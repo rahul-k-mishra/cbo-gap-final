@@ -1,0 +1,189 @@
+# CBO-GAP — standing rules for every Claude Code session
+
+This repository holds the revision of "Finite-ensemble observability of the
+mean-field convergence rate in consensus-based optimization" (Journal of Global
+Optimization, JOGO-D-26-00563, rejected 2026 with an invitation to resubmit as a
+new manuscript). Sole author: Rahul Kumar Mishra, Independent Researcher,
+Ranchi. Read this file in full before touching anything. Read
+notes/DEFECT_LEDGER.md before touching the manuscript or proposing an
+experiment. Everything in this file is non-negotiable.
+
+## Layout
+
+    CLAUDE.md                      this file
+    README.md                      what the repository is and how to run anything
+    .claude/settings.json          deny rules: no edits under zenodo-v1, no rm -rf,
+                                   no force push, no history rewrite; ask on push
+    .gitattributes                 "* -text": git never rewrites line endings; the
+                                   archived CSVs are CRLF and their hashes must survive
+    ENVIRONMENT.md                 Python, NumPy, platform, CPU, RAM of every machine
+                                   this project runs on, pasted from console output
+    requirements.lock              pip freeze of .venv on the Linux box; the
+                                   determinism check is run against this environment
+    zenodo-v1/                     the 68 files deposited at DOI 10.5281/zenodo.22068685,
+                                   byte-identical, chmod a-w, NEVER written to
+    zenodo-v1.sha256               per-file manifest computed on Rahul's machine
+    zenodo-v1-manifest-claude.sha256   the same manifest computed on the zip he uploaded
+    referee/                       JOGO_report.pdf and the submitted PDF JOGO-D-26-00563.pdf
+    notes/DEFECT_LEDGER.md         every known defect, its fix type, its status, the
+                                   commit that closed it
+    manuscript/                    round-2 LaTeX source; starts as zenodo-v1/sn-article.tex
+                                   plus the DOI sentence, which reproduces the submitted text
+    scripts/                       round-2 scripts only; they IMPORT dynamics from
+                                   zenodo-v1 and never retype them
+    runs/<run-id>/                 one folder per executed run: CSVs, console log, sha256;
+                                   never modified after the sha256 is written
+    logs/                          console logs of analysis-only runs
+    .venv/                         local virtual environment, not tracked
+
+## Hard rules
+
+1. zenodo-v1 is the deposited archive. Never create, modify, delete, move or
+   overwrite anything in it. It is chmod a-w and denied in .claude/settings.json;
+   those are backstops, not permission. Scripts may read from it and import
+   modules from it; nothing else.
+
+2. Never assume or compute a number independently. Every number that enters
+   the manuscript, the ledger, a table, a caption or a reply must come from the
+   console output of a script Rahul ran on his machine and stored under runs/
+   or logs/. If a number is needed: write the script, give the command, stop,
+   wait for the pasted output. Filling a gap with a plausible value is the one
+   unforgivable failure in this project.
+
+3. No output file may overwrite an existing file. Scripts open every output
+   with mode "x" and write into runs/<run-id>/ where <run-id> is new (date,
+   script name, short description). The Table 7 incident (a Part M result file
+   destroyed by a later Part D run that opened the same filename in write mode,
+   then wrongly declared fabricated) and the Part D near-miss both came from
+   this. Analysis scripts that write nothing say so in their docstring.
+
+4. Never retype dynamics. Round-2 scripts import one_realisation,
+   beta_on_ensemble or solve_beta, fit_slope, sigma_of, draw_initial and the
+   objective functions from the archived scripts in zenodo-v1 (sys.path
+   insertion), exactly as rmapj.py and perjcal.py do. The exactcal squared-norm
+   bug (np.linalg.norm where every other script uses np.sum((...)**2, axis=1),
+   halving every fitted exponent and costing a 3.75-hour run) came from
+   reimplementing by hand. The coupled error is the SQUARED distance,
+   accumulated as a running per-particle maximum over time steps.
+
+5. Every script, without exception:
+   - multiprocessing.Pool, --workers flag, parallel by default;
+   - prints at the head of the run: every parameter, every seed or the seed
+     table rule, Python version, NumPy version, platform, worker count;
+   - states in its docstring, before first execution, every pre-specified
+     criterion, threshold, sign convention and decision rule, each with a
+     worked numerical example; the nine analysis-design errors of this project
+     were all a threshold, sign or convention fixed by hand without one;
+   - Python 3.8 to 3.11 syntax only: no backslash inside an f-string expression,
+     no match statement, no X | Y unions, no parenthesised context managers,
+     no removeprefix on 3.8 targets; NumPy only, no SciPy, no pandas;
+   - writes per-realization, per-J errors (as exactcal_real.csv and
+     rmapj_real.csv do), never only cell means or only slopes;
+   - uses an injective seed table: one seed per (cell, realization) drawn from
+     numpy.random.SeedSequence keyed by the cell index, written to the output
+     CSV; never an arithmetic formula over name lengths (exactcal.py's formula
+     gives Ackley and Sphere identical seeds in every cell, ledger N6);
+   - measures and prints per-worker peak RSS (resource.getrusage) in any run
+     that evolves trajectories.
+
+6. Memory and the 12-hour limit of any shared platform are constraints;
+   runtime is not. Never trim a design to save compute. Never propose a
+   trajectory design whose per-worker peak RSS has not been measured by a
+   script Rahul ran. Free RAM on his machines can be as low as 1.5 GB.
+
+7. Cross-platform comparability is gated. The archive was produced on
+   Windows 7, Python 3.8.10, NumPy 1.24.4, three workers. No number from a run
+   on another machine is compared with an archived number until
+   scripts/detcheck.py has passed its pre-registered criteria D1 to D3 on that
+   machine, and the pass is recorded in ENVIRONMENT.md with the log path. If
+   it fails, say so plainly; compare only within platform.
+
+8. Manuscript edits: baseline first. Before any edit, extract the rendered PDF
+   text (pdftotext) as the baseline. After the edit, recompile, extract again,
+   diff against the baseline, and report the diff. Never report a fix as done
+   without that diff. After every edit check that the abstract, the
+   conclusions and every table caption still agree with the body; body-fixed-
+   abstract-stale drift happened repeatedly in round 1. Keep compile logs
+   clean: zero errors, zero undefined references, zero overfull boxes, no NaN
+   in any figure.
+
+9. Cited theorems: quote or say nothing. Any statement about a hypothesis or
+   conclusion of Fornasier-Klock-Riedl 2024 (SIAM J. Optim.), the anisotropic
+   Fornasier-Klock-Riedl 2022 (EvoApplications), Gerber-Hoffmann-Vaes 2025
+   (ESAIM COCV) or Carrillo-Choi-Totzeck-Tse 2018 is checked against the
+   primary text of the version cited, with that version's numbering.
+   Paraphrased conditions were wrong twice in round 1. FKR 2024's theorem and
+   equation numbers differ between the arXiv and journal versions; the
+   manuscript's bibliographic note claiming they are common is a known defect
+   (ledger N3).
+
+10. Manuscript language: plain human prose; nothing AI-sounding; no
+    overstatement; no "state of the art"; every mathematical step proved line
+    by line; an explicit account of what is and is not possible; exploratory
+    and confirmatory work labelled as such; a finite-window fitted slope is
+    never called a rate; a non-significant difference is never called
+    equivalence; a condition that is not a hypothesis of the theorem that owns
+    the J^-1 exponent is never called that theorem's admissibility (ledger N1).
+
+11. Deliverable zips sent to Rahul are flat: one folder, no subdirectories.
+    The repository has the structure above and it changes only with his
+    explicit approval.
+
+12. Replies to Rahul: no inline code spans or backticks in prose; commands and
+    URLs only inside fenced blocks; every command sequence ordered,
+    copy-pasteable, with the working directory stated first; complete
+    self-contained deliverables, not incremental patches; direct, unsoftened
+    assessments; say "I do not know" and name what would settle it rather
+    than guess.
+
+## Known failure modes of this project (do not repeat)
+
+- Patching introduces new defects. Every round-1 fix that was not verified in
+  the rendered artefact against a baseline introduced at least one new error.
+- The nine analysis-design errors (supplement S3): a two-sided criterion for a
+  one-sided bound; a variance-explained criterion on a treatment that removes
+  the variance; a criterion computed from an aggregate; a monotonicity
+  tolerance smaller than the measured spread; rank correlation without tie
+  correction; a predictive model without log transforms or support checks; an
+  inverted sign in the boundary extraction; a cliff criterion that could not
+  tell a cliff from a ramp; an aggregate mixing regions. Same cause each time.
+- Table 7 declared fabricated when it had been overwritten; a real section,
+  table and figure deleted and wrong numbers inserted as a fix.
+- Severity defined as gamma(r1) - gamma(r2) in the text while the reported
+  numbers were gamma(r2) - gamma(r1).
+- Stale intervals from one bootstrap unit pasted next to numbers from another.
+- Body text fixed, abstract left contradicting it.
+- The "exact calibration" fix (beta solved on each realization's own reference
+  ensemble) replaced a fixed-beta design with a random-beta design and became
+  referee point 3. A fix that changes the estimand is not a fix.
+- A text-extraction artefact ("35 x 10^4", a page number abutting
+  "5 x 10^4") was nearly logged as a manuscript defect. Check the source
+  before declaring a defect.
+- Deposited archive one edit behind the submitted manuscript; claimed console
+  logs and per-realization files that were never written. Archive what the
+  text says is archived, then write the text.
+
+## Workflow for any task
+
+1. Read CLAUDE.md, notes/DEFECT_LEDGER.md and the relevant archived script in
+   zenodo-v1 before writing anything.
+2. State what will be computed, by which script, under which pre-specified
+   criterion, and what each possible outcome will mean for the manuscript.
+   Write the script into scripts/.
+3. Give the ordered command sequence, working directory first. Stop. Wait for
+   the pasted console output.
+4. The output goes under runs/<run-id>/ or logs/ with its sha256.
+5. Only then write text, with every number copied from the log, never from
+   memory, and every change verified by the baseline diff of rule 8.
+6. Commit with a message naming the ledger item and the log or run folder.
+
+## Git discipline
+
+- Branch main. One commit per verified change. Never force-push, never
+  rewrite history, never amend a pushed commit.
+- Never commit .venv, scratch-*, LaTeX build artefacts or
+  .claude/settings.local.json (all in .gitignore).
+- runs/ and logs/ are tracked. A run folder is never modified after its
+  sha256 is written; a corrected run is a new run folder.
+- No Git LFS. Any single file above 50 MB: gzip it or stop and ask.
+- After a fresh clone, run: chmod -R a-w zenodo-v1

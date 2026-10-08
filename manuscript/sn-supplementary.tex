@@ -1,0 +1,86 @@
+\documentclass[sn-mathphys-num]{sn-jnl}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{url}
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\renewcommand{\thesection}{S\arabic{section}}
+\raggedbottom
+
+\title[Supplementary Material]{Supplementary Material for \emph{Finite-ensemble observability of the mean-field convergence rate in consensus-based optimization}}
+\author*[1]{\fnm{Rahul Kumar} \sur{Mishra}}\email{mishra.rahul98@gmail.com}
+\affil[1]{Independent Researcher, Ranchi, Jharkhand, India}
+\abstract{This document holds three blocks of supporting material referred to from the main text: the worst-case tracing of the mean-field constant chain, the complete log of analysis-design errors identified during this work, and the detailed record of withdrawn results. None is required to follow the experimental argument of the main paper. Numbering of the form S1, S2 is used throughout and referred to as such from the main text.}
+\keywords{consensus-based optimization, mean-field limit, effective sample size}
+\begin{document}
+\maketitle
+
+\section{Tracing the mean-field constant chain}\label{S1}
+
+\subsection{The traced constant chain}\label{app:tracing}
+The proof of \cite[Proposition 3.11]{fkr2024} introduces $c_M=\exp(\alpha C_2(1+\sqrt M))$, the square root arising because $\Omega_M$ bounds fourth moments while the estimate needs second moments. The same proof bounds the three terms of the consensus-point difference by quantities of order $c_M$, $\alpha C_1c_MM^{1/2}$ and $\alpha C_1c_M^2M^{1/2}$; squaring and summing gives order $\alpha^2C_1^2c_M^4M$, and the argument closes with Gr\"onwall, which exponentiates it. Separately, \cite[Proposition 3.11]{fkr2024} lists $C_{\rm MFA}$ as depending on $K$ and \cite[Lemma 3.10]{fkr2024} lists $K$ as depending on $d$, with the extended proof stating that the Burkholder--Davis--Gundy constant depends on the dimension, while the discussion after \cite[Theorem 3.8]{fkr2024} concludes that $C_{\rm MFA}$ does not depend explicitly on $d$. The two are reconciled by that word: $d$ enters through $K$, which sets $M$ via $\mathbb P(\Omega_M)\ge1-2K/M$, and $M$ enters inside the exponential of $c_M$. Every step is a worst-case inequality, so the composition bounds a bound.
+
+One branch of this chain is objective-dependent. The constants $b_1,b_2$ of \cite[Lemma 3.3]{carrillo2018} enter the fourth-moment estimate from which $K$ is obtained, and the proof of \cite[Lemma 3.10]{fkr2024} records them as $b_1=0$, $b_2=\exp(\alpha(\sup\mathcal E-\underline{\mathcal E}))$ when $\mathcal E$ is bounded and as $b_1=C_4^2+b_2$, $b_2=2(C_2/C_3)(1+1/(\alpha C_3C_4^2))$ when $\mathcal E$ satisfies the coercivity condition. In the printed derivation the constant carrying $b_2$ stands in the Gr\"onwall coefficient, so for a bounded objective the chain as written places $\alpha$ inside two nested exponentials, while for a coercive objective $b_2$ is decreasing in $\alpha$. We record this as bookkeeping in worst-case upper bounds and not as a claim about the constant itself: \cite[Theorem 3.8]{fkr2024} asserts exponential dependence on $\alpha$, and that is the only form used anywhere in this paper. Together with the three points of Section 3.4 of the main text it means that the $\ell=0$ objectives of Table 1 of the main text sit on the unfavourable branch of every published bound examined here.
+
+
+\subsection{A refinement of the informal lower bound on $\alpha_0$}
+\emph{An $\alpha_0$ refinement that changes nothing in practice.} \cite[Section 3.3]{fkr2024} observes, for a $\rho_0$ equivalent to Lebesgue measure on a compact set, an order of $d\log(\varepsilon)/\varepsilon$ as $d,1/\varepsilon\to\infty$. We read the magnitude as $d\log(1/\varepsilon)/\varepsilon$: the expression this is drawn from, \cite[Remark 4.8]{fkr2024}, carries a leading minus sign in front of a logarithm whose argument is below one, and the quantity must diverge as $\varepsilon\downarrow0$. Making the ball volume explicit adds $(d/2)\log d$: with $\kappa_d=\pi^{d/2}/\Gamma(d/2+1)$, Stirling gives $\log(1/\kappa_d)=\frac d2\log d-\frac d2(1+\log2+\log\pi)+O(\log d)$, so the residual per dimension after subtracting $\frac d2\log d$ tends to $-1.41894$; measured values are $-1.2449$, $-1.3902$, $-1.4149$ at $d=10,100,1000$. The added term dominates only when $\log d>2\log(1/\varepsilon)$, that is $d$ beyond roughly $10^6$ at $\varepsilon=10^{-3}$.
+
+
+
+\section{Exploratory runs excluded from the main experiment matrix}\label{S1b}
+Two exploratory runs are excluded from Table~2 of the main text and from its totals. Their generating scripts, aggregate outputs and console logs are archived; the per-realization files were lost to an output overwrite. Both belong to withdrawn results and no reported conclusion rests on either.
+
+\begin{table}[h]
+\caption{Exploratory runs excluded from the main experiment matrix.}\label{tabS1}
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+ID & Design & Cells & Realizations & Hours\\
+\midrule
+EXP-BMATCH & 2 obj $\times$ 6 $d$ $\times$ 3 $B$ levels & 36 & 720 & 1.1\\
+EXP-REFPANEL & 6 obj $\times$ 8 $\tau_0$ panel & 48 & 960 & 1.2\\
+\midrule
+& \textbf{total} & \textbf{84} & \textbf{1\,680} & \textbf{2.3}\\
+\botrule
+\end{tabular}
+\end{table}
+
+\section{Analysis-design errors identified during this work}\label{S2}
+
+
+\begin{enumerate}
+\item A two-sided recovery criterion, when the bound is one-sided; it marked slopes of $-1.25$ as failures and produced a non-monotone threshold table.
+\item A variance-explained criterion applied to a treatment that removes the variance: the gain returned $0.0508$ against a threshold of $0.05$ while the total $R^2$ was $0.146$.
+\item A criterion computed from an aggregate: a mean-slope test passed at $-0.906$ by averaging a target where every cell is consistent ($-0.998$) with one where half are not ($-0.815$).
+\item A monotonicity tolerance of $0.02$ against a measured slope spread of $0.055$.
+\item A rank correlation without tie correction on a descriptor with $23$ of $36$ values identical; the same input gave $+0.62$ and $+0.34$ on two machines.
+\item A predictive model fitted without log-transforming scale features or checking support: $22$ of $36$ test cells lay outside the training range in one feature and out-of-sample $R^2$ was $-92.6$.
+\item An inverted sign convention in the boundary extraction: with $\Delta=-1-\hat\gamma$, failure at $-0.85$ is $\Delta=-0.15$, but the crossing was sought at $+0.15$; $30$ of $42$ cells were wrongly censored, and correcting it raised identified boundaries from $5$ to $19$.
+\item A cliff criterion that could not distinguish a cliff from a ramp, testing flatness only for $r\le1$ and magnitude only at the endpoint.
+\item An aggregate that mixed regions: a two-arm verdict was computed over cells including two lying outside the parameter condition, which reversed its sign.
+\end{enumerate}
+
+All nine are the same failure: a threshold, sign or convention fixed by hand and not checked against a worked example before compute was committed. Several were prespecified, which protects against choosing a criterion after seeing results but not against choosing a badly formed one.
+
+We distinguish exploratory from confirmatory work. Sections 7.2 and 7.8 of the main text are exploratory: the question evolved and criteria changed. Section 7.3 of the main text onward use criteria fixed in the run scripts before execution, and those scripts print them at the head of every run.
+
+
+
+\section{Withdrawn results, in detail}\label{S3}
+The main text summarises six results withdrawn during this work. They are, with the reason for withdrawal in each case: a fitted power law $|\hat\gamma|\sim cd^{-0.57}$, withdrawn because the exponent was not stable under concentration control; a crossover ensemble size, withdrawn because the criterion that produced it was two-sided against a one-sided bound; an extreme-order-statistics explanation predicting a $2/d$ ratio, withdrawn because the measured ratio drifted from $1.10$ to $1.65$ across the tested dimensions rather than holding; the effective sample size as a general diagnostic, withdrawn because pooled across regimes the fitted slope ranged from $-1.67$ to $-0.31$ within the single band $\mathrm{ESS}\in[2.5,25)$ over eight cells, although within a fixed dimension it orders objectives almost exactly, with Spearman correlation $-0.94$ to $-1.00$ at $d\ge10$ and $-0.746$ pooled over $144$ cells; the claim that concentration is the mechanism, withdrawn as unqualified; and a predictive law for the concentration threshold from landscape geometry, withdrawn on a leave-one-landscape-out $R^2$ of $-0.979$. Each is retained here rather than deleted because the sequence of hypotheses tested and rejected is part of the record of how the reported results were arrived at.
+
+\begin{thebibliography}{9}
+\bibitem{fkr2024}
+Fornasier, M., Klock, T., Riedl, K.: Consensus-based optimization methods converge globally. SIAM J. Optim. \textbf{34}(3), 2973--3004 (2024). \url{https://doi.org/10.1137/22M1527805}.
+\bibitem{carrillo2018}
+Carrillo, J.A., Choi, Y.-P., Totzeck, C., Tse, O.: An analytical framework for consensus-based global optimization method. Math. Models Methods Appl. Sci. \textbf{28}(6), 1037--1066 (2018). \url{https://doi.org/10.1142/S0218202518500276}.
+\bibitem{ghv2025}
+Gerber, N.J., Hoffmann, F., Vaes, U.: Mean-field limits for consensus-based optimization and sampling. ESAIM Control Optim. Calc. Var. \textbf{31}, Paper No. 74 (2025). \url{https://doi.org/10.1051/cocv/2025060}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/zenodo-v1/**)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(chmod *zenodo-v1*)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git rebase *)",
+      "Bash(git commit --amend *)",
+      "Bash(git filter-branch *)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ]
+  }
+}

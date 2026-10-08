@@ -1,0 +1,23 @@
+# local environment and scratch
+.venv/
+__pycache__/
+*.pyc
+scratch-*/
+nohup.out
+*.swp
+.DS_Store
+
+# Claude Code local permission grants (machine-specific)
+.claude/settings.local.json
+
+# LaTeX build artefacts in the working manuscript (the PDF itself is tracked)
+manuscript/*.aux
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.log
+manuscript/*.out
+manuscript/*.toc
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+manuscript/*.synctex.gz
+manuscript/*.spl

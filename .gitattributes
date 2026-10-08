@@ -1,0 +1,4 @@
+# Never let git rewrite line endings or treat anything as text to normalise.
+# The archived CSVs are CRLF (written on Windows 7); their bytes and hashes
+# must survive every checkout on every platform.
+* -text

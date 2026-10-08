@@ -1,0 +1,55 @@
+objective,diffusion,beta,d,slope,min_ESS_ref,verdict
+ackley,anisotropic,3.0,2,-1.258082,460.3097,rate NOT observed
+ackley,anisotropic,3.0,10,-0.876531,1050.6042,J^-1 recovered
+ackley,anisotropic,30.0,2,-1.285394,16.5814,rate NOT observed
+ackley,anisotropic,30.0,10,-0.328090,1.3042,rate NOT observed
+ackley,anisotropic,300.0,2,-0.983921,1.6264,J^-1 recovered
+ackley,anisotropic,300.0,10,-0.277152,1.0000,SATURATED (hardmin)
+ackley,isotropic,1.0,2,-1.205010,6603.1793,rate NOT observed
+ackley,isotropic,1.0,5,-1.034466,18310.1504,J^-1 recovered
+ackley,isotropic,1.0,10,-1.025039,29248.8078,J^-1 recovered
+ackley,isotropic,3.0,2,-1.250296,459.5684,rate NOT observed
+ackley,isotropic,3.0,5,-0.871489,43.8478,J^-1 recovered
+ackley,isotropic,3.0,10,-0.867669,800.1263,J^-1 recovered
+ackley,isotropic,10.0,2,-1.281701,81.7286,rate NOT observed
+ackley,isotropic,10.0,5,-0.596133,2.0796,rate NOT observed
+ackley,isotropic,10.0,10,-0.396210,1.8377,rate NOT observed
+ackley,isotropic,30.0,2,-1.248319,16.1724,rate NOT observed
+ackley,isotropic,30.0,5,-0.610661,1.1843,rate NOT observed
+ackley,isotropic,30.0,10,-0.319395,1.0203,rate NOT observed
+ackley,isotropic,100.0,2,-1.124139,3.1880,J^-1 recovered
+ackley,isotropic,100.0,5,-0.569809,1.0010,SATURATED (hardmin)
+ackley,isotropic,100.0,10,-0.318958,1.0000,SATURATED (hardmin)
+ackley,isotropic,300.0,2,-1.154280,1.6497,rate NOT observed
+ackley,isotropic,300.0,5,-0.614688,1.0000,SATURATED (hardmin)
+ackley,isotropic,300.0,10,-0.334426,1.0000,SATURATED (hardmin)
+ackley,isotropic,1000.0,2,-1.016524,1.0953,J^-1 recovered
+ackley,isotropic,1000.0,5,-0.569792,1.0000,SATURATED (hardmin)
+ackley,isotropic,1000.0,10,-0.337847,1.0000,SATURATED (hardmin)
+rastrigin,anisotropic,3.0,2,-1.477639,107.4929,rate NOT observed
+rastrigin,anisotropic,3.0,10,-0.049009,1.0000,SATURATED (hardmin)
+rastrigin,anisotropic,30.0,2,-1.668616,9.2605,rate NOT observed
+rastrigin,anisotropic,30.0,10,-0.010565,1.0000,SATURATED (hardmin)
+rastrigin,anisotropic,300.0,2,-1.525290,1.5181,rate NOT observed
+rastrigin,anisotropic,300.0,10,-0.053410,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,1.0,2,-1.101234,869.1501,J^-1 recovered
+rastrigin,isotropic,1.0,5,-0.309057,3.0599,rate NOT observed
+rastrigin,isotropic,1.0,10,-0.052113,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,3.0,2,-1.480958,109.1372,rate NOT observed
+rastrigin,isotropic,3.0,5,-0.262437,1.0192,rate NOT observed
+rastrigin,isotropic,3.0,10,-0.048499,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,10.0,2,-1.651960,24.7267,rate NOT observed
+rastrigin,isotropic,10.0,5,-0.227863,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,10.0,10,-0.064231,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,30.0,2,-1.659741,10.2514,rate NOT observed
+rastrigin,isotropic,30.0,5,-0.250771,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,30.0,10,-0.056979,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,100.0,2,-1.521384,2.7373,rate NOT observed
+rastrigin,isotropic,100.0,5,-0.220088,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,100.0,10,-0.061477,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,300.0,2,-1.505515,1.7882,rate NOT observed
+rastrigin,isotropic,300.0,5,-0.216932,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,300.0,10,-0.101264,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,1000.0,2,-1.542064,1.1440,rate NOT observed
+rastrigin,isotropic,1000.0,5,-0.248584,1.0000,SATURATED (hardmin)
+rastrigin,isotropic,1000.0,10,-0.068085,1.0000,SATURATED (hardmin)
