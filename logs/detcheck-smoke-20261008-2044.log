@@ -1,0 +1,52 @@
+========================================================================================
+CBO-GAP detcheck -- determinism gate for this machine
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2
+  workers  2   tasks R1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+    sha256 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py
+    sha256 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py
+    sha256 5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py
+    sha256 47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv
+    sha256 cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv
+  parameters: lam 1.0  sigma(exactcal) 0.2  dt 0.01  K 100  T 1.0  Jinf 50000
+  J grid    : [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  tolerance : half a unit in the last archived digit, per quantity
+  run folder: /home/rahul/Research/cbo-gap-final/runs/detcheck-20261008-204445
+
+  R1  exactcal_real.csv line 2: ackley d=2 centred tau0=0.5 seed=20261707
+
+----------------------------------------------------------------------------------------
+pass 1: 2 worker(s)
+----------------------------------------------------------------------------------------
+  wall 3.6 s
+
+  R1  wall 3.5 s   peak RSS of its worker 47 MB   X0[0,:3] = ['-1.4281120557073483', '0.24191103292720531']
+  quantity                 archived                 computed      absdiff        tol  ok
+  beta                 0.5397402043       0.5397402043261751    2.618e-11    5.0e-11  PASS
+  achieved_frac                 0.5       0.5000000000000009    8.882e-16    5.0e-02  PASS
+  log_ess_0                 10.1266       10.126631103850341    3.110e-05    5.0e-05  PASS
+  log_ess_min               10.1266       10.126631103850341    3.110e-05    5.0e-05  PASS
+  slope                    -1.22556       -1.225558641807295    1.358e-06    5.0e-06  PASS
+  E_10                  0.056786325      0.05678632541036251    4.104e-10    5.0e-10  PASS
+  E_20                 0.0019362834    0.0019362833885807468    1.142e-11    5.0e-11  PASS
+  E_40                 0.0015084385     0.001508438493923288    6.077e-12    5.0e-11  PASS
+  E_80                 0.0002997718    0.0002997717987186728    1.281e-12    5.0e-11  PASS
+  E_160                5.398521e-05    5.398521012010334e-05    1.201e-13    5.0e-12  PASS
+  E_320               0.00094587002    0.0009458700221344427    2.134e-12    5.0e-12  PASS
+  E_640               0.00055601548    0.0005560154804581383    4.581e-13    5.0e-12  PASS
+  E_1280               3.921463e-05    3.921462999430181e-05    5.698e-15    5.0e-12  PASS
+  E_2560              2.3936545e-06   2.3936545161572066e-06    1.616e-14    5.0e-14  PASS
+  E_5000              8.3003762e-06    8.300376209856855e-06    9.857e-15    5.0e-14  PASS
+
+----------------------------------------------------------------------------------------
+pass 2: 1 worker, for D3 (bitwise identity of every quantity)
+----------------------------------------------------------------------------------------
+  wall 4.1 s
+
+========================================================================================
+VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS
+results   /home/rahul/Research/cbo-gap-final/runs/detcheck-20261008-204445/detcheck_results.csv
+========================================================================================
