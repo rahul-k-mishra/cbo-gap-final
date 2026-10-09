@@ -21,3 +21,7 @@ manuscript/*.fls
 manuscript/*.fdb_latexmk
 manuscript/*.synctex.gz
 manuscript/*.spl
+
+# Kaggle scratch, rebuilt on every kgrun call
+.kaggle-bundle/
+.kaggle-push/

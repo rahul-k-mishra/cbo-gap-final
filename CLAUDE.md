@@ -187,3 +187,55 @@ experiment. Everything in this file is non-negotiable.
   sha256 is written; a corrected run is a new run folder.
 - No Git LFS. Any single file above 50 MB: gzip it or stop and ask.
 - After a fresh clone, run: chmod -R a-w zenodo-v1
+
+## Kaggle compute
+
+Heavy runs go to Kaggle; the repository, the manuscript and the git history
+stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
+12-hour cap and 20 GB of output space. Treat all four as constraints.
+
+13. scripts/kgrun.py is the only thing that talks to Kaggle. It assembles the
+    bundle, versions the dataset, generates the runner and its metadata,
+    pushes, polls and downloads the output into a new runs/ folder with a
+    sha256 manifest. Never push a kernel by hand, never edit a notebook in
+    the Kaggle web editor: the next push overwrites it and the repository
+    stops being the source of truth.
+
+14. Credentials never leave the laptop. ~/.kaggle/kaggle.json is denied to
+    Claude in .claude/settings.json; the kaggle CLI reads it itself. Never
+    print it, copy it, put it in a notebook, or add a GitHub token to Kaggle
+    Secrets. Every kaggle command is an ask rule: the user approves each push
+    in the moment.
+
+15. On Kaggle the archive is mounted read-only at /kaggle/input/<dataset> and
+    output goes to /kaggle/working. Scripts take both as flags, --archive and
+    --outdir, so one file runs unchanged on both machines. Never hard-code
+    either path, and never copy the archive into /kaggle/working to work
+    around the read-only mount.
+
+16. The determinism gate is per platform. detcheck.py must pass D1 to D3 on
+    Kaggle before any Kaggle number is compared with an archived one, and the
+    verdict is recorded in ENVIRONMENT.md with its log path, exactly as for
+    the laptop. A pass on the laptop says nothing about Kaggle.
+
+17. A job is sized to finish inside 12 hours. Longer work is split into
+    shards run as separate jobs with distinct --job names and
+    --shard i --nshards k. Shards are never resumed: a job that hits the cap
+    is re-run with more shards, because a resumed run would mix two sessions'
+    output in one folder. Sharding is safe because every seed comes from a
+    SeedSequence keyed by the cell, so a shard emits exactly the rows it
+    would have emitted in a single run and the merge is a concatenation.
+
+18. Nothing that comes back from Kaggle is trusted until its header is read.
+    Every script prints its parameters, seeds, Python and NumPy versions,
+    platform and worker count at the head of the run; check that the Kaggle
+    run used the versions and flags intended before any number from it is
+    quoted. A NumPy version difference between laptop and Kaggle is exactly
+    what rule 16 exists to catch.
+
+19. Output folders from Kaggle are runs/<job>-kaggle-<timestamp>/ and are
+    never modified after their sha256 manifest is written, same as local run
+    folders. The Kaggle-side copy is not the record; the committed folder is.
+
+20. .kaggle-bundle/ and .kaggle-push/ are scratch, rebuilt on every call, and
+    are in .gitignore. Never edit them by hand and never commit them.

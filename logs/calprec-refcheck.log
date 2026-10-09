@@ -1,0 +1,56 @@
+==============================================================================================
+CBO-GAP calprec -- stage C1: calibration sample size for a fixed beta
+==============================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   cpus 2   workers 1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  mode     FULL
+  objs     ['ackley']
+  dims     [40]   laws ['centred']
+  taus     [0.5, 0.1, 0.01]
+  levels   [4000, 16000, 64000, 256000, 1000000]
+  reps     2   reference vector 4000000   chunk 100000
+  seeds    SeedSequence, entropy 20261009, keyed by (kind, obj, d, law, tau, N, rep)
+  C1       sufficient when max over reps of |tau_realized/tau0 - 1| <= 0.05
+  N_star   smallest level sufficient in EVERY cell; no relaxation
+  run dir  /home/rahul/Research/cbo-gap-final/runs/calprec-20261009-071815
+
+  1 tasks, each = one reference vector plus 30 solves
+
+  [  1/  1] ackley      d=40  centred  task   283.4s  RSS   196MB  elapsed 0h 04m 43s  projected 0h 04m 43s
+  total wall 0h 04m 43s
+
+WORST CELL AT EACH CALIBRATION SIZE (C1 statistic: max |tau_realized/tau0 - 1|)
+          N   tau0      worst dev  worst cell                             cells ok
+       4000    0.5         0.0306  ackley d=40 centred                         1/1
+       4000    0.1         0.1928  ackley d=40 centred                         0/1
+       4000   0.01         0.9222  ackley d=40 centred                         0/1
+
+      16000    0.5         0.0158  ackley d=40 centred                         1/1
+      16000    0.1         0.1275  ackley d=40 centred                         0/1
+      16000   0.01         0.9057  ackley d=40 centred                         0/1
+
+      64000    0.5         0.0141  ackley d=40 centred                         1/1
+      64000    0.1         0.2239  ackley d=40 centred                         0/1
+      64000   0.01         0.5975  ackley d=40 centred                         0/1
+
+     256000    0.5         0.0093  ackley d=40 centred                         1/1
+     256000    0.1         0.0614  ackley d=40 centred                         0/1
+     256000   0.01         0.0242  ackley d=40 centred                         1/1
+
+    1000000    0.5         0.0014  ackley d=40 centred                         1/1
+    1000000    0.1         0.0474  ackley d=40 centred                         1/1
+    1000000   0.01         0.2072  ackley d=40 centred                         0/1
+
+C2  THE ARCHIVED 4000-POINT PROBE, for comparison with the above:
+    tau0 0.5    worst realized/target spread [1.023, 1.031] at ackley d=40 centred
+    tau0 0.1    worst realized/target spread [0.8072, 0.8428] at ackley d=40 centred
+    tau0 0.01   worst realized/target spread [0.07778, 0.07808] at ackley d=40 centred
+
+==============================================================================================
+N_star: NO level in [4000, 16000, 64000, 256000, 1000000] satisfies C1 in every cell.
+Under the production rule the sweep is extended upward; C1 is not relaxed.
+detail  /home/rahul/Research/cbo-gap-final/runs/calprec-20261009-071815/calprec_detail.csv
+summary /home/rahul/Research/cbo-gap-final/runs/calprec-20261009-071815/calprec_summary.csv
+==============================================================================================
