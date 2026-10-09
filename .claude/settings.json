@@ -2,19 +2,29 @@
   "permissions": {
     "deny": [
       "Edit(/zenodo-v1/**)",
-      "Bash(rm -rf *)",
-      "Bash(rm -r *)",
-      "Bash(chmod *zenodo-v1*)",
-      "Bash(git push --force *)",
+      "Edit(/runs/**)",
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(truncate *)",
+      "Bash(shred *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(git push --force*)",
       "Bash(git push -f *)",
-      "Bash(git reset --hard *)",
+      "Bash(git reset *)",
       "Bash(git clean *)",
       "Bash(git rebase *)",
-      "Bash(git commit --amend *)",
-      "Bash(git filter-branch *)"
+      "Bash(git commit --amend*)",
+      "Bash(git filter-branch *)",
+      "Bash(git checkout -- *)",
+      "Bash(git restore *)"
     ],
     "ask": [
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(mv *)",
+      "Bash(cp *)",
+      "Bash(unzip *)",
+      "Bash(tar *)"
     ]
   }
 }
