@@ -45,10 +45,10 @@ existing output. Run from the repository root with the venv active, for example:
 set -o noclobber makes the shell refuse to redirect onto a log that already
 exists, so a console log is never overwritten.
 
-detcheck.py takes --archive (default zenodo-v1 in this repository) and
---outdir (default runs/), so the same file runs unchanged with the archive
-somewhere else, for example on Kaggle (calprec.py and costprobe.py do not
-take these flags yet; CLAUDE.md rule 15 requires them before a Kaggle run):
+detcheck.py, calprec.py and costprobe.py take --archive (default zenodo-v1
+in this repository) and --outdir (default runs/), resolved by
+scripts/cbopaths.py, so the same file runs unchanged with the archive
+somewhere else, for example on Kaggle:
 
     python scripts/detcheck.py --workers 4 --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
 

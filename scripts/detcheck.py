@@ -83,26 +83,16 @@ import numpy as np
 
 sys.dont_write_bytecode = True
 
+import cbopaths                                                # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-def _early_flag(name, default):
-    """Read --name VALUE from argv before argparse, because the archive path
-    must be known at import time. argparse still declares both flags below,
-    so --help lists them and an unknown flag is still an error."""
-    argv = sys.argv
-    for i, tok in enumerate(argv):
-        if tok == name and i + 1 < len(argv):
-            return argv[i + 1]
-        if tok.startswith(name + "="):
-            return tok.split("=", 1)[1]
-    return default
-
-
-ARCH = _early_flag("--archive", os.environ.get("CBOGAP_ARCHIVE",
-                                               os.path.join(ROOT, "zenodo-v1")))
-OUTROOT = _early_flag("--outdir", os.environ.get("CBOGAP_OUTDIR",
-                                                 os.path.join(ROOT, "runs")))
+# The archive path must be known at import time, so --archive and --outdir
+# are read from argv before argparse (scripts/cbopaths.py). argparse still
+# declares both flags in main(), so --help lists them and an unknown flag is
+# still an error.
+ARCH = cbopaths.archive_path(ROOT)
+OUTROOT = cbopaths.output_root(ROOT)
 if not os.path.isdir(ARCH):
     sys.stderr.write("setup error: archive not found at {}\n".format(ARCH))
     sys.stderr.write("pass --archive <path> or set CBOGAP_ARCHIVE\n")

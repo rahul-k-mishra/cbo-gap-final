@@ -107,7 +107,14 @@ HOW TO RUN (from the repository root, venv active)
     python scripts/calprec.py --workers 2 --quick        smoke, about a minute
     python scripts/calprec.py --workers 2                full stage C1
     nohup python scripts/calprec.py --workers 2 > logs/calprec-full.log 2>&1 &
-Writes runs/calprec-<timestamp>/ with two CSVs, opened with mode "x".
+--archive PATH (else CBOGAP_ARCHIVE, else <repo>/zenodo-v1) names the
+archive the dynamics are imported from; --outdir PATH (else CBOGAP_OUTDIR,
+else <repo>/runs) names the directory the run folder is created in. Both
+are resolved by scripts/cbopaths.py, with the same semantics as detcheck.py;
+a missing archive is a setup error (exit code 2). On Kaggle:
+    python calprec.py --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+Writes <outdir>/calprec-<timestamp>/ (default runs/calprec-<timestamp>/)
+with two CSVs, opened with mode "x".
 Exit code 0 if an N_star exists under C1, 1 if no level in the sweep
 satisfies C1 everywhere (meaning: extend the sweep), 2 on a setup error.
 
@@ -129,10 +136,19 @@ import numpy as np
 
 sys.dont_write_bytecode = True
 
+import cbopaths                                                # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ARCH = os.path.join(ROOT, "zenodo-v1")
+
+# The archive path must be known at import time, so --archive and --outdir
+# are read from argv before argparse (scripts/cbopaths.py). argparse still
+# declares both flags in main(), so --help lists them and an unknown flag is
+# still an error.
+ARCH = cbopaths.archive_path(ROOT)
+OUTROOT = cbopaths.output_root(ROOT)
 if not os.path.isdir(ARCH):
-    sys.stderr.write("setup error: {} not found\n".format(ARCH))
+    sys.stderr.write("setup error: archive not found at {}\n".format(ARCH))
+    sys.stderr.write("pass --archive <path> or set CBOGAP_ARCHIVE\n")
     sys.exit(2)
 sys.path.insert(0, ARCH)
 
@@ -245,6 +261,12 @@ def main():
     p.add_argument("--objs", default=",".join(OBJS))
     p.add_argument("--dims", default=",".join(str(x) for x in DIMS))
     p.add_argument("--laws", default=",".join(LAWS))
+    p.add_argument("--archive", default=None,
+                   help="path to the deposited archive; default <repo>/zenodo-v1, "
+                        "or CBOGAP_ARCHIVE. On Kaggle: /kaggle/input/<dataset>")
+    p.add_argument("--outdir", default=None,
+                   help="directory to create the run folder in; default <repo>/runs, "
+                        "or CBOGAP_OUTDIR. On Kaggle: /kaggle/working")
     a = p.parse_args()
 
     objs = [s.strip() for s in a.objs.split(",") if s.strip()]
@@ -258,7 +280,7 @@ def main():
         levels, taus, reps, n_ref = [4000, 16000], [0.5, 0.01], 6, 200000
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    outdir = os.path.join(ROOT, "runs", "calprec-" + stamp)
+    outdir = os.path.join(OUTROOT, "calprec-" + stamp)
     os.makedirs(outdir)
 
     print("=" * 94)
