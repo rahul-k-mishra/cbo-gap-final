@@ -19,8 +19,15 @@ Swap:           3789           0        3789
 /dev/sda2       457G   35G  400G   8% /
 ```
 
-Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/Research/cbo-gap-final/zenodo-v1, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-repo.log
-Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/cbo-archive-test, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-separate.log
+Determinism gate (scripts/detcheck.py v3, D1-D3), archive /home/rahul/Research/cbo-gap-final/zenodo-v1, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v3-full-repo.log
+Determinism gate (scripts/detcheck.py v3, D1-D3), archive /home/rahul/cbo-archive-test, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v3-full-separate.log
+v3 is the current detcheck.py (after the cbopaths refactor). The v2 logs
+(logs/detcheck-v2-full-repo.log, logs/detcheck-v2-full-separate.log) are
+identical to the v3 logs in every compared quantity, every computed value,
+every verdict, X0 and the five archive hashes. By diff, they differ only
+in the run-folder path, the wall times and, in the repository-layout pair,
+R2's printed peak RSS (167 MB in v2, 166 MB in v3). The v2 pass is
+therefore not lost by the change.
 
 ## Kaggle CPU session, recorded 2026-10-09
 

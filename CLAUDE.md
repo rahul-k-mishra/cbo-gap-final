@@ -12,8 +12,10 @@ experiment. Everything in this file is non-negotiable.
 
     CLAUDE.md                      this file
     README.md                      what the repository is and how to run anything
-    .claude/settings.json          deny rules: no edits under zenodo-v1, no rm -rf,
-                                   no force push, no history rewrite; ask on push
+    .claude/settings.json          allow git add, commit, push; deny edits under
+                                   zenodo-v1 and runs/, every rm form, chmod, force
+                                   push, history rewrite, and every kaggle command;
+                                   ask on mv, cp, unzip, tar
     .gitattributes                 "* -text": git never rewrites line endings; the
                                    archived CSVs are CRLF and their hashes must survive
     ENVIRONMENT.md                 Python, NumPy, platform, CPU, RAM of every machine
@@ -213,8 +215,9 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
 14. Credentials never leave the laptop. ~/.kaggle/kaggle.json is denied to
     Claude in .claude/settings.json; the kaggle CLI reads it itself. Never
     print it, copy it, put it in a notebook, or add a GitHub token to Kaggle
-    Secrets. Every kaggle command is an ask rule: the user approves each push
-    in the moment.
+    Secrets. Every kaggle command is denied to Claude outright in
+    .claude/settings.json: under rule 21 Claude executes nothing, and
+    kgrun.py, with every kaggle command it issues, is run by Rahul.
 
 15. On Kaggle the archive is mounted read-only under /kaggle/input, at a
     path the kgrun runner discovers rather than assumes (it tries

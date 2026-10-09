@@ -1,5 +1,12 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push)",
+      "Bash(git push origin main)",
+      "Bash(git push *)"
+    ],
     "deny": [
       "Edit(/zenodo-v1/**)",
       "Edit(/runs/**)",
@@ -11,8 +18,7 @@
       "Bash(shred *)",
       "Bash(chmod *)",
       "Bash(chown *)",
-      "Bash(kaggle datasets delete *)",
-      "Bash(kaggle kernels delete *)",
+      "Bash(kaggle *)",
       "Bash(git push --force*)",
       "Bash(git push -f *)",
       "Bash(git reset *)",
@@ -24,8 +30,6 @@
       "Bash(git restore *)"
     ],
     "ask": [
-      "Bash(git push *)",
-      "Bash(kaggle *)",
       "Bash(mv *)",
       "Bash(cp *)",
       "Bash(unzip *)",
