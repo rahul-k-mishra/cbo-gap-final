@@ -57,6 +57,11 @@ WHAT IT DOES NOT DO
 HOW TO RUN (from the repository root, venv active)
     python scripts/detcheck.py --workers 2 > logs/detcheck-$(date +%Y%m%d-%H%M).log 2>&1
     python scripts/detcheck.py --workers 2 --tasks R1        (about a minute: smoke)
+On Kaggle, where the archive is mounted read-only and output goes to working:
+    python detcheck.py --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+The gate is PER PLATFORM. A pass on one machine says nothing about another,
+so it runs first on every new machine before any number from that machine is
+compared with an archived one.
 Exit code 0 on PASS, 1 on FAIL, 2 on a setup error.
 
 NumPy only. Python 3.8 to 3.11 syntax.
@@ -79,9 +84,28 @@ import numpy as np
 sys.dont_write_bytecode = True
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ARCH = os.path.join(ROOT, "zenodo-v1")
+
+
+def _early_flag(name, default):
+    """Read --name VALUE from argv before argparse, because the archive path
+    must be known at import time. argparse still declares both flags below,
+    so --help lists them and an unknown flag is still an error."""
+    argv = sys.argv
+    for i, tok in enumerate(argv):
+        if tok == name and i + 1 < len(argv):
+            return argv[i + 1]
+        if tok.startswith(name + "="):
+            return tok.split("=", 1)[1]
+    return default
+
+
+ARCH = _early_flag("--archive", os.environ.get("CBOGAP_ARCHIVE",
+                                               os.path.join(ROOT, "zenodo-v1")))
+OUTROOT = _early_flag("--outdir", os.environ.get("CBOGAP_OUTDIR",
+                                                 os.path.join(ROOT, "runs")))
 if not os.path.isdir(ARCH):
-    sys.stderr.write("setup error: {} not found\n".format(ARCH))
+    sys.stderr.write("setup error: archive not found at {}\n".format(ARCH))
+    sys.stderr.write("pass --archive <path> or set CBOGAP_ARCHIVE\n")
     sys.exit(2)
 sys.path.insert(0, ARCH)
 
@@ -206,12 +230,16 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--workers", type=int, default=2)
     p.add_argument("--tasks", default="R1,R2,R3")
+    p.add_argument("--archive", default=None,
+                   help="path to the deposited archive; default <repo>/zenodo-v1, "
+                        "or CBOGAP_ARCHIVE. On Kaggle: /kaggle/input/<dataset>")
     p.add_argument("--outdir", default=None,
-                   help="run folder under runs/; default runs/detcheck-<timestamp>")
+                   help="directory to create the run folder in; default <repo>/runs, "
+                        "or CBOGAP_OUTDIR. On Kaggle: /kaggle/working")
     a = p.parse_args()
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    outdir = a.outdir or os.path.join(ROOT, "runs", "detcheck-" + stamp)
+    outdir = os.path.join(OUTROOT, "detcheck-" + stamp)
     os.makedirs(outdir)                        # refuses if it exists
 
     print("=" * 88)
