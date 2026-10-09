@@ -323,3 +323,34 @@ ENVIRONMENT.md. Kaggle: not run (G2).
   missing. Kaggle's Python is 3.13.15; its NumPy version is unknown,
   because no script has executed there. CLOSED by the commit that adds this
   entry; the Kaggle gate itself stays open under G2.
+  CORRECTED 2026-10-09 (see K3); the text above is kept as first written.
+  Its Cause and Fix are wrong. The diagnosis of a processing delay was
+  mistaken. In the second launch (runs/detcheck-kaggle-20261009-094052), kgrun
+  waited until "kaggle datasets status" reported ready, which it did after
+  3 s (logs/kgrun-detcheck-relaunch-1.log), and the kernel failed the same
+  way. Its listing shows the dataset mounted and complete at a different path.
+  The dataset-ready wait did not address the cause; it is retained only as a
+  guard against pushing a kernel against a version that is genuinely still
+  being processed. The real cause was the mount path (K3). The first
+  launch's log has no listing of /kaggle/input, so it does not show the
+  nested path by itself. The first failure is attributed to the mount path
+  because both runs looked for the same missing path, and Rahul reports the
+  dataset ready with its files listed afterwards. The CLOSED above is
+  withdrawn: K1 is closed by K3's fix.
+- K3 (Kaggle, mount path). Both failed launches looked for the archive at
+  /kaggle/input/cbo-gap-archive, the path the runner hard-coded. Kaggle
+  mounted the dataset at /kaggle/input/datasets/ericsom/cbo-gap-archive.
+  Evidence: runs/detcheck-kaggle-20261009-094052/cbo-detcheck.log, the
+  runner's listing of /kaggle/input at t = 1.176 s:
+      /kaggle/input/datasets/ericsom/cbo-gap-archive/   31 file(s): audit.py, boundary.py, calprec.py, cbopaths.py, cliff.py, control.py, costprobe.py, crossed.py, detcheck.py, ess_extend.py ...
+  31 is the bundle kgrun uploaded: "26 archive files + 5 round-2 scripts"
+  in logs/kgrun-detcheck-relaunch-1.log. So the dataset was mounted and
+  complete, at a path the runner did not look at. Fix, in the commit that
+  adds this entry: the generated runner no longer hard-codes the path. kgrun
+  passes in the user and the dataset slug, and the runner tries
+  /kaggle/input/<dataset>, then /kaggle/input/datasets/<user>/<dataset>, then
+  a sorted walk of /kaggle/input to depth 3 for the first directory named
+  exactly <dataset>. It prints which candidate matched and passes that path
+  as --archive. If none matches, it lists /kaggle/input and exits 2. CLOSED
+  by the commit that adds this entry, pending a Kaggle launch that finds the
+  archive.

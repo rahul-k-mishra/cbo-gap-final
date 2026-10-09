@@ -93,24 +93,57 @@ import os
 import subprocess
 import sys
 
-ARCHIVE = "/kaggle/input/{dataset}"
+USER = "{user}"
+DATASET = "{dataset}"
+BASE = "/kaggle/input"
 WORK = "/kaggle/working"
-SCRIPT = os.path.join(ARCHIVE, "{script}")
+
+
+def find_archive():
+    """Return (path, how) for the mounted dataset, or (None, None).
+
+    Kaggle has been assumed to mount datasets at /kaggle/input/<dataset>; on
+    2026-10-09 it mounted this one at /kaggle/input/datasets/<user>/<dataset>
+    (ledger K3). Neither is assumed: both are tried in that order, then
+    /kaggle/input is walked in sorted order to depth 3 and the first
+    directory named exactly <dataset> is taken."""
+    c1 = os.path.join(BASE, DATASET)
+    if os.path.isdir(c1):
+        return c1, "candidate 1, /kaggle/input/<dataset>"
+    c2 = os.path.join(BASE, "datasets", USER, DATASET)
+    if os.path.isdir(c2):
+        return c2, "candidate 2, /kaggle/input/datasets/<user>/<dataset>"
+    if os.path.isdir(BASE):
+        for base, dirs, files in os.walk(BASE):
+            dirs.sort()
+            for d in dirs:
+                if d == DATASET:
+                    return (os.path.join(base, d),
+                            "candidate 3, first directory named <dataset> in a sorted "
+                            "walk of /kaggle/input to depth 3")
+            if base[len(BASE):].count(os.sep) >= 2:
+                dirs[:] = []
+    return None, None
+
 
 print("kgrun runner: job {job}")
 print("  python  ", sys.version.replace(chr(10), " "))
-print("  archive ", ARCHIVE)
+print("  dataset ", USER + "/" + DATASET)
 sys.stdout.flush()
-if not os.path.isdir(ARCHIVE):
-    print("kgrun runner: SETUP ERROR, archive not found at " + ARCHIVE)
-    print("  the dataset was expected to be mounted at that path; /kaggle/input holds:")
-    if not os.path.isdir("/kaggle/input"):
+ARCHIVE, HOW = find_archive()
+if ARCHIVE is None:
+    print("kgrun runner: SETUP ERROR, archive not found. Tried "
+          + os.path.join(BASE, DATASET) + ", then "
+          + os.path.join(BASE, "datasets", USER, DATASET) + ", then a walk of "
+          + BASE + " to depth 3 for a directory named " + DATASET)
+    print("  /kaggle/input holds:")
+    if not os.path.isdir(BASE):
         print("    (/kaggle/input does not exist)")
     else:
         shown = 0
-        for base, dirs, files in os.walk("/kaggle/input"):
+        for base, dirs, files in os.walk(BASE):
             dirs.sort()
-            if base[len("/kaggle/input"):].count(os.sep) >= 3:
+            if base[len(BASE):].count(os.sep) >= 3:
                 dirs[:] = []
             print("    " + base + "/   " + str(len(files)) + " file(s): "
                   + ", ".join(sorted(files)[:10]) + (" ..." if len(files) > 10 else ""))
@@ -121,6 +154,9 @@ if not os.path.isdir(ARCHIVE):
     print("kgrun runner: exit code 2")
     sys.stdout.flush()
     sys.exit(2)
+SCRIPT = os.path.join(ARCHIVE, "{script}")
+print("  archive ", ARCHIVE)
+print("  found by", HOW)
 print("  listing ", len(os.listdir(ARCHIVE)), "files in the mounted dataset")
 print("  script  ", SCRIPT)
 print("  args    ", {args!r})
@@ -206,9 +242,10 @@ def dataset_version(user, dataset, note, dry):
 def wait_ready(user, dataset, every, timeout, dry):
     """Poll "kaggle datasets status" until the dataset reports ready.
 
-    The first launch (runs/detcheck-kaggle-20261009-092908, ledger K1) pushed
-    the kernel while the new dataset was still being processed, and the
-    kernel found nothing at /kaggle/input/<dataset>. Ready means the last
+    This wait was added for K1 on a wrong diagnosis (processing delay); the
+    real cause of both failed launches was the mount path (ledger K3). It is
+    kept only as a guard against pushing a kernel against a version that is
+    genuinely still being processed. Ready means the last
     non-empty line of the status output is exactly "ready"; a last line
     containing "error" stops at once; anything else is polled again. On
     timeout the script stops and the kernel is NOT pushed."""
@@ -241,7 +278,7 @@ def wait_ready(user, dataset, every, timeout, dry):
 def write_kernel(user, dataset, job, script, args, dry):
     kid = "{}/cbo-{}".format(user, job)
     say("GENERATE KERNEL  {}".format(kid))
-    runner = RUNNER_TEMPLATE.format(dataset=dataset, script=script, job=job,
+    runner = RUNNER_TEMPLATE.format(user=user, dataset=dataset, script=script, job=job,
                                     args=args)
     meta = {
         "id": kid,
@@ -267,8 +304,10 @@ def write_kernel(user, dataset, job, script, args, dry):
         say("  wrote {}/run.py and kernel-metadata.json".format(PUSHDIR))
     say("  private {}  internet {}  gpu {}".format(
         meta["is_private"], meta["enable_internet"], meta["enable_gpu"]))
-    say("  runner will call: {} --archive /kaggle/input/{} --outdir /kaggle/working {}".format(
-        script, dataset, args))
+    say("  runner will search /kaggle/input/{0}, then /kaggle/input/datasets/{1}/{0}, "
+        "then a walk of /kaggle/input to depth 3".format(dataset, user))
+    say("  runner will call: {} --archive <found path> --outdir /kaggle/working {}".format(
+        script, args))
     return kid
 
 
