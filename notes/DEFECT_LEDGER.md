@@ -305,5 +305,4 @@ ENVIRONMENT.md. Kaggle: not run (G2).
   significant figures (-1.22556), so the smallest discrepancy the archive can
   resolve is 5e-6 (the tolerance printed for R1's slope in
   logs/detcheck-v2-full-repo.log), not 5e-7. The section now states the
-  script's rule as the operative criterion. CLOSED by the commit that adds
-  this entry.
+  script's rule as the operative criterion. CLOSED by acf1786.

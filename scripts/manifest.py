@@ -49,6 +49,22 @@ prints what it would do and the files that would be listed.
 Exit code 0 when every folder was either written or left alone for one of
 the reasons above, 1 if any write failed.
 
+USE AS A MODULE
+  kgrun.py imports write_manifest from this file, so a Kaggle run folder gets
+  a manifest that is byte-identical to the one this script writes for the
+  same folder. Importing this module has no side effects: it defines
+  constants and functions and does nothing else. The functions are:
+    list_files(folder)      -> (sorted relative paths, offending paths);
+                               reads the directory tree, hashes nothing
+    manifest_text(folder, files)
+                            -> the exact text of sha256.txt for those files
+    write_manifest(folder)  -> the list of lines written; raises
+                               ManifestRefused if the folder already has
+                               sha256.txt, has no files, or holds a symlink
+                               or non-regular file, in which case nothing is
+                               written. It raises OSError if a read or the
+                               write fails.
+
 HOW TO RUN (from the repository root)
     python scripts/manifest.py --dry-run
     python scripts/manifest.py
@@ -95,6 +111,38 @@ def list_files(folder):
             files.append(rel)
     files.sort()
     return files, bad
+
+
+class ManifestRefused(Exception):
+    """The folder is one write_manifest refuses to touch; nothing was written."""
+
+
+def manifest_text(folder, files):
+    """Hash each relative path in files (already sorted) and return the text
+    of sha256.txt: one "<sha256>  <path>" line per file, each ending in \\n."""
+    return "".join("{}  {}\n".format(sha256_of(os.path.join(folder, rel)), rel)
+                   for rel in files)
+
+
+def write_manifest(folder):
+    """Write folder/sha256.txt, opened with mode "x", and return its lines.
+
+    Every hash is computed before the file is opened, so a read error leaves
+    no partial manifest. Raises ManifestRefused, writing nothing, if the
+    folder already has sha256.txt, has no files, or contains a symbolic link
+    or anything that is not a regular file or directory."""
+    if os.path.lexists(os.path.join(folder, MANIFEST)):
+        raise ManifestRefused("has manifest, left alone")
+    files, bad = list_files(folder)
+    if bad:
+        raise ManifestRefused("not a regular file: " + ", ".join(
+            os.path.relpath(b, folder) for b in bad))
+    if not files:
+        raise ManifestRefused("empty, skipped")
+    text = manifest_text(folder, files)
+    with open(os.path.join(folder, MANIFEST), "x", newline="\n") as fh:
+        fh.write(text)
+    return text.splitlines()
 
 
 def main():
@@ -148,11 +196,8 @@ def main():
             counts["would write"] += 1
             continue
         try:
-            lines = ["{}  {}".format(sha256_of(os.path.join(folder, rel)), rel)
-                     for rel in files]
-            with open(os.path.join(folder, MANIFEST), "x", newline="\n") as fh:
-                fh.write("\n".join(lines) + "\n")
-        except (OSError, IOError) as e:
+            lines = write_manifest(folder)
+        except (ManifestRefused, OSError, IOError) as e:
             print("{:<44} FAILED: {}".format(name, e))
             counts["failed"] += 1
             continue

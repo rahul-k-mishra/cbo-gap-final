@@ -18,7 +18,9 @@ This script is the only thing that talks to Kaggle. It:
   4. pushes the kernel, which starts a batch run;
   5. polls until it finishes;
   6. downloads its output into a NEW runs/<job>-kaggle-<timestamp>/ folder and
-     writes a sha256 manifest of what came back.
+     writes sha256.txt for what came back, through write_manifest from
+     scripts/manifest.py, so it is byte-identical to the manifest
+     manifest.py would write for the same folder.
 
 The notebook on Kaggle is generated from the script in this repository on
 every push, so there is never a second copy of the code to drift. Never edit
@@ -57,18 +59,22 @@ SHARDING
   because every seed is derived from a SeedSequence keyed by the cell rather
   than by position in the task list.
 
-Python 3.8 to 3.11 syntax. Standard library only.
+Python 3.8 to 3.11 syntax. Standard library only, plus scripts/manifest.py
+(itself standard library only), imported from this script's directory.
 """
 
 import argparse
 import datetime
-import hashlib
 import json
 import os
 import shutil
 import subprocess
 import sys
 import time
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from manifest import ManifestRefused, write_manifest  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ARCHIVE = os.path.join(ROOT, "zenodo-v1")
@@ -126,14 +132,6 @@ def run_cmd(cmd, dry, check=True, capture=False):
     if check and rc != 0:
         raise SystemExit("command failed with code {}".format(rc))
     return ""
-
-
-def sha256_of(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as fh:
-        for chunk in iter(lambda: fh.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
 
 
 def build_bundle(user, dataset, dry):
@@ -253,16 +251,10 @@ def fetch(kid, job, dry):
     run_cmd(["kaggle", "kernels", "output", kid, "-p", outdir], dry)
     if dry:
         return outdir
-    lines = []
-    for base, _, files in os.walk(outdir):
-        for f in sorted(files):
-            p = os.path.join(base, f)
-            if f == "sha256.txt":
-                continue
-            lines.append("{}  {}".format(sha256_of(p),
-                                         os.path.relpath(p, outdir)))
-    with open(os.path.join(outdir, "sha256.txt"), "x") as fh:
-        fh.write("\n".join(lines) + "\n")
+    try:
+        lines = write_manifest(outdir)
+    except ManifestRefused as e:
+        raise SystemExit("no manifest written in {}: {}".format(outdir, e))
     say("  {} files, manifest written to sha256.txt".format(len(lines)))
     for ln in lines:
         say("    " + ln)

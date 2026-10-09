@@ -177,7 +177,11 @@ experiment. Everything in this file is non-negotiable.
    Write the script into scripts/.
 3. Give the ordered command sequence, working directory first. Stop. Wait for
    the pasted console output.
-4. The output goes under runs/<run-id>/ or logs/ with its sha256.
+4. The output goes under runs/<run-id>/, and scripts/manifest.py writes
+   its sha256.txt (for a Kaggle run, kgrun.py fetch writes it through the
+   same function). Only run folders under runs/ get sha256.txt. Console
+   logs go in logs/, are tracked in git, are never overwritten (the shell
+   runs with set -o noclobber) and carry no separate manifest.
 5. Only then write text, with every number copied from the log, never from
    memory, and every change verified by the baseline diff of rule 8.
 6. Commit with a message naming the ledger item and the log or run folder.
