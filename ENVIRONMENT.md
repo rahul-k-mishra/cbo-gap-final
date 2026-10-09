@@ -24,16 +24,29 @@ Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/cbo-archiv
 
 ## Kaggle CPU session, recorded 2026-10-09
 
-From runs/detcheck-kaggle-20261009-092908/cbo-detcheck.log, the first launch,
-which failed before any script ran (ledger K1):
+From runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log, the third launch
+(kernel version 3), copied from the runner and detcheck headers:
 
 ```
   python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]
+  numpy    2.1.3
+  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4
+  workers  4   tasks R1,R2,R3
+  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive
+  found by candidate 2, /kaggle/input/datasets/<user>/<dataset>
 ```
 
-NumPy: unknown; no script has executed on Kaggle yet.
-Cores: 4 requested (Rahul; CLAUDE.md: a Kaggle CPU session has 4 cores). The
-log shows neither the core count nor the worker flag, because the runner
-stopped before printing its arguments.
+The mount path was discovered by the runner, not assumed (ledger K3). The
+two earlier launches failed before any script ran (ledger K1, K3).
 
-Determinism gate (scripts/detcheck.py, D1-D3): NOT RUN.
+Determinism gate (scripts/detcheck.py, D1-D3), archive /kaggle/input/datasets/ericsom/cbo-gap-archive, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log
+
+Measured in that run (4-worker pass, each realization in its own worker):
+
+```
+  pass 1: 4 worker(s)   wall 29.9 s
+  R1  wall 2.7 s    peak RSS of its worker 42 MB
+  R2  wall 16.3 s   peak RSS of its worker 180 MB
+  R3  wall 29.7 s   peak RSS of its worker 330 MB
+  pass 2: 1 worker, for D3   wall 46.4 s
+```

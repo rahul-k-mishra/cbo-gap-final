@@ -1,0 +1,7 @@
+N,tau0,worst_max_rel_dev,cells_sufficient,cells,cells_C4_unreliable
+4000,0.5,0.0553519,3,4,0
+4000,0.01,0.869536,0,4,2
+16000,0.5,0.0404716,4,4,0
+16000,0.01,0.819434,0,4,2
+
+N_star,NONE IN SWEEP

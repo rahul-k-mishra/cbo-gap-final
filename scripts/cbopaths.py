@@ -32,8 +32,9 @@ Worked example. With argv ["detcheck.py", "--workers", "2", "--archive",
   archive_path(root) -> "/home/rahul/cbo-archive-test"
   output_root(root)  -> "/home/rahul/Research/cbo-gap-final/runs"
 With argv ["calprec.py", "--outdir=/kaggle/working"] and CBOGAP_ARCHIVE set to
-"/kaggle/input/cbo-gap-archive":
-  archive_path(root) -> "/kaggle/input/cbo-gap-archive"
+"/kaggle/input/datasets/ericsom/cbo-gap-archive" (the Kaggle mount path the
+kgrun runner found on 2026-10-09):
+  archive_path(root) -> "/kaggle/input/datasets/ericsom/cbo-gap-archive"
   output_root(root)  -> "/kaggle/working"
 
 WHAT IT DELIBERATELY DOES NOT DO

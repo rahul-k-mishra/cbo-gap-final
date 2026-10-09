@@ -1,0 +1,7 @@
+objective,d,tau0,seed,wall_s,peak_rss_mb,beta,achieved_frac,slope
+ackley,2,0.1,90000000,4.707,42.2,1.097928513,0.1,-1.42518
+ackley,40,0.1,90000001,37.139,150.7,4.026078185,0.1,-0.865279
+rosenbrock,2,0.1,90000002,3.759,43.0,0.2850606583,0.1,-0.896597
+rosenbrock,40,0.1,90000003,27.529,168.5,0.0002809704514,0.1,-1.01153
+
+grid,cells,realizations,core_seconds,workers,projected_seconds

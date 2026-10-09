@@ -111,8 +111,10 @@ HOW TO RUN (from the repository root, venv active)
 archive the dynamics are imported from; --outdir PATH (else CBOGAP_OUTDIR,
 else <repo>/runs) names the directory the run folder is created in. Both
 are resolved by scripts/cbopaths.py, with the same semantics as detcheck.py;
-a missing archive is a setup error (exit code 2). On Kaggle:
-    python calprec.py --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+a missing archive is a setup error (exit code 2). On Kaggle the kgrun
+runner discovers the mount path rather than assuming it (on 2026-10-09:
+/kaggle/input/datasets/ericsom/cbo-gap-archive) and calls, for example:
+    python calprec.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working
 Writes <outdir>/calprec-<timestamp>/ (default runs/calprec-<timestamp>/)
 with two CSVs, opened with mode "x".
 Exit code 0 if an N_star exists under C1, 1 if no level in the sweep
@@ -263,7 +265,8 @@ def main():
     p.add_argument("--laws", default=",".join(LAWS))
     p.add_argument("--archive", default=None,
                    help="path to the deposited archive; default <repo>/zenodo-v1, "
-                        "or CBOGAP_ARCHIVE. On Kaggle: /kaggle/input/<dataset>")
+                        "or CBOGAP_ARCHIVE. On Kaggle: the path the kgrun runner finds "
+                        "(2026-10-09: /kaggle/input/datasets/<user>/<dataset>)")
     p.add_argument("--outdir", default=None,
                    help="directory to create the run folder in; default <repo>/runs, "
                         "or CBOGAP_OUTDIR. On Kaggle: /kaggle/working")

@@ -1,0 +1,105 @@
+[{"stream_name":"stdout","time":0.693537124,"data":"kgrun runner: job detcheck\n"}
+,{"stream_name":"stdout","time":0.693708145,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.693720523,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.69372463,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.693728495,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.701553765,"data":"  listing  31 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.701585785,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/detcheck.py\n"}
+,{"stream_name":"stdout","time":0.701590642,"data":"  args     --workers 4 --tasks R1,R2,R3\n"}
+,{"stream_name":"stdout","time":0.701594555,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/detcheck.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --tasks R1,R2,R3\n"}
+,{"stream_name":"stdout","time":1.332603612,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":1.332635918,"data":"CBO-GAP detcheck -- determinism gate for this machine\n"}
+,{"stream_name":"stdout","time":1.332640018,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":1.3326428,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.3326455689999999,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":1.33264802,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4\n"}
+,{"stream_name":"stdout","time":1.332650765,"data":"  workers  4   tasks R1,R2,R3\n"}
+,{"stream_name":"stdout","time":1.332653198,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.33265558,"data":"    sha256 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py\n"}
+,{"stream_name":"stdout","time":1.332657987,"data":"    sha256 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py\n"}
+,{"stream_name":"stdout","time":1.332660352,"data":"    sha256 5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py\n"}
+,{"stream_name":"stdout","time":1.332662804,"data":"    sha256 47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv\n"}
+,{"stream_name":"stdout","time":1.332665511,"data":"    sha256 cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv\n"}
+,{"stream_name":"stdout","time":1.332667963,"data":"  parameters: lam 1.0  sigma(exactcal) 0.2  dt 0.01  K 100  T 1.0  Jinf 50000\n"}
+,{"stream_name":"stdout","time":1.332670351,"data":"  J grid    : [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]\n"}
+,{"stream_name":"stdout","time":1.332672817,"data":"  tolerance : half a unit in the last archived digit, per quantity\n"}
+,{"stream_name":"stdout","time":1.332702144,"data":"  run folder: /kaggle/working/detcheck-20261009-041647\n"}
+,{"stream_name":"stdout","time":1.332709065,"data":"\n"}
+,{"stream_name":"stdout","time":1.332712597,"data":"  R1  exactcal_real.csv line 2: ackley d=2 centred tau0=0.5 seed=20261707\n"}
+,{"stream_name":"stdout","time":1.332716617,"data":"  R2  exactcal_real.csv line 272: ackley d=40 centred tau0=0.5 seed=20266685\n"}
+,{"stream_name":"stdout","time":1.332720909,"data":"  R3  rmapj_real.csv line 290: isotropic ackley d=80 r=0.75 tau0=0.1 rep=0 seed=20261118\n"}
+,{"stream_name":"stdout","time":1.332735211,"data":"\n"}
+,{"stream_name":"stdout","time":1.332737619,"data":"----------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.3327400759999999,"data":"pass 1: 4 worker(s)\n"}
+,{"stream_name":"stdout","time":1.332742382,"data":"----------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":31.17352237,"data":"  wall 29.9 s\n"}
+,{"stream_name":"stdout","time":31.173560053,"data":"\n"}
+,{"stream_name":"stdout","time":31.173565387,"data":"  R1  wall 2.7 s   peak RSS of its worker 42 MB   X0[0,:3] = ['-1.4281120557073483', '0.24191103292720531']\n"}
+,{"stream_name":"stdout","time":31.173569952,"data":"  quantity                 archived                 computed      absdiff        tol  ok\n"}
+,{"stream_name":"stdout","time":31.173574045,"data":"  beta                 0.5397402043       0.5397402043261758    2.618e-11    5.0e-11  PASS\n"}
+,{"stream_name":"stdout","time":31.173578042,"data":"  achieved_frac                 0.5       0.4999999999999991    8.882e-16    5.0e-02  PASS\n"}
+,{"stream_name":"stdout","time":31.173582208,"data":"  log_ess_0                 10.1266       10.126631103850336    3.110e-05    5.0e-05  PASS\n"}
+,{"stream_name":"stdout","time":31.173585954,"data":"  log_ess_min               10.1266       10.126631103850336    3.110e-05    5.0e-05  PASS\n"}
+,{"stream_name":"stdout","time":31.173589975,"data":"  slope                    -1.22556      -1.2255586418072948    1.358e-06    5.0e-06  PASS\n"}
+,{"stream_name":"stdout","time":31.173593021,"data":"  E_10                  0.056786325      0.05678632541036248    4.104e-10    5.0e-10  PASS\n"}
+,{"stream_name":"stdout","time":31.173595504,"data":"  E_20                 0.0019362834    0.0019362833885807347    1.142e-11    5.0e-11  PASS\n"}
+,{"stream_name":"stdout","time":31.173598057,"data":"  E_40                 0.0015084385    0.0015084384939232872    6.077e-12    5.0e-11  PASS\n"}
+,{"stream_name":"stdout","time":31.173600504,"data":"  E_80                 0.0002997718    0.0002997717987186739    1.281e-12    5.0e-11  PASS\n"}
+,{"stream_name":"stdout","time":31.173603032,"data":"  E_160                5.398521e-05   5.3985210120103024e-05    1.201e-13    5.0e-12  PASS\n"}
+,{"stream_name":"stdout","time":31.173605645,"data":"  E_320               0.00094587002    0.0009458700221344426    2.134e-12    5.0e-12  PASS\n"}
+,{"stream_name":"stdout","time":31.173608374,"data":"  E_640               0.00055601548    0.0005560154804581378    4.581e-13    5.0e-12  PASS\n"}
+,{"stream_name":"stdout","time":31.173610923,"data":"  E_1280               3.921463e-05   3.9214629994301865e-05    5.698e-15    5.0e-12  PASS\n"}
+,{"stream_name":"stdout","time":31.173613349,"data":"  E_2560              2.3936545e-06    2.393654516157209e-06    1.616e-14    5.0e-14  PASS\n"}
+,{"stream_name":"stdout","time":31.173615781,"data":"  E_5000              8.3003762e-06    8.300376209856806e-06    9.857e-15    5.0e-14  PASS\n"}
+,{"stream_name":"stdout","time":31.173618341,"data":"\n"}
+,{"stream_name":"stdout","time":31.173620644,"data":"  R2  wall 16.3 s   peak RSS of its worker 180 MB   X0[0,:3] = ['-0.98749316877196791', '0.86715191229466038', '2.0484022936847803']\n"}
+,{"stream_name":"stdout","time":31.173623243,"data":"  quantity                 archived                 computed      absdiff        tol  ok\n"}
+,{"stream_name":"stdout","time":31.173625666,"data":"  beta                  2.228681798       2.2286817981751126    1.751e-10    5.0e-10  PASS\n"}
+,{"stream_name":"stdout","time":31.173628042,"data":"  achieved_frac                 0.5       0.5000000000000009    8.882e-16    5.0e-02  PASS\n"}
+,{"stream_name":"stdout","time":31.173642106,"data":"  log_ess_0                 10.1266        10.12663110385034    3.110e-05    5.0e-05  PASS\n"}
+,{"stream_name":"stdout","time":31.173646058,"data":"  log_ess_min               9.60706        9.607061755739522    1.756e-06    5.0e-06  PASS\n"}
+,{"stream_name":"stdout","time":31.173649614,"data":"  slope                   -0.999254      -0.9992543458825525    3.459e-07    5.0e-07  PASS\n"}
+,{"stream_name":"stdout","time":31.173653501,"data":"  E_10                    3.2267505        3.226750455750236    4.425e-08    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.173657164,"data":"  E_20                    1.9298099       1.9298098876242655    1.238e-08    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.17366075,"data":"  E_40                    1.0433405       1.0433404798534807    2.015e-08    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.173664541,"data":"  E_80                   0.66432044       0.6643204357192876    4.281e-09    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173668368,"data":"  E_160                  0.25978374       0.2597837351085813    4.891e-09    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173671836,"data":"  E_320                  0.14435644      0.14435643538207676    4.618e-09    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173717206,"data":"  E_640                 0.057775368      0.05777536802653249    2.653e-11    5.0e-10  PASS\n"}
+,{"stream_name":"stdout","time":31.173722617,"data":"  E_1280                 0.03418393      0.03418392999575964    4.240e-12    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173726505,"data":"  E_2560                 0.01331903     0.013319030176552824    1.766e-10    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173730502,"data":"  E_5000                0.007792121     0.007792120954739502    4.526e-11    5.0e-10  PASS\n"}
+,{"stream_name":"stdout","time":31.17373441,"data":"\n"}
+,{"stream_name":"stdout","time":31.173738063,"data":"  R3  wall 29.7 s   peak RSS of its worker 330 MB   X0[0,:3] = ['-2.5749770988199834', '-0.50198172192819102', '0.062408732966357329']\n"}
+,{"stream_name":"stdout","time":31.173742129,"data":"  quantity                 archived                 computed      absdiff        tol  ok\n"}
+,{"stream_name":"stdout","time":31.173745954,"data":"  beta                      5.84859        5.848585783055567    4.217e-06    5.0e-06  PASS\n"}
+,{"stream_name":"stdout","time":31.173749996,"data":"  sigma                    0.136931      0.13693063937629152    3.606e-07    5.0e-07  PASS\n"}
+,{"stream_name":"stdout","time":31.173753928,"data":"  slope                   -0.897987      -0.8979867504318089    2.496e-07    5.0e-07  PASS\n"}
+,{"stream_name":"stdout","time":31.173757783,"data":"  E_10                     12.57505       12.575050092246027    9.225e-08    5.0e-06  PASS\n"}
+,{"stream_name":"stdout","time":31.173761694,"data":"  E_20                     6.492959        6.492958972126402    2.787e-08    5.0e-07  PASS\n"}
+,{"stream_name":"stdout","time":31.173765582,"data":"  E_40                    3.9512728         3.95127278989449    1.011e-08    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.173769442,"data":"  E_80                    3.1151694       3.1151693791451374    2.085e-08    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.173774289,"data":"  E_160                   1.4259929       1.4259929000395626    3.956e-11    5.0e-08  PASS\n"}
+,{"stream_name":"stdout","time":31.173778202,"data":"  E_320                  0.83048212       0.8304821245117932    4.512e-09    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173782351,"data":"  E_640                  0.38010039       0.3801003896462483    3.538e-10    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.17379241,"data":"  E_1280                 0.19323974       0.1932397356167852    4.383e-09    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173795118,"data":"  E_2560                 0.08436855      0.08436855029574018    2.957e-10    5.0e-09  PASS\n"}
+,{"stream_name":"stdout","time":31.173797609,"data":"  E_5000                0.047664753     0.047664752541188384    4.588e-10    5.0e-10  PASS\n"}
+,{"stream_name":"stdout","time":31.173800025,"data":"\n"}
+,{"stream_name":"stdout","time":31.173802276,"data":"----------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":31.173804692,"data":"pass 2: 1 worker, for D3 (bitwise identity of every quantity)\n"}
+,{"stream_name":"stdout","time":31.173807059,"data":"----------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":77.600179757,"data":"  wall 46.4 s\n"}
+,{"stream_name":"stdout","time":77.600219487,"data":"\n"}
+,{"stream_name":"stdout","time":77.600225144,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":77.600230209,"data":"VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS\n"}
+,{"stream_name":"stdout","time":77.600234858,"data":"results   /kaggle/working/detcheck-20261009-041647/detcheck_results.csv\n"}
+,{"stream_name":"stdout","time":77.600239538,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":77.641365736,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":80.277560538,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":80.277599401,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":80.642746858,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":80.642774626,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":82.307967101,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":83.448773634,"data":"[NbConvertApp] Writing 287055 bytes to __results__.html\n"}
+]

@@ -57,8 +57,10 @@ WHAT IT DOES NOT DO
 HOW TO RUN (from the repository root, venv active)
     python scripts/detcheck.py --workers 2 > logs/detcheck-$(date +%Y%m%d-%H%M).log 2>&1
     python scripts/detcheck.py --workers 2 --tasks R1        (about a minute: smoke)
-On Kaggle, where the archive is mounted read-only and output goes to working:
-    python detcheck.py --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+On Kaggle the archive is mounted read-only at a path the kgrun runner
+discovers rather than assumes (on 2026-10-09: /kaggle/input/datasets/ericsom/cbo-gap-archive),
+and output goes to /kaggle/working. The runner then calls, for example:
+    python detcheck.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working
 The gate is PER PLATFORM. A pass on one machine says nothing about another,
 so it runs first on every new machine before any number from that machine is
 compared with an archived one.
@@ -222,7 +224,8 @@ def main():
     p.add_argument("--tasks", default="R1,R2,R3")
     p.add_argument("--archive", default=None,
                    help="path to the deposited archive; default <repo>/zenodo-v1, "
-                        "or CBOGAP_ARCHIVE. On Kaggle: /kaggle/input/<dataset>")
+                        "or CBOGAP_ARCHIVE. On Kaggle: the path the kgrun runner finds "
+                        "(2026-10-09: /kaggle/input/datasets/<user>/<dataset>)")
     p.add_argument("--outdir", default=None,
                    help="directory to create the run folder in; default <repo>/runs, "
                         "or CBOGAP_OUTDIR. On Kaggle: /kaggle/working")

@@ -216,7 +216,11 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     Secrets. Every kaggle command is an ask rule: the user approves each push
     in the moment.
 
-15. On Kaggle the archive is mounted read-only at /kaggle/input/<dataset> and
+15. On Kaggle the archive is mounted read-only under /kaggle/input, at a
+    path the kgrun runner discovers rather than assumes (it tries
+    /kaggle/input/<dataset>, then /kaggle/input/datasets/<user>/<dataset>,
+    then a walk of /kaggle/input; on 2026-10-09 Kaggle used the second,
+    /kaggle/input/datasets/ericsom/cbo-gap-archive; ledger K3), and
     output goes to /kaggle/working. Scripts take both as flags, --archive and
     --outdir, so one file runs unchanged on both machines. Never hard-code
     either path, and never copy the archive into /kaggle/working to work

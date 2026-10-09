@@ -48,9 +48,13 @@ exists, so a console log is never overwritten.
 detcheck.py, calprec.py and costprobe.py take --archive (default zenodo-v1
 in this repository) and --outdir (default runs/), resolved by
 scripts/cbopaths.py, so the same file runs unchanged with the archive
-somewhere else, for example on Kaggle:
+somewhere else. On Kaggle the runner that kgrun.py generates discovers the
+mount path rather than assuming it: it tries /kaggle/input/<dataset>, then
+/kaggle/input/datasets/<user>/<dataset>, then a walk of /kaggle/input. On
+2026-10-09 Kaggle mounted the dataset at the second of these, so the runner
+called, for example:
 
-    python scripts/detcheck.py --workers 4 --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+    python detcheck.py --workers 4 --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working
 
 After every run, scripts/manifest.py writes sha256.txt into each run folder
 under runs/ that does not have one yet. It never touches a folder that

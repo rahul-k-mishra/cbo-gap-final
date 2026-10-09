@@ -270,7 +270,9 @@ platform is compared with an archived number.
 Status (2026-10-09). Linux box: PASS, tasks R1,R2,R3, with the repository
 archive (logs/detcheck-v2-full-repo.log) and with the archive in a separate
 read-only directory (logs/detcheck-v2-full-separate.log); recorded in
-ENVIRONMENT.md. Kaggle: not run (G2).
+ENVIRONMENT.md. Kaggle: PASS, tasks R1,R2,R3, workers 4, NumPy 2.1.3
+(runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log); recorded in
+ENVIRONMENT.md (G2 closed).
 
 ## Repository defects
 
@@ -289,6 +291,10 @@ ENVIRONMENT.md. Kaggle: not run (G2).
   no number from a Kaggle run may be compared with an archived number until
   detcheck passes D1-D3 on Kaggle and the verdict is recorded in
   ENVIRONMENT.md with its log path. OPEN until that Kaggle log exists.
+  CLOSED 2026-10-09: detcheck passed D1-D3 on Kaggle, tasks R1,R2,R3,
+  workers 4 (runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log:
+  "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS"); recorded in the
+  Kaggle section of ENVIRONMENT.md.
 - G3 (repo, gate criteria). Until 2026-10-09 the section "Determinism gate"
   above carried, as if pre-registered, a draft criterion: D1 X0 and beta to
   full double precision, D2 E_J to relative 5e-8 and the slope to 5e-7
@@ -354,3 +360,29 @@ ENVIRONMENT.md. Kaggle: not run (G2).
   as --archive. If none matches, it lists /kaggle/input and exits 2. CLOSED
   by the commit that adds this entry, pending a Kaggle launch that finds the
   archive.
+  CLOSED 2026-10-09 by 4c9824c, confirmed: the third launch
+  (runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log) printed
+  "found by candidate 2, /kaggle/input/datasets/<user>/<dataset>" and ran
+  detcheck against /kaggle/input/datasets/ericsom/cbo-gap-archive.
+- K4 (Kaggle, cross-platform facts; record, not a defect). Established by
+  runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log, compared line by
+  line with logs/detcheck-v2-full-repo.log, logs/detcheck-v2-full-separate.log,
+  logs/detcheck-v3-full-repo.log and logs/detcheck-v3-full-separate.log:
+  (a) Archive bytes. The five archive sha256 lines (exactcal.py,
+      regimemap.py, rmapj.py, exactcal_real.csv, rmapj_real.csv) are
+      identical in the Kaggle log and all four local logs, and equal the
+      corresponding entries of zenodo-v1.sha256. The archive Kaggle mounted
+      is byte-identical to the deposit for every file the gate reads.
+  (b) Random stream. The printed X0[0,:3] of R1, R2 and R3 is identical, to
+      every printed digit, on the laptop (NumPy 2.5.3) and on Kaggle (NumPy
+      2.1.3). That is two platforms, not three: the archive did not store
+      X0, so the Windows 7 platform that produced it has no X0 to compare
+      (detcheck docstring; ledger "Determinism gate").
+  (c) Reproduction across NumPy versions. The archived values were produced
+      with NumPy 1.24.4 (CLAUDE.md rule 7). They are reproduced within the
+      gate's tolerance (half a unit in the last stored digit) with NumPy
+      2.5.3 on the laptop and NumPy 2.1.3 on Kaggle. The gate itself was not
+      run on the archive's platform; the archive is the reference it checks
+      against.
+  Consequence: under CLAUDE.md rules 7 and 16, numbers from either platform
+  may be compared with archived numbers.
