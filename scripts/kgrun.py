@@ -12,7 +12,9 @@ This script is the only thing that talks to Kaggle. It:
   1. assembles the upload bundle: the archived scripts from zenodo-v1, the two
      per-realization CSVs the determinism gate needs, and the round-2 scripts
      from scripts/;
-  2. creates the dataset the first time, versions it afterwards;
+  2. creates the dataset the first time, versions it afterwards, and waits
+     until "kaggle datasets status" reports ready (--ready-poll, default 30 s;
+     --ready-timeout, default 1800 s; on timeout nothing is pushed);
   3. generates the Kaggle runner (a short script that calls one of our scripts
      with the flags you name) and its kernel-metadata.json;
   4. pushes the kernel, which starts a batch run;
@@ -98,6 +100,27 @@ SCRIPT = os.path.join(ARCHIVE, "{script}")
 print("kgrun runner: job {job}")
 print("  python  ", sys.version.replace(chr(10), " "))
 print("  archive ", ARCHIVE)
+sys.stdout.flush()
+if not os.path.isdir(ARCHIVE):
+    print("kgrun runner: SETUP ERROR, archive not found at " + ARCHIVE)
+    print("  the dataset was expected to be mounted at that path; /kaggle/input holds:")
+    if not os.path.isdir("/kaggle/input"):
+        print("    (/kaggle/input does not exist)")
+    else:
+        shown = 0
+        for base, dirs, files in os.walk("/kaggle/input"):
+            dirs.sort()
+            if base[len("/kaggle/input"):].count(os.sep) >= 3:
+                dirs[:] = []
+            print("    " + base + "/   " + str(len(files)) + " file(s): "
+                  + ", ".join(sorted(files)[:10]) + (" ..." if len(files) > 10 else ""))
+            shown += 1
+            if shown >= 50:
+                print("    (listing stopped after 50 directories)")
+                break
+    print("kgrun runner: exit code 2")
+    sys.stdout.flush()
+    sys.exit(2)
 print("  listing ", len(os.listdir(ARCHIVE)), "files in the mounted dataset")
 print("  script  ", SCRIPT)
 print("  args    ", {args!r})
@@ -178,6 +201,41 @@ def dataset_version(user, dataset, note, dry):
     say("VERSION DATASET")
     run_cmd(["kaggle", "datasets", "version", "-p", BUNDLE, "-m", note,
              "-r", "skip"], dry)
+
+
+def wait_ready(user, dataset, every, timeout, dry):
+    """Poll "kaggle datasets status" until the dataset reports ready.
+
+    The first launch (runs/detcheck-kaggle-20261009-092908, ledger K1) pushed
+    the kernel while the new dataset was still being processed, and the
+    kernel found nothing at /kaggle/input/<dataset>. Ready means the last
+    non-empty line of the status output is exactly "ready"; a last line
+    containing "error" stops at once; anything else is polled again. On
+    timeout the script stops and the kernel is NOT pushed."""
+    did = "{}/{}".format(user, dataset)
+    say("WAIT FOR DATASET READY  {}  (every {} s, timeout {} s)".format(did, every, timeout))
+    if dry:
+        say("  $ kaggle datasets status {}".format(did))
+        say("  (dry run: would poll until it reports ready; not polling)")
+        return
+    t0 = time.time()
+    while True:
+        out = run_cmd(["kaggle", "datasets", "status", did], False, check=False,
+                      capture=True)
+        lines = [ln.strip().lower() for ln in out.splitlines() if ln.strip()]
+        last = lines[-1] if lines else ""
+        elapsed = time.time() - t0
+        say("  {:.0f} s: status {!r}".format(elapsed, last))
+        if last == "ready":
+            return
+        if "error" in last:
+            raise SystemExit("dataset {} reports {!r}; kernel NOT pushed".format(did, last))
+        if elapsed >= timeout:
+            raise SystemExit("dataset {} not ready after {:.0f} s; kernel NOT pushed. "
+                             "Check it with: kaggle datasets status {} ; when it reports "
+                             "ready, run: python scripts/kgrun.py push --job <job> ..."
+                             .format(did, elapsed, did))
+        time.sleep(every)
 
 
 def write_kernel(user, dataset, job, script, args, dry):
@@ -275,6 +333,10 @@ def main():
     p.add_argument("--dataset", default=DEFAULT_DATASET)
     p.add_argument("--note", default=None, help="dataset version message")
     p.add_argument("--poll", type=int, default=60, help="seconds between polls")
+    p.add_argument("--ready-poll", type=int, default=30,
+                   help="seconds between dataset status polls after create/version")
+    p.add_argument("--ready-timeout", type=int, default=1800,
+                   help="seconds to wait for the dataset to report ready before giving up")
     p.add_argument("--first", action="store_true",
                    help="create the dataset instead of versioning it")
     p.add_argument("--dry-run", action="store_true")
@@ -297,9 +359,11 @@ def main():
     elif a.action == "dataset-create":
         build_bundle(a.user, a.dataset, dry)
         dataset_create(a.user, a.dataset, dry)
+        wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
     elif a.action == "dataset-version":
         build_bundle(a.user, a.dataset, dry)
         dataset_version(a.user, a.dataset, note, dry)
+        wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
     elif a.action == "push":
         write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry)
         push(kid, dry)
@@ -313,6 +377,7 @@ def main():
             dataset_create(a.user, a.dataset, dry)
         else:
             dataset_version(a.user, a.dataset, note, dry)
+        wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
         write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry)
         push(kid, dry)
         verdict = poll(kid, a.poll, dry)

@@ -1,0 +1,15 @@
+[{"stream_name":"stdout","time":0.909001346,"data":"kgrun runner: job detcheck\n"}
+,{"stream_name":"stdout","time":0.909266465,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.909274127,"data":"  archive  /kaggle/input/cbo-gap-archive\n"}
+,{"stream_name":"stderr","time":0.912888845,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":0.915318436,"data":"  File \"/kaggle/src/script.py\", line 13, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":0.915364909,"data":"    print(\"  listing \", len(os.listdir(ARCHIVE)), \"files in the mounted dataset\")\n"}
+,{"stream_name":"stderr","time":0.915372211,"data":"                            ~~~~~~~~~~^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":0.915377336,"data":"FileNotFoundError: [Errno 2] No such file or directory: '/kaggle/input/cbo-gap-archive'\n"}
+,{"stream_name":"stderr","time":4.310321652,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4.310373741,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4.801524807,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4.8015625570000005,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6.950025467,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":8.433427482,"data":"[NbConvertApp] Writing 276559 bytes to __results__.html\n"}
+]

@@ -306,3 +306,20 @@ ENVIRONMENT.md. Kaggle: not run (G2).
   resolve is 5e-6 (the tolerance printed for R1's slope in
   logs/detcheck-v2-full-repo.log), not 5e-7. The section now states the
   script's rule as the operative criterion. CLOSED by acf1786.
+- K1 (Kaggle, launch). The first Kaggle launch failed before detcheck ran.
+  Log: runs/detcheck-kaggle-20261009-092908/cbo-detcheck.log. The runner
+  printed its header (python 3.13.15) and then raised FileNotFoundError on
+  /kaggle/input/cbo-gap-archive at its os.listdir line, 0.92 s into the run.
+  Stated by Rahul, from the kgrun console, which is not in the repository:
+  kgrun pushed the kernel immediately after "Your private Dataset is being
+  created", the kernel errored 66 s later, and kaggle datasets status
+  ericsom/cbo-gap-archive later reported ready, with kaggle datasets files
+  listing the uploaded files. Cause: the kernel was pushed before the
+  dataset finished processing, so there was nothing to mount. Fix:
+  kgrun.py now waits after dataset-create or dataset-version until
+  "kaggle datasets status" reports ready (--ready-poll 30 s,
+  --ready-timeout 1800 s; on timeout it does not push). The generated
+  runner now lists /kaggle/input and exits 2 if the archive path is
+  missing. Kaggle's Python is 3.13.15; its NumPy version is unknown,
+  because no script has executed there. CLOSED by the commit that adds this
+  entry; the Kaggle gate itself stays open under G2.

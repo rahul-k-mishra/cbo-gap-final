@@ -21,3 +21,19 @@ Swap:           3789           0        3789
 
 Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/Research/cbo-gap-final/zenodo-v1, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-repo.log
 Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/cbo-archive-test, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-separate.log
+
+## Kaggle CPU session, recorded 2026-10-09
+
+From runs/detcheck-kaggle-20261009-092908/cbo-detcheck.log, the first launch,
+which failed before any script ran (ledger K1):
+
+```
+  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]
+```
+
+NumPy: unknown; no script has executed on Kaggle yet.
+Cores: 4 requested (Rahul; CLAUDE.md: a Kaggle CPU session has 4 cores). The
+log shows neither the core count nor the worker flag, because the runner
+stopped before printing its arguments.
+
+Determinism gate (scripts/detcheck.py, D1-D3): NOT RUN.
