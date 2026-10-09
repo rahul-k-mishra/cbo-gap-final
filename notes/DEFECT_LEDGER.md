@@ -243,3 +243,13 @@ double precision; D2, all ten E_J match the archived %.8g values to relative
 byte-identical output. PASS requires all three realizations to pass D1-D3.
 Until PASS is recorded in ENVIRONMENT.md, no number from this machine is
 compared with an archived number.
+
+## Repository defects
+
+- G1 (repo, history). Commit 7f5e257 ("Kaggle pipeline: kgrun driver,
+  detcheck archive/outdir flags, ...") has a message naming the detcheck
+  --archive and --outdir flags, but scripts/detcheck.py in that commit's tree
+  contains neither (zero occurrences of --archive). The flags landed in the
+  following commit, e945d17, which contains scripts/detcheck.py alone. History
+  is not rewritten: 7f5e257 is pushed and stays as it is, and this entry is
+  the record. CLOSED by e945d17.

@@ -239,3 +239,12 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
 
 20. .kaggle-bundle/ and .kaggle-push/ are scratch, rebuilt on every call, and
     are in .gitignore. Never edit them by hand and never commit them.
+
+## Division of labour
+
+21. Claude writes files, commits and pushes. Claude does not execute
+    scripts, gates, experiments or kgrun. Every run is performed by Rahul on
+    his machine, and he pastes the console output back. When a task needs a
+    result Claude does not have, Claude writes the script and the exact
+    command sequence for him to run, then stops and waits. Never record a
+    result that was not received from him.
