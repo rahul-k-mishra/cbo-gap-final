@@ -37,4 +37,22 @@ existing output. Run from the repository root with the venv active, for example:
     cd /home/rahul/Research/cbo-gap-final
     . .venv/bin/activate
     export PYTHONDONTWRITEBYTECODE=1
+    set -o noclobber
     python scripts/detcheck.py --workers 2 > logs/detcheck-$(date +%Y%m%d-%H%M).log 2>&1
+    python scripts/manifest.py --dry-run
+    python scripts/manifest.py
+
+set -o noclobber makes the shell refuse to redirect onto a log that already
+exists, so a console log is never overwritten.
+
+detcheck.py takes --archive (default zenodo-v1 in this repository) and
+--outdir (default runs/), so the same file runs unchanged with the archive
+somewhere else, for example on Kaggle (calprec.py and costprobe.py do not
+take these flags yet; CLAUDE.md rule 15 requires them before a Kaggle run):
+
+    python scripts/detcheck.py --workers 4 --archive /kaggle/input/cbo-gap-archive --outdir /kaggle/working
+
+After every run, scripts/manifest.py writes sha256.txt into each run folder
+under runs/ that does not have one yet. It never touches a folder that
+already has one. Commit the console log, the run folder and its sha256.txt
+together.

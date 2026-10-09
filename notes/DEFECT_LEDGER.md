@@ -231,18 +231,46 @@ more under the fixed-beta protocol.
   precision criterion and a measured memory footprint precedes any trajectory
   run.
 
-## Determinism gate (pre-registered 2026-10-08)
+## Determinism gate (pre-registered 2026-10-08 in the docstring of scripts/detcheck.py)
 
-scripts/detcheck.py imports exactcal.py and regimemap.py from zenodo-v1 and
-reruns three archived realizations with their archived seeds: exactcal_real.csv
-row 1 (ackley, d = 2, centred, tau_0 = 0.5, seed 20261707), one exactcal row at
-d = 40, and the first isotropic d = 80 row of rmapj_real.csv. Criteria:
-D1, first entries of X0 and the solved beta match the archived beta to full
-double precision; D2, all ten E_J match the archived %.8g values to relative
-5e-8 and the slope to 5e-7 absolute; D3, one worker and two workers give
-byte-identical output. PASS requires all three realizations to pass D1-D3.
-Until PASS is recorded in ENVIRONMENT.md, no number from this machine is
-compared with an archived number.
+The operative criteria are the ones in the docstring of scripts/detcheck.py,
+section "PRE-REGISTERED CRITERIA (fixed 2026-10-08, before first execution)".
+That docstring is where the gate is pre-registered, and this section only
+summarizes it. An earlier draft criterion carried here until 2026-10-09 is
+recorded as G3 below.
+
+What it runs. detcheck.py imports exactcal.py, regimemap.py and rmapj.py from
+the archive (zenodo-v1 by default, or the path given by --archive), prints
+the sha256 of five archive files (exactcal.py, regimemap.py, rmapj.py,
+exactcal_real.csv, rmapj_real.csv), and reruns three archived realizations
+with their archived seeds through the archived functions:
+  R1  exactcal_real.csv, first data row: ackley, d = 2, centred,
+      tau_0 = 0.5, seed 20261707;
+  R2  exactcal_real.csv, first row with d = 40;
+  R3  rmapj_real.csv, first row with diffusion = isotropic and d = 80.
+
+Tolerance rule, per quantity: |computed - archived| <= half a unit in the
+last digit the archive stored for that quantity. Examples from the docstring:
+"0.056786325" gives 5e-10; "5.398521e-05" gives 5e-12; "-1.22556" gives 5e-6;
+"0.5397402043" gives 5e-11.
+  D1  CALIBRATION. The solved beta, the achieved initial ESS fraction and the
+      stored log-ESS values meet the tolerance rule.
+  D2  TRAJECTORY. Every per-J coupled error E_J (stored %.8g) and the fitted
+      slope (%.6g in exactcal_real.csv, %.6f in rmapj_real.csv) meet the
+      tolerance rule.
+  D3  WORKER INDEPENDENCE. A single-worker repeat gives bitwise identical
+      results for every quantity.
+  PASS = D1 and D2 for every quantity of R1, R2 and R3, and D3. The first
+  three coordinates of X0 are printed and stored for future cross-platform
+  diagnosis; the archive did not store X0, so X0 is compared with nothing.
+
+Until PASS is recorded in ENVIRONMENT.md for a platform, no number from that
+platform is compared with an archived number.
+
+Status (2026-10-09). Linux box: PASS, tasks R1,R2,R3, with the repository
+archive (logs/detcheck-v2-full-repo.log) and with the archive in a separate
+read-only directory (logs/detcheck-v2-full-separate.log); recorded in
+ENVIRONMENT.md. Kaggle: not run (G2).
 
 ## Repository defects
 
@@ -261,3 +289,21 @@ compared with an archived number.
   no number from a Kaggle run may be compared with an archived number until
   detcheck passes D1-D3 on Kaggle and the verdict is recorded in
   ENVIRONMENT.md with its log path. OPEN until that Kaggle log exists.
+- G3 (repo, gate criteria). Until 2026-10-09 the section "Determinism gate"
+  above carried, as if pre-registered, a draft criterion: D1 X0 and beta to
+  full double precision, D2 E_J to relative 5e-8 and the slope to 5e-7
+  absolute. History, as stated by Rahul: the draft was written on 2026-10-07
+  in chat, before detcheck.py existed, as a description of the intended
+  check. Its 5e-8 and 5e-7 came from the manuscript's statement that the
+  rmapj rerun reproduced 2160 archived slopes to within 5.0e-7, the rounding
+  of that stored file. When detcheck.py was written on 2026-10-08, the draft
+  was replaced by the per-quantity rule (half a unit in the last stored
+  digit). That rule was in the docstring before the script's first
+  execution, so the draft was superseded before any run. The ledger was never
+  updated. The draft is unachievable as written: the archive stores no X0 and
+  stores beta to 10 decimals. For R1's slope the archive stores six
+  significant figures (-1.22556), so the smallest discrepancy the archive can
+  resolve is 5e-6 (the tolerance printed for R1's slope in
+  logs/detcheck-v2-full-repo.log), not 5e-7. The section now states the
+  script's rule as the operative criterion. CLOSED by the commit that adds
+  this entry.

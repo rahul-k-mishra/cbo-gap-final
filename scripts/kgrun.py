@@ -261,7 +261,7 @@ def fetch(kid, job, dry):
                 continue
             lines.append("{}  {}".format(sha256_of(p),
                                          os.path.relpath(p, outdir)))
-    with open(os.path.join(outdir, "sha256.txt"), "w") as fh:
+    with open(os.path.join(outdir, "sha256.txt"), "x") as fh:
         fh.write("\n".join(lines) + "\n")
     say("  {} files, manifest written to sha256.txt".format(len(lines)))
     for ln in lines:

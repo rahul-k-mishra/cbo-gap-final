@@ -31,9 +31,14 @@ experiment. Everything in this file is non-negotiable.
                                    plus the DOI sentence, which reproduces the submitted text
     scripts/                       round-2 scripts only; they IMPORT dynamics from
                                    zenodo-v1 and never retype them
-    runs/<run-id>/                 one folder per executed run: CSVs, console log, sha256;
-                                   never modified after the sha256 is written
-    logs/                          console logs of analysis-only runs
+    runs/<run-id>/                 one folder per executed run: the output files the
+                                   script wrote (CSVs) and sha256.txt, the manifest
+                                   written by scripts/manifest.py (or by kgrun.py fetch
+                                   for a Kaggle run); never modified after sha256.txt
+                                   is written
+    logs/                          console logs: of analysis-only runs, and of runs
+                                   whose output folder is under runs/ (the console log
+                                   names that folder in its header)
     .venv/                         local virtual environment, not tracked
 
 ## Hard rules
@@ -184,7 +189,7 @@ experiment. Everything in this file is non-negotiable.
 - Never commit .venv, scratch-*, LaTeX build artefacts or
   .claude/settings.local.json (all in .gitignore).
 - runs/ and logs/ are tracked. A run folder is never modified after its
-  sha256 is written; a corrected run is a new run folder.
+  sha256.txt is written; a corrected run is a new run folder.
 - No Git LFS. Any single file above 50 MB: gzip it or stop and ask.
 - After a fresh clone, run: chmod -R a-w zenodo-v1
 
@@ -197,7 +202,7 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
 13. scripts/kgrun.py is the only thing that talks to Kaggle. It assembles the
     bundle, versions the dataset, generates the runner and its metadata,
     pushes, polls and downloads the output into a new runs/ folder with a
-    sha256 manifest. Never push a kernel by hand, never edit a notebook in
+    sha256.txt manifest. Never push a kernel by hand, never edit a notebook in
     the Kaggle web editor: the next push overwrites it and the repository
     stops being the source of truth.
 
@@ -234,7 +239,7 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     what rule 16 exists to catch.
 
 19. Output folders from Kaggle are runs/<job>-kaggle-<timestamp>/ and are
-    never modified after their sha256 manifest is written, same as local run
+    never modified after their sha256.txt manifest is written, same as local run
     folders. The Kaggle-side copy is not the record; the committed folder is.
 
 20. .kaggle-bundle/ and .kaggle-push/ are scratch, rebuilt on every call, and
