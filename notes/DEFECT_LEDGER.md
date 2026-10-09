@@ -253,3 +253,11 @@ compared with an archived number.
   following commit, e945d17, which contains scripts/detcheck.py alone. History
   is not rewritten: 7f5e257 is pushed and stays as it is, and this entry is
   the record. CLOSED by e945d17.
+- G2 (repo, gate). The determinism gate is per platform (CLAUDE.md rules 7
+  and 16). On the Linux box it passes with detcheck v2, tasks R1,R2,R3, both
+  with the repository archive (logs/detcheck-v2-full-repo.log) and with the
+  archive in a separate read-only directory outside the repository
+  (logs/detcheck-v2-full-separate.log). The Kaggle gate has not been run, so
+  no number from a Kaggle run may be compared with an archived number until
+  detcheck passes D1-D3 on Kaggle and the verdict is recorded in
+  ENVIRONMENT.md with its log path. OPEN until that Kaggle log exists.

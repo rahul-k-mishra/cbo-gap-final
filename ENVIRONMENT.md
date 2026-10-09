@@ -19,4 +19,5 @@ Swap:           3789           0        3789
 /dev/sda2       457G   35G  400G   8% /
 ```
 
-Determinism gate (scripts/detcheck.py, D1-D3): VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-full-*.log
+Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/Research/cbo-gap-final/zenodo-v1, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-repo.log
+Determinism gate (scripts/detcheck.py v2, D1-D3), archive /home/rahul/cbo-archive-test, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see logs/detcheck-v2-full-separate.log
