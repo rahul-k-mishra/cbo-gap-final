@@ -1,0 +1,113 @@
+[{"stream_name":"stdout","time":1.402858013,"data":"kgrun runner: job refscale-smoke\n"}
+,{"stream_name":"stdout","time":1.40300268,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.403011311,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.403015769,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.403018702,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.413181762,"data":"  listing  32 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.413297947,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/refscale.py\n"}
+,{"stream_name":"stdout","time":1.41330666,"data":"  args     --workers 4 --smoke\n"}
+,{"stream_name":"stdout","time":1.4133112319999999,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/refscale.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --smoke\n"}
+,{"stream_name":"stdout","time":2.058419371,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":2.058450592,"data":"CBO-GAP refscale -- reference size at which the population concentration is estimable\n"}
+,{"stream_name":"stdout","time":2.058458248,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":2.058466213,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":2.058469162,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":2.05847189,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4\n"}
+,{"stream_name":"stdout","time":2.058489735,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":2.058494594,"data":"  mode     SMOKE (timing; verdicts are not results)\n"}
+,{"stream_name":"stdout","time":2.058499146,"data":"  cells    objectives ['ackley', 'sphere']  d 40  law centred  nominal tau0 [0.01, 0.1]\n"}
+,{"stream_name":"stdout","time":2.058503479,"data":"  calib.   N_CAL 1000000  seed kind 11\n"}
+,{"stream_name":"stdout","time":2.05850811,"data":"  ladder   [4000000, 16000000]   replicates 2   chunk 250000   seed kind 12\n"}
+,{"stream_name":"stdout","time":2.058512926,"data":"  seeds    default_rng(SeedSequence(key)), key = (ENTROPY 20261009, kind, obj code, d, tau0 in millionths, n, rep); obj codes {'ackley': 0, 'sphere': 1}\n"}
+,{"stream_name":"stdout","time":2.058517431,"data":"  E1       streamed vs archived log_ess_of on held arrays at rungs [4000000, 16000000]: relative diff \u003c= 1e-12, else stop\n"}
+,{"stream_name":"stdout","time":2.058522439,"data":"  C5       range/median over replicates \u003c= 0.025\n"}
+,{"stream_name":"stdout","time":2.058526655,"data":"  D1       |median_n - median_next| / median_next \u003c= 0.025; top rung untested\n"}
+,{"stream_name":"stdout","time":2.05853039,"data":"  F1       extrapolate only if slope \u003c 0 and the second-highest rung passes D1\n"}
+,{"stream_name":"stdout","time":2.058534494,"data":"  X1       sphere exact tau(beta) = (1+4b)^(d/2) / (1+2b)^d\n"}
+,{"stream_name":"stdout","time":2.058538291,"data":"  run dir  /kaggle/working/refscale-smoke-20261009-045738\n"}
+,{"stream_name":"stdout","time":2.058542341,"data":"\n"}
+,{"stream_name":"stdout","time":17.126652226,"data":"PHASE A  calibration, 4 cells\n"}
+,{"stream_name":"stdout","time":18.606416736,"data":"  ackley  nominal tau0 0.01   beta = 6.028534528294139   achieved on calibration sample 0.010000   wall 16.5 s   peak RSS 272 MB\n"}
+,{"stream_name":"stdout","time":18.606466916,"data":"  ackley  nominal tau0 0.1    beta = 4.117791730834002   achieved on calibration sample 0.100000   wall 16.4 s   peak RSS 272 MB\n"}
+,{"stream_name":"stdout","time":18.606472456,"data":"  sphere  nominal tau0 0.01   beta = 0.40654222121074113   achieved on calibration sample 0.010000   exact tau(beta) 0.0112133   wall 15.0 s   peak RSS 194 MB\n"}
+,{"stream_name":"stdout","time":18.606492869,"data":"  sphere  nominal tau0 0.1    beta = 0.2461457179039086   achieved on calibration sample 0.100000   exact tau(beta) 0.0998249   wall 15.2 s   peak RSS 194 MB\n"}
+,{"stream_name":"stdout","time":18.606498189,"data":"\n"}
+,{"stream_name":"stdout","time":45.171432303,"data":"PHASE B  equivalence gate E1 on rungs [4000000, 16000000], 8 tasks, largest first\n"}
+,{"stream_name":"stdout","time":45.171469893,"data":"  [B   1/  8] sphere n=16000000    rep 0  wall     26.6 s  RSS    646 MB  elapsed     26.6 s\n"}
+,{"stream_name":"stdout","time":45.171487604,"data":"        beta=0.406542 tau_hat=0.0113714 share=0.00892 exact=0.0112133 relerr=+0.0141 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":45.17149303,"data":"        beta=0.246146 tau_hat=0.0999755 share=0.000615 exact=0.0998249 relerr=+0.0015 E1 PASS (1.24e-16)\n"}
+,{"stream_name":"stdout","time":45.337358674,"data":"  [B   2/  8] sphere n=16000000    rep 1  wall     26.7 s  RSS    646 MB  elapsed     26.7 s\n"}
+,{"stream_name":"stdout","time":45.33741943,"data":"        beta=0.406542 tau_hat=0.0114709 share=0.0134 exact=0.0112133 relerr=+0.0230 E1 PASS (2.93e-16)\n"}
+,{"stream_name":"stdout","time":45.3374261,"data":"        beta=0.246146 tau_hat=0.099807 share=0.000783 exact=0.0998249 relerr=-0.0002 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":59.348897426,"data":"  [B   3/  8] ackley n=4000000     rep 0  wall     14.2 s  RSS    297 MB  elapsed     40.7 s\n"}
+,{"stream_name":"stdout","time":59.34895443,"data":"        beta=6.02853 tau_hat=0.00887638 share=0.0969 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":59.348961006,"data":"        beta=4.11779 tau_hat=0.0988146 share=0.0121 E1 PASS (1.38e-16)\n"}
+,{"stream_name":"stdout","time":59.757005112,"data":"  [B   4/  8] ackley n=4000000     rep 1  wall     14.4 s  RSS    297 MB  elapsed     41.1 s\n"}
+,{"stream_name":"stdout","time":59.757042759,"data":"        beta=6.02853 tau_hat=0.0117276 share=0.0351 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":59.757050697,"data":"        beta=4.11779 tau_hat=0.103959 share=0.0052 E1 PASS (2.75e-16)\n"}
+,{"stream_name":"stdout","time":66.226597324,"data":"  [B   5/  8] sphere n=4000000     rep 0  wall      6.9 s  RSS    219 MB  elapsed     47.6 s\n"}
+,{"stream_name":"stdout","time":66.226636924,"data":"        beta=0.406542 tau_hat=0.0105627 share=0.0617 exact=0.0112133 relerr=-0.0580 E1 PASS (3.34e-16)\n"}
+,{"stream_name":"stdout","time":66.226643382,"data":"        beta=0.246146 tau_hat=0.0996063 share=0.00358 exact=0.0998249 relerr=-0.0022 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":66.571655997,"data":"  [B   6/  8] sphere n=4000000     rep 1  wall      6.8 s  RSS    219 MB  elapsed     48.0 s\n"}
+,{"stream_name":"stdout","time":66.571686285,"data":"        beta=0.406542 tau_hat=0.0120753 share=0.0144 exact=0.0112133 relerr=+0.0769 E1 PASS (3.29e-16)\n"}
+,{"stream_name":"stdout","time":66.571692829,"data":"        beta=0.246146 tau_hat=0.100839 share=0.00138 exact=0.0998249 relerr=+0.0102 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":73.003336326,"data":"  [B   7/  8] ackley n=16000000    rep 0  wall     54.4 s  RSS    646 MB  elapsed     54.4 s\n"}
+,{"stream_name":"stdout","time":73.003401462,"data":"        beta=6.02853 tau_hat=0.00812752 share=0.127 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":73.003407655,"data":"        beta=4.11779 tau_hat=0.100368 share=0.0101 E1 PASS (4.97e-16)\n"}
+,{"stream_name":"stdout","time":73.369515428,"data":"  [B   8/  8] ackley n=16000000    rep 1  wall     54.8 s  RSS    646 MB  elapsed     54.8 s\n"}
+,{"stream_name":"stdout","time":73.369543643,"data":"        beta=6.02853 tau_hat=0.0113605 share=0.0184 E1 PASS (2.93e-16)\n"}
+,{"stream_name":"stdout","time":73.369548773,"data":"        beta=4.11779 tau_hat=0.102283 share=0.00218 E1 PASS (2.48e-16)\n"}
+,{"stream_name":"stdout","time":73.43889656,"data":"\n"}
+,{"stream_name":"stdout","time":73.438932785,"data":"E1 PASSED on every replicate and beta at rungs [4000000, 16000000].\n"}
+,{"stream_name":"stdout","time":73.438938499,"data":"\n"}
+,{"stream_name":"stdout","time":73.438942352,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":73.438946945,"data":"RUNG TABLE  (every value at the cell's fixed beta; tau0 is nominal)\n"}
+,{"stream_name":"stdout","time":73.438957462,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":73.438961584,"data":"ackley at beta = 6.028534528294139  (nominal tau0 0.01)\n"}
+,{"stream_name":"stdout","time":73.438965547,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate\n"}
+,{"stream_name":"stdout","time":73.438969785,"data":"      4000000     0.010302   0.00887638    0.0117276    0.2768  fail    0.0573     fail        no\n"}
+,{"stream_name":"stdout","time":73.43897375,"data":"     16000000     0.009744   0.00812752    0.0113605    0.3318  fail         - untested        no\n"}
+,{"stream_name":"stdout","time":73.438977889,"data":"  smallest adequate rung: none -- no adequate rung in the ladder\n"}
+,{"stream_name":"stdout","time":73.438982092,"data":"  F1: slope 0.1308; not in the asymptotic regime; no extrapolation\n"}
+,{"stream_name":"stdout","time":73.43898587,"data":"\n"}
+,{"stream_name":"stdout","time":73.438989488,"data":"ackley at beta = 4.117791730834002  (nominal tau0 0.1)\n"}
+,{"stream_name":"stdout","time":73.438993251,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate\n"}
+,{"stream_name":"stdout","time":73.438997245,"data":"      4000000     0.101387    0.0988146     0.103959    0.0507  fail    0.0006     pass        no\n"}
+,{"stream_name":"stdout","time":73.439001165,"data":"     16000000     0.101326     0.100368     0.102283    0.0189  pass         - untested        no\n"}
+,{"stream_name":"stdout","time":73.439009259,"data":"  smallest adequate rung: none -- no adequate rung in the ladder\n"}
+,{"stream_name":"stdout","time":73.439013451,"data":"  F1: slope -0.7123; extrapolated required size 1.08e+07 (extrapolation from a 2-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":73.439017894,"data":"\n"}
+,{"stream_name":"stdout","time":73.439026599,"data":"sphere at beta = 0.40654222121074113  (nominal tau0 0.01)   exact tau(beta) = 0.011213257\n"}
+,{"stream_name":"stdout","time":73.4390307,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate  relerr(median)\n"}
+,{"stream_name":"stdout","time":73.439035048,"data":"      4000000     0.011319    0.0105627    0.0120753    0.1336  fail    0.0089     pass        no  +0.0094\n"}
+,{"stream_name":"stdout","time":73.439038897,"data":"     16000000    0.0114212    0.0113714    0.0114709    0.0087  pass         - untested        no  +0.0185\n"}
+,{"stream_name":"stdout","time":73.439058559,"data":"  smallest adequate rung: none -- no adequate rung in the ladder\n"}
+,{"stream_name":"stdout","time":73.439063723,"data":"  F1: slope -1.9700; extrapolated required size 9.37e+06 (extrapolation from a 2-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":73.439067774,"data":"\n"}
+,{"stream_name":"stdout","time":73.439071499,"data":"sphere at beta = 0.2461457179039086  (nominal tau0 0.1)   exact tau(beta) = 0.099824906\n"}
+,{"stream_name":"stdout","time":73.439077151,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate  relerr(median)\n"}
+,{"stream_name":"stdout","time":73.439081161,"data":"      4000000     0.100223    0.0996063     0.100839    0.0123  pass    0.0033     pass       yes  +0.0040\n"}
+,{"stream_name":"stdout","time":73.439086994,"data":"     16000000    0.0998912     0.099807    0.0999755    0.0017  pass         - untested        no  +0.0007\n"}
+,{"stream_name":"stdout","time":73.439095757,"data":"  smallest adequate rung: 4000000\n"}
+,{"stream_name":"stdout","time":73.439098515,"data":"  F1: slope -1.4334; extrapolated required size 2.44e+06 (extrapolation from a 2-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":73.439101264,"data":"\n"}
+,{"stream_name":"stdout","time":73.439103717,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":73.43910641,"data":"MEASURED  peak RSS of any reference task 646 MB\n"}
+,{"stream_name":"stdout","time":73.439109164,"data":"MEASURED  ackley throughput 2.9e+05 points per second per worker (40000000 points in 137.7 worker-seconds)\n"}
+,{"stream_name":"stdout","time":73.439111852,"data":"MEASURED  sphere throughput 5.98e+05 points per second per worker (40000000 points in 66.9 worker-seconds)\n"}
+,{"stream_name":"stdout","time":73.439114629,"data":"\n"}
+,{"stream_name":"stdout","time":73.439117117,"data":"PROJECTION (from the smoke throughput above; a lower bound, not a measurement;\n"}
+,{"stream_name":"stdout","time":73.439119849,"data":"           ignores the E1 held-array overhead and scheduling gaps)\n"}
+,{"stream_name":"stdout","time":73.439122487,"data":"  ladder [4000000, 16000000, 64000000, 256000000]  x 6 reps  with 4 workers: at least 0.72 h\n"}
+,{"stream_name":"stdout","time":73.439125164,"data":"  ladder [4000000, 16000000, 64000000, 256000000, 1024000000]  x 6 reps  with 4 workers: at least 2.91 h\n"}
+,{"stream_name":"stdout","time":73.439127854,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":73.43913069,"data":"files     /kaggle/working/refscale-smoke-20261009-045738\n"}
+,{"stream_name":"stdout","time":73.439133331,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":73.486596545,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":76.763908981,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":76.763953752,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":77.334131102,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":77.334157434,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":80.0914947,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":81.669770367,"data":"[NbConvertApp] Writing 287043 bytes to __results__.html\n"}
+]
