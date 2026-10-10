@@ -411,6 +411,22 @@ What changed:
     but does not compare them with the finalize invocation.
   - Not fixed: it was found after the fix pass and is outside the list.
     The workaround is to pass the same --rows, or none, to both.
+  - CLOSED 2026-10-10 by 2c20653 (scripts/costprobe2.py md5
+    5813a90cf36399bb8a320e5d6e9dcaee). Finalize takes its rows from the
+    "rows" entry of the folders' params, which merge_folders already
+    requires to agree across folders. --rows now defaults to None.
+    - Given to finalize and different from the folders' rows: exit 2, with
+      both lists printed.
+    - Omitted: the folders' rows are used and printed.
+    P0 still runs before the merge, on --rows or on all rows. All rows
+    contain any folder's rows, and a --rows equal to the folders' rows is
+    the same set, so P0 always covers the rows finalized. Outside finalize,
+    behaviour is unchanged: without --rows every row is selected, as
+    before.
+    (2c20653's message also says this file was updated. It was not: the
+    edit failed on a mismatched search string, and the commit carried the
+    script alone. This entry and the section below were added in the next
+    commit.)
 - R5. Process-per-task means each task forks the parent once, as
   maxtasksperchild=1 did. The parent's RSS, including the growing
   rows_written list, still sets the baseline of each child's ru_maxrss
@@ -430,3 +446,86 @@ The header must show:
 - the T1 rate source, the largest unit and TIMEOUT_S.
 
 The end must show P2 PASS for every module, and no A-ERR.
+
+## 2026-10-10: the plan-mode run, and what it exercised
+
+Source: logs/costprobe2-plan.log (committed in acb2ae1).
+
+What ran:
+- The log's script sha256 is 5b27795c4089f455b27cb47ef3b26f0cdaa50ce691b4b3d4bb70e8c0dea797ed,
+  which is scripts/costprobe2.py at 4bebd32, before the R4 fix.
+- The R4 fix changes only the --rows default and the finalize branch.
+  Without --rows, the code paths plan mode runs (P1, P0, the plan and T1)
+  select the same rows as at 4bebd32.
+- Header: python 3.12.3, numpy 2.5.3, cpus 2, workers 2, start fork, all
+  five thread variables = 1, mode plan, all seventeen rows.
+
+What the log shows:
+- P1 PASS. All twelve modules were imported from
+  /home/rahul/Research/cbo-gap-final/zenodo-v1/<module>.py, each hash "ok".
+- P0 PASS.
+  - Every factor of every row reads "ok" against the archived source, at
+    the cited lines.
+  - Six NOT_CHECKED lines are printed: TAU8, REFSIZE, SYNTH, NAMED, HORIZON
+    and ANISO.
+  - All seventeen rows reproduce their Table 2 cell and realization counts.
+- PLAN: 331 main probes, 52 check probes, total 383. The 52 is what
+  build_plan should give: one A3 pair for each of the eleven dynamics
+  modules, plus the fifteen A1/A2 pairs in CHECKS, two members each.
+- T1:
+  - rate 5.074e-07 s per proxy unit, from the embedded logs/costprobe.log
+    rates;
+  - largest unit control, ackley, d = 40, adaptive, proxy 9.618e+08;
+  - projected wall 488.0 s;
+  - TIMEOUT_S = 2440.0 s.
+- "PLAN MODE: no dynamics run, nothing written."
+
+### Exercised for real by the plan run, on the laptop only
+
+- B1 / P0(a), and R2, the new source reader. Every resolution form it uses
+  produced a value equal to the grid:
+  - plain and tuple assignments;
+  - attribute targets (regime's args.M and args.Jgrid);
+  - "for" iterables (ess_surface 273, 280);
+  - argparse defaults (--realisations in law, sigma, crossed, cliff,
+    regimemap);
+  - IfExp branch choice (regime 508, 549, 550, 575 to 577, 599);
+  - Name resolution (visibility INITS, law DIMS and TAUS);
+  - list(NAMED) (regime 575);
+  - comprehensions over SYNTH (regime 548, law 521);
+  - the dict indexed by args.part (sigma 259-260).
+  R2's specific risk, a misread "quick" test, did not arise in any cited
+  range. Had it arisen, the value read would have differed from the grid,
+  and every value matched.
+- B2 / P1. The imported modules' own __file__ paths resolve inside the
+  archive and hash correctly.
+- P0(b), the counts, for all seventeen rows.
+- The plan builder: deduplication of units, the per-module A3 pairs
+  (B3's plan side), and the seed-key uniqueness check. No duplicate-key
+  error was raised.
+- A10. The thread variables read 1 on the laptop. C3, the start method, is
+  fork on the laptop.
+- The T1 computation, from the embedded rate. The timeout value is now
+  known: 2440.0 s.
+- C4, partly. The nine archive modules never imported on Kaggle import on
+  the laptop's Python 3.12.3. Kaggle's Python 3.13.15 is still untested.
+
+### Still untested, because plan mode runs no dynamics
+
+- P2 (B3's run side), P3, P4, A1 to A3, A-ERR (B4) and P5 (A1, A7, A8).
+  None has produced a verdict.
+- E3 and the scheduler: process-per-task, the Pipe, the timeout, and
+  "worker exited" rows. Whether 2440 s is adequate (R3) is unknown until
+  real walls exist.
+- D1 / merge_folders and R4's new finalize branch: no folder has been
+  finalized.
+- Resume under rule 17.
+- C1 (the solve_beta bodies) and C2 (a SeedSequence passed through the
+  archived one_realisation functions). No probe beta was computed and no
+  realization ran.
+- Every Kaggle-side assumption: C2 and C3 on Python 3.13.15 / NumPy 2.1.3,
+  the thread variables there, and C4 there.
+- R1 still holds. SYNTH's and GEOM's objective-name "ok" could not have
+  failed, because both sides come from the module's SYNTH.
+- A2, A3, A4, A5, A6, A9, A11 to A15, B5 to B9, D2, D3, E1, E2, R3, R5,
+  R6: unchanged, and none can be exercised without dynamics.
