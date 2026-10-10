@@ -264,3 +264,169 @@ Assumed, not verified:
 2. Decide which of A1, A2, A5, B1, B3, B4, D1 and E3 to fix before the
    smoke.
 3. Then the Kaggle smoke, with --workers 4 so that A1 does not bite.
+
+---
+
+## 2026-10-10, second pass: fixes made, items left, and a re-review of the diff
+
+What changed:
+
+- scripts/costprobe2.py went from 3d42589 (md5
+  c1ef6d574fa0e3f161df28c52f604672, 1089 lines) to the commit that adds this
+  section (md5 8e44de92f16cff52a9ff45b5096f4268, 1586 lines).
+- Diff against 3d42589: 896 lines inserted, 399 deleted.
+- Fixes were made only to the items Rahul listed. Nothing was executed. The
+  only check made was a parse under the Python 3.8 grammar.
+
+### Closed by the fixes
+
+- A1. P5 divides by W, the --workers of the run that measured the walls:
+  - the in-run finalize uses --workers;
+  - --finalize uses the workers value stored in the folders' params file,
+    which merge_folders requires to be the same in every folder.
+- A2, A3. The claim that pairs run at the same load is withdrawn. The
+  docstring now says the pairs are queued adjacently and that neighbour
+  load is uncontrolled. Every check line, printed and in
+  costprobe2_checks.csv, carries "neighbour load uncontrolled; evidence, not
+  a measurement". Load is not equalised.
+- A7, A8. A row whose module was scaled by a failing check is labelled
+  "SCALED, not a bound". An unscaled row is labelled "lower bound (perfect
+  scaling; beta and r dependence partly untested)". The blanket "lower
+  bounds" line is gone. Both labels are in the projection CSV.
+- A10. The thread variables are set unconditionally (os.environ[v] = "1")
+  before numpy is imported. The multiprocessing start method is now
+  printed in the header as well.
+- B1. P0(a) reads each factor from the archived source with ast, at the
+  line ranges in SOURCE:
+  - non-quick branch only;
+  - Names, list(NAMED), comprehensions over SYNTH, argparse defaults and a
+    dict indexed by an argparse flag are resolved;
+  - exactly one value is required.
+  It compares the result with the list the row loops over. row_cells now
+  builds every row from GRID, the same lists P0(a) checks. Literals that sit
+  inside comprehensions are printed as "not checked against source" (the
+  NOT_CHECKED list).
+- B2. P1 hashes os.path.realpath(module.__file__) after import, and
+  requires that file to lie in the archive directory and end in .py.
+- B3. P2 now has one A3 pair per module in the plan: each module's
+  smallest unit, run twice with the same key. P2 passes only if every pair
+  is complete and bitwise identical. The docstring states that P2 tests
+  repeatability per module, not that distinct keys give distinct streams.
+- B4. An expected check whose member errored, timed out or is missing is a
+  FAIL, with the error text; it is never dropped.
+  - The expected checks come from build_plan, not from the rows that
+    happen to exist.
+  - An errored A3 pair is a P2 FAIL (exit 3).
+  - An errored A1 or A2 check gives exit 4 (A-ERR), labels the module's
+    rows "check errored", and leaves their scale unchanged.
+- D1. merge_folders accepts a repeated task id only when every earlier
+  occurrence is an error row; the later row replaces it. A repeat after a
+  complete row exits 2. This is stated in the docstring.
+- E3. multiprocessing.Pool is replaced by one Process per task, at most W
+  at once, each sending its result through a Pipe:
+  - a task past TIMEOUT_S is terminated and written as an error row
+    ("timeout");
+  - a process that exits without a result is written as an error row
+    ("worker exited with code ...").
+  - TIMEOUT_S = 5 x the projected wall of the largest unit in the queue,
+    printed at the head of the run with the rate, its source and the unit
+    (criterion T1).
+
+### Partly closed
+
+- B5. There is now one A3 noise pair per module instead of one overall, and
+  each module's A1/A2 verdicts are labelled noise-limited by that module's
+  own pair. It is still a single pair per module.
+- B8. Smoke is now the A3 pair of every module, so it exercises P2 and the
+  dynamics of every module. It still projects nothing.
+
+### Left, by decision (Rahul, 2026-10-10)
+
+- A5, A6. The beta and r dependence of wall time stays partly untested.
+  The cure would be a combinatorial sweep that costs more than the
+  measurement is worth, so the projection carries the caveat instead. It
+  is written into the docstring's cost-model section and into the
+  lower-bound label.
+- C1 to C5, the remaining signature and platform assumptions: the
+  solve_beta bodies; default_rng accepting a SeedSequence; the start method
+  on Kaggle; the nine modules never imported on Kaggle; the dict keys. The
+  smoke run tests them for real, which is what a smoke run is for. A
+  failure there is an error row, P2 FAIL or exit 2, not a silent number.
+
+### Left, not in the list to fix (unchanged since the first review)
+
+- A4: one seed per unit.
+- A9: P4 measures costprobe2, not the rerun, and the RSS baseline is
+  inherited from the parent.
+- A11: walls use time.time(); the timeout itself uses time.monotonic().
+- A12: my samplers for the probe beta.
+- A13: PROBEARM counts are not from Table 2.
+- A14: only the centred law in main probes.
+- A15: the slope column. It is now described in the docstring as "a
+  diagnostic of one realization at a timing beta, not a result", but it is
+  still written.
+- B6: P4 cannot fail for most units.
+- B7: P3 points are not each row's initial law.
+- B9: no projected total run time for costprobe2 itself. The plan mode now
+  prints the timeout but not a total.
+- D2, D3: finalize's default rows and folder discovery.
+- E1: nothing has run.
+- E2: non-finite E_J is not examined.
+
+### New issues found re-reading the diff
+
+- R1. P0(a) is vacuous for two factors.
+  - The objective lists of SYNTH and GEOM: GRID takes REG_SYNTH and
+    LAW_SYNTH from the modules' SYNTH, and the source reader resolves the
+    archived comprehension from the same SYNTH. Both sides are the same
+    object, so the comparison cannot fail.
+  - The line ranges in SOURCE were typed by me. A range that points at the
+    wrong line gives "NOT READ" (a FAIL, exit 2) or a wrong variable with a
+    different value (a MISMATCH, exit 2). It could read a wrong variable
+    only if that variable has the same name and the same value. P1 pins
+    the archive bytes, so the line numbers cannot drift.
+- R2. The P0 source reader is about 110 new lines that have never run.
+  Most failure modes in it end in FAIL and exit 2 rather than in a silent
+  pass: wrong node types, Python 3.8 ast.Index, the IfExp branch choice.
+  One that would not: _in_quick_branch decides the branch by looking for
+  "quick" anywhere in the dump of an If test. A test that mentions quick in
+  some other way would be misread. I know of none in the cited ranges.
+- R3. The timeout model is crude.
+  - Without --timing-from, the rate comes from the laptop's exactcal
+    probes, not from each module. A platform more than five times slower
+    than the laptop on the largest unit would time it out.
+  - The adaptive-arm proxy factor of 4 is a guess. If the adaptive arm
+    costs more than about 20 times its non-adaptive proxy (5 x 4), its
+    probes time out.
+  - Either way the result is error rows, A-ERR or P2 FAIL, and NOT
+    PROJECTED. That is visible, not silent, but it can waste a Kaggle job.
+    The smoke's folder can be passed as --timing-from to the full run to
+    base the timeout on measured walls.
+- R4. finalize takes the planned checks and projected rows from its own
+  --rows, not from the rows stored in the folders' params.
+  - If --finalize is called with a different --rows than the run used,
+    checks can be reported missing (a spurious FAIL), or a run's checks can
+    go unreported.
+  - merge_folders requires the folders to agree with each other on rows,
+    but does not compare them with the finalize invocation.
+  - Not fixed: it was found after the fix pass and is outside the list.
+    The workaround is to pass the same --rows, or none, to both.
+- R5. Process-per-task means each task forks the parent once, as
+  maxtasksperchild=1 did. The parent's RSS, including the growing
+  rows_written list, still sets the baseline of each child's ru_maxrss
+  (A9).
+- R6. Walls are measured inside the child and exclude process start. The
+  0.2 s polling interval of the scheduler delays reuse of a free slot by up
+  to 0.2 s. That affects neighbour load, not the measured walls.
+
+### What the first execution must show before any number is used
+
+The header must show:
+- workers 4;
+- start fork;
+- all thread variables equal to 1;
+- P1 PASS, with every module path inside the archive;
+- P0 PASS, every factor "ok", and the NOT_CHECKED lines;
+- the T1 rate source, the largest unit and TIMEOUT_S.
+
+The end must show P2 PASS for every module, and no A-ERR.
