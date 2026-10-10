@@ -288,19 +288,16 @@ For every cell the script takes three things from the row's module:
     within that margin of the goal can branch differently. Worked example (illustrative values):
     held beta 6.028534528294139, streamed 6.028534528294161, ratio - 1 =
     3.6e-15: pass.
-  - Open point D5a, for Rahul (not decided). A streamed solve has 200
-    sequential passes, each a full regeneration of the stream. It fits one
-    6-hour shard only if one pass at that rung takes under 21600 / 200 =
-    108 s. refscale's full run will print the measured wall of a 1G
-    replicate. If one pass is slower than that, the solve does not fit, and
-    under ledger K5 it cannot resume across Kaggle sessions. Two ways out,
-    neither decided:
-    - (i) refine the bracket with many betas per pass; refscale already
-      evaluates several betas on one stream;
-    - (ii) run the streamed solve on the laptop, where rule 17 resumption
-      works.
-    Plan mode prints the projected solve time per case-(a) cell once the
-    throughput table exists.
+  - D5a (Rahul, 2026-10-10). The streamed solve of a case (a) cell runs on
+    the laptop, not on Kaggle. On the laptop, CLAUDE.md rule 17 resumption
+    works (ledger K5), there is no 12-hour cap, and the solve is one cell at
+    a time rather than a matrix. It keeps the plain 200-step bisection of
+    exactcal.beta_on_ensemble; betas are NOT packed into one pass. calprec
+    v2 therefore marks case (a) cells in its Kaggle output as "streamed
+    solve pending, laptop". A separate laptop invocation, which takes the
+    list of such cells from a verified Kaggle folder, performs the solve
+    with E2. Its bisection state is written after every step, so that rule
+    17 resumption can continue it.
 - D6, the probe arm. Confirmed: its beta is the archived
   mechanism.beta_for_target, which reproduces the archived probe protocol
   exactly. The arm must be the archived protocol, not a reimplementation of
