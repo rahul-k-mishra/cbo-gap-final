@@ -156,7 +156,9 @@ MODES
                 folder read and the number of tasks skipped from each.
   --finalize DIR[,DIR]  No dynamics. Reads verified folders, concatenates
               their results, applies P2, P4, A1 to A3 and P5, and writes the
-              projection into a new folder. A complete unsharded run
+              projection into a new folder. Every folder's parameters except
+              the shard index must agree (same script hash, mode, rows,
+              nshards, workers, Python, NumPy), or it stops with exit 2. A complete unsharded run
               finalizes itself.
 
 OUTPUT (new folder <outdir>/costprobe2-<timestamp>[-smoke][-s<i>of<k>]/,
@@ -937,8 +939,20 @@ def main():
     if mode == "finalize":
         rows = []
         seen = set()
+        ref = None
         for f in [x for x in a.finalize.split(",") if x]:
-            _, rr = read_folder(f)
+            pr, rr = read_folder(f)
+            # walls are comparable only across folders run alike: every parameter
+            # except the shard index must agree, or finalize stops
+            if pr is None:
+                sys.stderr.write("finalize: {} has no params file\n".format(f))
+                sys.exit(2)
+            cmp_ = dict((k, v) for k, v in pr.items() if k != "shard")
+            if ref is None:
+                ref = cmp_
+            elif cmp_ != ref:
+                sys.stderr.write("finalize: {} was run with other parameters: {} vs {}\n".format(f, cmp_, ref))
+                sys.exit(2)
             for r in rr:
                 if r["tid"] in seen:
                     sys.stderr.write("finalize: task {} found twice\n".format(r["tid"]))
