@@ -85,6 +85,10 @@ A proof counts here as text only.
 
 ## 5. Compute actually required
 
+Superseded 2026-10-10 by Rahul's decision: the full experiment matrix is
+rerun under fixed beta with per-realization archiving. See
+notes/RERUN_PLAN.md. The text below is kept as first written.
+
 Two runs are required. Both use a fixed beta calibrated once per cell on a
 sample of the size calprec.py's N_star rule sets:
 

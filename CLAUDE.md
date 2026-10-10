@@ -236,11 +236,24 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
 
 17. A job is sized to finish inside 12 hours. Longer work is split into
     shards run as separate jobs with distinct --job names and
-    --shard i --nshards k. Shards are never resumed: a job that hits the cap
-    is re-run with more shards, because a resumed run would mix two sessions'
-    output in one folder. Sharding is safe because every seed comes from a
-    SeedSequence keyed by the cell, so a shard emits exactly the rows it
-    would have emitted in a single run and the merge is a concatenation.
+    --shard i --nshards k. Shards remain separate jobs with distinct names.
+    Resumption is allowed (amended 2026-10-10, Rahul's decision), on these
+    terms only:
+    - A resumed run reads the completed task keys from one or more previous
+      run folders, skips those tasks, and writes to a NEW run folder.
+    - Previous output is never modified, appended to or overwritten.
+    - The merge across folders is a concatenation. This is sound because
+      every seed is keyed by the cell, through a SeedSequence over the task
+      key, and not by position in the task list. A task therefore emits the
+      same row whichever run, shard or resumption executes it.
+    The following are added to make those terms checkable:
+    - A previous folder is read only after its sha256.txt verifies.
+    - A task key counts as completed only when its row is complete.
+    - A key found in two folders stops the run.
+    - The resumed run's parameters, other than the folder list, must equal
+      those printed in each previous folder's header, or it stops.
+    - The resumed run prints every folder it read and the number of keys it
+      skipped from each.
 
 18. Nothing that comes back from Kaggle is trusted until its header is read.
     Every script prints its parameters, seeds, Python and NumPy versions,
