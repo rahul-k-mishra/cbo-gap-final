@@ -125,6 +125,33 @@ were not recovered:
   rerun writes both per realization, so neither needs a separate run. Is it
   acceptable that the rerun's Table 2 has no such rows?
 
+## Decisions, Rahul, 2026-10-10
+
+- F1: keep the B rule for EXP-LAWPANEL. It becomes a labelled historical
+  arm in the supplement, because it is what the withdrawn result rests on.
+- F2: run EXP-MECH and EXP-CAL once, as the concentration arm. This
+  dissolves referee point 7 for the main comparison (ledger N17).
+- F3: keep the adaptive arm of EXP-ADAPT, labelled a diagnostic and not
+  fixed-beta, as the submitted paper labels it.
+- F4: EXP-PERJ is not rerun. Its result stands in the supplement under its
+  own estimand, with perjcal_real.csv.
+- F5: calibrate the synthetic objectives with their own module, regime.py or
+  law.py, never with exactcal's.
+- F6: measure the peak RSS at J_inf 100000 in the extended costprobe
+  (scripts/costprobe2.py) before EXP-REFSIZE runs.
+- F7: agreed. ESS_0(J) per nested J and the per-J errors become output
+  columns of every rerun row.
+- Added row PROBEARM: a seed-paired probe-calibrated arm on the
+  concentration-arm grid, 144 cells and 2160 realizations, beta from the
+  archived 4000-point probe (ledger N17; calprec v2 spec D6).
+- Realization counts and J grids stay as archived, row by row.
+- Memory budget: 3 GB per worker. Ceiling: 6 hours projected per shard.
+  Kaggle output is treated as lost at the cap, and resumption recovers only
+  from fetched output.
+- calprec is extended per notes/CALPREC_V2_SPEC.md. Under refscale O2, the
+  declared beta is the one solved at the largest adequate reference size,
+  or at the top rung if none is adequate, and the cell is labelled by beta.
+
 ## calprec coverage the rerun needs and calprec does not have
 
 calprec.py now covers obj6 x d {2, 5, 10, 40} x law {centred, mix-0.1} x

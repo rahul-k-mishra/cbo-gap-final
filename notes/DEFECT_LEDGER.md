@@ -74,6 +74,10 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
 - R7 (ref, T). "moved the statistic by 0.300" as a measured effect; the two
   runs are not seed-paired (mechanism.py counter from 20260821; exactcal.py
   formula from 20260822). Reword, or pair inside the new design. OPEN.
+  Disposition 2026-10-10: dissolved for the main comparison by N17 (MECH
+  and CAL collapse into one fixed-beta experiment). The seed-paired probe
+  arm (N17) gives a measured probe-versus-fixed difference. OPEN until the
+  text is rewritten and verified by a rendered diff.
 - R8 (ref, T). sn-article.tex line 348 writes E_J ~ C J^{-gamma} with
   gamma-hat ~ -1 as the fitted slope. Write E_J ~ C J^{gamma}; recheck every
   sign-bearing definition. OPEN.
@@ -166,6 +170,46 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   plus a bounded Lipschitz perturbation"; the actual argument is
   |rho omega sin(omega x_i)| <= rho omega^2 |x_i|, which must be written.
   OPEN.
+
+## Newly found (2026-10-10)
+
+- N16 (new, repo, seeding). The docstring of scripts/calprec.py says its
+  seeds are "Injective by construction: SeedSequence over a tuple of small
+  integers". But seed_for returns
+  int(np.random.SeedSequence(list(key)).generate_state(1, dtype=np.uint32)[0]),
+  which reduces the key to one 32-bit integer. A map from the key tuples
+  onto 2^32 values is not injective, so distinct keys can collide.
+  Scope:
+  - refscale.py is unaffected. It passes the full key to
+    numpy.random.default_rng(SeedSequence(key)) and says so in its
+    docstring.
+  - calprec's completed runs are smoke, timing and refcheck runs only:
+    runs/calprec-20261009-065642, -065734, -071626, -071815, -072623 and
+    -092252 (logs/calprec-*.log). None is the production stage C1, and no
+    number in the manuscript, the ledger's dispositions or a declared
+    N_star rests on them.
+  Fix: in the extended calprec (notes/CALPREC_V2_SPEC.md), which uses the
+  full SeedSequence key. The finished runs and scripts/calprec.py at
+  7f5e257 are not edited, and the finished runs are not rerun to correct
+  it. OPEN until the extended calprec is committed.
+- N17 (design decision, Rahul 2026-10-10, RERUN_PLAN F2). EXP-MECH
+  (mechanism.py: probe beta) and EXP-CAL (exactcal.py: beta solved per
+  realization) have the same grid (mechanism.py 294-297, exactcal.py
+  262-265): 6 objectives x d {2, 5, 10, 40} x 2 laws x tau0 {0.5, 0.1,
+  0.01} x 15 realizations. Under a beta calibrated once per cell on an
+  independent sample, both become the same experiment, so it is run once,
+  as the concentration arm.
+  This also dissolves referee point 7 (R7) for the main comparison. The
+  "probe versus exact" contrast, and the 0.300 it produced, existed only
+  because two protocols were run. Neither protocol is the design of the
+  new paper. Both archived runs move to the supplement as the record of two
+  superseded protocols, and no causal reading of their difference is made.
+  A seed-paired probe arm is added on the same grid (144 cells, 2160
+  realizations; Rahul, 2026-10-10). Each realization of it runs with the
+  same seed key as its fixed-beta counterpart, at the archived 4000-point
+  probe beta. That turns "the protocols differ" into a measured, paired
+  difference. Recorded in notes/RERUN_PLAN.md. OPEN until both arms have
+  run.
 
 ## Checked and found sound
 
