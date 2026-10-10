@@ -3,8 +3,8 @@
 Status: specification only, approved in outline by Rahul on 2026-10-10
 (answer 2 of that day). No script exists yet. Nothing here has been run.
 The criteria below become binding only when they are copied into the
-script's docstring before its first execution (CLAUDE.md rule 5). Items
-marked DECISION are Rahul's to settle before the script is written.
+script's docstring before its first execution (CLAUDE.md rule 5). Rahul's
+decisions are recorded in section 11.
 
 Sources: notes/RERUN_PLAN.md (grids and flags F1 to F7, decided
 2026-10-10), scripts/calprec.py (v1, at 7f5e257), scripts/refscale.py
@@ -44,7 +44,7 @@ across modules.
 | Row | Module | Calibration grid | Factors that do not enter beta |
 |---|---|---|---|
 | EXP-MECH/CAL concentration arm (N17) | mechanism.py | obj6 x d {2, 5, 10, 40} x law {centred, mix-0.1} x tau0 {0.5, 0.1, 0.01} | realization |
-| probe arm (N17) | mechanism.py | not calibrated by calprec: beta = mechanism.beta_for_target (the archived 4000-point probe), DECISION D6 | |
+| probe arm (N17) | mechanism.py | not calibrated by calprec: beta = mechanism.beta_for_target (the archived 4000-point probe), D6, confirmed | |
 | EXP-ADAPT | control.py | obj6 x d {5, 10, 40} x centred x tau0 {0.1, 0.01} | arm (both arms start at this beta; the adaptive arm re-solves it in flight, F3) |
 | EXP-TAU8 | boundary.py | obj6 x d {5, 10, 40} x centred x tau0 {0.3, 0.2, 0.1, 0.07, 0.05, 0.03, 0.02, 0.01} | |
 | EXP-REFSIZE | regime.py | ackley, sphere, rosenbrock x d 10 x centred x tau0 0.1 | J_inf |
@@ -92,21 +92,21 @@ For every cell the script takes three things from the row's module:
 ## 4. Procedure per calibration cell
 
 - Phase A, calibration samples. For each level N in the calibration ladder
-  L_cal (DECISION D3; v1 used 4000, 16000, 64000, 256000, 1000000) and each
+  L_cal (D3: 4000 to 4000000) and each
   of R = 24 draws (v1's REPS), draw N values (values only), solve beta-hat,
   and store it as repr.
 - Phase B, production beta. Draw one further calibration sample, of the
   cell's own size N_cell, with its own seed kind, and solve beta_prod.
-  N_cell is defined in section 5 (DECISION D2: per cell or global). Phase
+  N_cell is defined in section 5 (D2: per cell). Phase
   B therefore runs after Phase C has fixed N_cell. The order is A, C, B, C'
   as in section 8.
-- Phase C, references. A reference ladder L_ref (DECISION D4), six
+- Phase C, references. A reference ladder L_ref (D4: 1M to 1G), six
   independent replicates per rung. Each reference is streamed in chunks
   (the refscale composition of exactcal._logsumexp) and evaluates every
   beta-hat of the cell on the same stream.
   It climbs rung by rung and stops at the first rung judged adequate by C5
   and D1 at beta_adq (section 5), which needs the next rung as well, or at
-  the cap n_max (DECISION D1).
+  the cap n_max (D1: provisionally 1G).
 - Phase C', production check. beta_prod is evaluated on six new replicates
   at the adequate rung's size (kind 32, reps 6 to 11), so the check does
   not reuse the streams that chose the rung.
@@ -153,8 +153,8 @@ For every cell the script takes three things from the row's module:
   is at most 0.05, where tau_ref is the median over the six replicates.
   Worked example as in v1: realized values from 0.0098 to 0.0104 at tau0 =
   0.01 give a maximum deviation of 0.04: sufficient.
-- N_cell. The smallest sufficient level in L_cal for that cell (DECISION
-  D2; v1's rule was one global N_star over all cells).
+- N_cell. The smallest sufficient level in L_cal for that cell (D2;
+  v1's rule was one global N_star over all cells).
 - C6, production check. |tau_ref(beta_prod)/tau0 - 1| must be at most
   0.05, where tau_ref is the median over the six Phase C' replicates. A failure is reported, and the cell goes to
   section 6, case (b). Worked example: tau0 = 0.1, tau_ref(beta_prod) =
@@ -183,9 +183,9 @@ For every cell the script takes three things from the row's module:
   (median over the six replicates) and the replicate range, and the cell is
   labelled by beta, never by a target. Solving beta on a reference needs
   the reference held. If that rung exceeds the held cap of G-RSS, see
-  DECISION D5.
+  D5 (streamed bisection, criterion E2).
 - Case (b), adequate reference, but no level of L_cal is sufficient (C1),
-  or C6 fails. Proposed (DECISION D5): solve beta on one replicate of the
+  or C6 fails. Accepted (D5): solve beta on one replicate of the
   adequate rung and evaluate it on the other five. If the median of those
   five passes C6's 0.05, label the cell by target with that beta;
   otherwise label it by beta, as in case (a).
@@ -255,25 +255,56 @@ For every cell the script takes three things from the row's module:
 - End: the per-cell verdict table (in finalize), the largest RSS per
   module, and the rows flagged by G-RSS.
 
-## 11. What I need from Rahul
+## 11. Decisions (Rahul, 2026-10-10)
 
-- D1. n_max, the largest reference rung, and whether it is a measured
-  feasible size. It comes from the refscale full run (outcome O1, O2 or O3
-  and its measured wall times and peak RSS). Until that is fetched,
-  section 6 has no cap.
-- D2. N_cell per cell (proposed) or one global N_star over all cells (v1's
-  rule). A global N_star would be set by the hardest cell, likely a tau0 =
-  0.01 cell, and might not exist at all.
-- D3. The calibration ladder. Keep v1's top of 1,000,000, or extend it to
-  4,000,000? R = 24 is kept from v1 unless you say otherwise.
-- D4. The reference ladder start (proposed: 1M, rising by factors of four
-  to n_max) and six replicates as in refscale.
-- D5. Case (b) as proposed. And for case (a), when the largest rung exceeds
-  the 1024 MB held cap, either allow a streamed bisection (one full
-  objective pass per bisection step; slow, but runtime is not a constraint
-  under rule 6), or cap the declared-beta solve at the held cap.
-- D6. The probe arm of N17 uses mechanism.beta_for_target, which
-  reproduces the archived probe beta exactly. Confirm that is the intended
-  arm, rather than a new 4000-point probe with a v2 seed.
-- D7. Throughput for G-CAP: allow a calprec v2 smoke run, on Kaggle, to
-  produce the throughput table before the full run is planned.
+- D1, the reference cap n_max. Deferred until the refscale verdict.
+  Provisionally it is refscale's top rung, 1G (1024000000). Rahul fixes it
+  when refscale's result is in.
+- D2, the calibration size. One size N_cell per cell. A single global N_star
+  would over-calibrate the easy cells and under-calibrate the hard ones, and
+  the per-cell size is itself a reportable result.
+- D3, the calibration ladder. L_cal = 4000, 16000, 64000, 256000, 1000000,
+  4000000. R = 24 draws per level, as in v1.
+- D4, the reference ladder. L_ref = 1M, 4M, 16M, 64M, 256M, 1G, six
+  replicates per rung. From 4M upward the rungs coincide with refscale's
+  ladder, so the two studies are directly comparable.
+- D5, the fallback solves. Case (b) as proposed in section 6. For case (a),
+  when the rung exceeds the 1024 MB held cap, beta is solved by a STREAMED
+  bisection, not capped at the held size. The docstring states the
+  following:
+  - Each bisection step is one streamed pass over the same reference
+    stream, regenerated from its seed key. The log-ESS of that pass is
+    computed with the same chunked composition of exactcal._logsumexp that
+    E1 verifies against exactcal.log_ess_of.
+  - The bracket and the iteration count are those of
+    exactcal.beta_on_ensemble: lo = 1e-10, hi = 1e10, 200 geometric
+    bisections.
+  - Added criterion E2, streamed-solve equivalence. On the cell's lowest
+    held rung, the streamed bisection and exactcal.beta_on_ensemble on the
+    held array must agree to |beta_streamed / beta_held - 1| <= 1e-9.
+    Otherwise the streamed solve is not used and the cell is reported. Why
+    the tolerance is not bitwise: E1 guarantees the streamed and held
+    log-ESS only to relative 1e-12, so a bisection comparison that falls
+    within that margin of the goal can branch differently. Worked example (illustrative values):
+    held beta 6.028534528294139, streamed 6.028534528294161, ratio - 1 =
+    3.6e-15: pass.
+  - Open point D5a, for Rahul (not decided). A streamed solve has 200
+    sequential passes, each a full regeneration of the stream. It fits one
+    6-hour shard only if one pass at that rung takes under 21600 / 200 =
+    108 s. refscale's full run will print the measured wall of a 1G
+    replicate. If one pass is slower than that, the solve does not fit, and
+    under ledger K5 it cannot resume across Kaggle sessions. Two ways out,
+    neither decided:
+    - (i) refine the bracket with many betas per pass; refscale already
+      evaluates several betas on one stream;
+    - (ii) run the streamed solve on the laptop, where rule 17 resumption
+      works.
+    Plan mode prints the projected solve time per case-(a) cell once the
+    throughput table exists.
+- D6, the probe arm. Confirmed: its beta is the archived
+  mechanism.beta_for_target, which reproduces the archived probe protocol
+  exactly. The arm must be the archived protocol, not a reimplementation of
+  it.
+- D7, the throughput run. A calprec v2 smoke on Kaggle produces the
+  throughput table. It runs only after costprobe2's smoke and after
+  refscale has finished, with one Kaggle job at a time.

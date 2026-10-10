@@ -430,3 +430,18 @@ ENVIRONMENT.md (G2 closed).
       against.
   Consequence: under CLAUDE.md rules 7 and 16, numbers from either platform
   may be compared with archived numbers.
+- K5 (Kaggle, resumption; record of a limit, not fixed by decision). kgrun.py
+  bundles only the archive's .py files, exactcal_real.csv and
+  rmapj_real.csv, and scripts/*.py except kgrun.py (build_bundle). It never
+  uploads earlier run folders. CLAUDE.md rule 17 (amended 2026-10-10) allows
+  resumption from the completed task keys of previous run folders. Locally
+  that works, but on Kaggle a resumed job cannot see the folders it would
+  resume from.
+  Consequences, decided by Rahul on 2026-10-10:
+  - every Kaggle shard is sized to the 6-hour projected ceiling, half the
+    12-hour cap;
+  - Kaggle output is treated as lost if a session hits the cap, because it
+    is not known whether /kaggle/working survives;
+  - resumption is a recovery from fetched output only.
+  kgrun is not changed. It is fixed only if a shard actually needs to
+  resume on Kaggle. OPEN as a known limit.
