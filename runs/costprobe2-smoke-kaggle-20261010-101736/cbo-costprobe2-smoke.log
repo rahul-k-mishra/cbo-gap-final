@@ -1,0 +1,292 @@
+[{"stream_name":"stdout","time":1.5006137229999998,"data":"kgrun runner: job costprobe2-smoke\n"}
+,{"stream_name":"stdout","time":1.500678047,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.500685361,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.500689746,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.500693648,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.506246622,"data":"  listing  33 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.5062779960000001,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/costprobe2.py\n"}
+,{"stream_name":"stdout","time":1.5062818359999999,"data":"  args     --workers 4 --smoke\n"}
+,{"stream_name":"stdout","time":1.506284595,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/costprobe2.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --smoke\n"}
+,{"stream_name":"stdout","time":3.006141938,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":3.00619547,"data":"CBO-GAP costprobe2 -- cost of every rerun row, measured with each row's own dynamics\n"}
+,{"stream_name":"stdout","time":3.00623623,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":3.006241878,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":3.006246061,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":3.006250612,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4\n"}
+,{"stream_name":"stdout","time":3.006255218,"data":"  start    fork\n"}
+,{"stream_name":"stdout","time":3.006259364,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":3.00626345,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":3.006267734,"data":"  script   sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":3.006271701,"data":"  mode     smoke   shard 0 of 1   rows BETA-ISO,BETA-ANI,LAWPANEL,CONC,PROBEARM,ADAPT,TAU8,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,SIGMA,ANISO,RMAP,CLIFF,ONSET\n"}
+,{"stream_name":"stdout","time":3.006276198,"data":"  fixed    dt 0.01  lambda 1.0  iso sigma 0.2  probe tau0 0.1  probe r 0.5  probe sample 4000\n"}
+,{"stream_name":"stdout","time":3.006279764,"data":"  seeds    default_rng(SeedSequence(key)), full width; key = (ENTROPY 20261010, kind 41, module, objective, d, diffusion, law, J_inf, K, arm, variant, tau0e6, re6, beta_design e6, sigma_design e6); probe-beta kind 42; P3 kind 43\n"}
+,{"stream_name":"stdout","time":3.006285467,"data":"  P4       peak RSS \u003c= 3072 MB per worker;  A1-A3 ratio \u003c= 1.25;  P5 ceiling 21600 s per shard\n"}
+,{"stream_name":"stdout","time":3.006289838,"data":"\n"}
+,{"stream_name":"stdout","time":3.00629365,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.006297277,"data":"P1 -- ARCHIVE IDENTITY (the imported modules' own files)\n"}
+,{"stream_name":"stdout","time":3.006301412,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.006304995,"data":"  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  /kaggle/input/datasets/ericsom/cbo-gap-archive/ess_surface.py  ok\n"}
+,{"stream_name":"stdout","time":3.006332372,"data":"  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  /kaggle/input/datasets/ericsom/cbo-gap-archive/visibility.py  ok\n"}
+,{"stream_name":"stdout","time":3.006336769,"data":"  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  /kaggle/input/datasets/ericsom/cbo-gap-archive/mechanism.py  ok\n"}
+,{"stream_name":"stdout","time":3.006343966,"data":"  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  /kaggle/input/datasets/ericsom/cbo-gap-archive/control.py  ok\n"}
+,{"stream_name":"stdout","time":3.006348773,"data":"  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  /kaggle/input/datasets/ericsom/cbo-gap-archive/boundary.py  ok\n"}
+,{"stream_name":"stdout","time":3.006351559,"data":"  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  /kaggle/input/datasets/ericsom/cbo-gap-archive/regime.py  ok\n"}
+,{"stream_name":"stdout","time":3.006354099,"data":"  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  /kaggle/input/datasets/ericsom/cbo-gap-archive/law.py  ok\n"}
+,{"stream_name":"stdout","time":3.006356946,"data":"  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  /kaggle/input/datasets/ericsom/cbo-gap-archive/sigma.py  ok\n"}
+,{"stream_name":"stdout","time":3.0063595,"data":"  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  /kaggle/input/datasets/ericsom/cbo-gap-archive/crossed.py  ok\n"}
+,{"stream_name":"stdout","time":3.006362072,"data":"  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  /kaggle/input/datasets/ericsom/cbo-gap-archive/cliff.py  ok\n"}
+,{"stream_name":"stdout","time":3.006364617,"data":"  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  /kaggle/input/datasets/ericsom/cbo-gap-archive/regimemap.py  ok\n"}
+,{"stream_name":"stdout","time":3.006367316,"data":"  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  /kaggle/input/datasets/ericsom/cbo-gap-archive/exactcal.py  ok\n"}
+,{"stream_name":"stdout","time":3.006369848,"data":"  P1 PASS\n"}
+,{"stream_name":"stdout","time":3.006372145,"data":"\n"}
+,{"stream_name":"stdout","time":3.006374404,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.006377253,"data":"P0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts against Table 2\n"}
+,{"stream_name":"stdout","time":3.006379775,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.00638237,"data":"  BETA-ISO  M       ess_surface.py 241-246 M               ok\n"}
+,{"stream_name":"stdout","time":3.006384906,"data":"  BETA-ISO  betas   ess_surface.py 241-246 betas           ok\n"}
+,{"stream_name":"stdout","time":3.006387709,"data":"  BETA-ISO  dims    ess_surface.py 241-246 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006390184,"data":"  BETA-ISO  jgrid   ess_surface.py 241-246 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.00639255,"data":"  BETA-ISO  objs    ess_surface.py 273-273 obj             ok\n"}
+,{"stream_name":"stdout","time":3.006395016,"data":"  BETA-ANI  M       ess_surface.py 241-246 M               ok\n"}
+,{"stream_name":"stdout","time":3.00639771,"data":"  BETA-ANI  betas   ess_surface.py 241-246 aniso_betas     ok\n"}
+,{"stream_name":"stdout","time":3.006400152,"data":"  BETA-ANI  dims    ess_surface.py 241-246 aniso_dims      ok\n"}
+,{"stream_name":"stdout","time":3.006406634,"data":"  BETA-ANI  jgrid   ess_surface.py 241-246 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.006409149,"data":"  BETA-ANI  objs    ess_surface.py 280-280 obj             ok\n"}
+,{"stream_name":"stdout","time":3.006411702,"data":"  LAWPANEL  M       visibility.py 321-326 M               ok\n"}
+,{"stream_name":"stdout","time":3.006414293,"data":"  LAWPANEL  dims    visibility.py 321-326 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006416731,"data":"  LAWPANEL  jgrid   visibility.py 321-326 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.00641932,"data":"  LAWPANEL  laws    visibility.py 321-326 inits           ok\n"}
+,{"stream_name":"stdout","time":3.00642186,"data":"  LAWPANEL  objs    visibility.py 321-326 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006424261,"data":"  CONC      M       mechanism.py 294-297 M               ok\n"}
+,{"stream_name":"stdout","time":3.006426684,"data":"  CONC      dims    mechanism.py 294-297 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006429071,"data":"  CONC      jgrid   mechanism.py 294-297 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.006431435,"data":"  CONC      laws    mechanism.py 294-297 inits           ok\n"}
+,{"stream_name":"stdout","time":3.006433782,"data":"  CONC      objs    mechanism.py 294-297 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006436334,"data":"  CONC      taus    mechanism.py 294-297 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006438672,"data":"  PROBEARM  M       mechanism.py 294-297 M               ok\n"}
+,{"stream_name":"stdout","time":3.006441221,"data":"  PROBEARM  dims    mechanism.py 294-297 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006443617,"data":"  PROBEARM  jgrid   mechanism.py 294-297 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.006445988,"data":"  PROBEARM  laws    mechanism.py 294-297 inits           ok\n"}
+,{"stream_name":"stdout","time":3.006448457,"data":"  PROBEARM  objs    mechanism.py 294-297 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006450811,"data":"  PROBEARM  taus    mechanism.py 294-297 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006453194,"data":"  ADAPT     M       control.py 297-300 M               ok\n"}
+,{"stream_name":"stdout","time":3.006455577,"data":"  ADAPT     arms    control.py 305-305 arms            ok\n"}
+,{"stream_name":"stdout","time":3.006457947,"data":"  ADAPT     dims    control.py 297-300 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006460482,"data":"  ADAPT     jgrid   control.py 297-300 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.006462862,"data":"  ADAPT     objs    control.py 297-300 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006472828,"data":"  ADAPT     taus    control.py 297-300 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006475391,"data":"  TAU8      M       boundary.py 252-256 M               ok\n"}
+,{"stream_name":"stdout","time":3.006477783,"data":"  TAU8      dims    boundary.py 252-256 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006480303,"data":"  TAU8      jgrid   boundary.py 252-256 J_list          ok\n"}
+,{"stream_name":"stdout","time":3.006482788,"data":"  TAU8      objs    boundary.py 252-256 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006485115,"data":"  TAU8      taus    boundary.py 252-256 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006487874,"data":"  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181\n"}
+,{"stream_name":"stdout","time":3.006500212,"data":"  REFSIZE   M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":3.006502855,"data":"  REFSIZE   d       regime.py 512-512 dA              ok\n"}
+,{"stream_name":"stdout","time":3.006505257,"data":"  REFSIZE   jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.006513995,"data":"  REFSIZE   jinfs   regime.py 508-508 Jinfs           ok\n"}
+,{"stream_name":"stdout","time":3.006516391,"data":"  REFSIZE   objs    regime.py 511-511 objsA           ok\n"}
+,{"stream_name":"stdout","time":3.006518908,"data":"  REFSIZE   not checked against source: tau0 0.1, law centred, T 1.0 inside the cells comprehension, regime.py 513\n"}
+,{"stream_name":"stdout","time":3.006521416,"data":"  SYNTH     M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":3.00652396,"data":"  SYNTH     dims    regime.py 549-549 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006526327,"data":"  SYNTH     jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.006528843,"data":"  SYNTH     objs    regime.py 548-548 names           ok\n"}
+,{"stream_name":"stdout","time":3.006531213,"data":"  SYNTH     taus    regime.py 550-550 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006533906,"data":"  SYNTH     not checked against source: law centred inside the cells comprehension, regime.py 553\n"}
+,{"stream_name":"stdout","time":3.006536515,"data":"  NAMED     M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":3.00653902,"data":"  NAMED     dims    regime.py 576-576 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006541348,"data":"  NAMED     jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.006543886,"data":"  NAMED     objs    regime.py 575-575 names           ok\n"}
+,{"stream_name":"stdout","time":3.006546251,"data":"  NAMED     taus    regime.py 577-577 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006548906,"data":"  NAMED     not checked against source: law centred inside the cells comprehension, regime.py 578\n"}
+,{"stream_name":"stdout","time":3.006551395,"data":"  HORIZON   M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":3.006553733,"data":"  HORIZON   Ts      regime.py 599-599 Ts              ok\n"}
+,{"stream_name":"stdout","time":3.006556053,"data":"  HORIZON   jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.006558632,"data":"  HORIZON   laws    regime.py 600-600 inits           ok\n"}
+,{"stream_name":"stdout","time":3.006561093,"data":"  HORIZON   objs    regime.py 596-596 names           ok\n"}
+,{"stream_name":"stdout","time":3.006563664,"data":"  HORIZON   not checked against source: d 10 and tau0 0.1 inside the cells comprehension, regime.py 601\n"}
+,{"stream_name":"stdout","time":3.006566143,"data":"  GEOM      M       law.py 770-770 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.006568528,"data":"  GEOM      dims    law.py 522-522 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006571239,"data":"  GEOM      jgrid   law.py 523-523 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.006573794,"data":"  GEOM      objs    law.py 521-521 names           ok\n"}
+,{"stream_name":"stdout","time":3.006576136,"data":"  GEOM      taus    law.py 522-522 taus            ok\n"}
+,{"stream_name":"stdout","time":3.006578473,"data":"  SIGMA     M       sigma.py 238-238 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.006580996,"data":"  SIGMA     diffs   sigma.py 259-260 diffs           ok\n"}
+,{"stream_name":"stdout","time":3.006586234,"data":"  SIGMA     dims    sigma.py 253-257 dims            ok\n"}
+,{"stream_name":"stdout","time":3.006588685,"data":"  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.00659106,"data":"  SIGMA     objs    sigma.py 253-257 objs            ok\n"}
+,{"stream_name":"stdout","time":3.006593431,"data":"  SIGMA     rs      sigma.py 253-257 rs              ok\n"}
+,{"stream_name":"stdout","time":3.006595798,"data":"  SIGMA     taus    sigma.py 253-257 taus            ok\n"}
+,{"stream_name":"stdout","time":3.472254244,"data":"  ANISO     M       crossed.py 239-239 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.472290568,"data":"  ANISO     diffs   crossed.py 248-248 diffs           ok\n"}
+,{"stream_name":"stdout","time":3.472295947,"data":"  ANISO     dims    crossed.py 255-258 dims            ok\n"}
+,{"stream_name":"stdout","time":3.472300294,"data":"  ANISO     jgrid   crossed.py 255-258 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.472304791,"data":"  ANISO     objs    crossed.py 255-258 objs            ok\n"}
+,{"stream_name":"stdout","time":3.472308901,"data":"  ANISO     rs      crossed.py 255-258 rs              ok\n"}
+,{"stream_name":"stdout","time":3.472312902,"data":"  ANISO     sigmas  crossed.py 255-258 sigmas          ok\n"}
+,{"stream_name":"stdout","time":3.472317275,"data":"  ANISO     taus    crossed.py 255-258 taus            ok\n"}
+,{"stream_name":"stdout","time":3.4723213,"data":"  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262\n"}
+,{"stream_name":"stdout","time":3.472325589,"data":"  RMAP      M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.472329296,"data":"  RMAP      diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":3.472333215,"data":"  RMAP      dims    regimemap.py 300-302 dimsM           ok\n"}
+,{"stream_name":"stdout","time":3.47233612,"data":"  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.472338655,"data":"  RMAP      objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":3.47234102,"data":"  RMAP      rs      regimemap.py 300-302 rsM             ok\n"}
+,{"stream_name":"stdout","time":3.472343681,"data":"  RMAP      taus    regimemap.py 300-302 tausM           ok\n"}
+,{"stream_name":"stdout","time":3.472346105,"data":"  CLIFF     M       cliff.py 244-244 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.472348669,"data":"  CLIFF     diffs   cliff.py 253-253 diffs           ok\n"}
+,{"stream_name":"stdout","time":3.472351053,"data":"  CLIFF     dims    cliff.py 260-264 dims            ok\n"}
+,{"stream_name":"stdout","time":3.472353405,"data":"  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.472356729,"data":"  CLIFF     objs    cliff.py 260-264 objs            ok\n"}
+,{"stream_name":"stdout","time":3.472359179,"data":"  CLIFF     rs      cliff.py 260-264 rs              ok\n"}
+,{"stream_name":"stdout","time":3.47236154,"data":"  CLIFF     taus    cliff.py 260-264 taus            ok\n"}
+,{"stream_name":"stdout","time":3.472364113,"data":"  ONSET     M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":3.472366516,"data":"  ONSET     diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":3.472368992,"data":"  ONSET     dims    regimemap.py 300-302 dimsD           ok\n"}
+,{"stream_name":"stdout","time":3.472382567,"data":"  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":3.472385117,"data":"  ONSET     objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":3.472388431,"data":"  ONSET     rs      regimemap.py 300-302 rsD             ok\n"}
+,{"stream_name":"stdout","time":3.472392399,"data":"  ONSET     tau     regimemap.py 304-304 tauD            ok\n"}
+,{"stream_name":"stdout","time":3.472394925,"data":"  BETA-ISO   cells   42 (Table 2   42)   realizations   840 (Table 2   840)   units   6   ok\n"}
+,{"stream_name":"stdout","time":3.472397673,"data":"  BETA-ANI   cells   12 (Table 2   12)   realizations   240 (Table 2   240)   units   4   ok\n"}
+,{"stream_name":"stdout","time":3.472400157,"data":"  LAWPANEL   cells  144 (Table 2  144)   realizations  2880 (Table 2  2880)   units  36   ok\n"}
+,{"stream_name":"stdout","time":3.47240406,"data":"  CONC       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok\n"}
+,{"stream_name":"stdout","time":3.47240664,"data":"  PROBEARM   cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok\n"}
+,{"stream_name":"stdout","time":3.472409176,"data":"  ADAPT      cells   72 (Table 2   72)   realizations  1080 (Table 2  1080)   units  36   ok\n"}
+,{"stream_name":"stdout","time":3.472411725,"data":"  TAU8       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  18   ok\n"}
+,{"stream_name":"stdout","time":3.47241418,"data":"  REFSIZE    cells   12 (Table 2   12)   realizations   144 (Table 2   144)   units  12   ok\n"}
+,{"stream_name":"stdout","time":3.472416651,"data":"  SYNTH      cells   72 (Table 2   72)   realizations   864 (Table 2   864)   units  36   ok\n"}
+,{"stream_name":"stdout","time":3.472419421,"data":"  NAMED      cells   36 (Table 2   36)   realizations   432 (Table 2   432)   units  18   ok\n"}
+,{"stream_name":"stdout","time":3.472421928,"data":"  HORIZON    cells   24 (Table 2   24)   realizations   288 (Table 2   288)   units  12   ok\n"}
+,{"stream_name":"stdout","time":3.47242441,"data":"  GEOM       cells  336 (Table 2  336)   realizations  4032 (Table 2  4032)   units  42   ok\n"}
+,{"stream_name":"stdout","time":3.472426877,"data":"  SIGMA      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok\n"}
+,{"stream_name":"stdout","time":3.472429437,"data":"  ANISO      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok\n"}
+,{"stream_name":"stdout","time":3.472431891,"data":"  RMAP       cells  240 (Table 2  240)   realizations  2880 (Table 2  2880)   units  12   ok\n"}
+,{"stream_name":"stdout","time":3.472434362,"data":"  CLIFF      cells  144 (Table 2  144)   realizations  1728 (Table 2  1728)   units  16   ok\n"}
+,{"stream_name":"stdout","time":3.472436819,"data":"  ONSET      cells  180 (Table 2  180)   realizations  2160 (Table 2  2160)   units  30   ok\n"}
+,{"stream_name":"stdout","time":3.472439558,"data":"  P0 PASS\n"}
+,{"stream_name":"stdout","time":3.472441948,"data":"\n"}
+,{"stream_name":"stdout","time":3.47244429,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472446868,"data":"PLAN\n"}
+,{"stream_name":"stdout","time":3.472449486,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472451989,"data":"  main probes 0   check probes 22   total 22\n"}
+,{"stream_name":"stdout","time":3.472454389,"data":"\n"}
+,{"stream_name":"stdout","time":3.472456641,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472461486,"data":"T1 -- PER-TASK TIMEOUT\n"}
+,{"stream_name":"stdout","time":3.472465022,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472467613,"data":"  rate 5.074e-07 s per proxy unit, from logs/costprobe.log, 24 laptop probes (embedded)\n"}
+,{"stream_name":"stdout","time":3.472470106,"data":"  largest unit cliff ackley d=10 anisotropic J_inf=50000 T=1.0 J10 -  proxy 6.011e+07\n"}
+,{"stream_name":"stdout","time":3.472472589,"data":"  projected wall of the largest unit 30.5 s;  TIMEOUT_S = 5.0 x 30.5 = 152.5 s\n"}
+,{"stream_name":"stdout","time":3.472475051,"data":"\n"}
+,{"stream_name":"stdout","time":3.47247763,"data":"  run dir  /kaggle/working/costprobe2-20261010-044642-smoke\n"}
+,{"stream_name":"stdout","time":3.472480157,"data":"\n"}
+,{"stream_name":"stdout","time":3.472482636,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472485216,"data":"P3 -- OBJECTIVE IDENTITY (reported; no decision rests on it)\n"}
+,{"stream_name":"stdout","time":3.472487662,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.4724902220000002,"data":"  126 comparisons, 22 differ\n"}
+,{"stream_name":"stdout","time":3.4724926050000002,"data":"    DIFFERS  ess_surface vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472495085,"data":"    DIFFERS  visibility vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472497525,"data":"    DIFFERS  mechanism vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472499957,"data":"    DIFFERS  control vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.47250258,"data":"    DIFFERS  boundary vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472505067,"data":"    DIFFERS  regime vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472507527,"data":"    DIFFERS  law vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472509981,"data":"    DIFFERS  sigma vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472512437,"data":"    DIFFERS  crossed vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472514878,"data":"    DIFFERS  cliff vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.47251738,"data":"    DIFFERS  regimemap vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":3.472519824,"data":"    DIFFERS  ess_surface vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472522468,"data":"    DIFFERS  visibility vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.4725249590000002,"data":"    DIFFERS  mechanism vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.47252745,"data":"    DIFFERS  control vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.4725300040000002,"data":"    DIFFERS  boundary vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472532454,"data":"    DIFFERS  regime vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472537398,"data":"    DIFFERS  law vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.4725400779999998,"data":"    DIFFERS  sigma vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472542514,"data":"    DIFFERS  crossed vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472545157,"data":"    DIFFERS  cliff vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472547619,"data":"    DIFFERS  regimemap vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":3.472550343,"data":"\n"}
+,{"stream_name":"stdout","time":3.47255277,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3.472555543,"data":"PROBES  22 task(s), at most 4 at once, one fresh process each, timeout 152 s\n"}
+,{"stream_name":"stdout","time":3.472558038,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":6.1160572,"data":"  [   1/22  ] ess_surface ackley            d=2   anisotropic Jinf=50000  T=1.0 J10   -        wall      2.5 s  RSS    53.9 MB  elapsed        3 s\n"}
+,{"stream_name":"stdout","time":6.124517636,"data":"  [   2/22  ] ess_surface ackley            d=2   anisotropic Jinf=50000  T=1.0 J10   -        wall      2.5 s  RSS    53.9 MB  elapsed        3 s\n"}
+,{"stream_name":"stdout","time":6.945175486,"data":"  [   3/22  ] visibility  ackley            d=2   none        Jinf=50000  T=1.0 J19   -        wall      3.4 s  RSS    53.9 MB  elapsed        3 s\n"}
+,{"stream_name":"stdout","time":6.951632943,"data":"  [   4/22  ] visibility  ackley            d=2   none        Jinf=50000  T=1.0 J19   -        wall      3.4 s  RSS    54.1 MB  elapsed        3 s\n"}
+,{"stream_name":"stdout","time":9.177508807,"data":"  [   5/22  ] mechanism   ackley            d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.8 s  RSS    53.6 MB  elapsed        6 s\n"}
+,{"stream_name":"stdout","time":9.185163184,"data":"  [   6/22  ] mechanism   ackley            d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.8 s  RSS    53.7 MB  elapsed        6 s\n"}
+,{"stream_name":"stdout","time":11.402642998,"data":"  [   7/22  ] control     ackley            d=5   none        Jinf=50000  T=1.0 J10   fixed    wall      4.3 s  RSS    67.4 MB  elapsed        8 s\n"}
+,{"stream_name":"stdout","time":11.40715843,"data":"  [   8/22  ] control     ackley            d=5   none        Jinf=50000  T=1.0 J10   fixed    wall      4.2 s  RSS    67.5 MB  elapsed        8 s\n"}
+,{"stream_name":"stdout","time":13.63045344,"data":"  [   9/22  ] boundary    ackley            d=5   none        Jinf=50000  T=1.0 J10   -        wall      4.3 s  RSS    67.2 MB  elapsed       10 s\n"}
+,{"stream_name":"stdout","time":13.641638251,"data":"  [  10/22  ] boundary    ackley            d=5   none        Jinf=50000  T=1.0 J10   -        wall      4.4 s  RSS    67.3 MB  elapsed       10 s\n"}
+,{"stream_name":"stdout","time":13.855385865,"data":"  [  11/22  ] regime      ackley            d=10  none        Jinf=12500  T=1.0 J10b  -        wall      2.4 s  RSS    55.7 MB  elapsed       10 s\n"}
+,{"stream_name":"stdout","time":13.860197747,"data":"  [  12/22  ] regime      ackley            d=10  none        Jinf=12500  T=1.0 J10b  -        wall      2.4 s  RSS    55.8 MB  elapsed       10 s\n"}
+,{"stream_name":"stdout","time":18.289162701,"data":"  [  13/22  ] law         syn_k100_r0_w1    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.5 s  RSS    66.9 MB  elapsed       15 s\n"}
+,{"stream_name":"stdout","time":18.295473573,"data":"  [  14/22  ] law         syn_k100_r0_w1    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.5 s  RSS    66.7 MB  elapsed       15 s\n"}
+,{"stream_name":"stdout","time":19.107137749,"data":"  [  15/22  ] sigma       ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      5.0 s  RSS    65.6 MB  elapsed       16 s\n"}
+,{"stream_name":"stdout","time":19.116313161,"data":"  [  16/22  ] sigma       ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      5.0 s  RSS    65.4 MB  elapsed       16 s\n"}
+,{"stream_name":"stdout","time":23.138446652,"data":"  [  17/22  ] crossed     ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      4.7 s  RSS    65.5 MB  elapsed       20 s\n"}
+,{"stream_name":"stdout","time":23.144600411,"data":"  [  18/22  ] crossed     ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      4.7 s  RSS    65.6 MB  elapsed       20 s\n"}
+,{"stream_name":"stdout","time":27.771891597,"data":"  [  19/22  ] cliff       ackley            d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      8.5 s  RSS    83.2 MB  elapsed       24 s\n"}
+,{"stream_name":"stdout","time":27.78012054,"data":"  [  20/22  ] cliff       ackley            d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      8.5 s  RSS    83.3 MB  elapsed       24 s\n"}
+,{"stream_name":"stdout","time":28.590991133,"data":"  [  21/22  ] regimemap   ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      5.4 s  RSS    65.8 MB  elapsed       25 s\n"}
+,{"stream_name":"stdout","time":28.599651227,"data":"  [  22/22  ] regimemap   ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      5.4 s  RSS    65.9 MB  elapsed       25 s\n"}
+,{"stream_name":"stdout","time":28.653078123,"data":"  probes finished in 25.1 s\n"}
+,{"stream_name":"stdout","time":28.653130356,"data":"\n"}
+,{"stream_name":"stdout","time":28.653137307,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":28.653141428,"data":"SMOKE: the A3 pair of each module; no projection\n"}
+,{"stream_name":"stdout","time":28.65314538,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":28.653149976999998,"data":"  ess_surface  ackley            d=2   member 0 wall 2.477 s  RSS 53.9 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653153725,"data":"  ess_surface  ackley            d=2   member 1 wall 2.489 s  RSS 53.9 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653156988,"data":"  visibility   ackley            d=2   member 0 wall 3.379 s  RSS 53.9 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653160402,"data":"  visibility   ackley            d=2   member 1 wall 3.361 s  RSS 54.1 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653163914,"data":"  mechanism    ackley            d=2   member 0 wall 2.785 s  RSS 53.6 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653167685,"data":"  mechanism    ackley            d=2   member 1 wall 2.807 s  RSS 53.7 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653171176,"data":"  control      ackley            d=5   member 0 wall 4.272 s  RSS 67.4 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653174909,"data":"  control      ackley            d=5   member 1 wall 4.247 s  RSS 67.5 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653178955,"data":"  boundary     ackley            d=5   member 0 wall 4.326 s  RSS 67.2 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653182508,"data":"  boundary     ackley            d=5   member 1 wall 4.414 s  RSS 67.3 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653186311,"data":"  regime       ackley            d=10  member 0 wall 2.390 s  RSS 55.7 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653226265,"data":"  regime       ackley            d=10  member 1 wall 2.409 s  RSS 55.8 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653234083,"data":"  law          syn_k100_r0_w1    d=5   member 0 wall 4.476 s  RSS 66.9 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653238123,"data":"  law          syn_k100_r0_w1    d=5   member 1 wall 4.462 s  RSS 66.7 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.65324202,"data":"  sigma        ackley            d=5   member 0 wall 5.006 s  RSS 65.6 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653245568,"data":"  sigma        ackley            d=5   member 1 wall 5.007 s  RSS 65.4 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653249697,"data":"  crossed      ackley            d=5   member 0 wall 4.673 s  RSS 65.5 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653253301,"data":"  crossed      ackley            d=5   member 1 wall 4.705 s  RSS 65.6 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653257053,"data":"  cliff        ackley            d=10  member 0 wall 8.468 s  RSS 83.2 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653260908,"data":"  cliff        ackley            d=10  member 1 wall 8.461 s  RSS 83.3 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653265638,"data":"  regimemap    ackley            d=5   member 0 wall 5.368 s  RSS 65.8 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653271808,"data":"  regimemap    ackley            d=5   member 1 wall 5.365 s  RSS 65.9 MB  end ok\n"}
+,{"stream_name":"stdout","time":28.653275863,"data":"\n"}
+,{"stream_name":"stdout","time":28.653279426,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":28.65328332,"data":"FINALIZE -- P2, A1 to A3, A-ERR, P4, P5 from 22 result rows (W = 4)\n"}
+,{"stream_name":"stdout","time":28.653287348,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":28.653291468,"data":"\n"}
+,{"stream_name":"stdout","time":28.653294995,"data":"  check                      module           wall 0     wall 1    ratio  verdict\n"}
+,{"stream_name":"stdout","time":28.653299441,"data":"  A3-boundary                boundary          4.326      4.414   1.0203  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653303921,"data":"  A3-cliff                   cliff             8.468      8.461   1.0008  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653307904000002,"data":"  A3-control                 control           4.272      4.247   1.0059  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653312298,"data":"  A3-crossed                 crossed           4.673      4.705   1.0068  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653316761,"data":"  A3-ess_surface             ess_surface       2.477      2.489   1.0048  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653321125,"data":"  A3-law                     law               4.476      4.462   1.0031  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653325549,"data":"  A3-mechanism               mechanism         2.785      2.807   1.0079  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653335545,"data":"  A3-regime                  regime            2.390      2.409   1.0079  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653340497,"data":"  A3-regimemap               regimemap         5.368      5.365   1.0006  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653345639,"data":"  A3-sigma                   sigma             5.006      5.007   1.0002  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.653350199,"data":"  A3-visibility              visibility        3.379      3.361   1.0054  P2 PASS; noise ratio within 1.25   [neighbour load uncontrolled; evidence, not a measurement]\n"}
+,{"stream_name":"stdout","time":28.65335493,"data":"\n"}
+,{"stream_name":"stdout","time":28.653358521,"data":"  P2 (one A3 pair per module, bitwise E_J): PASS\n"}
+,{"stream_name":"stdout","time":28.653365761,"data":"\n"}
+,{"stream_name":"stdout","time":28.653368989,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":28.653372548,"data":"files  /kaggle/working/costprobe2-20261010-044642-smoke\n"}
+,{"stream_name":"stdout","time":28.653376483,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":28.860625663,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":32.529517454,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":32.529591562,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":33.11766307,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":33.117725694,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":36.030323867,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":37.911948499,"data":"[NbConvertApp] Writing 287047 bytes to __results__.html\n"}
+]

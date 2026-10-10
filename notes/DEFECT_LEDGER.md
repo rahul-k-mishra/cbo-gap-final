@@ -284,6 +284,52 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   tau(beta) is reported with its uncertainty rather than assumed to equal
   the target. OPEN (to be written into the manuscript's calibration
   section).
+- N20 (finding, not a defect; P3 of the costprobe2 smoke). Source:
+  runs/costprobe2-smoke-kaggle-20261010-101736/cbo-costprobe2-smoke.log,
+  section P3 ("126 comparisons, 22 differ"). File:
+  costprobe2-20261010-044642-smoke/costprobe2_objcheck.csv.
+  - Rastrigin differs from exactcal's in all eleven other modules, with
+    max |diff| 1.421e-14 at d = 2 and 2.274e-13 at d = 40. Every other
+    objective in the comparison matches bitwise.
+  - The two expressions, read in the archived source:
+    - exactcal.py, f_rastrigin (def at line 98):
+          np.sum(X * X - 10.0 * np.cos(2.0 * np.pi * X) + 10.0, axis=1)
+    - the other eleven modules (ess_surface 105, visibility 124,
+      mechanism 134, control 122, boundary 118, regime 132, law 140,
+      sigma 118, crossed 124, cliff 131, regimemap 151; def lines):
+          np.sum(X * X + 10.0 * (1.0 - np.cos(2.0 * np.pi * X)), axis=1)
+  - Algebraically these are the same function, x^2 + 10 (1 - cos 2 pi x).
+    They group and order the floating-point operations differently:
+    x^2 - 10 cos + 10 against x^2 + 10 (1 - cos). Different roundings can
+    therefore give results that differ in the last bits. This is an
+    arithmetic-ordering difference in one formula, not a different
+    objective.
+  - The cause of the observed size, beyond "different evaluation order", is
+    not established. I did not trace the rounding.
+  - Consequence: a beta calibrated through exactcal's rastrigin and a
+    trajectory evolved through another module's rastrigin would use
+    objectives that are equal only up to rounding. This is evidence for
+    RERUN_PLAN F5 and CALPREC_V2_SPEC section 3 (calibrate through each
+    row's own module), not a defect in either.
+  No action beyond that rule. CLOSED as a record.
+- N21 (repo, amendment of a pre-registered script). scripts/refscale.py was
+  amended after its first full execution (N18; first executed at c6dc0cb).
+  - The amendment adds one flag, --objectives, which selects a subset of
+    the objectives {ackley, sphere}. It is additive:
+    - no criterion, threshold, seed rule, ladder rule or default is
+      changed;
+    - with the flag absent, objs = OBJS in the original order, so every
+      task, seed key, print and output file is as in the version first
+      executed;
+    - seed keys depend on the objective's code, not on the selection, so a
+      sphere-only run draws the same calibration and reference streams as
+      a run of both objectives.
+  - Purpose: the follow-up 4G rung on sphere only (N18, "O3 open"). That
+    run is a follow-up decided by Rahul on 2026-10-10 AFTER seeing refscale's
+    result. C5 (range/median <= 0.025) and D1 (drift <= 0.025) are
+    unchanged, and the run's verdicts are read under them.
+  - Recorded in refscale.py's docstring ("AMENDMENT (2026-10-10, ...)").
+  OPEN until the follow-up run is fetched.
 
 ## Checked and found sound
 

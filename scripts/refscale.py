@@ -186,6 +186,15 @@ ORDER OF WORK
   largest first. The gate runs before the expensive rungs so a failure costs
   minutes, not hours.
 
+AMENDMENT (2026-10-10, after the first full execution; ledger N21)
+  --objectives NAME[,NAME] restricts the run to a subset of the two objectives,
+  for the follow-up 4G rung on sphere only. It selects objectives and nothing
+  else: no criterion, threshold, seed rule, ladder rule or default changes.
+  Seed keys depend on the objective's code, not on which objectives are run,
+  so a selected objective's calibration and references at a given (n, rep)
+  are the same streams as in a run of both. With the flag absent the run is
+  identical to the version first executed (c6dc0cb).
+
 SMOKE MODE (--smoke): ladder 4M, 16M, two replicates, every phase as above.
   It prints measured throughput per objective, and a PROJECTION (a lower
   bound from that throughput, not a measurement) of the full run's wall time
@@ -393,6 +402,9 @@ def main():
     p.add_argument("--reps", type=int, default=None, help="must be 6 outside --smoke")
     p.add_argument("--ncal", type=int, default=N_CAL)
     p.add_argument("--chunk", type=int, default=CHUNK)
+    p.add_argument("--objectives", default=None,
+                   help="comma-separated subset of {}; default all, in that order. "
+                        "Selects objectives only (amendment 2026-10-10)".format(",".join(OBJS)))
     p.add_argument("--archive", default=None,
                    help="path to the deposited archive; default <repo>/zenodo-v1, "
                         "or CBOGAP_ARCHIVE. On Kaggle: the path the kgrun runner finds "
@@ -418,6 +430,19 @@ def main():
                          "two lowest)\n")
         return 2
     gate_rungs = ladder[:2]
+    # Amendment 2026-10-10 (ledger N21): --objectives selects a subset of OBJS
+    # and nothing else. Absent, objs is OBJS in its original order, so every
+    # task, seed key, print and file is as before the amendment.
+    if a.objectives is None:
+        objs = list(OBJS)
+    else:
+        want = [o for o in a.objectives.split(",") if o]
+        bad = [o for o in want if o not in OBJS]
+        if bad or not want or len(set(want)) != len(want):
+            sys.stderr.write("setup error: --objectives must be distinct names from {}; "
+                             "got {}\n".format(OBJS, a.objectives))
+            return 2
+        objs = [o for o in OBJS if o in want]
     chunk, n_cal = a.chunk, a.ncal
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -433,7 +458,7 @@ def main():
         platform.platform(), platform.machine(), os.cpu_count(), a.workers))
     print("  archive  {}".format(ARCH))
     print("  mode     {}".format("SMOKE (timing; verdicts are not results)" if a.smoke else "FULL"))
-    print("  cells    objectives {}  d {}  law {}  nominal tau0 {}".format(OBJS, D, LAW, TAUS))
+    print("  cells    objectives {}  d {}  law {}  nominal tau0 {}".format(objs, D, LAW, TAUS))
     print("  calib.   N_CAL {}  seed kind {}".format(n_cal, KIND_CAL))
     print("  ladder   {}   replicates {}   chunk {}   seed kind {}".format(
         ladder, reps, chunk, KIND_REF))
@@ -453,8 +478,8 @@ def main():
     pool = Pool(processes=a.workers, maxtasksperchild=1)
 
     # Phase A: calibration ------------------------------------------------
-    print("PHASE A  calibration, {} cells".format(len(OBJS) * len(TAUS)))
-    cal_tasks = [(obj, tau, n_cal, chunk) for obj in OBJS for tau in TAUS]
+    print("PHASE A  calibration, {} cells".format(len(objs) * len(TAUS)))
+    cal_tasks = [(obj, tau, n_cal, chunk) for obj in objs for tau in TAUS]
     cals = pool.map(calibrate, cal_tasks)
     beta_of = {}
     with open(os.path.join(outdir, "refscale_calibration.csv"), "x", newline="") as fh:
@@ -482,11 +507,11 @@ def main():
     sys.stdout.flush()
 
     # Phases B and C: references -------------------------------------------
-    betas = {obj: [beta_of[(obj, tau)] for tau in TAUS] for obj in OBJS}
+    betas = {obj: [beta_of[(obj, tau)] for tau in TAUS] for obj in objs}
 
     def tasks_for(rungs, hold):
         t = [(obj, betas[obj], n, rep, chunk, hold)
-             for n in rungs for obj in OBJS for rep in range(reps)]
+             for n in rungs for obj in objs for rep in range(reps)]
         t.sort(key=lambda x: -x[2])            # largest first
         return t
 
@@ -501,7 +526,7 @@ def main():
 
     tau_hats = {}                               # (obj, tau, n) -> list of tau_hat
     e1_failures = []
-    throughput = {obj: [0, 0.0] for obj in OBJS}  # points, wall seconds
+    throughput = {obj: [0, 0.0] for obj in objs}  # points, wall seconds
 
     def run_phase(label, tasks):
         n_done = 0
@@ -555,7 +580,7 @@ def main():
 
     nonlocal_peak = [0.0]
     print("PHASE B  equivalence gate E1 on rungs {}, {} tasks, largest first".format(
-        gate_rungs, len(OBJS) * len(gate_rungs) * reps))
+        gate_rungs, len(objs) * len(gate_rungs) * reps))
     run_phase("B", tasks_for(gate_rungs, True))
     print()
     if e1_failures:
@@ -574,7 +599,7 @@ def main():
     rest = [n for n in ladder if n not in gate_rungs]
     if rest:
         print("PHASE C  rungs {}, {} tasks, largest first".format(
-            rest, len(OBJS) * len(rest) * reps))
+            rest, len(objs) * len(rest) * reps))
         run_phase("C", tasks_for(rest, False))
         print()
     real_fh.close()
@@ -588,7 +613,7 @@ def main():
     print("=" * 96)
     print("RUNG TABLE  (every value at the cell's fixed beta; tau0 is nominal)")
     print("=" * 96)
-    for obj in OBJS:
+    for obj in objs:
         for i, tau in enumerate(TAUS):
             beta = betas[obj][i]
             exact = exact_tau_sphere(beta, D) if obj == "sphere" else None
@@ -674,7 +699,7 @@ def main():
     # Throughput and, in smoke mode, the projection ---------------------------
     print("=" * 96)
     print("MEASURED  peak RSS of any reference task {:.0f} MB".format(peak_task_rss))
-    for obj in OBJS:
+    for obj in objs:
         pts, sec = throughput[obj]
         print("MEASURED  {} throughput {:.3g} points per second per worker "
               "({} points in {:.1f} worker-seconds)".format(obj, pts / sec, pts, sec))
@@ -685,7 +710,7 @@ def main():
         for lad in PROJ_LADDERS:
             work = 0.0
             longest = 0.0
-            for obj in OBJS:
+            for obj in objs:
                 rate = throughput[obj][0] / throughput[obj][1]
                 work += REPS * sum(lad) / rate
                 longest = max(longest, max(lad) / rate)

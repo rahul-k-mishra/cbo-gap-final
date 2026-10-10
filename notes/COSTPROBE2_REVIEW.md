@@ -529,3 +529,57 @@ What the log shows:
   failed, because both sides come from the module's SYNTH.
 - A2, A3, A4, A5, A6, A9, A11 to A15, B5 to B9, D2, D3, E1, E2, R3, R5,
   R6: unchanged, and none can be exercised without dynamics.
+
+## 2026-10-10: the Kaggle smoke run, and what it exercised
+
+Source: runs/costprobe2-smoke-kaggle-20261010-101736/cbo-costprobe2-smoke.log
+(script sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b,
+which is 2c20653). Python 3.13.15, NumPy 2.1.3, 4 cpus, 4 workers, start
+fork, thread variables all 1. Exit 0. 22 check probes, 0 main probes.
+
+### Exercised for real by the smoke, on Kaggle
+
+- C2. A SeedSequence passed unchanged into the archived one_realisation
+  works in all eleven dynamics modules on NumPy 2.1.3: 22 rows, all "ok".
+- C3. The start method is fork on Kaggle's Python 3.13.15.
+- C4. All twelve archive modules import on Kaggle's Python 3.13.15, and the
+  eleven dynamics modules each ran a realization.
+- C1, for the modules whose probe beta comes from solve_beta: control,
+  boundary, regime, law, sigma, crossed, cliff and regimemap each returned
+  a beta, and their realizations ran. The other three paths ran too:
+  ess_surface's design value, visibility's scales_of and mechanism's
+  beta_for_target. Whether those betas are right was not checked; they are
+  timing inputs only.
+- A10. All five thread variables read 1 on Kaggle.
+- B1/P0 and B2/P1, on Kaggle: P0 PASS and P1 PASS, with every module
+  inside the Kaggle mount.
+- B3, run side. P2 PASS for each of the eleven A3 pairs, so E_J is
+  bitwise repeatable per module across two processes on Kaggle. It still
+  does not show that distinct keys give distinct streams.
+- P3 ran on Kaggle: "126 comparisons, 22 differ", all rastrigin (ledger
+  N20). B7 still holds: the test points are not each row's initial law.
+- E3, partly. The process-per-task scheduler and the Pipe returned all 22
+  results with at most 4 at once, in 25.1 s. The timeout (152.5 s) was
+  computed but never reached, so the timeout branch and the "worker exited"
+  branch have not been exercised.
+- A3 noise, for each module's smallest unit only: ratios 1.0002 to 1.0203.
+- P4, for the smallest units only: peak RSS 53.6 to 83.3 MB.
+
+### Still untested, because the smoke runs no main probes and makes no projection
+
+- P5 and its labels: A1 (division by W), A7 and A8 (SCALED against lower
+  bound), the shard count.
+- A1 and A2 checks, with A2 and A3's load caveat. No A1 or A2 pair ran.
+- A-ERR and B4's error paths. No member errored, so the FAIL-with-error
+  path is untested, for A3 and for A1/A2.
+- P4 at the large units: d = 80, J_inf = 100000 (RERUN_PLAN F6), the J19
+  grid at d = 40, the adaptive arm at d = 40.
+- R3, the timeout's adequacy for large units. The full run's timeout is the
+  plan's 2440.0 s, from the embedded laptop rate. The smoke's measured
+  walls are on small units only. --timing-from cannot use the smoke folder
+  on Kaggle, because kgrun does not upload run folders (ledger K5).
+- D1 / merge_folders and R4's finalize branch. No finalize from folders has
+  run.
+- Resume under rule 17.
+- A4, A5, A6, A9, A11 to A15, B5 (one pair per module), B6, B9, D2, D3, E2
+  (non-finite E_J not examined), R1, R5, R6: unchanged.

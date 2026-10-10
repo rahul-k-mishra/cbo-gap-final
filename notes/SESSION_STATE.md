@@ -65,16 +65,9 @@ full run finished.
 
 ## 2. In flight
 
-- costprobe2 smoke on Kaggle, job "costprobe2-smoke".
-  - A kgrun process was running at 2026-10-10 10:14 (dataset version
-    "kgrun costprobe2-smoke 2026-10-10T10:14:44"), with
-    logs/kgrun-costprobe2-smoke.log open.
-  - The log is not committed while kgrun holds it.
-  - The script is scripts/costprobe2.py. This is the 2c20653 version
-    (md5 5813a90cf36399bb8a320e5d6e9dcaee) if the working tree matched
-    HEAD when kgrun assembled the bundle. The Kaggle log's sha256 line will
-    confirm it.
-- Nothing else is in flight. refscale has finished (section 3.0).
+- Nothing is running. Next, one Kaggle job at a time:
+  1. costprobe2 full, two shards;
+  2. the refscale 4G sphere-only follow-up (ledger N21).
 
 ## 3. Measured so far about the science
 
@@ -117,6 +110,28 @@ not results.
 - calprec v2 cap n_max = 1G (notes/CALPREC_V2_SPEC.md D1). The reference
   estimate is the median of six (section 11a), a forward-looking decision;
   refscale's own verdict is unchanged.
+
+### 3.0b costprobe2 smoke (Kaggle): plumbing and P2 pass; no projection
+
+Source: runs/costprobe2-smoke-kaggle-20261010-101736/cbo-costprobe2-smoke.log.
+logs/kgrun-costprobe2-smoke.log shows "finished after 67 s".
+
+- Header: python 3.13.15, numpy 2.1.3, cpus 4, workers 4, start fork, all
+  five thread variables = 1. Script sha256 ea5cb2e1...f64b, which is
+  scripts/costprobe2.py at 2c20653.
+- P1 PASS. All twelve archive modules were imported from the Kaggle mount,
+  and every hash is "ok".
+- P0 PASS: every factor "ok", six NOT_CHECKED lines, all seventeen rows
+  reproduce Table 2.
+- PLAN: 0 main probes, 22 check probes, the A3 pair of each of the eleven
+  dynamics modules.
+- T1: rate 5.074e-07 (the embedded laptop rate). Largest unit cliff ackley
+  d = 10 anisotropic, projected 30.5 s; TIMEOUT_S = 152.5 s. No task
+  reached it: all 22 rows end "ok", walls 2.390 to 8.468 s.
+- Peak RSS 53.6 to 83.3 MB.
+- P2 PASS for all eleven A3 pairs. Noise ratios 1.0002 to 1.0203.
+- P3: "126 comparisons, 22 differ", all rastrigin (ledger N20).
+- Exit code 0. Smoke mode projects nothing, by design.
 
 ### 3.1 calprec, the calibration-size question (laptop)
 
@@ -214,8 +229,9 @@ Source: runs/refscale-smoke-kaggle-20261009-102942/cbo-refscale-smoke.log.
 - Archive: ARC1, ARC2, ARC3, ARC4, ARC5 open. ARC6 and ARC7 need no action.
   S3 is declared and folded into ARC1.
 - Newly found: N1 to N15, all open; N16 (calprec seed reduction), N17
-  (MECH/CAL collapse, R7), N18 (refscale verdict; O3 open) and N19
-  (tight-target calibration error), all open.
+  (MECH/CAL collapse, R7), N18 (refscale verdict; O3 open), N19
+  (tight-target calibration error) and N21 (refscale.py amended, additive), open;
+  N20 (rastrigin evaluation order) closed as a record.
 - Kaggle: K5 (no resumption on Kaggle), a known limit.
 - Closed: G1 (e945d17), G2 (23a46c8), G3 (acf1786), K1 (closed through K3),
   K3 (4c9824c). K4 is a record, not a defect.
