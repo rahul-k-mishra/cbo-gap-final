@@ -225,6 +225,9 @@ MODES
               folder's parameters except the shard index must agree (script
               hash, mode, rows, nshards, workers, Python, NumPy), or it
               stops with exit 2.
+              The rows finalized are those stored in the folders' params
+              file, not this invocation's --rows. If --rows is given and
+              differs from the folders' rows, finalize stops with exit 2.
               A REPEATED TASK ID is accepted only when every earlier
               occurrence is an error row ("err"); the later row replaces it.
               A repeated id whose earlier occurrence is complete ("ok")
@@ -1322,7 +1325,9 @@ def merge_folders(folders):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--workers", type=int, default=2)
-    p.add_argument("--rows", default=",".join(ROW_ORDER))
+    p.add_argument("--rows", default=None,
+                   help="comma-separated rows; default all. With --finalize the rows come "
+                        "from the folders, and a --rows that disagrees is an error")
     p.add_argument("--plan", action="store_true")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--shard", type=int, default=0)
@@ -1335,7 +1340,8 @@ def main():
     p.add_argument("--outdir", default=None,
                    help="output root; default <repo>/runs or CBOGAP_OUTDIR")
     a = p.parse_args()
-    sel = [r for r in a.rows.split(",") if r]
+    rows_given = a.rows is not None
+    sel = [r for r in (a.rows if rows_given else ",".join(ROW_ORDER)).split(",") if r]
     for r in sel:
         if r not in TABLE2:
             sys.stderr.write("setup error: unknown row {}\n".format(r))
@@ -1404,6 +1410,18 @@ def main():
     if mode == "finalize":
         hdr("FINALIZE FOLDERS (repeated task ids: only error rows may be replaced)")
         rows, ref = merge_folders([x for x in a.finalize.split(",") if x])
+        # R4: the rows come from the folders' params, never from this invocation
+        fsel = [r for r in ref["rows"].split(",") if r]
+        for r in fsel:
+            if r not in TABLE2:
+                sys.stderr.write("finalize: the folders name an unknown row {}\n".format(r))
+                sys.exit(2)
+        if rows_given and sel != fsel:
+            sys.stderr.write("finalize: --rows {} disagrees with the folders' rows {}; "
+                             "omit --rows or pass the folders' rows\n".format(",".join(sel), ",".join(fsel)))
+            sys.exit(2)
+        print("  rows from the folders' params: {}".format(",".join(fsel)))
+        sel = fsel
         stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         outdir = os.path.join(OUTROOT, "costprobe2-finalize-{}".format(stamp))
         os.makedirs(outdir)
