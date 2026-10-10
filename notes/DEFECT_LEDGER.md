@@ -210,6 +210,80 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   probe beta. That turns "the protocols differ" into a measured, paired
   difference. Recorded in notes/RERUN_PLAN.md. OPEN until both arms have
   run.
+- N18 (result, refscale full run). This is a verdict under the criteria
+  pre-registered in scripts/refscale.py (c6dc0cb).
+  Sources:
+  - runs/refscale-kaggle-20261010-094820/cbo-refscale.log, written by
+    kgrun's fetch (logs/kgrun-refscale-full.log: "finished after 9435 s");
+  - runs/refscale-kaggle-20261010-101146/, byte-identical to 094820 (same
+    sha256 for every file; origin not shown in any repository log).
+  Run: Python 3.13.15, NumPy 2.1.3, workers 4, ladder 4M to 1G, six
+  replicates, "E1 PASSED on every replicate and beta at rungs [4000000,
+  16000000]".
+  - ackley at beta = 6.028534528294139 (nominal tau0 0.01): "no adequate
+    rung in the ladder".
+    - C5 ratio 0.6670, 0.3669, 0.1729, 0.0867, 0.3000 at 4M, 16M, 64M,
+      256M, 1G.
+    - Medians 0.00963929, 0.00919193, 0.00922234, 0.00924136, 0.009123.
+    - F1: "slope -0.2193; extrapolated required size 2.59e+12
+      (extrapolation from a 5-point fit, not a measurement)".
+    - At 1G, replicate 2 has tau_hat 0.00678988 with largest-term share
+      0.235 (S1).
+  - sphere at beta = 0.40654222121074113 (nominal tau0 0.01, exact tau
+    0.011213257): "no adequate rung in the ladder".
+    - C5 ratio 0.1318, 0.0841, 0.0476, 0.0296, 0.0117. 1G passes C5 but is
+      the top rung, so its D1 is untested.
+    - relerr(median) +0.0236, +0.0015, +0.0030, -0.0013, -0.0027.
+    - F1: "extrapolated required size 2.54e+08 (extrapolation from a
+      5-point fit, not a measurement)".
+  - ackley at beta = 4.117791730834002 (tau0 0.1): smallest adequate rung
+    64000000.
+  - sphere at beta = 0.2461457179039086 (tau0 0.1): smallest adequate rung
+    4000000.
+  - Cost:
+    - 1G replicate walls 3225.4 to 3236.8 s for ackley (RSS 269 MB) and
+      1416.3 to 1426.5 s for sphere (RSS 193 MB);
+    - "MEASURED peak RSS of any reference task 647 MB";
+    - throughput 3.16e+05 (ackley) and 7.13e+05 (sphere) points per second
+      per worker.
+  Verdict against the outcomes fixed in advance:
+  - O2 for both tight-target cells. No adequate size was reached at
+    beta(0.01) for either objective. Both cells are therefore redefined by
+    a declared fixed beta, labelled by beta, with tau(beta) and its
+    replicate spread (notes/CALPREC_V2_SPEC.md section 6). The manuscript
+    states that the tightest target is not identifiable by direct Monte
+    Carlo on this problem.
+  - O3 is NOT established under the pre-registered criteria. O3 requires
+    sphere to be adequate where ackley is not, and at beta(0.01) sphere has
+    no adequate rung either. Two things are consistent with O3: sphere's
+    1G rung passes C5 (0.0117) with a median within -0.0027 of the exact
+    value, and ackley's 1G rung fails C5 (0.3000). Whether sphere's 1G rung
+    is adequate depends on its D1, which needs a 4G rung (proposed, not
+    run). At tau0 0.1 both objectives are adequate, sphere at 4M and ackley
+    at 64M.
+  OPEN for O3; O2 is recorded.
+- N19 (new, calibration finding, both from N18's log). A 1,000,000-point
+  calibration sample at nominal tau0 = 0.01 does not give tau(beta) = 0.01,
+  and the direction of the error depends on the objective.
+  - Sphere: the calibrated beta = 0.40654222121074113 has exact (closed
+    form, X1) tau(beta) = 0.011213257 ("exact tau(beta) 0.0112133" in
+    Phase A), above the target 0.01. The 1G median, 0.0111832 (relerr
+    -0.0027), agrees with the closed form.
+  - Ackley: the calibrated beta = 6.028534528294139 gives a realized
+    concentration whose reference medians are 0.00919193 to 0.00924136 at
+    16M to 256M and 0.009123 at 1G, below the target. Every one of the six
+    1G replicates is below 0.01 (max 0.00952705).
+  This ackley value is not adequate (C5 fails at every rung, N18), so it is
+  an estimate, not a measured tau. By the argument in refscale.py's
+  docstring, a finite reference that misses the rare points near the
+  minimum understates sum w^2 and so overstates tau; the true value would
+  then lie further below 0.01. That is reasoning, not a measurement.
+  Consequence: a fixed beta calibrated on 1,000,000 points at tau0 = 0.01
+  has an error large enough to matter, and of opposite sign for sphere and
+  ackley. Cells at the tight target are labelled by beta (O2), and their
+  tau(beta) is reported with its uncertainty rather than assumed to equal
+  the target. OPEN (to be written into the manuscript's calibration
+  section).
 
 ## Checked and found sound
 

@@ -104,9 +104,9 @@ For every cell the script takes three things from the row's module:
   independent replicates per rung. Each reference is streamed in chunks
   (the refscale composition of exactcal._logsumexp) and evaluates every
   beta-hat of the cell on the same stream.
-  It climbs rung by rung and stops at the first rung judged adequate by C5
+  It climbs rung by rung and stops at the first rung judged adequate by C5m
   and D1 at beta_adq (section 5), which needs the next rung as well, or at
-  the cap n_max (D1: provisionally 1G).
+  the cap n_max (D1: 1G, fixed from refscale, ledger N18).
 - Phase C', production check. beta_prod is evaluated on six new replicates
   at the adequate rung's size (kind 32, reps 6 to 11), so the check does
   not reuse the streams that chose the rung.
@@ -134,18 +134,40 @@ For every cell the script takes three things from the row's module:
   every beta, or the run stops (exit 3). Worked example as in refscale.py:
   streamed 10.596634733096073, held 10.596634733096080, relative difference
   6.6e-16, pass.
-- C5, reference precision, from refscale. At beta_adq, the median of the
-  cell's R beta-hat values at the top level of L_cal, range/median of the
-  six replicate tau_hat values must be at most 0.025. beta_adq is used
-  because beta_prod does not exist until the adequate rung has fixed
-  N_cell. C5 at beta_prod is evaluated afterwards, in Phase C', and only
-  reported. Worked example as in
-  refscale.py: sorted 0.00988 0.00994 0.00997 0.00999 0.01003 0.01008,
-  median 0.00998, range 0.00020, ratio 0.0200: pass.
+- C5m, precision of the reference ESTIMATE. This replaces refscale's C5;
+  see section 11a.
+  - The estimate of tau at a rung is tau_ref, the MEDIAN of the six
+    independent replicate tau_hat values: the mean of the 3rd and 4th
+    sorted values. No single reference is used as the estimate.
+  - Requirement: the relative standard error of tau_ref is at most 0.01,
+    a fifth of C1's 0.05 margin, as in refscale's derivation.
+  - Under approximate normality of tau_hat across replicates, with
+    replicate standard deviation sigma:
+    - SE(tau_ref) = c6 sigma, where c6 is the standard deviation of the
+      median of six independent standard normals;
+    - E[range of six] = d6 sigma, with d6 = 2.534 (refscale used 2.53).
+    So the requirement becomes
+          range / tau_ref <= 0.01 x d6 / c6
+    at beta_adq.
+  - c6 is NOT stated here from memory. Before calprec v2's first execution
+    it is computed by a no-dynamics Monte Carlo that Rahul runs (at least
+    10^7 medians of six standard normals, fixed seed). The value and its
+    log are written into the docstring, and the resulting threshold is
+    printed at the head of every run.
+  - Worked example, with an ILLUSTRATIVE c6 = 0.46 (not the value to be
+    used): threshold 0.01 x 2.534 / 0.46 = 0.0551.
+    - Sorted replicates 0.00970 0.00980 0.00985 0.00990 0.01000 0.01010:
+      tau_ref 0.009875, range 0.00040, ratio 0.0405, at most 0.0551: pass.
+    - Sorted 0.00940 0.00960 0.00975 0.00985 0.00995 0.01010: tau_ref
+      0.00980, range 0.00070, ratio 0.0714: fail.
+  - beta_adq is the median of the cell's R beta-hat values at the top
+    level of L_cal. It is used because beta_prod does not exist until the
+    adequate rung has fixed N_cell. C5m at beta_prod is evaluated
+    afterwards, in Phase C', and reported.
 - D1, reference drift, from refscale. |median_n - median_4n| / median_4n
   must be at most 0.025. Worked example: 0.00995 at 64M and 0.01003 at
   256M give 0.0080: pass.
-- Adequate rung. The smallest rung that passes C5 and D1 at beta_adq. C4 of v1 (two halves within 0.10) is not used: C5 with six
+- Adequate rung. The smallest rung that passes C5m and D1 at beta_adq. C4 of v1 (two halves within 0.10) is not used: C5m with six
   replicates and D1 is the stronger test of the same thing. v1's verdicts
   are not reinterpreted.
 - C1, sufficiency, from v1, evaluated on the adequate rung. A level N is
@@ -240,7 +262,7 @@ For every cell the script takes three things from the row's module:
   and the case (b) key and beta where used.
 - calprec2_beta.csv (finalize only): one row per calibration cell with
   module, objective, d, law, tau0, beta (repr), provenance, label, tau_ref
-  median and range, the adequate rung, N_cell, and the C1, C5, D1, C6 and
+  median and range, the adequate rung, N_cell, and the C1, C5m, D1, C6 and
   G-RSS verdicts. The rows the fixed-beta rerun may use are those with
   label "target", or label "beta" from section 6.
 
@@ -255,11 +277,37 @@ For every cell the script takes three things from the row's module:
 - End: the per-cell verdict table (in finalize), the largest RSS per
   module, and the rows flagged by G-RSS.
 
+## 11a. Amendment after refscale: the median-of-six reference estimate
+
+- Decided by Rahul on 2026-10-10, AFTER seeing the refscale full run
+  (ledger N18). This is a forward-looking design decision for calprec v2.
+- The reference estimate of tau at a rung is the median of six
+  independent references, not a single reference. C5 is restated against
+  that estimator as C5m (section 5).
+- Refscale's own verdict stands as recorded: O2 for both tight-target
+  cells, under refscale's pre-registered C5, which bounds the spread of
+  single references (range/median of six at most 0.025). The median
+  estimator is NOT applied retroactively to refscale. No refscale verdict
+  is recomputed, relabelled or reinterpreted under C5m.
+- C5m and its constant c6 are fixed in calprec v2's docstring before
+  calprec v2's first execution, and they apply only to calprec v2's own
+  runs.
+- D1 (drift between rung medians), C1 and C6 already use the median over
+  six replicates and are unchanged.
+
 ## 11. Decisions (Rahul, 2026-10-10)
 
-- D1, the reference cap n_max. Deferred until the refscale verdict.
-  Provisionally it is refscale's top rung, 1G (1024000000). Rahul fixes it
-  when refscale's result is in.
+- D1, the reference cap n_max = 1G (1024000000). Fixed 2026-10-10 from the
+  refscale full run (ledger N18; runs/refscale-kaggle-20261010-094820).
+  - 1G is the largest rung refscale measured. Its replicates took 3225.4
+    to 3236.8 s for ackley and 1416.3 to 1426.5 s for sphere on one Kaggle
+    worker, at a peak RSS of 269 and 193 MB.
+  - A larger cap would not rescue the hardest cell. For ackley at the tight
+    beta, F1 printed "extrapolated required size 2.59e+12 (extrapolation
+    from a 5-point fit, not a measurement)". That is an extrapolation, not
+    a measured requirement, and it lies far beyond any reachable rung.
+  - Whether 1G is adequate for sphere at the tight beta is untested,
+    because 1G was the top rung and its D1 needs a 4G rung.
 - D2, the calibration size. One size N_cell per cell. A single global N_star
   would over-calibrate the easy cells and under-calibrate the hard ones, and
   the per-cell size is itself a reportable result.

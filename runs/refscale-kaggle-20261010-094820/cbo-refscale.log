@@ -1,0 +1,279 @@
+[{"stream_name":"stdout","time":0.80152287,"data":"kgrun runner: job refscale\n"}
+,{"stream_name":"stdout","time":0.801679406,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.801688518,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.801692379,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.80169608,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.810448713,"data":"  listing  32 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.810483115,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/refscale.py\n"}
+,{"stream_name":"stdout","time":0.810488921,"data":"  args     --workers 4 --ladder 4000000,16000000,64000000,256000000,1024000000\n"}
+,{"stream_name":"stdout","time":0.81049341,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/refscale.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --ladder 4000000,16000000,64000000,256000000,1024000000\n"}
+,{"stream_name":"stdout","time":1.24505868,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.24508844,"data":"CBO-GAP refscale -- reference size at which the population concentration is estimable\n"}
+,{"stream_name":"stdout","time":1.245092794,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.245096995,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.245101094,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":1.245104907,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4\n"}
+,{"stream_name":"stdout","time":1.245108706,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.245112609,"data":"  mode     FULL\n"}
+,{"stream_name":"stdout","time":1.245116087,"data":"  cells    objectives ['ackley', 'sphere']  d 40  law centred  nominal tau0 [0.01, 0.1]\n"}
+,{"stream_name":"stdout","time":1.245120418,"data":"  calib.   N_CAL 1000000  seed kind 11\n"}
+,{"stream_name":"stdout","time":1.245124392,"data":"  ladder   [4000000, 16000000, 64000000, 256000000, 1024000000]   replicates 6   chunk 250000   seed kind 12\n"}
+,{"stream_name":"stdout","time":1.245128725,"data":"  seeds    default_rng(SeedSequence(key)), key = (ENTROPY 20261009, kind, obj code, d, tau0 in millionths, n, rep); obj codes {'ackley': 0, 'sphere': 1}\n"}
+,{"stream_name":"stdout","time":1.245132952,"data":"  E1       streamed vs archived log_ess_of on held arrays at rungs [4000000, 16000000]: relative diff \u003c= 1e-12, else stop\n"}
+,{"stream_name":"stdout","time":1.245137553,"data":"  C5       range/median over replicates \u003c= 0.025\n"}
+,{"stream_name":"stdout","time":1.245141329,"data":"  D1       |median_n - median_next| / median_next \u003c= 0.025; top rung untested\n"}
+,{"stream_name":"stdout","time":1.24514524,"data":"  F1       extrapolate only if slope \u003c 0 and the second-highest rung passes D1\n"}
+,{"stream_name":"stdout","time":1.245155372,"data":"  X1       sphere exact tau(beta) = (1+4b)^(d/2) / (1+2b)^d\n"}
+,{"stream_name":"stdout","time":1.245158163,"data":"  run dir  /kaggle/working/refscale-20261010-014114\n"}
+,{"stream_name":"stdout","time":1.245160543,"data":"\n"}
+,{"stream_name":"stdout","time":14.922300707,"data":"PHASE A  calibration, 4 cells\n"}
+,{"stream_name":"stdout","time":16.206136661,"data":"  ackley  nominal tau0 0.01   beta = 6.028534528294139   achieved on calibration sample 0.010000   wall 14.9 s   peak RSS 272 MB\n"}
+,{"stream_name":"stdout","time":16.206180978,"data":"  ackley  nominal tau0 0.1    beta = 4.117791730834002   achieved on calibration sample 0.100000   wall 14.9 s   peak RSS 272 MB\n"}
+,{"stream_name":"stdout","time":16.206186998,"data":"  sphere  nominal tau0 0.01   beta = 0.40654222121074113   achieved on calibration sample 0.010000   exact tau(beta) 0.0112133   wall 13.6 s   peak RSS 194 MB\n"}
+,{"stream_name":"stdout","time":16.206191345,"data":"  sphere  nominal tau0 0.1    beta = 0.2461457179039086   achieved on calibration sample 0.100000   exact tau(beta) 0.0998249   wall 13.7 s   peak RSS 194 MB\n"}
+,{"stream_name":"stdout","time":16.206195475,"data":"\n"}
+,{"stream_name":"stdout","time":69.949019868,"data":"PHASE B  equivalence gate E1 on rungs [4000000, 16000000], 24 tasks, largest first\n"}
+,{"stream_name":"stdout","time":69.952493246,"data":"PHASE B  equivalence gate E1 on rungs [4000000, 16000000], 24 tasks, largest first\n"}
+,{"stream_name":"stdout","time":69.952521048,"data":"  [B   1/ 24] ackley n=16000000    rep 3  wall     53.7 s  RSS    646 MB  elapsed     53.7 s\n"}
+,{"stream_name":"stdout","time":69.952526463,"data":"        beta=6.02853 tau_hat=0.00934463 share=0.0246 E1 PASS (5.96e-16)\n"}
+,{"stream_name":"stdout","time":69.952531654,"data":"        beta=4.11779 tau_hat=0.0995862 share=0.00298 E1 PASS (1.24e-16)\n"}
+,{"stream_name":"stdout","time":70.136750432,"data":"  [B   2/ 24] ackley n=16000000    rep 2  wall     53.9 s  RSS    646 MB  elapsed     53.9 s\n"}
+,{"stream_name":"stdout","time":70.136785347,"data":"        beta=6.02853 tau_hat=0.00798821 share=0.064 E1 PASS (3.02e-16)\n"}
+,{"stream_name":"stdout","time":70.136793332,"data":"        beta=4.11779 tau_hat=0.0978241 share=0.00627 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":70.503437665,"data":"  [B   3/ 24] ackley n=16000000    rep 1  wall     54.3 s  RSS    646 MB  elapsed     54.3 s\n"}
+,{"stream_name":"stdout","time":70.503465075,"data":"        beta=6.02853 tau_hat=0.0113605 share=0.0184 E1 PASS (2.93e-16)\n"}
+,{"stream_name":"stdout","time":70.503470779,"data":"        beta=4.11779 tau_hat=0.102283 share=0.00218 E1 PASS (2.48e-16)\n"}
+,{"stream_name":"stdout","time":70.544321816,"data":"  [B   4/ 24] ackley n=16000000    rep 0  wall     54.3 s  RSS    646 MB  elapsed     54.3 s\n"}
+,{"stream_name":"stdout","time":70.544346128,"data":"        beta=6.02853 tau_hat=0.00812752 share=0.127 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":70.544351415,"data":"        beta=4.11779 tau_hat=0.100368 share=0.0101 E1 PASS (4.97e-16)\n"}
+,{"stream_name":"stdout","time":95.450565424,"data":"  [B   5/ 24] sphere n=16000000    rep 0  wall     24.9 s  RSS    647 MB  elapsed     79.2 s\n"}
+,{"stream_name":"stdout","time":95.450601329,"data":"        beta=0.406542 tau_hat=0.0113714 share=0.00892 exact=0.0112133 relerr=+0.0141 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":95.450607424,"data":"        beta=0.246146 tau_hat=0.0999755 share=0.000615 exact=0.0998249 relerr=+0.0015 E1 PASS (1.24e-16)\n"}
+,{"stream_name":"stdout","time":95.461192493,"data":"  [B   6/ 24] sphere n=16000000    rep 1  wall     24.9 s  RSS    647 MB  elapsed     79.3 s\n"}
+,{"stream_name":"stdout","time":95.461223433,"data":"        beta=0.406542 tau_hat=0.0114709 share=0.0134 exact=0.0112133 relerr=+0.0230 E1 PASS (2.93e-16)\n"}
+,{"stream_name":"stdout","time":95.461249518,"data":"        beta=0.246146 tau_hat=0.099807 share=0.000783 exact=0.0998249 relerr=-0.0002 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":121.100591191,"data":"  [B   7/ 24] sphere n=16000000    rep 2  wall     25.6 s  RSS    646 MB  elapsed    104.9 s\n"}
+,{"stream_name":"stdout","time":121.100637353,"data":"        beta=0.406542 tau_hat=0.011155 share=0.00806 exact=0.0112133 relerr=-0.0052 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":121.10064365,"data":"        beta=0.246146 tau_hat=0.0997624 share=0.000585 exact=0.0998249 relerr=-0.0006 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":121.116556045,"data":"  [B   8/ 24] sphere n=16000000    rep 3  wall     25.6 s  RSS    647 MB  elapsed    104.9 s\n"}
+,{"stream_name":"stdout","time":121.116607941,"data":"        beta=0.406542 tau_hat=0.0105966 share=0.0131 exact=0.0112133 relerr=-0.0550 E1 PASS (1.48e-16)\n"}
+,{"stream_name":"stdout","time":121.116613999,"data":"        beta=0.246146 tau_hat=0.0993886 share=0.000807 exact=0.0998249 relerr=-0.0044 E1 PASS (2.49e-16)\n"}
+,{"stream_name":"stdout","time":123.872578507,"data":"  [B   9/ 24] ackley n=16000000    rep 4  wall     53.9 s  RSS    646 MB  elapsed    107.7 s\n"}
+,{"stream_name":"stdout","time":123.872632404,"data":"        beta=6.02853 tau_hat=0.00911077 share=0.125 E1 PASS (5.98e-16)\n"}
+,{"stream_name":"stdout","time":123.872637108,"data":"        beta=4.11779 tau_hat=0.100256 share=0.00922 E1 PASS (1.24e-16)\n"}
+,{"stream_name":"stdout","time":123.935631875,"data":"  [B  10/ 24] ackley n=16000000    rep 5  wall     53.8 s  RSS    647 MB  elapsed    107.7 s\n"}
+,{"stream_name":"stdout","time":123.935659726,"data":"        beta=6.02853 tau_hat=0.00927309 share=0.048 E1 PASS (2.98e-16)\n"}
+,{"stream_name":"stdout","time":123.935664513,"data":"        beta=4.11779 tau_hat=0.0995361 share=0.00472 E1 PASS (1.24e-16)\n"}
+,{"stream_name":"stdout","time":137.502570683,"data":"  [B  11/ 24] ackley n=4000000     rep 0  wall     13.6 s  RSS    297 MB  elapsed    121.3 s\n"}
+,{"stream_name":"stdout","time":137.502603791,"data":"        beta=6.02853 tau_hat=0.00887638 share=0.0969 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":137.502608473,"data":"        beta=4.11779 tau_hat=0.0988146 share=0.0121 E1 PASS (1.38e-16)\n"}
+,{"stream_name":"stdout","time":137.512773327,"data":"  [B  12/ 24] ackley n=4000000     rep 1  wall     13.6 s  RSS    297 MB  elapsed    121.3 s\n"}
+,{"stream_name":"stdout","time":137.512803509,"data":"        beta=6.02853 tau_hat=0.0117276 share=0.0351 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":137.512808127,"data":"        beta=4.11779 tau_hat=0.103959 share=0.0052 E1 PASS (2.75e-16)\n"}
+,{"stream_name":"stdout","time":146.856364847,"data":"  [B  13/ 24] sphere n=16000000    rep 5  wall     25.7 s  RSS    647 MB  elapsed    130.6 s\n"}
+,{"stream_name":"stdout","time":146.856395599,"data":"        beta=0.406542 tau_hat=0.0113061 share=0.0103 exact=0.0112133 relerr=+0.0083 E1 PASS (1.47e-16)\n"}
+,{"stream_name":"stdout","time":146.856400022,"data":"        beta=0.246146 tau_hat=0.0997192 share=0.000671 exact=0.0998249 relerr=-0.0011 E1 PASS (2.49e-16)\n"}
+,{"stream_name":"stdout","time":146.876965585,"data":"  [B  14/ 24] sphere n=16000000    rep 4  wall     25.8 s  RSS    647 MB  elapsed    130.7 s\n"}
+,{"stream_name":"stdout","time":146.876992464,"data":"        beta=0.406542 tau_hat=0.0105265 share=0.0302 exact=0.0112133 relerr=-0.0612 E1 PASS (1.48e-16)\n"}
+,{"stream_name":"stdout","time":146.877017664,"data":"        beta=0.246146 tau_hat=0.0996332 share=0.00135 exact=0.0998249 relerr=-0.0019 E1 PASS (2.49e-16)\n"}
+,{"stream_name":"stdout","time":151.006752088,"data":"  [B  15/ 24] ackley n=4000000     rep 3  wall     13.5 s  RSS    297 MB  elapsed    134.8 s\n"}
+,{"stream_name":"stdout","time":151.006780126,"data":"        beta=6.02853 tau_hat=0.0104022 share=0.0629 E1 PASS (3.34e-16)\n"}
+,{"stream_name":"stdout","time":151.006803172,"data":"        beta=4.11779 tau_hat=0.101465 share=0.00827 E1 PASS (1.38e-16)\n"}
+,{"stream_name":"stdout","time":151.046830429,"data":"  [B  16/ 24] ackley n=4000000     rep 2  wall     13.5 s  RSS    297 MB  elapsed    134.8 s\n"}
+,{"stream_name":"stdout","time":151.046854956,"data":"        beta=6.02853 tau_hat=0.0112484 share=0.0486 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":151.046859927,"data":"        beta=4.11779 tau_hat=0.101812 share=0.0066 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":157.41162056,"data":"  [B  17/ 24] sphere n=4000000     rep 1  wall      6.4 s  RSS    219 MB  elapsed    141.2 s\n"}
+,{"stream_name":"stdout","time":157.411661099,"data":"        beta=0.406542 tau_hat=0.0120753 share=0.0144 exact=0.0112133 relerr=+0.0769 E1 PASS (3.29e-16)\n"}
+,{"stream_name":"stdout","time":157.411667436,"data":"        beta=0.246146 tau_hat=0.100839 share=0.00138 exact=0.0998249 relerr=+0.0102 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":157.414102794,"data":"  [B  18/ 24] sphere n=4000000     rep 0  wall      6.4 s  RSS    219 MB  elapsed    141.2 s\n"}
+,{"stream_name":"stdout","time":157.414128362,"data":"        beta=0.406542 tau_hat=0.0105627 share=0.0617 exact=0.0112133 relerr=-0.0580 E1 PASS (3.34e-16)\n"}
+,{"stream_name":"stdout","time":157.414133212,"data":"        beta=0.246146 tau_hat=0.0996063 share=0.00358 exact=0.0998249 relerr=-0.0022 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":160.645605127,"data":"  [B  19/ 24] ackley n=4000000     rep 4  wall     13.8 s  RSS    297 MB  elapsed    144.4 s\n"}
+,{"stream_name":"stdout","time":160.645638898,"data":"        beta=6.02853 tau_hat=0.00872323 share=0.129 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":160.645644662,"data":"        beta=4.11779 tau_hat=0.0991986 share=0.015 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":160.655830083,"data":"  [B  20/ 24] ackley n=4000000     rep 5  wall     13.8 s  RSS    297 MB  elapsed    144.4 s\n"}
+,{"stream_name":"stdout","time":160.655889553,"data":"        beta=6.02853 tau_hat=0.0052982 share=0.358 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":160.655896859,"data":"        beta=4.11779 tau_hat=0.0941204 share=0.0404 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":163.803053033,"data":"  [B  21/ 24] sphere n=4000000     rep 2  wall      6.4 s  RSS    219 MB  elapsed    147.6 s\n"}
+,{"stream_name":"stdout","time":163.803083844,"data":"        beta=0.406542 tau_hat=0.0117899 share=0.0428 exact=0.0112133 relerr=+0.0514 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":163.803089492,"data":"        beta=0.246146 tau_hat=0.100742 share=0.0027 exact=0.0998249 relerr=+0.0092 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":163.824758112,"data":"  [B  22/ 24] sphere n=4000000     rep 3  wall      6.4 s  RSS    219 MB  elapsed    147.6 s\n"}
+,{"stream_name":"stdout","time":163.824809285,"data":"        beta=0.406542 tau_hat=0.0113236 share=0.0172 exact=0.0112133 relerr=+0.0098 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":163.824815518,"data":"        beta=0.246146 tau_hat=0.0999134 share=0.00158 exact=0.0998249 relerr=+0.0009 E1 PASS (1.38e-16)\n"}
+,{"stream_name":"stdout","time":165.98306461,"data":"  [B  23/ 24] sphere n=4000000     rep 5  wall      5.3 s  RSS    219 MB  elapsed    149.8 s\n"}
+,{"stream_name":"stdout","time":165.98310906,"data":"        beta=0.406542 tau_hat=0.0113135 share=0.0301 exact=0.0112133 relerr=+0.0089 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":165.983115854,"data":"        beta=0.246146 tau_hat=0.100193 share=0.00223 exact=0.0998249 relerr=+0.0037 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":166.023088021,"data":"  [B  24/ 24] sphere n=4000000     rep 4  wall      5.4 s  RSS    219 MB  elapsed    149.8 s\n"}
+,{"stream_name":"stdout","time":166.023138596,"data":"        beta=0.406542 tau_hat=0.0116312 share=0.0178 exact=0.0112133 relerr=+0.0373 E1 PASS (1.65e-16)\n"}
+,{"stream_name":"stdout","time":166.023144103,"data":"        beta=0.246146 tau_hat=0.0996396 share=0.00159 exact=0.0998249 relerr=-0.0019 E1 PASS (0.00e+00)\n"}
+,{"stream_name":"stdout","time":166.028847076,"data":"\n"}
+,{"stream_name":"stdout","time":166.028877637,"data":"E1 PASSED on every replicate and beta at rungs [4000000, 16000000].\n"}
+,{"stream_name":"stdout","time":166.028882311,"data":"\n"}
+,{"stream_name":"stdout","time":166.028885756,"data":"PHASE C  rungs [64000000, 256000000, 1024000000], 36 tasks, largest first\n"}
+,{"stream_name":"stdout","time":3395.172461208,"data":"  [C   1/ 36] ackley n=1024000000  rep 0  wall   3229.1 s  RSS    269 MB  elapsed   3229.1 s\n"}
+,{"stream_name":"stdout","time":3395.172673747,"data":"        beta=6.02853 tau_hat=0.00896236 share=0.0242\n"}
+,{"stream_name":"stdout","time":3395.172682156,"data":"        beta=4.11779 tau_hat=0.100551 share=0.000817\n"}
+,{"stream_name":"stdout","time":3396.064755477,"data":"  [C   2/ 36] ackley n=1024000000  rep 3  wall   3230.0 s  RSS    269 MB  elapsed   3230.0 s\n"}
+,{"stream_name":"stdout","time":3396.064783951,"data":"        beta=6.02853 tau_hat=0.00920999 share=0.0283\n"}
+,{"stream_name":"stdout","time":3396.06497604,"data":"        beta=4.11779 tau_hat=0.100638 share=0.000893\n"}
+,{"stream_name":"stdout","time":3399.998367667,"data":"  [C   3/ 36] ackley n=1024000000  rep 2  wall   3234.0 s  RSS    269 MB  elapsed   3234.0 s\n"}
+,{"stream_name":"stdout","time":3399.998394798,"data":"        beta=6.02853 tau_hat=0.00678988 share=0.235\n"}
+,{"stream_name":"stdout","time":3399.998399663,"data":"        beta=4.11779 tau_hat=0.100118 share=0.00465\n"}
+,{"stream_name":"stdout","time":3402.827813396,"data":"  [C   4/ 36] ackley n=1024000000  rep 1  wall   3236.8 s  RSS    269 MB  elapsed   3236.8 s\n"}
+,{"stream_name":"stdout","time":3402.827876123,"data":"        beta=6.02853 tau_hat=0.00925895 share=0.00792\n"}
+,{"stream_name":"stdout","time":3402.827883927,"data":"        beta=4.11779 tau_hat=0.100621 share=0.000373\n"}
+,{"stream_name":"stdout","time":4826.360972746,"data":"  [C   5/ 36] sphere n=1024000000  rep 0  wall   1426.3 s  RSS    193 MB  elapsed   4660.3 s\n"}
+,{"stream_name":"stdout","time":4826.36103077,"data":"        beta=0.406542 tau_hat=0.011162 share=0.000779 exact=0.0112133 relerr=-0.0046\n"}
+,{"stream_name":"stdout","time":4826.361038879,"data":"        beta=0.246146 tau_hat=0.099799 share=2.75e-05 exact=0.0998249 relerr=-0.0003\n"}
+,{"stream_name":"stdout","time":4829.354331842,"data":"  [C   6/ 36] sphere n=1024000000  rep 1  wall   1426.5 s  RSS    193 MB  elapsed   4663.3 s\n"}
+,{"stream_name":"stdout","time":4829.354386891,"data":"        beta=0.406542 tau_hat=0.0111499 share=0.00213 exact=0.0112133 relerr=-0.0056\n"}
+,{"stream_name":"stdout","time":4829.354394227,"data":"        beta=0.246146 tau_hat=0.0997848 share=5.06e-05 exact=0.0998249 relerr=-0.0004\n"}
+,{"stream_name":"stdout","time":6243.868736239,"data":"  [C   7/ 36] sphere n=1024000000  rep 2  wall   1417.5 s  RSS    193 MB  elapsed   6077.8 s\n"}
+,{"stream_name":"stdout","time":6243.868787688,"data":"        beta=0.406542 tau_hat=0.0112044 share=0.0013 exact=0.0112133 relerr=-0.0008\n"}
+,{"stream_name":"stdout","time":6243.868795143,"data":"        beta=0.246146 tau_hat=0.0998056 share=3.75e-05 exact=0.0998249 relerr=-0.0002\n"}
+,{"stream_name":"stdout","time":6245.669519152,"data":"  [C   8/ 36] sphere n=1024000000  rep 3  wall   1416.3 s  RSS    193 MB  elapsed   6079.6 s\n"}
+,{"stream_name":"stdout","time":6245.669559932,"data":"        beta=0.406542 tau_hat=0.0112211 share=0.00188 exact=0.0112133 relerr=+0.0007\n"}
+,{"stream_name":"stdout","time":6245.669579828,"data":"        beta=0.246146 tau_hat=0.0998402 share=4.68e-05 exact=0.0998249 relerr=+0.0002\n"}
+,{"stream_name":"stdout","time":6620.622417002,"data":"  [C   9/ 36] ackley n=1024000000  rep 4  wall   3225.4 s  RSS    269 MB  elapsed   6454.6 s\n"}
+,{"stream_name":"stdout","time":6620.622458756,"data":"        beta=6.02853 tau_hat=0.00903601 share=0.0178\n"}
+,{"stream_name":"stdout","time":6620.622464839,"data":"        beta=4.11779 tau_hat=0.100613 share=0.000658\n"}
+,{"stream_name":"stdout","time":6621.686350461,"data":"  [C  10/ 36] ackley n=1024000000  rep 5  wall   3225.6 s  RSS    269 MB  elapsed   6455.7 s\n"}
+,{"stream_name":"stdout","time":6621.686421448,"data":"        beta=6.02853 tau_hat=0.00952705 share=0.00525\n"}
+,{"stream_name":"stdout","time":6621.686429607,"data":"        beta=4.11779 tau_hat=0.10073 share=0.000276\n"}
+,{"stream_name":"stdout","time":7419.592953908,"data":"  [C  11/ 36] ackley n=256000000   rep 0  wall    799.0 s  RSS    269 MB  elapsed   7253.6 s\n"}
+,{"stream_name":"stdout","time":7419.593077672,"data":"        beta=6.02853 tau_hat=0.00935815 share=0.0291\n"}
+,{"stream_name":"stdout","time":7419.593087314,"data":"        beta=4.11779 tau_hat=0.100595 share=0.00139\n"}
+,{"stream_name":"stdout","time":7420.779937116,"data":"  [C  12/ 36] ackley n=256000000   rep 1  wall    799.1 s  RSS    269 MB  elapsed   7254.8 s\n"}
+,{"stream_name":"stdout","time":7420.779985208,"data":"        beta=6.02853 tau_hat=0.00867337 share=0.0322\n"}
+,{"stream_name":"stdout","time":7420.779991386,"data":"        beta=4.11779 tau_hat=0.100386 share=0.00157\n"}
+,{"stream_name":"stdout","time":7660.469904406,"data":"  [C  13/ 36] sphere n=1024000000  rep 4  wall   1416.6 s  RSS    193 MB  elapsed   7494.4 s\n"}
+,{"stream_name":"stdout","time":7660.469996341,"data":"        beta=0.406542 tau_hat=0.0112807 share=0.000801 exact=0.0112133 relerr=+0.0060\n"}
+,{"stream_name":"stdout","time":7660.470004818,"data":"        beta=0.246146 tau_hat=0.0998661 share=2.78e-05 exact=0.0998249 relerr=+0.0004\n"}
+,{"stream_name":"stdout","time":7662.331104315,"data":"  [C  14/ 36] sphere n=1024000000  rep 5  wall   1416.6 s  RSS    193 MB  elapsed   7496.3 s\n"}
+,{"stream_name":"stdout","time":7662.331153438,"data":"        beta=0.406542 tau_hat=0.0111512 share=0.000599 exact=0.0112133 relerr=-0.0055\n"}
+,{"stream_name":"stdout","time":7662.33116054,"data":"        beta=0.246146 tau_hat=0.0997558 share=2.35e-05 exact=0.0998249 relerr=-0.0007\n"}
+,{"stream_name":"stdout","time":8236.176841955,"data":"  [C  15/ 36] ackley n=256000000   rep 3  wall    815.4 s  RSS    269 MB  elapsed   8070.2 s\n"}
+,{"stream_name":"stdout","time":8236.176893249,"data":"        beta=6.02853 tau_hat=0.00908642 share=0.0468\n"}
+,{"stream_name":"stdout","time":8236.176899812,"data":"        beta=4.11779 tau_hat=0.100692 share=0.00197\n"}
+,{"stream_name":"stdout","time":8236.325541461,"data":"  [C  16/ 36] ackley n=256000000   rep 2  wall    816.7 s  RSS    269 MB  elapsed   8070.3 s\n"}
+,{"stream_name":"stdout","time":8236.32559668,"data":"        beta=6.02853 tau_hat=0.00912457 share=0.0183\n"}
+,{"stream_name":"stdout","time":8236.325602408,"data":"        beta=4.11779 tau_hat=0.100636 share=0.00103\n"}
+,{"stream_name":"stdout","time":8478.017434019,"data":"  [C  17/ 36] ackley n=256000000   rep 4  wall    817.5 s  RSS    269 MB  elapsed   8312.0 s\n"}
+,{"stream_name":"stdout","time":8478.017521589,"data":"        beta=6.02853 tau_hat=0.00947458 share=0.0208\n"}
+,{"stream_name":"stdout","time":8478.017528258,"data":"        beta=4.11779 tau_hat=0.10084 share=0.0011\n"}
+,{"stream_name":"stdout","time":8479.173742752,"data":"  [C  18/ 36] ackley n=256000000   rep 5  wall    816.8 s  RSS    269 MB  elapsed   8313.2 s\n"}
+,{"stream_name":"stdout","time":8479.173795941,"data":"        beta=6.02853 tau_hat=0.00946108 share=0.0164\n"}
+,{"stream_name":"stdout","time":8479.173800846,"data":"        beta=4.11779 tau_hat=0.10064 share=0.000936\n"}
+,{"stream_name":"stdout","time":8596.41434968,"data":"  [C  19/ 36] sphere n=256000000   rep 0  wall    360.2 s  RSS    193 MB  elapsed   8430.4 s\n"}
+,{"stream_name":"stdout","time":8596.414399657,"data":"        beta=0.406542 tau_hat=0.0111659 share=0.00272 exact=0.0112133 relerr=-0.0042\n"}
+,{"stream_name":"stdout","time":8596.414405726,"data":"        beta=0.246146 tau_hat=0.0997134 share=0.000101 exact=0.0998249 relerr=-0.0011\n"}
+,{"stream_name":"stdout","time":8597.672261056,"data":"  [C  20/ 36] sphere n=256000000   rep 1  wall    361.3 s  RSS    193 MB  elapsed   8431.6 s\n"}
+,{"stream_name":"stdout","time":8597.672291719,"data":"        beta=0.406542 tau_hat=0.0112175 share=0.00189 exact=0.0112133 relerr=+0.0004\n"}
+,{"stream_name":"stdout","time":8597.672454759,"data":"        beta=0.246146 tau_hat=0.0997856 share=8.12e-05 exact=0.0998249 relerr=-0.0004\n"}
+,{"stream_name":"stdout","time":8851.257559005,"data":"  [C  21/ 36] sphere n=256000000   rep 3  wall    372.1 s  RSS    193 MB  elapsed   8685.2 s\n"}
+,{"stream_name":"stdout","time":8851.257606793,"data":"        beta=0.406542 tau_hat=0.0109573 share=0.00678 exact=0.0112133 relerr=-0.0228\n"}
+,{"stream_name":"stdout","time":8851.257613931,"data":"        beta=0.246146 tau_hat=0.0996194 share=0.000178 exact=0.0998249 relerr=-0.0021\n"}
+,{"stream_name":"stdout","time":8852.998942453,"data":"  [C  22/ 36] sphere n=256000000   rep 2  wall    375.0 s  RSS    193 MB  elapsed   8687.0 s\n"}
+,{"stream_name":"stdout","time":8852.998974674,"data":"        beta=0.406542 tau_hat=0.011188 share=0.00452 exact=0.0112133 relerr=-0.0023\n"}
+,{"stream_name":"stdout","time":8852.998980807,"data":"        beta=0.246146 tau_hat=0.0997087 share=0.000138 exact=0.0998249 relerr=-0.0012\n"}
+,{"stream_name":"stdout","time":8965.34906756,"data":"  [C  23/ 36] sphere n=256000000   rep 5  wall    367.7 s  RSS    193 MB  elapsed   8799.3 s\n"}
+,{"stream_name":"stdout","time":8965.349116008,"data":"        beta=0.406542 tau_hat=0.0112888 share=0.00324 exact=0.0112133 relerr=+0.0067\n"}
+,{"stream_name":"stdout","time":8965.349123154,"data":"        beta=0.246146 tau_hat=0.0998868 share=0.000112 exact=0.0998249 relerr=+0.0006\n"}
+,{"stream_name":"stdout","time":8966.695459961,"data":"  [C  24/ 36] sphere n=256000000   rep 4  wall    370.3 s  RSS    193 MB  elapsed   8800.7 s\n"}
+,{"stream_name":"stdout","time":8966.695528514,"data":"        beta=0.406542 tau_hat=0.0112085 share=0.00335 exact=0.0112133 relerr=-0.0004\n"}
+,{"stream_name":"stdout","time":8966.695535872,"data":"        beta=0.246146 tau_hat=0.0997384 share=0.000115 exact=0.0998249 relerr=-0.0009\n"}
+,{"stream_name":"stdout","time":9056.597374555,"data":"  [C  25/ 36] ackley n=64000000    rep 0  wall    205.3 s  RSS    269 MB  elapsed   8890.6 s\n"}
+,{"stream_name":"stdout","time":9056.597410123,"data":"        beta=6.02853 tau_hat=0.0100109 share=0.0245\n"}
+,{"stream_name":"stdout","time":9056.597415408,"data":"        beta=4.11779 tau_hat=0.100932 share=0.00185\n"}
+,{"stream_name":"stdout","time":9058.221525873,"data":"  [C  26/ 36] ackley n=64000000    rep 1  wall    205.2 s  RSS    269 MB  elapsed   8892.2 s\n"}
+,{"stream_name":"stdout","time":9058.22155719,"data":"        beta=6.02853 tau_hat=0.00955202 share=0.025\n"}
+,{"stream_name":"stdout","time":9058.221583005,"data":"        beta=4.11779 tau_hat=0.100549 share=0.00192\n"}
+,{"stream_name":"stdout","time":9168.581293581,"data":"  [C  27/ 36] ackley n=64000000    rep 2  wall    203.2 s  RSS    269 MB  elapsed   9002.6 s\n"}
+,{"stream_name":"stdout","time":9168.581379286,"data":"        beta=6.02853 tau_hat=0.00905216 share=0.0594\n"}
+,{"stream_name":"stdout","time":9168.581385199,"data":"        beta=4.11779 tau_hat=0.100591 share=0.0036\n"}
+,{"stream_name":"stdout","time":9170.145908258,"data":"  [C  28/ 36] ackley n=64000000    rep 3  wall    203.4 s  RSS    269 MB  elapsed   9004.1 s\n"}
+,{"stream_name":"stdout","time":9170.145939797,"data":"        beta=6.02853 tau_hat=0.00917755 share=0.059\n"}
+,{"stream_name":"stdout","time":9170.145944292,"data":"        beta=4.11779 tau_hat=0.100351 share=0.00355\n"}
+,{"stream_name":"stdout","time":9260.087317742,"data":"  [C  29/ 36] sphere n=64000000    rep 0  wall     91.5 s  RSS    193 MB  elapsed   9094.1 s\n"}
+,{"stream_name":"stdout","time":9260.087360689,"data":"        beta=0.406542 tau_hat=0.0114445 share=0.0036 exact=0.0112133 relerr=+0.0206\n"}
+,{"stream_name":"stdout","time":9260.087371953,"data":"        beta=0.246146 tau_hat=0.100103 share=0.000205 exact=0.0998249 relerr=+0.0028\n"}
+,{"stream_name":"stdout","time":9261.63475898,"data":"  [C  30/ 36] sphere n=64000000    rep 1  wall     91.5 s  RSS    193 MB  elapsed   9095.6 s\n"}
+,{"stream_name":"stdout","time":9261.634794161,"data":"        beta=0.406542 tau_hat=0.0110864 share=0.00588 exact=0.0112133 relerr=-0.0113\n"}
+,{"stream_name":"stdout","time":9261.634799946,"data":"        beta=0.246146 tau_hat=0.0996082 share=0.000281 exact=0.0998249 relerr=-0.0022\n"}
+,{"stream_name":"stdout","time":9261.686327342,"data":"  [C  31/ 36] ackley n=64000000    rep 4  wall    205.1 s  RSS    269 MB  elapsed   9095.7 s\n"}
+,{"stream_name":"stdout","time":9261.68635363,"data":"        beta=6.02853 tau_hat=0.00926714 share=0.0978\n"}
+,{"stream_name":"stdout","time":9261.686359094,"data":"        beta=4.11779 tau_hat=0.101392 share=0.00502\n"}
+,{"stream_name":"stdout","time":9263.291587154,"data":"  [C  32/ 36] ackley n=64000000    rep 5  wall    205.1 s  RSS    269 MB  elapsed   9097.3 s\n"}
+,{"stream_name":"stdout","time":9263.29162592,"data":"        beta=6.02853 tau_hat=0.00841616 share=0.0958\n"}
+,{"stream_name":"stdout","time":9263.291631754,"data":"        beta=4.11779 tau_hat=0.0996658 share=0.00522\n"}
+,{"stream_name":"stdout","time":9353.999530933,"data":"  [C  33/ 36] sphere n=64000000    rep 2  wall     93.9 s  RSS    193 MB  elapsed   9188.0 s\n"}
+,{"stream_name":"stdout","time":9353.999629778,"data":"        beta=0.406542 tau_hat=0.0115092 share=0.00646 exact=0.0112133 relerr=+0.0264\n"}
+,{"stream_name":"stdout","time":9353.999639699,"data":"        beta=0.246146 tau_hat=0.100138 share=0.000291 exact=0.0998249 relerr=+0.0031\n"}
+,{"stream_name":"stdout","time":9355.430812307,"data":"  [C  34/ 36] sphere n=64000000    rep 4  wall     93.7 s  RSS    193 MB  elapsed   9189.4 s\n"}
+,{"stream_name":"stdout","time":9355.430843958,"data":"        beta=0.406542 tau_hat=0.0110291 share=0.005 exact=0.0112133 relerr=-0.0164\n"}
+,{"stream_name":"stdout","time":9355.430849273,"data":"        beta=0.246146 tau_hat=0.0997298 share=0.000255 exact=0.0998249 relerr=-0.0010\n"}
+,{"stream_name":"stdout","time":9355.599593828,"data":"  [C  35/ 36] sphere n=64000000    rep 3  wall     93.9 s  RSS    193 MB  elapsed   9189.6 s\n"}
+,{"stream_name":"stdout","time":9355.59964047,"data":"        beta=0.406542 tau_hat=0.0114066 share=0.00369 exact=0.0112133 relerr=+0.0172\n"}
+,{"stream_name":"stdout","time":9355.599648226,"data":"        beta=0.246146 tau_hat=0.100005 share=0.000208 exact=0.0998249 relerr=+0.0018\n"}
+,{"stream_name":"stdout","time":9356.374755626,"data":"  [C  36/ 36] sphere n=64000000    rep 5  wall     93.1 s  RSS    193 MB  elapsed   9190.4 s\n"}
+,{"stream_name":"stdout","time":9356.37479744,"data":"        beta=0.406542 tau_hat=0.0109734 share=0.034 exact=0.0112133 relerr=-0.0214\n"}
+,{"stream_name":"stdout","time":9356.374803474,"data":"        beta=0.246146 tau_hat=0.099927 share=0.000817 exact=0.0998249 relerr=+0.0010\n"}
+,{"stream_name":"stdout","time":9356.418664209,"data":"\n"}
+,{"stream_name":"stdout","time":9356.418732203,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":9356.41874065,"data":"RUNG TABLE  (every value at the cell's fixed beta; tau0 is nominal)\n"}
+,{"stream_name":"stdout","time":9356.418744968,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":9356.418749648,"data":"ackley at beta = 6.028534528294139  (nominal tau0 0.01)\n"}
+,{"stream_name":"stdout","time":9356.418753631,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate\n"}
+,{"stream_name":"stdout","time":9356.418758308,"data":"      4000000   0.00963929    0.0052982    0.0117276    0.6670  fail    0.0487     fail        no\n"}
+,{"stream_name":"stdout","time":9356.418762709,"data":"     16000000   0.00919193   0.00798821    0.0113605    0.3669  fail    0.0033     pass        no\n"}
+,{"stream_name":"stdout","time":9356.418766923,"data":"     64000000   0.00922234   0.00841616    0.0100109    0.1729  fail    0.0021     pass        no\n"}
+,{"stream_name":"stdout","time":9356.418771287,"data":"    256000000   0.00924136   0.00867337   0.00947458    0.0867  fail    0.0130     pass        no\n"}
+,{"stream_name":"stdout","time":9356.418775968,"data":"   1024000000     0.009123   0.00678988   0.00952705    0.3000  fail         - untested        no\n"}
+,{"stream_name":"stdout","time":9356.418780433,"data":"  smallest adequate rung: none -- no adequate rung in the ladder\n"}
+,{"stream_name":"stdout","time":9356.41878483,"data":"  F1: slope -0.2193; extrapolated required size 2.59e+12 (extrapolation from a 5-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":9356.418789193,"data":"\n"}
+,{"stream_name":"stdout","time":9356.41879345,"data":"ackley at beta = 4.117791730834002  (nominal tau0 0.1)\n"}
+,{"stream_name":"stdout","time":9356.418797949,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate\n"}
+,{"stream_name":"stdout","time":9356.418802123,"data":"      4000000     0.100332    0.0941204     0.103959    0.0981  fail    0.0041     pass        no\n"}
+,{"stream_name":"stdout","time":9356.418805993,"data":"     16000000    0.0999209    0.0978241     0.102283    0.0446  fail    0.0065     pass        no\n"}
+,{"stream_name":"stdout","time":9356.418810396,"data":"     64000000      0.10057    0.0996658     0.101392    0.0172  pass    0.0007     pass       yes\n"}
+,{"stream_name":"stdout","time":9356.418814238,"data":"    256000000     0.100638     0.100386      0.10084    0.0045  pass    0.0002     pass       yes\n"}
+,{"stream_name":"stdout","time":9356.418818313,"data":"   1024000000     0.100617     0.100118      0.10073    0.0061  pass         - untested        no\n"}
+,{"stream_name":"stdout","time":9356.418822222,"data":"  smallest adequate rung: 64000000\n"}
+,{"stream_name":"stdout","time":9356.418899737,"data":"  F1: slope -0.5664; extrapolated required size 3.7e+07 (extrapolation from a 5-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":9356.418905703,"data":"\n"}
+,{"stream_name":"stdout","time":9356.418909826,"data":"sphere at beta = 0.40654222121074113  (nominal tau0 0.01)   exact tau(beta) = 0.011213257\n"}
+,{"stream_name":"stdout","time":9356.418916078,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate  relerr(median)\n"}
+,{"stream_name":"stdout","time":9356.418956359,"data":"      4000000    0.0114774    0.0105627    0.0120753    0.1318  fail    0.0220     pass        no  +0.0236\n"}
+,{"stream_name":"stdout","time":9356.418961122,"data":"     16000000    0.0112305    0.0105265    0.0114709    0.0841  fail    0.0014     pass        no  +0.0015\n"}
+,{"stream_name":"stdout","time":9356.418965115,"data":"     64000000    0.0112465    0.0109734    0.0115092    0.0476  fail    0.0043     pass        no  +0.0030\n"}
+,{"stream_name":"stdout","time":9356.418968998,"data":"    256000000    0.0111982    0.0109573    0.0112888    0.0296  fail    0.0013     pass        no  -0.0013\n"}
+,{"stream_name":"stdout","time":9356.418973248,"data":"   1024000000    0.0111832    0.0111499    0.0112807    0.0117  pass         - untested        no  -0.0027\n"}
+,{"stream_name":"stdout","time":9356.418977352,"data":"  smallest adequate rung: none -- no adequate rung in the ladder\n"}
+,{"stream_name":"stdout","time":9356.418980906,"data":"  F1: slope -0.4248; extrapolated required size 2.54e+08 (extrapolation from a 5-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":9356.418985414,"data":"\n"}
+,{"stream_name":"stdout","time":9356.418989227,"data":"sphere at beta = 0.2461457179039086  (nominal tau0 0.1)   exact tau(beta) = 0.099824906\n"}
+,{"stream_name":"stdout","time":9356.418993607,"data":"            n       median          min          max     ratio    C5     drift       D1  adequate  relerr(median)\n"}
+,{"stream_name":"stdout","time":9356.418997669,"data":"      4000000     0.100053    0.0996063     0.100839    0.0123  pass    0.0031     pass       yes  +0.0023\n"}
+,{"stream_name":"stdout","time":9356.419001675,"data":"     16000000    0.0997408    0.0993886    0.0999755    0.0059  pass    0.0023     pass       yes  -0.0008\n"}
+,{"stream_name":"stdout","time":9356.419006307,"data":"     64000000     0.099966    0.0996082     0.100138    0.0053  pass    0.0024     pass       yes  +0.0014\n"}
+,{"stream_name":"stdout","time":9356.419010435,"data":"    256000000    0.0997259    0.0996194    0.0998868    0.0027  pass    0.0008     pass       yes  -0.0010\n"}
+,{"stream_name":"stdout","time":9356.419014504,"data":"   1024000000    0.0998023    0.0997558    0.0998661    0.0011  pass         - untested        no  -0.0002\n"}
+,{"stream_name":"stdout","time":9356.419018246,"data":"  smallest adequate rung: 4000000\n"}
+,{"stream_name":"stdout","time":9356.419021605,"data":"  F1: slope -0.4047; extrapolated required size 7.28e+05 (extrapolation from a 5-point fit, not a measurement)\n"}
+,{"stream_name":"stdout","time":9356.419026047,"data":"\n"}
+,{"stream_name":"stdout","time":9356.419030232,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":9356.419034523,"data":"MEASURED  peak RSS of any reference task 647 MB\n"}
+,{"stream_name":"stdout","time":9356.419038468,"data":"MEASURED  ackley throughput 3.16e+05 points per second per worker (8184000000 points in 25878.6 worker-seconds)\n"}
+,{"stream_name":"stdout","time":9356.419043018,"data":"MEASURED  sphere throughput 7.13e+05 points per second per worker (8184000000 points in 11472.9 worker-seconds)\n"}
+,{"stream_name":"stdout","time":9356.419047658,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":9356.419051502,"data":"files     /kaggle/working/refscale-20261010-014114\n"}
+,{"stream_name":"stdout","time":9356.419055459,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":9356.466912014,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":9359.193273731,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":9359.193319159,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":9359.627965515,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":9359.628001449,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":9361.492487512,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":9362.796117639,"data":"[NbConvertApp] Writing 287133 bytes to __results__.html\n"}
+]

@@ -5,8 +5,8 @@ project stands and cites a log or a commit for every claim. Every number here
 is copied from a file in logs/ or runs/. If this file and a log disagree, the
 log is right and this file is stale.
 
-Written 2026-10-10, at commit 7592b03. While this was written the refscale full
-run was still in progress on Kaggle.
+Written 2026-10-10 at commit 7592b03; updated the same day after the refscale
+full run finished.
 
 ## 1. Settled
 
@@ -65,51 +65,58 @@ run was still in progress on Kaggle.
 
 ## 2. In flight
 
-### 2.1 refscale full run, Kaggle job "refscale"
-
-- Script: scripts/refscale.py, unchanged since c6dc0cb (md5
-  cdb5763e9080450d84cda69b5226d532 on 2026-10-10).
-- Launched with:
-  kgrun.py run --job refscale --script refscale.py --args "--workers 4
-  --ladder 4000000,16000000,64000000,256000000,1024000000"
-  (logs/kgrun-refscale-full.log, header and "runner will call" line). The
-  dataset version was pushed at 2026-10-10T07:08:55, and the kernel was
-  RUNNING at the last poll in that log.
-- logs/kgrun-refscale-full.log is not committed. The local kgrun process
-  still has it open. Commit it with the fetched run folder once kgrun exits.
-- Cells: ackley and sphere, d = 40, centred law, nominal tau0 0.01 and 0.1.
-  N_CAL = 1,000,000. Six replicates per rung. Ladder 4M, 16M, 64M, 256M, 1G.
-- Pre-specified criteria (refscale.py docstring, fixed 2026-10-09):
-  - E1, equivalence gate: streamed and held log-ESS agree to relative 1e-12
-    on the two lowest rungs, or the run stops with exit 3.
-  - C5, precision: range/median over six replicates <= 0.025.
-  - D1, drift: |median_n - median_next| / median_next <= 0.025. The top rung
-    is untested.
-  - Adequate rung: passes both C5 and D1.
-  - S1: share of sum w^2 carried by the largest term. Reported, no threshold.
-  - X1: sphere exact tau(beta) = (1+4b)^(d/2) / (1+2b)^d, with the relative
-    error of each median.
-  - F1: extrapolate a required size only if the fitted slope of
-    log(range/median) on log n is negative and the second-highest rung
-    passes D1.
-- Outcomes, fixed in advance (2026-10-09):
-  - O1: an adequate size is reachable. calprec C4 is rerun at that reference
-    size and N_star becomes declarable.
-  - O2: no adequate size is reachable. The tau0 = 0.01 cells are redefined by
-    a declared fixed beta with tau(beta) and its uncertainty, and the paper
-    states that the tightest target cannot be identified by direct Monte
-    Carlo. This is an estimand change, decided before the run.
-  - O3: sphere is adequate where ackley is not. The limit is the
-    objective's tail, and X1 is the evidence.
-  - "Within reach of a real run" is judged by Rahul from the printed wall
-    times and peak RSS. The script does not decide it.
-- Before any number from it is used: read the header (CLAUDE.md rule 18), and
-  check exit code 0 and "E1 PASSED".
+- costprobe2 smoke on Kaggle, job "costprobe2-smoke".
+  - A kgrun process was running at 2026-10-10 10:14 (dataset version
+    "kgrun costprobe2-smoke 2026-10-10T10:14:44"), with
+    logs/kgrun-costprobe2-smoke.log open.
+  - The log is not committed while kgrun holds it.
+  - The script is scripts/costprobe2.py. This is the 2c20653 version
+    (md5 5813a90cf36399bb8a320e5d6e9dcaee) if the working tree matched
+    HEAD when kgrun assembled the bundle. The Kaggle log's sha256 line will
+    confirm it.
+- Nothing else is in flight. refscale has finished (section 3.0).
 
 ## 3. Measured so far about the science
 
 Every item is a measurement under the stated protocol. Smoke verdicts are
 not results.
+
+### 3.0 refscale full run (Kaggle): verdict O2 for both tight-target cells
+
+- Run folder: runs/refscale-kaggle-20261010-094820, written by kgrun's
+  fetch. logs/kgrun-refscale-full.log shows "finished after 9435 s".
+  runs/refscale-kaggle-20261010-101146 is byte-identical; no repository
+  log shows where it came from.
+- Header: python 3.13.15, numpy 2.1.3, workers 4, ladder 4M, 16M, 64M,
+  256M, 1G, replicates 6. "E1 PASSED on every replicate and beta at rungs
+  [4000000, 16000000]".
+- ackley, beta 6.028534528294139 (nominal tau0 0.01): "no adequate rung in
+  the ladder".
+  - C5 ratio 0.3000 at 1G.
+  - Medians 0.00919193 to 0.00924136 from 16M to 256M, and 0.009123 at 1G.
+  - F1 "extrapolated required size 2.59e+12 (extrapolation from a 5-point
+    fit, not a measurement)".
+- sphere, beta 0.40654222121074113 (nominal tau0 0.01, exact 0.011213257):
+  "no adequate rung in the ladder".
+  - C5 ratio 0.0117 at 1G, which passes C5, but 1G is the top rung, so its
+    D1 is untested.
+  - relerr(median) -0.0027 at 1G.
+- tau0 0.1: ackley's smallest adequate rung is 64000000; sphere's is
+  4000000.
+- Cost: 1G replicate walls 3225.4 to 3236.8 s (ackley) and 1416.3 to
+  1426.5 s (sphere). Throughput 3.16e+05 and 7.13e+05 points per second
+  per worker. Peak RSS of any reference task 647 MB.
+- Verdict (ledger N18):
+  - O2 for both tight-target cells.
+  - O3 not established under the pre-registered criteria. Sphere has no
+    adequate rung at the tight beta either. A 4G sphere-only rung, proposed
+    and not run, would settle it.
+- Calibration error at the tight target (ledger N19): sphere's exact tau
+  is 0.011213257, above 0.01. Ackley's reference medians lie below 0.01;
+  that is an estimate, not adequate.
+- calprec v2 cap n_max = 1G (notes/CALPREC_V2_SPEC.md D1). The reference
+  estimate is the median of six (section 11a), a forward-looking decision;
+  refscale's own verdict is unchanged.
 
 ### 3.1 calprec, the calibration-size question (laptop)
 
@@ -174,8 +181,12 @@ Source: runs/refscale-smoke-kaggle-20261009-102942/cbo-refscale-smoke.log.
 
 ## 4. Not known
 
-- N_star. It has not been declared. Whether the tau0 = 0.01 concentration is
-  estimable at all is what refscale is measuring now (O1, O2 or O3).
+- N_star / N_cell. Not declared; calprec v2 has not been written. refscale
+  gave O2 at tau0 = 0.01, so those cells will be labelled by beta (N18).
+- Whether sphere's 1G rung is adequate at the tight beta (its D1 is
+  untested). The 4G sphere rung is proposed, not run.
+- c6, the constant of C5m in calprec v2 (CALPREC_V2_SPEC section 5). It is
+  to be computed by a no-dynamics Monte Carlo before calprec v2 runs.
 - Kaggle trajectory throughput. costprobe has not run there.
 - Peak RSS at J_inf = 100000 (EXP-REFSIZE). No script has measured it.
 - Peak RSS and wall time for every design outside costprobe's 24 probes. These
@@ -202,7 +213,10 @@ Source: runs/refscale-smoke-kaggle-20261009-102942/cbo-refscale-smoke.log.
 - Ackley proof obligations under R1: O1 to O8. All open.
 - Archive: ARC1, ARC2, ARC3, ARC4, ARC5 open. ARC6 and ARC7 need no action.
   S3 is declared and folded into ARC1.
-- Newly found: N1 to N15. All open.
+- Newly found: N1 to N15, all open; N16 (calprec seed reduction), N17
+  (MECH/CAL collapse, R7), N18 (refscale verdict; O3 open) and N19
+  (tight-target calibration error), all open.
+- Kaggle: K5 (no resumption on Kaggle), a known limit.
 - Closed: G1 (e945d17), G2 (23a46c8), G3 (acf1786), K1 (closed through K3),
   K3 (4c9824c). K4 is a record, not a defect.
 - ARC2's list of per-cell files omits law_synth.csv (EXP-GEOM) and
