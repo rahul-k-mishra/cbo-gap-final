@@ -1,0 +1,426 @@
+[{"stream_name":"stdout","time":0.763333749,"data":"kgrun runner: job costprobe2-s1\n"}
+,{"stream_name":"stdout","time":0.763456331,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.763463636,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.763466558,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.763469188,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.769783713,"data":"  listing  33 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.769822131,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/costprobe2.py\n"}
+,{"stream_name":"stdout","time":0.769828652,"data":"  args     --workers 4 --shard 1 --nshards 2\n"}
+,{"stream_name":"stdout","time":0.769832239,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/costprobe2.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --shard 1 --nshards 2\n"}
+,{"stream_name":"stdout","time":1.9906270670000001,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.990678969,"data":"CBO-GAP costprobe2 -- cost of every rerun row, measured with each row's own dynamics\n"}
+,{"stream_name":"stdout","time":1.990751805,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.990759264,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.990763701,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":1.9907674260000001,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4\n"}
+,{"stream_name":"stdout","time":1.9907717790000001,"data":"  start    fork\n"}
+,{"stream_name":"stdout","time":1.990775696,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":1.990779764,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.990784087,"data":"  script   sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":1.990788316,"data":"  mode     full   shard 1 of 2   rows BETA-ISO,BETA-ANI,LAWPANEL,CONC,PROBEARM,ADAPT,TAU8,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,SIGMA,ANISO,RMAP,CLIFF,ONSET\n"}
+,{"stream_name":"stdout","time":1.990792727,"data":"  fixed    dt 0.01  lambda 1.0  iso sigma 0.2  probe tau0 0.1  probe r 0.5  probe sample 4000\n"}
+,{"stream_name":"stdout","time":1.990796864,"data":"  seeds    default_rng(SeedSequence(key)), full width; key = (ENTROPY 20261010, kind 41, module, objective, d, diffusion, law, J_inf, K, arm, variant, tau0e6, re6, beta_design e6, sigma_design e6); probe-beta kind 42; P3 kind 43\n"}
+,{"stream_name":"stdout","time":1.990803645,"data":"  P4       peak RSS \u003c= 3072 MB per worker;  A1-A3 ratio \u003c= 1.25;  P5 ceiling 21600 s per shard\n"}
+,{"stream_name":"stdout","time":1.990807408,"data":"\n"}
+,{"stream_name":"stdout","time":1.990809772,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.990812655,"data":"P1 -- ARCHIVE IDENTITY (the imported modules' own files)\n"}
+,{"stream_name":"stdout","time":1.990815455,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.9908182939999999,"data":"  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  /kaggle/input/datasets/ericsom/cbo-gap-archive/ess_surface.py  ok\n"}
+,{"stream_name":"stdout","time":1.9908353509999999,"data":"  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  /kaggle/input/datasets/ericsom/cbo-gap-archive/visibility.py  ok\n"}
+,{"stream_name":"stdout","time":1.990838737,"data":"  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  /kaggle/input/datasets/ericsom/cbo-gap-archive/mechanism.py  ok\n"}
+,{"stream_name":"stdout","time":1.9908460730000002,"data":"  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  /kaggle/input/datasets/ericsom/cbo-gap-archive/control.py  ok\n"}
+,{"stream_name":"stdout","time":1.990850573,"data":"  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  /kaggle/input/datasets/ericsom/cbo-gap-archive/boundary.py  ok\n"}
+,{"stream_name":"stdout","time":1.990854575,"data":"  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  /kaggle/input/datasets/ericsom/cbo-gap-archive/regime.py  ok\n"}
+,{"stream_name":"stdout","time":1.990859572,"data":"  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  /kaggle/input/datasets/ericsom/cbo-gap-archive/law.py  ok\n"}
+,{"stream_name":"stdout","time":1.990864056,"data":"  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  /kaggle/input/datasets/ericsom/cbo-gap-archive/sigma.py  ok\n"}
+,{"stream_name":"stdout","time":1.990868946,"data":"  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  /kaggle/input/datasets/ericsom/cbo-gap-archive/crossed.py  ok\n"}
+,{"stream_name":"stdout","time":1.9908733440000002,"data":"  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  /kaggle/input/datasets/ericsom/cbo-gap-archive/cliff.py  ok\n"}
+,{"stream_name":"stdout","time":1.99087748,"data":"  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  /kaggle/input/datasets/ericsom/cbo-gap-archive/regimemap.py  ok\n"}
+,{"stream_name":"stdout","time":1.990881691,"data":"  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  /kaggle/input/datasets/ericsom/cbo-gap-archive/exactcal.py  ok\n"}
+,{"stream_name":"stdout","time":1.990885815,"data":"  P1 PASS\n"}
+,{"stream_name":"stdout","time":1.990889638,"data":"\n"}
+,{"stream_name":"stdout","time":1.990893305,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.99089779,"data":"P0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts against Table 2\n"}
+,{"stream_name":"stdout","time":1.9909019350000001,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.990906391,"data":"  BETA-ISO  M       ess_surface.py 241-246 M               ok\n"}
+,{"stream_name":"stdout","time":1.9909104420000001,"data":"  BETA-ISO  betas   ess_surface.py 241-246 betas           ok\n"}
+,{"stream_name":"stdout","time":1.9909146500000001,"data":"  BETA-ISO  dims    ess_surface.py 241-246 dims            ok\n"}
+,{"stream_name":"stdout","time":1.99091723,"data":"  BETA-ISO  jgrid   ess_surface.py 241-246 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.9909197029999999,"data":"  BETA-ISO  objs    ess_surface.py 273-273 obj             ok\n"}
+,{"stream_name":"stdout","time":1.990922103,"data":"  BETA-ANI  M       ess_surface.py 241-246 M               ok\n"}
+,{"stream_name":"stdout","time":1.9909247209999998,"data":"  BETA-ANI  betas   ess_surface.py 241-246 aniso_betas     ok\n"}
+,{"stream_name":"stdout","time":1.99093085,"data":"  BETA-ANI  dims    ess_surface.py 241-246 aniso_dims      ok\n"}
+,{"stream_name":"stdout","time":1.990934703,"data":"  BETA-ANI  jgrid   ess_surface.py 241-246 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.990938565,"data":"  BETA-ANI  objs    ess_surface.py 280-280 obj             ok\n"}
+,{"stream_name":"stdout","time":1.990942298,"data":"  LAWPANEL  M       visibility.py 321-326 M               ok\n"}
+,{"stream_name":"stdout","time":1.990946355,"data":"  LAWPANEL  dims    visibility.py 321-326 dims            ok\n"}
+,{"stream_name":"stdout","time":1.990950487,"data":"  LAWPANEL  jgrid   visibility.py 321-326 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.990954215,"data":"  LAWPANEL  laws    visibility.py 321-326 inits           ok\n"}
+,{"stream_name":"stdout","time":1.990958,"data":"  LAWPANEL  objs    visibility.py 321-326 objs            ok\n"}
+,{"stream_name":"stdout","time":1.990961593,"data":"  CONC      M       mechanism.py 294-297 M               ok\n"}
+,{"stream_name":"stdout","time":1.9909650920000002,"data":"  CONC      dims    mechanism.py 294-297 dims            ok\n"}
+,{"stream_name":"stdout","time":1.990968455,"data":"  CONC      jgrid   mechanism.py 294-297 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.9909719529999998,"data":"  CONC      laws    mechanism.py 294-297 inits           ok\n"}
+,{"stream_name":"stdout","time":1.9909753019999998,"data":"  CONC      objs    mechanism.py 294-297 objs            ok\n"}
+,{"stream_name":"stdout","time":1.9909791270000001,"data":"  CONC      taus    mechanism.py 294-297 taus            ok\n"}
+,{"stream_name":"stdout","time":1.990983001,"data":"  PROBEARM  M       mechanism.py 294-297 M               ok\n"}
+,{"stream_name":"stdout","time":1.990987297,"data":"  PROBEARM  dims    mechanism.py 294-297 dims            ok\n"}
+,{"stream_name":"stdout","time":1.990991223,"data":"  PROBEARM  jgrid   mechanism.py 294-297 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.9909951019999999,"data":"  PROBEARM  laws    mechanism.py 294-297 inits           ok\n"}
+,{"stream_name":"stdout","time":1.990998978,"data":"  PROBEARM  objs    mechanism.py 294-297 objs            ok\n"}
+,{"stream_name":"stdout","time":1.991002943,"data":"  PROBEARM  taus    mechanism.py 294-297 taus            ok\n"}
+,{"stream_name":"stdout","time":1.991006853,"data":"  ADAPT     M       control.py 297-300 M               ok\n"}
+,{"stream_name":"stdout","time":1.9910107460000002,"data":"  ADAPT     arms    control.py 305-305 arms            ok\n"}
+,{"stream_name":"stdout","time":1.991014582,"data":"  ADAPT     dims    control.py 297-300 dims            ok\n"}
+,{"stream_name":"stdout","time":1.9910186730000001,"data":"  ADAPT     jgrid   control.py 297-300 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.991022569,"data":"  ADAPT     objs    control.py 297-300 objs            ok\n"}
+,{"stream_name":"stdout","time":1.991026671,"data":"  ADAPT     taus    control.py 297-300 taus            ok\n"}
+,{"stream_name":"stdout","time":1.991030646,"data":"  TAU8      M       boundary.py 252-256 M               ok\n"}
+,{"stream_name":"stdout","time":1.991034559,"data":"  TAU8      dims    boundary.py 252-256 dims            ok\n"}
+,{"stream_name":"stdout","time":1.9910383710000001,"data":"  TAU8      jgrid   boundary.py 252-256 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.991042492,"data":"  TAU8      objs    boundary.py 252-256 objs            ok\n"}
+,{"stream_name":"stdout","time":1.9910450389999998,"data":"  TAU8      taus    boundary.py 252-256 taus            ok\n"}
+,{"stream_name":"stdout","time":1.9910483509999999,"data":"  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181\n"}
+,{"stream_name":"stdout","time":1.991056443,"data":"  REFSIZE   M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":1.991060654,"data":"  REFSIZE   d       regime.py 512-512 dA              ok\n"}
+,{"stream_name":"stdout","time":1.9910646509999999,"data":"  REFSIZE   jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.9910700000000001,"data":"  REFSIZE   jinfs   regime.py 508-508 Jinfs           ok\n"}
+,{"stream_name":"stdout","time":1.991074185,"data":"  REFSIZE   objs    regime.py 511-511 objsA           ok\n"}
+,{"stream_name":"stdout","time":1.991078345,"data":"  REFSIZE   not checked against source: tau0 0.1, law centred, T 1.0 inside the cells comprehension, regime.py 513\n"}
+,{"stream_name":"stdout","time":1.9910823359999998,"data":"  SYNTH     M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":1.9911282909999999,"data":"  SYNTH     dims    regime.py 549-549 dims            ok\n"}
+,{"stream_name":"stdout","time":1.991141343,"data":"  SYNTH     jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.991145819,"data":"  SYNTH     objs    regime.py 548-548 names           ok\n"}
+,{"stream_name":"stdout","time":1.991149866,"data":"  SYNTH     taus    regime.py 550-550 taus            ok\n"}
+,{"stream_name":"stdout","time":1.991153997,"data":"  SYNTH     not checked against source: law centred inside the cells comprehension, regime.py 553\n"}
+,{"stream_name":"stdout","time":1.9911584310000001,"data":"  NAMED     M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":1.991162275,"data":"  NAMED     dims    regime.py 576-576 dims            ok\n"}
+,{"stream_name":"stdout","time":1.991166156,"data":"  NAMED     jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.991169883,"data":"  NAMED     objs    regime.py 575-575 names           ok\n"}
+,{"stream_name":"stdout","time":1.991173955,"data":"  NAMED     taus    regime.py 577-577 taus            ok\n"}
+,{"stream_name":"stdout","time":1.991177851,"data":"  NAMED     not checked against source: law centred inside the cells comprehension, regime.py 578\n"}
+,{"stream_name":"stdout","time":1.991181755,"data":"  HORIZON   M       regime.py 483-483 M               ok\n"}
+,{"stream_name":"stdout","time":1.991185677,"data":"  HORIZON   Ts      regime.py 599-599 Ts              ok\n"}
+,{"stream_name":"stdout","time":1.9911896470000001,"data":"  HORIZON   jgrid   regime.py 484-484 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.9911936780000001,"data":"  HORIZON   laws    regime.py 600-600 inits           ok\n"}
+,{"stream_name":"stdout","time":1.991196998,"data":"  HORIZON   objs    regime.py 596-596 names           ok\n"}
+,{"stream_name":"stdout","time":1.9912005320000001,"data":"  HORIZON   not checked against source: d 10 and tau0 0.1 inside the cells comprehension, regime.py 601\n"}
+,{"stream_name":"stdout","time":1.991204271,"data":"  GEOM      M       law.py 770-770 --realisations  ok\n"}
+,{"stream_name":"stdout","time":1.991207981,"data":"  GEOM      dims    law.py 522-522 dims            ok\n"}
+,{"stream_name":"stdout","time":1.991212049,"data":"  GEOM      jgrid   law.py 523-523 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.991215983,"data":"  GEOM      objs    law.py 521-521 names           ok\n"}
+,{"stream_name":"stdout","time":1.991220711,"data":"  GEOM      taus    law.py 522-522 taus            ok\n"}
+,{"stream_name":"stdout","time":1.991224648,"data":"  SIGMA     M       sigma.py 238-238 --realisations  ok\n"}
+,{"stream_name":"stdout","time":1.991233467,"data":"  SIGMA     diffs   sigma.py 259-260 diffs           ok\n"}
+,{"stream_name":"stdout","time":1.991237632,"data":"  SIGMA     dims    sigma.py 253-257 dims            ok\n"}
+,{"stream_name":"stdout","time":1.991241507,"data":"  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.99124535,"data":"  SIGMA     objs    sigma.py 253-257 objs            ok\n"}
+,{"stream_name":"stdout","time":1.991249155,"data":"  SIGMA     rs      sigma.py 253-257 rs              ok\n"}
+,{"stream_name":"stdout","time":1.991253154,"data":"  SIGMA     taus    sigma.py 253-257 taus            ok\n"}
+,{"stream_name":"stdout","time":2.39679992,"data":"  ANISO     M       crossed.py 239-239 --realisations  ok\n"}
+,{"stream_name":"stdout","time":2.3968379459999998,"data":"  ANISO     diffs   crossed.py 248-248 diffs           ok\n"}
+,{"stream_name":"stdout","time":2.396842252,"data":"  ANISO     dims    crossed.py 255-258 dims            ok\n"}
+,{"stream_name":"stdout","time":2.396845258,"data":"  ANISO     jgrid   crossed.py 255-258 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":2.39684789,"data":"  ANISO     objs    crossed.py 255-258 objs            ok\n"}
+,{"stream_name":"stdout","time":2.396850449,"data":"  ANISO     rs      crossed.py 255-258 rs              ok\n"}
+,{"stream_name":"stdout","time":2.396852842,"data":"  ANISO     sigmas  crossed.py 255-258 sigmas          ok\n"}
+,{"stream_name":"stdout","time":2.396855237,"data":"  ANISO     taus    crossed.py 255-258 taus            ok\n"}
+,{"stream_name":"stdout","time":2.396857715,"data":"  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262\n"}
+,{"stream_name":"stdout","time":2.396860484,"data":"  RMAP      M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":2.396862961,"data":"  RMAP      diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":2.396865587,"data":"  RMAP      dims    regimemap.py 300-302 dimsM           ok\n"}
+,{"stream_name":"stdout","time":2.396868056,"data":"  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":2.396870695,"data":"  RMAP      objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":2.396873127,"data":"  RMAP      rs      regimemap.py 300-302 rsM             ok\n"}
+,{"stream_name":"stdout","time":2.396875532,"data":"  RMAP      taus    regimemap.py 300-302 tausM           ok\n"}
+,{"stream_name":"stdout","time":2.396877926,"data":"  CLIFF     M       cliff.py 244-244 --realisations  ok\n"}
+,{"stream_name":"stdout","time":2.396880432,"data":"  CLIFF     diffs   cliff.py 253-253 diffs           ok\n"}
+,{"stream_name":"stdout","time":2.396882835,"data":"  CLIFF     dims    cliff.py 260-264 dims            ok\n"}
+,{"stream_name":"stdout","time":2.396885447,"data":"  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":2.396887892,"data":"  CLIFF     objs    cliff.py 260-264 objs            ok\n"}
+,{"stream_name":"stdout","time":2.396890359,"data":"  CLIFF     rs      cliff.py 260-264 rs              ok\n"}
+,{"stream_name":"stdout","time":2.396892818,"data":"  CLIFF     taus    cliff.py 260-264 taus            ok\n"}
+,{"stream_name":"stdout","time":2.396895219,"data":"  ONSET     M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":2.396897647,"data":"  ONSET     diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":2.396900068,"data":"  ONSET     dims    regimemap.py 300-302 dimsD           ok\n"}
+,{"stream_name":"stdout","time":2.396915946,"data":"  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":2.396919887,"data":"  ONSET     objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":2.396923863,"data":"  ONSET     rs      regimemap.py 300-302 rsD             ok\n"}
+,{"stream_name":"stdout","time":2.396926588,"data":"  ONSET     tau     regimemap.py 304-304 tauD            ok\n"}
+,{"stream_name":"stdout","time":2.396929055,"data":"  BETA-ISO   cells   42 (Table 2   42)   realizations   840 (Table 2   840)   units   6   ok\n"}
+,{"stream_name":"stdout","time":2.396931567,"data":"  BETA-ANI   cells   12 (Table 2   12)   realizations   240 (Table 2   240)   units   4   ok\n"}
+,{"stream_name":"stdout","time":2.396934071,"data":"  LAWPANEL   cells  144 (Table 2  144)   realizations  2880 (Table 2  2880)   units  36   ok\n"}
+,{"stream_name":"stdout","time":2.396937907,"data":"  CONC       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok\n"}
+,{"stream_name":"stdout","time":2.396940427,"data":"  PROBEARM   cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok\n"}
+,{"stream_name":"stdout","time":2.396943086,"data":"  ADAPT      cells   72 (Table 2   72)   realizations  1080 (Table 2  1080)   units  36   ok\n"}
+,{"stream_name":"stdout","time":2.396945579,"data":"  TAU8       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  18   ok\n"}
+,{"stream_name":"stdout","time":2.3969480819999998,"data":"  REFSIZE    cells   12 (Table 2   12)   realizations   144 (Table 2   144)   units  12   ok\n"}
+,{"stream_name":"stdout","time":2.396950629,"data":"  SYNTH      cells   72 (Table 2   72)   realizations   864 (Table 2   864)   units  36   ok\n"}
+,{"stream_name":"stdout","time":2.396953094,"data":"  NAMED      cells   36 (Table 2   36)   realizations   432 (Table 2   432)   units  18   ok\n"}
+,{"stream_name":"stdout","time":2.39695554,"data":"  HORIZON    cells   24 (Table 2   24)   realizations   288 (Table 2   288)   units  12   ok\n"}
+,{"stream_name":"stdout","time":2.396958008,"data":"  GEOM       cells  336 (Table 2  336)   realizations  4032 (Table 2  4032)   units  42   ok\n"}
+,{"stream_name":"stdout","time":2.396960946,"data":"  SIGMA      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok\n"}
+,{"stream_name":"stdout","time":2.396964897,"data":"  ANISO      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok\n"}
+,{"stream_name":"stdout","time":2.396971523,"data":"  RMAP       cells  240 (Table 2  240)   realizations  2880 (Table 2  2880)   units  12   ok\n"}
+,{"stream_name":"stdout","time":2.39697605,"data":"  CLIFF      cells  144 (Table 2  144)   realizations  1728 (Table 2  1728)   units  16   ok\n"}
+,{"stream_name":"stdout","time":2.39697987,"data":"  ONSET      cells  180 (Table 2  180)   realizations  2160 (Table 2  2160)   units  30   ok\n"}
+,{"stream_name":"stdout","time":2.396991254,"data":"  P0 PASS\n"}
+,{"stream_name":"stdout","time":2.396995063,"data":"\n"}
+,{"stream_name":"stdout","time":2.396998703,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397003096,"data":"PLAN\n"}
+,{"stream_name":"stdout","time":2.397006764,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397010987,"data":"  boundary     d=5      3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397014852,"data":"  boundary     d=10     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397023978,"data":"  boundary     d=40     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397026812,"data":"  cliff        d=10     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397029186,"data":"  cliff        d=40     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397031648,"data":"  control      d=5      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397034204,"data":"  control      d=10     6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397036747,"data":"  control      d=40     6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397039162,"data":"  crossed      d=5      4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397041543,"data":"  crossed      d=10     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.39704393,"data":"  crossed      d=40     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397046301,"data":"  ess_surface  d=2      2 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397048657,"data":"  ess_surface  d=5      1 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.3970514339999998,"data":"  ess_surface  d=10     2 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397054017,"data":"  law          d=5      7 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397056406,"data":"  law          d=10     7 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397059883,"data":"  law          d=40     7 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397063593,"data":"  mechanism    d=2      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.39706719,"data":"  mechanism    d=5      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397071128,"data":"  regime       d=5      8 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397074736,"data":"  regime       d=10    17 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397078796,"data":"  regime       d=40    10 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397082643,"data":"  regimemap    d=5      3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.3971082519999998,"data":"  regimemap    d=10     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397116109,"data":"  regimemap    d=20     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.3971200169999998,"data":"  regimemap    d=40     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.39712376,"data":"  regimemap    d=80     3 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397127552,"data":"  sigma        d=5      4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397131594,"data":"  sigma        d=10     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397135393,"data":"  sigma        d=40     4 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397139206,"data":"  visibility   d=2      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397143019,"data":"  visibility   d=3      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397146765,"data":"  visibility   d=5      6 main probe(s)\n"}
+,{"stream_name":"stdout","time":2.397150511,"data":"  main probes 165   check probes 0   total 165\n"}
+,{"stream_name":"stdout","time":2.397154356,"data":"\n"}
+,{"stream_name":"stdout","time":2.397157848,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397162098,"data":"T1 -- PER-TASK TIMEOUT\n"}
+,{"stream_name":"stdout","time":2.397166036,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397170127,"data":"  rate 5.074e-07 s per proxy unit, from logs/costprobe.log, 24 laptop probes (embedded)\n"}
+,{"stream_name":"stdout","time":2.397179417,"data":"  largest unit control ackley d=40 none J_inf=50000 T=1.0 J10 adaptive  proxy 9.618e+08\n"}
+,{"stream_name":"stdout","time":2.397183622,"data":"  projected wall of the largest unit 488.0 s;  TIMEOUT_S = 5.0 x 488.0 = 2440.0 s\n"}
+,{"stream_name":"stdout","time":2.397187775,"data":"\n"}
+,{"stream_name":"stdout","time":2.397191439,"data":"  run dir  /kaggle/working/costprobe2-20261011-043521-s1of2\n"}
+,{"stream_name":"stdout","time":2.397195357,"data":"\n"}
+,{"stream_name":"stdout","time":2.397203199,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397207739,"data":"P3 -- OBJECTIVE IDENTITY (reported; no decision rests on it)\n"}
+,{"stream_name":"stdout","time":2.397211677,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.3972158009999998,"data":"  126 comparisons, 22 differ\n"}
+,{"stream_name":"stdout","time":2.397219536,"data":"    DIFFERS  ess_surface vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.3972235729999998,"data":"    DIFFERS  visibility vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397227607,"data":"    DIFFERS  mechanism vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.39723179,"data":"    DIFFERS  control vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.3972357029999998,"data":"    DIFFERS  boundary vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397241018,"data":"    DIFFERS  regime vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.3972449989999998,"data":"    DIFFERS  law vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397248089,"data":"    DIFFERS  sigma vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397251017,"data":"    DIFFERS  crossed vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397254627,"data":"    DIFFERS  cliff vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397258386,"data":"    DIFFERS  regimemap vs exactcal  rastrigin  d=2  max |diff| 1.421e-14\n"}
+,{"stream_name":"stdout","time":2.397262316,"data":"    DIFFERS  ess_surface vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397266272,"data":"    DIFFERS  visibility vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397270304,"data":"    DIFFERS  mechanism vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397274372,"data":"    DIFFERS  control vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397278781,"data":"    DIFFERS  boundary vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397282492,"data":"    DIFFERS  regime vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.39728638,"data":"    DIFFERS  law vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397290273,"data":"    DIFFERS  sigma vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397294398,"data":"    DIFFERS  crossed vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397298134,"data":"    DIFFERS  cliff vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397306002,"data":"    DIFFERS  regimemap vs exactcal  rastrigin  d=40  max |diff| 2.274e-13\n"}
+,{"stream_name":"stdout","time":2.397310163,"data":"\n"}
+,{"stream_name":"stdout","time":2.397318416,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.397322578,"data":"PROBES  165 task(s), at most 4 at once, one fresh process each, timeout 2440 s\n"}
+,{"stream_name":"stdout","time":2.397326511,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":22.700258076,"data":"  [   1/165 ] control     sphere            d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     20.0 s  RSS   204.0 MB  elapsed       20 s\n"}
+,{"stream_name":"stdout","time":28.924636365,"data":"  [   2/165 ] control     griewank          d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     26.3 s  RSS   210.0 MB  elapsed       27 s\n"}
+,{"stream_name":"stdout","time":32.947946231,"data":"  [   3/165 ] control     ackley            d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     30.4 s  RSS   199.8 MB  elapsed       31 s\n"}
+,{"stream_name":"stdout","time":34.160608606,"data":"  [   4/165 ] control     rastrigin         d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     31.7 s  RSS   198.5 MB  elapsed       32 s\n"}
+,{"stream_name":"stdout","time":53.216342427,"data":"  [   5/165 ] control     rosenbrock        d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     24.0 s  RSS   206.2 MB  elapsed       51 s\n"}
+,{"stream_name":"stdout","time":57.034881822,"data":"  [   6/165 ] control     levy              d=40  none        Jinf=50000  T=1.0 J10   adaptive wall     34.2 s  RSS   216.6 MB  elapsed       55 s\n"}
+,{"stream_name":"stdout","time":77.697356923,"data":"  [   7/165 ] regimemap   ackley            d=80  anisotropic Jinf=50000  T=1.0 J10   -        wall     44.5 s  RSS   341.0 MB  elapsed       75 s\n"}
+,{"stream_name":"stdout","time":78.108543022,"data":"  [   8/165 ] regimemap   sphere            d=80  anisotropic Jinf=50000  T=1.0 J10   -        wall     24.7 s  RSS   335.7 MB  elapsed       76 s\n"}
+,{"stream_name":"stdout","time":81.126071321,"data":"  [   9/165 ] regimemap   rastrigin         d=80  anisotropic Jinf=50000  T=1.0 J10   -        wall     46.8 s  RSS   313.0 MB  elapsed       79 s\n"}
+,{"stream_name":"stdout","time":81.131546638,"data":"  [  10/165 ] regimemap   ackley            d=40  anisotropic Jinf=50000  T=1.0 J10   -        wall     23.9 s  RSS   191.9 MB  elapsed       79 s\n"}
+,{"stream_name":"stdout","time":91.374746245,"data":"  [  11/165 ] regimemap   sphere            d=40  anisotropic Jinf=50000  T=1.0 J10   -        wall     13.2 s  RSS   191.5 MB  elapsed       89 s\n"}
+,{"stream_name":"stdout","time":96.596630343,"data":"  [  12/165 ] control     rastrigin         d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     15.4 s  RSS    86.5 MB  elapsed       94 s\n"}
+,{"stream_name":"stdout","time":96.809240933,"data":"  [  13/165 ] control     ackley            d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     15.5 s  RSS    86.7 MB  elapsed       94 s\n"}
+,{"stream_name":"stdout","time":102.2312731,"data":"  [  14/165 ] regimemap   rastrigin         d=40  anisotropic Jinf=50000  T=1.0 J10   -        wall     24.5 s  RSS   193.6 MB  elapsed      100 s\n"}
+,{"stream_name":"stdout","time":104.049343727,"data":"  [  15/165 ] control     sphere            d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     12.5 s  RSS    85.8 MB  elapsed      102 s\n"}
+,{"stream_name":"stdout","time":111.07962643,"data":"  [  16/165 ] control     griewank          d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     14.2 s  RSS    85.2 MB  elapsed      109 s\n"}
+,{"stream_name":"stdout","time":113.902336178,"data":"  [  17/165 ] control     levy              d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     16.9 s  RSS    89.6 MB  elapsed      112 s\n"}
+,{"stream_name":"stdout","time":116.32113234,"data":"  [  18/165 ] control     rosenbrock        d=10  none        Jinf=50000  T=1.0 J10   adaptive wall     13.9 s  RSS    87.1 MB  elapsed      114 s\n"}
+,{"stream_name":"stdout","time":123.747578402,"data":"  [  19/165 ] boundary    sphere            d=40  none        Jinf=50000  T=1.0 J10   -        wall     12.6 s  RSS   193.2 MB  elapsed      121 s\n"}
+,{"stream_name":"stdout","time":126.967666014,"data":"  [  20/165 ] boundary    ackley            d=40  none        Jinf=50000  T=1.0 J10   -        wall     22.8 s  RSS   202.3 MB  elapsed      125 s\n"}
+,{"stream_name":"stdout","time":139.604172175,"data":"  [  21/165 ] sigma       sphere            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     12.5 s  RSS   193.7 MB  elapsed      137 s\n"}
+,{"stream_name":"stdout","time":139.817109925,"data":"  [  22/165 ] sigma       ackley            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     23.2 s  RSS   192.4 MB  elapsed      137 s\n"}
+,{"stream_name":"stdout","time":141.231585842,"data":"  [  23/165 ] boundary    levy              d=40  none        Jinf=50000  T=1.0 J10   -        wall     27.1 s  RSS   213.2 MB  elapsed      139 s\n"}
+,{"stream_name":"stdout","time":148.460107449,"data":"  [  24/165 ] sigma       rastrigin         d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     24.6 s  RSS   192.4 MB  elapsed      146 s\n"}
+,{"stream_name":"stdout","time":156.288441193,"data":"  [  25/165 ] sigma       rosenbrock        d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     16.5 s  RSS   202.5 MB  elapsed      154 s\n"}
+,{"stream_name":"stdout","time":161.911377096,"data":"  [  26/165 ] crossed     sphere            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     13.2 s  RSS   195.6 MB  elapsed      160 s\n"}
+,{"stream_name":"stdout","time":163.328416862,"data":"  [  27/165 ] crossed     ackley            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     23.4 s  RSS   190.7 MB  elapsed      161 s\n"}
+,{"stream_name":"stdout","time":165.341418494,"data":"  [  28/165 ] crossed     rastrigin         d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     23.8 s  RSS   192.2 MB  elapsed      163 s\n"}
+,{"stream_name":"stdout","time":172.569054706,"data":"  [  29/165 ] crossed     rosenbrock        d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     16.2 s  RSS   202.6 MB  elapsed      170 s\n"}
+,{"stream_name":"stdout","time":178.193678131,"data":"  [  30/165 ] cliff       sphere            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     12.7 s  RSS   193.7 MB  elapsed      176 s\n"}
+,{"stream_name":"stdout","time":185.426465469,"data":"  [  31/165 ] cliff       ackley            d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     23.4 s  RSS   191.7 MB  elapsed      183 s\n"}
+,{"stream_name":"stdout","time":188.045183731,"data":"  [  32/165 ] cliff       rastrigin         d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     24.6 s  RSS   192.4 MB  elapsed      186 s\n"}
+,{"stream_name":"stdout","time":189.061732519,"data":"  [  33/165 ] cliff       rosenbrock        d=40  isotropic   Jinf=50000  T=1.0 J10   -        wall     16.4 s  RSS   200.1 MB  elapsed      187 s\n"}
+,{"stream_name":"stdout","time":204.108184456,"data":"  [  34/165 ] regime      rastrigin         d=40  none        Jinf=50000  T=1.0 J10b  -        wall     25.7 s  RSS   205.8 MB  elapsed      202 s\n"}
+,{"stream_name":"stdout","time":210.130699778,"data":"  [  35/165 ] regime      syn_k1_r20_w3     d=40  none        Jinf=50000  T=1.0 J10b  -        wall     24.6 s  RSS   198.6 MB  elapsed      208 s\n"}
+,{"stream_name":"stdout","time":213.153656863,"data":"  [  36/165 ] regime      syn_k100_r0_w3    d=40  none        Jinf=50000  T=1.0 J10b  -        wall     25.0 s  RSS   206.5 MB  elapsed      211 s\n"}
+,{"stream_name":"stdout","time":214.367136109,"data":"  [  37/165 ] regime      syn_k100_r5_w3    d=40  none        Jinf=50000  T=1.0 J10b  -        wall     25.2 s  RSS   206.4 MB  elapsed      212 s\n"}
+,{"stream_name":"stdout","time":224.802334202,"data":"  [  38/165 ] regime      sphere            d=40  none        Jinf=50000  T=1.0 J10b  -        wall     14.5 s  RSS   205.3 MB  elapsed      222 s\n"}
+,{"stream_name":"stdout","time":229.225165377,"data":"  [  39/165 ] regime      syn_k100_r20_w3   d=40  none        Jinf=50000  T=1.0 J10b  -        wall     24.9 s  RSS   203.4 MB  elapsed      227 s\n"}
+,{"stream_name":"stdout","time":232.241642339,"data":"  [  40/165 ] regime      rosenbrock        d=40  none        Jinf=50000  T=1.0 J10b  -        wall     17.8 s  RSS   198.2 MB  elapsed      230 s\n"}
+,{"stream_name":"stdout","time":241.472183304,"data":"  [  41/165 ] regime      levy              d=40  none        Jinf=50000  T=1.0 J10b  -        wall     28.2 s  RSS   213.9 MB  elapsed      239 s\n"}
+,{"stream_name":"stdout","time":249.902160553,"data":"  [  42/165 ] regime      syn_k1_r0_w3      d=40  none        Jinf=50000  T=1.0 J10b  -        wall     24.9 s  RSS   199.9 MB  elapsed      248 s\n"}
+,{"stream_name":"stdout","time":254.324549798,"data":"  [  43/165 ] regime      syn_k1_r5_w3      d=40  none        Jinf=50000  T=1.0 J10b  -        wall     25.0 s  RSS   199.7 MB  elapsed      252 s\n"}
+,{"stream_name":"stdout","time":255.340517451,"data":"  [  44/165 ] law         syn_k1_r20_w3     d=40  none        Jinf=50000  T=1.0 J10b  -        wall     22.9 s  RSS   192.9 MB  elapsed      253 s\n"}
+,{"stream_name":"stdout","time":262.164165741,"data":"  [  45/165 ] law         syn_k100_r5_w1    d=40  none        Jinf=50000  T=1.0 J10b  -        wall     20.5 s  RSS   200.5 MB  elapsed      260 s\n"}
+,{"stream_name":"stdout","time":270.596451966,"data":"  [  46/165 ] law         syn_k100_r20_w1   d=40  none        Jinf=50000  T=1.0 J10b  -        wall     20.5 s  RSS   198.5 MB  elapsed      268 s\n"}
+,{"stream_name":"stdout","time":278.223646362,"data":"  [  47/165 ] law         syn_k1_r5_w7      d=40  none        Jinf=50000  T=1.0 J10b  -        wall     23.7 s  RSS   207.0 MB  elapsed      276 s\n"}
+,{"stream_name":"stdout","time":279.239771477,"data":"  [  48/165 ] law         syn_k100_r5_w7    d=40  none        Jinf=50000  T=1.0 J10b  -        wall     23.7 s  RSS   202.8 MB  elapsed      277 s\n"}
+,{"stream_name":"stdout","time":282.858222083,"data":"  [  49/165 ] law         syn_k1_r0_w1      d=40  none        Jinf=50000  T=1.0 J10b  -        wall     20.6 s  RSS   202.9 MB  elapsed      280 s\n"}
+,{"stream_name":"stdout","time":290.486266349,"data":"  [  50/165 ] regimemap   sphere            d=20  anisotropic Jinf=50000  T=1.0 J10   -        wall      7.5 s  RSS   119.5 MB  elapsed      288 s\n"}
+,{"stream_name":"stdout","time":291.296535705,"data":"  [  51/165 ] regimemap   ackley            d=20  anisotropic Jinf=50000  T=1.0 J10   -        wall     13.0 s  RSS   119.0 MB  elapsed      289 s\n"}
+,{"stream_name":"stdout","time":292.714667883,"data":"  [  52/165 ] regimemap   rastrigin         d=20  anisotropic Jinf=50000  T=1.0 J10   -        wall     13.3 s  RSS   114.4 MB  elapsed      290 s\n"}
+,{"stream_name":"stdout","time":293.529595936,"data":"  [  53/165 ] law         syn_k1_r5_w3      d=40  none        Jinf=50000  T=1.0 J10b  -        wall     22.9 s  RSS   192.3 MB  elapsed      291 s\n"}
+,{"stream_name":"stdout","time":303.362861173,"data":"  [  54/165 ] control     ackley            d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     12.7 s  RSS    68.1 MB  elapsed      301 s\n"}
+,{"stream_name":"stdout","time":303.571308171,"data":"  [  55/165 ] control     rastrigin         d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     12.2 s  RSS    67.4 MB  elapsed      301 s\n"}
+,{"stream_name":"stdout","time":303.785049009,"data":"  [  56/165 ] control     sphere            d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     10.9 s  RSS    67.4 MB  elapsed      301 s\n"}
+,{"stream_name":"stdout","time":305.596277607,"data":"  [  57/165 ] control     griewank          d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     11.8 s  RSS    67.4 MB  elapsed      303 s\n"}
+,{"stream_name":"stdout","time":315.230667836,"data":"  [  58/165 ] control     rosenbrock        d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     11.5 s  RSS    67.2 MB  elapsed      313 s\n"}
+,{"stream_name":"stdout","time":315.842543407,"data":"  [  59/165 ] regime      sphere            d=10  none        Jinf=50000  T=2.0 J10b  -        wall     10.1 s  RSS    88.6 MB  elapsed      313 s\n"}
+,{"stream_name":"stdout","time":316.655750587,"data":"  [  60/165 ] control     levy              d=5   none        Jinf=50000  T=1.0 J10   adaptive wall     13.1 s  RSS    67.7 MB  elapsed      314 s\n"}
+,{"stream_name":"stdout","time":319.274201768,"data":"  [  61/165 ] regime      rastrigin         d=10  none        Jinf=50000  T=2.0 J10b  -        wall     15.4 s  RSS    88.6 MB  elapsed      317 s\n"}
+,{"stream_name":"stdout","time":325.098438329,"data":"  [  62/165 ] regime      sphere            d=10  none        Jinf=100000 T=1.0 J10b  -        wall      9.1 s  RSS   123.2 MB  elapsed      323 s\n"}
+,{"stream_name":"stdout","time":326.312784714,"data":"  [  63/165 ] ess_surface ackley            d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      6.9 s  RSS    84.1 MB  elapsed      324 s\n"}
+,{"stream_name":"stdout","time":327.522784294,"data":"  [  64/165 ] regime      rosenbrock        d=10  none        Jinf=50000  T=2.0 J10b  -        wall     12.1 s  RSS    88.3 MB  elapsed      325 s\n"}
+,{"stream_name":"stdout","time":327.933531342,"data":"  [  65/165 ] regime      rosenbrock        d=10  none        Jinf=100000 T=1.0 J10b  -        wall     11.2 s  RSS   128.7 MB  elapsed      326 s\n"}
+,{"stream_name":"stdout","time":332.556179915,"data":"  [  66/165 ] ess_surface rastrigin         d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.4 s  RSS    85.1 MB  elapsed      330 s\n"}
+,{"stream_name":"stdout","time":332.968557602,"data":"  [  67/165 ] regimemap   sphere            d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      4.9 s  RSS    83.8 MB  elapsed      331 s\n"}
+,{"stream_name":"stdout","time":334.382284067,"data":"  [  68/165 ] regimemap   ackley            d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      7.9 s  RSS    83.1 MB  elapsed      332 s\n"}
+,{"stream_name":"stdout","time":335.392864246,"data":"  [  69/165 ] regimemap   rastrigin         d=10  anisotropic Jinf=50000  T=1.0 J10   -        wall      7.7 s  RSS    81.2 MB  elapsed      333 s\n"}
+,{"stream_name":"stdout","time":339.012340945,"data":"  [  70/165 ] boundary    griewank          d=10  none        Jinf=50000  T=1.0 J10   -        wall      5.9 s  RSS    86.2 MB  elapsed      337 s\n"}
+,{"stream_name":"stdout","time":339.422753319,"data":"  [  71/165 ] boundary    rastrigin         d=10  none        Jinf=50000  T=1.0 J10   -        wall      6.7 s  RSS    85.4 MB  elapsed      337 s\n"}
+,{"stream_name":"stdout","time":339.427435301,"data":"  [  72/165 ] boundary    rosenbrock        d=10  none        Jinf=50000  T=1.0 J10   -        wall      5.0 s  RSS    87.6 MB  elapsed      337 s\n"}
+,{"stream_name":"stdout","time":343.049963548,"data":"  [  73/165 ] sigma       ackley            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.5 s  RSS    84.7 MB  elapsed      341 s\n"}
+,{"stream_name":"stdout","time":344.06300414,"data":"  [  74/165 ] sigma       sphere            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      4.4 s  RSS    85.2 MB  elapsed      342 s\n"}
+,{"stream_name":"stdout","time":344.87269393,"data":"  [  75/165 ] sigma       rosenbrock        d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      5.3 s  RSS    85.1 MB  elapsed      342 s\n"}
+,{"stream_name":"stdout","time":346.486323156,"data":"  [  76/165 ] sigma       rastrigin         d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.2 s  RSS    86.2 MB  elapsed      344 s\n"}
+,{"stream_name":"stdout","time":349.303397752,"data":"  [  77/165 ] crossed     sphere            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      4.3 s  RSS    84.7 MB  elapsed      347 s\n"}
+,{"stream_name":"stdout","time":350.714868543,"data":"  [  78/165 ] crossed     ackley            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.6 s  RSS    84.7 MB  elapsed      348 s\n"}
+,{"stream_name":"stdout","time":351.332773821,"data":"  [  79/165 ] crossed     rastrigin         d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.1 s  RSS    86.3 MB  elapsed      349 s\n"}
+,{"stream_name":"stdout","time":351.949264955,"data":"  [  80/165 ] crossed     rosenbrock        d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      5.3 s  RSS    85.2 MB  elapsed      350 s\n"}
+,{"stream_name":"stdout","time":355.766648183,"data":"  [  81/165 ] cliff       sphere            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      4.4 s  RSS    87.1 MB  elapsed      353 s\n"}
+,{"stream_name":"stdout","time":356.780415337,"data":"  [  82/165 ] cliff       ackley            d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.4 s  RSS    84.7 MB  elapsed      354 s\n"}
+,{"stream_name":"stdout","time":357.191495806,"data":"  [  83/165 ] cliff       rosenbrock        d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      5.2 s  RSS    85.1 MB  elapsed      355 s\n"}
+,{"stream_name":"stdout","time":358.01880178,"data":"  [  84/165 ] cliff       rastrigin         d=10  isotropic   Jinf=50000  T=1.0 J10   -        wall      7.2 s  RSS    86.3 MB  elapsed      356 s\n"}
+,{"stream_name":"stdout","time":363.84017725,"data":"  [  85/165 ] regime      ackley            d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.9 s  RSS    86.3 MB  elapsed      361 s\n"}
+,{"stream_name":"stdout","time":364.05192954,"data":"  [  86/165 ] regime      syn_k1_r20_w1     d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.1 s  RSS    86.9 MB  elapsed      362 s\n"}
+,{"stream_name":"stdout","time":364.261712362,"data":"  [  87/165 ] regime      syn_k100_r0_w1    d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.9 s  RSS    86.8 MB  elapsed      362 s\n"}
+,{"stream_name":"stdout","time":365.075497111,"data":"  [  88/165 ] regime      syn_k100_r5_w1    d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.0 s  RSS    86.9 MB  elapsed      363 s\n"}
+,{"stream_name":"stdout","time":370.901466441,"data":"  [  89/165 ] regime      griewank          d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.6 s  RSS    86.5 MB  elapsed      369 s\n"}
+,{"stream_name":"stdout","time":371.117180533,"data":"  [  90/165 ] regime      syn_k100_r20_w1   d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.0 s  RSS    86.9 MB  elapsed      369 s\n"}
+,{"stream_name":"stdout","time":371.529290408,"data":"  [  91/165 ] regime      syn_k1_r0_w1      d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.1 s  RSS    86.8 MB  elapsed      369 s\n"}
+,{"stream_name":"stdout","time":372.138441943,"data":"  [  92/165 ] regime      syn_k1_r5_w1      d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.0 s  RSS    86.9 MB  elapsed      370 s\n"}
+,{"stream_name":"stdout","time":377.157441644,"data":"  [  93/165 ] law         syn_k1_r20_w1     d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.2 s  RSS    87.8 MB  elapsed      375 s\n"}
+,{"stream_name":"stdout","time":377.771802689,"data":"  [  94/165 ] law         syn_k100_r0_w1    d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.5 s  RSS    87.9 MB  elapsed      375 s\n"}
+,{"stream_name":"stdout","time":378.384458243,"data":"  [  95/165 ] law         syn_k100_r5_w3    d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.8 s  RSS    88.0 MB  elapsed      376 s\n"}
+,{"stream_name":"stdout","time":379.198651104,"data":"  [  96/165 ] law         syn_k100_r20_w3   d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.8 s  RSS    88.0 MB  elapsed      377 s\n"}
+,{"stream_name":"stdout","time":384.221331787,"data":"  [  97/165 ] visibility  ackley            d=5   none        Jinf=50000  T=1.0 J19   -        wall      4.9 s  RSS    67.3 MB  elapsed      382 s\n"}
+,{"stream_name":"stdout","time":384.431324326,"data":"  [  98/165 ] law         syn_k1_r20_w7     d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.1 s  RSS    88.1 MB  elapsed      382 s\n"}
+,{"stream_name":"stdout","time":384.841473581,"data":"  [  99/165 ] law         syn_k1_r5_w1      d=10  none        Jinf=50000  T=1.0 J10b  -        wall      6.3 s  RSS    88.0 MB  elapsed      382 s\n"}
+,{"stream_name":"stdout","time":385.052137789,"data":"  [ 100/165 ] law         syn_k100_r20_w7   d=10  none        Jinf=50000  T=1.0 J10b  -        wall      7.1 s  RSS    88.0 MB  elapsed      383 s\n"}
+,{"stream_name":"stdout","time":387.468643712,"data":"  [ 101/165 ] visibility  sphere            d=5   none        Jinf=50000  T=1.0 J19   -        wall      2.9 s  RSS    66.8 MB  elapsed      385 s\n"}
+,{"stream_name":"stdout","time":388.683334819,"data":"  [ 102/165 ] visibility  rastrigin         d=5   none        Jinf=50000  T=1.0 J19   -        wall      4.3 s  RSS    67.4 MB  elapsed      386 s\n"}
+,{"stream_name":"stdout","time":388.892152928,"data":"  [ 103/165 ] visibility  griewank          d=5   none        Jinf=50000  T=1.0 J19   -        wall      4.0 s  RSS    67.8 MB  elapsed      387 s\n"}
+,{"stream_name":"stdout","time":390.508285391,"data":"  [ 104/165 ] visibility  levy              d=5   none        Jinf=50000  T=1.0 J19   -        wall      5.2 s  RSS    68.1 MB  elapsed      388 s\n"}
+,{"stream_name":"stdout","time":390.917891484,"data":"  [ 105/165 ] visibility  rosenbrock        d=5   none        Jinf=50000  T=1.0 J19   -        wall      3.4 s  RSS    67.4 MB  elapsed      389 s\n"}
+,{"stream_name":"stdout","time":392.936386385,"data":"  [ 106/165 ] ess_surface rastrigin         d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      4.2 s  RSS    66.5 MB  elapsed      391 s\n"}
+,{"stream_name":"stdout","time":393.54854277,"data":"  [ 107/165 ] regimemap   ackley            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      4.5 s  RSS    66.4 MB  elapsed      391 s\n"}
+,{"stream_name":"stdout","time":393.96125978,"data":"  [ 108/165 ] regimemap   sphere            d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      2.9 s  RSS    66.1 MB  elapsed      392 s\n"}
+,{"stream_name":"stdout","time":394.974193167,"data":"  [ 109/165 ] regimemap   rastrigin         d=5   anisotropic Jinf=50000  T=1.0 J10   -        wall      4.3 s  RSS    66.8 MB  elapsed      393 s\n"}
+,{"stream_name":"stdout","time":396.588036047,"data":"  [ 110/165 ] mechanism   sphere            d=5   none        Jinf=50000  T=1.0 J10   -        wall      2.5 s  RSS    66.0 MB  elapsed      394 s\n"}
+,{"stream_name":"stdout","time":397.203378655,"data":"  [ 111/165 ] mechanism   ackley            d=5   none        Jinf=50000  T=1.0 J10   -        wall      4.2 s  RSS    65.8 MB  elapsed      395 s\n"}
+,{"stream_name":"stdout","time":397.616532978,"data":"  [ 112/165 ] mechanism   rastrigin         d=5   none        Jinf=50000  T=1.0 J10   -        wall      3.9 s  RSS    65.8 MB  elapsed      395 s\n"}
+,{"stream_name":"stdout","time":398.629311341,"data":"  [ 113/165 ] mechanism   griewank          d=5   none        Jinf=50000  T=1.0 J10   -        wall      3.5 s  RSS    64.9 MB  elapsed      396 s\n"}
+,{"stream_name":"stdout","time":400.243199372,"data":"  [ 114/165 ] mechanism   rosenbrock        d=5   none        Jinf=50000  T=1.0 J10   -        wall      3.0 s  RSS    66.5 MB  elapsed      398 s\n"}
+,{"stream_name":"stdout","time":401.455051755,"data":"  [ 115/165 ] mechanism   levy              d=5   none        Jinf=50000  T=1.0 J10   -        wall      4.8 s  RSS    65.1 MB  elapsed      399 s\n"}
+,{"stream_name":"stdout","time":401.663905752,"data":"  [ 116/165 ] boundary    rastrigin         d=5   none        Jinf=50000  T=1.0 J10   -        wall      4.0 s  RSS    68.0 MB  elapsed      399 s\n"}
+,{"stream_name":"stdout","time":402.478240512,"data":"  [ 117/165 ] boundary    griewank          d=5   none        Jinf=50000  T=1.0 J10   -        wall      3.7 s  RSS    67.9 MB  elapsed      400 s\n"}
+,{"stream_name":"stdout","time":403.489552376,"data":"  [ 118/165 ] boundary    rosenbrock        d=5   none        Jinf=50000  T=1.0 J10   -        wall      3.1 s  RSS    68.7 MB  elapsed      401 s\n"}
+,{"stream_name":"stdout","time":405.105231107,"data":"  [ 119/165 ] sigma       sphere            d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      2.6 s  RSS    68.0 MB  elapsed      403 s\n"}
+,{"stream_name":"stdout","time":405.714772472,"data":"  [ 120/165 ] sigma       rastrigin         d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      4.0 s  RSS    67.5 MB  elapsed      403 s\n"}
+,{"stream_name":"stdout","time":405.926287896,"data":"  [ 121/165 ] sigma       ackley            d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      4.3 s  RSS    67.6 MB  elapsed      404 s\n"}
+,{"stream_name":"stdout","time":406.737361559,"data":"  [ 122/165 ] sigma       rosenbrock        d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      3.1 s  RSS    67.4 MB  elapsed      404 s\n"}
+,{"stream_name":"stdout","time":408.557761717,"data":"  [ 123/165 ] crossed     sphere            d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      2.6 s  RSS    68.1 MB  elapsed      406 s\n"}
+,{"stream_name":"stdout","time":409.570899588,"data":"  [ 124/165 ] crossed     ackley            d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      4.3 s  RSS    67.6 MB  elapsed      407 s\n"}
+,{"stream_name":"stdout","time":409.779063048,"data":"  [ 125/165 ] crossed     rastrigin         d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      3.9 s  RSS    67.5 MB  elapsed      407 s\n"}
+,{"stream_name":"stdout","time":409.783284799,"data":"  [ 126/165 ] crossed     rosenbrock        d=5   isotropic   Jinf=50000  T=1.0 J10   -        wall      3.0 s  RSS    67.9 MB  elapsed      407 s\n"}
+,{"stream_name":"stdout","time":411.004183867,"data":"  [ 127/165 ] regime      sphere            d=10  none        Jinf=25000  T=1.0 J10b  -        wall      2.4 s  RSS    67.0 MB  elapsed      409 s\n"}
+,{"stream_name":"stdout","time":412.618174674,"data":"  [ 128/165 ] regime      rosenbrock        d=10  none        Jinf=25000  T=1.0 J10b  -        wall      3.0 s  RSS    67.7 MB  elapsed      410 s\n"}
+,{"stream_name":"stdout","time":414.032304272,"data":"  [ 129/165 ] regime      ackley            d=10  none        Jinf=50000  T=0.5 J10b  -        wall      4.0 s  RSS    85.4 MB  elapsed      412 s\n"}
+,{"stream_name":"stdout","time":414.640871571,"data":"  [ 130/165 ] regime      ackley            d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.8 s  RSS    68.6 MB  elapsed      412 s\n"}
+,{"stream_name":"stdout","time":415.453868783,"data":"  [ 131/165 ] regime      syn_k1_r20_w1     d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.3 s  RSS    68.9 MB  elapsed      413 s\n"}
+,{"stream_name":"stdout","time":416.865200548,"data":"  [ 132/165 ] regime      syn_k100_r0_w1    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.1 s  RSS    69.1 MB  elapsed      414 s\n"}
+,{"stream_name":"stdout","time":418.277347029,"data":"  [ 133/165 ] regime      syn_k100_r5_w1    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.2 s  RSS    69.1 MB  elapsed      416 s\n"}
+,{"stream_name":"stdout","time":418.892103693,"data":"  [ 134/165 ] regime      syn_k100_r20_w1   d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.1 s  RSS    69.1 MB  elapsed      417 s\n"}
+,{"stream_name":"stdout","time":419.506562697,"data":"  [ 135/165 ] regime      griewank          d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.0 s  RSS    68.4 MB  elapsed      417 s\n"}
+,{"stream_name":"stdout","time":421.119368807,"data":"  [ 136/165 ] regime      syn_k1_r0_w1      d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.1 s  RSS    69.1 MB  elapsed      419 s\n"}
+,{"stream_name":"stdout","time":422.732285898,"data":"  [ 137/165 ] regime      syn_k1_r5_w1      d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.2 s  RSS    69.1 MB  elapsed      420 s\n"}
+,{"stream_name":"stdout","time":422.736339826,"data":"  [ 138/165 ] law         syn_k1_r20_w1     d=5   none        Jinf=50000  T=1.0 J10b  -        wall      3.6 s  RSS    67.8 MB  elapsed      420 s\n"}
+,{"stream_name":"stdout","time":423.354991355,"data":"  [ 139/165 ] law         syn_k100_r0_w1    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      3.6 s  RSS    68.5 MB  elapsed      421 s\n"}
+,{"stream_name":"stdout","time":425.169322992,"data":"  [ 140/165 ] law         syn_k100_r5_w3    d=5   none        Jinf=50000  T=1.0 J10b  -        wall      3.9 s  RSS    67.9 MB  elapsed      423 s\n"}
+,{"stream_name":"stdout","time":426.787858638,"data":"  [ 141/165 ] law         syn_k100_r20_w3   d=5   none        Jinf=50000  T=1.0 J10b  -        wall      3.9 s  RSS    67.6 MB  elapsed      424 s\n"}
+,{"stream_name":"stdout","time":426.997515809,"data":"  [ 142/165 ] law         syn_k1_r20_w7     d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.1 s  RSS    67.7 MB  elapsed      425 s\n"}
+,{"stream_name":"stdout","time":427.609014767,"data":"  [ 143/165 ] law         syn_k100_r20_w7   d=5   none        Jinf=50000  T=1.0 J10b  -        wall      4.1 s  RSS    67.9 MB  elapsed      425 s\n"}
+,{"stream_name":"stdout","time":428.82019971,"data":"  [ 144/165 ] law         syn_k1_r5_w1      d=5   none        Jinf=50000  T=1.0 J10b  -        wall      3.6 s  RSS    67.8 MB  elapsed      426 s\n"}
+,{"stream_name":"stdout","time":430.035911492,"data":"  [ 145/165 ] visibility  sphere            d=3   none        Jinf=50000  T=1.0 J19   -        wall      2.2 s  RSS    59.8 MB  elapsed      428 s\n"}
+,{"stream_name":"stdout","time":430.24924468,"data":"  [ 146/165 ] visibility  rastrigin         d=3   none        Jinf=50000  T=1.0 J19   -        wall      3.2 s  RSS    59.5 MB  elapsed      428 s\n"}
+,{"stream_name":"stdout","time":430.462623705,"data":"  [ 147/165 ] visibility  ackley            d=3   none        Jinf=50000  T=1.0 J19   -        wall      3.5 s  RSS    59.8 MB  elapsed      428 s\n"}
+,{"stream_name":"stdout","time":432.078201762,"data":"  [ 148/165 ] visibility  griewank          d=3   none        Jinf=50000  T=1.0 J19   -        wall      3.1 s  RSS    60.0 MB  elapsed      430 s\n"}
+,{"stream_name":"stdout","time":432.688315121,"data":"  [ 149/165 ] regime      ackley            d=10  none        Jinf=12500  T=1.0 J10b  -        wall      2.2 s  RSS    56.6 MB  elapsed      430 s\n"}
+,{"stream_name":"stdout","time":433.097145704,"data":"  [ 150/165 ] visibility  rosenbrock        d=3   none        Jinf=50000  T=1.0 J19   -        wall      2.6 s  RSS    59.3 MB  elapsed      431 s\n"}
+,{"stream_name":"stdout","time":434.107697605,"data":"  [ 151/165 ] visibility  levy              d=3   none        Jinf=50000  T=1.0 J19   -        wall      3.9 s  RSS    59.5 MB  elapsed      432 s\n"}
+,{"stream_name":"stdout","time":435.119142973,"data":"  [ 152/165 ] visibility  ackley            d=2   none        Jinf=50000  T=1.0 J19   -        wall      2.9 s  RSS    55.0 MB  elapsed      433 s\n"}
+,{"stream_name":"stdout","time":435.123021876,"data":"  [ 153/165 ] visibility  sphere            d=2   none        Jinf=50000  T=1.0 J19   -        wall      1.9 s  RSS    55.0 MB  elapsed      433 s\n"}
+,{"stream_name":"stdout","time":435.337606744,"data":"  [ 154/165 ] visibility  rastrigin         d=2   none        Jinf=50000  T=1.0 J19   -        wall      2.4 s  RSS    55.4 MB  elapsed      433 s\n"}
+,{"stream_name":"stdout","time":436.752220633,"data":"  [ 155/165 ] visibility  griewank          d=2   none        Jinf=50000  T=1.0 J19   -        wall      2.5 s  RSS    54.9 MB  elapsed      434 s\n"}
+,{"stream_name":"stdout","time":436.959820139,"data":"  [ 156/165 ] visibility  rosenbrock        d=2   none        Jinf=50000  T=1.0 J19   -        wall      1.8 s  RSS    54.9 MB  elapsed      435 s\n"}
+,{"stream_name":"stdout","time":437.570682638,"data":"  [ 157/165 ] ess_surface ackley            d=2   anisotropic Jinf=50000  T=1.0 J10   -        wall      2.2 s  RSS    54.9 MB  elapsed      435 s\n"}
+,{"stream_name":"stdout","time":438.182078822,"data":"  [ 158/165 ] visibility  levy              d=2   none        Jinf=50000  T=1.0 J19   -        wall      2.9 s  RSS    55.3 MB  elapsed      436 s\n"}
+,{"stream_name":"stdout","time":438.998064223,"data":"  [ 159/165 ] ess_surface rastrigin         d=2   isotropic   Jinf=50000  T=1.0 J10   -        wall      2.1 s  RSS    55.3 MB  elapsed      437 s\n"}
+,{"stream_name":"stdout","time":439.605578249,"data":"  [ 160/165 ] mechanism   ackley            d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.5 s  RSS    54.5 MB  elapsed      437 s\n"}
+,{"stream_name":"stdout","time":439.817594152,"data":"  [ 161/165 ] mechanism   rastrigin         d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.2 s  RSS    54.7 MB  elapsed      437 s\n"}
+,{"stream_name":"stdout","time":440.028581108,"data":"  [ 162/165 ] mechanism   sphere            d=2   none        Jinf=50000  T=1.0 J10   -        wall      1.6 s  RSS    54.5 MB  elapsed      438 s\n"}
+,{"stream_name":"stdout","time":441.035281476,"data":"  [ 163/165 ] mechanism   rosenbrock        d=2   none        Jinf=50000  T=1.0 J10   -        wall      1.0 s  RSS    54.3 MB  elapsed      439 s\n"}
+,{"stream_name":"stdout","time":441.241357568,"data":"  [ 164/165 ] mechanism   griewank          d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.0 s  RSS    54.4 MB  elapsed      439 s\n"}
+,{"stream_name":"stdout","time":441.847504378,"data":"  [ 165/165 ] mechanism   levy              d=2   none        Jinf=50000  T=1.0 J10   -        wall      2.2 s  RSS    54.8 MB  elapsed      439 s\n"}
+,{"stream_name":"stdout","time":441.849252176,"data":"  probes finished in 439.5 s\n"}
+,{"stream_name":"stdout","time":441.849293571,"data":"\n"}
+,{"stream_name":"stdout","time":441.84929939,"data":"  Sharded or resumed run: finalize after every shard is fetched, with\n"}
+,{"stream_name":"stdout","time":441.849320254,"data":"  --finalize \u003cfolder\u003e,\u003cfolder\u003e,... (no dynamics).\n"}
+,{"stream_name":"stdout","time":441.849326005,"data":"\n"}
+,{"stream_name":"stdout","time":441.849329902,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":441.849333171,"data":"files  /kaggle/working/costprobe2-20261011-043521-s1of2\n"}
+,{"stream_name":"stdout","time":441.84933648,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":442.02128519,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":444.904948726,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":444.904997597,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":445.301328179,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":445.30136931,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":447.072269839,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":448.351946709,"data":"[NbConvertApp] Writing 287072 bytes to __results__.html\n"}
+]

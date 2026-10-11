@@ -1,0 +1,164 @@
+================================================================================================
+CBO-GAP costprobe2 -- cost of every rerun row, measured with each row's own dynamics
+================================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  start    fork
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  script   sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  mode     finalize   shard 0 of 1   rows BETA-ISO,BETA-ANI,LAWPANEL,CONC,PROBEARM,ADAPT,TAU8,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,SIGMA,ANISO,RMAP,CLIFF,ONSET
+  fixed    dt 0.01  lambda 1.0  iso sigma 0.2  probe tau0 0.1  probe r 0.5  probe sample 4000
+  seeds    default_rng(SeedSequence(key)), full width; key = (ENTROPY 20261010, kind 41, module, objective, d, diffusion, law, J_inf, K, arm, variant, tau0e6, re6, beta_design e6, sigma_design e6); probe-beta kind 42; P3 kind 43
+  P4       peak RSS <= 3072 MB per worker;  A1-A3 ratio <= 1.25;  P5 ceiling 21600 s per shard
+
+------------------------------------------------------------------------------------------------
+P1 -- ARCHIVE IDENTITY (the imported modules' own files)
+------------------------------------------------------------------------------------------------
+  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  /home/rahul/Research/cbo-gap-final/zenodo-v1/ess_surface.py  ok
+  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  /home/rahul/Research/cbo-gap-final/zenodo-v1/visibility.py  ok
+  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  /home/rahul/Research/cbo-gap-final/zenodo-v1/mechanism.py  ok
+  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  /home/rahul/Research/cbo-gap-final/zenodo-v1/control.py  ok
+  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  /home/rahul/Research/cbo-gap-final/zenodo-v1/boundary.py  ok
+  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  /home/rahul/Research/cbo-gap-final/zenodo-v1/regime.py  ok
+  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  /home/rahul/Research/cbo-gap-final/zenodo-v1/law.py  ok
+  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  /home/rahul/Research/cbo-gap-final/zenodo-v1/sigma.py  ok
+  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  /home/rahul/Research/cbo-gap-final/zenodo-v1/crossed.py  ok
+  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  /home/rahul/Research/cbo-gap-final/zenodo-v1/cliff.py  ok
+  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  /home/rahul/Research/cbo-gap-final/zenodo-v1/regimemap.py  ok
+  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  /home/rahul/Research/cbo-gap-final/zenodo-v1/exactcal.py  ok
+  P1 PASS
+
+------------------------------------------------------------------------------------------------
+P0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts against Table 2
+------------------------------------------------------------------------------------------------
+  BETA-ISO  M       ess_surface.py 241-246 M               ok
+  BETA-ISO  betas   ess_surface.py 241-246 betas           ok
+  BETA-ISO  dims    ess_surface.py 241-246 dims            ok
+  BETA-ISO  jgrid   ess_surface.py 241-246 J_list          ok
+  BETA-ISO  objs    ess_surface.py 273-273 obj             ok
+  BETA-ANI  M       ess_surface.py 241-246 M               ok
+  BETA-ANI  betas   ess_surface.py 241-246 aniso_betas     ok
+  BETA-ANI  dims    ess_surface.py 241-246 aniso_dims      ok
+  BETA-ANI  jgrid   ess_surface.py 241-246 J_list          ok
+  BETA-ANI  objs    ess_surface.py 280-280 obj             ok
+  LAWPANEL  M       visibility.py 321-326 M               ok
+  LAWPANEL  dims    visibility.py 321-326 dims            ok
+  LAWPANEL  jgrid   visibility.py 321-326 J_list          ok
+  LAWPANEL  laws    visibility.py 321-326 inits           ok
+  LAWPANEL  objs    visibility.py 321-326 objs            ok
+  CONC      M       mechanism.py 294-297 M               ok
+  CONC      dims    mechanism.py 294-297 dims            ok
+  CONC      jgrid   mechanism.py 294-297 J_list          ok
+  CONC      laws    mechanism.py 294-297 inits           ok
+  CONC      objs    mechanism.py 294-297 objs            ok
+  CONC      taus    mechanism.py 294-297 taus            ok
+  PROBEARM  M       mechanism.py 294-297 M               ok
+  PROBEARM  dims    mechanism.py 294-297 dims            ok
+  PROBEARM  jgrid   mechanism.py 294-297 J_list          ok
+  PROBEARM  laws    mechanism.py 294-297 inits           ok
+  PROBEARM  objs    mechanism.py 294-297 objs            ok
+  PROBEARM  taus    mechanism.py 294-297 taus            ok
+  ADAPT     M       control.py 297-300 M               ok
+  ADAPT     arms    control.py 305-305 arms            ok
+  ADAPT     dims    control.py 297-300 dims            ok
+  ADAPT     jgrid   control.py 297-300 J_list          ok
+  ADAPT     objs    control.py 297-300 objs            ok
+  ADAPT     taus    control.py 297-300 taus            ok
+  TAU8      M       boundary.py 252-256 M               ok
+  TAU8      dims    boundary.py 252-256 dims            ok
+  TAU8      jgrid   boundary.py 252-256 J_list          ok
+  TAU8      objs    boundary.py 252-256 objs            ok
+  TAU8      taus    boundary.py 252-256 taus            ok
+  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181
+  REFSIZE   M       regime.py 483-483 M               ok
+  REFSIZE   d       regime.py 512-512 dA              ok
+  REFSIZE   jgrid   regime.py 484-484 Jgrid           ok
+  REFSIZE   jinfs   regime.py 508-508 Jinfs           ok
+  REFSIZE   objs    regime.py 511-511 objsA           ok
+  REFSIZE   not checked against source: tau0 0.1, law centred, T 1.0 inside the cells comprehension, regime.py 513
+  SYNTH     M       regime.py 483-483 M               ok
+  SYNTH     dims    regime.py 549-549 dims            ok
+  SYNTH     jgrid   regime.py 484-484 Jgrid           ok
+  SYNTH     objs    regime.py 548-548 names           ok
+  SYNTH     taus    regime.py 550-550 taus            ok
+  SYNTH     not checked against source: law centred inside the cells comprehension, regime.py 553
+  NAMED     M       regime.py 483-483 M               ok
+  NAMED     dims    regime.py 576-576 dims            ok
+  NAMED     jgrid   regime.py 484-484 Jgrid           ok
+  NAMED     objs    regime.py 575-575 names           ok
+  NAMED     taus    regime.py 577-577 taus            ok
+  NAMED     not checked against source: law centred inside the cells comprehension, regime.py 578
+  HORIZON   M       regime.py 483-483 M               ok
+  HORIZON   Ts      regime.py 599-599 Ts              ok
+  HORIZON   jgrid   regime.py 484-484 Jgrid           ok
+  HORIZON   laws    regime.py 600-600 inits           ok
+  HORIZON   objs    regime.py 596-596 names           ok
+  HORIZON   not checked against source: d 10 and tau0 0.1 inside the cells comprehension, regime.py 601
+  GEOM      M       law.py 770-770 --realisations  ok
+  GEOM      dims    law.py 522-522 dims            ok
+  GEOM      jgrid   law.py 523-523 Jgrid           ok
+  GEOM      objs    law.py 521-521 names           ok
+  GEOM      taus    law.py 522-522 taus            ok
+  SIGMA     M       sigma.py 238-238 --realisations  ok
+  SIGMA     diffs   sigma.py 259-260 diffs           ok
+  SIGMA     dims    sigma.py 253-257 dims            ok
+  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok
+  SIGMA     objs    sigma.py 253-257 objs            ok
+  SIGMA     rs      sigma.py 253-257 rs              ok
+  SIGMA     taus    sigma.py 253-257 taus            ok
+  ANISO     M       crossed.py 239-239 --realisations  okruns/costprobe2-s1-kaggle-TIMESTAMP1 has no sha256.txt
+
+  ANISO     diffs   crossed.py 248-248 diffs           ok
+  ANISO     dims    crossed.py 255-258 dims            ok
+  ANISO     jgrid   crossed.py 255-258 Jgrid           ok
+  ANISO     objs    crossed.py 255-258 objs            ok
+  ANISO     rs      crossed.py 255-258 rs              ok
+  ANISO     sigmas  crossed.py 255-258 sigmas          ok
+  ANISO     taus    crossed.py 255-258 taus            ok
+  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262
+  RMAP      M       regimemap.py 279-279 --realisations  ok
+  RMAP      diffs   regimemap.py 288-288 diffs           ok
+  RMAP      dims    regimemap.py 300-302 dimsM           ok
+  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok
+  RMAP      objs    regimemap.py 289-289 objs            ok
+  RMAP      rs      regimemap.py 300-302 rsM             ok
+  RMAP      taus    regimemap.py 300-302 tausM           ok
+  CLIFF     M       cliff.py 244-244 --realisations  ok
+  CLIFF     diffs   cliff.py 253-253 diffs           ok
+  CLIFF     dims    cliff.py 260-264 dims            ok
+  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok
+  CLIFF     objs    cliff.py 260-264 objs            ok
+  CLIFF     rs      cliff.py 260-264 rs              ok
+  CLIFF     taus    cliff.py 260-264 taus            ok
+  ONSET     M       regimemap.py 279-279 --realisations  ok
+  ONSET     diffs   regimemap.py 288-288 diffs           ok
+  ONSET     dims    regimemap.py 300-302 dimsD           ok
+  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok
+  ONSET     objs    regimemap.py 289-289 objs            ok
+  ONSET     rs      regimemap.py 300-302 rsD             ok
+  ONSET     tau     regimemap.py 304-304 tauD            ok
+  BETA-ISO   cells   42 (Table 2   42)   realizations   840 (Table 2   840)   units   6   ok
+  BETA-ANI   cells   12 (Table 2   12)   realizations   240 (Table 2   240)   units   4   ok
+  LAWPANEL   cells  144 (Table 2  144)   realizations  2880 (Table 2  2880)   units  36   ok
+  CONC       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok
+  PROBEARM   cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  24   ok
+  ADAPT      cells   72 (Table 2   72)   realizations  1080 (Table 2  1080)   units  36   ok
+  TAU8       cells  144 (Table 2  144)   realizations  2160 (Table 2  2160)   units  18   ok
+  REFSIZE    cells   12 (Table 2   12)   realizations   144 (Table 2   144)   units  12   ok
+  SYNTH      cells   72 (Table 2   72)   realizations   864 (Table 2   864)   units  36   ok
+  NAMED      cells   36 (Table 2   36)   realizations   432 (Table 2   432)   units  18   ok
+  HORIZON    cells   24 (Table 2   24)   realizations   288 (Table 2   288)   units  12   ok
+  GEOM       cells  336 (Table 2  336)   realizations  4032 (Table 2  4032)   units  42   ok
+  SIGMA      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok
+  ANISO      cells  288 (Table 2  288)   realizations  3456 (Table 2  3456)   units  24   ok
+  RMAP       cells  240 (Table 2  240)   realizations  2880 (Table 2  2880)   units  12   ok
+  CLIFF      cells  144 (Table 2  144)   realizations  1728 (Table 2  1728)   units  16   ok
+  ONSET      cells  180 (Table 2  180)   realizations  2160 (Table 2  2160)   units  30   ok
+  P0 PASS
+
+------------------------------------------------------------------------------------------------
+FINALIZE FOLDERS (repeated task ids: only error rows may be replaced)
+------------------------------------------------------------------------------------------------
+  read runs/costprobe2-s0-kaggle-20261010-103952: 218 rows, 0 replacing earlier error rows

@@ -152,6 +152,37 @@ were not recovered:
   declared beta is the one solved at the largest adequate reference size,
   or at the top rung if none is adequate, and the cell is labelled by beta.
 
+## Measured cost: seventeen single-shard jobs (ledger N22, 2026-10-11)
+
+- costprobe2 measured every rerun row on Kaggle:
+  runs/costprobe2-finalize-20261011-101659/costprobe2_projection.csv.
+- Every one of the seventeen rows projects to one shard at the 6-hour
+  ceiling ("shards_at_6h" = 1 in every row).
+  - The largest is GEOM, at wall_s 10500.1 against 21600.
+  - The smallest is REFSIZE, at 194.6.
+- The rerun is therefore seventeen independent single-shard Kaggle jobs,
+  one per row, each with its own job name, run one at a time.
+- The projections are lower bounds: perfect scaling, one realization per
+  unit, at a timing beta. A1 and A2 are evidence, not measurement
+  ("neighbour load uncontrolled; evidence, not a measurement"), and A5 and
+  A6 remain untested by decision. The rerun's own plan mode must re-project
+  each job, including its extra per-J ESS_0(J) output, before launch; the
+  margin under the ceiling is smallest for GEOM.
+
+Ledger K5, the Kaggle resumption gap, does not bind for this rerun:
+- No row needs more than one session, so no job has to resume from an
+  earlier session's output.
+- If a job fails, it is rerun whole, as a new run folder.
+
+K5 stays open as a limit, for these reasons:
+- A job that hits the cap or is pre-empted loses its whole output (answer 7
+  of 2026-10-10).
+- A row whose real cost exceeds its lower bound by enough to pass the
+  ceiling would have to be split into shards, and those shards could not
+  resume on Kaggle either.
+- calprec v2's streamed solves already run on the laptop because of K5
+  (D5a).
+
 ## calprec coverage the rerun needs and calprec does not have
 
 calprec.py now covers obj6 x d {2, 5, 10, 40} x law {centred, mix-0.1} x

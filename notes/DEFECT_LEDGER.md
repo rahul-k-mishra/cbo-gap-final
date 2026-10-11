@@ -330,6 +330,66 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     unchanged, and the run's verdicts are read under them.
   - Recorded in refscale.py's docstring ("AMENDMENT (2026-10-10, ...)").
   OPEN until the follow-up run is fetched.
+- N22 (result, costprobe2 full run). The measured cost of every rerun row.
+  Sources:
+  - runs/costprobe2-s0-kaggle-20261010-103952 and
+    runs/costprobe2-s1-kaggle-20261011-101343, the shards, each with a
+    verified manifest;
+  - runs/costprobe2-finalize-20261011-101659 (costprobe2_projection.csv,
+    costprobe2_checks.csv) and logs/costprobe2-finalize-2.log.
+  logs/costprobe2-finalize.log is an earlier attempt that stopped with
+  "runs/costprobe2-s1-kaggle-TIMESTAMP1 has no sha256.txt" (the placeholder
+  path) before creating any folder.
+  - Shards. Both report Python 3.13.15, NumPy 2.1.3, workers 4, script
+    sha256 ea5cb2e1...f64b (2c20653), P1 PASS and P0 PASS.
+    - Shard 0: 166 main and 52 check probes, "probes finished in 603.7 s".
+    - Shard 1: 165 main probes, 439.5 s.
+    - Each has TIMEOUT_S 2440.0 s. The longest single probe was 46.776 s
+      (regimemap, rastrigin, d = 80, anisotropic).
+    - The shards ran in two Kaggle sessions, on 2026-10-10 and 2026-10-11.
+      Their walls are combined on the assumption that the sessions ran on
+      comparable machines. That assumption is not tested.
+  - Rows. Finalize read 218 and 165 rows, 383 in all, with 0 errors read
+    from the CSVs. No non-finite E_J was found.
+  - P2 PASS: all eleven A3 pairs are bitwise identical. Noise ratios run
+    from 1.0005 to 1.0227.
+  - A1 and A2: every check PASS. The largest ratio is 1.0246
+    (A2-mechanism-law); the largest A1 ratio is 1.0245
+    (A1-ess_surface-beta). No module was scaled (scale 1.0000 for every
+    row). In the script's own words, every ratio is "neighbour load
+    uncontrolled; evidence, not a measurement". A5 and A6, the beta and r
+    dependence of wall time beyond these pairs, remain untested by decision
+    (notes/COSTPROBE2_REVIEW.md). Every row carries the label "lower bound
+    (perfect scaling; beta and r dependence partly untested)".
+  - P4 PASS for every row. Largest peak RSS by row: ONSET 354.2 MB; LAWPANEL
+    220.3; ADAPT 216.6; CONC and PROBEARM 215.2; NAMED 213.9; TAU8 213.2;
+    GEOM 207.0; SYNTH 206.5; ANISO 202.6; SIGMA 202.5; CLIFF 200.1; RMAP
+    197.7; REFSIZE 128.7; HORIZON 88.6; BETA-ANI 87.3; BETA-ISO 85.1. At
+    J_inf = 100000 (RERUN_PLAN F6) the walls were 13.209, 9.148 and
+    11.228 s and the RSS 124.2, 123.2 and 128.7 MB (ackley, sphere,
+    rosenbrock).
+  - P5 at W = 4, per row as core h / wall h / shards at the 6-hour
+    ceiling:
+    - BETA-ISO 1.01 / 0.25 / 1; BETA-ANI 0.28 / 0.07 / 1;
+    - LAWPANEL 6.26 / 1.56 / 1; CONC 4.44 / 1.11 / 1;
+      PROBEARM 4.44 / 1.11 / 1; ADAPT 4.10 / 1.02 / 1;
+    - TAU8 5.72 / 1.43 / 1; REFSIZE 0.22 / 0.05 / 1; SYNTH 2.72 / 0.68 / 1;
+      NAMED 1.27 / 0.32 / 1; HORIZON 0.60 / 0.15 / 1;
+    - GEOM 11.67 / 2.92 / 1; SIGMA 8.76 / 2.19 / 1; ANISO 8.74 / 2.19 / 1;
+      RMAP 10.50 / 2.62 / 1; CLIFF 5.77 / 1.44 / 1; ONSET 9.40 / 2.35 / 1.
+    The largest is GEOM, wall_s 10500.1, against the 21600 s ceiling.
+  - Totals, computed by Claude from costprobe2_projection.csv, not printed
+    by the script:
+    - 17 rows, 2322 cells, 30960 realizations;
+    - core_s 309229.4 (85.90 h);
+    - summed per-row wall_s 77307.4 (21.47 h) at 4 workers, one row at a
+      time.
+    These are rerun-matrix totals: they include PROBEARM and exclude PERJ,
+    FINITEJ and RMAPJ, so they are not Table 2's totals.
+  What the numbers are: lower bounds from one realization per unit at a
+  timing beta. They do not include the rerun's extra per-J ESS output or
+  any calibration time. CLOSED as a measurement; the consequence is in
+  notes/RERUN_PLAN.md.
 
 ## Checked and found sound
 

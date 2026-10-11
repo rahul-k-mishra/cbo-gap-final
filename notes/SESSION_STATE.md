@@ -65,9 +65,8 @@ full run finished.
 
 ## 2. In flight
 
-- Nothing is running. Next, one Kaggle job at a time:
-  1. costprobe2 full, two shards;
-  2. the refscale 4G sphere-only follow-up (ledger N21).
+- Nothing is running. The next Kaggle job is the refscale 4G sphere-only
+  follow-up (ledger N21).
 
 ## 3. Measured so far about the science
 
@@ -132,6 +131,30 @@ logs/kgrun-costprobe2-smoke.log shows "finished after 67 s".
 - P2 PASS for all eleven A3 pairs. Noise ratios 1.0002 to 1.0203.
 - P3: "126 comparisons, 22 differ", all rastrigin (ledger N20).
 - Exit code 0. Smoke mode projects nothing, by design.
+
+### 3.0c costprobe2 full run (Kaggle): every row fits one shard (ledger N22)
+
+Sources: runs/costprobe2-s0-kaggle-20261010-103952,
+runs/costprobe2-s1-kaggle-20261011-101343,
+runs/costprobe2-finalize-20261011-101659 and logs/costprobe2-finalize-2.log.
+
+- 383 rows, 0 errors, no non-finite E_J. The longest single probe was
+  46.776 s against TIMEOUT_S 2440.0 s.
+- P2 PASS for all eleven modules.
+- Every A1 and A2 check PASS; the largest ratio is 1.0246
+  (A2-mechanism-law). No module was scaled. These are evidence, not
+  measurement ("neighbour load uncontrolled; evidence, not a
+  measurement"). A5 and A6 remain untested by decision.
+- P4 PASS everywhere. The largest row RSS is ONSET at 354.2 MB. At J_inf =
+  100000 the RSS was 123.2 to 128.7 MB.
+- Per-row wall at 4 workers runs from REFSIZE 0.05 h to GEOM 2.92 h, and
+  every row is 1 shard at the 6-hour ceiling. The per-row table is in
+  ledger N22.
+- Totals computed from the projection CSV: core 85.90 h; summed wall
+  21.47 h at 4 workers; 2322 cells; 30960 realizations. These are lower
+  bounds.
+- The two shards ran in different Kaggle sessions (2026-10-10 and
+  2026-10-11). That the machines were comparable is assumed, not tested.
 
 ### 3.1 calprec, the calibration-size question (laptop)
 
@@ -202,11 +225,9 @@ Source: runs/refscale-smoke-kaggle-20261009-102942/cbo-refscale-smoke.log.
   untested). The 4G sphere rung is proposed, not run.
 - c6, the constant of C5m in calprec v2 (CALPREC_V2_SPEC section 5). It is
   to be computed by a no-dynamics Monte Carlo before calprec v2 runs.
-- Kaggle trajectory throughput. costprobe has not run there.
-- Peak RSS at J_inf = 100000 (EXP-REFSIZE). No script has measured it.
-- Peak RSS and wall time for every design outside costprobe's 24 probes. These
-  are d = 3, 20 and 80 in the isotropic named arms, anisotropic diffusion,
-  the synthetic objectives, the T = 2 horizon, and the adaptive arm.
+- The rerun's real cost. costprobe2 (N22) gives lower bounds per row, from
+  one realization per unit at a timing beta. It does not include per-J ESS
+  output or calibration time.
 - Whether the objective functions and initial laws defined separately in each
   archived script equal exactcal's. calprec calibrates with exactcal's, so
   this matters for the fixed-beta rerun (notes/RERUN_PLAN.md). Not checked.
