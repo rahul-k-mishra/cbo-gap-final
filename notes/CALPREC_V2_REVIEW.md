@@ -753,3 +753,81 @@ What changed (Rahul's decisions of 2026-10-11, ledger N28 addendum and K5):
 
 - From the fourth pass: B6, C1, C3 to C5, D3, D5, D6, D8, E1, E3, G1, G3,
   G4, second-pass N8, and U1, U2 and U5.
+
+---
+
+## 2026-10-11, sixth pass: --stop-after, G-STOP, G-MEM per worker
+
+What changed:
+
+- scripts/calprec2.py: md5 c0801f490fa49d6d35e0f7c007a4cee0 to
+  ec8dbe3afbe414395fb9ca5f0de3cd74 (1478 lines). 122 lines inserted, 24
+  deleted.
+  - --stop-after, default 32400 s. Runner records when task execution
+    starts and starts no task once that much time has elapsed. job()
+    returns after a stopped phase without building later ones. The end
+    report gives the tasks run, the tasks not started in the stopping
+    phase, and that phase. Exit 5.
+  - G-STOP: full mode refuses when --stop-after + TIMEOUT_S exceeds
+    43200 s.
+  - G-MEM: --workers x 2472.8 MB.
+  - stop_after is in calprec2_params.csv, so every attempt of a shard
+    must use the same value.
+- notes/CALPREC2_RUNBOOK.md:
+  - an exit-5 step;
+  - the cross-shard warning, with the record that the instruction was
+    withdrawn;
+  - an instruction not to pass --stop-after.
+- Ledger: N28 second addendum; N29 (the --throughput defect); K5's
+  "no deadline" line marked superseded.
+- Nothing was executed. The script parses under the Python 3.8 grammar,
+  and the static pass found no undefined names. kgrun.py is unchanged in
+  this pass.
+
+### Closed
+
+- V1: G-MEM now scales with workers (Rahul's correction).
+- V2: --stop-after written as specified, exit 5.
+- The cross-shard resume: the instruction was withdrawn, and the runbook
+  forbids it.
+
+### Added beyond the instruction
+
+- G-STOP. Without it, a --stop-after too close to the cap, or a
+  TIMEOUT_S too large, would leave the stop no protection against the cap.
+  With the largest task of logs/calprec2-plan-fixed2-thr.log (1289 s),
+  TIMEOUT_S is 6445 s, and 32400 + 6445 = 38845 s is within 43200. That is
+  arithmetic on the logged estimate. Say if it should come out.
+
+### New issues
+
+- W1. G-STOP does not count time before phase A. That time includes:
+  - Kaggle's start;
+  - the runner's rebuild and re-verification of shipped folders;
+  - V1's hashing;
+  - calprec2's own verification of the resume folders;
+  - and, at the end, the finalisation of the run.
+  None of these has been measured. The slack left by the sum above is
+  43200 - 38845 = 4355 s (arithmetic).
+- W2. A task started just before the stop can run until TIMEOUT_S only if
+  it hangs. A normal task ends in its own time. The worst case is the
+  hang, and G-STOP bounds exactly that.
+- W3. Precedence 3 over 4 over 5. A stopped job with errored tasks exits 4,
+  not 5. The runbook's action for 4 is the same resume, so nothing is
+  lost, and the STOPPED line is still printed.
+- W4. A job that passes the stop time while its last phase is running,
+  with every task of that phase already started, is not "stopped". It
+  exits 0. That is correct: nothing was skipped.
+- W5. Kaggle's status for exit 5 is probably "error", as for any nonzero
+  exit (V3). kgrun then does not fetch automatically, and the runbook
+  fetches by hand.
+- W6. --stop-after is not applied in smoke mode. The smoke's code path is
+  unchanged, so its throughput folder stays valid. The head says this.
+- W7. Never executed: the stop, the early return, exit 5, the end report,
+  G-STOP, the scaled G-MEM. The first full attempt to pass nine hours is
+  their first test. With the target sizing, a shard is not expected to.
+
+### Still left
+
+- From earlier passes: B6, C1, C3 to C5, D3, D5, D6, D8, E1, E3, G1, G3,
+  G4, second-pass N8, U1, U2, U5, and V3 to V8.

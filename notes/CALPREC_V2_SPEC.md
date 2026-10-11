@@ -649,8 +649,14 @@ What this answers (Rahul's reasoning, recorded):
 Further decisions of 2026-10-11 (Rahul), after logs/calprec2-plan-fixed2-thr.log:
 - The full design runs: both sizes, all 336 cells, six replicates. Runtime
   is not a constraint; losing work is.
-- G-MEM: a full job refuses below 2 x 2472.8 MB MemAvailable (N25),
-  because it belongs on Kaggle.
+- G-MEM: a full job refuses below --workers x 2472.8 MB MemAvailable
+  (N25), because it belongs on Kaggle. The first figure, 2 x 2472.8, was
+  corrected the same day: a four-worker job holds four held 64M arrays.
+- --stop-after, default 32400 s (a margin choice, not a measurement). No
+  task starts after it; running tasks finish; no later phase is built;
+  exit 5, not a failure. A resume continues from the first incomplete
+  task. G-STOP refuses a job whose --stop-after + TIMEOUT_S exceeds
+  43200 s. Ledger N28, second addendum.
 - E1's 1e-12 at 64M is not pre-loosened.
 - Shards are sized against --shard-target x 21600 s, 0.5 by default.
   G-CAP refuses only against 21600 s.

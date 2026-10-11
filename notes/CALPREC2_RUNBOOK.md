@@ -97,9 +97,18 @@ Notes:
   differ (rule 17).
 - Never put --resume-from in ARGS. kgrun adds it on Kaggle, with the
   rebuilt paths.
-- Resume folders are never another shard's. Different shards have
-  disjoint tasks, and their parameters differ in "shard", so calprec2
-  would refuse them (exit 2).
+- RESUME FOLDERS ARE NEVER ANOTHER SHARD'S. Do not pass shard 0's
+  folders to shard 1.
+  - Different shards have disjoint tasks, so there is nothing to skip.
+  - Their parameters differ in "shard", so calprec2 refuses them (exit 2).
+  Rahul's instruction of 2026-10-11 said to launch the next shard "with
+  the previous folders as resume inputs". He has since said that was wrong
+  (2026-10-11). Resume inputs come from earlier attempts of the SAME shard
+  only. A new shard's attempt 1 has none.
+- Do not pass --stop-after. The default, 32400 s (nine hours, three under
+  the cap), is a margin choice, not a measurement. It is one of the
+  parameters a resume must match, so every attempt of a shard must use
+  the same value; leaving it at the default guarantees that.
 - "kgrun exit code 0" means kgrun itself finished. It says nothing about
   the job. The job's own exit is the line "kgrun runner: exit code N" in
   the kernel log (step 2).
@@ -191,13 +200,29 @@ Then paste into the conversation:
   - errored rows are not complete, so only they, and the tasks not yet
     run, are redone;
   - if the same tasks fail again, stop and paste.
+- exit code 5 (stopped early by --stop-after; NOT a failure). The folder
+  is complete as far as it goes. The run's last lines say which phase it
+  stopped in, how many tasks of that phase were not started, and that
+  later phases were not built.
+  - Do steps 2 and 3 as for any attempt: fetch if kgrun did not, verify
+    the manifest, commit and push.
+  - Relaunch the SAME shard with A = A + 1. RESUME = every earlier attempt
+    folder of this shard, this one included.
+  - The resumed job recomputes nothing already complete. It continues from
+    the first incomplete task: the not-started tasks of the stopping
+    phase, then the later phases.
+  - A shard may need several exit-5 attempts. Each one is a complete
+    record; none is lost.
 - exit code 3 (E1 or R1 failed): stop. Do not resume. Paste the FAIL
   lines. E1's 1e-12 is not loosened in advance (Rahul, 2026-10-11).
-- exit code 2 (setup: V0, V1, V2, G-CAP, G-MEM, or a resume refused
+- exit code 2 (setup: V0, V1, V2, G-CAP, G-MEM, G-STOP, or a resume refused
   because parameters, Python or NumPy differ): stop and paste. There is
   no calprec2 output to resume from.
 - NO "kgrun runner: exit code" line: the job died, by the 12-hour cap,
-  pre-emption or cancellation. Look in the fetched folder:
+  pre-emption or cancellation. With --stop-after this should not happen
+  through the cap: G-STOP refuses any job whose stop plus per-task timeout
+  exceeds 12 hours. It can still happen through pre-emption, or through
+  time Kaggle spends before phase A. Look in the fetched folder:
   - it holds a calprec2-full-*/calprec2_tasks.csv. Each row was flushed and
     fsynced when its task finished, so every row with end "ok" is complete,
     and a row cut off mid-write is not counted as complete. It is a

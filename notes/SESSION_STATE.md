@@ -82,6 +82,10 @@ full run finished.
   calprec2 md5 c0801f490fa49d6d35e0f7c007a4cee0, kgrun md5
   d8a053691f3a5774d2975f5cde07ee44, neither executed. Next: the plan at
   the target (runbook 0.1).
+- Later the same day: calprec2 --stop-after (default 32400 s, exit 5) with
+  G-STOP; G-MEM corrected to workers x 2472.8 MB; N29 recorded (the
+  --throughput folder never reached Kaggle; fixed by kgrun --data-dirs).
+  calprec2 md5 ec8dbe3afbe414395fb9ca5f0de3cd74, not executed.
 - Decided by Rahul, 2026-10-11:
   - calprec v2 does not wait for the 4G sphere rung;
   - the analysis criteria (bootstrap level, fit window, resamples,

@@ -252,14 +252,58 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       and the tail of each phase. It is an estimate, NOT a bound.
       Worked example (illustrative values): 6 x 64M at one beta with
       t_draw 3e-6 and t_beta 5e-8 costs 6 x 6.4e7 x 3.05e-6 = 1171 s.
-  G-MEM  MEMORY GUARD, full mode only (Rahul, 2026-10-11; review U3).
+  G-MEM  MEMORY GUARD, full mode only (Rahul, 2026-10-11; review U3, V1).
       Before any draw, MemAvailable is read from /proc/meminfo. The job
-      refuses (exit 2) when it is below 2 x 2472.8 = 4945.6 MB, or cannot
-      be read. 2472.8 MB is N25's measured peak of one held 64M
-      beta_on_ensemble. The message says the job belongs on Kaggle.
-      Worked example: MemAvailable 30000 MB passes; 3900 MB refuses.
-      The guard does not scale with --workers: with 4 workers, up to four
-      held 64M tasks can run at once.
+      refuses (exit 2) when it is below --workers x 2472.8 MB, or cannot be
+      read. The message says the job belongs on Kaggle.
+      - 2472.8 MB is N25's measured peak of one held 64M
+        beta_on_ensemble.
+      - Up to --workers held 64M tasks can run at once, so the requirement
+        scales with workers. Rahul's first figure, 2 x 2472.8, was
+        replaced on 2026-10-11: "a four-worker job holds four of those
+        arrays, not two".
+      Worked example: 4 workers need 9891.2 MB. MemAvailable 30000 MB
+      passes; 7830 MB refuses.
+  STOP  --stop-after SECONDS, full mode only (Rahul, 2026-10-11; review V2).
+      Default 32400 s (nine hours, three under Kaggle's 12-hour cap). The
+      default is a margin choice, not a measurement.
+      - Elapsed time is measured from the start of the job's task
+        execution, the first task of phase A. It is printed at the head of
+        the run.
+      - Once the elapsed time exceeds it, the scheduler starts no new task.
+        Tasks already running are allowed to finish, under the per-task
+        timeout (T1).
+      - The job then builds no later phase and exits 5.
+      - Every completed row was written and fsynced when its task finished,
+        so the folder is valid as it stands.
+      - At the end the run prints:
+        - the tasks run by this job;
+        - the tasks of the stopping phase that were not started;
+        - the phase it stopped in;
+        - that later phases were not built.
+      WHAT A RESUMED JOB DOES WITH A STOPPED FOLDER. Phases are separated
+      by barriers, so a stop part-way through a phase leaves every later
+      phase untouched: none of its tasks exists in the folder. A job run
+      with --resume-from that folder:
+      - rebuilds each phase's task list from the rows it has, exactly as an
+        unstopped job would;
+      - skips every task whose row is complete, so it recomputes nothing
+        already complete;
+      - starts at the first incomplete task. That is the not-started or
+        errored tasks of the stopping phase, then the later phases, whose
+        verdicts (adequacy, N_cell) are computed from the complete rows.
+      Worked example (illustrative values): a stop at 32400 s in phase C,
+      with 40 of 252 phase-C tasks not started, writes no C1, B or C'
+      task. The resumed job runs those 40, then C1, B and C' in full.
+  G-STOP  Full mode refuses (exit 2) when --stop-after + TIMEOUT_S exceeds
+      43200 s, the 12-hour cap. A task started just before the stop can
+      run for up to TIMEOUT_S, so this sum bounds the job's task time.
+      Worked example: logs/calprec2-plan-fixed2-thr.log estimates the
+      largest task at 1289 s, so TIMEOUT_S = 6445 s, and 32400 + 6445 =
+      38845 s is within 43200: pass. With an illustrative TIMEOUT_S of
+      12000 s, 44400 s: exit 2.
+      The time Kaggle and the runner spend before phase A, and the end of
+      the run, are not in the sum.
   T1  PER-TASK TIMEOUT (costprobe2's scheduler).
       - Each task runs in its own process, at most --workers at once.
       - A task still running after TIMEOUT_S is terminated and written as
@@ -280,11 +324,15 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
 
 EXIT CODES
   0  completed, every task ok, and no flag. O2 cells are not flags;
-  2  setup error (V0, V1, V2, G-CAP, G-MEM, resume, finalize merge);
+  2  setup error (V0, V1, V2, G-CAP, G-MEM, G-STOP, resume, finalize
+     merge);
   3  E1 or R1 failed;
   4  a task errored or timed out, or (in finalize) a cell is incomplete
-     or "E1 not run".
-  Exit 3 takes precedence over exit 4.
+     or "E1 not run";
+  5  stopped early by --stop-after. The output is complete as far as it
+     goes. NOT a failure: resume the same shard from this folder.
+  Precedence: 3 over 4, and 4 over 5. A stopped job with errored tasks
+  exits 4, and its resume reruns those tasks too.
 
 SEEDS (spec 7)
   Every stream is numpy.random.default_rng(SeedSequence(key + (chunk,)))
@@ -392,7 +440,8 @@ E1_TOL = 1e-12
 LOG_ESS_PER_SOLVE = 201            # exactcal.beta_on_ensemble: 200 in the loop, 1 at return
 RSS_BUDGET_MB = 3072.0
 N25_HELD64_PEAK_MB = 2472.8        # ledger N25, logs/memprobe.log: 64M solve peak
-MEM_GUARD_FACTOR = 2.0             # Rahul, 2026-10-11 (review U3)
+KAGGLE_CAP_S = 43200.0             # Kaggle's 12-hour session cap (CLAUDE.md, Kaggle compute)
+STOP_AFTER_DEFAULT = 32400.0       # nine hours: a margin choice, not a measurement (Rahul, 2026-10-11)
 SHARD_CEIL_S = 21600.0
 TIMEOUT_FACTOR = 5.0
 TIMEOUT_FLOOR_SMOKE = 600.0
@@ -688,9 +737,16 @@ class Out(object):
 
 
 class Runner(object):
-    def __init__(self, workers, timeout_s, out, store):
+    def __init__(self, workers, timeout_s, out, store, stop_after=None):
         self.workers, self.timeout_s, self.out, self.store = workers, timeout_s, out, store
         self.errors = 0
+        self.stop_after = stop_after
+        self.t_exec = None          # start of the job's task execution
+        self.ran = 0                # rows written by this job
+        self.stopped = None         # (phase label, tasks of that phase not started)
+
+    def elapsed(self):
+        return 0.0 if self.t_exec is None else time.time() - self.t_exec
 
     def run(self, items, label):
         """items: list of (fn_name, task dict). Tasks already in the store
@@ -699,9 +755,18 @@ class Runner(object):
         print("  [{}] {} task(s) to run, {} already in the resumed folders".format(
             label, len(todo), len(items) - len(todo)))
         sys.stdout.flush()
+        if self.t_exec is None:
+            self.t_exec = time.time()
         pending, running, nout, t0 = list(todo), [], 0, time.time()
         try:
             while pending or running:
+                if pending and self.stop_after is not None and self.elapsed() > self.stop_after:
+                    self.stopped = (label, len(pending))
+                    print("  STOP: --stop-after {:.0f} s exceeded at {:.0f} s in phase {}; {} task(s) of this phase "
+                          "not started; {} running task(s) allowed to finish".format(
+                              self.stop_after, self.elapsed(), label, len(pending), len(running)))
+                    sys.stdout.flush()
+                    pending = []
                 while pending and len(running) < self.workers:
                     fn, t = pending.pop(0)
                     rc, sc = multiprocessing.Pipe(duplex=False)
@@ -734,6 +799,7 @@ class Runner(object):
                     running.remove(entry)
                     progressed = True
                     nout += 1
+                    self.ran += 1
                     try:
                         rss = float(row.get("rss_mb") or "nan")
                     except ValueError:
@@ -984,7 +1050,13 @@ def n_cell_of(store, c):
     return ncell, devs
 
 
+def e1_flags(store):
+    return ["E1 FAIL " + r["tid"] for r in list(store.values()) if r.get("e1") == "FAIL"]
+
+
 def job(cells, runner, store):
+    """The phases in order. After a --stop-after stop, no later phase is
+    built: the function returns at once with the flags found so far."""
     flags3 = []
     cmap = dict((cell_id(c), c) for c in cells)
 
@@ -992,6 +1064,8 @@ def job(cells, runner, store):
     runner.run([("cal", {"tid": tid_of("A", c, N, rep), "phase": "A", "c": c, "n": N, "rep": rep,
                          "kind": K_CAL})
                 for c in cells for N in L_CAL for rep in range(R_CAL)], "A")
+    if runner.stopped:
+        return sorted(set(flags3 + e1_flags(store)))
     betas, badq = {}, {}
     for c in cells:
         rows = [store.get(tid_of("A", c, N, rep)) for N in L_CAL for rep in range(R_CAL)]
@@ -1006,6 +1080,8 @@ def job(cells, runner, store):
     runner.run([("ref", {"tid": tid_of("C", cmap[cid], n, rep), "phase": "C", "c": cmap[cid], "n": n,
                          "rep": rep, "betas": [badq[cid]], "hold": (n == N_LO and rep == 0)})
                 for cid in live for n in REF_SIZES for rep in range(REPS)], "C")
+    if runner.stopped:
+        return sorted(set(flags3 + e1_flags(store)))
     adq = []
     for cid in live:
         v, lo, hi, c5m, d1 = judge(store, cmap[cid])
@@ -1021,6 +1097,8 @@ def job(cells, runner, store):
     runner.run([("ref", {"tid": tid_of("P", cmap[cid], N_LO, rep), "phase": "P", "c": cmap[cid], "n": N_LO,
                          "rep": rep, "betas": betas[cid] + [badq[cid]], "hold": False})
                 for cid in adq for rep in range(REPS)], "C1")
+    if runner.stopped:
+        return sorted(set(flags3 + e1_flags(store)))
     ncell = {}
     for cid in adq:
         if r1_check(store, "P", cmap[cid], N_LO, NLEV - 1) == "FAIL":
@@ -1032,6 +1110,8 @@ def job(cells, runner, store):
     cp.hdr("PHASE B and C'  production beta and its check, {} cells".format(len(ncell)))
     runner.run([("cal", {"tid": tid_of("B", cmap[cid], ncell[cid], 0), "phase": "B", "c": cmap[cid],
                          "n": ncell[cid], "rep": 0, "kind": K_PROD}) for cid in sorted(ncell)], "B")
+    if runner.stopped:
+        return sorted(set(flags3 + e1_flags(store)))
     items = []
     for cid in sorted(ncell):
         r = store.get(tid_of("B", cmap[cid], ncell[cid], 0))
@@ -1041,10 +1121,7 @@ def job(cells, runner, store):
             items.append(("ref", {"tid": tid_of("Q", cmap[cid], N_LO, rep), "phase": "Q", "c": cmap[cid],
                                   "n": N_LO, "rep": rep, "betas": [float(r["beta_solved"])], "hold": False}))
     runner.run(items, "C'")
-    for r in list(store.values()):
-        if r.get("e1") == "FAIL":
-            flags3.append("E1 FAIL " + r["tid"])
-    return sorted(set(flags3))
+    return sorted(set(flags3 + e1_flags(store)))
 
 
 # --------------------------------------------------------------------------
@@ -1169,6 +1246,7 @@ def main():
     p.add_argument("--shard", type=int, default=0)
     p.add_argument("--nshards", type=int, default=1)
     p.add_argument("--shard-target", type=float, default=0.5)
+    p.add_argument("--stop-after", type=float, default=STOP_AFTER_DEFAULT)
     p.add_argument("--plan", action="store_true")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--throughput", default=None)
@@ -1182,8 +1260,9 @@ def main():
         if r not in ROWMOD:
             sys.stderr.write("setup error: {} is not a calibrated row (spec 2, ledger N27)\n".format(r))
             return 2
-    if not (0 <= a.shard < a.nshards) or a.workers < 1 or not (0.0 < a.shard_target <= 1.0):
-        sys.stderr.write("setup error: shard, worker or shard-target arguments out of range\n")
+    if not (0 <= a.shard < a.nshards) or a.workers < 1 or not (0.0 < a.shard_target <= 1.0) \
+            or not a.stop_after > 0:
+        sys.stderr.write("setup error: shard, worker, shard-target or stop-after arguments out of range\n")
         return 2
     mode = "finalize" if a.finalize else "plan" if a.plan else "smoke" if a.smoke else "full"
     me = cp.sha256_file(os.path.abspath(__file__))
@@ -1202,6 +1281,9 @@ def main():
     print("  costprobe2.py sha256 {}".format(cps))
     print("  mode     {}   rows {}   shard {} of {}   shard target {} x {:.0f} s".format(
         mode, ",".join(rows), a.shard, a.nshards, a.shard_target, SHARD_CEIL_S))
+    print("  stop     --stop-after {:.0f} s from the start of task execution{} (default {:.0f} s: a margin choice, "
+          "not a measurement)".format(a.stop_after, "" if mode == "full" else ", applied in full mode only",
+                                      STOP_AFTER_DEFAULT))
     print("  L_CAL {}  R {}   reference sizes {} and {}, reps {}   C' reps {}   chunk {}".format(
         L_CAL, R_CAL, N_LO, N_HI, REPS, PRODCHECK_REPS, CHUNK))
     print("  C5m <= {} at {}  D1 <= {} between {} and {}  C1 <= {}  C6 <= {}  E1 <= {:g} at {} rep 0  "
@@ -1229,7 +1311,7 @@ def main():
 
     params = [["script_sha256", me], ["costprobe2_sha256", cps], ["mode", mode], ["rows", ",".join(rows)],
               ["cells", a.cells or ""], ["shard", a.shard], ["nshards", a.nshards],
-              ["ref_sizes", "{};{}".format(N_LO, N_HI)], ["workers", a.workers],
+              ["ref_sizes", "{};{}".format(N_LO, N_HI)], ["workers", a.workers], ["stop_after", repr(a.stop_after)],
               ["python", platform.python_version()], ["numpy", np.__version__]]
 
     if mode == "finalize":
@@ -1323,11 +1405,18 @@ def main():
             sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds {:.0f} s, or cells lack throughput; "
                              "select fewer --cells or add shards\n".format(worst / a.workers, SHARD_CEIL_S))
             return 2
+        cp.hdr("G-STOP -- STOP BEFORE THE CAP")
+        print("  --stop-after {:.0f} s + TIMEOUT_S {:.0f} s = {:.0f} s   cap {:.0f} s".format(
+            a.stop_after, timeout_s, a.stop_after + timeout_s, KAGGLE_CAP_S))
+        if a.stop_after + timeout_s > KAGGLE_CAP_S:
+            sys.stderr.write("G-STOP: --stop-after + TIMEOUT_S exceeds the 12-hour cap; lower --stop-after\n")
+            return 2
+        print("  G-STOP PASS")
         avail = mem_available_mb()
-        need = MEM_GUARD_FACTOR * N25_HELD64_PEAK_MB
+        need = a.workers * N25_HELD64_PEAK_MB
         cp.hdr("G-MEM -- MEMORY GUARD")
-        print("  MemAvailable {}   required {:.1f} MB (2 x N25's held-64M peak {} MB)".format(
-            "unreadable" if avail is None else "{:.0f} MB".format(avail), need, N25_HELD64_PEAK_MB))
+        print("  MemAvailable {}   required {:.1f} MB ({} workers x N25's held-64M peak {} MB)".format(
+            "unreadable" if avail is None else "{:.0f} MB".format(avail), need, a.workers, N25_HELD64_PEAK_MB))
         if avail is None or avail < need:
             sys.stderr.write("G-MEM: available memory {} is below {:.1f} MB. This job holds 64M arrays; it belongs on "
                              "Kaggle (notes/CALPREC2_RUNBOOK.md), not on this machine.\n".format(
@@ -1360,7 +1449,7 @@ def main():
         return 4 if runner.errors else 0
 
     out = Out(os.path.join(outdir, "calprec2_tasks.csv"), TASK_COLS)
-    runner = Runner(a.workers, timeout_s, out, store)
+    runner = Runner(a.workers, timeout_s, out, store, stop_after=a.stop_after)
     try:
         flags3 = job(cells, runner, store)
     finally:
@@ -1368,12 +1457,21 @@ def main():
     for f in flags3:
         print("  FAIL {}".format(f))
     print("\n" + "=" * 96)
+    print("tasks run by this job: {}   task execution {:.0f} s".format(runner.ran, runner.elapsed()))
+    if runner.stopped:
+        print("STOPPED by --stop-after {:.0f} s in phase {}: {} task(s) of that phase not started; later phases "
+              "not built. Resume this shard from this folder.".format(a.stop_after, runner.stopped[0],
+                                                                      runner.stopped[1]))
+    else:
+        print("not stopped: every phase ran")
     print("errored or timed-out tasks: {}".format(runner.errors))
     print("files  {}".format(outdir))
     print("=" * 96)
     if flags3:
         return 3
-    return 4 if runner.errors else 0
+    if runner.errors:
+        return 4
+    return 5 if runner.stopped else 0
 
 
 if __name__ == "__main__":

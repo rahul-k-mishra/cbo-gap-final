@@ -596,6 +596,51 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       notes/CALPREC2_RUNBOOK.md.
     scripts/calprec2.py is now md5 c0801f490fa49d6d35e0f7c007a4cee0, not
     executed.
+  - Second addendum, 2026-10-11, Rahul's decisions on the fifth review
+    pass:
+    - --stop-after added, default 32400 s (nine hours). The default is a
+      margin choice, not a measurement.
+      - Once the time elapsed since the job's first task exceeds it, no
+        new task starts. Running tasks finish under the per-task timeout.
+      - The job builds no later phase and exits 5, "stopped early, output
+        complete as far as it goes". Exit 5 is not a failure.
+      - A resume recomputes nothing complete and continues from the first
+        incomplete task.
+      - Added with it, G-STOP: a full job refuses when --stop-after +
+        TIMEOUT_S exceeds the 43200 s cap. Rahul did not ask for this
+        check.
+    - G-MEM corrected to --workers x 2472.8 MB. Rahul: "My figure was
+      wrong; a four-worker job holds four of those arrays, not two." The
+      2 x 2472.8 = 4945.6 MB of the first addendum is superseded.
+    - The cross-shard resume instruction is withdrawn (Rahul: "my
+      instruction was wrong"). Resume inputs come from the same shard only,
+      and notes/CALPREC2_RUNBOOK.md says so.
+    - The flat shipping with an index and the runner-side rebuild and
+      re-verification are accepted.
+    scripts/calprec2.py is now md5 ec8dbe3afbe414395fb9ca5f0de3cd74, not
+    executed.
+- N29 (repo, defect found before execution; calprec2 with kgrun). Every
+  calprec2 full job on Kaggle would have exited 2 before any draw.
+  - calprec2's full mode requires --throughput, a verified smoke folder.
+    load_throughput reads it with costprobe2.verify_folder.
+  - That folder, runs/calprec2-smoke-kaggle-20261011-121225, existed only
+    on the laptop. kgrun bundled only the archive's .py files, two
+    archive CSVs and scripts/*.py, so no run folder ever reached Kaggle.
+  - On Kaggle, "--throughput runs/calprec2-smoke-kaggle-..." would have
+    named a path that does not exist. verify_folder would have written
+    "<folder> has no sha256.txt" and exited 2, before phase A.
+  - The cost would have been one wasted Kaggle launch per shard, with no
+    rows lost: the stop comes before any output.
+  - Why it was not seen earlier: the smoke takes no --throughput, and the
+    plan runs on the laptop, where the folder exists. No full job had been
+    launched.
+  - Found by Claude on 2026-10-11 while writing kgrun's resumption (review
+    fifth pass). Fixed by kgrun --data-dirs: the folder is verified,
+    shipped and rebuilt on Kaggle, and "runs/<name>" in --args is replaced
+    by the rebuilt path. The runbook passes the smoke folder through
+    --data-dirs on every attempt.
+  CLOSED by f83eefb (kgrun md5 d8a053691f3a5774d2975f5cde07ee44). Not yet
+  exercised on Kaggle.
 
 ## Checked and found sound
 
@@ -864,6 +909,8 @@ ENVIRONMENT.md (G2 closed).
   - pin Kaggle's image. A Python or NumPy change between attempts makes
     calprec2 refuse the resume (exit 2), and rule 16 then needs detcheck
     on the new image;
-  - stop a job cleanly before the cap. No deadline exists in calprec2;
+  - stop a job cleanly before the cap. [Superseded the same day: calprec2
+    --stop-after, default 32400 s, exit 5, with G-STOP; N28 second
+    addendum.]
   - check that logs/ is committed. The guard covers runs/ and HEAD only.
   - Nothing of this has run on Kaggle yet.
