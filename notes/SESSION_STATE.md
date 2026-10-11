@@ -67,6 +67,15 @@ full run finished.
 
 - Nothing is running. The next Kaggle job is the refscale 4G sphere-only
   follow-up (ledger N21).
+- Decided by Rahul, 2026-10-11:
+  - calprec v2 does not wait for the 4G sphere rung;
+  - the analysis criteria (bootstrap level, fit window, resamples,
+    tolerances, equivalence margin, heterogeneity statistic) will be given
+    by Rahul in full before the rerun script is written. None is to be
+    guessed, and no default for any of them appears in any script
+    docstring.
+- Written, not run: scripts/c6.py, the Monte Carlo for calprec v2's C5m
+  constant c6, with d6 re-estimated in the same run.
 
 ## 3. Measured so far about the science
 
