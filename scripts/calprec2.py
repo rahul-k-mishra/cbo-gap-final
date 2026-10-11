@@ -1,128 +1,109 @@
 """
 calprec2.py  --  CBO-GAP round 2: calprec v2, one fixed beta per calibration
                  cell for the fixed-beta rerun, calibrated through each row's
-                 own archived module
+                 own archived module, and measured on a fixed pair of
+                 reference sizes
 
 WHAT THIS PRODUCES, IN PLAIN LANGUAGE
 -------------------------------------
 The specification is notes/CALPREC_V2_SPEC.md (cited as "spec 5" and so
-on). For every calibration cell
+on; the design in force is spec 11c). For every calibration cell
 
     (module, objective, d, initial law, tau0)
 
-needed by a rerun row whose beta targets a concentration, this script finds
-a fixed beta and measures the concentration tau(beta) that beta actually
-produces, on large independent reference samples. The finalize step writes
-the beta table (calprec2_beta.csv) that the rerun script reads. Each beta is
-labelled "target" (tau(beta) is within 5% of tau0) or "beta" (it is not, or
-cannot be shown to be; the cell is then labelled by its beta, never by a
-target; spec 6, ledger N18 O2).
+of the four calibrated rows (spec 2, ledger N27), this script calibrates a
+fixed beta on independent calibration samples. It then measures the
+concentration tau(beta) that this beta actually delivers, on large
+independent reference samples of two fixed sizes, 64M and 256M. The
+finalize step writes the beta table (calprec2_beta.csv) that the rerun
+script reads.
+
+Each cell is labelled:
+  - "target": tau(beta) is within 5% of tau0, measured on a reference
+    judged adequate;
+  - "beta": it is not, or the reference is not adequate, so it cannot be
+    shown. The cell is then labelled by its beta, never by a target, and
+    both reference sizes are reported (spec 6, ledger N18 O2).
 
 No trajectories are evolved. Nothing in the archive is written to.
 
-REVISION 2026-10-11, before any execution (notes/CALPREC_V2_REVIEW.md,
-second pass). D5a, the 200-step streamed bisection on the laptop, is
-WITHDRAWN (ledger N24). Case (a) and case (b) solves are now a streamed GRID
-solve run with the rest of the job (criterion E3). Phase A is written to its
-own file and read by continuation jobs. Tasks run under costprobe2's
-process-per-task scheduler with a timeout.
+DESIGN CHANGE 2026-10-11 (Rahul; ledger N28; spec 11c), before any full
+execution. This replaces the earlier versions' rung climb to 1G, the
+adequacy search and the per-cell solves. Removed entirely:
+  - the climb;
+  - case (a) and case (b);
+  - the streamed grid solve, and E3 with it;
+  - the multi-job continuation (--inputs, --max-rung, calprec2_phaseA.csv);
+  - the nine rows outside N27's scope.
+The grid-solve design is preserved in ledger N24, spec 11b, and in this
+file at commit 0bd7011.
+
+Reason: logs/calprec2-plan-4rows-thr.log. For the 336 cells under the
+earlier design, G-CAP estimated:
+  - best case 301529 s;
+  - worst case 7672526 s;
+  - case (a) branch alone 5461019 s.
+These are at 2 workers, against a 21600 s ceiling. refscale (ledger N18)
+had already answered, on the hardest cell, what the climb asks.
 
 WHAT IS IMPORTED, AND WHAT IS NOT
-  * Archive modules and grids come from scripts/costprobe2.py: MODS
-    (hashed by V1), GRID and SOURCE (checked against the archived source by
-    V0), objective_of and probe_sample. costprobe2.py's sha256 is printed
-    and stored in the params file.
+  * Archive modules and grids come from scripts/costprobe2.py:
+    - MODS (hashed by V1);
+    - GRID and SOURCE (checked against the archived source by V0);
+    - objective_of and probe_sample.
+    costprobe2.py's sha256 is printed and stored in the params file.
   * The objective of a cell is its own module's (spec 3, RERUN_PLAN F5).
-  * The initial law is drawn with the module's own draw_initial
-    (mechanism, control, regime). For the modules whose one_realisation
-    draws X0 inline (boundary, law, sigma, crossed, cliff, regimemap), it is
-    drawn as rng.standard_normal((n, d)) + x*, with x* from the module's own
-    dict. V2 checks that line against the module source.
+  * The initial law:
+    - mechanism draws it with the module's own draw_initial;
+    - boundary, sigma and crossed draw X0 inline in one_realisation, so it
+      is drawn as rng.standard_normal((n, d)) + x*, with x* from the
+      module's own dict.
+    V2 checks that line against the module source.
   * Phase A's bisection is exactcal.beta_on_ensemble.
   * The streamed log-ESS is the refscale composition: exactcal._logsumexp
-    applied per chunk to -beta f and to -2 beta f, then applied to the
+    is applied per chunk to -beta f and to -2 beta f, and then to the
     vector of chunk results (E1).
-  * The GRID SOLVE is not imported (see S below). E3 checks it against
-    beta_on_ensemble.
 
-CELLS (spec 2)
-  The rows and their modules:
-    CONC mechanism, ADAPT control, TAU8 boundary,
-    REFSIZE / SYNTH / NAMED / HORIZON regime, GEOM law, SIGMA sigma,
-    ANISO crossed, RMAP and ONSET regimemap, CLIFF cliff.
-  BETA-ISO, BETA-ANI, LAWPANEL (F1), PROBEARM (D6) and PERJ (F4) are not
-  calibrated here. Identical cells of one module are calibrated once. The
-  plan prints the deduplicated count.
-
-JOBS, AND HOW A CELL SPANS SEVERAL OF THEM (review A1, A2)
-  A job evaluates, for each of its cells, the rungs from that cell's
-  start up to --max-rung:
-    - start = 0 if the cell has no climb rows in the --inputs folders;
-    - otherwise start = (highest rung with six complete climb rows) + 1.
-  The highest rung already evaluated is the continuation point. It is
-  judged in this job, once the rung above it exists; its own rows come from
-  the inputs and are not recomputed. A cell whose inputs already show an
-  adequate rung or case (a) is SKIPPED (review N1). The status is judged
-  from every pair of climbed rungs, as finalize judges it, and the rung-range
-  table says "skipped". Its later phases, if unfinished, are completed only
-  by a rule-17 resume of the job that resolved it. Phase A of a cell is computed once, in
-  the first job that touches the cell, and written to that job's
-  calprec2_phaseA.csv. A later job reads it from --inputs; the folder is
-  verified against its sha256.txt. A job given a cell with climb rows but
-  no phase-A rows stops with exit 2. No task id is ever written twice, so
-  finalize's rule needs no exception: a repeated id is accepted only over an
-  earlier error row.
-  --inputs is not a rule-17 resumption. The folders must agree with this
-  job on script sha256, costprobe2 sha256, rows, Python and NumPy, but they
-  may differ in --cells, --shard, --max-rung and --workers.
-  --resume-from is rule 17 (CLAUDE.md, amended 2026-10-10): every
-  parameter must be equal.
+CELLS (spec 2, ledger N27)
+  The four rows, each with its module:
+    CONC  mechanism;
+    TAU8  boundary;
+    SIGMA sigma;
+    ANISO crossed.
+  Identical cells of one module are calibrated once. The plan prints the
+  deduplicated count. No other row is calibrated by calprec v2; those rows
+  keep their archived betas (RERUN_PLAN, scope section).
 
 PROCEDURE PER CELL (barriers between phases; parallel over cells,
-replicates and blocks)
-  A   CALIBRATION. For each N in L_CAL = 4000, 16000, 64000, 256000,
-      1000000, 4000000 and each of R = 24 draws: N values (kind 31),
-      beta_hat = beta_on_ensemble(values, tau0, N). beta_adq = the median of
-      the 24 beta_hat at N = 4000000.
-  C   CLIMB. L_REF = 1M, 4M, 16M, 64M, 256M, 1G, six replicates per rung
-      (kind 32), streamed in chunks of 250000, evaluated at beta_adq. Rung i
-      is judged once rung i+1 exists: the first rung that passes C5m and D1
-      is n*. If rung i+1 is 1G and rung i fails, the cell is case (a). If
-      --max-rung is reached first, the cell is "unresolved, highest
-      evaluated rung L_REF[i+1]", to be continued (A2 corrected).
-  C1  SUFFICIENCY PASS at n*. The six replicates of n* are regenerated and
-      evaluated at the 144 beta_hat and at beta_adq (R1). N_cell = the
-      smallest N whose 24 beta_hat all pass C1, or none (case (b)).
-  B   PRODUCTION. beta_prod = beta_on_ensemble on a size-N_cell sample
-      (kind 33).
-  C'  PRODUCTION CHECK. beta_prod is evaluated on six NEW replicates of size
-      n* (kind 32, replicates 6 to 11): C6. On failure, case (b).
-  S   GRID SOLVES for case (b), at n*, and case (a), at 1G.
-      E3 first (below). Then the streamed grid solve on an independent
-      kind-34 stream of the solve size, rep 0:
-      - pass 1 evaluates K = 64 betas log-spaced over [1e-10, 1e10], the
-        bracket of beta_on_ensemble, all on one streamed pass;
-      - each later pass evaluates 64 betas log-spaced between the two grid
-        neighbours that bracket the target;
-      - passes stop when hi/lo - 1 <= 1e-6 (GRID_TOL). The width after
-        each pass is printed.
-      With 64 points over 20 decades, the width falls roughly as
-      46 / 63^p after p passes, so the stop rule needs 5 passes. Two passes
-      give about 1.2e-2, not below 1e-4.
-      beta_s = sqrt(lo hi), as beta_on_ensemble returns. Each pass is split
-      into blocks of 64 chunks, run as separate tasks and combined in chunk
-      order.
-      beta_s is then evaluated on the six kind-32 replicates of the solve
-      size, together with beta_adq (for R1).
-      Why an independent stream and all six replicates, rather than the
-      spec's "solve on one replicate and evaluate on the other five":
-      - the estimate tau_ref is then the same median-of-six estimator that
-        C5m was calibrated for (c6 is for six; spec 11a);
-      - none of the six evaluation replicates was used to choose beta_s, so
-        tau_ref is not biased toward tau0 by reusing the solving sample.
-      Under "the other five", the estimator would be a median of five,
-      which C5m's constant does not cover, and one replicate would serve
-      both to choose and to judge.
+replicates and draws)
+  A   CALIBRATION.
+      - For each N in L_CAL = 4000, 16000, 64000, 256000, 1000000,
+        4000000 and each of R = 24 draws: N values (kind 31), then
+        beta_hat = beta_on_ensemble(values, tau0, N).
+      - beta_adq = the median of the 24 beta_hat at N = 4000000.
+  C   REFERENCES AT TWO FIXED SIZES.
+      - N_LO = 64000000 and N_HI = 256000000, six independent replicates
+        each (kind 32, reps 0 to 5).
+      - Each replicate is streamed in chunks of 250000 and evaluated at
+        beta_adq.
+      - There is no ladder, no climbing and no stopping rule. Every cell
+        gets both sizes.
+      - Replicate 0 of N_LO is also held, for E1.
+  ADEQUACY, judged as refscale judged it:
+      - C5m at N_LO: range / median of its six <= 0.054682;
+      - AND D1 between the N_LO and N_HI medians <= 0.025.
+      A cell that passes both is "adequate at 64M".
+  C1  SUFFICIENCY PASS, adequate cells only.
+      - The six N_LO replicates are regenerated and evaluated at the 144
+        beta_hat and at beta_adq (R1).
+      - N_cell = the smallest L_CAL level whose 24 beta_hat all pass C1,
+        or none.
+  B   PRODUCTION, cells with an N_cell.
+      - beta_prod = beta_on_ensemble on a size-N_cell sample (kind 33).
+  C'  PRODUCTION CHECK.
+      - beta_prod is evaluated on six NEW N_LO replicates (kind 32, reps 6
+        to 11): C6.
+      - C5m of those six is reported, without a threshold (review D4).
 
 PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
 ------------------------------------------------------------------
@@ -133,127 +114,152 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
           that do not enter beta equal Table 2's cell count.
       Otherwise exit 2.
       Worked example: SIGMA has 24 cells; 24 x (2 diffusions x 6 r) = 288,
-      Table 2's count: pass. With five r values, 240: exit 2.
+      which is Table 2's count: pass. With five r values the product would
+      be 240: exit 2.
   V1  ARCHIVE IDENTITY. Every imported archive module's __file__ lies in the
-      archive and hashes to its zenodo-v1.sha256 entry, or exit 2.
-      Worked example: regimemap.py hashes to eb1d704f...14c8: ok.
+      archive and hashes to its zenodo-v1.sha256 entry. Otherwise exit 2.
+      Worked example: boundary.py hashes to 93d2eb04...b3e4: ok.
   V2  SAMPLER IDENTITY. For every module used, the first line after
       "rng = np.random.default_rng(seed)" in one_realisation that mentions
-      "rng" must equal SAMPLER_LINE, or exit 2.
+      "rng" must equal SAMPLER_LINE. Otherwise exit 2.
       Worked example: sigma's line is "X0 = rng.standard_normal((Jinf, d))
       + xs": ok.
-  E1  STREAMING EQUIVALENCE. Replicate 0 of the 1M rung is held whenever it
-      is evaluated. For every beta, |logESS_streamed - logESS_held| /
-      |logESS_held| <= 1e-12, against exactcal.log_ess_of. Every cell's
-      first job starts at 1M, so E1 runs for every cell (review C2). In
-      finalize, a cell without an E1 row is flagged "E1 not run", exit 4.
-      A failure gives exit 3.
+  E1  STREAMING EQUIVALENCE, now on the 64M rung (spec 11c).
+      - Replicate 0 of N_LO in phase C is held while it is streamed.
+      - exactcal.log_ess_of is evaluated on the held array at beta_adq.
+      - Requirement: |logESS_streamed - logESS_held| / |logESS_held| <=
+        1e-12, against exactcal.log_ess_of.
+      - Every cell has that row, so E1 runs for every cell. In finalize, a
+        cell without an E1 verdict is flagged "E1 not run", exit 4.
+      - A failure gives exit 3.
+      Only phase C's replicate 0 is held. The C1 and C' passes over the
+      same size are streamed only.
+      What E1 does NOT check:
+      - the 256M rung. Holding it would take four times the 64M array,
+        over the budget;
+      - the 145 C1 betas and beta_prod. Those passes use the same
+        functions, chunk_terms and combine_terms, at other betas.
+      E1 has not been run at 64M before. refscale ran it at 4M and 16M
+      (ledger N18). If it fails at 1e-12, the run exits 3. The tolerance is
+      not loosened in advance.
       Worked example (refscale): 10.596634733096073 against
       10.596634733096080 gives 6.6e-16: pass.
-  E3  GRID-SOLVE EQUIVALENCE. On the cell's lowest held rung (1M, kind-34
-      stream, rep 0), the grid solve and exactcal.beta_on_ensemble on the
-      held values must agree:
-          |beta_grid / beta_held - 1| <= 1e-6, printed.
-      If E3 fails, no solve result of that cell is used: the cell is
-      flagged, and exit 3.
-      Worked example (illustrative values): 6.0285345 against 6.0285381
-      gives 6.0e-7: pass.
-  R1  REGENERATION IDENTITY. When a rung's six replicates are re-evaluated
-      (the C1 pass, or a solve evaluation at a climbed rung), tau_hat at
-      beta_adq must equal the climb's, compared as repr strings. It applies
-      only when both rows were computed under the same Python and NumPy
-      (the "env" column). Otherwise the comparison is reported as "R1 not
-      applicable (env differs)" and is not a failure (review B4). A failure
-      gives exit 3.
+  R1  REGENERATION IDENTITY.
+      - When the C1 pass re-evaluates the six N_LO replicates, tau_hat at
+        beta_adq must equal phase C's, compared as repr strings.
+      - It applies only when both rows were computed under the same Python
+        and NumPy (the "env" column). Otherwise the comparison is reported
+        as "R1 not applicable (env differs)", and is not a failure.
+      - A failure gives exit 3.
       Worked example: 0.0099834716023 against 0.0099834716023: pass.
-  C5m range / tau_ref <= 0.054682, at beta_adq. tau_ref is the median of
-      six; the threshold comes from ledger N23.
+  C5m range / tau_ref <= 0.054682, at beta_adq, on the six N_LO replicates.
+      tau_ref is the median of the six. The threshold comes from ledger
+      N23.
       Worked examples (spec 5):
-      - 0.00970 0.00980 0.00985 0.00990 0.01000 0.01010: ratio 0.0405, pass;
-      - 0.00940 0.00960 0.00975 0.00985 0.00995 0.01010: ratio 0.0714, fail.
-  D1  |tau_ref(n) - tau_ref(4n)| / tau_ref(4n) <= 0.025, at beta_adq.
-      Worked example: 0.00995 against 0.01003 gives 0.0080: pass.
-  ADEQUATE  Passes C5m and D1. The top rung is never adequate.
-  C1  At n*: max over a level's 24 draws of |tau_ref(beta_hat)/tau0 - 1|
-      <= 0.05. N_cell = the smallest such level.
+      - 0.00970 0.00980 0.00985 0.00990 0.01000 0.01010: ratio 0.0405,
+        pass;
+      - 0.00940 0.00960 0.00975 0.00985 0.00995 0.01010: ratio 0.0714,
+        fail.
+  D1  |tau_ref(N_LO) - tau_ref(N_HI)| / tau_ref(N_HI) <= 0.025, at
+      beta_adq.
+      Worked example: 0.00995 at 64M against 0.01003 at 256M gives 0.0080:
+      pass.
+  ADEQUATE  Passes C5m and D1.
+      Worked example: C5m ratio 0.0405 and D1 0.0080: adequate. C5m 0.0405
+      with D1 0.031: not adequate (D1 FAIL).
+  C1  On the six N_LO replicates, for each level N:
+          max over the level's 24 draws of |tau_ref(beta_hat)/tau0 - 1|
+          <= 0.05.
+      N_cell = the smallest level that passes.
       Worked example: 0.0098 to 0.0104 at tau0 = 0.01 gives 0.04:
       sufficient.
-  C6  |tau_ref(beta_prod)/tau0 - 1| <= 0.05 over the six C' replicates.
+  C6  |tau_ref(beta_prod)/tau0 - 1| <= 0.05, where tau_ref is the median
+      over the six C' replicates.
       Worked example: tau0 0.1, tau_ref 0.1042: 0.042, pass.
-  CB  Case (b): "target" with beta_s if |tau_ref(beta_s)/tau0 - 1| <= 0.05;
-      otherwise "beta".
-  CA  Case (a): "beta", with beta_s solved at 1G, and tau(beta_s) as the
-      median of six 1G replicates, with their range.
-  INCOMPLETE  A cell whose rows for a phase are missing or errored is
-      labelled "incomplete (<phase>)". It is never given a case label
-      (review B2).
-  FINALIZE REPLAY (review N2). finalize recomputes the E3 grid solve and the
-      solve itself from their block rows, pass by pass, with the job's own
-      pass function. A cell whose E3 fails is labelled "E3 FAIL (case x)",
-      with exit 3; it is never "incomplete". A cell whose evaluation rows
-      evaluate a beta other than the replayed solve is flagged, with exit 3.
+  LABELS (finalize; each cell gets exactly one of these):
+      T   Adequate, N_cell found and C6 passes: "target" with beta_prod.
+          tau_ref and its range are the C' median and range.
+      BA  Adequate, but C1 finds no N_cell or C6 fails: beta_adq.
+          tau_ref and range are those of the six phase-C N_LO replicates.
+          Label "target" if |tau_ref/tau0 - 1| <= 0.05, otherwise "beta".
+          (Rule CB of the earlier design, applied to beta_adq because no
+          solve exists.)
+          Worked example: tau0 0.1, tau_ref(beta_adq) 0.0962: deviation
+          0.038, so "target". At 0.0941 the deviation is 0.059: "beta".
+      O2  Not adequate: "beta" with beta_adq (ledger N18 O2).
+          - The median and range of BOTH sizes are reported, with C5m and
+            D1 and which of them failed.
+          - tau_ref and its range are those of N_HI, the larger reference.
+            The label says "not adequate".
+          This is the expected outcome at the tight targets. It is a
+          finding, not a failure, and it does not change the exit code.
+      INCOMPLETE  A cell whose rows for a phase are missing or errored is
+          labelled "incomplete (<phase>)" and never given a label above.
+          Exit 4.
+          Finalize expects every cell of the folders' rows. A cell with no
+          rows at all (a shard folder not given) is "incomplete (phase A)".
   S1  Largest-term share: reported, no threshold.
-  X1/X2  Exact tau for the centred law with a diagonal quadratic objective
-      (sphere; synthetic rho = 0):
-          prod_i (1 + 4 beta a_i)^(1/2) / (1 + 2 beta a_i).
-      Reported, no threshold.
-      Worked example: d = 2, a = (1, 1), beta = 0.5 gives 0.75.
-  G-RSS  Peak RSS of each task <= 3072 MB, else a FAIL line and a flagged
-      row. The only held arrays are phase A (at most 4000000 values) and
-      the 1M arrays of E1 and E3. No held solve exists above 1M, pending
-      the memory probe (review A4).
-  G-CAP  A full run needs --throughput (a verified smoke folder). Two
-      estimates must each be at most 21600 s, or exit 2.
-      (1) The WORST-CASE ESTIMATE for the job (review N3). Per cell:
-            phase A (unless it is in the inputs)
-          + the climb from the cell's start to --max-rung
-          + the larger of two branches:
-            - the adequate branch at the highest rung that can be judged
-              adequate (the rung below --max-rung): C1 pass, B, C', and a
-              case (b) solve there;
-            - the case (a) branch, only when --max-rung is 1G: E3, the grid
-              passes over 1G and six 1G evaluation replicates.
-          The job's estimate is the sum over its cells, divided by workers.
-      (2) THE CASE (a) SOLVES (review N5): the sum, over every cell that
-          could become case (a) at worst, of its case (a) branch, divided
-          by workers. When --max-rung is 1G, that is every cell the job
-          runs. The plan prints this count and each cell's case (a) cost.
-      Each pass costs n x (t_draw + n_beta x t_beta); a solve adds n x
-      t_solve.
-      It assumes perfect scaling. It ignores barrier idle time and the tail
-      of each phase. It is an estimate, NOT a bound (review B3). The best
-      case assumes adequacy at the start rung.
-      Worked example (illustrative values): 6 x 4M at one beta with t_draw
-      3e-6 and t_beta 2e-8 costs 6 x 4e6 x 3.02e-6 = 72.5 s.
-  T1  PER-TASK TIMEOUT (costprobe2's scheduler, adopted). Each task runs in
-      its own process, at most --workers at once. A task still running
-      after TIMEOUT_S is terminated and written as an error row
-      ("timeout"). A process that exits without a result is written as an
-      error row ("worker exited").
-          TIMEOUT_S = 5 x the projected wall of the job's largest task,
-      over every task type the job can run at its max rung (phase A, B,
-      the E3 held solve, every climb rung, the C1 and C' replicates, grid
-      blocks and evaluation replicates at the adequate and case (a)
-      sizes; review N3). The projection comes from the throughput table and
-      is printed at the head of the run.
-      One process per task is kept for phase A's 144 small tasks per cell
-      (review N4, Rahul 2026-10-11): the fork overhead is bounded by the
-      task count times a few milliseconds, and a uniform scheduler is worth
-      more than the saving. Revisit if the smoke shows otherwise.
-      In smoke mode, where no table exists yet, the projection is
-      (4000000 + 2 x 1000000) points / 3.16e5 points per second, plus the
-      same again for the solve and the 145-beta pass, and the timeout is
-      floored at 600 s. 3.16e5 is refscale's measured ackley throughput,
-      the slowest it measured (runs/refscale-kaggle-20261010-094820).
-      Worked example (illustrative values): largest task projected 700 s:
-      TIMEOUT_S = 3500 s.
+  X1  Exact tau for the centred sphere, prod over d of (1 + 4 beta)^(1/2) /
+      (1 + 2 beta). Reported for the cell's final beta, no threshold.
+      Worked example: d = 2, beta = 0.5 gives 0.75.
+  G-RSS  Peak RSS of each task <= 3072 MB. Otherwise a FAIL line and a
+      flagged row. The held arrays are:
+      - phase A and B (at most 4000000 values);
+      - E1's 64M replicate.
+      ledger N25 measured this allocation, exactcal.log_ess_of on a held
+      64M ackley d = 40 array within beta_on_ensemble: peak 2472.8 MB,
+      within budget. The smoke's 4M peaks agree with memprobe's 4M peak:
+      301.8 MB for ackley d = 40 against memprobe's 294.3 MB.
+      The full job must therefore run on Kaggle, not on the laptop, whose
+      free memory can be 1.5 GB (CLAUDE.md rule 6).
+  G-CAP  A full run needs --throughput (a verified smoke folder). The
+      WORST-CASE ESTIMATE must be at most 21600 s, or exit 2.
+      Per cell:
+          phase A
+        + phase C (6 x N_LO and 6 x N_HI at one beta)
+        + E1's held log_ess_of on N_LO
+        + the adequate branch:
+          - the C1 pass (6 x N_LO at 145 betas);
+          - B (a 4M draw and solve, the largest N_cell);
+          - C' (6 x N_LO at one beta).
+      The worst case assumes every cell is adequate. The best case assumes
+      none is.
+      The job's estimate is the sum over its cells, divided by workers.
+      - A pass costs n x (t_draw + n_beta x t_beta). A held solve costs
+        n x (t_draw + t_solve).
+      - One held log_ess_of costs n x t_solve / 201, because
+        beta_on_ensemble calls log_ess_of 200 times in its loop and once at
+        return (exactcal.py 176-183).
+      The plan also prints the smallest --nshards k for which every shard,
+      cells assigned by index modulo k, has an estimate within the ceiling.
+      The estimate assumes perfect scaling. It ignores barrier idle time
+      and the tail of each phase. It is an estimate, NOT a bound.
+      Worked example (illustrative values): 6 x 64M at one beta with
+      t_draw 3e-6 and t_beta 5e-8 costs 6 x 6.4e7 x 3.05e-6 = 1171 s.
+  T1  PER-TASK TIMEOUT (costprobe2's scheduler).
+      - Each task runs in its own process, at most --workers at once.
+      - A task still running after TIMEOUT_S is terminated and written as
+        an error row ("timeout"). A process that exits without a result is
+        written as an error row ("worker exited").
+      - TIMEOUT_S = 5 x the estimated wall of the job's largest task.
+        - Task types: a phase-A or B solve, an N_LO pass at one beta with
+          E1, an N_HI pass at one beta, and an N_LO pass at 145 betas.
+        - The estimate is from the throughput table, printed at the head
+          of the run.
+      - In smoke mode, where no table exists yet, the projection is
+        (4000000 + 2 x 1000000) points / 3.16e5 points per second. It is
+        doubled for the solve and the 145-beta pass, and the timeout is
+        floored at 600 s. 3.16e5 is refscale's measured ackley throughput
+        (runs/refscale-kaggle-20261010-094820).
+      Worked example (illustrative values): largest task estimated at
+      700 s gives TIMEOUT_S = 3500 s.
 
 EXIT CODES
-  0  completed, every task ok, and no flag;
-  2  setup error (V0, V1, V2, G-CAP, inputs, resume, finalize merge);
-  3  E1, E3 or R1 failed;
+  0  completed, every task ok, and no flag. O2 cells are not flags;
+  2  setup error (V0, V1, V2, G-CAP, resume, finalize merge);
+  3  E1 or R1 failed;
   4  a task errored or timed out, or (in finalize) a cell is incomplete
-     or "E1 not run" (review C6).
+     or "E1 not run".
   Exit 3 takes precedence over exit 4.
 
 SEEDS (spec 7)
@@ -261,48 +267,51 @@ SEEDS (spec 7)
   at full width (ledger N16), with
       key = (ENTROPY 20261010, kind, module code, objective code, d,
              law code, tau0 x 1e6, n, rep)
-  Kinds: 31 calibration, 32 reference, 33 production, 34 solve, 35 smoke.
-  Reference keys (kind 32) carry tau0 = 0, as spec 7 says, so cells
-  differing only in tau0 share reference streams. Their tau_ref values
-  are therefore correlated, not independent (review B5). The chunk index
-  is appended to the key so that any chunk can be regenerated alone; that
-  is an addition to spec 7. Codes are indices in costprobe2's MODULES,
-  OBJ_NAMES and LAWS.
+  Kinds: 31 calibration, 32 reference, 33 production, 35 smoke.
+  - Kind 34, the old design's solve stream, is retired and not reused.
+  - Reference keys (kind 32) carry tau0 = 0, as spec 7 says. Cells
+    differing only in tau0 therefore share reference streams, and their
+    tau_ref values are correlated, not independent.
+  - The chunk index is appended to the key, so any chunk can be
+    regenerated alone.
+  Codes are indices in costprobe2's MODULES, OBJ_NAMES and LAWS.
 
 MODES
-  --plan            V0, V1, V2, the cells with their rung range for this
-                    job and, with --throughput, the estimates. No draws;
-                    nothing written.
+  --plan            V0, V1, V2, the cells and, with --throughput, the
+                    estimates and the shard count. No draws; nothing
+                    written.
   --smoke           Unit costs t_draw, t_solve and t_beta per (module,
                     objective, d, law), written to calprec2_throughput.csv.
                     Not results.
+                    The smoke task is unchanged from 0bd7011, so a smoke
+                    folder from that version is a valid --throughput.
   (default)         The job.
   --finalize DIR[,DIR]
                     No draws. Merges the verified folders, recomputes every
                     verdict per cell and writes calprec2_beta.csv.
-  Selection: --rows, --cells, --shard i --nshards k, --max-rung j
-  (default 5), --inputs DIR[,DIR], --resume-from DIR[,DIR].
+  Selection: --rows, --cells, --shard i --nshards k.
+  Resumption: --resume-from DIR[,DIR] (CLAUDE.md rule 17; every parameter
+  must be equal).
 
 OUTPUT (new folder <outdir>/calprec2-<mode>-<timestamp>[-s<i>of<k>]/, every
         file opened "x", every row flushed and fsynced, a task's row
         written once the task completes)
-  calprec2_params.csv      the parameters inputs, resume and finalize compare
-  calprec2_plan.csv        the cells, their shard, start rung, max rung and
-                           rows
-  calprec2_phaseA.csv      phase-A rows (only in the job that computes them)
-  calprec2_tasks.csv       all other task rows: tid, phase, cell, key, n,
-                           rep, block, betas and the per-beta log-ESS, lse
-                           terms, tau_hat, S1 share and E1 values
-                           (";"-joined repr lists), beta solved, achieved,
-                           env, wall, peak RSS, G-RSS flag, error, end
+  calprec2_params.csv      the parameters resume and finalize compare
+  calprec2_plan.csv        the cells, their shard and rows
+  calprec2_tasks.csv       one row per task, with these columns:
+                           - tid, phase, cell, key, n, rep;
+                           - betas, the per-beta log-ESS, tau_hat and S1
+                             share, and the E1 values (";"-joined repr
+                             lists);
+                           - beta solved, achieved, env, wall, peak RSS,
+                             G-RSS flag, error, end
   calprec2_throughput.csv  smoke only
   calprec2_beta.csv        finalize only
 
 HOW TO RUN (from the repository root, venv active)
-    python scripts/calprec2.py --plan
+    python scripts/calprec2.py --plan --workers 4 --throughput DIR
     python scripts/calprec2.py --workers 4 --smoke
-    python scripts/calprec2.py --workers 4 --throughput DIR --max-rung 3 --shard 0 --nshards K
-    python scripts/calprec2.py --workers 4 --throughput DIR --inputs DIR --cells ID --max-rung 5
+    python scripts/calprec2.py --workers 4 --throughput DIR --shard 0 --nshards K
     python scripts/calprec2.py --finalize DIR[,DIR]
   --archive and --outdir are resolved by scripts/cbopaths.py.
 
@@ -340,24 +349,20 @@ EC = cp.MODS["exactcal"]
 ENV = "python {} numpy {}".format(platform.python_version(), np.__version__)
 
 ENTROPY = 20261010
-K_CAL, K_REF, K_PROD, K_SOLVE, K_SMOKE = 31, 32, 33, 34, 35
+K_CAL, K_REF, K_PROD, K_SMOKE = 31, 32, 33, 35
 L_CAL = [4000, 16000, 64000, 256000, 1000000, 4000000]
 R_CAL = 24
-L_REF = [1000000, 4000000, 16000000, 64000000, 256000000, 1024000000]
+N_LO, N_HI = 64000000, 256000000
+REF_SIZES = [N_LO, N_HI]
 REPS = 6
 PRODCHECK_REPS = list(range(6, 12))
 CHUNK = 250000
-BLOCK_CHUNKS = 64
 C5M_MAX = 0.054682
 D1_MAX = 0.025
 C1_MAX = 0.05
 C6_MAX = 0.05
 E1_TOL = 1e-12
-E3_TOL = 1e-6
-GRID_K = 64
-GRID_TOL = 1e-6
-GRID_MAX_PASSES = 8
-BIS_LO, BIS_HI = 1e-10, 1e10
+LOG_ESS_PER_SOLVE = 201            # exactcal.beta_on_ensemble: 200 in the loop, 1 at return
 RSS_BUDGET_MB = 3072.0
 SHARD_CEIL_S = 21600.0
 TIMEOUT_FACTOR = 5.0
@@ -366,23 +371,14 @@ REFSCALE_ACKLEY_RATE = 3.16e5     # points/s/worker, runs/refscale-kaggle-202610
 N_SMOKE_DRAW, N_SMOKE_REF, SMOKE_NBETA = 4000000, 1000000, 145
 NLEV = len(L_CAL) * R_CAL + 1
 
-ROWMOD = {"CONC": "mechanism", "ADAPT": "control", "TAU8": "boundary",
-          "REFSIZE": "regime", "SYNTH": "regime", "NAMED": "regime", "HORIZON": "regime",
-          "GEOM": "law", "SIGMA": "sigma", "ANISO": "crossed", "RMAP": "regimemap",
-          "CLIFF": "cliff", "ONSET": "regimemap"}
-CALROWS = ["CONC", "ADAPT", "TAU8", "REFSIZE", "SYNTH", "NAMED", "HORIZON", "GEOM",
-           "SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
+ROWMOD = {"CONC": "mechanism", "TAU8": "boundary", "SIGMA": "sigma", "ANISO": "crossed"}
+CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"]
 
 SAMPLER_LINE = {
     "mechanism": "X0 = draw_initial(rng, Jinf, d, objective, init)",
-    "control": "X0 = draw_initial(rng, Jinf, d, objective, init)",
-    "regime": "X0 = draw_initial(rng, Jinf, d, xstar, init)",
     "boundary": "X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]",
-    "law": "X0 = rng.standard_normal((Jinf, d)) + xs",
     "sigma": "X0 = rng.standard_normal((Jinf, d)) + xs",
     "crossed": "X0 = rng.standard_normal((Jinf, d)) + xs",
-    "cliff": "X0 = rng.standard_normal((Jinf, d)) + xs",
-    "regimemap": "X0 = rng.standard_normal((Jinf, d))",
 }
 
 
@@ -397,29 +393,20 @@ def cal_cells(row):
     if row == "CONC":
         return [(m, o, d, law, t) for o in g["objs"] for d in g["dims"]
                 for law in g["laws"] for t in g["taus"]], 1
-    if row == "ADAPT":
-        return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
-                for t in g["taus"]], len(g["arms"])
-    if row in ("TAU8", "SYNTH", "NAMED", "GEOM"):
+    if row == "TAU8":
         return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
                 for t in g["taus"]], 1
-    if row == "REFSIZE":
-        return [(m, o, g["d"], "centred", 0.1) for o in g["objs"]], len(g["jinfs"])
-    if row == "HORIZON":
-        return [(m, o, 10, law, 0.1) for o in g["objs"] for law in g["laws"]], len(g["Ts"])
     if row == "SIGMA":
         return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
                 for t in g["taus"]], len(g["diffs"]) * len(g["rs"])
     if row == "ANISO":
         return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
                 for t in g["taus"]], len(g["diffs"]) * (len(g["sigmas"]) + len(g["rs"]))
-    if row in ("RMAP", "CLIFF"):
-        return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
-                for t in g["taus"]], len(g["diffs"]) * len(g["rs"])
-    if row == "ONSET":
-        return [(m, o, d, "centred", g["tau"]) for o in g["objs"] for d in g["dims"]], \
-            len(g["diffs"]) * len(g["rs"])
     raise ValueError(row)
+
+
+def all_cells(rows):
+    return sorted(set(c for r in rows for c in cal_cells(r)[0]), key=cell_id)
 
 
 def cell_id(c):
@@ -445,8 +432,8 @@ def key_str(k):
     return "-".join(str(x) for x in k)
 
 
-def tid_of(label, c, n, rep, extra=""):
-    return "{}|{}|{}|{}{}".format(label, cell_id(c), n, rep, extra)
+def tid_of(label, c, n, rep):
+    return "{}|{}|{}|{}".format(label, cell_id(c), n, rep)
 
 
 # --------------------------------------------------------------------------
@@ -470,11 +457,6 @@ def chunks_of(n):
     return out
 
 
-def blocks_of(n):
-    ch = chunks_of(n)
-    return [ch[i:i + BLOCK_CHUNKS] for i in range(0, len(ch), BLOCK_CHUNKS)]
-
-
 def values_held(c, key, n):
     out = np.empty(n, dtype=np.float64)
     pos = 0
@@ -494,7 +476,7 @@ def chunk_terms(fv, betas):
 
 
 def combine_terms(per_chunk, nb):
-    """per_chunk: list over chunks (or blocks) of [(l1, l2, mx) per beta]."""
+    """per_chunk: list over chunks of [(l1, l2, mx) per beta]."""
     res = []
     for i in range(nb):
         l1 = EC._logsumexp(np.asarray([t[i][0] for t in per_chunk]))
@@ -513,17 +495,11 @@ def tau_of(log_ess, n):
 
 
 def exact_tau(c, beta):
-    m, o, d, law, _t = c
-    if law != "centred":
+    """X1: centred sphere only; None otherwise."""
+    if c[3] != "centred" or c[1] != "sphere":
         return None
-    if o == "sphere":
-        a = np.ones(d)
-    else:
-        sp = getattr(cp.MODS[m], "SYNTH_PARAMS", {})
-        if o not in sp or sp[o][1] != 0.0:
-            return None
-        a = sp[o][0] ** (np.arange(d, dtype=float) / max(d - 1, 1))
-    return float(math.exp(float(np.sum(0.5 * np.log1p(4.0 * beta * a) - np.log1p(2.0 * beta * a)))))
+    d = int(c[2])
+    return float(math.exp(d * (0.5 * math.log1p(4.0 * beta) - math.log1p(2.0 * beta))))
 
 
 def rss_mb():
@@ -548,11 +524,11 @@ def median(v):
 
 def base_row(t):
     return {"tid": t["tid"], "phase": t["phase"], "cell": cell_id(t["c"]),
-            "n": t.get("n", ""), "rep": t.get("rep", ""), "block": t.get("block", ""), "env": ENV}
+            "n": t.get("n", ""), "rep": t.get("rep", ""), "env": ENV}
 
 
 def task_cal(t):
-    """Phase A, B, and the held E3 solve: beta_on_ensemble on a held sample."""
+    """Phase A and B: beta_on_ensemble on a held sample."""
     row = base_row(t)
     t0 = time.time()
     try:
@@ -569,15 +545,14 @@ def task_cal(t):
 
 
 def task_ref(t):
-    """One whole replicate, streamed, at a list of betas; E1 on rep 0 of 1M."""
+    """One whole replicate, streamed, at a list of betas; held for E1 when t["hold"]."""
     row = base_row(t)
     t0 = time.time()
     try:
-        c, n, rep, betas = t["c"], t["n"], t["rep"], t["betas"]
-        key = key_of(t["kind"], c, n, rep)
+        c, n, rep, betas, hold = t["c"], t["n"], t["rep"], t["betas"], t["hold"]
+        key = key_of(K_REF, c, n, rep)
         row["key"] = key_str(key)
         row["betas"] = jl(betas)
-        hold = (t["kind"] == K_REF and n == L_REF[0] and rep == 0)
         held = np.empty(n, dtype=np.float64) if hold else None
         per, pos = [], 0
         for ci, m in chunks_of(n):
@@ -591,7 +566,6 @@ def task_ref(t):
         row["log_ess"] = jl(les)
         row["tau_hat"] = jl([tau_of(x, n) for x in les])
         row["share"] = jl([math.exp(r[2] - r[1]) for r in res])
-        row["exact_tau"] = ";".join("" if exact_tau(c, b) is None else repr(exact_tau(c, b)) for b in betas)
         if hold:
             rd = []
             for b, le in zip(betas, les):
@@ -601,28 +575,6 @@ def task_ref(t):
             row["e1"] = "PASS" if all(x <= E1_TOL for x in rd) else "FAIL"
         else:
             row["e1"] = "not applied"
-        row["end"] = "ok"
-    except Exception as exc:
-        row.update({"error": "{}: {}".format(type(exc).__name__, exc), "end": "err"})
-    row["wall_s"] = "{:.3f}".format(time.time() - t0)
-    row["rss_mb"] = "{:.1f}".format(rss_mb())
-    return row
-
-
-def task_block(t):
-    """One block of one grid-solve pass: per-beta lse terms over its chunks."""
-    row = base_row(t)
-    t0 = time.time()
-    try:
-        c, betas = t["c"], t["betas"]
-        key = key_of(K_SOLVE, c, t["n"], 0)
-        row["key"] = key_str(key)
-        row["betas"] = jl(betas)
-        per = [chunk_terms(f_chunk(c, key, ci, m), betas) for ci, m in t["chunks"]]
-        res = combine_terms(per, len(betas))
-        row["l1"] = jl([r[0] for r in res])
-        row["l2"] = jl([r[1] for r in res])
-        row["mx"] = jl([r[2] for r in res])
         row["end"] = "ok"
     except Exception as exc:
         row.update({"error": "{}: {}".format(type(exc).__name__, exc), "end": "err"})
@@ -660,11 +612,11 @@ def task_smoke(t):
     return row
 
 
-TASKS = {"cal": task_cal, "ref": task_ref, "block": task_block, "smoke": task_smoke}
+TASKS = {"cal": task_cal, "ref": task_ref, "smoke": task_smoke}
 
-TASK_COLS = ["tid", "phase", "cell", "key", "n", "rep", "block", "betas", "log_ess", "l1", "l2", "mx",
-             "tau_hat", "share", "exact_tau", "e1_reldiff", "e1", "beta_solved", "achieved",
-             "status", "env", "wall_s", "rss_mb", "rss_flag", "error", "end"]
+TASK_COLS = ["tid", "phase", "cell", "key", "n", "rep", "betas", "log_ess", "tau_hat", "share",
+             "e1_reldiff", "e1", "beta_solved", "achieved", "env", "wall_s", "rss_mb", "rss_flag",
+             "error", "end"]
 THR_COLS = ["tid", "phase", "cell", "t_draw", "t_solve", "t_beta", "beta_solved", "env", "rss_mb",
             "error", "end"]
 
@@ -680,7 +632,7 @@ def child_main(fn_name, t, conn):
         conn.close()
 
 
-def error_row(t, msg, pid):
+def error_row(t, msg):
     row = base_row(t)
     row.update({"error": msg, "end": "err", "rss_mb": "nan", "wall_s": "nan"})
     return row
@@ -707,50 +659,50 @@ class Out(object):
 
 
 class Runner(object):
-    def __init__(self, workers, timeout_s, outs, store):
-        self.workers, self.timeout_s, self.outs, self.store = workers, timeout_s, outs, store
+    def __init__(self, workers, timeout_s, out, store):
+        self.workers, self.timeout_s, self.out, self.store = workers, timeout_s, out, store
         self.errors = 0
 
     def run(self, items, label):
-        """items: list of (fn_name, task dict, out key). Tasks already in the
-        store are not run. Returns nothing; rows go to the store and files."""
+        """items: list of (fn_name, task dict). Tasks already in the store
+        (from --resume-from) are not run. Rows go to the store and the file."""
         todo = [x for x in items if x[1]["tid"] not in self.store]
-        print("  [{}] {} task(s) to run, {} already in the inputs".format(
+        print("  [{}] {} task(s) to run, {} already in the resumed folders".format(
             label, len(todo), len(items) - len(todo)))
         sys.stdout.flush()
         pending, running, nout, t0 = list(todo), [], 0, time.time()
         try:
             while pending or running:
                 while pending and len(running) < self.workers:
-                    fn, t, ok_ = pending.pop(0)
+                    fn, t = pending.pop(0)
                     rc, sc = multiprocessing.Pipe(duplex=False)
                     pr = multiprocessing.Process(target=child_main, args=(fn, t, sc))
                     pr.start()
                     sc.close()
-                    running.append([pr, rc, t, ok_, time.monotonic()])
+                    running.append([pr, rc, t, time.monotonic()])
                 progressed = False
-                for item in list(running):
-                    pr, rc, t, ok_, ts = item
+                for entry in list(running):
+                    pr, rc, t, ts = entry
                     row = None
                     if rc.poll():
                         try:
                             row = rc.recv()
                         except EOFError:
                             pr.join()
-                            row = error_row(t, "worker exited with code {} without a result".format(pr.exitcode), pr.pid)
+                            row = error_row(t, "worker exited with code {} without a result".format(pr.exitcode))
                         pr.join()
                     elif not pr.is_alive():
                         pr.join()
-                        row = error_row(t, "worker exited with code {} without a result".format(pr.exitcode), pr.pid)
+                        row = error_row(t, "worker exited with code {} without a result".format(pr.exitcode))
                     elif time.monotonic() - ts > self.timeout_s:
                         pr.terminate()
                         pr.join()
                         row = error_row(t, "timeout after {:.0f} s (TIMEOUT_S {:.0f} s)".format(
-                            time.monotonic() - ts, self.timeout_s), pr.pid)
+                            time.monotonic() - ts, self.timeout_s))
                     if row is None:
                         continue
                     rc.close()
-                    running.remove(item)
+                    running.remove(entry)
                     progressed = True
                     nout += 1
                     try:
@@ -761,7 +713,7 @@ class Runner(object):
                         row["rss_flag"] = "G-RSS FAIL"
                         print("  G-RSS FAIL {} {:.1f} MB".format(row["tid"], rss))
                     row["env"] = row.get("env") or ENV
-                    self.outs[ok_].write(row)
+                    self.out.write(row)
                     self.store[row["tid"]] = row
                     if row["end"] != "ok":
                         self.errors += 1
@@ -774,7 +726,7 @@ class Runner(object):
                 if not progressed:
                     time.sleep(0.2)
         finally:
-            for pr, rc, _t, _o, _ts in running:
+            for pr, rc, _t, _ts in running:
                 pr.terminate()
                 pr.join()
 
@@ -795,7 +747,7 @@ def read_folders(folders, compare_keys):
             p = os.path.join(f, rel)
             if base == "calprec2_params.csv":
                 pr = dict((r[0], r[1]) for r in csv.reader(open(p, newline="")) if r)
-            elif base in ("calprec2_tasks.csv", "calprec2_phaseA.csv"):
+            elif base == "calprec2_tasks.csv":
                 rows.extend(csv.DictReader(open(p, newline="")))
         if pr is None:
             sys.stderr.write("{} has no calprec2_params.csv\n".format(f))
@@ -816,7 +768,7 @@ def read_folders(folders, compare_keys):
             else:
                 order.append(t)
             store[t] = r
-        print("  read {}: {} rows".format(f, len(rows)))
+        print("  read {}: shard {} of {}, {} rows".format(f, pr.get("shard"), pr.get("nshards"), len(rows)))
     return params, [store[t] for t in order]
 
 
@@ -882,82 +834,51 @@ def load_throughput(folder):
     return thr
 
 
-def grid_passes():
-    """Passes the stop rule needs over the initial bracket: computed, printed."""
-    w, p = BIS_HI / BIS_LO, 0
-    while w - 1.0 > GRID_TOL and p < GRID_MAX_PASSES:
-        w = w ** (1.0 / (GRID_K - 1))
-        p += 1
-    return p
-
-
-def cell_costs(c, s, mx, thr, have_a):
-    """Estimated worker-seconds for one cell in this job (review N3, N5):
-    (best case, worst case, largest single task, case (a) solve).
-    Every phase the job can run at its max rung is included:
-      climb       rungs s .. mx, six replicates at one beta;
-      adequate    possible at rungs max(s-1, 0) .. mx-1; the worst is mx-1:
-                  C1 pass (145 betas), B (a 4M draw and solve), C' (six
-                  replicates), then a case (b) solve at that rung;
-      case (a)    possible only when mx is the top rung: E3, the grid passes
-                  over 1G and six 1G evaluation replicates.
-    The worst case is phase A + climb + the larger of the two branches."""
+def cell_costs(c, thr):
+    """Estimated worker-seconds for one cell: (best case, worst case, largest
+    single task). The worst case assumes the cell is adequate (G-CAP)."""
     td, tb, ts = thr[(c[0], c[1], c[2], c[3])]
-    P = grid_passes()
 
     def pas(n, nb):
         return n * (td + nb * tb)
 
-    def blk(n):
-        return pas(min(n, BLOCK_CHUNKS * CHUNK), GRID_K)
-
-    e3 = L_REF[0] * (td + ts) + P * pas(L_REF[0], GRID_K)
-
-    def solve_at(n):
-        return e3 + P * pas(n, GRID_K) + REPS * pas(n, 2)
-    a = 0.0 if cell_id(c) in have_a else R_CAL * sum(L_CAL) * (td + ts)
-    climb = sum(REPS * pas(L_REF[i], 1) for i in range(s, mx + 1))
-    big = max([L_CAL[-1] * (td + ts), L_REF[0] * (td + ts)] + [pas(L_REF[i], 1) for i in range(s, mx + 1)])
-    branch_b = 0.0
-    if mx >= 1:
-        nb_ = L_REF[mx - 1]
-        branch_b = REPS * pas(nb_, NLEV) + L_CAL[-1] * (td + ts) + REPS * pas(nb_, 1) + solve_at(nb_)
-        big = max(big, pas(nb_, NLEV), blk(nb_), pas(nb_, 2))
-    branch_a = 0.0
-    if mx == len(L_REF) - 1:
-        branch_a = solve_at(L_REF[-1])
-        big = max(big, blk(L_REF[-1]), pas(L_REF[-1], 2))
-    worst = a + climb + max(branch_b, branch_a)
-    s1 = min(s + 1, mx)
-    best = a + REPS * pas(L_REF[s], 1) + REPS * pas(L_REF[s1], 1) + REPS * pas(L_REF[s], NLEV) \
-        + REPS * pas(L_REF[s], 1)
-    return best, worst, big, branch_a
+    solve4m = L_CAL[-1] * (td + ts)
+    e1 = N_LO * ts / LOG_ESS_PER_SOLVE
+    a = R_CAL * sum(L_CAL) * (td + ts)
+    ref = REPS * pas(N_LO, 1) + REPS * pas(N_HI, 1) + e1
+    adequate = REPS * pas(N_LO, NLEV) + solve4m + REPS * pas(N_LO, 1)
+    big = max(solve4m, pas(N_LO, 1) + e1, pas(N_HI, 1), pas(N_LO, NLEV))
+    return a + ref, a + ref + adequate, big
 
 
-def estimates(cells, starts, thr, mx, have_a):
-    """Job totals: (best, worst, largest task, case (a) total, case (a) by cell,
-    cells lacking throughput)."""
-    best, worst, big, ca, by, missing = 0.0, 0.0, 0.0, 0.0, {}, []
+def estimates(cells, thr):
+    """Totals: (best, worst, largest task, cells lacking throughput)."""
+    best, worst, big, missing = 0.0, 0.0, 0.0, []
     for c in cells:
         if (c[0], c[1], c[2], c[3]) not in thr:
             missing.append(cell_id(c))
             continue
-        b, w, g, x = cell_costs(c, starts[cell_id(c)], mx, thr, have_a)
+        b, w, g = cell_costs(c, thr)
         best += b
         worst += w
         big = max(big, g)
-        ca += x
-        by[cell_id(c)] = x
-    return best, worst, big, ca, by, missing
+    return best, worst, big, missing
+
+
+def shards_needed(cells, thr, workers):
+    """Smallest k for which every shard (index modulo k) has a worst-case
+    estimate within the ceiling: (k, its largest shard estimate) or (None, x)."""
+    w = [cell_costs(c, thr)[1] / workers for c in cells]
+    for k in range(1, len(cells) + 1):
+        top = max(sum(w[i::k]) for i in range(k))
+        if top <= SHARD_CEIL_S:
+            return k, top
+    return None, max(w) if w else 0.0
 
 
 # --------------------------------------------------------------------------
 # the job
 # --------------------------------------------------------------------------
-
-def item(fn, t, out="tasks"):
-    return (fn, t, out)
-
 
 def rung_stats(store, label, c, n, idx=0, reps=None):
     vals = []
@@ -969,35 +890,26 @@ def rung_stats(store, label, c, n, idx=0, reps=None):
     return median(vals), max(vals) - min(vals), vals
 
 
-def judge_rungs(store, c):
-    """Status from the climb rows present: ("adequate", i), ("case_a", 5) or
-    (None, highest evaluated). The first adequate pair wins (review N1). Used by
-    the job's rung-range table and by finalize, so the two agree."""
-    meds = {}
-    for i, n in enumerate(L_REF):
-        s = rung_stats(store, "C", c, n)
-        if s is not None:
-            meds[i] = s
-    top = max(meds) if meds else None
-    for i in sorted(meds):
-        if i + 1 in meds and meds[i][1] / meds[i][0] <= C5M_MAX and \
-                abs(meds[i][0] - meds[i + 1][0]) / meds[i + 1][0] <= D1_MAX:
-            return ("adequate", i), meds
-    if top == len(L_REF) - 1:
-        return ("case_a", top), meds
-    return (None, top), meds
-
-
-def highest_climbed(store, c):
-    top = None
-    for i, n in enumerate(L_REF):
-        if rung_stats(store, "C", c, n) is not None:
-            top = i
-    return top
+def judge(store, c):
+    """Adequacy from the phase-C rows: (verdict, lo stats, hi stats, c5m, d1).
+    verdict is "adequate", "not adequate (...)" or "incomplete (phase C)".
+    The job and finalize both use it."""
+    lo = rung_stats(store, "C", c, N_LO)
+    hi = rung_stats(store, "C", c, N_HI)
+    if lo is None or hi is None:
+        return "incomplete (phase C)", lo, hi, None, None
+    c5m = lo[1] / lo[0]
+    d1 = abs(lo[0] - hi[0]) / hi[0]
+    fails = []
+    if not c5m <= C5M_MAX:
+        fails.append("C5m FAIL")
+    if not d1 <= D1_MAX:
+        fails.append("D1 FAIL")
+    return ("adequate" if not fails else "not adequate ({})".format(", ".join(fails))), lo, hi, c5m, d1
 
 
 def r1_check(store, label, c, n, idx):
-    """R1 between climb rows and re-evaluation rows at rung n; same env only."""
+    """R1 between phase-C rows and re-evaluation rows at size n; same env only."""
     res = []
     for rep in range(REPS):
         cl = store.get(tid_of("C", c, n, rep))
@@ -1017,102 +929,28 @@ def r1_check(store, label, c, n, idx):
     return "not applicable" if res else "no rows"
 
 
-def grid_of(lo, hi):
-    """The K-point grid of a pass, as Python floats (repr round-trips)."""
-    return [float(x) for x in np.geomspace(lo, hi, GRID_K)]
-
-
-def grid_step(c, n, grid, rows, p):
-    """One pass: from the block rows of a grid, the new bracket (lo, hi, None),
-    or (None, None, error). Shared by the job and by finalize (review N2)."""
+def n_cell_of(store, c):
+    """C1 from the six P rows: (N_cell or None, {N: max deviation}) or None if incomplete."""
+    rows = [store.get(tid_of("P", c, N_LO, rep)) for rep in range(REPS)]
     if any(r is None or r["end"] != "ok" for r in rows):
-        return None, None, "incomplete (grid pass {})".format(p + 1)
-    if floats(rows[0]["betas"]) != grid:
-        return None, None, "grid of pass {} in the rows differs from the replayed grid".format(p + 1)
-    per = [list(zip(floats(r["l1"]), floats(r["l2"]), floats(r["mx"]))) for r in rows]
-    les = [log_ess_from(x) for x in combine_terms(per, GRID_K)]
-    goal = math.log(c[4] * n)
-    above = [i for i in range(GRID_K) if les[i] > goal]
-    if not above or above[0] != 0:
-        return None, None, "target outside the grid bracket at pass {}".format(p + 1)
-    i = max(above)
-    if i >= GRID_K - 1:
-        return None, None, "target outside the grid bracket at pass {}".format(p + 1)
-    return grid[i], grid[i + 1], None
+        return None
+    taus = [floats(r["tau_hat"]) for r in rows]
+    devs, ncell = {}, None
+    for li, N in enumerate(L_CAL):
+        devs[N] = max(abs(median([t[li * R_CAL + j] for t in taus]) / c[4] - 1.0) for j in range(R_CAL))
+        if ncell is None and devs[N] <= C1_MAX:
+            ncell = N
+    return ncell, devs
 
 
-def replay_grid(st, label, c, n):
-    """Recompute a grid solve from its block rows: (beta, widths, error)."""
-    lo, hi, widths = BIS_LO, BIS_HI, []
-    nb = len(blocks_of(n))
-    for p in range(GRID_MAX_PASSES):
-        rows = [st.get(tid_of(label, c, n, 0, "|p{}|b{}".format(p, bi))) for bi in range(nb)]
-        if all(r is None for r in rows):
-            break
-        lo2, hi2, err = grid_step(c, n, grid_of(lo, hi), rows, p)
-        if err is not None:
-            return None, widths, err
-        lo, hi = lo2, hi2
-        widths.append(hi / lo - 1.0)
-        if widths[-1] <= GRID_TOL:
-            return math.sqrt(lo * hi), widths, None
-    return None, widths, ("no grid rows" if not widths else "stop rule not met")
-
-
-def grid_solve_round(runner, cells_n, store, label):
-    """Run the grid passes for every (cell, n) in cells_n, all cells together,
-    pass by pass. Returns {cid: (beta, lo, hi, widths) or error string}."""
-    state = {}
-    for cid, n in cells_n:
-        state[cid] = {"n": n, "lo": BIS_LO, "hi": BIS_HI, "widths": [], "done": False, "err": None}
-    for p in range(GRID_MAX_PASSES):
-        live = [cid for cid in state if not state[cid]["done"] and state[cid]["err"] is None]
-        if not live:
-            break
-        items = []
-        for cid in live:
-            s = state[cid]
-            c = cell_from_id(cid)
-            grid = grid_of(s["lo"], s["hi"])
-            s["grid"] = grid
-            for bi, blk in enumerate(blocks_of(s["n"])):
-                items.append(item("block", {"tid": tid_of(label, c, s["n"], 0, "|p{}|b{}".format(p, bi)),
-                                             "phase": label, "c": c, "n": s["n"], "rep": 0,
-                                             "block": "p{}b{}".format(p, bi), "betas": grid, "chunks": blk}))
-        runner.run(items, "{} pass {}".format(label, p + 1))
-        for cid in live:
-            s = state[cid]
-            c = cell_from_id(cid)
-            rows = [store.get(tid_of(label, c, s["n"], 0, "|p{}|b{}".format(p, bi)))
-                    for bi in range(len(blocks_of(s["n"])))]
-            lo2, hi2, err = grid_step(c, s["n"], s["grid"], rows, p)
-            if err is not None:
-                s["err"] = err
-                continue
-            s["lo"], s["hi"] = lo2, hi2
-            s["widths"].append(s["hi"] / s["lo"] - 1.0)
-            if s["widths"][-1] <= GRID_TOL:
-                s["done"] = True
-    out = {}
-    for cid, s in state.items():
-        if s["err"] is not None:
-            out[cid] = s["err"]
-        elif not s["done"]:
-            out[cid] = "stop rule not met in {} passes".format(GRID_MAX_PASSES)
-        else:
-            out[cid] = (math.sqrt(s["lo"] * s["hi"]), s["lo"], s["hi"], s["widths"])
-    return out
-
-
-def job(a, cells, starts, runner, store):
+def job(cells, runner, store):
     flags3 = []
     cmap = dict((cell_id(c), c) for c in cells)
 
     cp.hdr("PHASE A  calibration samples")
-    items = [item("cal", {"tid": tid_of("A", c, N, rep), "phase": "A", "c": c, "n": N, "rep": rep,
-                          "kind": K_CAL}, "phaseA")
-             for c in cells for N in L_CAL for rep in range(R_CAL)]
-    runner.run(items, "A")
+    runner.run([("cal", {"tid": tid_of("A", c, N, rep), "phase": "A", "c": c, "n": N, "rep": rep,
+                         "kind": K_CAL})
+                for c in cells for N in L_CAL for rep in range(R_CAL)], "A")
     betas, badq = {}, {}
     for c in cells:
         rows = [store.get(tid_of("A", c, N, rep)) for N in L_CAL for rep in range(R_CAL)]
@@ -1120,135 +958,48 @@ def job(a, cells, starts, runner, store):
             bl = [float(r["beta_solved"]) for r in rows]
             betas[cell_id(c)] = bl
             badq[cell_id(c)] = median(bl[-R_CAL:])
-    live = [cell_id(c) for c in cells if cell_id(c) in badq]
+    live = sorted(badq)
     print("  {} of {} cells have a complete phase A".format(len(live), len(cells)))
 
-    cp.hdr("PHASE C  climb at beta_adq, up to rung {}".format(L_REF[a.max_rung]))
-    status = {}
-    pending = {}
+    cp.hdr("PHASE C  references at {} and {}, six replicates each, at beta_adq".format(N_LO, N_HI))
+    runner.run([("ref", {"tid": tid_of("C", cmap[cid], n, rep), "phase": "C", "c": cmap[cid], "n": n,
+                         "rep": rep, "betas": [badq[cid]], "hold": (n == N_LO and rep == 0)})
+                for cid in live for n in REF_SIZES for rep in range(REPS)], "C")
+    adq = []
     for cid in live:
-        s = starts[cid]
-        if s > a.max_rung:
-            status[cid] = ("unresolved", s - 1)
+        v, lo, hi, c5m, d1 = judge(store, cmap[cid])
+        if c5m is None:
+            print("  {:<48} {}".format(cid, v))
             continue
-        pending[cid] = [s] if s > 0 else [0, min(1, a.max_rung)]
-    while pending:
-        items = []
-        for cid, rungs in pending.items():
-            c = cmap[cid]
-            for i in sorted(set(rungs)):
-                for rep in range(REPS):
-                    items.append(item("ref", {"tid": tid_of("C", c, L_REF[i], rep), "phase": "C", "c": c,
-                                              "n": L_REF[i], "rep": rep, "kind": K_REF, "betas": [badq[cid]]}))
-        runner.run(items, "C")
-        nxt = {}
-        for cid, rungs in pending.items():
-            c = cmap[cid]
-            hi = max(rungs)
-            if hi == 0:
-                status[cid] = ("unresolved", 0)
-                continue
-            s_lo = rung_stats(store, "C", c, L_REF[hi - 1])
-            s_hi = rung_stats(store, "C", c, L_REF[hi])
-            if s_lo is None or s_hi is None:
-                status[cid] = ("incomplete (climb)", None)
-                continue
-            if s_lo[1] / s_lo[0] <= C5M_MAX and abs(s_lo[0] - s_hi[0]) / s_hi[0] <= D1_MAX:
-                status[cid] = ("adequate", hi - 1)
-            elif hi == len(L_REF) - 1:
-                status[cid] = ("case_a", hi)
-            elif hi >= a.max_rung:
-                status[cid] = ("unresolved", hi)
-            else:
-                nxt[cid] = [hi + 1]
-        pending = nxt
-    for cid in sorted(status):
-        st = status[cid]
-        if st[0] == "unresolved":
-            print("  {:<48} unresolved, highest evaluated rung {}".format(cid, L_REF[st[1]]))
-        else:
-            print("  {:<48} {}".format(cid, st))
+        print("  {:<48} C5m {:.6f}  D1 {:.6f}  {}".format(cid, c5m, d1, v))
+        if v == "adequate":
+            adq.append(cid)
+    print("  adequate at {}: {} of {} cells".format(N_LO, len(adq), len(live)))
 
-    adq = sorted(cid for cid in status if status[cid][0] == "adequate")
-    cp.hdr("PHASE C1  sufficiency pass at n*, {} cells".format(len(adq)))
-    items = []
+    cp.hdr("PHASE C1  sufficiency pass at {}, {} cells".format(N_LO, len(adq)))
+    runner.run([("ref", {"tid": tid_of("P", cmap[cid], N_LO, rep), "phase": "P", "c": cmap[cid], "n": N_LO,
+                         "rep": rep, "betas": betas[cid] + [badq[cid]], "hold": False})
+                for cid in adq for rep in range(REPS)], "C1")
+    ncell = {}
     for cid in adq:
-        c, ns = cmap[cid], L_REF[status[cid][1]]
-        for rep in range(REPS):
-            items.append(item("ref", {"tid": tid_of("P", c, ns, rep), "phase": "P", "c": c, "n": ns,
-                                      "rep": rep, "kind": K_REF, "betas": betas[cid] + [badq[cid]]}))
-    runner.run(items, "C1")
-    ncell, case_b = {}, []
-    for cid in adq:
-        c, ns = cmap[cid], L_REF[status[cid][1]]
-        if r1_check(store, "P", c, ns, NLEV - 1) == "FAIL":
+        if r1_check(store, "P", cmap[cid], N_LO, NLEV - 1) == "FAIL":
             flags3.append("R1 FAIL " + cid)
-        rows = [store.get(tid_of("P", c, ns, rep)) for rep in range(REPS)]
-        if any(r is None or r["end"] != "ok" for r in rows):
-            continue
-        taus = [floats(r["tau_hat"]) for r in rows]
-        for li, N in enumerate(L_CAL):
-            devs = [abs(median([t[li * R_CAL + j] for t in taus]) / c[4] - 1.0) for j in range(R_CAL)]
-            if max(devs) <= C1_MAX:
-                ncell[cid] = N
-                break
-        if cid not in ncell:
-            case_b.append(cid)
+        nc = n_cell_of(store, cmap[cid])
+        if nc is not None and nc[0] is not None:
+            ncell[cid] = nc[0]
 
     cp.hdr("PHASE B and C'  production beta and its check, {} cells".format(len(ncell)))
-    runner.run([item("cal", {"tid": tid_of("B", cmap[cid], ncell[cid], 0), "phase": "B", "c": cmap[cid],
-                             "n": ncell[cid], "rep": 0, "kind": K_PROD}) for cid in sorted(ncell)], "B")
+    runner.run([("cal", {"tid": tid_of("B", cmap[cid], ncell[cid], 0), "phase": "B", "c": cmap[cid],
+                         "n": ncell[cid], "rep": 0, "kind": K_PROD}) for cid in sorted(ncell)], "B")
     items = []
     for cid in sorted(ncell):
         r = store.get(tid_of("B", cmap[cid], ncell[cid], 0))
         if r is None or r["end"] != "ok":
             continue
-        c, ns = cmap[cid], L_REF[status[cid][1]]
         for rep in PRODCHECK_REPS:
-            items.append(item("ref", {"tid": tid_of("Q", c, ns, rep), "phase": "Q", "c": c, "n": ns,
-                                      "rep": rep, "kind": K_REF, "betas": [float(r["beta_solved"])]}))
+            items.append(("ref", {"tid": tid_of("Q", cmap[cid], N_LO, rep), "phase": "Q", "c": cmap[cid],
+                                  "n": N_LO, "rep": rep, "betas": [float(r["beta_solved"])], "hold": False}))
     runner.run(items, "C'")
-    for cid in sorted(ncell):
-        c, ns = cmap[cid], L_REF[status[cid][1]]
-        s = rung_stats(store, "Q", c, ns, reps=PRODCHECK_REPS)
-        if s is not None and abs(s[0] / c[4] - 1.0) > C6_MAX:
-            case_b.append(cid)
-
-    solves = [(cid, L_REF[status[cid][1]]) for cid in sorted(case_b)] + \
-             [(cid, L_REF[-1]) for cid in sorted(status) if status[cid][0] == "case_a"]
-    cp.hdr("PHASE S  E3, then grid solves, {} cells".format(len(solves)))
-    runner.run([item("cal", {"tid": tid_of("H", cmap[cid], L_REF[0], 0), "phase": "H", "c": cmap[cid],
-                             "n": L_REF[0], "rep": 0, "kind": K_SOLVE}) for cid, n in solves], "E3 held")
-    g3 = grid_solve_round(runner, [(cid, L_REF[0]) for cid, n in solves], store, "G3")
-    e3ok = {}
-    for cid, n in solves:
-        h = store.get(tid_of("H", cmap[cid], L_REF[0], 0))
-        g = g3.get(cid)
-        if h is None or h["end"] != "ok" or not isinstance(g, tuple):
-            print("  E3 {}  not evaluated ({})".format(cid, g if not isinstance(g, tuple) else "held solve missing"))
-            continue
-        rel = abs(g[0] / float(h["beta_solved"]) - 1.0)
-        e3ok[cid] = rel <= E3_TOL
-        print("  E3 {}  held {}  grid {!r}  rel {:.2e}  {}".format(
-            cid, h["beta_solved"], g[0], rel, "PASS" if e3ok[cid] else "FAIL"))
-        if not e3ok[cid]:
-            flags3.append("E3 FAIL " + cid)
-    go = [(cid, n) for cid, n in solves if e3ok.get(cid)]
-    gs = grid_solve_round(runner, go, store, "G")
-    items = []
-    for cid, n in go:
-        g = gs.get(cid)
-        if not isinstance(g, tuple):
-            print("  solve {}: {}".format(cid, g))
-            continue
-        print("  solve {}  n {}  beta_s {!r}  widths {}".format(cid, n, g[0], ", ".join("{:.2e}".format(w) for w in g[3])))
-        for rep in range(REPS):
-            items.append(item("ref", {"tid": tid_of("E", cmap[cid], n, rep), "phase": "E", "c": cmap[cid],
-                                      "n": n, "rep": rep, "kind": K_REF, "betas": [g[0], badq[cid]]}))
-    runner.run(items, "S-eval")
-    for cid, n in go:
-        if r1_check(store, "E", cmap[cid], n, 1) == "FAIL":
-            flags3.append("R1 FAIL " + cid)
     for r in list(store.values()):
         if r.get("e1") == "FAIL":
             flags3.append("E1 FAIL " + r["tid"])
@@ -1260,121 +1011,88 @@ def job(a, cells, starts, runner, store):
 # --------------------------------------------------------------------------
 
 def finalize(rows, cells, outdir):
-    cp.hdr("FINALIZE  {} rows, {} cells".format(len(rows), len(cells)))
+    cp.hdr("FINALIZE  {} rows, {} cells expected".format(len(rows), len(cells)))
     st = dict((r["tid"], r) for r in rows)
     out, any3, any4 = [], False, False
     for c in cells:
         cid = cell_id(c)
         rec = {"cell": cid, "module": c[0], "objective": c[1], "d": c[2], "law": c[3], "tau0": repr(c[4])}
         flags = []
+        label, beta, prov, tref, tn, rng = None, None, "", None, None, None
         arows = [st.get(tid_of("A", c, N, rep)) for N in L_CAL for rep in range(R_CAL)]
         if any(r is None or r["end"] != "ok" for r in arows):
-            rec["label"] = "incomplete (phase A)"
-            any4 = True
-            out.append(rec)
-            continue
-        bl = [float(r["beta_solved"]) for r in arows]
-        badq = median(bl[-R_CAL:])
-        rec["beta_adq"] = repr(badq)
-        e1 = st.get(tid_of("C", c, L_REF[0], 0))
-        if e1 is None or e1.get("e1") not in ("PASS", "FAIL"):
-            flags.append("E1 not run")
-            any4 = True
-        elif e1["e1"] == "FAIL":
-            flags.append("E1 FAIL")
-            any3 = True
-        (jst, ji), meds = judge_rungs(st, c)
-        top = max(meds) if meds else None
-        nstar = ji if jst == "adequate" else None
-        rec["rungs"] = ";".join(str(L_REF[i]) for i in sorted(meds))
-        label, beta, prov, tref, rng, nsolve = None, None, "", None, None, None
-        if nstar is not None:
-            ns = L_REF[nstar]
-            rec["n_star"] = ns
-            rec["C5m"] = "{:.6f}".format(meds[nstar][1] / meds[nstar][0])
-            rec["D1"] = "{:.6f}".format(abs(meds[nstar][0] - meds[nstar + 1][0]) / meds[nstar + 1][0])
-            pr = [st.get(tid_of("P", c, ns, rep)) for rep in range(REPS)]
-            if any(r is None or r["end"] != "ok" for r in pr):
-                label = "incomplete (C1 pass)"
-            else:
-                r1 = r1_check(st, "P", c, ns, NLEV - 1)
-                if r1 == "FAIL":
-                    flags.append("R1 FAIL")
-                    any3 = True
-                elif r1.startswith("not applicable"):
-                    flags.append("R1 not applicable (env differs)")
-                taus = [floats(r["tau_hat"]) for r in pr]
-                ncell = None
-                for li, N in enumerate(L_CAL):
-                    dev = max(abs(median([t[li * R_CAL + j] for t in taus]) / c[4] - 1.0) for j in range(R_CAL))
-                    rec["C1_" + str(N)] = "{:.6f}".format(dev)
-                    if ncell is None and dev <= C1_MAX:
-                        ncell = N
-                rec["N_cell"] = "" if ncell is None else ncell
-                if ncell is not None:
-                    b = st.get(tid_of("B", c, ncell, 0))
-                    q = rung_stats(st, "Q", c, ns, reps=PRODCHECK_REPS)
-                    if b is None or b["end"] != "ok" or q is None:
-                        label = "incomplete (production or C')"
-                    else:
-                        dev = abs(q[0] / c[4] - 1.0)
-                        rec["C6"] = "{:.6f}".format(dev)
-                        if dev <= C6_MAX:
-                            label, beta, prov = "target", float(b["beta_solved"]), "calibration N_cell {}".format(ncell)
-                            tref, rng = q[0], q[1]
-                if label is None:
-                    nsolve, case = ns, "b"
-        elif top is not None and top == len(L_REF) - 1:
-            nsolve, case = L_REF[-1], "a"
-        elif top is not None and meds:
-            label = "unresolved, highest evaluated rung {}".format(L_REF[top])
+            label = "incomplete (phase A)"
         else:
-            label = "incomplete (climb)"
-        if label is None and nsolve is not None:
-            h = st.get(tid_of("H", c, L_REF[0], 0))
-            g3b, _w3, g3err = replay_grid(st, "G3", c, L_REF[0])
-            if h is None or h["end"] != "ok" or g3b is None:
-                label = "incomplete (E3, case {}: {})".format(case, g3err if g3b is None else "held solve missing")
+            badq = median([float(r["beta_solved"]) for r in arows][-R_CAL:])
+            rec["beta_adq"] = repr(badq)
+            e1 = st.get(tid_of("C", c, N_LO, 0))
+            if e1 is None or e1.get("e1") not in ("PASS", "FAIL"):
+                flags.append("E1 not run")
+                any4 = True
+            elif e1["e1"] == "FAIL":
+                flags.append("E1 FAIL")
+                any3 = True
+            v, lo, hi, c5m, d1 = judge(st, c)
+            for nm, s in (("64M", lo), ("256M", hi)):
+                if s is not None:
+                    rec["med_" + nm], rec["range_" + nm] = repr(s[0]), repr(s[1])
+            rec["adequacy"] = v
+            if c5m is None:
+                label = v
             else:
-                rel3 = abs(g3b / float(h["beta_solved"]) - 1.0)
-                rec["E3"] = "{:.3e}".format(rel3)
-                if rel3 > E3_TOL:
-                    label = "E3 FAIL (case {})".format(case)
-                    flags.append("E3 FAIL")
-                    any3 = True
-            if label is None:
-                gb, gw, gerr = replay_grid(st, "G", c, nsolve)
-                ev = rung_stats(st, "E", c, nsolve)
-                if gb is None:
-                    label = "incomplete (solve, case {}: {})".format(case, gerr)
-                elif ev is None:
-                    label = "incomplete (solve evaluation, case {})".format(case)
+                rec["C5m"], rec["D1"] = "{:.6f}".format(c5m), "{:.6f}".format(d1)
+            if label is None and v != "adequate":
+                label, beta, prov = "beta, {}".format(v), badq, "beta_adq; reference not adequate"
+                tref, tn, rng = hi[0], N_HI, hi[1]
+            elif label is None:
+                nc = n_cell_of(st, c)
+                if nc is None:
+                    label = "incomplete (C1 pass)"
                 else:
-                    if floats(st[tid_of("E", c, nsolve, 0)]["betas"])[0] != gb:
-                        flags.append("E rows evaluate a beta other than the replayed grid solve")
-                        any3 = True
-                    beta, tref, rng = gb, ev[0], ev[1]
-                    dev = abs(tref / c[4] - 1.0)
-                    rec["case_dev"] = "{:.6f}".format(dev)
-                    rec["grid_passes"] = len(gw)
-                    prov = "grid solve at n {} (case {})".format(nsolve, case)
-                    label = "target" if (case == "b" and dev <= C6_MAX) else "beta"
-                    r1 = r1_check(st, "E", c, nsolve, 1)
+                    r1 = r1_check(st, "P", c, N_LO, NLEV - 1)
                     if r1 == "FAIL":
                         flags.append("R1 FAIL")
                         any3 = True
                     elif r1.startswith("not applicable"):
                         flags.append("R1 not applicable (env differs)")
+                    for N in L_CAL:
+                        rec["C1_" + str(N)] = "{:.6f}".format(nc[1][N])
+                    rec["N_cell"] = "" if nc[0] is None else nc[0]
+                    why = "C1 found no sufficient level"
+                    if nc[0] is not None:
+                        b = st.get(tid_of("B", c, nc[0], 0))
+                        q = rung_stats(st, "Q", c, N_LO, reps=PRODCHECK_REPS)
+                        if b is None or b["end"] != "ok" or q is None:
+                            label = "incomplete (production or C')"
+                        else:
+                            rec["beta_prod"] = b["beta_solved"]
+                            dev = abs(q[0] / c[4] - 1.0)
+                            rec["C6"] = "{:.6f}".format(dev)
+                            rec["C5m_prod"] = "{:.6f}".format(q[1] / q[0])
+                            if dev <= C6_MAX:
+                                label, beta = "target", float(b["beta_solved"])
+                                prov = "beta_prod, calibration N_cell {}".format(nc[0])
+                                tref, tn, rng = q[0], N_LO, q[1]
+                            else:
+                                why = "C6 failed for beta_prod"
+                    if label is None:
+                        dev = abs(lo[0] / c[4] - 1.0)
+                        label = "target" if dev <= C6_MAX else "beta"
+                        beta, prov = badq, "beta_adq; {}".format(why)
+                        tref, tn, rng = lo[0], N_LO, lo[1]
+                        rec["dev_adq"] = "{:.6f}".format(dev)
         if label.startswith("incomplete"):
             any4 = True
         rec.update({"label": label, "beta": "" if beta is None else repr(beta), "provenance": prov,
-                    "tau_ref": "" if tref is None else repr(tref), "range": "" if rng is None else repr(rng),
+                    "tau_ref": "" if tref is None else repr(tref), "tau_ref_n": "" if tn is None else tn,
+                    "range": "" if rng is None else repr(rng),
                     "exact_tau": "" if beta is None or exact_tau(c, beta) is None else repr(exact_tau(c, beta)),
                     "flags": ";".join(flags)})
         out.append(rec)
     cols = ["cell", "module", "objective", "d", "law", "tau0", "label", "beta", "provenance", "tau_ref",
-            "range", "exact_tau", "beta_adq", "rungs", "n_star", "C5m", "D1"] + \
-        ["C1_" + str(N) for N in L_CAL] + ["N_cell", "C6", "E3", "case_dev", "grid_passes", "flags"]
+            "tau_ref_n", "range", "exact_tau", "beta_adq", "adequacy", "med_64M", "range_64M", "med_256M",
+            "range_256M", "C5m", "D1"] + ["C1_" + str(N) for N in L_CAL] + \
+        ["N_cell", "beta_prod", "C6", "C5m_prod", "dev_adq", "flags"]
     with open(os.path.join(outdir, "calprec2_beta.csv"), "x", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
         w.writeheader()
@@ -1386,6 +1104,12 @@ def finalize(rows, cells, outdir):
         counts[k] = counts.get(k, 0) + 1
     for k in sorted(counts):
         print("  {:<12} {}".format(k, counts[k]))
+    adc = {}
+    for rec in out:
+        if rec.get("adequacy"):
+            adc[rec["adequacy"]] = adc.get(rec["adequacy"], 0) + 1
+    for k in sorted(adc):
+        print("  {:<40} {}".format(k, adc[k]))
     for rec in out:
         if rec.get("flags"):
             print("  FLAG {}: {}".format(rec["cell"], rec["flags"]))
@@ -1403,11 +1127,9 @@ def main():
     p.add_argument("--cells", default=None)
     p.add_argument("--shard", type=int, default=0)
     p.add_argument("--nshards", type=int, default=1)
-    p.add_argument("--max-rung", type=int, default=len(L_REF) - 1)
     p.add_argument("--plan", action="store_true")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--throughput", default=None)
-    p.add_argument("--inputs", default="")
     p.add_argument("--resume-from", default="")
     p.add_argument("--finalize", default="")
     p.add_argument("--archive", default=None)
@@ -1416,17 +1138,17 @@ def main():
     rows = CALROWS if a.rows is None else [r for r in a.rows.split(",") if r]
     for r in rows:
         if r not in ROWMOD:
-            sys.stderr.write("setup error: {} is not a calibrated row\n".format(r))
+            sys.stderr.write("setup error: {} is not a calibrated row (spec 2, ledger N27)\n".format(r))
             return 2
-    if not (0 <= a.max_rung < len(L_REF)) or not (0 <= a.shard < a.nshards) or a.workers < 1:
-        sys.stderr.write("setup error: rung, shard or worker arguments out of range\n")
+    if not (0 <= a.shard < a.nshards) or a.workers < 1:
+        sys.stderr.write("setup error: shard or worker arguments out of range\n")
         return 2
     mode = "finalize" if a.finalize else "plan" if a.plan else "smoke" if a.smoke else "full"
     me = cp.sha256_file(os.path.abspath(__file__))
     cps = cp.sha256_file(os.path.abspath(cp.__file__))
 
     print("=" * 96)
-    print("CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, through each row's module")
+    print("CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, measured at 64M and 256M")
     print("=" * 96)
     print("  python   {}".format(sys.version.replace("\n", " ")))
     print("  numpy    {}".format(np.__version__))
@@ -1436,21 +1158,20 @@ def main():
     print("  archive  {}".format(cp.ARCH))
     print("  script   sha256 {}".format(me))
     print("  costprobe2.py sha256 {}".format(cps))
-    print("  mode     {}   rows {}   shard {} of {}   max rung {}".format(
-        mode, ",".join(rows), a.shard, a.nshards, L_REF[a.max_rung]))
-    print("  L_CAL {}  R {}   L_REF {}  reps {}   chunk {}  block {} chunks".format(
-        L_CAL, R_CAL, L_REF, REPS, CHUNK, BLOCK_CHUNKS))
-    print("  C5m <= {}  D1 <= {}  C1 <= {}  C6 <= {}  E1 <= {:g}  E3 <= {:g}  RSS <= {:.0f} MB".format(
-        C5M_MAX, D1_MAX, C1_MAX, C6_MAX, E1_TOL, E3_TOL, RSS_BUDGET_MB))
-    print("  grid     K {} per pass over [{:g}, {:g}], stop at relative width <= {:g}: {} passes by the rule".format(
-        GRID_K, BIS_LO, BIS_HI, GRID_TOL, grid_passes()))
+    print("  mode     {}   rows {}   shard {} of {}".format(mode, ",".join(rows), a.shard, a.nshards))
+    print("  L_CAL {}  R {}   reference sizes {} and {}, reps {}   C' reps {}   chunk {}".format(
+        L_CAL, R_CAL, N_LO, N_HI, REPS, PRODCHECK_REPS, CHUNK))
+    print("  C5m <= {} at {}  D1 <= {} between {} and {}  C1 <= {}  C6 <= {}  E1 <= {:g} at {} rep 0  "
+          "RSS <= {:.0f} MB".format(C5M_MAX, N_LO, D1_MAX, N_LO, N_HI, C1_MAX, C6_MAX, E1_TOL, N_LO, RSS_BUDGET_MB))
     print("  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY {}, kind, module, "
-          "objective, d, law, tau0e6 (0 for kind {}), n, rep); kinds A {} C {} B {} S {} smoke {}".format(
-              ENTROPY, K_REF, K_CAL, K_REF, K_PROD, K_SOLVE, K_SMOKE))
+          "objective, d, law, tau0e6 (0 for kind {}), n, rep); kinds A {} C {} B {} smoke {}".format(
+              ENTROPY, K_REF, K_CAL, K_REF, K_PROD, K_SMOKE))
+    if a.throughput:
+        print("  throughput  {}".format(a.throughput))
 
     check_v(rows)
 
-    allcells = sorted(set(c for r in rows for c in cal_cells(r)[0]), key=cell_id)
+    allcells = all_cells(rows)
     serves = {}
     for r in rows:
         for c in cal_cells(r)[0]:
@@ -1462,42 +1183,37 @@ def main():
     for m in sorted(bym):
         print("  {:<10} {:>4} deduplicated calibration cells".format(m, bym[m]))
     print("  total {}".format(len(allcells)))
+
+    params = [["script_sha256", me], ["costprobe2_sha256", cps], ["mode", mode], ["rows", ",".join(rows)],
+              ["cells", a.cells or ""], ["shard", a.shard], ["nshards", a.nshards],
+              ["ref_sizes", "{};{}".format(N_LO, N_HI)], ["workers", a.workers],
+              ["python", platform.python_version()], ["numpy", np.__version__]]
+
+    if mode == "finalize":
+        fp, trows = read_folders([x for x in a.finalize.split(",") if x], ["script_sha256", "costprobe2_sha256", "rows"])
+        frows = [r for r in fp[0]["rows"].split(",") if r]
+        if any(r not in ROWMOD for r in frows):
+            sys.stderr.write("finalize: the folders' rows {} are not all calibrated rows\n".format(frows))
+            return 2
+        stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+        outdir = os.path.join(OUTROOT, "calprec2-finalize-" + stamp)
+        os.makedirs(outdir)
+        code = finalize(trows, all_cells(frows), outdir)
+        print("\nfiles  {}".format(outdir))
+        return code
+
+    sel = allcells
     if a.cells:
         want = set(x for x in a.cells.split(",") if x)
         bad = want - set(cell_id(c) for c in allcells)
         if bad:
             sys.stderr.write("setup error: unknown cell ids {}\n".format(sorted(bad)))
             return 2
-        allcells = [c for c in allcells if cell_id(c) in want]
-    cells = [c for i, c in enumerate(allcells) if i % a.nshards == a.shard]
+        sel = [c for c in allcells if cell_id(c) in want]
+    cells = [c for i, c in enumerate(sel) if i % a.nshards == a.shard]
     print("  this job: {} cells".format(len(cells)))
 
-    params = [["script_sha256", me], ["costprobe2_sha256", cps], ["mode", mode], ["rows", ",".join(rows)],
-              ["cells", a.cells or ""], ["shard", a.shard], ["nshards", a.nshards],
-              ["max_rung", a.max_rung], ["workers", a.workers],
-              ["python", platform.python_version()], ["numpy", np.__version__]]
-
-    if mode == "finalize":
-        _p, trows = read_folders([x for x in a.finalize.split(",") if x], ["script_sha256", "costprobe2_sha256", "rows"])
-        stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        outdir = os.path.join(OUTROOT, "calprec2-finalize-" + stamp)
-        os.makedirs(outdir)
-        fcells = sorted(set(r["cell"] for r in trows if r["phase"] == "A"))
-        code = finalize(trows, [cell_from_id(x) for x in fcells], outdir)
-        print("\nfiles  {}".format(outdir))
-        return code
-
     store = {}
-    if a.inputs:
-        _p, irows = read_folders([x for x in a.inputs.split(",") if x],
-                                 ["script_sha256", "costprobe2_sha256", "rows", "python", "numpy"])
-        if _p and any(_p[0].get(k) != str(v) for k, v in params if k in ("script_sha256", "costprobe2_sha256",
-                                                                          "rows", "python", "numpy")):
-            sys.stderr.write("inputs: script, costprobe2, rows, Python or NumPy differ from this job's\n")
-            return 2
-        for r in irows:
-            if r["end"] == "ok":
-                store[r["tid"]] = r
     if a.resume_from:
         mine = dict((k, str(v)) for k, v in params)
         _p, rrows = read_folders([x for x in a.resume_from.split(",") if x], list(mine.keys()))
@@ -1506,60 +1222,31 @@ def main():
             return 2
         for r in rrows:
             if r["end"] == "ok":
-                if r["tid"] in store:
-                    sys.stderr.write("resume: task {} also in the inputs\n".format(r["tid"]))
-                    return 2
                 store[r["tid"]] = r
 
-    starts, have_a, skipped = {}, set(), {}
-    for c in cells:
-        cid = cell_id(c)
-        has_a = all(tid_of("A", c, N, rep) in store for N in L_CAL for rep in range(R_CAL))
-        top = highest_climbed(store, c)
-        if top is not None and not has_a:
-            sys.stderr.write("inputs: cell {} has climb rows but no phase-A rows\n".format(cid))
-            return 2
-        if has_a:
-            have_a.add(cid)
-        (st_, ri), _m = judge_rungs(store, c)
-        if st_ == "adequate":
-            skipped[cid] = "skipped: adequate at {} in the inputs".format(L_REF[ri])
-        elif st_ == "case_a":
-            skipped[cid] = "skipped: case (a) in the inputs"
-        starts[cid] = 0 if top is None else top + 1
-    run_cells = [c for c in cells if cell_id(c) not in skipped]
     thr = load_throughput(a.throughput) if a.throughput else None
-    cp.hdr("RUNG RANGE PER CELL (this job)")
-    for c in cells:
-        cid = cell_id(c)
-        if cid in skipped:
-            print("  {:<48} {}  (its later phases, if unfinished, are completed only by a rule-17 "
-                  "resume of the job that resolved it)".format(cid, skipped[cid]))
-            continue
-        s = starts[cid]
-        extra = ""
-        if thr is not None and (c[0], c[1], c[2], c[3]) in thr:
-            _b, w_, _g, ca_ = cell_costs(c, s, a.max_rung, thr, have_a)
-            extra = "  worst {:.0f} s, case (a) solve {:.0f} s (worker-seconds)".format(w_, ca_)
-        print("  {:<48} phase A {}  rungs {} to {}{}{}".format(
-            cid, "from inputs" if cid in have_a else "computed here",
-            L_REF[s] if s < len(L_REF) else "-", L_REF[a.max_rung],
-            "" if s == 0 else "  (judges {} first)".format(L_REF[s - 1]), extra))
-    n_case_a = len(run_cells) if a.max_rung == len(L_REF) - 1 else 0
-    print("  cells run: {}   skipped as resolved: {}   could become case (a) at worst: {}".format(
-        len(run_cells), len(skipped), n_case_a))
-
-    miss, worst, big, ca_tot = [], 0.0, 0.0, 0.0
+    miss, worst, big = [], 0.0, 0.0
     if thr is not None:
-        best, worst, big, ca_tot, _by, miss = estimates(run_cells, starts, thr, a.max_rung, have_a)
+        best, worst, big, miss = estimates(cells, thr)
         cp.hdr("G-CAP -- ESTIMATE for this job (perfect scaling; barrier idle and tails ignored; NOT a bound)")
-        print("  best case {:.0f} s   worst-case estimate {:.0f} s   at {} workers   ceiling {:.0f} s".format(
-            best / a.workers, worst / a.workers, a.workers, SHARD_CEIL_S))
-        print("  case (a) solves if all {} cells became case (a): {:.0f} s at {} workers".format(
-            n_case_a, ca_tot / a.workers, a.workers))
+        if mode == "plan":
+            for c in cells:
+                if (c[0], c[1], c[2], c[3]) in thr:
+                    b_, w_, g_ = cell_costs(c, thr)
+                    print("  {:<48} best {:>7.0f} s  worst {:>7.0f} s  largest task {:>6.0f} s (worker-seconds)".format(
+                        cell_id(c), b_, w_, g_))
+        print("  best case (no cell adequate) {:.0f} s   worst-case estimate (every cell adequate) {:.0f} s   "
+              "at {} workers   ceiling {:.0f} s".format(best / a.workers, worst / a.workers, a.workers, SHARD_CEIL_S))
         print("  largest single task, estimated {:.0f} s".format(big))
         if miss:
             print("  {} cells lack throughput: {}".format(len(miss), ", ".join(miss[:5])))
+        else:
+            k, top = shards_needed(sel, thr, a.workers)
+            if k is None:
+                print("  no shard count fits: one cell alone is estimated at {:.0f} s".format(top))
+            else:
+                print("  smallest --nshards with every shard within the ceiling: {}   (largest shard {:.0f} s "
+                      "at {} workers, over the {} selected cells)".format(k, top, a.workers, len(sel)))
     if mode == "smoke":
         proj = (N_SMOKE_DRAW + 2 * N_SMOKE_REF) / REFSCALE_ACKLEY_RATE
         timeout_s = max(TIMEOUT_FLOOR_SMOKE, TIMEOUT_FACTOR * 2.0 * proj)
@@ -1571,6 +1258,7 @@ def main():
         cp.hdr("T1 -- PER-TASK TIMEOUT")
         print("  TIMEOUT_S = {:.0f} s   ({})".format(timeout_s, src))
     if mode == "plan":
+        cp.hdr("ROWS SERVED BY EACH CELL (this job)")
         for c in cells:
             print("  {}   rows {}".format(cell_id(c), ",".join(serves[cell_id(c)])))
         print("\nPLAN MODE: no draws, nothing written.")
@@ -1579,11 +1267,9 @@ def main():
         if thr is None:
             sys.stderr.write("G-CAP: a full run needs --throughput <verified smoke folder>\n")
             return 2
-        if miss or worst / a.workers > SHARD_CEIL_S or ca_tot / a.workers > SHARD_CEIL_S \
-                or (run_cells and timeout_s <= 0):
-            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s or case (a) solves {:.0f} s exceed {:.0f} s, "
-                             "or cells lack throughput; lower --max-rung, select fewer --cells or add shards\n".format(
-                                 worst / a.workers, ca_tot / a.workers, SHARD_CEIL_S))
+        if miss or worst / a.workers > SHARD_CEIL_S or (cells and timeout_s <= 0):
+            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds {:.0f} s, or cells lack throughput; "
+                             "select fewer --cells or add shards\n".format(worst / a.workers, SHARD_CEIL_S))
             return 2
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -1594,33 +1280,28 @@ def main():
         csv.writer(fh).writerows(params)
     with open(os.path.join(outdir, "calprec2_plan.csv"), "x", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["cell", "shard", "start_rung", "max_rung", "phase_a", "rows"])
+        w.writerow(["cell", "shard", "rows"])
         for c in cells:
-            cid = cell_id(c)
-            w.writerow([cid, a.shard, L_REF[starts[cid]] if starts[cid] < len(L_REF) else "", L_REF[a.max_rung],
-                        "inputs" if cid in have_a else "here", ";".join(serves[cid])])
+            w.writerow([cell_id(c), a.shard, ";".join(serves[cell_id(c)])])
     print("\n  run dir  {}".format(outdir))
 
     if mode == "smoke":
         units = sorted(set((c[0], c[1], c[2], c[3], 0.1) for c in cells), key=cell_id)
-        outs = {"thr": Out(os.path.join(outdir, "calprec2_throughput.csv"), THR_COLS)}
-        runner = Runner(a.workers, timeout_s, outs, {})
+        out = Out(os.path.join(outdir, "calprec2_throughput.csv"), THR_COLS)
+        runner = Runner(a.workers, timeout_s, out, {})
         try:
-            runner.run([item("smoke", {"tid": "SMOKE|" + cell_id(u), "phase": "SMOKE", "c": u}, "thr")
-                        for u in units], "smoke")
+            runner.run([("smoke", {"tid": "SMOKE|" + cell_id(u), "phase": "SMOKE", "c": u}) for u in units], "smoke")
         finally:
-            outs["thr"].close()
+            out.close()
         print("\nSMOKE: unit costs only; not results.")
         return 4 if runner.errors else 0
 
-    outs = {"phaseA": Out(os.path.join(outdir, "calprec2_phaseA.csv"), TASK_COLS),
-            "tasks": Out(os.path.join(outdir, "calprec2_tasks.csv"), TASK_COLS)}
-    runner = Runner(a.workers, timeout_s, outs, store)
+    out = Out(os.path.join(outdir, "calprec2_tasks.csv"), TASK_COLS)
+    runner = Runner(a.workers, timeout_s, out, store)
     try:
-        flags3 = job(a, run_cells, starts, runner, store)
+        flags3 = job(cells, runner, store)
     finally:
-        for o in outs.values():
-            o.close()
+        out.close()
     for f in flags3:
         print("  FAIL {}".format(f))
     print("\n" + "=" * 96)

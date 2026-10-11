@@ -151,6 +151,12 @@ were not recovered:
 - calprec is extended per notes/CALPREC_V2_SPEC.md. Under refscale O2, the
   declared beta is the one solved at the largest adequate reference size,
   or at the top rung if none is adequate, and the cell is labelled by beta.
+  SUPERSEDED 2026-10-11 (ledger N28, CALPREC_V2_SPEC 11c). There is no
+  solve. Each cell's beta is measured at 64M and 256M:
+  - an adequate cell takes beta_prod or beta_adq, labelled "target" or
+    "beta" by the 5% rule;
+  - a cell that is not adequate takes beta_adq, labelled by beta, with
+    both sizes reported.
 
 ## Measured cost: seventeen single-shard jobs (ledger N22, 2026-10-11)
 
@@ -181,7 +187,8 @@ K5 stays open as a limit, for these reasons:
   ceiling would have to be split into shards, and those shards could not
   resume on Kaggle either.
 - calprec v2's streamed solves already run on the laptop because of K5
-  (D5a).
+  (D5a). [Withdrawn: D5a by N24, and every calprec v2 solve by N28.
+  calprec v2 now fits whole cells in shard jobs on Kaggle.]
 
 ## Calibration scope narrowed, rerun not narrowed (Rahul, 2026-10-11; ledger N27)
 
@@ -198,6 +205,9 @@ K5 stays open as a limit, for these reasons:
     nominal tau0.
 - A future session must not read this as dropping rows from the rerun.
   No row is dropped.
+- 2026-10-11 (N28): calprec v2 measures each of the 336 cells at two fixed
+  reference sizes, 64M and 256M, with no climb and no solve. This does not
+  change the rerun's coverage.
 - The "calprec coverage" list below is superseded where it concerns rows
   other than the four. Their deviation from nominal is quantified as
   stated in CALPREC_V2_SPEC section 2: archived per-cell achieved

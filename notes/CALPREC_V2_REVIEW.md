@@ -503,3 +503,149 @@ What changed:
   measured).
 - The probe's linear gate under-predicted 64M (2031 MB extrapolated against
   2472.8 MB measured).
+
+---
+
+## 2026-10-11, fourth pass: the fixed two-size design (ledger N28)
+
+What changed:
+
+- Rahul's design change of 2026-10-11 (CALPREC_V2_SPEC 11c). It was made
+  because logs/calprec2-plan-4rows-thr.log estimated the 336 cells at:
+  - best case 301529 s;
+  - worst case 7672526 s;
+  - case (a) branch 5461019 s.
+  These are at 2 workers, against 21600 s.
+- scripts/calprec2.py went from md5 c5b6052f181fed72a6c8d92a63cb69a8
+  (1636 lines, 0bd7011) to md5 dd3aa2508be868906c34e40266d2467e (1317
+  lines). Diff: 502 lines inserted, 821 deleted.
+- The new version was not executed. It was parsed under the Python 3.8
+  grammar, and a static pass found no undefined names and no costprobe2
+  attribute missing.
+- Removed, not disabled:
+  - the climb (L_REF, judge_rungs, highest_climbed);
+  - case (a) and case (b);
+  - the grid solve (grid_of, grid_step, replay_grid, grid_solve_round,
+    task_block, blocks_of);
+  - E3, and the kind-34 stream;
+  - --inputs, --max-rung, calprec2_phaseA.csv and the skip logic;
+  - the case (a) estimate;
+  - the nine rows outside N27, with their samplers and X2.
+- Added:
+  - phase C at 64M and 256M;
+  - judge() (C5m at 64M, D1 64M against 256M), used by both the job and
+    finalize;
+  - E1 on the held 64M replicate 0, phase C only (a "hold" flag in the
+    task, not a size test);
+  - the labels T, BA and O2;
+  - C5m of the C' replicates (C5m_prod);
+  - finalize's expected-cell list;
+  - the plan's smallest --nshards.
+
+### Closed by the removal
+
+These items concern code that no longer exists:
+
+- Third pass T1 to T4: the plan file's skipped cells, the worst case's
+  branch choice, the "could become case (a)" count, and in-run E3 against
+  replayed E3.
+- Second pass N1, N2, N3, N5 and N7: the skip logic, finalize's replay,
+  the climb branches of the estimate, the cost of case (a), and grid
+  monotonicity.
+- A1, A2 and F2 (multi-job cells), A3 (the case (a) solve) and D1 (the
+  case (b) interpretation).
+- B4: R1 against laptop solves. No solve exists. R1 now compares only
+  phase C with the C1 pass, both in one Kaggle job.
+
+### Closed or narrowed by the rewrite, beyond the removal
+
+- C2 (E1 skippable). Every cell has phase C's 64M replicate 0, which is
+  the held one, so E1 runs for every cell. finalize flags "E1 not run"
+  (exit 4).
+- D4 (C5m at beta_prod not reported). It is now computed from the C'
+  replicates and written as C5m_prod, with no threshold.
+  - Spec 5 asks for it.
+  - I added it while rewriting finalize, which is a fix of an earlier
+    review item outside the instruction's list. Say if it should come out.
+- D7 (plan does not refuse oversized held arrays). Moot: the held sizes
+  are now constants (4M and 64M). 64M values are 512 MB, under the spec's
+  1024 MB values cap. Memory is covered by N25, not by that cap.
+- A gap no pass had listed: finalize used to take its cells from the
+  phase-A rows it was given. A missing shard folder therefore produced a
+  shorter beta table silently. It now expects every cell of the folders'
+  rows and labels a cell without rows "incomplete (phase A)" (exit 4).
+
+### Closed by observation (the Kaggle smoke, runs/calprec2-smoke-kaggle-20261011-121225)
+
+The smoke ran the 0bd7011 script; the parts named below are unchanged in
+the new one.
+
+- E2 (inspect.getsource on the read-only mount): V2 PASS on Kaggle.
+- E4 (fork on Kaggle): the header prints "start fork".
+- B7 (sign of t_beta): all 90 throughput rows end "ok". t_beta ranges
+  from 2.3371496134334142e-08 to 6.12103028429879e-08, and none is
+  negative or zero. The weakness of a difference of two walls remains,
+  but this table is not affected.
+
+### Left open
+
+- B6, beta_adq's own tau. It matters more now: BA and O2 cells carry
+  beta_adq itself. Their tau is measured, so the label is honest. But
+  beta_adq is a median of 24 calibration solves, not a solve on the
+  reference.
+- C1 (V2 checks the module line, not probe_sample).
+- C3 (V0(b)'s choice of factors).
+- C4 (R1 after a resume is vacuous). Resumption is laptop-only (K5), and
+  this job does not run on the laptop.
+- C5 (G-CAP is only as good as the smoke). The smoke predates this
+  version. Its timed primitives are unchanged, but no smoke has timed a
+  64M or 256M pass, nor a held 64M log_ess_of.
+- D3: one output file, calprec2_tasks.csv, instead of the spec's three.
+- D5: the G-RSS verdict is not in the beta table; X1's relative error is
+  not computed (only the exact value); S1 is not summarised.
+- D6: one line per task is printed, but no projected time, and no
+  largest RSS per module at the end.
+- D8: calprec2_plan.csv carries no V0 counts.
+- E1 (row-wise objectives) and E3 (_logsumexp on chunk vectors):
+  assumptions.
+- G1: plan and smoke have run, under the old script; full, resume and
+  finalize have not. G3: finalize has never run on any rows. G4: the 64M
+  and 256M passes and the held 64M E1 have not been measured in
+  calprec2.
+- Second pass N8 (the smoke timeout's constants are judgement). The smoke
+  finished without a timeout.
+
+### New issues found re-reading the rewrite
+
+- U1. Smoke progress lines print an empty wall ("wall           s" on all
+  90 lines of the Kaggle smoke log). task_smoke never sets wall_s.
+  Cosmetic. Not fixed.
+- U2. The worst case assumes every cell is adequate, so it charges every
+  cell the 145-beta 64M pass, B and C'. At the tight targets most cells
+  are expected to be O2, so the estimate is high. That is the safe
+  direction, but it can call for more shards than needed.
+- U3. E1 memory is an inference, not a measurement. It rests on two
+  facts: memprobe's 64M peak (2472.8 MB, laptop, NumPy 2.5.3), and the
+  agreement of the smoke's 4M peak with memprobe's 4M.
+  - Kaggle runs NumPy 2.1.3.
+  - Up to --workers held 64M tasks can run at once. On Kaggle (30 GB) that
+    is safe at 4 workers.
+  - Nothing in the script refuses a full run on the laptop. The docstring
+    says it must not run there; there is no guard.
+- U4. E1 at 64M composes 256 chunk results against one held np.sum over
+  64M terms. 1e-12 has not been tried at this size (refscale: 4M and 16M).
+  A failure would be exit 3, at the end of the job.
+- U5. The head prints the --throughput path but not the sha256 of its
+  table (spec 10). The folder's manifest is verified on load.
+- U6. Decisions taken in writing, put to Rahul: BA, O2's tau_ref at 256M,
+  and the C1 pass kept as a separate regeneration (spec 11c).
+
+### What the next execution must show
+
+- calprec2 --plan with --throughput:
+  - V0, V1, V2 PASS;
+  - total 336;
+  - the per-cell estimates;
+  - the best and worst case at the stated workers;
+  - the largest task;
+  - the smallest --nshards.

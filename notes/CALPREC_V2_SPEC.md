@@ -1,7 +1,10 @@
 # calprec v2: specification of the extended calibration study
 
 Status: specification only, approved in outline by Rahul on 2026-10-10
-(answer 2 of that day). No script exists yet. Nothing here has been run.
+(answer 2 of that day). THE DESIGN IN FORCE IS SECTION 11c (2026-10-11):
+fixed references at 64M and 256M. It supersedes the climb, the adequacy
+search and the per-cell solves of sections 4, 6, 11 (D1, D4, D5) and 11b,
+which are kept as first written. Only the 2026-10-11 smoke has run.
 The criteria below become binding only when they are copied into the
 script's docstring before its first execution (CLAUDE.md rule 5). Rahul's
 decisions are recorded in section 11.
@@ -38,9 +41,9 @@ below for calprec v2's runs.
   - The 13-row plan (logs/calprec2-plan.log, script 4c7f2950...b36d96 =
     0bd7011) gives mechanism 144, boundary 144, sigma 24 and crossed 24
     deduplicated cells, 336 in all, against 861 for all thirteen rows.
-  - Every calprec2 command passes --rows CONC,TAU8,SIGMA,ANISO. The
-    script's default is still all thirteen rows, so a command without
-    --rows would plan all 861 cells.
+  - Every calprec2 command passes --rows CONC,TAU8,SIGMA,ANISO.
+    UPDATED 2026-10-11 (section 11c): the script now knows only these four
+    rows. They are its default, and any other row is a setup error (exit 2).
 - Reasons:
   - Referee points 3, 4 and 5 concern the concentration arm and the
     operating level. The diffusion comparison is main text under the
@@ -145,6 +148,9 @@ For every cell the script takes three things from the row's module:
   N_cell is defined in section 5 (D2: per cell). Phase
   B therefore runs after Phase C has fixed N_cell. The order is A, C, B, C'
   as in section 8.
+SUPERSEDED 2026-10-11 by section 11c for Phase C: two fixed sizes, 64M and
+256M, with no ladder. Phases A, B and C' stand, with C' at 64M.
+
 - Phase C, references. A reference ladder L_ref (D4: 1M to 1G), six
   independent replicates per rung. Each reference is streamed in chunks
   (the refscale composition of exactcal._logsumexp) and evaluates every
@@ -173,7 +179,8 @@ For every cell the script takes three things from the row's module:
   exit 2. The script prints the matched line. Worked example:
   sigma.one_realisation contains "X0 = rng.standard_normal((Jinf, d)) +
   xs" before any other rng call: pass.
-- E1, streaming equivalence, from refscale. On the lowest reference rung
+- E1, streaming equivalence, from refscale. [2026-10-11, section 11c: the
+  held replicate is replicate 0 of the 64M size, in phase C only.] On the lowest reference rung
   of every cell, one replicate is also held. The streamed and held log-ESS
   (exactcal.log_ess_of on the held array) must agree to relative 1e-12 at
   every beta, or the run stops (exit 3). Worked example as in refscale.py:
@@ -220,7 +227,8 @@ For every cell the script takes three things from the row's module:
 - D1, reference drift, from refscale. |median_n - median_4n| / median_4n
   must be at most 0.025. Worked example: 0.00995 at 64M and 0.01003 at
   256M give 0.0080: pass.
-- Adequate rung. The smallest rung that passes C5m and D1 at beta_adq. C4 of v1 (two halves within 0.10) is not used: C5m with six
+- Adequate rung. [2026-10-11, section 11c: adequate at 64M means C5m at
+  64M and D1 between 64M and 256M; there is no search.] The smallest rung that passes C5m and D1 at beta_adq. C4 of v1 (two halves within 0.10) is not used: C5m with six
   replicates and D1 is the stronger test of the same thing. v1's verdicts
   are not reinterpreted.
 - C1, sufficiency, from v1, evaluated on the adequate rung. A level N is
@@ -251,6 +259,9 @@ For every cell the script takes three things from the row's module:
   marked.
 
 ## 6. Cells that cannot be labelled by a target
+
+SUPERSEDED 2026-10-11 by section 11c: case (a), case (b) and every solve
+are removed. The labels in force are T, BA and O2 of section 11c.
 
 - Case (a), no adequate rung up to n_max. This is answer 3. The declared
   beta is the one solved on the reference at the largest adequate rung, or
@@ -285,7 +296,8 @@ For every cell the script takes three things from the row's module:
   key at full width and never reduced (N16).
 - Key: (ENTROPY 20261010, kind, module code, objective code, d, law code,
   tau0 in millionths, n, rep). Kinds: 31 calibration draw, 32 reference, 33
-  production draw, 34 case (b) reference solve.
+  production draw, 34 case (b) reference solve. [Kind 34 retired 2026-10-11,
+  section 11c; not reused.]
 - The ENTROPY and kinds differ from calprec v1 (20261009, kinds 1 and 2)
   and from refscale (20261009, kinds 11 and 12), so no stream can coincide
   with one there.
@@ -295,6 +307,8 @@ For every cell the script takes three things from the row's module:
 - Every key is written out in full in every CSV row.
 
 ## 8. Order of work, sharding, resumption
+
+[2026-10-11, section 11c: no case (b) task unit; a cell lives in one job.]
 
 - Task units: (cell, N, rep) for Phase A; (cell, n, rep) for each
   reference; (cell) for Phase B; (cell, case b) for the case (b) solve.
@@ -424,6 +438,12 @@ For every cell the script takes three things from the row's module:
 
 ## 11b. Revision of 2026-10-11 (Rahul), before calprec v2's first execution
 
+SUPERSEDED the same day by section 11c. The grid solve, E3, the multi-job
+cells and N1 to N5 below are removed from calprec v2. The text is kept
+unchanged as the record of the design. The grid solve is preserved for any
+later study that needs it (ledger N24, N28; scripts/calprec2.py at
+0bd7011).
+
 - D5a WITHDRAWN.
   - It was decided before refscale measured a 1G replicate. refscale then
     measured one ackley d = 40 1G replicate at 3225.4 to 3236.8 s on one
@@ -503,3 +523,120 @@ For every cell the script takes three things from the row's module:
   - N5. The plan prints each cell's projected case (a) solve cost and how
     many cells could become case (a) at worst. G-CAP refuses a job whose
     case (a) solves would exceed the 6-hour ceiling.
+
+## 11c. Design change of 2026-10-11 (Rahul): two fixed reference sizes
+
+This section is the design in force. It replaces the climb, the adequacy
+search, case (a), case (b), the grid solve and E3 (sections 4, 6, 11 D1,
+D4 and D5, and 11b). Ledger N28.
+
+Reason. A full run would be refused by G-CAP.
+logs/calprec2-plan-4rows-thr.log (script 4c7f2950...b36d96 = 0bd7011,
+throughput from runs/calprec2-smoke-kaggle-20261011-121225) prints, for
+the 336 cells:
+- "best case 301529 s   worst-case estimate 7672526 s   at 2 workers
+  ceiling 21600 s";
+- "case (a) solves if all 336 cells became case (a): 5461019 s at 2
+  workers";
+- "largest single task, estimated 5207 s".
+The cause is structural: 336 cells, each searching a six-rung ladder to
+1G. refscale (ledger N18) had already answered on the hardest cell what
+that search asks. It is not to be rediscovered 336 times.
+
+The design:
+- Phase A, unchanged. L_cal 4000 to 4000000, 24 draws per level, giving
+  beta_adq (the median of the 24 at 4000000).
+- Phase C, two fixed sizes. 64M and 256M, six independent kind-32
+  replicates each, evaluated at beta_adq on streamed references. No
+  ladder, no climbing, no stopping rule.
+- Adequacy per cell, judged exactly as refscale judged it:
+  - C5m at 64M: range / median of its six <= 0.054682;
+  - AND D1 between the 64M and 256M medians <= 0.025.
+  A cell that passes both is adequate at 64M.
+- C1 and the production beta follow as before, on the 64M size:
+  - the C1 pass regenerates the six 64M replicates at the 144 beta-hat and
+    beta_adq, with R1 against phase C;
+  - N_cell, then B (kind 33);
+  - C' on six new 64M replicates (reps 6 to 11) with C6.
+  - C5m of the C' replicates at beta_prod is now reported, with no
+    threshold (spec 5's "evaluated afterwards ... and reported"; review D4).
+- Cells that fail C5m or D1 are labelled by beta (outcome O2, already
+  decided in N18). The beta is beta_adq. tau(beta) is reported with both
+  sizes' medians and ranges, C5m, D1 and which of them failed. This is the
+  expected result at the tight targets. It is a finding, not a failure,
+  and it does not change the exit code.
+
+E1, decided (Rahul asked for it to be decided and stated):
+- E1 moves to replicate 0 of the 64M size in phase C. That replicate is
+  held while streamed, and exactcal.log_ess_of on the held array is
+  compared with the streamed composition at beta_adq, relative 1e-12.
+- Every cell has that replicate, so E1 runs for every cell. finalize flags
+  a missing verdict "E1 not run" (exit 4); a failure gives exit 3.
+- Memory: one held 64M log_ess_of is the allocation memprobe measured
+  inside beta_on_ensemble at 64M, peak 2472.8 MB against the 3072 MB budget
+  (ledger N25, laptop, NumPy 2.5.3). The calprec2 smoke's 4M peaks match
+  memprobe's 4M peak (301.8 MB for ackley d = 40 in
+  runs/calprec2-smoke-kaggle-20261011-121225, against 294.3 MB). So the
+  64M figure is taken to carry over to calprec2's worker processes. That
+  is an inference from two measurements, not a measurement of calprec2 at
+  64M. G-RSS measures every task, and Kaggle's NumPy 2.1.3 may allocate
+  differently.
+- What is lost against the old 1M E1:
+  - the 256M size is never checked against a held computation, because
+    holding it would take four times the 64M array, over the budget;
+  - E1 runs at beta_adq only, not at the 145 C1 betas or beta_prod. Those
+    passes use the same chunk_terms and combine_terms;
+  - E1 has not been run at 64M anywhere before. refscale ran it at 4M and
+    16M (N18). If 1e-12 fails at 64M, the run exits 3, and the tolerance is
+    Rahul's decision, not loosened in advance.
+- The full job holds 64M arrays, so it runs on Kaggle, not on the laptop
+  (free memory there can be 1.5 GB, CLAUDE.md rule 6).
+
+Labels in calprec2_beta.csv (each cell gets exactly one):
+- T: adequate, N_cell found and C6 passes. "target" with beta_prod.
+  tau_ref is the C' median.
+- BA: adequate, but C1 finds no N_cell or C6 fails. The cell takes
+  beta_adq. tau_ref is the median of the six phase-C 64M replicates.
+  "target" if |tau_ref / tau0 - 1| <= 0.05, otherwise "beta".
+- O2: not adequate. "beta", not adequate, with beta_adq. tau_ref is the
+  256M median, the larger reference. Both sizes are reported.
+- incomplete (<phase>): missing or errored rows, exit 4.
+
+Decisions made by Claude in writing this, for Rahul to confirm or change:
+- BA. Without a solve, an adequate cell that fails C1 or C6 has no beta of
+  its own. It takes beta_adq. It is labelled by rule CB of the old design
+  (5% on an adequate reference), applied to beta_adq. The alternative for
+  a C6 failure is beta_prod with its C' median.
+- O2's tau_ref is the 256M median, not the 64M one. Both are in the table.
+- The C1 pass stays a separate regeneration of the 64M replicates, as
+  before, so R1 still checks regeneration. Folding the 145 betas into
+  phase C would save one 64M draw per replicate, at the cost of a
+  145-beta pass for every cell rather than only the adequate ones, and it
+  would lose R1.
+- finalize expects every cell of the folders' rows. A cell with no rows,
+  for example from a shard folder not given, is "incomplete (phase A)",
+  exit 4. Before, such a cell was silently absent.
+- The smoke folder runs/calprec2-smoke-kaggle-20261011-121225 remains a
+  valid --throughput. task_smoke and the primitives it times (f_chunk,
+  chunk_terms, combine_terms, beta_on_ensemble) are unchanged.
+
+Removed from calprec v2, not disabled:
+- the climb and L_REF;
+- case (a), case (b), the streamed grid solve, E3, the kind-34 stream;
+- --inputs, --max-rung, calprec2_phaseA.csv and the skip logic (N1);
+- finalize's replay (N2); the case (a) estimate (N5);
+- the nine rows outside N27's scope, with their samplers and the X2 exact
+  value (no synthetic objective is in the four rows).
+The grid solve design is preserved in ledger N24 and section 11b, and in
+scripts/calprec2.py at 0bd7011, in case a later study needs it.
+
+What this answers (Rahul's reasoning, recorded):
+- Referee points 3, 4 and 5: beta is fixed per cell and independently
+  calibrated.
+- What that beta actually delivers is measured per cell, on a reference
+  that is either adequate or declared not adequate. That is stronger than
+  the submitted paper's nominal targets.
+- The 64M and 256M pair also gives the first per-cell measurement of
+  reference adequacy, across 336 cells. Rahul's instruction said refscale
+  had two. By N18 it had four: two objectives (ackley and sphere, d = 40)
+  at two targets each (tau0 0.01 and 0.1).

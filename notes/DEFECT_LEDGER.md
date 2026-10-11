@@ -428,6 +428,10 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     his "two passes, below 1e-4" was wrong. Also his decision of
     2026-10-11: case (b) is solved by the same grid solve, which removes
     the last held solve above 1M (CALPREC_V2_SPEC 11b).
+  - Addendum, 2026-10-11 (N28): the grid solve and E3 are REMOVED from
+    calprec v2 by the design change of that day. The design above is kept
+    here, in CALPREC_V2_SPEC 11b and in scripts/calprec2.py at 0bd7011,
+    in case a later study needs it.
 - N25 (result, memory probe; resolves notes/CALPREC_V2_REVIEW.md A4).
   Sources: logs/memprobe.log and runs/memprobe-20261011-110235/memprobe.csv
   (manifest verified).
@@ -445,7 +449,9 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     16M under-predicts the 64M peak, so it would not be a safe gate for a
     larger size.
   - Consequence: the design no longer holds anything above 1M (CALPREC_V2
-    SPEC 11b: phase A at most 4M values, E1 and E3 at 1M). This figure
+    SPEC 11b: phase A at most 4M values, E1 and E3 at 1M). SUPERSEDED by
+    N28: E1 now holds replicate 0 of the 64M reference, so this figure
+    bounds a path the design does take, one log_ess_of on a held 64M array. This figure
     therefore bounds a path the design does not take. It is recorded so
     that a future held solve can be sized without rerunning the probe.
   - 128M: arithmetic on the probe's numbers, NOT a measurement. The solve
@@ -504,6 +510,61 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       evidence on their precision at tight targets.
     See CALPREC_V2_SPEC section 2.
   OPEN until calprec v2 has run on the four rows.
+- N28 (design change, Rahul 2026-10-11, before calprec v2's full run).
+  calprec v2 drops the climb, the adequacy search and the per-cell solve
+  for two fixed reference sizes.
+  - Reason: a full run would be refused by G-CAP.
+    logs/calprec2-plan-4rows-thr.log (script 4c7f2950...b36d96 = 0bd7011,
+    --throughput runs/calprec2-smoke-kaggle-20261011-121225) prints, for the
+    336 cells of N27:
+    - "best case 301529 s   worst-case estimate 7672526 s   at 2 workers
+      ceiling 21600 s";
+    - "case (a) solves if all 336 cells became case (a): 5461019 s at 2
+      workers";
+    - "largest single task, estimated 5207 s".
+    Plan mode itself only reports; a full run with these estimates exits 2.
+    (The commit message of 34ba973 says the plan was "refused by G-CAP".
+    Strictly, the plan reports the estimates and a full run would be
+    refused.)
+    The cause is structural: 336 cells each searching a six-rung ladder to
+    1G, while refscale (N18) had already answered what that search asks,
+    on the hardest cell.
+  - Design (CALPREC_V2_SPEC 11c):
+    - phase A unchanged, giving beta_adq;
+    - phase C at 64M and 256M, six replicates each, at beta_adq, with no
+      ladder and no stopping rule;
+    - adequate at 64M = C5m at 64M (<= 0.054682) and D1 between the 64M
+      and 256M medians (<= 0.025), as refscale judged it;
+    - C1, B and C' as before, at 64M;
+    - cells that fail are labelled by beta (O2, N18), with both sizes'
+      medians and ranges reported. This is a finding, not a failure.
+  - Removed from calprec v2, not disabled: case (a), case (b), the grid
+    solve, E3, kind 34, the multi-job continuation (--inputs, --max-rung,
+    the phase-A file) and the nine rows outside N27. Reason: with no climb
+    there is nothing to solve at a climbed rung, and every cell fits in one
+    job. The grid solve design is preserved in N24 and CALPREC_V2_SPEC 11b,
+    and in scripts/calprec2.py at 0bd7011, in case a later study needs it.
+  - E1 moves to replicate 0 of the 64M size, held in phase C. Its memory is
+    the allocation N25 measured at 64M (2472.8 MB, within 3072 MB). That it
+    carries over to calprec2's processes is an inference: the smoke's 4M
+    peak for ackley d = 40, 301.8 MB, matches memprobe's 294.3 MB. Lost
+    against the old 1M E1: no held check at 256M (over budget), E1 at
+    beta_adq only, and E1 never run at 64M before (refscale held 4M and
+    16M).
+  - Decisions made by Claude in the rewrite, put to Rahul: BA (an
+    adequate cell failing C1 or C6 takes beta_adq, labelled by the old CB
+    rule); O2's tau_ref is the 256M median; the C1 pass stays a separate
+    regeneration with R1; finalize expects every cell of the rows.
+  - Correction recorded: Rahul's instruction said refscale measured
+    adequacy for two cells. N18 has four (ackley and sphere, d = 40, at
+    tau0 0.01 and 0.1).
+  - The smoke (runs/calprec2-smoke-kaggle-20261011-121225; kgrun runner
+    exit code 0; 90 units; Python 3.13.15, NumPy 2.1.3) stays a valid
+    throughput table: the smoke task and the primitives it times are
+    unchanged.
+  Script: scripts/calprec2.py, md5 dd3aa2508be868906c34e40266d2467e, not
+  executed. Review: notes/CALPREC_V2_REVIEW.md, fourth pass. OPEN until the
+  new plan's G-CAP estimate is read and the full run is done.
 
 ## Checked and found sound
 

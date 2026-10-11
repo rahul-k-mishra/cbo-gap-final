@@ -67,6 +67,13 @@ full run finished.
 
 - Nothing is running. The next Kaggle job is the refscale 4G sphere-only
   follow-up (ledger N21).
+- 2026-10-11: calprec v2 is scoped to four rows, 336 cells (N27). Its
+  smoke ran on Kaggle (runs/calprec2-smoke-kaggle-20261011-121225, runner
+  exit code 0). The plan with that throughput (logs/calprec2-plan-4rows-
+  thr.log) estimated the old design at a 7672526 s worst case at 2
+  workers. The design was changed to two fixed reference sizes, 64M and
+  256M (N28; CALPREC_V2_SPEC 11c; script md5
+  dd3aa2508be868906c34e40266d2467e). Next: its plan with --throughput.
 - Decided by Rahul, 2026-10-11:
   - calprec v2 does not wait for the 4G sphere rung;
   - the analysis criteria (bootstrap level, fit window, resamples,
@@ -84,7 +91,8 @@ full run finished.
   runs/memprobe-20261011-110235): the 64M held solve peaks at 2472.8 MB
   (held 752.2 MB, solve 710.1 s on the laptop); 4M and 16M peak at 294.3
   and 641.7 MB. calprec v2 holds nothing above 1M, so this bounds an
-  unused path.
+  unused path. [Superseded by N28: E1 now holds one 64M replicate per cell,
+  so this figure bounds a path in use.]
 
 ## 3. Measured so far about the science
 
