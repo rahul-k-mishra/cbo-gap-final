@@ -1,0 +1,785 @@
+================================================================================================
+CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, measured at 64M and 256M
+================================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 4   start fork
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  script   sha256 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  mode     plan   rows CONC,TAU8,SIGMA,ANISO   shard 0 of 1   shard target 1.0 x 36000 s
+  ceiling  --ceiling 36000 s (given; default 21600 s: a margin choice, not Kaggle's limit; the cap 43200 s is enforced by G-STOP)
+  stop     --stop-after 36000 s from the start of task execution, applied in full mode only (default 36000 s: a margin choice, not a measurement)
+  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   reference sizes 64000000 and 256000000, reps 6   C' reps [6, 7, 8, 9, 10, 11]   chunk 250000
+  C5m <= 0.054682 at 64000000  D1 <= 0.025 between 64000000 and 256000000  C1 <= 0.05  C6 <= 0.05  E1 <= 1e-12 at 64000000 rep 0  RSS <= 3072 MB
+  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 smoke 35
+  throughput  runs/calprec2-smoke-kaggle-20261011-121225
+
+------------------------------------------------------------------------------------------------
+V1 -- ARCHIVE IDENTITY (imported modules' own files)
+------------------------------------------------------------------------------------------------
+  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok
+  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok
+  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok
+  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok
+  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok
+  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok
+  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok
+  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok
+  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok
+  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok
+  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok
+  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok
+  V1 PASS
+
+------------------------------------------------------------------------------------------------
+V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts
+------------------------------------------------------------------------------------------------
+  CONC      M       mechanism.py 294-297 M               ok
+  CONC      dims    mechanism.py 294-297 dims            ok
+  CONC      jgrid   mechanism.py 294-297 J_list          ok
+  CONC      laws    mechanism.py 294-297 inits           ok
+  CONC      objs    mechanism.py 294-297 objs            ok
+  CONC      taus    mechanism.py 294-297 taus            ok
+  TAU8      M       boundary.py 252-256 M               ok
+  TAU8      dims    boundary.py 252-256 dims            ok
+  TAU8      jgrid   boundary.py 252-256 J_list          ok
+  TAU8      objs    boundary.py 252-256 objs            ok
+  TAU8      taus    boundary.py 252-256 taus            ok
+  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181
+  SIGMA     M       sigma.py 238-238 --realisations  ok
+  SIGMA     diffs   sigma.py 259-260 diffs           ok
+  SIGMA     dims    sigma.py 253-257 dims            ok
+  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok
+  SIGMA     objs    sigma.py 253-257 objs            ok
+  SIGMA     rs      sigma.py 253-257 rs              ok
+  SIGMA     taus    sigma.py 253-257 taus            ok
+  ANISO     M       crossed.py 239-239 --realisations  ok
+  ANISO     diffs   crossed.py 248-248 diffs           ok
+  ANISO     dims    crossed.py 255-258 dims            ok
+  ANISO     jgrid   crossed.py 255-258 Jgrid           ok
+  ANISO     objs    crossed.py 255-258 objs            ok
+  ANISO     rs      crossed.py 255-258 rs              ok
+  ANISO     sigmas  crossed.py 255-258 sigmas          ok
+  ANISO     taus    crossed.py 255-258 taus            ok
+  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262
+  CONC      144 calibration cells x   1 =  144  (Table 2  144)  ok
+  TAU8      144 calibration cells x   1 =  144  (Table 2  144)  ok
+  SIGMA      24 calibration cells x  12 =  288  (Table 2  288)  ok
+  ANISO      24 calibration cells x  12 =  288  (Table 2  288)  ok
+  V0 PASS
+
+------------------------------------------------------------------------------------------------
+V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)
+------------------------------------------------------------------------------------------------
+  boundary   X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]  ok
+  crossed    X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  mechanism  X0 = draw_initial(rng, Jinf, d, objective, init)  ok
+  sigma      X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  V2 PASS
+
+------------------------------------------------------------------------------------------------
+CELLS
+------------------------------------------------------------------------------------------------
+  boundary    144 deduplicated calibration cells
+  crossed      24 deduplicated calibration cells
+  mechanism   144 deduplicated calibration cells
+  sigma        24 deduplicated calibration cells
+  total 336
+  this job: 336 cells
+
+------------------------------------------------------------------------------------------------
+G-CAP -- ESTIMATE for this job (perfect scaling; barrier idle and tails ignored; NOT a bound)
+------------------------------------------------------------------------------------------------
+  boundary|ackley|10|centred|0.01                  best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.02                  best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.03                  best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.05                  best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.07                  best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.1                   best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.2                   best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|10|centred|0.3                   best    3774 s  worst    7516 s  largest task    544 s (worker-seconds)
+  boundary|ackley|40|centred|0.01                  best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.02                  best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.03                  best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.05                  best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.07                  best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.1                   best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.2                   best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|40|centred|0.3                   best    9134 s  worst   14860 s  largest task    951 s (worker-seconds)
+  boundary|ackley|5|centred|0.01                   best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.02                   best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.03                   best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.05                   best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.07                   best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.1                    best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.2                    best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|ackley|5|centred|0.3                    best    2934 s  worst    6397 s  largest task    525 s (worker-seconds)
+  boundary|griewank|10|centred|0.01                best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.02                best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.03                best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.05                best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.07                best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.1                 best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.2                 best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|10|centred|0.3                 best    3305 s  worst    6866 s  largest task    530 s (worker-seconds)
+  boundary|griewank|40|centred|0.01                best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.02                best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.03                best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.05                best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.07                best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.1                 best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.2                 best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|40|centred|0.3                 best    7248 s  worst   12162 s  largest task    713 s (worker-seconds)
+  boundary|griewank|5|centred|0.01                 best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.02                 best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.03                 best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.05                 best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.07                 best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.1                  best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.2                  best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|griewank|5|centred|0.3                  best    2615 s  worst    5879 s  largest task    501 s (worker-seconds)
+  boundary|levy|10|centred|0.01                    best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.02                    best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.03                    best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.05                    best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.07                    best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.1                     best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.2                     best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|10|centred|0.3                     best    4004 s  worst    7788 s  largest task    545 s (worker-seconds)
+  boundary|levy|40|centred|0.01                    best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.02                    best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.03                    best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.05                    best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.07                    best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.1                     best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.2                     best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|40|centred|0.3                     best   10912 s  worst   17330 s  largest task   1177 s (worker-seconds)
+  boundary|levy|5|centred|0.01                     best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.02                     best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.03                     best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.05                     best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.07                     best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.1                      best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.2                      best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|levy|5|centred|0.3                      best    2979 s  worst    6378 s  largest task    512 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.01               best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.02               best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.03               best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.05               best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.07               best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.1                best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.2                best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|10|centred|0.3                best    3554 s  worst    7322 s  largest task    555 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.01               best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.02               best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.03               best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.05               best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.07               best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.1                best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.2                best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|40|centred|0.3                best    9311 s  worst   15203 s  largest task    974 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.01                best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.02                best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.03                best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.05                best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.07                best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.1                 best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.2                 best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rastrigin|5|centred|0.3                 best    2637 s  worst    5886 s  largest task    497 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.01              best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.02              best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.03              best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.05              best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.07              best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.1               best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.2               best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|10|centred|0.3               best    2884 s  worst    6245 s  largest task    509 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.01              best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.02              best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.03              best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.05              best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.07              best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.1               best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.2               best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|40|centred|0.3               best    6551 s  worst   11298 s  largest task    634 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.01               best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.02               best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.03               best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.05               best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.07               best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.1                best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.2                best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|rosenbrock|5|centred|0.3                best    2405 s  worst    5662 s  largest task    507 s (worker-seconds)
+  boundary|sphere|10|centred|0.01                  best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.02                  best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.03                  best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.05                  best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.07                  best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.1                   best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.2                   best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|10|centred|0.3                   best    2462 s  worst    5662 s  largest task    496 s (worker-seconds)
+  boundary|sphere|40|centred|0.01                  best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.02                  best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.03                  best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.05                  best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.07                  best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.1                   best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.2                   best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|40|centred|0.3                   best    4617 s  worst    8637 s  largest task    564 s (worker-seconds)
+  boundary|sphere|5|centred|0.01                   best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.02                   best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.03                   best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.05                   best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.07                   best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.1                    best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.2                    best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  boundary|sphere|5|centred|0.3                    best    2098 s  worst    5140 s  largest task    481 s (worker-seconds)
+  crossed|ackley|10|centred|0.01                   best    3741 s  worst    7526 s  largest task    553 s (worker-seconds)
+  crossed|ackley|10|centred|0.1                    best    3741 s  worst    7526 s  largest task    553 s (worker-seconds)
+  crossed|ackley|40|centred|0.01                   best    8893 s  worst   14559 s  largest task    917 s (worker-seconds)
+  crossed|ackley|40|centred|0.1                    best    8893 s  worst   14559 s  largest task    917 s (worker-seconds)
+  crossed|ackley|5|centred|0.01                    best    2863 s  worst    6205 s  largest task    507 s (worker-seconds)
+  crossed|ackley|5|centred|0.1                     best    2863 s  worst    6205 s  largest task    507 s (worker-seconds)
+  crossed|rastrigin|10|centred|0.01                best    3559 s  worst    7184 s  largest task    532 s (worker-seconds)
+  crossed|rastrigin|10|centred|0.1                 best    3559 s  worst    7184 s  largest task    532 s (worker-seconds)
+  crossed|rastrigin|40|centred|0.01                best    9292 s  worst   15155 s  largest task    974 s (worker-seconds)
+  crossed|rastrigin|40|centred|0.1                 best    9292 s  worst   15155 s  largest task    974 s (worker-seconds)
+  crossed|rastrigin|5|centred|0.01                 best    2704 s  worst    6016 s  largest task    507 s (worker-seconds)
+  crossed|rastrigin|5|centred|0.1                  best    2704 s  worst    6016 s  largest task    507 s (worker-seconds)
+  crossed|rosenbrock|10|centred|0.01               best    2858 s  worst    6246 s  largest task    514 s (worker-seconds)
+  crossed|rosenbrock|10|centred|0.1                best    2858 s  worst    6246 s  largest task    514 s (worker-seconds)
+  crossed|rosenbrock|40|centred|0.01               best    6555 s  worst   11330 s  largest task    633 s (worker-seconds)
+  crossed|rosenbrock|40|centred|0.1                best    6555 s  worst   11330 s  largest task    633 s (worker-seconds)
+  crossed|rosenbrock|5|centred|0.01                best    2404 s  worst    5563 s  largest task    491 s (worker-seconds)
+  crossed|rosenbrock|5|centred|0.1                 best    2404 s  worst    5563 s  largest task    491 s (worker-seconds)
+  crossed|sphere|10|centred|0.01                   best    2454 s  worst    5653 s  largest task    496 s (worker-seconds)
+  crossed|sphere|10|centred|0.1                    best    2454 s  worst    5653 s  largest task    496 s (worker-seconds)
+  crossed|sphere|40|centred|0.01                   best    4614 s  worst    8666 s  largest task    569 s (worker-seconds)
+  crossed|sphere|40|centred|0.1                    best    4614 s  worst    8666 s  largest task    569 s (worker-seconds)
+  crossed|sphere|5|centred|0.01                    best    2142 s  worst    5236 s  largest task    489 s (worker-seconds)
+  crossed|sphere|5|centred|0.1                     best    2142 s  worst    5236 s  largest task    489 s (worker-seconds)
+  mechanism|ackley|10|centred|0.01                 best    3671 s  worst    7336 s  largest task    535 s (worker-seconds)
+  mechanism|ackley|10|centred|0.1                  best    3671 s  worst    7336 s  largest task    535 s (worker-seconds)
+  mechanism|ackley|10|centred|0.5                  best    3671 s  worst    7336 s  largest task    535 s (worker-seconds)
+  mechanism|ackley|10|mix-0.1|0.01                 best    3843 s  worst    7592 s  largest task    543 s (worker-seconds)
+  mechanism|ackley|10|mix-0.1|0.1                  best    3843 s  worst    7592 s  largest task    543 s (worker-seconds)
+  mechanism|ackley|10|mix-0.1|0.5                  best    3843 s  worst    7592 s  largest task    543 s (worker-seconds)
+  mechanism|ackley|2|centred|0.01                  best    2355 s  worst    5573 s  largest task    502 s (worker-seconds)
+  mechanism|ackley|2|centred|0.1                   best    2355 s  worst    5573 s  largest task    502 s (worker-seconds)
+  mechanism|ackley|2|centred|0.5                   best    2355 s  worst    5573 s  largest task    502 s (worker-seconds)
+  mechanism|ackley|2|mix-0.1|0.01                  best    2499 s  worst    5800 s  largest task    512 s (worker-seconds)
+  mechanism|ackley|2|mix-0.1|0.1                   best    2499 s  worst    5800 s  largest task    512 s (worker-seconds)
+  mechanism|ackley|2|mix-0.1|0.5                   best    2499 s  worst    5800 s  largest task    512 s (worker-seconds)
+  mechanism|ackley|40|centred|0.01                 best    9006 s  worst   14803 s  largest task    935 s (worker-seconds)
+  mechanism|ackley|40|centred|0.1                  best    9006 s  worst   14803 s  largest task    935 s (worker-seconds)
+  mechanism|ackley|40|centred|0.5                  best    9006 s  worst   14803 s  largest task    935 s (worker-seconds)
+  mechanism|ackley|40|mix-0.1|0.01                 best    9690 s  worst   15661 s  largest task   1022 s (worker-seconds)
+  mechanism|ackley|40|mix-0.1|0.1                  best    9690 s  worst   15661 s  largest task   1022 s (worker-seconds)
+  mechanism|ackley|40|mix-0.1|0.5                  best    9690 s  worst   15661 s  largest task   1022 s (worker-seconds)
+  mechanism|ackley|5|centred|0.01                  best    2863 s  worst    6279 s  largest task    519 s (worker-seconds)
+  mechanism|ackley|5|centred|0.1                   best    2863 s  worst    6279 s  largest task    519 s (worker-seconds)
+  mechanism|ackley|5|centred|0.5                   best    2863 s  worst    6279 s  largest task    519 s (worker-seconds)
+  mechanism|ackley|5|mix-0.1|0.01                  best    3024 s  worst    6465 s  largest task    518 s (worker-seconds)
+  mechanism|ackley|5|mix-0.1|0.1                   best    3024 s  worst    6465 s  largest task    518 s (worker-seconds)
+  mechanism|ackley|5|mix-0.1|0.5                   best    3024 s  worst    6465 s  largest task    518 s (worker-seconds)
+  mechanism|griewank|10|centred|0.01               best    3252 s  worst    6765 s  largest task    523 s (worker-seconds)
+  mechanism|griewank|10|centred|0.1                best    3252 s  worst    6765 s  largest task    523 s (worker-seconds)
+  mechanism|griewank|10|centred|0.5                best    3252 s  worst    6765 s  largest task    523 s (worker-seconds)
+  mechanism|griewank|10|mix-0.1|0.01               best    3506 s  worst    7166 s  largest task    540 s (worker-seconds)
+  mechanism|griewank|10|mix-0.1|0.1                best    3506 s  worst    7166 s  largest task    540 s (worker-seconds)
+  mechanism|griewank|10|mix-0.1|0.5                best    3506 s  worst    7166 s  largest task    540 s (worker-seconds)
+  mechanism|griewank|2|centred|0.01                best    2237 s  worst    5514 s  largest task    516 s (worker-seconds)
+  mechanism|griewank|2|centred|0.1                 best    2237 s  worst    5514 s  largest task    516 s (worker-seconds)
+  mechanism|griewank|2|centred|0.5                 best    2237 s  worst    5514 s  largest task    516 s (worker-seconds)
+  mechanism|griewank|2|mix-0.1|0.01                best    2273 s  worst    5331 s  largest task    478 s (worker-seconds)
+  mechanism|griewank|2|mix-0.1|0.1                 best    2273 s  worst    5331 s  largest task    478 s (worker-seconds)
+  mechanism|griewank|2|mix-0.1|0.5                 best    2273 s  worst    5331 s  largest task    478 s (worker-seconds)
+  mechanism|griewank|40|centred|0.01               best    7221 s  worst   12305 s  largest task    710 s (worker-seconds)
+  mechanism|griewank|40|centred|0.1                best    7221 s  worst   12305 s  largest task    710 s (worker-seconds)
+  mechanism|griewank|40|centred|0.5                best    7221 s  worst   12305 s  largest task    710 s (worker-seconds)
+  mechanism|griewank|40|mix-0.1|0.01               best    8084 s  worst   13440 s  largest task    818 s (worker-seconds)
+  mechanism|griewank|40|mix-0.1|0.1                best    8084 s  worst   13440 s  largest task    818 s (worker-seconds)
+  mechanism|griewank|40|mix-0.1|0.5                best    8084 s  worst   13440 s  largest task    818 s (worker-seconds)
+  mechanism|griewank|5|centred|0.01                best    2586 s  worst    5850 s  largest task    502 s (worker-seconds)
+  mechanism|griewank|5|centred|0.1                 best    2586 s  worst    5850 s  largest task    502 s (worker-seconds)
+  mechanism|griewank|5|centred|0.5                 best    2586 s  worst    5850 s  largest task    502 s (worker-seconds)
+  mechanism|griewank|5|mix-0.1|0.01                best    2843 s  worst    6201 s  largest task    511 s (worker-seconds)
+  mechanism|griewank|5|mix-0.1|0.1                 best    2843 s  worst    6201 s  largest task    511 s (worker-seconds)
+  mechanism|griewank|5|mix-0.1|0.5                 best    2843 s  worst    6201 s  largest task    511 s (worker-seconds)
+  mechanism|levy|10|centred|0.01                   best    3983 s  worst    7731 s  largest task    539 s (worker-seconds)
+  mechanism|levy|10|centred|0.1                    best    3983 s  worst    7731 s  largest task    539 s (worker-seconds)
+  mechanism|levy|10|centred|0.5                    best    3983 s  worst    7731 s  largest task    539 s (worker-seconds)
+  mechanism|levy|10|mix-0.1|0.01                   best    4319 s  worst    8343 s  largest task    575 s (worker-seconds)
+  mechanism|levy|10|mix-0.1|0.1                    best    4319 s  worst    8343 s  largest task    575 s (worker-seconds)
+  mechanism|levy|10|mix-0.1|0.5                    best    4319 s  worst    8343 s  largest task    575 s (worker-seconds)
+  mechanism|levy|2|centred|0.01                    best    2299 s  worst    5478 s  largest task    498 s (worker-seconds)
+  mechanism|levy|2|centred|0.1                     best    2299 s  worst    5478 s  largest task    498 s (worker-seconds)
+  mechanism|levy|2|centred|0.5                     best    2299 s  worst    5478 s  largest task    498 s (worker-seconds)
+  mechanism|levy|2|mix-0.1|0.01                    best    2357 s  worst    5604 s  largest task    507 s (worker-seconds)
+  mechanism|levy|2|mix-0.1|0.1                     best    2357 s  worst    5604 s  largest task    507 s (worker-seconds)
+  mechanism|levy|2|mix-0.1|0.5                     best    2357 s  worst    5604 s  largest task    507 s (worker-seconds)
+  mechanism|levy|40|centred|0.01                   best   11041 s  worst   17470 s  largest task   1196 s (worker-seconds)
+  mechanism|levy|40|centred|0.1                    best   11041 s  worst   17470 s  largest task   1196 s (worker-seconds)
+  mechanism|levy|40|centred|0.5                    best   11041 s  worst   17470 s  largest task   1196 s (worker-seconds)
+  mechanism|levy|40|mix-0.1|0.01                   best   11793 s  worst   18474 s  largest task   1289 s (worker-seconds)
+  mechanism|levy|40|mix-0.1|0.1                    best   11793 s  worst   18474 s  largest task   1289 s (worker-seconds)
+  mechanism|levy|40|mix-0.1|0.5                    best   11793 s  worst   18474 s  largest task   1289 s (worker-seconds)
+  mechanism|levy|5|centred|0.01                    best    3004 s  worst    6504 s  largest task    528 s (worker-seconds)
+  mechanism|levy|5|centred|0.1                     best    3004 s  worst    6504 s  largest task    528 s (worker-seconds)
+  mechanism|levy|5|centred|0.5                     best    3004 s  worst    6504 s  largest task    528 s (worker-seconds)
+  mechanism|levy|5|mix-0.1|0.01                    best    3116 s  worst    6568 s  largest task    516 s (worker-seconds)
+  mechanism|levy|5|mix-0.1|0.1                     best    3116 s  worst    6568 s  largest task    516 s (worker-seconds)
+  mechanism|levy|5|mix-0.1|0.5                     best    3116 s  worst    6568 s  largest task    516 s (worker-seconds)
+  mechanism|rastrigin|10|centred|0.01              best    3585 s  worst    7238 s  largest task    535 s (worker-seconds)
+  mechanism|rastrigin|10|centred|0.1               best    3585 s  worst    7238 s  largest task    535 s (worker-seconds)
+  mechanism|rastrigin|10|centred|0.5               best    3585 s  worst    7238 s  largest task    535 s (worker-seconds)
+  mechanism|rastrigin|10|mix-0.1|0.01              best    3729 s  worst    7438 s  largest task    540 s (worker-seconds)
+  mechanism|rastrigin|10|mix-0.1|0.1               best    3729 s  worst    7438 s  largest task    540 s (worker-seconds)
+  mechanism|rastrigin|10|mix-0.1|0.5               best    3729 s  worst    7438 s  largest task    540 s (worker-seconds)
+  mechanism|rastrigin|2|centred|0.01               best    2171 s  worst    5197 s  largest task    475 s (worker-seconds)
+  mechanism|rastrigin|2|centred|0.1                best    2171 s  worst    5197 s  largest task    475 s (worker-seconds)
+  mechanism|rastrigin|2|centred|0.5                best    2171 s  worst    5197 s  largest task    475 s (worker-seconds)
+  mechanism|rastrigin|2|mix-0.1|0.01               best    2239 s  worst    5306 s  largest task    480 s (worker-seconds)
+  mechanism|rastrigin|2|mix-0.1|0.1                best    2239 s  worst    5306 s  largest task    480 s (worker-seconds)
+  mechanism|rastrigin|2|mix-0.1|0.5                best    2239 s  worst    5306 s  largest task    480 s (worker-seconds)
+  mechanism|rastrigin|40|centred|0.01              best    9378 s  worst   15142 s  largest task    982 s (worker-seconds)
+  mechanism|rastrigin|40|centred|0.1               best    9378 s  worst   15142 s  largest task    982 s (worker-seconds)
+  mechanism|rastrigin|40|centred|0.5               best    9378 s  worst   15142 s  largest task    982 s (worker-seconds)
+  mechanism|rastrigin|40|mix-0.1|0.01              best   10041 s  worst   16140 s  largest task   1067 s (worker-seconds)
+  mechanism|rastrigin|40|mix-0.1|0.1               best   10041 s  worst   16140 s  largest task   1067 s (worker-seconds)
+  mechanism|rastrigin|40|mix-0.1|0.5               best   10041 s  worst   16140 s  largest task   1067 s (worker-seconds)
+  mechanism|rastrigin|5|centred|0.01               best    2729 s  worst    6041 s  largest task    506 s (worker-seconds)
+  mechanism|rastrigin|5|centred|0.1                best    2729 s  worst    6041 s  largest task    506 s (worker-seconds)
+  mechanism|rastrigin|5|centred|0.5                best    2729 s  worst    6041 s  largest task    506 s (worker-seconds)
+  mechanism|rastrigin|5|mix-0.1|0.01               best    2796 s  worst    6105 s  largest task    504 s (worker-seconds)
+  mechanism|rastrigin|5|mix-0.1|0.1                best    2796 s  worst    6105 s  largest task    504 s (worker-seconds)
+  mechanism|rastrigin|5|mix-0.1|0.5                best    2796 s  worst    6105 s  largest task    504 s (worker-seconds)
+  mechanism|rosenbrock|10|centred|0.01             best    2917 s  worst    6315 s  largest task    514 s (worker-seconds)
+  mechanism|rosenbrock|10|centred|0.1              best    2917 s  worst    6315 s  largest task    514 s (worker-seconds)
+  mechanism|rosenbrock|10|centred|0.5              best    2917 s  worst    6315 s  largest task    514 s (worker-seconds)
+  mechanism|rosenbrock|10|mix-0.1|0.01             best    3040 s  worst    6341 s  largest task    494 s (worker-seconds)
+  mechanism|rosenbrock|10|mix-0.1|0.1              best    3040 s  worst    6341 s  largest task    494 s (worker-seconds)
+  mechanism|rosenbrock|10|mix-0.1|0.5              best    3040 s  worst    6341 s  largest task    494 s (worker-seconds)
+  mechanism|rosenbrock|2|centred|0.01              best    2162 s  worst    5748 s  largest task    576 s (worker-seconds)
+  mechanism|rosenbrock|2|centred|0.1               best    2162 s  worst    5748 s  largest task    576 s (worker-seconds)
+  mechanism|rosenbrock|2|centred|0.5               best    2162 s  worst    5748 s  largest task    576 s (worker-seconds)
+  mechanism|rosenbrock|2|mix-0.1|0.01              best    2141 s  worst    5597 s  largest task    553 s (worker-seconds)
+  mechanism|rosenbrock|2|mix-0.1|0.1               best    2141 s  worst    5597 s  largest task    553 s (worker-seconds)
+  mechanism|rosenbrock|2|mix-0.1|0.5               best    2141 s  worst    5597 s  largest task    553 s (worker-seconds)
+  mechanism|rosenbrock|40|centred|0.01             best    6599 s  worst   11377 s  largest task    638 s (worker-seconds)
+  mechanism|rosenbrock|40|centred|0.1              best    6599 s  worst   11377 s  largest task    638 s (worker-seconds)
+  mechanism|rosenbrock|40|centred|0.5              best    6599 s  worst   11377 s  largest task    638 s (worker-seconds)
+  mechanism|rosenbrock|40|mix-0.1|0.01             best    7153 s  worst   12071 s  largest task    704 s (worker-seconds)
+  mechanism|rosenbrock|40|mix-0.1|0.1              best    7153 s  worst   12071 s  largest task    704 s (worker-seconds)
+  mechanism|rosenbrock|40|mix-0.1|0.5              best    7153 s  worst   12071 s  largest task    704 s (worker-seconds)
+  mechanism|rosenbrock|5|centred|0.01              best    2350 s  worst    5567 s  largest task    501 s (worker-seconds)
+  mechanism|rosenbrock|5|centred|0.1               best    2350 s  worst    5567 s  largest task    501 s (worker-seconds)
+  mechanism|rosenbrock|5|centred|0.5               best    2350 s  worst    5567 s  largest task    501 s (worker-seconds)
+  mechanism|rosenbrock|5|mix-0.1|0.01              best    2476 s  worst    5627 s  largest task    487 s (worker-seconds)
+  mechanism|rosenbrock|5|mix-0.1|0.1               best    2476 s  worst    5627 s  largest task    487 s (worker-seconds)
+  mechanism|rosenbrock|5|mix-0.1|0.5               best    2476 s  worst    5627 s  largest task    487 s (worker-seconds)
+  mechanism|sphere|10|centred|0.01                 best    2503 s  worst    5706 s  largest task    496 s (worker-seconds)
+  mechanism|sphere|10|centred|0.1                  best    2503 s  worst    5706 s  largest task    496 s (worker-seconds)
+  mechanism|sphere|10|centred|0.5                  best    2503 s  worst    5706 s  largest task    496 s (worker-seconds)
+  mechanism|sphere|10|mix-0.1|0.01                 best    2659 s  worst    6017 s  largest task    515 s (worker-seconds)
+  mechanism|sphere|10|mix-0.1|0.1                  best    2659 s  worst    6017 s  largest task    515 s (worker-seconds)
+  mechanism|sphere|10|mix-0.1|0.5                  best    2659 s  worst    6017 s  largest task    515 s (worker-seconds)
+  mechanism|sphere|2|centred|0.01                  best    1922 s  worst    4899 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|2|centred|0.1                   best    1922 s  worst    4899 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|2|centred|0.5                   best    1922 s  worst    4899 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|2|mix-0.1|0.01                  best    2039 s  worst    5029 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|2|mix-0.1|0.1                   best    2039 s  worst    5029 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|2|mix-0.1|0.5                   best    2039 s  worst    5029 s  largest task    475 s (worker-seconds)
+  mechanism|sphere|40|centred|0.01                 best    4618 s  worst    8659 s  largest task    567 s (worker-seconds)
+  mechanism|sphere|40|centred|0.1                  best    4618 s  worst    8659 s  largest task    567 s (worker-seconds)
+  mechanism|sphere|40|centred|0.5                  best    4618 s  worst    8659 s  largest task    567 s (worker-seconds)
+  mechanism|sphere|40|mix-0.1|0.01                 best    5204 s  worst    9320 s  largest task    562 s (worker-seconds)
+  mechanism|sphere|40|mix-0.1|0.1                  best    5204 s  worst    9320 s  largest task    562 s (worker-seconds)
+  mechanism|sphere|40|mix-0.1|0.5                  best    5204 s  worst    9320 s  largest task    562 s (worker-seconds)
+  mechanism|sphere|5|centred|0.01                  best    2111 s  worst    5180 s  largest task    485 s (worker-seconds)
+  mechanism|sphere|5|centred|0.1                   best    2111 s  worst    5180 s  largest task    485 s (worker-seconds)
+  mechanism|sphere|5|centred|0.5                   best    2111 s  worst    5180 s  largest task    485 s (worker-seconds)
+  mechanism|sphere|5|mix-0.1|0.01                  best    2202 s  worst    5382 s  largest task    500 s (worker-seconds)
+  mechanism|sphere|5|mix-0.1|0.1                   best    2202 s  worst    5382 s  largest task    500 s (worker-seconds)
+  mechanism|sphere|5|mix-0.1|0.5                   best    2202 s  worst    5382 s  largest task    500 s (worker-seconds)
+  sigma|ackley|10|centred|0.01                     best    3667 s  worst    7327 s  largest task    534 s (worker-seconds)
+  sigma|ackley|10|centred|0.1                      best    3667 s  worst    7327 s  largest task    534 s (worker-seconds)
+  sigma|ackley|40|centred|0.01                     best    8882 s  worst   14480 s  largest task    919 s (worker-seconds)
+  sigma|ackley|40|centred|0.1                      best    8882 s  worst   14480 s  largest task    919 s (worker-seconds)
+  sigma|ackley|5|centred|0.01                      best    2842 s  worst    6224 s  largest task    513 s (worker-seconds)
+  sigma|ackley|5|centred|0.1                       best    2842 s  worst    6224 s  largest task    513 s (worker-seconds)
+  sigma|rastrigin|10|centred|0.01                  best    3570 s  worst    7204 s  largest task    532 s (worker-seconds)
+  sigma|rastrigin|10|centred|0.1                   best    3570 s  worst    7204 s  largest task    532 s (worker-seconds)
+  sigma|rastrigin|40|centred|0.01                  best    9382 s  worst   15227 s  largest task    981 s (worker-seconds)
+  sigma|rastrigin|40|centred|0.1                   best    9382 s  worst   15227 s  largest task    981 s (worker-seconds)
+  sigma|rastrigin|5|centred|0.01                   best    2653 s  worst    5962 s  largest task    507 s (worker-seconds)
+  sigma|rastrigin|5|centred|0.1                    best    2653 s  worst    5962 s  largest task    507 s (worker-seconds)
+  sigma|rosenbrock|10|centred|0.01                 best    2894 s  worst    6254 s  largest task    509 s (worker-seconds)
+  sigma|rosenbrock|10|centred|0.1                  best    2894 s  worst    6254 s  largest task    509 s (worker-seconds)
+  sigma|rosenbrock|40|centred|0.01                 best    6539 s  worst   11286 s  largest task    630 s (worker-seconds)
+  sigma|rosenbrock|40|centred|0.1                  best    6539 s  worst   11286 s  largest task    630 s (worker-seconds)
+  sigma|rosenbrock|5|centred|0.01                  best    2368 s  worst    5535 s  largest task    493 s (worker-seconds)
+  sigma|rosenbrock|5|centred|0.1                   best    2368 s  worst    5535 s  largest task    493 s (worker-seconds)
+  sigma|sphere|10|centred|0.01                     best    2498 s  worst    5540 s  largest task    468 s (worker-seconds)
+  sigma|sphere|10|centred|0.1                      best    2498 s  worst    5540 s  largest task    468 s (worker-seconds)
+  sigma|sphere|40|centred|0.01                     best    4427 s  worst    6919 s  largest task    382 s (worker-seconds)
+  sigma|sphere|40|centred|0.1                      best    4427 s  worst    6919 s  largest task    382 s (worker-seconds)
+  sigma|sphere|5|centred|0.01                      best    1767 s  worst    3301 s  largest task    232 s (worker-seconds)
+  sigma|sphere|5|centred|0.1                       best    1767 s  worst    3301 s  largest task    232 s (worker-seconds)
+  best case (no cell adequate) 368357 s   worst-case estimate (every cell adequate) 699034 s   at 4 workers   ceiling 36000 s (given)
+  largest single task, estimated 1289 s
+  shard counts from --shard-target 1.0 x --ceiling 36000 s (given ceiling) = 36000 s
+  at the target (36000 s): smallest --nshards 26   largest shard 31781 s = 88.3% of 36000 s, at 4 workers, over the 336 selected cells
+  at the full ceiling (36000 s): smallest --nshards 26   largest shard 31781 s = 88.3% of 36000 s, at 4 workers, over the 336 selected cells
+  RECOMMENDED: --nshards 26, the count at the target. The estimate assumes perfect scaling, ignores barrier idle and phase tails, and is not a bound. G-CAP refuses only above --ceiling 36000 s.
+
+------------------------------------------------------------------------------------------------
+G-STOP PREVIEW -- what a full job with these flags would get (largest task over the selected cells)
+------------------------------------------------------------------------------------------------
+  largest single task, estimated 1289 s   TIMEOUT_S = 5 x 1289 = 6446 s
+  --stop-after 36000 s + TIMEOUT_S 6446 s = 42446 s   cap 43200 s   margin 754 s (Kaggle start-up and shutdown are not counted)
+  G-STOP would PASS
+
+------------------------------------------------------------------------------------------------
+ROWS SERVED BY EACH CELL (this job)
+------------------------------------------------------------------------------------------------
+  boundary|ackley|10|centred|0.01   rows TAU8
+  boundary|ackley|10|centred|0.02   rows TAU8
+  boundary|ackley|10|centred|0.03   rows TAU8
+  boundary|ackley|10|centred|0.05   rows TAU8
+  boundary|ackley|10|centred|0.07   rows TAU8
+  boundary|ackley|10|centred|0.1   rows TAU8
+  boundary|ackley|10|centred|0.2   rows TAU8
+  boundary|ackley|10|centred|0.3   rows TAU8
+  boundary|ackley|40|centred|0.01   rows TAU8
+  boundary|ackley|40|centred|0.02   rows TAU8
+  boundary|ackley|40|centred|0.03   rows TAU8
+  boundary|ackley|40|centred|0.05   rows TAU8
+  boundary|ackley|40|centred|0.07   rows TAU8
+  boundary|ackley|40|centred|0.1   rows TAU8
+  boundary|ackley|40|centred|0.2   rows TAU8
+  boundary|ackley|40|centred|0.3   rows TAU8
+  boundary|ackley|5|centred|0.01   rows TAU8
+  boundary|ackley|5|centred|0.02   rows TAU8
+  boundary|ackley|5|centred|0.03   rows TAU8
+  boundary|ackley|5|centred|0.05   rows TAU8
+  boundary|ackley|5|centred|0.07   rows TAU8
+  boundary|ackley|5|centred|0.1   rows TAU8
+  boundary|ackley|5|centred|0.2   rows TAU8
+  boundary|ackley|5|centred|0.3   rows TAU8
+  boundary|griewank|10|centred|0.01   rows TAU8
+  boundary|griewank|10|centred|0.02   rows TAU8
+  boundary|griewank|10|centred|0.03   rows TAU8
+  boundary|griewank|10|centred|0.05   rows TAU8
+  boundary|griewank|10|centred|0.07   rows TAU8
+  boundary|griewank|10|centred|0.1   rows TAU8
+  boundary|griewank|10|centred|0.2   rows TAU8
+  boundary|griewank|10|centred|0.3   rows TAU8
+  boundary|griewank|40|centred|0.01   rows TAU8
+  boundary|griewank|40|centred|0.02   rows TAU8
+  boundary|griewank|40|centred|0.03   rows TAU8
+  boundary|griewank|40|centred|0.05   rows TAU8
+  boundary|griewank|40|centred|0.07   rows TAU8
+  boundary|griewank|40|centred|0.1   rows TAU8
+  boundary|griewank|40|centred|0.2   rows TAU8
+  boundary|griewank|40|centred|0.3   rows TAU8
+  boundary|griewank|5|centred|0.01   rows TAU8
+  boundary|griewank|5|centred|0.02   rows TAU8
+  boundary|griewank|5|centred|0.03   rows TAU8
+  boundary|griewank|5|centred|0.05   rows TAU8
+  boundary|griewank|5|centred|0.07   rows TAU8
+  boundary|griewank|5|centred|0.1   rows TAU8
+  boundary|griewank|5|centred|0.2   rows TAU8
+  boundary|griewank|5|centred|0.3   rows TAU8
+  boundary|levy|10|centred|0.01   rows TAU8
+  boundary|levy|10|centred|0.02   rows TAU8
+  boundary|levy|10|centred|0.03   rows TAU8
+  boundary|levy|10|centred|0.05   rows TAU8
+  boundary|levy|10|centred|0.07   rows TAU8
+  boundary|levy|10|centred|0.1   rows TAU8
+  boundary|levy|10|centred|0.2   rows TAU8
+  boundary|levy|10|centred|0.3   rows TAU8
+  boundary|levy|40|centred|0.01   rows TAU8
+  boundary|levy|40|centred|0.02   rows TAU8
+  boundary|levy|40|centred|0.03   rows TAU8
+  boundary|levy|40|centred|0.05   rows TAU8
+  boundary|levy|40|centred|0.07   rows TAU8
+  boundary|levy|40|centred|0.1   rows TAU8
+  boundary|levy|40|centred|0.2   rows TAU8
+  boundary|levy|40|centred|0.3   rows TAU8
+  boundary|levy|5|centred|0.01   rows TAU8
+  boundary|levy|5|centred|0.02   rows TAU8
+  boundary|levy|5|centred|0.03   rows TAU8
+  boundary|levy|5|centred|0.05   rows TAU8
+  boundary|levy|5|centred|0.07   rows TAU8
+  boundary|levy|5|centred|0.1   rows TAU8
+  boundary|levy|5|centred|0.2   rows TAU8
+  boundary|levy|5|centred|0.3   rows TAU8
+  boundary|rastrigin|10|centred|0.01   rows TAU8
+  boundary|rastrigin|10|centred|0.02   rows TAU8
+  boundary|rastrigin|10|centred|0.03   rows TAU8
+  boundary|rastrigin|10|centred|0.05   rows TAU8
+  boundary|rastrigin|10|centred|0.07   rows TAU8
+  boundary|rastrigin|10|centred|0.1   rows TAU8
+  boundary|rastrigin|10|centred|0.2   rows TAU8
+  boundary|rastrigin|10|centred|0.3   rows TAU8
+  boundary|rastrigin|40|centred|0.01   rows TAU8
+  boundary|rastrigin|40|centred|0.02   rows TAU8
+  boundary|rastrigin|40|centred|0.03   rows TAU8
+  boundary|rastrigin|40|centred|0.05   rows TAU8
+  boundary|rastrigin|40|centred|0.07   rows TAU8
+  boundary|rastrigin|40|centred|0.1   rows TAU8
+  boundary|rastrigin|40|centred|0.2   rows TAU8
+  boundary|rastrigin|40|centred|0.3   rows TAU8
+  boundary|rastrigin|5|centred|0.01   rows TAU8
+  boundary|rastrigin|5|centred|0.02   rows TAU8
+  boundary|rastrigin|5|centred|0.03   rows TAU8
+  boundary|rastrigin|5|centred|0.05   rows TAU8
+  boundary|rastrigin|5|centred|0.07   rows TAU8
+  boundary|rastrigin|5|centred|0.1   rows TAU8
+  boundary|rastrigin|5|centred|0.2   rows TAU8
+  boundary|rastrigin|5|centred|0.3   rows TAU8
+  boundary|rosenbrock|10|centred|0.01   rows TAU8
+  boundary|rosenbrock|10|centred|0.02   rows TAU8
+  boundary|rosenbrock|10|centred|0.03   rows TAU8
+  boundary|rosenbrock|10|centred|0.05   rows TAU8
+  boundary|rosenbrock|10|centred|0.07   rows TAU8
+  boundary|rosenbrock|10|centred|0.1   rows TAU8
+  boundary|rosenbrock|10|centred|0.2   rows TAU8
+  boundary|rosenbrock|10|centred|0.3   rows TAU8
+  boundary|rosenbrock|40|centred|0.01   rows TAU8
+  boundary|rosenbrock|40|centred|0.02   rows TAU8
+  boundary|rosenbrock|40|centred|0.03   rows TAU8
+  boundary|rosenbrock|40|centred|0.05   rows TAU8
+  boundary|rosenbrock|40|centred|0.07   rows TAU8
+  boundary|rosenbrock|40|centred|0.1   rows TAU8
+  boundary|rosenbrock|40|centred|0.2   rows TAU8
+  boundary|rosenbrock|40|centred|0.3   rows TAU8
+  boundary|rosenbrock|5|centred|0.01   rows TAU8
+  boundary|rosenbrock|5|centred|0.02   rows TAU8
+  boundary|rosenbrock|5|centred|0.03   rows TAU8
+  boundary|rosenbrock|5|centred|0.05   rows TAU8
+  boundary|rosenbrock|5|centred|0.07   rows TAU8
+  boundary|rosenbrock|5|centred|0.1   rows TAU8
+  boundary|rosenbrock|5|centred|0.2   rows TAU8
+  boundary|rosenbrock|5|centred|0.3   rows TAU8
+  boundary|sphere|10|centred|0.01   rows TAU8
+  boundary|sphere|10|centred|0.02   rows TAU8
+  boundary|sphere|10|centred|0.03   rows TAU8
+  boundary|sphere|10|centred|0.05   rows TAU8
+  boundary|sphere|10|centred|0.07   rows TAU8
+  boundary|sphere|10|centred|0.1   rows TAU8
+  boundary|sphere|10|centred|0.2   rows TAU8
+  boundary|sphere|10|centred|0.3   rows TAU8
+  boundary|sphere|40|centred|0.01   rows TAU8
+  boundary|sphere|40|centred|0.02   rows TAU8
+  boundary|sphere|40|centred|0.03   rows TAU8
+  boundary|sphere|40|centred|0.05   rows TAU8
+  boundary|sphere|40|centred|0.07   rows TAU8
+  boundary|sphere|40|centred|0.1   rows TAU8
+  boundary|sphere|40|centred|0.2   rows TAU8
+  boundary|sphere|40|centred|0.3   rows TAU8
+  boundary|sphere|5|centred|0.01   rows TAU8
+  boundary|sphere|5|centred|0.02   rows TAU8
+  boundary|sphere|5|centred|0.03   rows TAU8
+  boundary|sphere|5|centred|0.05   rows TAU8
+  boundary|sphere|5|centred|0.07   rows TAU8
+  boundary|sphere|5|centred|0.1   rows TAU8
+  boundary|sphere|5|centred|0.2   rows TAU8
+  boundary|sphere|5|centred|0.3   rows TAU8
+  crossed|ackley|10|centred|0.01   rows ANISO
+  crossed|ackley|10|centred|0.1   rows ANISO
+  crossed|ackley|40|centred|0.01   rows ANISO
+  crossed|ackley|40|centred|0.1   rows ANISO
+  crossed|ackley|5|centred|0.01   rows ANISO
+  crossed|ackley|5|centred|0.1   rows ANISO
+  crossed|rastrigin|10|centred|0.01   rows ANISO
+  crossed|rastrigin|10|centred|0.1   rows ANISO
+  crossed|rastrigin|40|centred|0.01   rows ANISO
+  crossed|rastrigin|40|centred|0.1   rows ANISO
+  crossed|rastrigin|5|centred|0.01   rows ANISO
+  crossed|rastrigin|5|centred|0.1   rows ANISO
+  crossed|rosenbrock|10|centred|0.01   rows ANISO
+  crossed|rosenbrock|10|centred|0.1   rows ANISO
+  crossed|rosenbrock|40|centred|0.01   rows ANISO
+  crossed|rosenbrock|40|centred|0.1   rows ANISO
+  crossed|rosenbrock|5|centred|0.01   rows ANISO
+  crossed|rosenbrock|5|centred|0.1   rows ANISO
+  crossed|sphere|10|centred|0.01   rows ANISO
+  crossed|sphere|10|centred|0.1   rows ANISO
+  crossed|sphere|40|centred|0.01   rows ANISO
+  crossed|sphere|40|centred|0.1   rows ANISO
+  crossed|sphere|5|centred|0.01   rows ANISO
+  crossed|sphere|5|centred|0.1   rows ANISO
+  mechanism|ackley|10|centred|0.01   rows CONC
+  mechanism|ackley|10|centred|0.1   rows CONC
+  mechanism|ackley|10|centred|0.5   rows CONC
+  mechanism|ackley|10|mix-0.1|0.01   rows CONC
+  mechanism|ackley|10|mix-0.1|0.1   rows CONC
+  mechanism|ackley|10|mix-0.1|0.5   rows CONC
+  mechanism|ackley|2|centred|0.01   rows CONC
+  mechanism|ackley|2|centred|0.1   rows CONC
+  mechanism|ackley|2|centred|0.5   rows CONC
+  mechanism|ackley|2|mix-0.1|0.01   rows CONC
+  mechanism|ackley|2|mix-0.1|0.1   rows CONC
+  mechanism|ackley|2|mix-0.1|0.5   rows CONC
+  mechanism|ackley|40|centred|0.01   rows CONC
+  mechanism|ackley|40|centred|0.1   rows CONC
+  mechanism|ackley|40|centred|0.5   rows CONC
+  mechanism|ackley|40|mix-0.1|0.01   rows CONC
+  mechanism|ackley|40|mix-0.1|0.1   rows CONC
+  mechanism|ackley|40|mix-0.1|0.5   rows CONC
+  mechanism|ackley|5|centred|0.01   rows CONC
+  mechanism|ackley|5|centred|0.1   rows CONC
+  mechanism|ackley|5|centred|0.5   rows CONC
+  mechanism|ackley|5|mix-0.1|0.01   rows CONC
+  mechanism|ackley|5|mix-0.1|0.1   rows CONC
+  mechanism|ackley|5|mix-0.1|0.5   rows CONC
+  mechanism|griewank|10|centred|0.01   rows CONC
+  mechanism|griewank|10|centred|0.1   rows CONC
+  mechanism|griewank|10|centred|0.5   rows CONC
+  mechanism|griewank|10|mix-0.1|0.01   rows CONC
+  mechanism|griewank|10|mix-0.1|0.1   rows CONC
+  mechanism|griewank|10|mix-0.1|0.5   rows CONC
+  mechanism|griewank|2|centred|0.01   rows CONC
+  mechanism|griewank|2|centred|0.1   rows CONC
+  mechanism|griewank|2|centred|0.5   rows CONC
+  mechanism|griewank|2|mix-0.1|0.01   rows CONC
+  mechanism|griewank|2|mix-0.1|0.1   rows CONC
+  mechanism|griewank|2|mix-0.1|0.5   rows CONC
+  mechanism|griewank|40|centred|0.01   rows CONC
+  mechanism|griewank|40|centred|0.1   rows CONC
+  mechanism|griewank|40|centred|0.5   rows CONC
+  mechanism|griewank|40|mix-0.1|0.01   rows CONC
+  mechanism|griewank|40|mix-0.1|0.1   rows CONC
+  mechanism|griewank|40|mix-0.1|0.5   rows CONC
+  mechanism|griewank|5|centred|0.01   rows CONC
+  mechanism|griewank|5|centred|0.1   rows CONC
+  mechanism|griewank|5|centred|0.5   rows CONC
+  mechanism|griewank|5|mix-0.1|0.01   rows CONC
+  mechanism|griewank|5|mix-0.1|0.1   rows CONC
+  mechanism|griewank|5|mix-0.1|0.5   rows CONC
+  mechanism|levy|10|centred|0.01   rows CONC
+  mechanism|levy|10|centred|0.1   rows CONC
+  mechanism|levy|10|centred|0.5   rows CONC
+  mechanism|levy|10|mix-0.1|0.01   rows CONC
+  mechanism|levy|10|mix-0.1|0.1   rows CONC
+  mechanism|levy|10|mix-0.1|0.5   rows CONC
+  mechanism|levy|2|centred|0.01   rows CONC
+  mechanism|levy|2|centred|0.1   rows CONC
+  mechanism|levy|2|centred|0.5   rows CONC
+  mechanism|levy|2|mix-0.1|0.01   rows CONC
+  mechanism|levy|2|mix-0.1|0.1   rows CONC
+  mechanism|levy|2|mix-0.1|0.5   rows CONC
+  mechanism|levy|40|centred|0.01   rows CONC
+  mechanism|levy|40|centred|0.1   rows CONC
+  mechanism|levy|40|centred|0.5   rows CONC
+  mechanism|levy|40|mix-0.1|0.01   rows CONC
+  mechanism|levy|40|mix-0.1|0.1   rows CONC
+  mechanism|levy|40|mix-0.1|0.5   rows CONC
+  mechanism|levy|5|centred|0.01   rows CONC
+  mechanism|levy|5|centred|0.1   rows CONC
+  mechanism|levy|5|centred|0.5   rows CONC
+  mechanism|levy|5|mix-0.1|0.01   rows CONC
+  mechanism|levy|5|mix-0.1|0.1   rows CONC
+  mechanism|levy|5|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|10|centred|0.01   rows CONC
+  mechanism|rastrigin|10|centred|0.1   rows CONC
+  mechanism|rastrigin|10|centred|0.5   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|2|centred|0.01   rows CONC
+  mechanism|rastrigin|2|centred|0.1   rows CONC
+  mechanism|rastrigin|2|centred|0.5   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|40|centred|0.01   rows CONC
+  mechanism|rastrigin|40|centred|0.1   rows CONC
+  mechanism|rastrigin|40|centred|0.5   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|5|centred|0.01   rows CONC
+  mechanism|rastrigin|5|centred|0.1   rows CONC
+  mechanism|rastrigin|5|centred|0.5   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|10|centred|0.01   rows CONC
+  mechanism|rosenbrock|10|centred|0.1   rows CONC
+  mechanism|rosenbrock|10|centred|0.5   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|2|centred|0.01   rows CONC
+  mechanism|rosenbrock|2|centred|0.1   rows CONC
+  mechanism|rosenbrock|2|centred|0.5   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|40|centred|0.01   rows CONC
+  mechanism|rosenbrock|40|centred|0.1   rows CONC
+  mechanism|rosenbrock|40|centred|0.5   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|5|centred|0.01   rows CONC
+  mechanism|rosenbrock|5|centred|0.1   rows CONC
+  mechanism|rosenbrock|5|centred|0.5   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.5   rows CONC
+  mechanism|sphere|10|centred|0.01   rows CONC
+  mechanism|sphere|10|centred|0.1   rows CONC
+  mechanism|sphere|10|centred|0.5   rows CONC
+  mechanism|sphere|10|mix-0.1|0.01   rows CONC
+  mechanism|sphere|10|mix-0.1|0.1   rows CONC
+  mechanism|sphere|10|mix-0.1|0.5   rows CONC
+  mechanism|sphere|2|centred|0.01   rows CONC
+  mechanism|sphere|2|centred|0.1   rows CONC
+  mechanism|sphere|2|centred|0.5   rows CONC
+  mechanism|sphere|2|mix-0.1|0.01   rows CONC
+  mechanism|sphere|2|mix-0.1|0.1   rows CONC
+  mechanism|sphere|2|mix-0.1|0.5   rows CONC
+  mechanism|sphere|40|centred|0.01   rows CONC
+  mechanism|sphere|40|centred|0.1   rows CONC
+  mechanism|sphere|40|centred|0.5   rows CONC
+  mechanism|sphere|40|mix-0.1|0.01   rows CONC
+  mechanism|sphere|40|mix-0.1|0.1   rows CONC
+  mechanism|sphere|40|mix-0.1|0.5   rows CONC
+  mechanism|sphere|5|centred|0.01   rows CONC
+  mechanism|sphere|5|centred|0.1   rows CONC
+  mechanism|sphere|5|centred|0.5   rows CONC
+  mechanism|sphere|5|mix-0.1|0.01   rows CONC
+  mechanism|sphere|5|mix-0.1|0.1   rows CONC
+  mechanism|sphere|5|mix-0.1|0.5   rows CONC
+  sigma|ackley|10|centred|0.01   rows SIGMA
+  sigma|ackley|10|centred|0.1   rows SIGMA
+  sigma|ackley|40|centred|0.01   rows SIGMA
+  sigma|ackley|40|centred|0.1   rows SIGMA
+  sigma|ackley|5|centred|0.01   rows SIGMA
+  sigma|ackley|5|centred|0.1   rows SIGMA
+  sigma|rastrigin|10|centred|0.01   rows SIGMA
+  sigma|rastrigin|10|centred|0.1   rows SIGMA
+  sigma|rastrigin|40|centred|0.01   rows SIGMA
+  sigma|rastrigin|40|centred|0.1   rows SIGMA
+  sigma|rastrigin|5|centred|0.01   rows SIGMA
+  sigma|rastrigin|5|centred|0.1   rows SIGMA
+  sigma|rosenbrock|10|centred|0.01   rows SIGMA
+  sigma|rosenbrock|10|centred|0.1   rows SIGMA
+  sigma|rosenbrock|40|centred|0.01   rows SIGMA
+  sigma|rosenbrock|40|centred|0.1   rows SIGMA
+  sigma|rosenbrock|5|centred|0.01   rows SIGMA
+  sigma|rosenbrock|5|centred|0.1   rows SIGMA
+  sigma|sphere|10|centred|0.01   rows SIGMA
+  sigma|sphere|10|centred|0.1   rows SIGMA
+  sigma|sphere|40|centred|0.01   rows SIGMA
+  sigma|sphere|40|centred|0.1   rows SIGMA
+  sigma|sphere|5|centred|0.01   rows SIGMA
+  sigma|sphere|5|centred|0.1   rows SIGMA
+
+PLAN MODE: no draws, nothing written.
