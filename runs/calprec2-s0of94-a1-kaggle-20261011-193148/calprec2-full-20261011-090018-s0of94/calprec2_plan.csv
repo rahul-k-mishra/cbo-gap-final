@@ -1,0 +1,5 @@
+cell,shard,rows
+boundary|ackley|10|centred|0.01,0,TAU8
+boundary|rastrigin|5|centred|0.2,0,TAU8
+mechanism|ackley|5|centred|0.5,0,CONC
+mechanism|rosenbrock|5|centred|0.01,0,CONC
