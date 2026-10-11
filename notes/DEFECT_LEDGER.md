@@ -473,6 +473,37 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     list with the replayed grid directly (calprec2.py at 0bd7011).
   - It never executed. Recorded in notes/CALPREC_V2_REVIEW.md (third
     pass). CLOSED by 0bd7011.
+- N27 (scope decision, Rahul 2026-10-11, after the calprec2 plan:
+  logs/calprec2-plan.log, 861 cells over 13 rows, "could become case (a)
+  at worst: 861"). calprec v2 calibrates FOUR rows only:
+  - CONC (mechanism, 144 cells);
+  - TAU8 (boundary, 144);
+  - SIGMA (sigma, 24);
+  - ANISO (crossed, 24).
+  That is 336 cells, the counts read from that plan.
+  - Reasons:
+    - referee points 3, 4 and 5 concern the concentration arm and the
+      operating level, and the diffusion comparison is main text under the
+      agreed scope (REVISION_PLAN);
+    - the supplementary rows' estimand is the archived protocol, so
+      recalibrating them would change what the supplement reports rather
+      than correct it;
+    - 861 cells all reaching case (a) is unaffordable, and no referee
+      asked for it.
+  - This narrows RERUN_PLAN's CALIBRATION coverage only. The rerun still
+    covers the full matrix. The four rows take calprec v2 betas; every
+    other row keeps its archived probe beta (or design beta or B rule) and
+    is reported as probe-calibrated at nominal tau0. PROBEARM is
+    unaffected. No row is dropped from the rerun.
+  - The deviation of the kept probe betas cannot be quantified per cell
+    from calprec v1 and refscale alone:
+    - calprec v1 covers one cell (ackley d = 40, C2);
+    - refscale evaluates no probe beta;
+    - the archive's per-cell achieved initial concentrations (on 50000-
+      point references) are the per-cell record available, with refscale's
+      evidence on their precision at tight targets.
+    See CALPREC_V2_SPEC section 2.
+  OPEN until calprec v2 has run on the four rows.
 
 ## Checked and found sound
 

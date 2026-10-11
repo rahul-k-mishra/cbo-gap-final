@@ -183,6 +183,28 @@ K5 stays open as a limit, for these reasons:
 - calprec v2's streamed solves already run on the laptop because of K5
   (D5a).
 
+## Calibration scope narrowed, rerun not narrowed (Rahul, 2026-10-11; ledger N27)
+
+- calprec v2 calibrates four rows: CONC, TAU8, SIGMA and ANISO, 336
+  calibration cells by the plan's count (CALPREC_V2_SPEC section 2).
+- THE RERUN STILL COVERS THE FULL MATRIX: all seventeen rows of the
+  costprobe2 projection, as seventeen single-shard jobs (N22).
+  - CONC, TAU8, SIGMA and ANISO take calprec v2 betas.
+  - PROBEARM takes the archived probe beta, by design.
+  - BETA-ISO and BETA-ANI keep their design betas.
+  - LAWPANEL keeps the B rule.
+  - ADAPT, REFSIZE, SYNTH, NAMED, HORIZON, GEOM, RMAP, CLIFF and ONSET keep
+    their archived probe betas and are reported as probe-calibrated at
+    nominal tau0.
+- A future session must not read this as dropping rows from the rerun.
+  No row is dropped.
+- The "calprec coverage" list below is superseded where it concerns rows
+  other than the four. Their deviation from nominal is quantified as
+  stated in CALPREC_V2_SPEC section 2: archived per-cell achieved
+  concentration, calprec v1's single C2 cell, and refscale's adequacy
+  evidence. A per-cell measurement of tau(probe beta) on an adequate
+  reference is not designed.
+
 ## calprec coverage the rerun needs and calprec does not have
 
 calprec.py now covers obj6 x d {2, 5, 10, 40} x law {centred, mix-0.1} x

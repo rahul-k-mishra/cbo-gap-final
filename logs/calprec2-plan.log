@@ -1,0 +1,1892 @@
+================================================================================================
+CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, through each row's module
+================================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2   start fork
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  script   sha256 4c7f29502091b464bbd66485b2ee4aac3717a6dd4dad477c7a33a69227b36d96
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  mode     plan   rows CONC,ADAPT,TAU8,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,SIGMA,ANISO,RMAP,CLIFF,ONSET   shard 0 of 1   max rung 1024000000
+  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   L_REF [1000000, 4000000, 16000000, 64000000, 256000000, 1024000000]  reps 6   chunk 250000  block 64 chunks
+  C5m <= 0.054682  D1 <= 0.025  C1 <= 0.05  C6 <= 0.05  E1 <= 1e-12  E3 <= 1e-06  RSS <= 3072 MB
+  grid     K 64 per pass over [1e-10, 1e+10], stop at relative width <= 1e-06: 5 passes by the rule
+  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 S 34 smoke 35
+
+------------------------------------------------------------------------------------------------
+V1 -- ARCHIVE IDENTITY (imported modules' own files)
+------------------------------------------------------------------------------------------------
+  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok
+  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok
+  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok
+  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok
+  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok
+  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok
+  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok
+  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok
+  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok
+  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok
+  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok
+  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok
+  V1 PASS
+
+------------------------------------------------------------------------------------------------
+V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts
+------------------------------------------------------------------------------------------------
+  CONC      M       mechanism.py 294-297 M               ok
+  CONC      dims    mechanism.py 294-297 dims            ok
+  CONC      jgrid   mechanism.py 294-297 J_list          ok
+  CONC      laws    mechanism.py 294-297 inits           ok
+  CONC      objs    mechanism.py 294-297 objs            ok
+  CONC      taus    mechanism.py 294-297 taus            ok
+  ADAPT     M       control.py 297-300 M               ok
+  ADAPT     arms    control.py 305-305 arms            ok
+  ADAPT     dims    control.py 297-300 dims            ok
+  ADAPT     jgrid   control.py 297-300 J_list          ok
+  ADAPT     objs    control.py 297-300 objs            ok
+  ADAPT     taus    control.py 297-300 taus            ok
+  TAU8      M       boundary.py 252-256 M               ok
+  TAU8      dims    boundary.py 252-256 dims            ok
+  TAU8      jgrid   boundary.py 252-256 J_list          ok
+  TAU8      objs    boundary.py 252-256 objs            ok
+  TAU8      taus    boundary.py 252-256 taus            ok
+  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181
+  REFSIZE   M       regime.py 483-483 M               ok
+  REFSIZE   d       regime.py 512-512 dA              ok
+  REFSIZE   jgrid   regime.py 484-484 Jgrid           ok
+  REFSIZE   jinfs   regime.py 508-508 Jinfs           ok
+  REFSIZE   objs    regime.py 511-511 objsA           ok
+  REFSIZE   not checked against source: tau0 0.1, law centred, T 1.0 inside the cells comprehension, regime.py 513
+  SYNTH     M       regime.py 483-483 M               ok
+  SYNTH     dims    regime.py 549-549 dims            ok
+  SYNTH     jgrid   regime.py 484-484 Jgrid           ok
+  SYNTH     objs    regime.py 548-548 names           ok
+  SYNTH     taus    regime.py 550-550 taus            ok
+  SYNTH     not checked against source: law centred inside the cells comprehension, regime.py 553
+  NAMED     M       regime.py 483-483 M               ok
+  NAMED     dims    regime.py 576-576 dims            ok
+  NAMED     jgrid   regime.py 484-484 Jgrid           ok
+  NAMED     objs    regime.py 575-575 names           ok
+  NAMED     taus    regime.py 577-577 taus            ok
+  NAMED     not checked against source: law centred inside the cells comprehension, regime.py 578
+  HORIZON   M       regime.py 483-483 M               ok
+  HORIZON   Ts      regime.py 599-599 Ts              ok
+  HORIZON   jgrid   regime.py 484-484 Jgrid           ok
+  HORIZON   laws    regime.py 600-600 inits           ok
+  HORIZON   objs    regime.py 596-596 names           ok
+  HORIZON   not checked against source: d 10 and tau0 0.1 inside the cells comprehension, regime.py 601
+  GEOM      M       law.py 770-770 --realisations  ok
+  GEOM      dims    law.py 522-522 dims            ok
+  GEOM      jgrid   law.py 523-523 Jgrid           ok
+  GEOM      objs    law.py 521-521 names           ok
+  GEOM      taus    law.py 522-522 taus            ok
+  SIGMA     M       sigma.py 238-238 --realisations  ok
+  SIGMA     diffs   sigma.py 259-260 diffs           ok
+  SIGMA     dims    sigma.py 253-257 dims            ok
+  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok
+  SIGMA     objs    sigma.py 253-257 objs            ok
+  SIGMA     rs      sigma.py 253-257 rs              ok
+  SIGMA     taus    sigma.py 253-257 taus            ok
+  ANISO     M       crossed.py 239-239 --realisations  ok
+  ANISO     diffs   crossed.py 248-248 diffs           ok
+  ANISO     dims    crossed.py 255-258 dims            ok
+  ANISO     jgrid   crossed.py 255-258 Jgrid           ok
+  ANISO     objs    crossed.py 255-258 objs            ok
+  ANISO     rs      crossed.py 255-258 rs              ok
+  ANISO     sigmas  crossed.py 255-258 sigmas          ok
+  ANISO     taus    crossed.py 255-258 taus            ok
+  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262
+  RMAP      M       regimemap.py 279-279 --realisations  ok
+  RMAP      diffs   regimemap.py 288-288 diffs           ok
+  RMAP      dims    regimemap.py 300-302 dimsM           ok
+  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok
+  RMAP      objs    regimemap.py 289-289 objs            ok
+  RMAP      rs      regimemap.py 300-302 rsM             ok
+  RMAP      taus    regimemap.py 300-302 tausM           ok
+  CLIFF     M       cliff.py 244-244 --realisations  ok
+  CLIFF     diffs   cliff.py 253-253 diffs           ok
+  CLIFF     dims    cliff.py 260-264 dims            ok
+  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok
+  CLIFF     objs    cliff.py 260-264 objs            ok
+  CLIFF     rs      cliff.py 260-264 rs              ok
+  CLIFF     taus    cliff.py 260-264 taus            ok
+  ONSET     M       regimemap.py 279-279 --realisations  ok
+  ONSET     diffs   regimemap.py 288-288 diffs           ok
+  ONSET     dims    regimemap.py 300-302 dimsD           ok
+  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok
+  ONSET     objs    regimemap.py 289-289 objs            ok
+  ONSET     rs      regimemap.py 300-302 rsD             ok
+  ONSET     tau     regimemap.py 304-304 tauD            ok
+  CONC      144 calibration cells x   1 =  144  (Table 2  144)  ok
+  ADAPT      36 calibration cells x   2 =   72  (Table 2   72)  ok
+  TAU8      144 calibration cells x   1 =  144  (Table 2  144)  ok
+  REFSIZE     3 calibration cells x   4 =   12  (Table 2   12)  ok
+  SYNTH      72 calibration cells x   1 =   72  (Table 2   72)  ok
+  NAMED      36 calibration cells x   1 =   36  (Table 2   36)  ok
+  HORIZON     8 calibration cells x   3 =   24  (Table 2   24)  ok
+  GEOM      336 calibration cells x   1 =  336  (Table 2  336)  ok
+  SIGMA      24 calibration cells x  12 =  288  (Table 2  288)  ok
+  ANISO      24 calibration cells x  12 =  288  (Table 2  288)  ok
+  RMAP       24 calibration cells x  10 =  240  (Table 2  240)  ok
+  CLIFF       8 calibration cells x  18 =  144  (Table 2  144)  ok
+  ONSET      15 calibration cells x  12 =  180  (Table 2  180)  ok
+  V0 PASS
+
+------------------------------------------------------------------------------------------------
+V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)
+------------------------------------------------------------------------------------------------
+  boundary   X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]  ok
+  cliff      X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  control    X0 = draw_initial(rng, Jinf, d, objective, init)  ok
+  crossed    X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  law        X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  mechanism  X0 = draw_initial(rng, Jinf, d, objective, init)  ok
+  regime     X0 = draw_initial(rng, Jinf, d, xstar, init)  ok
+  regimemap  X0 = rng.standard_normal((Jinf, d))  ok
+  sigma      X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  V2 PASS
+
+------------------------------------------------------------------------------------------------
+CELLS
+------------------------------------------------------------------------------------------------
+  boundary    144 deduplicated calibration cells
+  cliff         8 deduplicated calibration cells
+  control      36 deduplicated calibration cells
+  crossed      24 deduplicated calibration cells
+  law         336 deduplicated calibration cells
+  mechanism   144 deduplicated calibration cells
+  regime      112 deduplicated calibration cells
+  regimemap    33 deduplicated calibration cells
+  sigma        24 deduplicated calibration cells
+  total 861
+  this job: 861 cells
+
+------------------------------------------------------------------------------------------------
+RUNG RANGE PER CELL (this job)
+------------------------------------------------------------------------------------------------
+  boundary|ackley|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|10|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|40|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.02                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.03                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.05                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.07                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.2                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|ackley|5|centred|0.3                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|10|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|40|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|griewank|5|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.02                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.03                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.05                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.07                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.2                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|10|centred|0.3                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.02                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.03                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.05                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.07                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.2                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|40|centred|0.3                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.02                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.03                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.05                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.07                     phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.2                      phase A computed here  rungs 1000000 to 1024000000
+  boundary|levy|5|centred|0.3                      phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|rastrigin|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|10|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|40|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  boundary|rosenbrock|5|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|10|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|40|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.02                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.03                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.05                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.07                   phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.2                    phase A computed here  rungs 1000000 to 1024000000
+  boundary|sphere|5|centred|0.3                    phase A computed here  rungs 1000000 to 1024000000
+  cliff|ackley|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  cliff|ackley|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  cliff|rastrigin|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  cliff|rastrigin|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  cliff|rosenbrock|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  cliff|rosenbrock|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  cliff|sphere|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  cliff|sphere|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  control|ackley|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  control|griewank|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  control|levy|10|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  control|levy|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  control|levy|40|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  control|levy|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  control|levy|5|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000
+  control|levy|5|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  control|rastrigin|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  control|rosenbrock|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  control|sphere|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|ackley|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  crossed|rastrigin|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  crossed|rosenbrock|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  crossed|sphere|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r0_w1|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|10|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|40|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w1|5|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|10|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|40|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w3|5|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|10|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.02              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.05              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.07              phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.2               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|40|centred|0.3               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r20_w7|5|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w1|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w3|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k100_r5_w7|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|10|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|40|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r0_w1|5|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|10|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|40|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w1|5|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|10|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|40|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w3|5|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|10|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.02                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.03                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.05                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.07                phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|40|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r20_w7|5|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|10|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|40|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w1|5|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|10|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|40|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w3|5|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|10|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|40|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000
+  law|syn_k1_r5_w7|5|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|10|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|2|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|40|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|ackley|5|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|centred|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|10|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|centred|0.5                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|mix-0.1|0.01                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|mix-0.1|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|2|mix-0.1|0.5                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|centred|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|40|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|centred|0.5                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|mix-0.1|0.01                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|mix-0.1|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|griewank|5|mix-0.1|0.5                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|centred|0.5                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|mix-0.1|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|mix-0.1|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|10|mix-0.1|0.5                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|centred|0.5                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|mix-0.1|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|2|mix-0.1|0.5                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|centred|0.5                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|mix-0.1|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|mix-0.1|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|40|mix-0.1|0.5                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|centred|0.5                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|mix-0.1|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|levy|5|mix-0.1|0.5                     phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|10|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|centred|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|2|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|40|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|centred|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rastrigin|5|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|centred|0.5              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|mix-0.1|0.01             phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|mix-0.1|0.1              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|10|mix-0.1|0.5              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|2|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|centred|0.5              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|mix-0.1|0.01             phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|mix-0.1|0.1              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|40|mix-0.1|0.5              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|rosenbrock|5|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|10|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|2|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|40|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  mechanism|sphere|5|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|20|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  regimemap|ackley|80|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|10|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|20|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|40|centred|0.5               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  regimemap|rastrigin|80|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|10|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|20|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|40|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  regimemap|sphere|80|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|10|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|10|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|10|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|40|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|40|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|5|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  regime|ackley|5|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  regime|griewank|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|10|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|10|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|40|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|40|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|5|centred|0.01                       phase A computed here  rungs 1000000 to 1024000000
+  regime|levy|5|centred|0.1                        phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|10|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  regime|rastrigin|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|10|mix-0.1|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  regime|rosenbrock|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|10|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|10|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|10|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|40|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|40|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|5|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  regime|sphere|5|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|10|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|10|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|40|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|40|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|5|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w1|5|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|10|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|10|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|40|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|40|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|5|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r0_w3|5|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|10|centred|0.01           phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|10|centred|0.1            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|40|centred|0.01           phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|40|centred|0.1            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|5|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w1|5|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|10|centred|0.01           phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|10|centred|0.1            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|40|centred|0.01           phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|40|centred|0.1            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|5|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r20_w3|5|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|10|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|10|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|40|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|40|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|5|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w1|5|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|10|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|10|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|40|centred|0.01            phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|40|centred|0.1             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|5|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k100_r5_w3|5|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w1|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r0_w3|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|10|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|10|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|40|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|40|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|5|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w1|5|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|10|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|10|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|40|centred|0.01             phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|40|centred|0.1              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|5|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r20_w3|5|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w1|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000
+  regime|syn_k1_r5_w3|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|10|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|40|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|5|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|ackley|5|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000
+  sigma|rastrigin|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000
+  sigma|rosenbrock|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|10|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|40|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|5|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000
+  sigma|sphere|5|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000
+  cells run: 861   skipped as resolved: 0   could become case (a) at worst: 861
+  boundary|ackley|10|centred|0.01   rows TAU8
+  boundary|ackley|10|centred|0.02   rows TAU8
+  boundary|ackley|10|centred|0.03   rows TAU8
+  boundary|ackley|10|centred|0.05   rows TAU8
+  boundary|ackley|10|centred|0.07   rows TAU8
+  boundary|ackley|10|centred|0.1   rows TAU8
+  boundary|ackley|10|centred|0.2   rows TAU8
+  boundary|ackley|10|centred|0.3   rows TAU8
+  boundary|ackley|40|centred|0.01   rows TAU8
+  boundary|ackley|40|centred|0.02   rows TAU8
+  boundary|ackley|40|centred|0.03   rows TAU8
+  boundary|ackley|40|centred|0.05   rows TAU8
+  boundary|ackley|40|centred|0.07   rows TAU8
+  boundary|ackley|40|centred|0.1   rows TAU8
+  boundary|ackley|40|centred|0.2   rows TAU8
+  boundary|ackley|40|centred|0.3   rows TAU8
+  boundary|ackley|5|centred|0.01   rows TAU8
+  boundary|ackley|5|centred|0.02   rows TAU8
+  boundary|ackley|5|centred|0.03   rows TAU8
+  boundary|ackley|5|centred|0.05   rows TAU8
+  boundary|ackley|5|centred|0.07   rows TAU8
+  boundary|ackley|5|centred|0.1   rows TAU8
+  boundary|ackley|5|centred|0.2   rows TAU8
+  boundary|ackley|5|centred|0.3   rows TAU8
+  boundary|griewank|10|centred|0.01   rows TAU8
+  boundary|griewank|10|centred|0.02   rows TAU8
+  boundary|griewank|10|centred|0.03   rows TAU8
+  boundary|griewank|10|centred|0.05   rows TAU8
+  boundary|griewank|10|centred|0.07   rows TAU8
+  boundary|griewank|10|centred|0.1   rows TAU8
+  boundary|griewank|10|centred|0.2   rows TAU8
+  boundary|griewank|10|centred|0.3   rows TAU8
+  boundary|griewank|40|centred|0.01   rows TAU8
+  boundary|griewank|40|centred|0.02   rows TAU8
+  boundary|griewank|40|centred|0.03   rows TAU8
+  boundary|griewank|40|centred|0.05   rows TAU8
+  boundary|griewank|40|centred|0.07   rows TAU8
+  boundary|griewank|40|centred|0.1   rows TAU8
+  boundary|griewank|40|centred|0.2   rows TAU8
+  boundary|griewank|40|centred|0.3   rows TAU8
+  boundary|griewank|5|centred|0.01   rows TAU8
+  boundary|griewank|5|centred|0.02   rows TAU8
+  boundary|griewank|5|centred|0.03   rows TAU8
+  boundary|griewank|5|centred|0.05   rows TAU8
+  boundary|griewank|5|centred|0.07   rows TAU8
+  boundary|griewank|5|centred|0.1   rows TAU8
+  boundary|griewank|5|centred|0.2   rows TAU8
+  boundary|griewank|5|centred|0.3   rows TAU8
+  boundary|levy|10|centred|0.01   rows TAU8
+  boundary|levy|10|centred|0.02   rows TAU8
+  boundary|levy|10|centred|0.03   rows TAU8
+  boundary|levy|10|centred|0.05   rows TAU8
+  boundary|levy|10|centred|0.07   rows TAU8
+  boundary|levy|10|centred|0.1   rows TAU8
+  boundary|levy|10|centred|0.2   rows TAU8
+  boundary|levy|10|centred|0.3   rows TAU8
+  boundary|levy|40|centred|0.01   rows TAU8
+  boundary|levy|40|centred|0.02   rows TAU8
+  boundary|levy|40|centred|0.03   rows TAU8
+  boundary|levy|40|centred|0.05   rows TAU8
+  boundary|levy|40|centred|0.07   rows TAU8
+  boundary|levy|40|centred|0.1   rows TAU8
+  boundary|levy|40|centred|0.2   rows TAU8
+  boundary|levy|40|centred|0.3   rows TAU8
+  boundary|levy|5|centred|0.01   rows TAU8
+  boundary|levy|5|centred|0.02   rows TAU8
+  boundary|levy|5|centred|0.03   rows TAU8
+  boundary|levy|5|centred|0.05   rows TAU8
+  boundary|levy|5|centred|0.07   rows TAU8
+  boundary|levy|5|centred|0.1   rows TAU8
+  boundary|levy|5|centred|0.2   rows TAU8
+  boundary|levy|5|centred|0.3   rows TAU8
+  boundary|rastrigin|10|centred|0.01   rows TAU8
+  boundary|rastrigin|10|centred|0.02   rows TAU8
+  boundary|rastrigin|10|centred|0.03   rows TAU8
+  boundary|rastrigin|10|centred|0.05   rows TAU8
+  boundary|rastrigin|10|centred|0.07   rows TAU8
+  boundary|rastrigin|10|centred|0.1   rows TAU8
+  boundary|rastrigin|10|centred|0.2   rows TAU8
+  boundary|rastrigin|10|centred|0.3   rows TAU8
+  boundary|rastrigin|40|centred|0.01   rows TAU8
+  boundary|rastrigin|40|centred|0.02   rows TAU8
+  boundary|rastrigin|40|centred|0.03   rows TAU8
+  boundary|rastrigin|40|centred|0.05   rows TAU8
+  boundary|rastrigin|40|centred|0.07   rows TAU8
+  boundary|rastrigin|40|centred|0.1   rows TAU8
+  boundary|rastrigin|40|centred|0.2   rows TAU8
+  boundary|rastrigin|40|centred|0.3   rows TAU8
+  boundary|rastrigin|5|centred|0.01   rows TAU8
+  boundary|rastrigin|5|centred|0.02   rows TAU8
+  boundary|rastrigin|5|centred|0.03   rows TAU8
+  boundary|rastrigin|5|centred|0.05   rows TAU8
+  boundary|rastrigin|5|centred|0.07   rows TAU8
+  boundary|rastrigin|5|centred|0.1   rows TAU8
+  boundary|rastrigin|5|centred|0.2   rows TAU8
+  boundary|rastrigin|5|centred|0.3   rows TAU8
+  boundary|rosenbrock|10|centred|0.01   rows TAU8
+  boundary|rosenbrock|10|centred|0.02   rows TAU8
+  boundary|rosenbrock|10|centred|0.03   rows TAU8
+  boundary|rosenbrock|10|centred|0.05   rows TAU8
+  boundary|rosenbrock|10|centred|0.07   rows TAU8
+  boundary|rosenbrock|10|centred|0.1   rows TAU8
+  boundary|rosenbrock|10|centred|0.2   rows TAU8
+  boundary|rosenbrock|10|centred|0.3   rows TAU8
+  boundary|rosenbrock|40|centred|0.01   rows TAU8
+  boundary|rosenbrock|40|centred|0.02   rows TAU8
+  boundary|rosenbrock|40|centred|0.03   rows TAU8
+  boundary|rosenbrock|40|centred|0.05   rows TAU8
+  boundary|rosenbrock|40|centred|0.07   rows TAU8
+  boundary|rosenbrock|40|centred|0.1   rows TAU8
+  boundary|rosenbrock|40|centred|0.2   rows TAU8
+  boundary|rosenbrock|40|centred|0.3   rows TAU8
+  boundary|rosenbrock|5|centred|0.01   rows TAU8
+  boundary|rosenbrock|5|centred|0.02   rows TAU8
+  boundary|rosenbrock|5|centred|0.03   rows TAU8
+  boundary|rosenbrock|5|centred|0.05   rows TAU8
+  boundary|rosenbrock|5|centred|0.07   rows TAU8
+  boundary|rosenbrock|5|centred|0.1   rows TAU8
+  boundary|rosenbrock|5|centred|0.2   rows TAU8
+  boundary|rosenbrock|5|centred|0.3   rows TAU8
+  boundary|sphere|10|centred|0.01   rows TAU8
+  boundary|sphere|10|centred|0.02   rows TAU8
+  boundary|sphere|10|centred|0.03   rows TAU8
+  boundary|sphere|10|centred|0.05   rows TAU8
+  boundary|sphere|10|centred|0.07   rows TAU8
+  boundary|sphere|10|centred|0.1   rows TAU8
+  boundary|sphere|10|centred|0.2   rows TAU8
+  boundary|sphere|10|centred|0.3   rows TAU8
+  boundary|sphere|40|centred|0.01   rows TAU8
+  boundary|sphere|40|centred|0.02   rows TAU8
+  boundary|sphere|40|centred|0.03   rows TAU8
+  boundary|sphere|40|centred|0.05   rows TAU8
+  boundary|sphere|40|centred|0.07   rows TAU8
+  boundary|sphere|40|centred|0.1   rows TAU8
+  boundary|sphere|40|centred|0.2   rows TAU8
+  boundary|sphere|40|centred|0.3   rows TAU8
+  boundary|sphere|5|centred|0.01   rows TAU8
+  boundary|sphere|5|centred|0.02   rows TAU8
+  boundary|sphere|5|centred|0.03   rows TAU8
+  boundary|sphere|5|centred|0.05   rows TAU8
+  boundary|sphere|5|centred|0.07   rows TAU8
+  boundary|sphere|5|centred|0.1   rows TAU8
+  boundary|sphere|5|centred|0.2   rows TAU8
+  boundary|sphere|5|centred|0.3   rows TAU8
+  cliff|ackley|10|centred|0.1   rows CLIFF
+  cliff|ackley|40|centred|0.1   rows CLIFF
+  cliff|rastrigin|10|centred|0.1   rows CLIFF
+  cliff|rastrigin|40|centred|0.1   rows CLIFF
+  cliff|rosenbrock|10|centred|0.1   rows CLIFF
+  cliff|rosenbrock|40|centred|0.1   rows CLIFF
+  cliff|sphere|10|centred|0.1   rows CLIFF
+  cliff|sphere|40|centred|0.1   rows CLIFF
+  control|ackley|10|centred|0.01   rows ADAPT
+  control|ackley|10|centred|0.1   rows ADAPT
+  control|ackley|40|centred|0.01   rows ADAPT
+  control|ackley|40|centred|0.1   rows ADAPT
+  control|ackley|5|centred|0.01   rows ADAPT
+  control|ackley|5|centred|0.1   rows ADAPT
+  control|griewank|10|centred|0.01   rows ADAPT
+  control|griewank|10|centred|0.1   rows ADAPT
+  control|griewank|40|centred|0.01   rows ADAPT
+  control|griewank|40|centred|0.1   rows ADAPT
+  control|griewank|5|centred|0.01   rows ADAPT
+  control|griewank|5|centred|0.1   rows ADAPT
+  control|levy|10|centred|0.01   rows ADAPT
+  control|levy|10|centred|0.1   rows ADAPT
+  control|levy|40|centred|0.01   rows ADAPT
+  control|levy|40|centred|0.1   rows ADAPT
+  control|levy|5|centred|0.01   rows ADAPT
+  control|levy|5|centred|0.1   rows ADAPT
+  control|rastrigin|10|centred|0.01   rows ADAPT
+  control|rastrigin|10|centred|0.1   rows ADAPT
+  control|rastrigin|40|centred|0.01   rows ADAPT
+  control|rastrigin|40|centred|0.1   rows ADAPT
+  control|rastrigin|5|centred|0.01   rows ADAPT
+  control|rastrigin|5|centred|0.1   rows ADAPT
+  control|rosenbrock|10|centred|0.01   rows ADAPT
+  control|rosenbrock|10|centred|0.1   rows ADAPT
+  control|rosenbrock|40|centred|0.01   rows ADAPT
+  control|rosenbrock|40|centred|0.1   rows ADAPT
+  control|rosenbrock|5|centred|0.01   rows ADAPT
+  control|rosenbrock|5|centred|0.1   rows ADAPT
+  control|sphere|10|centred|0.01   rows ADAPT
+  control|sphere|10|centred|0.1   rows ADAPT
+  control|sphere|40|centred|0.01   rows ADAPT
+  control|sphere|40|centred|0.1   rows ADAPT
+  control|sphere|5|centred|0.01   rows ADAPT
+  control|sphere|5|centred|0.1   rows ADAPT
+  crossed|ackley|10|centred|0.01   rows ANISO
+  crossed|ackley|10|centred|0.1   rows ANISO
+  crossed|ackley|40|centred|0.01   rows ANISO
+  crossed|ackley|40|centred|0.1   rows ANISO
+  crossed|ackley|5|centred|0.01   rows ANISO
+  crossed|ackley|5|centred|0.1   rows ANISO
+  crossed|rastrigin|10|centred|0.01   rows ANISO
+  crossed|rastrigin|10|centred|0.1   rows ANISO
+  crossed|rastrigin|40|centred|0.01   rows ANISO
+  crossed|rastrigin|40|centred|0.1   rows ANISO
+  crossed|rastrigin|5|centred|0.01   rows ANISO
+  crossed|rastrigin|5|centred|0.1   rows ANISO
+  crossed|rosenbrock|10|centred|0.01   rows ANISO
+  crossed|rosenbrock|10|centred|0.1   rows ANISO
+  crossed|rosenbrock|40|centred|0.01   rows ANISO
+  crossed|rosenbrock|40|centred|0.1   rows ANISO
+  crossed|rosenbrock|5|centred|0.01   rows ANISO
+  crossed|rosenbrock|5|centred|0.1   rows ANISO
+  crossed|sphere|10|centred|0.01   rows ANISO
+  crossed|sphere|10|centred|0.1   rows ANISO
+  crossed|sphere|40|centred|0.01   rows ANISO
+  crossed|sphere|40|centred|0.1   rows ANISO
+  crossed|sphere|5|centred|0.01   rows ANISO
+  crossed|sphere|5|centred|0.1   rows ANISO
+  law|syn_k100_r0_w1|10|centred|0.01   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.02   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.03   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.05   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.07   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.1   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.2   rows GEOM
+  law|syn_k100_r0_w1|10|centred|0.3   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.01   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.02   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.03   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.05   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.07   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.1   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.2   rows GEOM
+  law|syn_k100_r0_w1|40|centred|0.3   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.01   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.02   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.03   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.05   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.07   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.1   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.2   rows GEOM
+  law|syn_k100_r0_w1|5|centred|0.3   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.01   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.02   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.03   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.05   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.07   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.1   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.2   rows GEOM
+  law|syn_k100_r20_w1|10|centred|0.3   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.01   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.02   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.03   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.05   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.07   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.1   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.2   rows GEOM
+  law|syn_k100_r20_w1|40|centred|0.3   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.01   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.02   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.03   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.05   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.07   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.1   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.2   rows GEOM
+  law|syn_k100_r20_w1|5|centred|0.3   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.01   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.02   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.03   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.05   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.07   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.1   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.2   rows GEOM
+  law|syn_k100_r20_w3|10|centred|0.3   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.01   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.02   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.03   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.05   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.07   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.1   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.2   rows GEOM
+  law|syn_k100_r20_w3|40|centred|0.3   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.01   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.02   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.03   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.05   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.07   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.1   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.2   rows GEOM
+  law|syn_k100_r20_w3|5|centred|0.3   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.01   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.02   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.03   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.05   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.07   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.1   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.2   rows GEOM
+  law|syn_k100_r20_w7|10|centred|0.3   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.01   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.02   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.03   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.05   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.07   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.1   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.2   rows GEOM
+  law|syn_k100_r20_w7|40|centred|0.3   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.01   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.02   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.03   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.05   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.07   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.1   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.2   rows GEOM
+  law|syn_k100_r20_w7|5|centred|0.3   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.01   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.02   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.03   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.05   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.07   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.1   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.2   rows GEOM
+  law|syn_k100_r5_w1|10|centred|0.3   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.01   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.02   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.03   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.05   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.07   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.1   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.2   rows GEOM
+  law|syn_k100_r5_w1|40|centred|0.3   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.01   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.02   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.03   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.05   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.07   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.1   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.2   rows GEOM
+  law|syn_k100_r5_w1|5|centred|0.3   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.01   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.02   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.03   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.05   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.07   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.1   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.2   rows GEOM
+  law|syn_k100_r5_w3|10|centred|0.3   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.01   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.02   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.03   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.05   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.07   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.1   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.2   rows GEOM
+  law|syn_k100_r5_w3|40|centred|0.3   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.01   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.02   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.03   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.05   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.07   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.1   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.2   rows GEOM
+  law|syn_k100_r5_w3|5|centred|0.3   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.01   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.02   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.03   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.05   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.07   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.1   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.2   rows GEOM
+  law|syn_k100_r5_w7|10|centred|0.3   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.01   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.02   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.03   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.05   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.07   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.1   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.2   rows GEOM
+  law|syn_k100_r5_w7|40|centred|0.3   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.01   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.02   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.03   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.05   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.07   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.1   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.2   rows GEOM
+  law|syn_k100_r5_w7|5|centred|0.3   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.01   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.02   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.03   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.05   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.07   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.1   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.2   rows GEOM
+  law|syn_k1_r0_w1|10|centred|0.3   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.01   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.02   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.03   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.05   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.07   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.1   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.2   rows GEOM
+  law|syn_k1_r0_w1|40|centred|0.3   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.01   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.02   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.03   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.05   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.07   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.1   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.2   rows GEOM
+  law|syn_k1_r0_w1|5|centred|0.3   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.01   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.02   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.03   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.05   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.07   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.1   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.2   rows GEOM
+  law|syn_k1_r20_w1|10|centred|0.3   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.01   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.02   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.03   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.05   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.07   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.1   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.2   rows GEOM
+  law|syn_k1_r20_w1|40|centred|0.3   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.01   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.02   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.03   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.05   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.07   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.1   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.2   rows GEOM
+  law|syn_k1_r20_w1|5|centred|0.3   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.01   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.02   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.03   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.05   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.07   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.1   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.2   rows GEOM
+  law|syn_k1_r20_w3|10|centred|0.3   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.01   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.02   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.03   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.05   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.07   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.1   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.2   rows GEOM
+  law|syn_k1_r20_w3|40|centred|0.3   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.01   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.02   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.03   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.05   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.07   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.1   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.2   rows GEOM
+  law|syn_k1_r20_w3|5|centred|0.3   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.01   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.02   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.03   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.05   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.07   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.1   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.2   rows GEOM
+  law|syn_k1_r20_w7|10|centred|0.3   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.01   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.02   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.03   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.05   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.07   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.1   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.2   rows GEOM
+  law|syn_k1_r20_w7|40|centred|0.3   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.01   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.02   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.03   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.05   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.07   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.1   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.2   rows GEOM
+  law|syn_k1_r20_w7|5|centred|0.3   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.01   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.02   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.03   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.05   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.07   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.1   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.2   rows GEOM
+  law|syn_k1_r5_w1|10|centred|0.3   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.01   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.02   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.03   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.05   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.07   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.1   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.2   rows GEOM
+  law|syn_k1_r5_w1|40|centred|0.3   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.01   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.02   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.03   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.05   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.07   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.1   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.2   rows GEOM
+  law|syn_k1_r5_w1|5|centred|0.3   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.01   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.02   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.03   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.05   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.07   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.1   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.2   rows GEOM
+  law|syn_k1_r5_w3|10|centred|0.3   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.01   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.02   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.03   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.05   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.07   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.1   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.2   rows GEOM
+  law|syn_k1_r5_w3|40|centred|0.3   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.01   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.02   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.03   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.05   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.07   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.1   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.2   rows GEOM
+  law|syn_k1_r5_w3|5|centred|0.3   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.01   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.02   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.03   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.05   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.07   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.1   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.2   rows GEOM
+  law|syn_k1_r5_w7|10|centred|0.3   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.01   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.02   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.03   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.05   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.07   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.1   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.2   rows GEOM
+  law|syn_k1_r5_w7|40|centred|0.3   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.01   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.02   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.03   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.05   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.07   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.1   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.2   rows GEOM
+  law|syn_k1_r5_w7|5|centred|0.3   rows GEOM
+  mechanism|ackley|10|centred|0.01   rows CONC
+  mechanism|ackley|10|centred|0.1   rows CONC
+  mechanism|ackley|10|centred|0.5   rows CONC
+  mechanism|ackley|10|mix-0.1|0.01   rows CONC
+  mechanism|ackley|10|mix-0.1|0.1   rows CONC
+  mechanism|ackley|10|mix-0.1|0.5   rows CONC
+  mechanism|ackley|2|centred|0.01   rows CONC
+  mechanism|ackley|2|centred|0.1   rows CONC
+  mechanism|ackley|2|centred|0.5   rows CONC
+  mechanism|ackley|2|mix-0.1|0.01   rows CONC
+  mechanism|ackley|2|mix-0.1|0.1   rows CONC
+  mechanism|ackley|2|mix-0.1|0.5   rows CONC
+  mechanism|ackley|40|centred|0.01   rows CONC
+  mechanism|ackley|40|centred|0.1   rows CONC
+  mechanism|ackley|40|centred|0.5   rows CONC
+  mechanism|ackley|40|mix-0.1|0.01   rows CONC
+  mechanism|ackley|40|mix-0.1|0.1   rows CONC
+  mechanism|ackley|40|mix-0.1|0.5   rows CONC
+  mechanism|ackley|5|centred|0.01   rows CONC
+  mechanism|ackley|5|centred|0.1   rows CONC
+  mechanism|ackley|5|centred|0.5   rows CONC
+  mechanism|ackley|5|mix-0.1|0.01   rows CONC
+  mechanism|ackley|5|mix-0.1|0.1   rows CONC
+  mechanism|ackley|5|mix-0.1|0.5   rows CONC
+  mechanism|griewank|10|centred|0.01   rows CONC
+  mechanism|griewank|10|centred|0.1   rows CONC
+  mechanism|griewank|10|centred|0.5   rows CONC
+  mechanism|griewank|10|mix-0.1|0.01   rows CONC
+  mechanism|griewank|10|mix-0.1|0.1   rows CONC
+  mechanism|griewank|10|mix-0.1|0.5   rows CONC
+  mechanism|griewank|2|centred|0.01   rows CONC
+  mechanism|griewank|2|centred|0.1   rows CONC
+  mechanism|griewank|2|centred|0.5   rows CONC
+  mechanism|griewank|2|mix-0.1|0.01   rows CONC
+  mechanism|griewank|2|mix-0.1|0.1   rows CONC
+  mechanism|griewank|2|mix-0.1|0.5   rows CONC
+  mechanism|griewank|40|centred|0.01   rows CONC
+  mechanism|griewank|40|centred|0.1   rows CONC
+  mechanism|griewank|40|centred|0.5   rows CONC
+  mechanism|griewank|40|mix-0.1|0.01   rows CONC
+  mechanism|griewank|40|mix-0.1|0.1   rows CONC
+  mechanism|griewank|40|mix-0.1|0.5   rows CONC
+  mechanism|griewank|5|centred|0.01   rows CONC
+  mechanism|griewank|5|centred|0.1   rows CONC
+  mechanism|griewank|5|centred|0.5   rows CONC
+  mechanism|griewank|5|mix-0.1|0.01   rows CONC
+  mechanism|griewank|5|mix-0.1|0.1   rows CONC
+  mechanism|griewank|5|mix-0.1|0.5   rows CONC
+  mechanism|levy|10|centred|0.01   rows CONC
+  mechanism|levy|10|centred|0.1   rows CONC
+  mechanism|levy|10|centred|0.5   rows CONC
+  mechanism|levy|10|mix-0.1|0.01   rows CONC
+  mechanism|levy|10|mix-0.1|0.1   rows CONC
+  mechanism|levy|10|mix-0.1|0.5   rows CONC
+  mechanism|levy|2|centred|0.01   rows CONC
+  mechanism|levy|2|centred|0.1   rows CONC
+  mechanism|levy|2|centred|0.5   rows CONC
+  mechanism|levy|2|mix-0.1|0.01   rows CONC
+  mechanism|levy|2|mix-0.1|0.1   rows CONC
+  mechanism|levy|2|mix-0.1|0.5   rows CONC
+  mechanism|levy|40|centred|0.01   rows CONC
+  mechanism|levy|40|centred|0.1   rows CONC
+  mechanism|levy|40|centred|0.5   rows CONC
+  mechanism|levy|40|mix-0.1|0.01   rows CONC
+  mechanism|levy|40|mix-0.1|0.1   rows CONC
+  mechanism|levy|40|mix-0.1|0.5   rows CONC
+  mechanism|levy|5|centred|0.01   rows CONC
+  mechanism|levy|5|centred|0.1   rows CONC
+  mechanism|levy|5|centred|0.5   rows CONC
+  mechanism|levy|5|mix-0.1|0.01   rows CONC
+  mechanism|levy|5|mix-0.1|0.1   rows CONC
+  mechanism|levy|5|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|10|centred|0.01   rows CONC
+  mechanism|rastrigin|10|centred|0.1   rows CONC
+  mechanism|rastrigin|10|centred|0.5   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|10|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|2|centred|0.01   rows CONC
+  mechanism|rastrigin|2|centred|0.1   rows CONC
+  mechanism|rastrigin|2|centred|0.5   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|2|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|40|centred|0.01   rows CONC
+  mechanism|rastrigin|40|centred|0.1   rows CONC
+  mechanism|rastrigin|40|centred|0.5   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|40|mix-0.1|0.5   rows CONC
+  mechanism|rastrigin|5|centred|0.01   rows CONC
+  mechanism|rastrigin|5|centred|0.1   rows CONC
+  mechanism|rastrigin|5|centred|0.5   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.01   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.1   rows CONC
+  mechanism|rastrigin|5|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|10|centred|0.01   rows CONC
+  mechanism|rosenbrock|10|centred|0.1   rows CONC
+  mechanism|rosenbrock|10|centred|0.5   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|10|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|2|centred|0.01   rows CONC
+  mechanism|rosenbrock|2|centred|0.1   rows CONC
+  mechanism|rosenbrock|2|centred|0.5   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|2|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|40|centred|0.01   rows CONC
+  mechanism|rosenbrock|40|centred|0.1   rows CONC
+  mechanism|rosenbrock|40|centred|0.5   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|40|mix-0.1|0.5   rows CONC
+  mechanism|rosenbrock|5|centred|0.01   rows CONC
+  mechanism|rosenbrock|5|centred|0.1   rows CONC
+  mechanism|rosenbrock|5|centred|0.5   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.01   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.1   rows CONC
+  mechanism|rosenbrock|5|mix-0.1|0.5   rows CONC
+  mechanism|sphere|10|centred|0.01   rows CONC
+  mechanism|sphere|10|centred|0.1   rows CONC
+  mechanism|sphere|10|centred|0.5   rows CONC
+  mechanism|sphere|10|mix-0.1|0.01   rows CONC
+  mechanism|sphere|10|mix-0.1|0.1   rows CONC
+  mechanism|sphere|10|mix-0.1|0.5   rows CONC
+  mechanism|sphere|2|centred|0.01   rows CONC
+  mechanism|sphere|2|centred|0.1   rows CONC
+  mechanism|sphere|2|centred|0.5   rows CONC
+  mechanism|sphere|2|mix-0.1|0.01   rows CONC
+  mechanism|sphere|2|mix-0.1|0.1   rows CONC
+  mechanism|sphere|2|mix-0.1|0.5   rows CONC
+  mechanism|sphere|40|centred|0.01   rows CONC
+  mechanism|sphere|40|centred|0.1   rows CONC
+  mechanism|sphere|40|centred|0.5   rows CONC
+  mechanism|sphere|40|mix-0.1|0.01   rows CONC
+  mechanism|sphere|40|mix-0.1|0.1   rows CONC
+  mechanism|sphere|40|mix-0.1|0.5   rows CONC
+  mechanism|sphere|5|centred|0.01   rows CONC
+  mechanism|sphere|5|centred|0.1   rows CONC
+  mechanism|sphere|5|centred|0.5   rows CONC
+  mechanism|sphere|5|mix-0.1|0.01   rows CONC
+  mechanism|sphere|5|mix-0.1|0.1   rows CONC
+  mechanism|sphere|5|mix-0.1|0.5   rows CONC
+  regimemap|ackley|10|centred|0.01   rows RMAP
+  regimemap|ackley|10|centred|0.03   rows RMAP
+  regimemap|ackley|10|centred|0.1   rows RMAP,ONSET
+  regimemap|ackley|10|centred|0.5   rows RMAP
+  regimemap|ackley|20|centred|0.1   rows ONSET
+  regimemap|ackley|40|centred|0.01   rows RMAP
+  regimemap|ackley|40|centred|0.03   rows RMAP
+  regimemap|ackley|40|centred|0.1   rows RMAP,ONSET
+  regimemap|ackley|40|centred|0.5   rows RMAP
+  regimemap|ackley|5|centred|0.1   rows ONSET
+  regimemap|ackley|80|centred|0.1   rows ONSET
+  regimemap|rastrigin|10|centred|0.01   rows RMAP
+  regimemap|rastrigin|10|centred|0.03   rows RMAP
+  regimemap|rastrigin|10|centred|0.1   rows RMAP,ONSET
+  regimemap|rastrigin|10|centred|0.5   rows RMAP
+  regimemap|rastrigin|20|centred|0.1   rows ONSET
+  regimemap|rastrigin|40|centred|0.01   rows RMAP
+  regimemap|rastrigin|40|centred|0.03   rows RMAP
+  regimemap|rastrigin|40|centred|0.1   rows RMAP,ONSET
+  regimemap|rastrigin|40|centred|0.5   rows RMAP
+  regimemap|rastrigin|5|centred|0.1   rows ONSET
+  regimemap|rastrigin|80|centred|0.1   rows ONSET
+  regimemap|sphere|10|centred|0.01   rows RMAP
+  regimemap|sphere|10|centred|0.03   rows RMAP
+  regimemap|sphere|10|centred|0.1   rows RMAP,ONSET
+  regimemap|sphere|10|centred|0.5   rows RMAP
+  regimemap|sphere|20|centred|0.1   rows ONSET
+  regimemap|sphere|40|centred|0.01   rows RMAP
+  regimemap|sphere|40|centred|0.03   rows RMAP
+  regimemap|sphere|40|centred|0.1   rows RMAP,ONSET
+  regimemap|sphere|40|centred|0.5   rows RMAP
+  regimemap|sphere|5|centred|0.1   rows ONSET
+  regimemap|sphere|80|centred|0.1   rows ONSET
+  regime|ackley|10|centred|0.01   rows NAMED
+  regime|ackley|10|centred|0.1   rows REFSIZE,NAMED,HORIZON
+  regime|ackley|10|mix-0.1|0.1   rows HORIZON
+  regime|ackley|40|centred|0.01   rows NAMED
+  regime|ackley|40|centred|0.1   rows NAMED
+  regime|ackley|5|centred|0.01   rows NAMED
+  regime|ackley|5|centred|0.1   rows NAMED
+  regime|griewank|10|centred|0.01   rows NAMED
+  regime|griewank|10|centred|0.1   rows NAMED
+  regime|griewank|40|centred|0.01   rows NAMED
+  regime|griewank|40|centred|0.1   rows NAMED
+  regime|griewank|5|centred|0.01   rows NAMED
+  regime|griewank|5|centred|0.1   rows NAMED
+  regime|levy|10|centred|0.01   rows NAMED
+  regime|levy|10|centred|0.1   rows NAMED
+  regime|levy|40|centred|0.01   rows NAMED
+  regime|levy|40|centred|0.1   rows NAMED
+  regime|levy|5|centred|0.01   rows NAMED
+  regime|levy|5|centred|0.1   rows NAMED
+  regime|rastrigin|10|centred|0.01   rows NAMED
+  regime|rastrigin|10|centred|0.1   rows NAMED,HORIZON
+  regime|rastrigin|10|mix-0.1|0.1   rows HORIZON
+  regime|rastrigin|40|centred|0.01   rows NAMED
+  regime|rastrigin|40|centred|0.1   rows NAMED
+  regime|rastrigin|5|centred|0.01   rows NAMED
+  regime|rastrigin|5|centred|0.1   rows NAMED
+  regime|rosenbrock|10|centred|0.01   rows NAMED
+  regime|rosenbrock|10|centred|0.1   rows REFSIZE,NAMED,HORIZON
+  regime|rosenbrock|10|mix-0.1|0.1   rows HORIZON
+  regime|rosenbrock|40|centred|0.01   rows NAMED
+  regime|rosenbrock|40|centred|0.1   rows NAMED
+  regime|rosenbrock|5|centred|0.01   rows NAMED
+  regime|rosenbrock|5|centred|0.1   rows NAMED
+  regime|sphere|10|centred|0.01   rows NAMED
+  regime|sphere|10|centred|0.1   rows REFSIZE,NAMED,HORIZON
+  regime|sphere|10|mix-0.1|0.1   rows HORIZON
+  regime|sphere|40|centred|0.01   rows NAMED
+  regime|sphere|40|centred|0.1   rows NAMED
+  regime|sphere|5|centred|0.01   rows NAMED
+  regime|sphere|5|centred|0.1   rows NAMED
+  regime|syn_k100_r0_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r0_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r0_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k100_r0_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r0_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r0_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r0_w3|5|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r20_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r20_w3|5|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k100_r5_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k100_r5_w3|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r0_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r0_w3|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r20_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r20_w3|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w1|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w1|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w1|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w1|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w1|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w1|5|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w3|10|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w3|10|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w3|40|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w3|40|centred|0.1   rows SYNTH
+  regime|syn_k1_r5_w3|5|centred|0.01   rows SYNTH
+  regime|syn_k1_r5_w3|5|centred|0.1   rows SYNTH
+  sigma|ackley|10|centred|0.01   rows SIGMA
+  sigma|ackley|10|centred|0.1   rows SIGMA
+  sigma|ackley|40|centred|0.01   rows SIGMA
+  sigma|ackley|40|centred|0.1   rows SIGMA
+  sigma|ackley|5|centred|0.01   rows SIGMA
+  sigma|ackley|5|centred|0.1   rows SIGMA
+  sigma|rastrigin|10|centred|0.01   rows SIGMA
+  sigma|rastrigin|10|centred|0.1   rows SIGMA
+  sigma|rastrigin|40|centred|0.01   rows SIGMA
+  sigma|rastrigin|40|centred|0.1   rows SIGMA
+  sigma|rastrigin|5|centred|0.01   rows SIGMA
+  sigma|rastrigin|5|centred|0.1   rows SIGMA
+  sigma|rosenbrock|10|centred|0.01   rows SIGMA
+  sigma|rosenbrock|10|centred|0.1   rows SIGMA
+  sigma|rosenbrock|40|centred|0.01   rows SIGMA
+  sigma|rosenbrock|40|centred|0.1   rows SIGMA
+  sigma|rosenbrock|5|centred|0.01   rows SIGMA
+  sigma|rosenbrock|5|centred|0.1   rows SIGMA
+  sigma|sphere|10|centred|0.01   rows SIGMA
+  sigma|sphere|10|centred|0.1   rows SIGMA
+  sigma|sphere|40|centred|0.01   rows SIGMA
+  sigma|sphere|40|centred|0.1   rows SIGMA
+  sigma|sphere|5|centred|0.01   rows SIGMA
+  sigma|sphere|5|centred|0.1   rows SIGMA
+
+PLAN MODE: no draws, nothing written.

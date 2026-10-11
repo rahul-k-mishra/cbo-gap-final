@@ -30,6 +30,51 @@ records, for each beta:
 
 ## 2. Coverage
 
+SCOPE DECISION, Rahul, 2026-10-11 (ledger N27). It supersedes the coverage
+below for calprec v2's runs.
+
+- calprec v2 calibrates FOUR rows only: CONC (mechanism), TAU8 (boundary),
+  SIGMA (sigma) and ANISO (crossed).
+  - The 13-row plan (logs/calprec2-plan.log, script 4c7f2950...b36d96 =
+    0bd7011) gives mechanism 144, boundary 144, sigma 24 and crossed 24
+    deduplicated cells, 336 in all, against 861 for all thirteen rows.
+  - Every calprec2 command passes --rows CONC,TAU8,SIGMA,ANISO. The
+    script's default is still all thirteen rows, so a command without
+    --rows would plan all 861 cells.
+- Reasons:
+  - Referee points 3, 4 and 5 concern the concentration arm and the
+    operating level. The diffusion comparison is main text under the
+    agreed scope (REVISION_PLAN). Everything else is supplementary.
+  - The supplementary rows' estimand is the archived protocol.
+    Recalibrating them would change what the supplement reports rather
+    than correct it.
+  - The worst case of 861 cells all reaching case (a) is unaffordable, and
+    no referee asked for it.
+- What this does NOT do: it does not narrow the rerun. The full matrix
+  still reruns (notes/RERUN_PLAN.md). The four calibrated rows take calprec
+  v2 betas. Every other row keeps its archived probe beta and is reported
+  as probe-calibrated at nominal tau0. PROBEARM is unaffected: it uses the
+  archived probe by design (D6).
+- Quantifying the deviation of the archived probe betas, for the rows that
+  keep them. What the existing record can and cannot do:
+  - calprec v1 (logs/calprec-refcheck-v2.log, C2) evaluates the archived
+    4000-point probe for ONE cell only: ackley, d = 40, centred.
+  - refscale does not evaluate archived probe betas at all. Its betas come
+    from 1,000,000-point calibration samples. What it quantifies is the
+    reference adequacy at tight targets (N18, N19).
+  - Per cell, the archive records the achieved initial concentration of
+    the ensembles that were actually evolved: ess_frac_initial,
+    log_ESS_initial, tau0, le0, log_ess_init and log_ess_0 columns in the
+    *_raw, *_summary, regime_*, law_synth and regimemap_*_real files. That
+    is what Section 7.13 of the submitted paper reported. These values are
+    measured on each realization's 50000-point reference. refscale (N18)
+    shows such a reference is far from adequate at tau0 = 0.01, so at
+    tight targets they are estimates of uncertain precision.
+  - Quantifying tau(probe beta) per cell on an adequate reference would
+    need a new no-dynamics measurement: each archived probe beta evaluated
+    on a large reference. It has not been designed or run, and is Rahul's
+    decision.
+
 Only rows whose beta targets a concentration need calprec. These are the P
 and X rows of RERUN_PLAN. The D rows are excluded: EXP-BETA-ISO and
 EXP-BETA-ANI use design beta values, and EXP-LAWPANEL uses the B rule (F1).
