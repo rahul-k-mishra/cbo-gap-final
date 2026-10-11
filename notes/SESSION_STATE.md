@@ -74,8 +74,12 @@ full run finished.
     by Rahul in full before the rerun script is written. None is to be
     guessed, and no default for any of them appears in any script
     docstring.
-- Written, not run: scripts/c6.py, the Monte Carlo for calprec v2's C5m
-  constant c6, with d6 re-estimated in the same run.
+- c6 measured (ledger N23; logs/c6.log; runs/c6-20261011-102531):
+  - c6_hat 0.463495 (se 0.000094);
+  - d6_hat 2.534504 (se 0.000274), consistent with 2.534;
+  - T_mc 0.054682 (se 0.000013); T_spec 0.054672 (se 0.000011);
+  - M1 PASS, M2 PASS; 2.5 s.
+  The C5m threshold is fixed at 0.054682.
 
 ## 3. Measured so far about the science
 

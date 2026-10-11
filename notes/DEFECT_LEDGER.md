@@ -390,6 +390,22 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   timing beta. They do not include the rerun's extra per-J ESS output or
   any calibration time. CLOSED as a measurement; the consequence is in
   notes/RERUN_PLAN.md.
+- N23 (result, c6). The constant of calprec v2's criterion C5m. Sources:
+  logs/c6.log and runs/c6-20261011-102531/ (c6_summary.csv, c6_chunks.csv;
+  manifest verified).
+  - Run: Python 3.12.3, NumPy 2.5.3, the laptop, workers 2, N 10000000 in
+    K 40 chunks; "10000000 draws in 2.5 s"; per-worker peak RSS max
+    53.5 MB.
+  - Results:
+    - c6_hat = 0.463495, se 0.000094 (relative 2.02e-04);
+    - d6_hat = 2.534504, se 0.000274, against the spec's 2.534;
+    - T_spec = 0.01 x 2.534 / c6_hat = 0.054672, se 0.000011;
+    - T_mc = 0.01 x d6_hat / c6_hat = 0.054682, se 0.000013.
+  - Verdicts: M1 PASS. M2 PASS ("d6_hat is consistent with 2.534").
+  - Consequence: the C5m threshold is fixed at 0.054682 (T_mc, from the
+    measured d6 and c6) in notes/CALPREC_V2_SPEC.md. The 2.534 the spec had
+    assumed was confirmed independently by this run; it was not reused.
+  CLOSED.
 
 ## Checked and found sound
 

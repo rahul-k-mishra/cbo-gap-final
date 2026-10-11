@@ -149,17 +149,25 @@ For every cell the script takes three things from the row's module:
     So the requirement becomes
           range / tau_ref <= 0.01 x d6 / c6
     at beta_adq.
-  - c6 is NOT stated here from memory. Before calprec v2's first execution
-    it is computed by a no-dynamics Monte Carlo that Rahul runs (at least
-    10^7 medians of six standard normals, fixed seed). The value and its
-    log are written into the docstring, and the resulting threshold is
-    printed at the head of every run.
-  - Worked example, with an ILLUSTRATIVE c6 = 0.46 (not the value to be
-    used): threshold 0.01 x 2.534 / 0.46 = 0.0551.
+  - THRESHOLD, FIXED: range / tau_ref <= 0.054682.
+    - Source: logs/c6.log and runs/c6-20261011-102531/ (ledger N23), a
+      Monte Carlo of 10000000 medians of six standard normals with
+      full-width seeds.
+    - That run measured c6_hat = 0.463495 (se 0.000094) and d6_hat =
+      2.534504 (se 0.000274). The threshold is T_mc = 0.01 x d6_hat /
+      c6_hat = 0.054682 (se 0.000013), rounded as the log prints it.
+    - The d6 = 2.534 the spec had assumed from refscale was confirmed
+      independently by the same run (M2 PASS), not reused. T_spec =
+      0.01 x 2.534 / c6_hat = 0.054672 is reported in the log, and it is
+      not the value used.
+  - Worked example, with the real constant 0.054682:
     - Sorted replicates 0.00970 0.00980 0.00985 0.00990 0.01000 0.01010:
-      tau_ref 0.009875, range 0.00040, ratio 0.0405, at most 0.0551: pass.
+      tau_ref 0.009875, range 0.00040, ratio 0.0405, at most 0.054682:
+      pass.
     - Sorted 0.00940 0.00960 0.00975 0.00985 0.00995 0.01010: tau_ref
       0.00980, range 0.00070, ratio 0.0714: fail.
+    - Borderline: tau_ref 0.010000 with range 0.000545 gives 0.0545: pass.
+      Range 0.000550 gives 0.0550, above 0.054682: fail.
   - beta_adq is the median of the cell's R beta-hat values at the top
     level of L_cal. It is used because beta_prod does not exist until the
     adequate rung has fixed N_cell. C5m at beta_prod is evaluated
@@ -289,9 +297,8 @@ For every cell the script takes three things from the row's module:
   single references (range/median of six at most 0.025). The median
   estimator is NOT applied retroactively to refscale. No refscale verdict
   is recomputed, relabelled or reinterpreted under C5m.
-- C5m and its constant c6 are fixed in calprec v2's docstring before
-  calprec v2's first execution, and they apply only to calprec v2's own
-  runs.
+- C5m's threshold is 0.054682, fixed from the c6 run (ledger N23) before
+  calprec v2 exists. It applies only to calprec v2's own runs.
 - D1 (drift between rung medians), C1 and C6 already use the median over
   six replicates and are unchanged.
 

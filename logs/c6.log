@@ -1,0 +1,26 @@
+========================================================================================
+CBO-GAP c6 -- standard deviation of the median of six standard normals (calprec v2 C5m)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  N 10000000   chunk 250000   K 40 chunks
+  seeds    default_rng(SeedSequence(key)), full width; key = (ENTROPY 20261011, kind 51, chunk index, chunk size)
+  median   (s3 + s4) / 2 of six sorted N(0,1);  range s6 - s1
+  M1       se(c6_hat) / c6_hat <= 0.001
+  M2       |d6_hat - 2.534| <= 0.0005 + 3 se(d6_hat)  (reported)
+  use      calprec v2 C5m only:  threshold = 0.01 x d6 / c6
+  run dir  /home/rahul/Research/cbo-gap-final/runs/c6-20261011-102531
+
+  10000000 draws in 2.5 s;  per-worker peak RSS max 53.5 MB
+
+  c6_hat  = 0.463495   se 0.000094   (relative 2.02e-04)
+  d6_hat  = 2.534504   se 0.000274   (spec uses 2.534)
+  T_spec  = 0.01 x 2.534 / c6_hat     = 0.054672   se 0.000011
+  T_mc    = 0.01 x d6_hat / c6_hat = 0.054682   se 0.000013
+
+  M1  PASS
+  M2  PASS: d6_hat is consistent with 2.534
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/c6-20261011-102531
+========================================================================================
