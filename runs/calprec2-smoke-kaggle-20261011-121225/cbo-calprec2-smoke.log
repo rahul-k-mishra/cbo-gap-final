@@ -1,0 +1,546 @@
+[{"stream_name":"stdout","time":0.765933615,"data":"kgrun runner: job calprec2-smoke\n"}
+,{"stream_name":"stdout","time":0.765983208,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.765988873,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.765992188,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.765995386,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.776070768,"data":"  listing  36 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.776094301,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py\n"}
+,{"stream_name":"stdout","time":0.776099794,"data":"  args     --workers 4 --smoke --rows CONC,TAU8,SIGMA,ANISO\n"}
+,{"stream_name":"stdout","time":0.776105068,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --smoke --rows CONC,TAU8,SIGMA,ANISO\n"}
+,{"stream_name":"stdout","time":1.7125204790000002,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.712579453,"data":"CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, through each row's module\n"}
+,{"stream_name":"stdout","time":1.712588172,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":1.712593949,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.7125982199999998,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":1.712602925,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4   start fork\n"}
+,{"stream_name":"stdout","time":1.712607956,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":1.712612038,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.7126151840000001,"data":"  script   sha256 4c7f29502091b464bbd66485b2ee4aac3717a6dd4dad477c7a33a69227b36d96\n"}
+,{"stream_name":"stdout","time":1.712618738,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":1.712623635,"data":"  mode     smoke   rows CONC,TAU8,SIGMA,ANISO   shard 0 of 1   max rung 1024000000\n"}
+,{"stream_name":"stdout","time":1.7126272710000001,"data":"  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   L_REF [1000000, 4000000, 16000000, 64000000, 256000000, 1024000000]  reps 6   chunk 250000  block 64 chunks\n"}
+,{"stream_name":"stdout","time":1.712632432,"data":"  C5m \u003c= 0.054682  D1 \u003c= 0.025  C1 \u003c= 0.05  C6 \u003c= 0.05  E1 \u003c= 1e-12  E3 \u003c= 1e-06  RSS \u003c= 3072 MB\n"}
+,{"stream_name":"stdout","time":1.712638221,"data":"  grid     K 64 per pass over [1e-10, 1e+10], stop at relative width \u003c= 1e-06: 5 passes by the rule\n"}
+,{"stream_name":"stdout","time":1.7126433570000001,"data":"  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 S 34 smoke 35\n"}
+,{"stream_name":"stdout","time":1.7126501950000002,"data":"\n"}
+,{"stream_name":"stdout","time":1.712654755,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.712659635,"data":"V1 -- ARCHIVE IDENTITY (imported modules' own files)\n"}
+,{"stream_name":"stdout","time":1.712680591,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.71268598,"data":"  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok\n"}
+,{"stream_name":"stdout","time":1.7126908250000001,"data":"  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok\n"}
+,{"stream_name":"stdout","time":1.712695761,"data":"  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok\n"}
+,{"stream_name":"stdout","time":1.712700641,"data":"  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok\n"}
+,{"stream_name":"stdout","time":1.71270686,"data":"  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok\n"}
+,{"stream_name":"stdout","time":1.7127117680000001,"data":"  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok\n"}
+,{"stream_name":"stdout","time":1.7127161,"data":"  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok\n"}
+,{"stream_name":"stdout","time":1.712720899,"data":"  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok\n"}
+,{"stream_name":"stdout","time":1.7127255319999999,"data":"  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok\n"}
+,{"stream_name":"stdout","time":1.712730075,"data":"  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok\n"}
+,{"stream_name":"stdout","time":1.7127349189999999,"data":"  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok\n"}
+,{"stream_name":"stdout","time":1.71273947,"data":"  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok\n"}
+,{"stream_name":"stdout","time":1.712744368,"data":"  V1 PASS\n"}
+,{"stream_name":"stdout","time":1.7127487609999998,"data":"\n"}
+,{"stream_name":"stdout","time":1.712753228,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.712757708,"data":"V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts\n"}
+,{"stream_name":"stdout","time":1.712762449,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.71276707,"data":"  CONC      M       mechanism.py 294-297 M               ok\n"}
+,{"stream_name":"stdout","time":1.7127716830000002,"data":"  CONC      dims    mechanism.py 294-297 dims            ok\n"}
+,{"stream_name":"stdout","time":1.712776296,"data":"  CONC      jgrid   mechanism.py 294-297 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.7127810079999999,"data":"  CONC      laws    mechanism.py 294-297 inits           ok\n"}
+,{"stream_name":"stdout","time":1.712785878,"data":"  CONC      objs    mechanism.py 294-297 objs            ok\n"}
+,{"stream_name":"stdout","time":1.7127902499999998,"data":"  CONC      taus    mechanism.py 294-297 taus            ok\n"}
+,{"stream_name":"stdout","time":1.71279497,"data":"  TAU8      M       boundary.py 252-256 M               ok\n"}
+,{"stream_name":"stdout","time":1.712799483,"data":"  TAU8      dims    boundary.py 252-256 dims            ok\n"}
+,{"stream_name":"stdout","time":1.71280434,"data":"  TAU8      jgrid   boundary.py 252-256 J_list          ok\n"}
+,{"stream_name":"stdout","time":1.7128090280000001,"data":"  TAU8      objs    boundary.py 252-256 objs            ok\n"}
+,{"stream_name":"stdout","time":1.712813815,"data":"  TAU8      taus    boundary.py 252-256 taus            ok\n"}
+,{"stream_name":"stdout","time":1.712823011,"data":"  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181\n"}
+,{"stream_name":"stdout","time":1.712828296,"data":"  SIGMA     M       sigma.py 238-238 --realisations  ok\n"}
+,{"stream_name":"stdout","time":1.712833012,"data":"  SIGMA     diffs   sigma.py 259-260 diffs           ok\n"}
+,{"stream_name":"stdout","time":1.712837615,"data":"  SIGMA     dims    sigma.py 253-257 dims            ok\n"}
+,{"stream_name":"stdout","time":1.7128423179999999,"data":"  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.712846796,"data":"  SIGMA     objs    sigma.py 253-257 objs            ok\n"}
+,{"stream_name":"stdout","time":1.712852421,"data":"  SIGMA     rs      sigma.py 253-257 rs              ok\n"}
+,{"stream_name":"stdout","time":1.712857243,"data":"  SIGMA     taus    sigma.py 253-257 taus            ok\n"}
+,{"stream_name":"stdout","time":1.7128618150000001,"data":"  ANISO     M       crossed.py 239-239 --realisations  ok\n"}
+,{"stream_name":"stdout","time":1.712866588,"data":"  ANISO     diffs   crossed.py 248-248 diffs           ok\n"}
+,{"stream_name":"stdout","time":1.712870755,"data":"  ANISO     dims    crossed.py 255-258 dims            ok\n"}
+,{"stream_name":"stdout","time":1.71287542,"data":"  ANISO     jgrid   crossed.py 255-258 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":1.712880146,"data":"  ANISO     objs    crossed.py 255-258 objs            ok\n"}
+,{"stream_name":"stdout","time":1.712884938,"data":"  ANISO     rs      crossed.py 255-258 rs              ok\n"}
+,{"stream_name":"stdout","time":1.7128896999999998,"data":"  ANISO     sigmas  crossed.py 255-258 sigmas          ok\n"}
+,{"stream_name":"stdout","time":1.712894419,"data":"  ANISO     taus    crossed.py 255-258 taus            ok\n"}
+,{"stream_name":"stdout","time":1.712899266,"data":"  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262\n"}
+,{"stream_name":"stdout","time":1.712904403,"data":"  CONC      144 calibration cells x   1 =  144  (Table 2  144)  ok\n"}
+,{"stream_name":"stdout","time":1.712909288,"data":"  TAU8      144 calibration cells x   1 =  144  (Table 2  144)  ok\n"}
+,{"stream_name":"stdout","time":1.712914165,"data":"  SIGMA      24 calibration cells x  12 =  288  (Table 2  288)  ok\n"}
+,{"stream_name":"stdout","time":1.712919029,"data":"  ANISO      24 calibration cells x  12 =  288  (Table 2  288)  ok\n"}
+,{"stream_name":"stdout","time":1.712923905,"data":"  V0 PASS\n"}
+,{"stream_name":"stdout","time":1.712928508,"data":"\n"}
+,{"stream_name":"stdout","time":1.712933498,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.712937155,"data":"V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)\n"}
+,{"stream_name":"stdout","time":1.71294037,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.7129448680000001,"data":"  boundary   X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]  ok\n"}
+,{"stream_name":"stdout","time":1.71294958,"data":"  crossed    X0 = rng.standard_normal((Jinf, d)) + xs  ok\n"}
+,{"stream_name":"stdout","time":1.712954285,"data":"  mechanism  X0 = draw_initial(rng, Jinf, d, objective, init)  ok\n"}
+,{"stream_name":"stdout","time":1.712959005,"data":"  sigma      X0 = rng.standard_normal((Jinf, d)) + xs  ok\n"}
+,{"stream_name":"stdout","time":1.712963593,"data":"  V2 PASS\n"}
+,{"stream_name":"stdout","time":1.712972162,"data":"\n"}
+,{"stream_name":"stdout","time":1.712976702,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.71298125,"data":"CELLS\n"}
+,{"stream_name":"stdout","time":1.7129859079999998,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.712990478,"data":"  boundary    144 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":1.712995424,"data":"  crossed      24 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":1.7130001240000001,"data":"  mechanism   144 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":1.713004865,"data":"  sigma        24 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":1.713009574,"data":"  total 336\n"}
+,{"stream_name":"stdout","time":1.713014148,"data":"  this job: 336 cells\n"}
+,{"stream_name":"stdout","time":1.713018895,"data":"\n"}
+,{"stream_name":"stdout","time":1.7130235200000001,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.7130285779999999,"data":"RUNG RANGE PER CELL (this job)\n"}
+,{"stream_name":"stdout","time":1.71303548,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.713040731,"data":"  boundary|ackley|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713046088,"data":"  boundary|ackley|10|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713051005,"data":"  boundary|ackley|10|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713055738,"data":"  boundary|ackley|10|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7130606130000001,"data":"  boundary|ackley|10|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7130658429999999,"data":"  boundary|ackley|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713070496,"data":"  boundary|ackley|10|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7130757380000001,"data":"  boundary|ackley|10|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713080422,"data":"  boundary|ackley|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713085464,"data":"  boundary|ackley|40|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7130905159999998,"data":"  boundary|ackley|40|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713095418,"data":"  boundary|ackley|40|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7131003900000001,"data":"  boundary|ackley|40|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71310541,"data":"  boundary|ackley|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713114196,"data":"  boundary|ackley|40|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713119218,"data":"  boundary|ackley|40|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7131241259999999,"data":"  boundary|ackley|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7131290350000001,"data":"  boundary|ackley|5|centred|0.02                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713133842,"data":"  boundary|ackley|5|centred|0.03                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713139162,"data":"  boundary|ackley|5|centred|0.05                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713144426,"data":"  boundary|ackley|5|centred|0.07                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713149501,"data":"  boundary|ackley|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71315425,"data":"  boundary|ackley|5|centred|0.2                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7131591259999999,"data":"  boundary|ackley|5|centred|0.3                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7131639330000001,"data":"  boundary|griewank|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713168664,"data":"  boundary|griewank|10|centred|0.02                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71317371,"data":"  boundary|griewank|10|centred|0.03                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713178718,"data":"  boundary|griewank|10|centred|0.05                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713183716,"data":"  boundary|griewank|10|centred|0.07                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713188788,"data":"  boundary|griewank|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713193738,"data":"  boundary|griewank|10|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71319866,"data":"  boundary|griewank|10|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713203675,"data":"  boundary|griewank|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713209073,"data":"  boundary|griewank|40|centred|0.02                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713214013,"data":"  boundary|griewank|40|centred|0.03                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713218946,"data":"  boundary|griewank|40|centred|0.05                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713223906,"data":"  boundary|griewank|40|centred|0.07                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713228803,"data":"  boundary|griewank|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713237055,"data":"  boundary|griewank|40|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713242418,"data":"  boundary|griewank|40|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713247706,"data":"  boundary|griewank|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7132524500000001,"data":"  boundary|griewank|5|centred|0.02                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7132570280000001,"data":"  boundary|griewank|5|centred|0.03                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713262088,"data":"  boundary|griewank|5|centred|0.05                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71326674,"data":"  boundary|griewank|5|centred|0.07                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713271438,"data":"  boundary|griewank|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713276413,"data":"  boundary|griewank|5|centred|0.2                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7132813580000001,"data":"  boundary|griewank|5|centred|0.3                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71328622,"data":"  boundary|levy|10|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713290958,"data":"  boundary|levy|10|centred|0.02                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71329588,"data":"  boundary|levy|10|centred|0.03                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713300641,"data":"  boundary|levy|10|centred|0.05                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7133053710000001,"data":"  boundary|levy|10|centred|0.07                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713309735,"data":"  boundary|levy|10|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713314598,"data":"  boundary|levy|10|centred|0.2                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713319288,"data":"  boundary|levy|10|centred|0.3                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71332416,"data":"  boundary|levy|40|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71332909,"data":"  boundary|levy|40|centred|0.02                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7133338999999999,"data":"  boundary|levy|40|centred|0.03                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713374901,"data":"  boundary|levy|40|centred|0.05                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7133949529999999,"data":"  boundary|levy|40|centred|0.07                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71340125,"data":"  boundary|levy|40|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713418726,"data":"  boundary|levy|40|centred|0.2                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713424509,"data":"  boundary|levy|40|centred|0.3                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713429796,"data":"  boundary|levy|5|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134351479999999,"data":"  boundary|levy|5|centred|0.02                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71344065,"data":"  boundary|levy|5|centred|0.03                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134460790000001,"data":"  boundary|levy|5|centred|0.05                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713451333,"data":"  boundary|levy|5|centred|0.07                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713456624,"data":"  boundary|levy|5|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134619039999999,"data":"  boundary|levy|5|centred|0.2                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713467235,"data":"  boundary|levy|5|centred|0.3                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134726489999998,"data":"  boundary|rastrigin|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134783580000001,"data":"  boundary|rastrigin|10|centred|0.02               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134835750000001,"data":"  boundary|rastrigin|10|centred|0.03               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134886329999999,"data":"  boundary|rastrigin|10|centred|0.05               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7134939999999999,"data":"  boundary|rastrigin|10|centred|0.07               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713499326,"data":"  boundary|rastrigin|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71350473,"data":"  boundary|rastrigin|10|centred|0.2                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713511671,"data":"  boundary|rastrigin|10|centred|0.3                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7135173,"data":"  boundary|rastrigin|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7135229,"data":"  boundary|rastrigin|40|centred|0.02               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713528216,"data":"  boundary|rastrigin|40|centred|0.03               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713533418,"data":"  boundary|rastrigin|40|centred|0.05               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71356281,"data":"  boundary|rastrigin|40|centred|0.07               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713577133,"data":"  boundary|rastrigin|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71358737,"data":"  boundary|rastrigin|40|centred|0.2                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713592701,"data":"  boundary|rastrigin|40|centred|0.3                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713598062,"data":"  boundary|rastrigin|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713603391,"data":"  boundary|rastrigin|5|centred|0.02                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713608803,"data":"  boundary|rastrigin|5|centred|0.03                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713614473,"data":"  boundary|rastrigin|5|centred|0.05                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713619483,"data":"  boundary|rastrigin|5|centred|0.07                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136243260000001,"data":"  boundary|rastrigin|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713629048,"data":"  boundary|rastrigin|5|centred|0.2                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713633341,"data":"  boundary|rastrigin|5|centred|0.3                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713637869,"data":"  boundary|rosenbrock|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136429469999999,"data":"  boundary|rosenbrock|10|centred|0.02              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713647986,"data":"  boundary|rosenbrock|10|centred|0.03              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136527689999999,"data":"  boundary|rosenbrock|10|centred|0.05              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713657258,"data":"  boundary|rosenbrock|10|centred|0.07              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713661483,"data":"  boundary|rosenbrock|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713665766,"data":"  boundary|rosenbrock|10|centred|0.2               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136701109999999,"data":"  boundary|rosenbrock|10|centred|0.3               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136745690000001,"data":"  boundary|rosenbrock|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136795280000001,"data":"  boundary|rosenbrock|40|centred|0.02              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713683716,"data":"  boundary|rosenbrock|40|centred|0.03              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136881210000001,"data":"  boundary|rosenbrock|40|centred|0.05              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7136933189999999,"data":"  boundary|rosenbrock|40|centred|0.07              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713697841,"data":"  boundary|rosenbrock|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137069249999999,"data":"  boundary|rosenbrock|40|centred|0.2               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71371138,"data":"  boundary|rosenbrock|40|centred|0.3               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713715649,"data":"  boundary|rosenbrock|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713720988,"data":"  boundary|rosenbrock|5|centred|0.02               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137256760000001,"data":"  boundary|rosenbrock|5|centred|0.03               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713730191,"data":"  boundary|rosenbrock|5|centred|0.05               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713734773,"data":"  boundary|rosenbrock|5|centred|0.07               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137396,"data":"  boundary|rosenbrock|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713744144,"data":"  boundary|rosenbrock|5|centred|0.2                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137496909999999,"data":"  boundary|rosenbrock|5|centred|0.3                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137549399999998,"data":"  boundary|sphere|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713759834,"data":"  boundary|sphere|10|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713764818,"data":"  boundary|sphere|10|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137694780000001,"data":"  boundary|sphere|10|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713774086,"data":"  boundary|sphere|10|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71377833,"data":"  boundary|sphere|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713783168,"data":"  boundary|sphere|10|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713787316,"data":"  boundary|sphere|10|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71379044,"data":"  boundary|sphere|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713793584,"data":"  boundary|sphere|40|centred|0.02                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713796688,"data":"  boundary|sphere|40|centred|0.03                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7137998730000001,"data":"  boundary|sphere|40|centred|0.05                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138030610000001,"data":"  boundary|sphere|40|centred|0.07                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713806326,"data":"  boundary|sphere|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713812856,"data":"  boundary|sphere|40|centred|0.2                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138162129999999,"data":"  boundary|sphere|40|centred|0.3                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713819488,"data":"  boundary|sphere|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713822996,"data":"  boundary|sphere|5|centred|0.02                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713826163,"data":"  boundary|sphere|5|centred|0.03                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71382973,"data":"  boundary|sphere|5|centred|0.05                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71383284,"data":"  boundary|sphere|5|centred|0.07                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713836083,"data":"  boundary|sphere|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713839211,"data":"  boundary|sphere|5|centred|0.2                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71384259,"data":"  boundary|sphere|5|centred|0.3                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138457,"data":"  crossed|ackley|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138488299999999,"data":"  crossed|ackley|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713851936,"data":"  crossed|ackley|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713856493,"data":"  crossed|ackley|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138613870000001,"data":"  crossed|ackley|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713866522,"data":"  crossed|ackley|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138714529999999,"data":"  crossed|rastrigin|10|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713876202,"data":"  crossed|rastrigin|10|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138806309999999,"data":"  crossed|rastrigin|40|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713884926,"data":"  crossed|rastrigin|40|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71388974,"data":"  crossed|rastrigin|5|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7138942259999999,"data":"  crossed|rastrigin|5|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713898676,"data":"  crossed|rosenbrock|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713907776,"data":"  crossed|rosenbrock|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713912815,"data":"  crossed|rosenbrock|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713917403,"data":"  crossed|rosenbrock|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713922428,"data":"  crossed|rosenbrock|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713927113,"data":"  crossed|rosenbrock|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713931499,"data":"  crossed|sphere|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713936011,"data":"  crossed|sphere|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713940376,"data":"  crossed|sphere|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71394493,"data":"  crossed|sphere|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713949606,"data":"  crossed|sphere|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713954165,"data":"  crossed|sphere|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713958607,"data":"  mechanism|ackley|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713963051,"data":"  mechanism|ackley|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713968009,"data":"  mechanism|ackley|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713972981,"data":"  mechanism|ackley|10|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7139779929999999,"data":"  mechanism|ackley|10|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713982801,"data":"  mechanism|ackley|10|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7139882910000002,"data":"  mechanism|ackley|2|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713992555,"data":"  mechanism|ackley|2|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713995738,"data":"  mechanism|ackley|2|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.713999291,"data":"  mechanism|ackley|2|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714002506,"data":"  mechanism|ackley|2|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714005735,"data":"  mechanism|ackley|2|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714009543,"data":"  mechanism|ackley|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714015184,"data":"  mechanism|ackley|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140186929999999,"data":"  mechanism|ackley|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714021996,"data":"  mechanism|ackley|40|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714025304,"data":"  mechanism|ackley|40|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714028416,"data":"  mechanism|ackley|40|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140317029999999,"data":"  mechanism|ackley|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140349609999999,"data":"  mechanism|ackley|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714038256,"data":"  mechanism|ackley|5|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714041451,"data":"  mechanism|ackley|5|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140458939999998,"data":"  mechanism|ackley|5|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714050965,"data":"  mechanism|ackley|5|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140544709999999,"data":"  mechanism|griewank|10|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714057608,"data":"  mechanism|griewank|10|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714060816,"data":"  mechanism|griewank|10|centred|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714064108,"data":"  mechanism|griewank|10|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714067341,"data":"  mechanism|griewank|10|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714070655,"data":"  mechanism|griewank|10|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714073778,"data":"  mechanism|griewank|2|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140770029999999,"data":"  mechanism|griewank|2|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714080445,"data":"  mechanism|griewank|2|centred|0.5                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714083663,"data":"  mechanism|griewank|2|mix-0.1|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140868679999999,"data":"  mechanism|griewank|2|mix-0.1|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714090075,"data":"  mechanism|griewank|2|mix-0.1|0.5                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714093208,"data":"  mechanism|griewank|40|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7140988099999999,"data":"  mechanism|griewank|40|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714102408,"data":"  mechanism|griewank|40|centred|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714105624,"data":"  mechanism|griewank|40|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141087609999999,"data":"  mechanism|griewank|40|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714111913,"data":"  mechanism|griewank|40|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141150509999998,"data":"  mechanism|griewank|5|centred|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714118188,"data":"  mechanism|griewank|5|centred|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141213180000001,"data":"  mechanism|griewank|5|centred|0.5                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714124478,"data":"  mechanism|griewank|5|mix-0.1|0.01                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141277000000001,"data":"  mechanism|griewank|5|mix-0.1|0.1                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714130837,"data":"  mechanism|griewank|5|mix-0.1|0.5                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714134097,"data":"  mechanism|levy|10|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141372449999999,"data":"  mechanism|levy|10|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714140477,"data":"  mechanism|levy|10|centred|0.5                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714143901,"data":"  mechanism|levy|10|mix-0.1|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71414747,"data":"  mechanism|levy|10|mix-0.1|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141508239999999,"data":"  mechanism|levy|10|mix-0.1|0.5                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714154026,"data":"  mechanism|levy|2|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714157235,"data":"  mechanism|levy|2|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714160373,"data":"  mechanism|levy|2|centred|0.5                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714163513,"data":"  mechanism|levy|2|mix-0.1|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714166651,"data":"  mechanism|levy|2|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714169795,"data":"  mechanism|levy|2|mix-0.1|0.5                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71417294,"data":"  mechanism|levy|40|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714178413,"data":"  mechanism|levy|40|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714181595,"data":"  mechanism|levy|40|centred|0.5                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141847430000001,"data":"  mechanism|levy|40|mix-0.1|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714187977,"data":"  mechanism|levy|40|mix-0.1|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714191284,"data":"  mechanism|levy|40|mix-0.1|0.5                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7141946030000001,"data":"  mechanism|levy|5|centred|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714197903,"data":"  mechanism|levy|5|centred|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714201028,"data":"  mechanism|levy|5|centred|0.5                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714204247,"data":"  mechanism|levy|5|mix-0.1|0.01                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714207401,"data":"  mechanism|levy|5|mix-0.1|0.1                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71421055,"data":"  mechanism|levy|5|mix-0.1|0.5                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714214404,"data":"  mechanism|rastrigin|10|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714217647,"data":"  mechanism|rastrigin|10|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142208,"data":"  mechanism|rastrigin|10|centred|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714223944,"data":"  mechanism|rastrigin|10|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714227089,"data":"  mechanism|rastrigin|10|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714230445,"data":"  mechanism|rastrigin|10|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714234143,"data":"  mechanism|rastrigin|2|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714237297,"data":"  mechanism|rastrigin|2|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714240514,"data":"  mechanism|rastrigin|2|centred|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714243748,"data":"  mechanism|rastrigin|2|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142468910000002,"data":"  mechanism|rastrigin|2|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.71425026,"data":"  mechanism|rastrigin|2|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714253594,"data":"  mechanism|rastrigin|40|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142592030000001,"data":"  mechanism|rastrigin|40|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714262398,"data":"  mechanism|rastrigin|40|centred|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142655310000001,"data":"  mechanism|rastrigin|40|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142686729999999,"data":"  mechanism|rastrigin|40|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142718239999999,"data":"  mechanism|rastrigin|40|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714275161,"data":"  mechanism|rastrigin|5|centred|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.714278317,"data":"  mechanism|rastrigin|5|centred|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142821879999999,"data":"  mechanism|rastrigin|5|centred|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7142854170000001,"data":"  mechanism|rastrigin|5|mix-0.1|0.01               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723700831,"data":"  mechanism|rastrigin|5|mix-0.1|0.1                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723725034,"data":"  mechanism|rastrigin|5|mix-0.1|0.5                phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723730401,"data":"  mechanism|rosenbrock|10|centred|0.01             phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723735513,"data":"  mechanism|rosenbrock|10|centred|0.1              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723740577,"data":"  mechanism|rosenbrock|10|centred|0.5              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723745377,"data":"  mechanism|rosenbrock|10|mix-0.1|0.01             phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7237499459999999,"data":"  mechanism|rosenbrock|10|mix-0.1|0.1              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72375476,"data":"  mechanism|rosenbrock|10|mix-0.1|0.5              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7237598219999999,"data":"  mechanism|rosenbrock|2|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723764485,"data":"  mechanism|rosenbrock|2|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72376965,"data":"  mechanism|rosenbrock|2|centred|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7237744670000001,"data":"  mechanism|rosenbrock|2|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723779558,"data":"  mechanism|rosenbrock|2|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723784383,"data":"  mechanism|rosenbrock|2|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7237888190000001,"data":"  mechanism|rosenbrock|40|centred|0.01             phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723803089,"data":"  mechanism|rosenbrock|40|centred|0.1              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7238081090000001,"data":"  mechanism|rosenbrock|40|centred|0.5              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723812933,"data":"  mechanism|rosenbrock|40|mix-0.1|0.01             phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723817339,"data":"  mechanism|rosenbrock|40|mix-0.1|0.1              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723821843,"data":"  mechanism|rosenbrock|40|mix-0.1|0.5              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723826557,"data":"  mechanism|rosenbrock|5|centred|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723832459,"data":"  mechanism|rosenbrock|5|centred|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723837259,"data":"  mechanism|rosenbrock|5|centred|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7238417259999999,"data":"  mechanism|rosenbrock|5|mix-0.1|0.01              phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723846194,"data":"  mechanism|rosenbrock|5|mix-0.1|0.1               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723850588,"data":"  mechanism|rosenbrock|5|mix-0.1|0.5               phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723855122,"data":"  mechanism|sphere|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723859634,"data":"  mechanism|sphere|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72386427,"data":"  mechanism|sphere|10|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7238691739999998,"data":"  mechanism|sphere|10|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723874306,"data":"  mechanism|sphere|10|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723878864,"data":"  mechanism|sphere|10|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723883824,"data":"  mechanism|sphere|2|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723888273,"data":"  mechanism|sphere|2|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7238930209999999,"data":"  mechanism|sphere|2|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723897901,"data":"  mechanism|sphere|2|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239028250000001,"data":"  mechanism|sphere|2|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723907741,"data":"  mechanism|sphere|2|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239166030000002,"data":"  mechanism|sphere|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239210809999999,"data":"  mechanism|sphere|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239255770000002,"data":"  mechanism|sphere|40|centred|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723930809,"data":"  mechanism|sphere|40|mix-0.1|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72393555,"data":"  mechanism|sphere|40|mix-0.1|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239403150000001,"data":"  mechanism|sphere|40|mix-0.1|0.5                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239451909999999,"data":"  mechanism|sphere|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239498850000001,"data":"  mechanism|sphere|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723954468,"data":"  mechanism|sphere|5|centred|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239592369999999,"data":"  mechanism|sphere|5|mix-0.1|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723964374,"data":"  mechanism|sphere|5|mix-0.1|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723969366,"data":"  mechanism|sphere|5|mix-0.1|0.5                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239768739999999,"data":"  sigma|ackley|10|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723981873,"data":"  sigma|ackley|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239864599999999,"data":"  sigma|ackley|40|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723991962,"data":"  sigma|ackley|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.723995884,"data":"  sigma|ackley|5|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7239990600000001,"data":"  sigma|ackley|5|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724002237,"data":"  sigma|rastrigin|10|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724005439,"data":"  sigma|rastrigin|10|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724030417,"data":"  sigma|rastrigin|40|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7240341369999999,"data":"  sigma|rastrigin|40|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724037308,"data":"  sigma|rastrigin|5|centred|0.01                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72404152,"data":"  sigma|rastrigin|5|centred|0.1                    phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7240479880000001,"data":"  sigma|rosenbrock|10|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724051266,"data":"  sigma|rosenbrock|10|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724054508,"data":"  sigma|rosenbrock|40|centred|0.01                 phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724058693,"data":"  sigma|rosenbrock|40|centred|0.1                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724061922,"data":"  sigma|rosenbrock|5|centred|0.01                  phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724065677,"data":"  sigma|rosenbrock|5|centred|0.1                   phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724068957,"data":"  sigma|sphere|10|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.72407215,"data":"  sigma|sphere|10|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724075384,"data":"  sigma|sphere|40|centred|0.01                     phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.7240785600000001,"data":"  sigma|sphere|40|centred|0.1                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724081733,"data":"  sigma|sphere|5|centred|0.01                      phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724084868,"data":"  sigma|sphere|5|centred|0.1                       phase A computed here  rungs 1000000 to 1024000000\n"}
+,{"stream_name":"stdout","time":1.724088086,"data":"  cells run: 336   skipped as resolved: 0   could become case (a) at worst: 336\n"}
+,{"stream_name":"stdout","time":1.7240912320000001,"data":"\n"}
+,{"stream_name":"stdout","time":1.724094279,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.724097489,"data":"T1 -- PER-TASK TIMEOUT\n"}
+,{"stream_name":"stdout","time":1.724100594,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1.7241041529999999,"data":"  TIMEOUT_S = 600 s   (smoke: (4M + 2 x 1M) / 3.16e5, doubled for the solve and the 145-beta pass, floor 600 s)\n"}
+,{"stream_name":"stdout","time":1.724107404,"data":"\n"}
+,{"stream_name":"stdout","time":1.724110354,"data":"  run dir  /kaggle/working/calprec2-smoke-20261011-061818\n"}
+,{"stream_name":"stdout","time":1.724113529,"data":"  [smoke] 90 task(s) to run, 0 already in the inputs\n"}
+,{"stream_name":"stdout","time":61.111720062,"data":"  [smoke     1/90   ] SMOKE|boundary|ackley|5|centred|0.1                          wall           s  RSS   193.3 MB  elapsed      59 s\n"}
+,{"stream_name":"stdout","time":62.123745168,"data":"  [smoke     2/90   ] SMOKE|boundary|griewank|10|centred|0.1                       wall           s  RSS   193.5 MB  elapsed      60 s\n"}
+,{"stream_name":"stdout","time":63.137762059,"data":"  [smoke     3/90   ] SMOKE|boundary|ackley|10|centred|0.1                         wall           s  RSS   193.3 MB  elapsed      61 s\n"}
+,{"stream_name":"stdout","time":78.578192871,"data":"  [smoke     4/90   ] SMOKE|boundary|ackley|40|centred|0.1                         wall           s  RSS   301.8 MB  elapsed      77 s\n"}
+,{"stream_name":"stdout","time":119.67771261,"data":"  [smoke     5/90   ] SMOKE|boundary|griewank|5|centred|0.1                        wall           s  RSS   193.6 MB  elapsed     118 s\n"}
+,{"stream_name":"stdout","time":125.700288727,"data":"  [smoke     6/90   ] SMOKE|boundary|levy|10|centred|0.1                           wall           s  RSS   193.6 MB  elapsed     124 s\n"}
+,{"stream_name":"stdout","time":133.330667738,"data":"  [smoke     7/90   ] SMOKE|boundary|griewank|40|centred|0.1                       wall           s  RSS   302.2 MB  elapsed     132 s\n"}
+,{"stream_name":"stdout","time":160.003027366,"data":"  [smoke     8/90   ] SMOKE|boundary|levy|40|centred|0.1                           wall           s  RSS   449.1 MB  elapsed     158 s\n"}
+,{"stream_name":"stdout","time":177.651726253,"data":"  [smoke     9/90   ] SMOKE|boundary|levy|5|centred|0.1                            wall           s  RSS   193.6 MB  elapsed     176 s\n"}
+,{"stream_name":"stdout","time":185.677683671,"data":"  [smoke    10/90   ] SMOKE|boundary|rastrigin|10|centred|0.1                      wall           s  RSS   193.6 MB  elapsed     184 s\n"}
+,{"stream_name":"stdout","time":210.990714413,"data":"  [smoke    11/90   ] SMOKE|boundary|rastrigin|40|centred|0.1                      wall           s  RSS   376.7 MB  elapsed     209 s\n"}
+,{"stream_name":"stdout","time":216.827736646,"data":"  [smoke    12/90   ] SMOKE|boundary|rastrigin|5|centred|0.1                       wall           s  RSS   193.5 MB  elapsed     215 s\n"}
+,{"stream_name":"stdout","time":236.279562176,"data":"  [smoke    13/90   ] SMOKE|boundary|rosenbrock|10|centred|0.1                     wall           s  RSS   193.6 MB  elapsed     235 s\n"}
+,{"stream_name":"stdout","time":254.121533632,"data":"  [smoke    14/90   ] SMOKE|boundary|rosenbrock|40|centred|0.1                     wall           s  RSS   370.9 MB  elapsed     252 s\n"}
+,{"stream_name":"stdout","time":268.363006687,"data":"  [smoke    15/90   ] SMOKE|boundary|rosenbrock|5|centred|0.1                      wall           s  RSS   193.6 MB  elapsed     267 s\n"}
+,{"stream_name":"stdout","time":274.187529415,"data":"  [smoke    16/90   ] SMOKE|boundary|sphere|10|centred|0.1                         wall           s  RSS   193.6 MB  elapsed     272 s\n"}
+,{"stream_name":"stdout","time":299.649608503,"data":"  [smoke    17/90   ] SMOKE|boundary|sphere|40|centred|0.1                         wall           s  RSS   224.0 MB  elapsed     298 s\n"}
+,{"stream_name":"stdout","time":310.07891506,"data":"  [smoke    18/90   ] SMOKE|boundary|sphere|5|centred|0.1                          wall           s  RSS   193.6 MB  elapsed     308 s\n"}
+,{"stream_name":"stdout","time":330.130917779,"data":"  [smoke    19/90   ] SMOKE|crossed|ackley|10|centred|0.1                          wall           s  RSS   193.6 MB  elapsed     328 s\n"}
+,{"stream_name":"stdout","time":351.39345137,"data":"  [smoke    20/90   ] SMOKE|crossed|ackley|40|centred|0.1                          wall           s  RSS   302.2 MB  elapsed     350 s\n"}
+,{"stream_name":"stdout","time":358.619474857,"data":"  [smoke    21/90   ] SMOKE|crossed|ackley|5|centred|0.1                           wall           s  RSS   193.6 MB  elapsed     357 s\n"}
+,{"stream_name":"stdout","time":370.451774826,"data":"  [smoke    22/90   ] SMOKE|crossed|rastrigin|10|centred|0.1                       wall           s  RSS   193.6 MB  elapsed     369 s\n"}
+,{"stream_name":"stdout","time":407.335765228,"data":"  [smoke    23/90   ] SMOKE|crossed|rastrigin|40|centred|0.1                       wall           s  RSS   376.7 MB  elapsed     406 s\n"}
+,{"stream_name":"stdout","time":409.547855431,"data":"  [smoke    24/90   ] SMOKE|crossed|rastrigin|5|centred|0.1                        wall           s  RSS   193.6 MB  elapsed     408 s\n"}
+,{"stream_name":"stdout","time":416.172647444,"data":"  [smoke    25/90   ] SMOKE|crossed|rosenbrock|10|centred|0.1                      wall           s  RSS   193.6 MB  elapsed     414 s\n"}
+,{"stream_name":"stdout","time":439.029092766,"data":"  [smoke    26/90   ] SMOKE|crossed|rosenbrock|40|centred|0.1                      wall           s  RSS   370.9 MB  elapsed     437 s\n"}
+,{"stream_name":"stdout","time":465.296404229,"data":"  [smoke    27/90   ] SMOKE|crossed|rosenbrock|5|centred|0.1                       wall           s  RSS   193.6 MB  elapsed     464 s\n"}
+,{"stream_name":"stdout","time":466.911504292,"data":"  [smoke    28/90   ] SMOKE|crossed|sphere|10|centred|0.1                          wall           s  RSS   193.6 MB  elapsed     465 s\n"}
+,{"stream_name":"stdout","time":479.547146433,"data":"  [smoke    29/90   ] SMOKE|crossed|sphere|40|centred|0.1                          wall           s  RSS   224.1 MB  elapsed     478 s\n"}
+,{"stream_name":"stdout","time":496.398588796,"data":"  [smoke    30/90   ] SMOKE|crossed|sphere|5|centred|0.1                           wall           s  RSS   193.6 MB  elapsed     495 s\n"}
+,{"stream_name":"stdout","time":526.673025595,"data":"  [smoke    31/90   ] SMOKE|mechanism|ackley|10|centred|0.1                        wall           s  RSS   193.6 MB  elapsed     525 s\n"}
+,{"stream_name":"stdout","time":528.287922012,"data":"  [smoke    32/90   ] SMOKE|mechanism|ackley|10|mix-0.1|0.1                        wall           s  RSS   193.8 MB  elapsed     527 s\n"}
+,{"stream_name":"stdout","time":536.716671512,"data":"  [smoke    33/90   ] SMOKE|mechanism|ackley|2|centred|0.1                         wall           s  RSS   193.6 MB  elapsed     535 s\n"}
+,{"stream_name":"stdout","time":554.362038984,"data":"  [smoke    34/90   ] SMOKE|mechanism|ackley|2|mix-0.1|0.1                         wall           s  RSS   193.9 MB  elapsed     553 s\n"}
+,{"stream_name":"stdout","time":595.868805183,"data":"  [smoke    35/90   ] SMOKE|mechanism|ackley|5|centred|0.1                         wall           s  RSS   193.7 MB  elapsed     594 s\n"}
+,{"stream_name":"stdout","time":603.693769998,"data":"  [smoke    36/90   ] SMOKE|mechanism|ackley|40|centred|0.1                        wall           s  RSS   302.2 MB  elapsed     602 s\n"}
+,{"stream_name":"stdout","time":606.910522111,"data":"  [smoke    37/90   ] SMOKE|mechanism|ackley|40|mix-0.1|0.1                        wall           s  RSS   313.9 MB  elapsed     605 s\n"}
+,{"stream_name":"stdout","time":613.936939272,"data":"  [smoke    38/90   ] SMOKE|mechanism|ackley|5|mix-0.1|0.1                         wall           s  RSS   193.8 MB  elapsed     612 s\n"}
+,{"stream_name":"stdout","time":655.837273466,"data":"  [smoke    39/90   ] SMOKE|mechanism|griewank|10|centred|0.1                      wall           s  RSS   193.7 MB  elapsed     654 s\n"}
+,{"stream_name":"stdout","time":664.06824445,"data":"  [smoke    40/90   ] SMOKE|mechanism|griewank|2|centred|0.1                       wall           s  RSS   193.6 MB  elapsed     662 s\n"}
+,{"stream_name":"stdout","time":664.482759637,"data":"  [smoke    41/90   ] SMOKE|mechanism|griewank|10|mix-0.1|0.1                      wall           s  RSS   193.9 MB  elapsed     663 s\n"}
+,{"stream_name":"stdout","time":670.302415523,"data":"  [smoke    42/90   ] SMOKE|mechanism|griewank|2|mix-0.1|0.1                       wall           s  RSS   193.8 MB  elapsed     669 s\n"}
+,{"stream_name":"stdout","time":722.429756416,"data":"  [smoke    43/90   ] SMOKE|mechanism|griewank|5|centred|0.1                       wall           s  RSS   193.6 MB  elapsed     721 s\n"}
+,{"stream_name":"stdout","time":728.050443409,"data":"  [smoke    44/90   ] SMOKE|mechanism|griewank|40|centred|0.1                      wall           s  RSS   302.3 MB  elapsed     726 s\n"}
+,{"stream_name":"stdout","time":729.866642243,"data":"  [smoke    45/90   ] SMOKE|mechanism|griewank|5|mix-0.1|0.1                       wall           s  RSS   193.9 MB  elapsed     728 s\n"}
+,{"stream_name":"stdout","time":738.489221141,"data":"  [smoke    46/90   ] SMOKE|mechanism|griewank|40|mix-0.1|0.1                      wall           s  RSS   307.9 MB  elapsed     737 s\n"}
+,{"stream_name":"stdout","time":784.400661036,"data":"  [smoke    47/90   ] SMOKE|mechanism|levy|10|centred|0.1                          wall           s  RSS   193.6 MB  elapsed     783 s\n"}
+,{"stream_name":"stdout","time":787.818869252,"data":"  [smoke    48/90   ] SMOKE|mechanism|levy|2|centred|0.1                           wall           s  RSS   193.6 MB  elapsed     786 s\n"}
+,{"stream_name":"stdout","time":792.035327104,"data":"  [smoke    49/90   ] SMOKE|mechanism|levy|10|mix-0.1|0.1                          wall           s  RSS   193.7 MB  elapsed     790 s\n"}
+,{"stream_name":"stdout","time":795.852952076,"data":"  [smoke    50/90   ] SMOKE|mechanism|levy|2|mix-0.1|0.1                           wall           s  RSS   193.8 MB  elapsed     794 s\n"}
+,{"stream_name":"stdout","time":850.382844374,"data":"  [smoke    51/90   ] SMOKE|mechanism|levy|5|centred|0.1                           wall           s  RSS   193.5 MB  elapsed     849 s\n"}
+,{"stream_name":"stdout","time":854.20375169,"data":"  [smoke    52/90   ] SMOKE|mechanism|levy|5|mix-0.1|0.1                           wall           s  RSS   193.9 MB  elapsed     852 s\n"}
+,{"stream_name":"stdout","time":865.637737428,"data":"  [smoke    53/90   ] SMOKE|mechanism|levy|40|centred|0.1                          wall           s  RSS   449.2 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":871.259994926,"data":"  [smoke    54/90   ] SMOKE|mechanism|levy|40|mix-0.1|0.1                          wall           s  RSS   460.8 MB  elapsed     870 s\n"}
+,{"stream_name":"stdout","time":910.96027178,"data":"  [smoke    55/90   ] SMOKE|mechanism|rastrigin|10|centred|0.1                     wall           s  RSS   193.5 MB  elapsed     909 s\n"}
+,{"stream_name":"stdout","time":915.180035403,"data":"  [smoke    56/90   ] SMOKE|mechanism|rastrigin|10|mix-0.1|0.1                     wall           s  RSS   193.8 MB  elapsed     913 s\n"}
+,{"stream_name":"stdout","time":921.604915184,"data":"  [smoke    57/90   ] SMOKE|mechanism|rastrigin|2|centred|0.1                      wall           s  RSS   193.6 MB  elapsed     920 s\n"}
+,{"stream_name":"stdout","time":927.023162039,"data":"  [smoke    58/90   ] SMOKE|mechanism|rastrigin|2|mix-0.1|0.1                      wall           s  RSS   193.8 MB  elapsed     925 s\n"}
+,{"stream_name":"stdout","time":979.349217889,"data":"  [smoke    59/90   ] SMOKE|mechanism|rastrigin|5|centred|0.1                      wall           s  RSS   193.5 MB  elapsed     978 s\n"}
+,{"stream_name":"stdout","time":985.768851587,"data":"  [smoke    60/90   ] SMOKE|mechanism|rastrigin|5|mix-0.1|0.1                      wall           s  RSS   193.9 MB  elapsed     984 s\n"}
+,{"stream_name":"stdout","time":988.583696432,"data":"  [smoke    61/90   ] SMOKE|mechanism|rastrigin|40|centred|0.1                     wall           s  RSS   376.6 MB  elapsed     987 s\n"}
+,{"stream_name":"stdout","time":994.608509564,"data":"  [smoke    62/90   ] SMOKE|mechanism|rastrigin|40|mix-0.1|0.1                     wall           s  RSS   390.3 MB  elapsed     993 s\n"}
+,{"stream_name":"stdout","time":1038.113039692,"data":"  [smoke    63/90   ] SMOKE|mechanism|rosenbrock|10|centred|0.1                    wall           s  RSS   193.6 MB  elapsed    1036 s\n"}
+,{"stream_name":"stdout","time":1044.740464119,"data":"  [smoke    64/90   ] SMOKE|mechanism|rosenbrock|10|mix-0.1|0.1                    wall           s  RSS   193.9 MB  elapsed    1043 s\n"}
+,{"stream_name":"stdout","time":1053.765329508,"data":"  [smoke    65/90   ] SMOKE|mechanism|rosenbrock|2|centred|0.1                     wall           s  RSS   193.6 MB  elapsed    1052 s\n"}
+,{"stream_name":"stdout","time":1057.383923037,"data":"  [smoke    66/90   ] SMOKE|mechanism|rosenbrock|2|mix-0.1|0.1                     wall           s  RSS   193.9 MB  elapsed    1056 s\n"}
+,{"stream_name":"stdout","time":1106.90126901,"data":"  [smoke    67/90   ] SMOKE|mechanism|rosenbrock|40|centred|0.1                    wall           s  RSS   371.0 MB  elapsed    1105 s\n"}
+,{"stream_name":"stdout","time":1110.319616885,"data":"  [smoke    68/90   ] SMOKE|mechanism|rosenbrock|5|centred|0.1                     wall           s  RSS   193.6 MB  elapsed    1109 s\n"}
+,{"stream_name":"stdout","time":1114.736798173,"data":"  [smoke    69/90   ] SMOKE|mechanism|rosenbrock|5|mix-0.1|0.1                     wall           s  RSS   193.9 MB  elapsed    1113 s\n"}
+,{"stream_name":"stdout","time":1115.749750636,"data":"  [smoke    70/90   ] SMOKE|mechanism|rosenbrock|40|mix-0.1|0.1                    wall           s  RSS   384.5 MB  elapsed    1114 s\n"}
+,{"stream_name":"stdout","time":1165.05671357,"data":"  [smoke    71/90   ] SMOKE|mechanism|sphere|10|centred|0.1                        wall           s  RSS   193.5 MB  elapsed    1163 s\n"}
+,{"stream_name":"stdout","time":1167.87488482,"data":"  [smoke    72/90   ] SMOKE|mechanism|sphere|10|mix-0.1|0.1                        wall           s  RSS   193.9 MB  elapsed    1166 s\n"}
+,{"stream_name":"stdout","time":1170.288909598,"data":"  [smoke    73/90   ] SMOKE|mechanism|sphere|2|centred|0.1                         wall           s  RSS   193.6 MB  elapsed    1169 s\n"}
+,{"stream_name":"stdout","time":1172.906649971,"data":"  [smoke    74/90   ] SMOKE|mechanism|sphere|2|mix-0.1|0.1                         wall           s  RSS   193.9 MB  elapsed    1171 s\n"}
+,{"stream_name":"stdout","time":1226.830418164,"data":"  [smoke    75/90   ] SMOKE|mechanism|sphere|5|centred|0.1                         wall           s  RSS   193.6 MB  elapsed    1225 s\n"}
+,{"stream_name":"stdout","time":1228.443866318,"data":"  [smoke    76/90   ] SMOKE|mechanism|sphere|40|centred|0.1                        wall           s  RSS   224.2 MB  elapsed    1227 s\n"}
+,{"stream_name":"stdout","time":1229.455142163,"data":"  [smoke    77/90   ] SMOKE|mechanism|sphere|5|mix-0.1|0.1                         wall           s  RSS   193.9 MB  elapsed    1228 s\n"}
+,{"stream_name":"stdout","time":1232.872831949,"data":"  [smoke    78/90   ] SMOKE|mechanism|sphere|40|mix-0.1|0.1                        wall           s  RSS   237.7 MB  elapsed    1231 s\n"}
+,{"stream_name":"stdout","time":1287.199906401,"data":"  [smoke    79/90   ] SMOKE|sigma|ackley|5|centred|0.1                             wall           s  RSS   193.7 MB  elapsed    1285 s\n"}
+,{"stream_name":"stdout","time":1287.612327987,"data":"  [smoke    80/90   ] SMOKE|sigma|ackley|10|centred|0.1                            wall           s  RSS   193.6 MB  elapsed    1286 s\n"}
+,{"stream_name":"stdout","time":1292.836737234,"data":"  [smoke    81/90   ] SMOKE|sigma|rastrigin|10|centred|0.1                         wall           s  RSS   193.7 MB  elapsed    1291 s\n"}
+,{"stream_name":"stdout","time":1305.075763522,"data":"  [smoke    82/90   ] SMOKE|sigma|ackley|40|centred|0.1                            wall           s  RSS   302.3 MB  elapsed    1303 s\n"}
+,{"stream_name":"stdout","time":1344.972769213,"data":"  [smoke    83/90   ] SMOKE|sigma|rastrigin|5|centred|0.1                          wall           s  RSS   193.7 MB  elapsed    1343 s\n"}
+,{"stream_name":"stdout","time":1351.796921613,"data":"  [smoke    84/90   ] SMOKE|sigma|rosenbrock|10|centred|0.1                        wall           s  RSS   193.7 MB  elapsed    1350 s\n"}
+,{"stream_name":"stdout","time":1365.23394001,"data":"  [smoke    85/90   ] SMOKE|sigma|rastrigin|40|centred|0.1                         wall           s  RSS   376.7 MB  elapsed    1364 s\n"}
+,{"stream_name":"stdout","time":1374.065079843,"data":"  [smoke    86/90   ] SMOKE|sigma|rosenbrock|40|centred|0.1                        wall           s  RSS   370.9 MB  elapsed    1372 s\n"}
+,{"stream_name":"stdout","time":1401.735587987,"data":"  [smoke    87/90   ] SMOKE|sigma|rosenbrock|5|centred|0.1                         wall           s  RSS   193.7 MB  elapsed    1400 s\n"}
+,{"stream_name":"stdout","time":1408.550853701,"data":"  [smoke    88/90   ] SMOKE|sigma|sphere|10|centred|0.1                            wall           s  RSS   193.6 MB  elapsed    1407 s\n"}
+,{"stream_name":"stdout","time":1417.16711067,"data":"  [smoke    89/90   ] SMOKE|sigma|sphere|5|centred|0.1                             wall           s  RSS   193.7 MB  elapsed    1415 s\n"}
+,{"stream_name":"stdout","time":1419.776103346,"data":"  [smoke    90/90   ] SMOKE|sigma|sphere|40|centred|0.1                            wall           s  RSS   224.2 MB  elapsed    1418 s\n"}
+,{"stream_name":"stdout","time":1419.778395989,"data":"\n"}
+,{"stream_name":"stdout","time":1419.778436069,"data":"SMOKE: unit costs only; not results.\n"}
+,{"stream_name":"stdout","time":1419.841352922,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":1422.85435709,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1422.85440645,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1423.279488338,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1423.279525557,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1425.093270752,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1426.46108514,"data":"[NbConvertApp] Writing 287101 bytes to __results__.html\n"}
+]

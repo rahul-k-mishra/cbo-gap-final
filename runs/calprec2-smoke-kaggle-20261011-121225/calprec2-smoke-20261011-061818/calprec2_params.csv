@@ -1,0 +1,11 @@
+script_sha256,4c7f29502091b464bbd66485b2ee4aac3717a6dd4dad477c7a33a69227b36d96
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+mode,smoke
+rows,"CONC,TAU8,SIGMA,ANISO"
+cells,
+shard,0
+nshards,1
+max_rung,5
+workers,4
+python,3.13.15
+numpy,2.1.3
