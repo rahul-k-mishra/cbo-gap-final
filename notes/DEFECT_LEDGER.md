@@ -423,6 +423,11 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       exactcal.beta_on_ensemble on a held 1M stream.
     - E2 is withdrawn with D5a.
   - Recorded in CALPREC_V2_SPEC sections 6, 11 and 11b. CLOSED.
+  - Addendum, 2026-10-11: Rahul confirmed the correction. The stop rule
+    (relative width <= 1e-6) stands, and five passes of 64 is the answer;
+    his "two passes, below 1e-4" was wrong. Also his decision of
+    2026-10-11: case (b) is solved by the same grid solve, which removes
+    the last held solve above 1M (CALPREC_V2_SPEC 11b).
 
 ## Checked and found sound
 

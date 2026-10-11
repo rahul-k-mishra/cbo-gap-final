@@ -416,8 +416,9 @@ For every cell the script takes three things from the row's module:
   printed. Nothing is derived from a cell's grid solve without E3.
 - No held solve above 1M exists in the design. The case (b) solve also
   uses the grid solve.
-  - This is Claude's choice, put to Rahul for approval: it removes the
-    dependence on the unmeasured 64M memory (review A4).
+  - Proposed by Claude and APPROVED by Rahul on 2026-10-11, because it
+    removes the last held solve above 1M, and with it the dependence on
+    the unmeasured 64M memory (review A4).
   - The only held arrays are phase A (at most 4M values) and the 1M arrays
     of E1 and E3.
   - The 64M memory probe (scripts/memprobe.py) still runs before any held
@@ -443,3 +444,17 @@ For every cell the script takes three things from the row's module:
 - Seeds: a chunk index is appended to every key (SeedSequence(key +
   (chunk,))), so a chunk can be regenerated alone. This is an addition to
   section 7.
+- Further decisions of 2026-10-11 (review N1 to N5):
+  - N1. A continuation job skips a cell whose inputs already show it
+    adequate or case (a), and says so in its rung-range table.
+  - N2. finalize recomputes E3 and the solve from their rows. An E3
+    failure is labelled "E3 FAIL" in the beta table, never "incomplete".
+  - N3. The worst-case estimate and TIMEOUT_S include every phase the job
+    can run at its max rung.
+  - N4. One process per task stays, for phase A as well. The fork
+    overhead is bounded by the task count times a few milliseconds, and
+    the scheduler's uniformity is worth more than the saving. Revisit if
+    the smoke shows otherwise.
+  - N5. The plan prints each cell's projected case (a) solve cost and how
+    many cells could become case (a) at worst. G-CAP refuses a job whose
+    case (a) solves would exceed the 6-hour ceiling.

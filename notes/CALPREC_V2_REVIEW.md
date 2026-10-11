@@ -406,3 +406,89 @@ What changed:
   cell's rung range.
 - memprobe: the 4M and 16M solve peaks; the gate decision; and, if 64M
   ran, its solve peak against 3072 MB.
+
+---
+
+## 2026-10-11, third pass: N1 to N5 decided and applied
+
+What changed:
+
+- scripts/calprec2.py went from md5 0b82f0805700b449f2d6faf836fa5649
+  (03d0174) to md5 c5b6052f181fed72a6c8d92a63cb69a8 (1636 lines). Diff
+  against 03d0174: 222 lines inserted, 101 deleted.
+- Not executed; parsed under the Python 3.8 grammar.
+
+### Closed
+
+- N1. A continuation job skips a cell whose inputs already show an
+  adequate rung or case (a).
+  - The status comes from judge_rungs, which judges every pair of climbed
+    rungs; finalize uses the same function.
+  - The rung-range table prints "skipped: adequate at <n> in the inputs"
+    or "skipped: case (a) in the inputs". It notes that the cell's
+    unfinished later phases, if any, are completed only by a rule-17
+    resume of the job that resolved it.
+- N2. finalize replays the E3 grid solve (G3 rows) and the solve (G rows)
+  with grid_step, the pass function the job itself uses.
+  - E3 is recomputed against the held 1M solve. A failure is labelled
+    "E3 FAIL (case x)", flagged, exit 3.
+  - beta_s is taken from the replay, not from the evaluation rows. If the
+    evaluation rows evaluated a different beta, the cell is flagged, exit
+    3.
+  - The fragile "|p" task-id parsing (old N6) is gone: replay builds each
+    block's task id directly.
+- N3. cell_costs computes, per cell:
+  - the climb from the cell's start to --max-rung;
+  - the adequate branch at the rung below --max-rung: the C1 pass with 145
+    betas, B, C', and a case (b) solve;
+  - the case (a) branch at 1G, only when --max-rung is 1G.
+  The worst case takes the larger branch. The largest single task, which
+  sets TIMEOUT_S, ranges over every task type in both branches.
+- N5. The plan's rung-range table prints each cell's worst case and its
+  case (a) solve cost (worker-seconds) when --throughput is given. It
+  prints "could become case (a) at worst: k": all cells run, when
+  --max-rung is 1G. G-CAP refuses the job (exit 2) when the case (a)
+  solves, summed over those k cells and divided by workers, exceed 21600 s.
+
+### Left, by decision
+
+- N4. One process per task for phase A's 144 small tasks per cell (Rahul,
+  2026-10-11). The overhead is bounded by the task count times a few
+  milliseconds, and the scheduler's uniformity is worth more than the
+  saving. Revisit if the smoke shows otherwise. Recorded in the docstring
+  (T1) and the spec (11b).
+
+### Found and fixed while re-reading the diff (not in Rahul's list)
+
+- R1 (this pass). The grid-consistency check in grid_solve_round compared
+  stored betas with [float(repr(x)) for x in grid], where grid held numpy
+  float64 values. Under NumPy 2, repr of a numpy scalar is
+  "np.float64(...)", so float() of it raises ValueError. That would have
+  crashed the job's parent process at the first grid pass.
+  - Fixed in the N2 refactor: grid_of returns Python floats, and
+    grid_step compares the lists directly.
+  - I am reporting it because the instruction for this pass was to fix
+    the listed items, and this is outside them. It is a crash, not a
+    wrong number, and leaving it would make every grid solve fail.
+
+### New issues found re-reading the diff
+
+- T1. calprec2_plan.csv still lists skipped cells with a start rung, and
+  does not mark them as skipped. Only the console table says "skipped".
+- T2. The worst case charges every cell the adequate branch at the rung
+  below --max-rung, even a cell whose start is already above it. That
+  over-estimates, which is the safe direction.
+- T3. "Could become case (a) at worst" counts every cell run when
+  --max-rung is 1G. That is the honest worst case. It may make G-CAP
+  refuse jobs that would in fact fit, which can only be resolved with
+  fewer cells per job.
+- T4. The in-run E3 (in job) and the finalize E3 (replay) compute the same
+  thing by two code paths that share grid_step. A disagreement between
+  them is possible only through the held 1M solve or the comparison, and
+  is not checked.
+
+### Still left from earlier passes
+
+- B6, B7, C1, C3, C4, C5, D3, D4, D5, D6, D7, D8, E1 to E4, G1 to G4.
+- Second-pass N7 (grid monotonicity) and N8 (the smoke timeout's judgement
+  constants).

@@ -61,7 +61,11 @@ JOBS, AND HOW A CELL SPANS SEVERAL OF THEM (review A1, A2)
     - otherwise start = (highest rung with six complete climb rows) + 1.
   The highest rung already evaluated is the continuation point. It is
   judged in this job, once the rung above it exists; its own rows come from
-  the inputs and are not recomputed. Phase A of a cell is computed once, in
+  the inputs and are not recomputed. A cell whose inputs already show an
+  adequate rung or case (a) is SKIPPED (review N1). The status is judged
+  from every pair of climbed rungs, as finalize judges it, and the rung-range
+  table says "skipped". Its later phases, if unfinished, are completed only
+  by a rule-17 resume of the job that resolved it. Phase A of a cell is computed once, in
   the first job that touches the cell, and written to that job's
   calprec2_phaseA.csv. A later job reads it from --inputs; the folder is
   verified against its sha256.txt. A job given a cell with climb rows but
@@ -183,6 +187,11 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
   INCOMPLETE  A cell whose rows for a phase are missing or errored is
       labelled "incomplete (<phase>)". It is never given a case label
       (review B2).
+  FINALIZE REPLAY (review N2). finalize recomputes the E3 grid solve and the
+      solve itself from their block rows, pass by pass, with the job's own
+      pass function. A cell whose E3 fails is labelled "E3 FAIL (case x)",
+      with exit 3; it is never "incomplete". A cell whose evaluation rows
+      evaluate a beta other than the replayed solve is flagged, with exit 3.
   S1  Largest-term share: reported, no threshold.
   X1/X2  Exact tau for the centred law with a diagonal quadratic objective
       (sphere; synthetic rho = 0):
@@ -193,14 +202,24 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       row. The only held arrays are phase A (at most 4000000 values) and
       the 1M arrays of E1 and E3. No held solve exists above 1M, pending
       the memory probe (review A4).
-  G-CAP  A full run needs --throughput (a verified smoke folder), and its
-      WORST-CASE ESTIMATE must be at most 21600 s, or exit 2.
-      The estimate is
-          sum over cells of (A, unless it is in the inputs; climb from the
-          cell's start to --max-rung; the C1 pass, C' and an n* solve at
-          the rung below --max-rung, or a 1G solve if --max-rung is 1G)
-          / workers,
-      with each pass costing n x (t_draw + n_beta x t_beta).
+  G-CAP  A full run needs --throughput (a verified smoke folder). Two
+      estimates must each be at most 21600 s, or exit 2.
+      (1) The WORST-CASE ESTIMATE for the job (review N3). Per cell:
+            phase A (unless it is in the inputs)
+          + the climb from the cell's start to --max-rung
+          + the larger of two branches:
+            - the adequate branch at the highest rung that can be judged
+              adequate (the rung below --max-rung): C1 pass, B, C', and a
+              case (b) solve there;
+            - the case (a) branch, only when --max-rung is 1G: E3, the grid
+              passes over 1G and six 1G evaluation replicates.
+          The job's estimate is the sum over its cells, divided by workers.
+      (2) THE CASE (a) SOLVES (review N5): the sum, over every cell that
+          could become case (a) at worst, of its case (a) branch, divided
+          by workers. When --max-rung is 1G, that is every cell the job
+          runs. The plan prints this count and each cell's case (a) cost.
+      Each pass costs n x (t_draw + n_beta x t_beta); a solve adds n x
+      t_solve.
       It assumes perfect scaling. It ignores barrier idle time and the tail
       of each phase. It is an estimate, NOT a bound (review B3). The best
       case assumes adequacy at the start rung.
@@ -212,8 +231,15 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       ("timeout"). A process that exits without a result is written as an
       error row ("worker exited").
           TIMEOUT_S = 5 x the projected wall of the job's largest task,
-      with the projection from the throughput table, printed at the head
-      of the run.
+      over every task type the job can run at its max rung (phase A, B,
+      the E3 held solve, every climb rung, the C1 and C' replicates, grid
+      blocks and evaluation replicates at the adequate and case (a)
+      sizes; review N3). The projection comes from the throughput table and
+      is printed at the head of the run.
+      One process per task is kept for phase A's 144 small tasks per cell
+      (review N4, Rahul 2026-10-11): the fork overhead is bounded by the
+      task count times a few milliseconds, and a uniform scheduler is worth
+      more than the saving. Revisit if the smoke shows otherwise.
       In smoke mode, where no table exists yet, the projection is
       (4000000 + 2 x 1000000) points / 3.16e5 points per second, plus the
       same again for the solve and the 145-beta pass, and the timeout is
@@ -865,39 +891,64 @@ def grid_passes():
     return p
 
 
-def estimates(cells, starts, thr, mx, have_a):
-    """(best-case s, worst-case s, largest single-task s, cells lacking throughput)."""
-    best, worst, big, missing = 0.0, 0.0, 0.0, []
+def cell_costs(c, s, mx, thr, have_a):
+    """Estimated worker-seconds for one cell in this job (review N3, N5):
+    (best case, worst case, largest single task, case (a) solve).
+    Every phase the job can run at its max rung is included:
+      climb       rungs s .. mx, six replicates at one beta;
+      adequate    possible at rungs max(s-1, 0) .. mx-1; the worst is mx-1:
+                  C1 pass (145 betas), B (a 4M draw and solve), C' (six
+                  replicates), then a case (b) solve at that rung;
+      case (a)    possible only when mx is the top rung: E3, the grid passes
+                  over 1G and six 1G evaluation replicates.
+    The worst case is phase A + climb + the larger of the two branches."""
+    td, tb, ts = thr[(c[0], c[1], c[2], c[3])]
     P = grid_passes()
+
+    def pas(n, nb):
+        return n * (td + nb * tb)
+
+    def blk(n):
+        return pas(min(n, BLOCK_CHUNKS * CHUNK), GRID_K)
+
+    e3 = L_REF[0] * (td + ts) + P * pas(L_REF[0], GRID_K)
+
+    def solve_at(n):
+        return e3 + P * pas(n, GRID_K) + REPS * pas(n, 2)
+    a = 0.0 if cell_id(c) in have_a else R_CAL * sum(L_CAL) * (td + ts)
+    climb = sum(REPS * pas(L_REF[i], 1) for i in range(s, mx + 1))
+    big = max([L_CAL[-1] * (td + ts), L_REF[0] * (td + ts)] + [pas(L_REF[i], 1) for i in range(s, mx + 1)])
+    branch_b = 0.0
+    if mx >= 1:
+        nb_ = L_REF[mx - 1]
+        branch_b = REPS * pas(nb_, NLEV) + L_CAL[-1] * (td + ts) + REPS * pas(nb_, 1) + solve_at(nb_)
+        big = max(big, pas(nb_, NLEV), blk(nb_), pas(nb_, 2))
+    branch_a = 0.0
+    if mx == len(L_REF) - 1:
+        branch_a = solve_at(L_REF[-1])
+        big = max(big, blk(L_REF[-1]), pas(L_REF[-1], 2))
+    worst = a + climb + max(branch_b, branch_a)
+    s1 = min(s + 1, mx)
+    best = a + REPS * pas(L_REF[s], 1) + REPS * pas(L_REF[s1], 1) + REPS * pas(L_REF[s], NLEV) \
+        + REPS * pas(L_REF[s], 1)
+    return best, worst, big, branch_a
+
+
+def estimates(cells, starts, thr, mx, have_a):
+    """Job totals: (best, worst, largest task, case (a) total, case (a) by cell,
+    cells lacking throughput)."""
+    best, worst, big, ca, by, missing = 0.0, 0.0, 0.0, 0.0, {}, []
     for c in cells:
-        u = (c[0], c[1], c[2], c[3])
-        if u not in thr:
+        if (c[0], c[1], c[2], c[3]) not in thr:
             missing.append(cell_id(c))
             continue
-        td, tb, ts = thr[u]
-
-        def pas(n, nb):
-            return n * (td + nb * tb)
-        a = 0.0 if cell_id(c) in have_a else R_CAL * sum(L_CAL) * (td + ts)
-        big = max(big, L_CAL[-1] * (td + ts))
-        s = starts[cell_id(c)]
-        climb = sum(REPS * pas(L_REF[i], 1) for i in range(s, mx + 1))
-        for i in range(s, mx + 1):
-            big = max(big, pas(L_REF[i], 1))
-        if mx == len(L_REF) - 1:
-            ns = L_REF[-1]
-            tail = 0.0
-        else:
-            ns = L_REF[max(s, mx - 1)]
-            tail = REPS * pas(ns, NLEV) + REPS * pas(ns, 1)
-            big = max(big, pas(ns, NLEV))
-        solve = L_REF[0] * (td + ts) + P * pas(L_REF[0], GRID_K) + P * pas(ns, GRID_K) + REPS * pas(ns, 2)
-        big = max(big, pas(min(ns, BLOCK_CHUNKS * CHUNK), GRID_K), pas(ns, 2))
-        worst += a + climb + tail + solve
-        s1 = min(s + 1, mx)
-        best += a + REPS * pas(L_REF[s], 1) + REPS * pas(L_REF[s1], 1) + REPS * pas(L_REF[s], NLEV) \
-            + REPS * pas(L_REF[s], 1)
-    return best, worst, big, missing
+        b, w, g, x = cell_costs(c, starts[cell_id(c)], mx, thr, have_a)
+        best += b
+        worst += w
+        big = max(big, g)
+        ca += x
+        by[cell_id(c)] = x
+    return best, worst, big, ca, by, missing
 
 
 # --------------------------------------------------------------------------
@@ -916,6 +967,25 @@ def rung_stats(store, label, c, n, idx=0, reps=None):
             return None
         vals.append(floats(r["tau_hat"])[idx])
     return median(vals), max(vals) - min(vals), vals
+
+
+def judge_rungs(store, c):
+    """Status from the climb rows present: ("adequate", i), ("case_a", 5) or
+    (None, highest evaluated). The first adequate pair wins (review N1). Used by
+    the job's rung-range table and by finalize, so the two agree."""
+    meds = {}
+    for i, n in enumerate(L_REF):
+        s = rung_stats(store, "C", c, n)
+        if s is not None:
+            meds[i] = s
+    top = max(meds) if meds else None
+    for i in sorted(meds):
+        if i + 1 in meds and meds[i][1] / meds[i][0] <= C5M_MAX and \
+                abs(meds[i][0] - meds[i + 1][0]) / meds[i + 1][0] <= D1_MAX:
+            return ("adequate", i), meds
+    if top == len(L_REF) - 1:
+        return ("case_a", top), meds
+    return (None, top), meds
 
 
 def highest_climbed(store, c):
@@ -947,6 +1017,48 @@ def r1_check(store, label, c, n, idx):
     return "not applicable" if res else "no rows"
 
 
+def grid_of(lo, hi):
+    """The K-point grid of a pass, as Python floats (repr round-trips)."""
+    return [float(x) for x in np.geomspace(lo, hi, GRID_K)]
+
+
+def grid_step(c, n, grid, rows, p):
+    """One pass: from the block rows of a grid, the new bracket (lo, hi, None),
+    or (None, None, error). Shared by the job and by finalize (review N2)."""
+    if any(r is None or r["end"] != "ok" for r in rows):
+        return None, None, "incomplete (grid pass {})".format(p + 1)
+    if floats(rows[0]["betas"]) != grid:
+        return None, None, "grid of pass {} in the rows differs from the replayed grid".format(p + 1)
+    per = [list(zip(floats(r["l1"]), floats(r["l2"]), floats(r["mx"]))) for r in rows]
+    les = [log_ess_from(x) for x in combine_terms(per, GRID_K)]
+    goal = math.log(c[4] * n)
+    above = [i for i in range(GRID_K) if les[i] > goal]
+    if not above or above[0] != 0:
+        return None, None, "target outside the grid bracket at pass {}".format(p + 1)
+    i = max(above)
+    if i >= GRID_K - 1:
+        return None, None, "target outside the grid bracket at pass {}".format(p + 1)
+    return grid[i], grid[i + 1], None
+
+
+def replay_grid(st, label, c, n):
+    """Recompute a grid solve from its block rows: (beta, widths, error)."""
+    lo, hi, widths = BIS_LO, BIS_HI, []
+    nb = len(blocks_of(n))
+    for p in range(GRID_MAX_PASSES):
+        rows = [st.get(tid_of(label, c, n, 0, "|p{}|b{}".format(p, bi))) for bi in range(nb)]
+        if all(r is None for r in rows):
+            break
+        lo2, hi2, err = grid_step(c, n, grid_of(lo, hi), rows, p)
+        if err is not None:
+            return None, widths, err
+        lo, hi = lo2, hi2
+        widths.append(hi / lo - 1.0)
+        if widths[-1] <= GRID_TOL:
+            return math.sqrt(lo * hi), widths, None
+    return None, widths, ("no grid rows" if not widths else "stop rule not met")
+
+
 def grid_solve_round(runner, cells_n, store, label):
     """Run the grid passes for every (cell, n) in cells_n, all cells together,
     pass by pass. Returns {cid: (beta, lo, hi, widths) or error string}."""
@@ -961,7 +1073,7 @@ def grid_solve_round(runner, cells_n, store, label):
         for cid in live:
             s = state[cid]
             c = cell_from_id(cid)
-            grid = list(np.geomspace(s["lo"], s["hi"], GRID_K))
+            grid = grid_of(s["lo"], s["hi"])
             s["grid"] = grid
             for bi, blk in enumerate(blocks_of(s["n"])):
                 items.append(item("block", {"tid": tid_of(label, c, s["n"], 0, "|p{}|b{}".format(p, bi)),
@@ -973,25 +1085,11 @@ def grid_solve_round(runner, cells_n, store, label):
             c = cell_from_id(cid)
             rows = [store.get(tid_of(label, c, s["n"], 0, "|p{}|b{}".format(p, bi)))
                     for bi in range(len(blocks_of(s["n"])))]
-            if any(r is None or r["end"] != "ok" for r in rows):
-                s["err"] = "incomplete (grid pass {})".format(p + 1)
+            lo2, hi2, err = grid_step(c, s["n"], s["grid"], rows, p)
+            if err is not None:
+                s["err"] = err
                 continue
-            if floats(rows[0]["betas"]) != [float(repr(x)) for x in s["grid"]]:
-                s["err"] = "grid of pass {} in the inputs differs from this job's".format(p + 1)
-                continue
-            per = [list(zip(floats(r["l1"]), floats(r["l2"]), floats(r["mx"]))) for r in rows]
-            res = combine_terms(per, GRID_K)
-            les = [log_ess_from(x) for x in res]
-            goal = math.log(c[4] * s["n"])
-            above = [i for i in range(GRID_K) if les[i] > goal]
-            if not above or above[0] != 0:
-                s["err"] = "target outside the grid bracket at pass {}".format(p + 1)
-                continue
-            i = max(above)
-            if i >= GRID_K - 1:
-                s["err"] = "target outside the grid bracket at pass {}".format(p + 1)
-                continue
-            s["lo"], s["hi"] = s["grid"][i], s["grid"][i + 1]
+            s["lo"], s["hi"] = lo2, hi2
             s["widths"].append(s["hi"] / s["lo"] - 1.0)
             if s["widths"][-1] <= GRID_TOL:
                 s["done"] = True
@@ -1185,18 +1283,9 @@ def finalize(rows, cells, outdir):
         elif e1["e1"] == "FAIL":
             flags.append("E1 FAIL")
             any3 = True
-        meds = {}
-        for i, n in enumerate(L_REF):
-            s = rung_stats(st, "C", c, n)
-            if s is not None:
-                meds[i] = s
+        (jst, ji), meds = judge_rungs(st, c)
         top = max(meds) if meds else None
-        nstar = None
-        for i in sorted(meds):
-            if i + 1 in meds and meds[i][1] / meds[i][0] <= C5M_MAX and \
-                    abs(meds[i][0] - meds[i + 1][0]) / meds[i + 1][0] <= D1_MAX:
-                nstar = i
-                break
+        nstar = ji if jst == "adequate" else None
         rec["rungs"] = ";".join(str(L_REF[i]) for i in sorted(meds))
         label, beta, prov, tref, rng, nsolve = None, None, "", None, None, None
         if nstar is not None:
@@ -1243,28 +1332,39 @@ def finalize(rows, cells, outdir):
             label = "incomplete (climb)"
         if label is None and nsolve is not None:
             h = st.get(tid_of("H", c, L_REF[0], 0))
-            g3 = [st.get(t) for t in st if t.startswith("G3|" + cid + "|")]
-            ev = rung_stats(st, "E", c, nsolve)
-            gpasses = sorted(set(t.split("|p")[1].split("|")[0] for t in st if t.startswith("G|" + cid + "|")),
-                             key=int) if any(t.startswith("G|" + cid + "|") for t in st) else []
-            if h is None or h["end"] != "ok" or not g3:
-                label = "incomplete (E3, case {})".format(case)
-            elif ev is None:
-                label = "incomplete (solve, case {})".format(case)
+            g3b, _w3, g3err = replay_grid(st, "G3", c, L_REF[0])
+            if h is None or h["end"] != "ok" or g3b is None:
+                label = "incomplete (E3, case {}: {})".format(case, g3err if g3b is None else "held solve missing")
             else:
-                beta = floats(st[tid_of("E", c, nsolve, 0)]["betas"])[0]
-                tref, rng = ev[0], ev[1]
-                dev = abs(tref / c[4] - 1.0)
-                rec["case_dev"] = "{:.6f}".format(dev)
-                rec["grid_passes"] = len(gpasses)
-                prov = "grid solve at n {} (case {})".format(nsolve, case)
-                label = "target" if (case == "b" and dev <= C6_MAX) else "beta"
-                r1 = r1_check(st, "E", c, nsolve, 1)
-                if r1 == "FAIL":
-                    flags.append("R1 FAIL")
+                rel3 = abs(g3b / float(h["beta_solved"]) - 1.0)
+                rec["E3"] = "{:.3e}".format(rel3)
+                if rel3 > E3_TOL:
+                    label = "E3 FAIL (case {})".format(case)
+                    flags.append("E3 FAIL")
                     any3 = True
-                elif r1.startswith("not applicable"):
-                    flags.append("R1 not applicable (env differs)")
+            if label is None:
+                gb, gw, gerr = replay_grid(st, "G", c, nsolve)
+                ev = rung_stats(st, "E", c, nsolve)
+                if gb is None:
+                    label = "incomplete (solve, case {}: {})".format(case, gerr)
+                elif ev is None:
+                    label = "incomplete (solve evaluation, case {})".format(case)
+                else:
+                    if floats(st[tid_of("E", c, nsolve, 0)]["betas"])[0] != gb:
+                        flags.append("E rows evaluate a beta other than the replayed grid solve")
+                        any3 = True
+                    beta, tref, rng = gb, ev[0], ev[1]
+                    dev = abs(tref / c[4] - 1.0)
+                    rec["case_dev"] = "{:.6f}".format(dev)
+                    rec["grid_passes"] = len(gw)
+                    prov = "grid solve at n {} (case {})".format(nsolve, case)
+                    label = "target" if (case == "b" and dev <= C6_MAX) else "beta"
+                    r1 = r1_check(st, "E", c, nsolve, 1)
+                    if r1 == "FAIL":
+                        flags.append("R1 FAIL")
+                        any3 = True
+                    elif r1.startswith("not applicable"):
+                        flags.append("R1 not applicable (env differs)")
         if label.startswith("incomplete"):
             any4 = True
         rec.update({"label": label, "beta": "" if beta is None else repr(beta), "provenance": prov,
@@ -1274,7 +1374,7 @@ def finalize(rows, cells, outdir):
         out.append(rec)
     cols = ["cell", "module", "objective", "d", "law", "tau0", "label", "beta", "provenance", "tau_ref",
             "range", "exact_tau", "beta_adq", "rungs", "n_star", "C5m", "D1"] + \
-        ["C1_" + str(N) for N in L_CAL] + ["N_cell", "C6", "case_dev", "grid_passes", "flags"]
+        ["C1_" + str(N) for N in L_CAL] + ["N_cell", "C6", "E3", "case_dev", "grid_passes", "flags"]
     with open(os.path.join(outdir, "calprec2_beta.csv"), "x", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
         w.writeheader()
@@ -1411,7 +1511,7 @@ def main():
                     return 2
                 store[r["tid"]] = r
 
-    starts, have_a = {}, set()
+    starts, have_a, skipped = {}, set(), {}
     for c in cells:
         cid = cell_id(c)
         has_a = all(tid_of("A", c, N, rep) in store for N in L_CAL for rep in range(R_CAL))
@@ -1421,23 +1521,42 @@ def main():
             return 2
         if has_a:
             have_a.add(cid)
+        (st_, ri), _m = judge_rungs(store, c)
+        if st_ == "adequate":
+            skipped[cid] = "skipped: adequate at {} in the inputs".format(L_REF[ri])
+        elif st_ == "case_a":
+            skipped[cid] = "skipped: case (a) in the inputs"
         starts[cid] = 0 if top is None else top + 1
+    run_cells = [c for c in cells if cell_id(c) not in skipped]
+    thr = load_throughput(a.throughput) if a.throughput else None
     cp.hdr("RUNG RANGE PER CELL (this job)")
     for c in cells:
         cid = cell_id(c)
+        if cid in skipped:
+            print("  {:<48} {}  (its later phases, if unfinished, are completed only by a rule-17 "
+                  "resume of the job that resolved it)".format(cid, skipped[cid]))
+            continue
         s = starts[cid]
-        print("  {:<48} phase A {}  rungs {} to {}{}".format(
+        extra = ""
+        if thr is not None and (c[0], c[1], c[2], c[3]) in thr:
+            _b, w_, _g, ca_ = cell_costs(c, s, a.max_rung, thr, have_a)
+            extra = "  worst {:.0f} s, case (a) solve {:.0f} s (worker-seconds)".format(w_, ca_)
+        print("  {:<48} phase A {}  rungs {} to {}{}{}".format(
             cid, "from inputs" if cid in have_a else "computed here",
             L_REF[s] if s < len(L_REF) else "-", L_REF[a.max_rung],
-            "" if s == 0 else "  (judges {} first)".format(L_REF[s - 1])))
+            "" if s == 0 else "  (judges {} first)".format(L_REF[s - 1]), extra))
+    n_case_a = len(run_cells) if a.max_rung == len(L_REF) - 1 else 0
+    print("  cells run: {}   skipped as resolved: {}   could become case (a) at worst: {}".format(
+        len(run_cells), len(skipped), n_case_a))
 
-    thr = load_throughput(a.throughput) if a.throughput else None
-    miss, worst, big = [], 0.0, 0.0
+    miss, worst, big, ca_tot = [], 0.0, 0.0, 0.0
     if thr is not None:
-        best, worst, big, miss = estimates(cells, starts, thr, a.max_rung, have_a)
+        best, worst, big, ca_tot, _by, miss = estimates(run_cells, starts, thr, a.max_rung, have_a)
         cp.hdr("G-CAP -- ESTIMATE for this job (perfect scaling; barrier idle and tails ignored; NOT a bound)")
         print("  best case {:.0f} s   worst-case estimate {:.0f} s   at {} workers   ceiling {:.0f} s".format(
             best / a.workers, worst / a.workers, a.workers, SHARD_CEIL_S))
+        print("  case (a) solves if all {} cells became case (a): {:.0f} s at {} workers".format(
+            n_case_a, ca_tot / a.workers, a.workers))
         print("  largest single task, estimated {:.0f} s".format(big))
         if miss:
             print("  {} cells lack throughput: {}".format(len(miss), ", ".join(miss[:5])))
@@ -1460,9 +1579,11 @@ def main():
         if thr is None:
             sys.stderr.write("G-CAP: a full run needs --throughput <verified smoke folder>\n")
             return 2
-        if miss or worst / a.workers > SHARD_CEIL_S or timeout_s <= 0:
-            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds {:.0f} s, or cells lack "
-                             "throughput; lower --max-rung or add shards\n".format(worst / a.workers, SHARD_CEIL_S))
+        if miss or worst / a.workers > SHARD_CEIL_S or ca_tot / a.workers > SHARD_CEIL_S \
+                or (run_cells and timeout_s <= 0):
+            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s or case (a) solves {:.0f} s exceed {:.0f} s, "
+                             "or cells lack throughput; lower --max-rung, select fewer --cells or add shards\n".format(
+                                 worst / a.workers, ca_tot / a.workers, SHARD_CEIL_S))
             return 2
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -1496,7 +1617,7 @@ def main():
             "tasks": Out(os.path.join(outdir, "calprec2_tasks.csv"), TASK_COLS)}
     runner = Runner(a.workers, timeout_s, outs, store)
     try:
-        flags3 = job(a, cells, starts, runner, store)
+        flags3 = job(a, run_cells, starts, runner, store)
     finally:
         for o in outs.values():
             o.close()
