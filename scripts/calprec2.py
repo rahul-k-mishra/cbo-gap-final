@@ -218,8 +218,20 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       301.8 MB for ackley d = 40 against memprobe's 294.3 MB.
       The full job must therefore run on Kaggle, not on the laptop, whose
       free memory can be 1.5 GB (CLAUDE.md rule 6).
+  CEILING  --ceiling SECONDS, default 21600 (Rahul, 2026-10-11; ledger
+      N28, third addendum). The per-job estimate ceiling used by G-CAP and
+      by both shard counts. It is printed at the head of every run and
+      stored in calprec2_params.csv, so a resume must match it.
+      - 21600 s is a margin choice made earlier in this project, not
+        Kaggle's limit. Kaggle's limit is the 43200 s cap, enforced by
+        G-STOP, which keeps the final say whatever --ceiling is.
+      - A job sized near ten hours (--ceiling 36000) relies on
+        --stop-after and a resume for safety, not on margin.
+      Worked example: --ceiling 36000 and a job whose worst-case estimate
+      is 30000 s at 4 workers passes G-CAP; at --ceiling 21600 the same
+      job exits 2.
   G-CAP  A full run needs --throughput (a verified smoke folder). The
-      WORST-CASE ESTIMATE must be at most 21600 s, or exit 2.
+      WORST-CASE ESTIMATE must be at most --ceiling, or exit 2.
       Per cell:
           phase A
         + phase C (6 x N_LO and 6 x N_HI at one beta)
@@ -239,15 +251,25 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       SHARD COUNT. The plan prints two shard counts. Cells are assigned to
       shards by index modulo k.
       - The count at the TARGET: the smallest k for which every shard's
-        estimate is at most --shard-target x 21600 s (default 0.5, so
-        10800 s). This is the recommended count, because the estimate
-        ignores barrier idle and phase tails and is not a bound.
-      - The count at the full ceiling, 21600 s.
+        estimate is at most --shard-target x --ceiling (defaults 0.5 and
+        21600 s, so 10800 s). This is the recommended count, because the
+        estimate ignores barrier idle and phase tails and is not a bound.
+      - The count at the full ceiling, --ceiling itself.
+      Each count is printed with the ceiling that produced it and whether
+      that ceiling is the default or was given.
       G-CAP itself still refuses a job only against the full ceiling,
       never against the target.
-      Worked example (illustrative values): shard estimates must fall to
-      10800 s at the target. A count of 40 that leaves a largest shard of
-      19968 s fits the ceiling but not the target; the target needs more.
+      Worked example (illustrative values): at the defaults, shard
+      estimates must fall to 10800 s at the target. A count of 40 that
+      leaves a largest shard of 19968 s fits the ceiling but not the
+      target; the target needs more. With --ceiling 36000 and
+      --shard-target 1.0 the two counts coincide, and every shard may be
+      estimated at up to 36000 s.
+      The plan also prints, before any launch, the largest task estimate,
+      TIMEOUT_S = 5 x it, and the G-STOP sum --stop-after + TIMEOUT_S
+      against 43200 s, with the verdict a full job would get. The plan's
+      largest task is over the selected cells; a shard's own TIMEOUT_S is
+      over its cells and so is at most that.
       The estimate assumes perfect scaling. It ignores barrier idle time
       and the tail of each phase. It is an estimate, NOT a bound.
       Worked example (illustrative values): 6 x 64M at one beta with
@@ -265,8 +287,18 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       Worked example: 4 workers need 9891.2 MB. MemAvailable 30000 MB
       passes; 7830 MB refuses.
   STOP  --stop-after SECONDS, full mode only (Rahul, 2026-10-11; review V2).
-      Default 32400 s (nine hours, three under Kaggle's 12-hour cap). The
-      default is a margin choice, not a measurement.
+      Default 36000 s (ten hours; Rahul, 2026-10-11, replacing 32400 s).
+      The default is a margin choice, not a measurement.
+      - Why 36000: logs/calprec2-plan-fixed2-thr.log estimates the largest
+        task at 1289 s, so TIMEOUT_S = 5 x 1289 = 6445 s, and
+        36000 + 6445 = 42445 s is within 43200 s. That leaves 755 s for
+        Kaggle's start-up and shutdown, which G-STOP does not count and
+        nobody has measured.
+      - A larger largest-task estimate makes G-STOP refuse this default
+        (exit 2). The fix is a smaller --stop-after, never a larger cap.
+        Worked example (illustrative): a largest task of 1500 s gives
+        TIMEOUT_S 7500 s, and 36000 + 7500 = 43500 > 43200: refused;
+        --stop-after 35000 gives 42500: pass.
       - Elapsed time is measured from the start of the job's task
         execution, the first task of phase A. It is printed at the head of
         the run.
@@ -292,16 +324,17 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       - starts at the first incomplete task. That is the not-started or
         errored tasks of the stopping phase, then the later phases, whose
         verdicts (adequacy, N_cell) are computed from the complete rows.
-      Worked example (illustrative values): a stop at 32400 s in phase C,
+      Worked example (illustrative values): a stop at 36000 s in phase C,
       with 40 of 252 phase-C tasks not started, writes no C1, B or C'
       task. The resumed job runs those 40, then C1, B and C' in full.
   G-STOP  Full mode refuses (exit 2) when --stop-after + TIMEOUT_S exceeds
       43200 s, the 12-hour cap. A task started just before the stop can
       run for up to TIMEOUT_S, so this sum bounds the job's task time.
       Worked example: logs/calprec2-plan-fixed2-thr.log estimates the
-      largest task at 1289 s, so TIMEOUT_S = 6445 s, and 32400 + 6445 =
-      38845 s is within 43200: pass. With an illustrative TIMEOUT_S of
-      12000 s, 44400 s: exit 2.
+      largest task at 1289 s, so TIMEOUT_S = 6445 s, and 36000 + 6445 =
+      42445 s is within 43200: pass, with 755 s to spare. (Under the
+      earlier default, 32400 + 6445 = 38845 s.) With an illustrative
+      TIMEOUT_S of 12000 s, 48000 s: exit 2.
       The time Kaggle and the runner spend before phase A, and the end of
       the run, are not in the sum.
   T1  PER-TASK TIMEOUT (costprobe2's scheduler).
@@ -361,7 +394,8 @@ MODES
   --finalize DIR[,DIR]
                     No draws. Merges the verified folders, recomputes every
                     verdict per cell and writes calprec2_beta.csv.
-  Selection: --rows, --cells, --shard i --nshards k, --shard-target f.
+  Selection: --rows, --cells, --shard i --nshards k, --shard-target f,
+  --ceiling SECONDS.
   Resumption: --resume-from DIR[,DIR] (CLAUDE.md rule 17; every parameter
   must be equal).
 
@@ -441,8 +475,8 @@ LOG_ESS_PER_SOLVE = 201            # exactcal.beta_on_ensemble: 200 in the loop,
 RSS_BUDGET_MB = 3072.0
 N25_HELD64_PEAK_MB = 2472.8        # ledger N25, logs/memprobe.log: 64M solve peak
 KAGGLE_CAP_S = 43200.0             # Kaggle's 12-hour session cap (CLAUDE.md, Kaggle compute)
-STOP_AFTER_DEFAULT = 32400.0       # nine hours: a margin choice, not a measurement (Rahul, 2026-10-11)
-SHARD_CEIL_S = 21600.0
+STOP_AFTER_DEFAULT = 36000.0       # ten hours: a margin choice, not a measurement (Rahul, 2026-10-11)
+CEILING_DEFAULT = 21600.0          # --ceiling default: a margin choice, not Kaggle's limit (N28, third addendum)
 TIMEOUT_FACTOR = 5.0
 TIMEOUT_FLOOR_SMOKE = 600.0
 REFSCALE_ACKLEY_RATE = 3.16e5     # points/s/worker, runs/refscale-kaggle-20261010-094820
@@ -1247,6 +1281,7 @@ def main():
     p.add_argument("--nshards", type=int, default=1)
     p.add_argument("--shard-target", type=float, default=0.5)
     p.add_argument("--stop-after", type=float, default=STOP_AFTER_DEFAULT)
+    p.add_argument("--ceiling", type=float, default=CEILING_DEFAULT)
     p.add_argument("--plan", action="store_true")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--throughput", default=None)
@@ -1261,8 +1296,8 @@ def main():
             sys.stderr.write("setup error: {} is not a calibrated row (spec 2, ledger N27)\n".format(r))
             return 2
     if not (0 <= a.shard < a.nshards) or a.workers < 1 or not (0.0 < a.shard_target <= 1.0) \
-            or not a.stop_after > 0:
-        sys.stderr.write("setup error: shard, worker, shard-target or stop-after arguments out of range\n")
+            or not a.stop_after > 0 or not a.ceiling > 0:
+        sys.stderr.write("setup error: shard, worker, shard-target, stop-after or ceiling arguments out of range\n")
         return 2
     mode = "finalize" if a.finalize else "plan" if a.plan else "smoke" if a.smoke else "full"
     me = cp.sha256_file(os.path.abspath(__file__))
@@ -1279,8 +1314,11 @@ def main():
     print("  archive  {}".format(cp.ARCH))
     print("  script   sha256 {}".format(me))
     print("  costprobe2.py sha256 {}".format(cps))
+    ceil_src = "default" if a.ceiling == CEILING_DEFAULT else "given"
     print("  mode     {}   rows {}   shard {} of {}   shard target {} x {:.0f} s".format(
-        mode, ",".join(rows), a.shard, a.nshards, a.shard_target, SHARD_CEIL_S))
+        mode, ",".join(rows), a.shard, a.nshards, a.shard_target, a.ceiling))
+    print("  ceiling  --ceiling {:.0f} s ({}; default {:.0f} s: a margin choice, not Kaggle's limit; the cap "
+          "{:.0f} s is enforced by G-STOP)".format(a.ceiling, ceil_src, CEILING_DEFAULT, KAGGLE_CAP_S))
     print("  stop     --stop-after {:.0f} s from the start of task execution{} (default {:.0f} s: a margin choice, "
           "not a measurement)".format(a.stop_after, "" if mode == "full" else ", applied in full mode only",
                                       STOP_AFTER_DEFAULT))
@@ -1312,6 +1350,7 @@ def main():
     params = [["script_sha256", me], ["costprobe2_sha256", cps], ["mode", mode], ["rows", ",".join(rows)],
               ["cells", a.cells or ""], ["shard", a.shard], ["nshards", a.nshards],
               ["ref_sizes", "{};{}".format(N_LO, N_HI)], ["workers", a.workers], ["stop_after", repr(a.stop_after)],
+              ["ceiling", repr(a.ceiling)],
               ["python", platform.python_version()], ["numpy", np.__version__]]
 
     if mode == "finalize":
@@ -1361,26 +1400,29 @@ def main():
                     print("  {:<48} best {:>7.0f} s  worst {:>7.0f} s  largest task {:>6.0f} s (worker-seconds)".format(
                         cell_id(c), b_, w_, g_))
         print("  best case (no cell adequate) {:.0f} s   worst-case estimate (every cell adequate) {:.0f} s   "
-              "at {} workers   ceiling {:.0f} s".format(best / a.workers, worst / a.workers, a.workers, SHARD_CEIL_S))
+              "at {} workers   ceiling {:.0f} s ({})".format(best / a.workers, worst / a.workers, a.workers, a.ceiling,
+                                                           ceil_src))
         print("  largest single task, estimated {:.0f} s".format(big))
         if miss:
             print("  {} cells lack throughput: {}".format(len(miss), ", ".join(miss[:5])))
         else:
-            tgt = a.shard_target * SHARD_CEIL_S
+            tgt = a.shard_target * a.ceiling
             kt, tt = shards_needed(sel, thr, a.workers, tgt)
-            kc, tc = shards_needed(sel, thr, a.workers, SHARD_CEIL_S)
-            for nm, lim, k, top in (("target", tgt, kt, tt), ("full ceiling", SHARD_CEIL_S, kc, tc)):
+            kc, tc = shards_needed(sel, thr, a.workers, a.ceiling)
+            print("  shard counts from --shard-target {} x --ceiling {:.0f} s ({} ceiling) = {:.0f} s".format(
+                a.shard_target, a.ceiling, ceil_src, tgt))
+            for nm, lim, k, top in (("target", tgt, kt, tt), ("full ceiling", a.ceiling, kc, tc)):
                 if k is None:
                     print("  at the {} ({:.0f} s): no shard count fits; one cell alone is estimated at {:.0f} s".format(
                         nm, lim, top))
                 else:
                     print("  at the {} ({:.0f} s): smallest --nshards {}   largest shard {:.0f} s = {:.1f}% of {:.0f} s, "
                           "at {} workers, over the {} selected cells".format(
-                              nm, lim, k, top, 100.0 * top / SHARD_CEIL_S, SHARD_CEIL_S, a.workers, len(sel)))
+                              nm, lim, k, top, 100.0 * top / a.ceiling, a.ceiling, a.workers, len(sel)))
             if kt is not None:
                 print("  RECOMMENDED: --nshards {}, the count at the target. The estimate assumes perfect scaling, "
                       "ignores barrier idle and phase tails, and is not a bound. G-CAP refuses only above "
-                      "{:.0f} s.".format(kt, SHARD_CEIL_S))
+                      "--ceiling {:.0f} s.".format(kt, a.ceiling))
     if mode == "smoke":
         proj = (N_SMOKE_DRAW + 2 * N_SMOKE_REF) / REFSCALE_ACKLEY_RATE
         timeout_s = max(TIMEOUT_FLOOR_SMOKE, TIMEOUT_FACTOR * 2.0 * proj)
@@ -1391,6 +1433,15 @@ def main():
     if mode in ("smoke", "full"):
         cp.hdr("T1 -- PER-TASK TIMEOUT")
         print("  TIMEOUT_S = {:.0f} s   ({})".format(timeout_s, src))
+    if mode == "plan" and thr is not None and not miss:
+        cp.hdr("G-STOP PREVIEW -- what a full job with these flags would get (largest task over the selected cells)")
+        print("  largest single task, estimated {:.0f} s   TIMEOUT_S = {:.0f} x {:.0f} = {:.0f} s".format(
+            big, TIMEOUT_FACTOR, big, timeout_s))
+        print("  --stop-after {:.0f} s + TIMEOUT_S {:.0f} s = {:.0f} s   cap {:.0f} s   margin {:.0f} s (Kaggle start-up "
+              "and shutdown are not counted)".format(a.stop_after, timeout_s, a.stop_after + timeout_s, KAGGLE_CAP_S,
+                                                     KAGGLE_CAP_S - a.stop_after - timeout_s))
+        print("  G-STOP would {}".format("PASS" if a.stop_after + timeout_s <= KAGGLE_CAP_S
+                                         else "REFUSE (exit 2): lower --stop-after, never raise the cap"))
     if mode == "plan":
         cp.hdr("ROWS SERVED BY EACH CELL (this job)")
         for c in cells:
@@ -1401,9 +1452,9 @@ def main():
         if thr is None:
             sys.stderr.write("G-CAP: a full run needs --throughput <verified smoke folder>\n")
             return 2
-        if miss or worst / a.workers > SHARD_CEIL_S or (cells and timeout_s <= 0):
-            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds {:.0f} s, or cells lack throughput; "
-                             "select fewer --cells or add shards\n".format(worst / a.workers, SHARD_CEIL_S))
+        if miss or worst / a.workers > a.ceiling or (cells and timeout_s <= 0):
+            sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds --ceiling {:.0f} s, or cells lack throughput; "
+                             "select fewer --cells or add shards\n".format(worst / a.workers, a.ceiling))
             return 2
         cp.hdr("G-STOP -- STOP BEFORE THE CAP")
         print("  --stop-after {:.0f} s + TIMEOUT_S {:.0f} s = {:.0f} s   cap {:.0f} s".format(

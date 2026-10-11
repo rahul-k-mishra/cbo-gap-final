@@ -652,7 +652,8 @@ Further decisions of 2026-10-11 (Rahul), after logs/calprec2-plan-fixed2-thr.log
 - G-MEM: a full job refuses below --workers x 2472.8 MB MemAvailable
   (N25), because it belongs on Kaggle. The first figure, 2 x 2472.8, was
   corrected the same day: a four-worker job holds four held 64M arrays.
-- --stop-after, default 32400 s (a margin choice, not a measurement). No
+- --stop-after, default 32400 s (a margin choice, not a measurement;
+  36000 s since N28's third addendum). No
   task starts after it; running tasks finish; no later phase is built;
   exit 5, not a failure. A resume continues from the first incomplete
   task. G-STOP refuses a job whose --stop-after + TIMEOUT_S exceeds
@@ -660,6 +661,12 @@ Further decisions of 2026-10-11 (Rahul), after logs/calprec2-plan-fixed2-thr.log
 - E1's 1e-12 at 64M is not pre-loosened.
 - Shards are sized against --shard-target x 21600 s, 0.5 by default.
   G-CAP refuses only against 21600 s.
+  [Amended the same day, ledger N28 third addendum: the 21600 s ceiling
+  is now --ceiling SECONDS, default 21600, stored in the params file.
+  Shards are sized against --shard-target x --ceiling, and G-CAP refuses
+  against --ceiling. --stop-after defaults to 36000 s. G-STOP is
+  unchanged. Long jobs: --ceiling 36000 --shard-target 1.0, runbook
+  section 6.]
 - Every Kaggle job is resumable (kgrun --resume-dirs, ledger K5 closed).
   After each job its output is committed and pushed before the next
   starts. The sequence is notes/CALPREC2_RUNBOOK.md.

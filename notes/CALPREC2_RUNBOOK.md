@@ -4,6 +4,15 @@ Written 2026-10-11 for scripts/calprec2.py (CALPREC_V2_SPEC 11c, ledger N28)
 and scripts/kgrun.py with resumption (ledger K5, closed). Follow it in
 order. Every command block starts from the repository root.
 
+SUPERSEDED FOR LAUNCHING, 2026-10-11 (ledger N28, third addendum).
+Shards 0 and 1 of 94 ran under the script with sha256 7a44dc5c...6207.
+calprec2.py has since changed (--ceiling; --stop-after default 36000 s),
+and finalize requires one script hash across folders. Every further job
+follows section 6, which restarts at shard 0 of a new count over all 336
+cells. Sections 2 to 4 (reading a result, committing, deciding the next
+launch from the exit code) still apply to those jobs. The two 94-shard
+folders are records and never go into RESUME or finalize.
+
 Rules this runbook enforces:
 - one Kaggle job at a time;
 - after each job, its output folder and its kgrun log are committed and
@@ -106,7 +115,8 @@ Notes:
   (2026-10-11). Resume inputs come from earlier attempts of the SAME shard
   only. A new shard's attempt 1 has none.
 - Do not pass --stop-after. The default, 32400 s (nine hours, three under
-  the cap), is a margin choice, not a measurement. It is one of the
+  the cap) in the script these 94-shard jobs ran, and 36000 s since
+  N28's third addendum, is a margin choice, not a measurement. It is one of the
   parameters a resume must match, so every attempt of a shard must use
   the same value; leaving it at the default guarantees that.
 - "kgrun exit code 0" means kgrun itself finished. It says nothing about
@@ -276,3 +286,109 @@ git push
 
 Paste the finalize log. The label counts, the adequacy counts and every
 FLAG line go into the ledger only from that log.
+
+## 6. Long jobs: --ceiling 36000 --shard-target 1.0 (Rahul, 2026-10-11)
+
+Ledger N28, third addendum. Each job is sized near ten hours instead of
+about ninety minutes, so the 336 cells run as far fewer jobs.
+
+WARNING. A job that dies without producing rows now loses up to ten
+hours, not ninety minutes. That is the trade Rahul accepted. Safety now
+comes from --stop-after (default 36000 s, exit 5) and a resume, not from
+margin: an estimate that is too low ends in exit 5 and a resumed attempt,
+never in more time on Kaggle. G-STOP still refuses any job whose
+--stop-after + TIMEOUT_S exceeds 43200 s. If it refuses, lower
+--stop-after; never raise the cap.
+
+Every job in this section runs the script at the commit that added
+--ceiling (md5 9ee2436b14c152df9d63c690eae3be36). Do not edit
+calprec2.py between the first long job and finalize: finalize refuses
+folders with different script hashes. Job names start calprec2-long-,
+so they never collide with the 94-shard folders.
+
+6.1 The plan. It prints the shard count at --shard-target x --ceiling =
+36000 s, the ceiling that produced it, and a G-STOP preview: the largest
+task estimate, TIMEOUT_S and the sum against 43200 s.
+
+```
+cd /home/rahul/Research/cbo-gap-final
+. .venv/bin/activate
+export PYTHONDONTWRITEBYTECODE=1
+set -o noclobber
+md5sum scripts/calprec2.py
+python scripts/calprec2.py --plan --workers 4 --rows CONC,TAU8,SIGMA,ANISO --throughput runs/calprec2-smoke-kaggle-20261011-121225 --ceiling 36000 --shard-target 1.0 > logs/calprec2-plan-long-thr.log 2>&1
+echo "exit code $?"
+grep -n "ceiling\|stop     \|best case\|largest single\|shard counts\|at the target\|at the full ceiling\|RECOMMENDED\|no shard\|TIMEOUT_S\|--stop-after\|G-STOP" logs/calprec2-plan-long-thr.log
+git add logs/calprec2-plan-long-thr.log
+git commit -m "calprec2 plan for long jobs, --ceiling 36000 --shard-target 1.0 (N28): logs/calprec2-plan-long-thr.log"
+git push
+```
+
+K is the number after "RECOMMENDED: --nshards". Paste the grep output
+before launching anything. The shard count is whatever that log says; no
+count is assumed here. If the preview says "G-STOP would REFUSE", stop.
+
+6.2 Launch one attempt of one shard. Identical to section 1 except for
+the job name and --ceiling 36000 in ARGS. ARGS must be identical across
+the attempts of one shard, --ceiling included (it is in the params file).
+
+```
+cd /home/rahul/Research/cbo-gap-final
+. .venv/bin/activate
+export PYTHONDONTWRITEBYTECODE=1
+set -o noclobber
+K=__K_FROM_6.1__
+S=0
+A=1
+JOB=calprec2-long-s${S}of${K}-a${A}
+THR=runs/calprec2-smoke-kaggle-20261011-121225
+ARGS="--workers 4 --rows CONC,TAU8,SIGMA,ANISO --throughput ${THR} --ceiling 36000 --shard ${S} --nshards ${K}"
+git status --short runs
+git status -sb | head -n 1
+python scripts/kgrun.py run --job "${JOB}" --script calprec2.py --data-dirs "${THR}" --args "${ARGS}" > logs/kgrun-${JOB}.log 2>&1
+echo "kgrun exit code $?"
+tail -n 25 logs/kgrun-${JOB}.log
+```
+
+A resumed attempt (A = 2 or later, after exit 4, exit 5 or a death with
+rows) adds --resume-dirs "${RESUME}" exactly as in section 1, with
+RESUME listing every earlier calprec2-long attempt folder of the same
+shard. To list them:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+for d in runs/calprec2-long-s${S}of${K}-a*-kaggle-*; do ls "$d"/calprec2-full-*/calprec2_params.csv >/dev/null 2>&1 && printf '%s,' "$d"; done; echo
+```
+
+In step 2, also check that the header line "ceiling  --ceiling 36000 s
+(given; ...)" is present and the G-STOP line reads PASS. Steps 2, 3 and 4
+are otherwise unchanged; replace calprec2-s by calprec2-long-s in every
+folder pattern.
+
+6.3 Finalize, after every long shard has exited 0. Only calprec2-long
+folders go in; the 94-shard folders do not.
+
+```
+cd /home/rahul/Research/cbo-gap-final
+. .venv/bin/activate
+export PYTHONDONTWRITEBYTECODE=1
+set -o noclobber
+K=__K_FROM_6.1__
+ALL=$(for d in runs/calprec2-long-s*of${K}-a*-kaggle-*; do ls "$d"/calprec2-full-*/calprec2_params.csv >/dev/null 2>&1 && printf '%s,' "$d"; done)
+ALL=${ALL%,}
+echo "${ALL}" | tr ',' '\n' | wc -l
+python scripts/calprec2.py --finalize "${ALL}" > logs/calprec2-finalize.log 2>&1
+echo "exit code $?"
+tail -n 40 logs/calprec2-finalize.log
+python scripts/manifest.py > logs/calprec2-finalize-manifest.log 2>&1
+cat logs/calprec2-finalize-manifest.log
+git add runs/calprec2-finalize-* logs/calprec2-finalize.log logs/calprec2-finalize-manifest.log
+git commit -m "calprec2 finalize (N28): calprec2_beta.csv for 336 cells"
+git push
+```
+
+6.4 The two 94-shard folders. Their eight cells (0, 94, 188, 282 and 1,
+95, 189, 283 of the 336) are recomputed by the long jobs. Seeds are keyed
+by cell, so on the same image the recomputed rows should carry the same
+tau_hat values. No script compares them yet; one can be written if
+wanted. Until then they are records only.

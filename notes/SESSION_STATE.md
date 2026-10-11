@@ -86,6 +86,14 @@ full run finished.
   G-STOP; G-MEM corrected to workers x 2472.8 MB; N29 recorded (the
   --throughput folder never reached Kaggle; fixed by kgrun --data-dirs).
   calprec2 md5 ec8dbe3afbe414395fb9ca5f0de3cd74, not executed.
+- Shards 0 and 1 of 94 ran on Kaggle, both runner exit code 0
+  (2379728, 434d484). Then Rahul decided on long jobs (ledger N28, third
+  addendum): --ceiling SECONDS (default 21600), --stop-after default
+  36000 s, a G-STOP preview in the plan. The edit changes the script hash,
+  so the long-job sequence restarts at shard 0 of a new count over all
+  336 cells; the two 94-shard folders are records, not finalize inputs.
+  calprec2 md5 9ee2436b14c152df9d63c690eae3be36, not executed. Next: the
+  plan with --ceiling 36000 --shard-target 1.0 (runbook section 6.1).
 - Decided by Rahul, 2026-10-11:
   - calprec v2 does not wait for the 4G sphere rung;
   - the analysis criteria (bootstrap level, fit window, resamples,

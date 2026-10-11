@@ -619,6 +619,43 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       re-verification are accepted.
     scripts/calprec2.py is now md5 ec8dbe3afbe414395fb9ca5f0de3cd74, not
     executed.
+  - Third addendum, 2026-10-11, Rahul's decision after shards 0 and 1 of
+    94 exited 0 (2379728, 434d484): each Kaggle job runs near the 12-hour
+    cap instead of about 1.5 hours.
+    - The ceiling is a parameter, --ceiling SECONDS, default 21600. It is
+      used by G-CAP, by shards_needed and by both printed shard counts,
+      printed at the head of every run and stored in calprec2_params.csv,
+      so a resume must match it.
+    - 21600 s was a margin choice, never Kaggle's limit. Kaggle's limit
+      is the 43200 s cap, and G-STOP, unchanged, keeps the final say: it
+      refuses when --stop-after + TIMEOUT_S exceeds 43200 s.
+    - --stop-after default 36000 s (was 32400). At the current
+      largest-task estimate of 1289 s (logs/calprec2-plan-fixed2-thr.log)
+      TIMEOUT_S is 6445 s and 36000 + 6445 = 42445 s, leaving 755 s for
+      Kaggle's start-up and shutdown, which G-STOP does not count and
+      nobody has measured. A larger largest-task estimate makes G-STOP
+      refuse the default; the fix is a smaller --stop-after, never a
+      larger cap.
+    - A job sized near ten hours (--ceiling 36000 --shard-target 1.0)
+      relies on --stop-after and a resume for safety, not on margin. A job
+      that dies without producing rows now loses up to ten hours rather
+      than about ninety minutes. Rahul accepted that trade.
+    - The plan prints the shard count at --shard-target x --ceiling, the
+      ceiling that produced it, and a G-STOP preview: the largest task
+      estimate, TIMEOUT_S and the G-STOP sum against 43200 s.
+    - Consequence for the two completed shards, decided by Rahul: the edit
+      changes calprec2.py's sha256 (7a44dc5c...6207 in both shard folders),
+      and finalize requires one script hash across folders; a new --nshards
+      also moves their eight cells to other shards. The long-job sequence
+      therefore covers all 336 cells from shard 0 of the new count.
+      runs/calprec2-s0of94-a1-kaggle-20261011-193148 and
+      runs/calprec2-s1of94-a1-kaggle-20261011-212722 stay committed as
+      records and are never passed to finalize. Seeds are keyed by cell,
+      so their eight cells, recomputed on the same image, should reproduce
+      the same tau_hat values; a comparison is possible and not yet
+      written.
+    scripts/calprec2.py is now md5 9ee2436b14c152df9d63c690eae3be36, not
+    executed.
 - N29 (repo, defect found before execution; calprec2 with kgrun). Every
   calprec2 full job on Kaggle would have exited 2 before any draw.
   - calprec2's full mode requires --throughput, a verified smoke folder.
