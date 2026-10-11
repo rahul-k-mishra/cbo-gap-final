@@ -406,6 +406,23 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     measured d6 and c6) in notes/CALPREC_V2_SPEC.md. The 2.534 the spec had
     assumed was confirmed independently by this run; it was not reused.
   CLOSED.
+- N24 (decision withdrawn, Rahul 2026-10-11). CALPREC_V2_SPEC D5a,
+  calprec v2's 200-step streamed bisection for case (a) cells on the
+  laptop, is withdrawn.
+  - Reason: D5a was decided on 2026-10-10, before refscale measured a 1G
+    replicate. refscale's full run (N18) measured one ackley d = 40 1G
+    replicate at 3225.4 to 3236.8 s on one Kaggle worker. 200 passes are
+    then about 645,000 worker-seconds per cell (notes/CALPREC_V2_REVIEW.md
+    A3). That is not viable anywhere.
+  - Replacement: a streamed grid solve, run on Kaggle with the climb.
+    - 64 betas per pass, on one pass over an independent stream.
+    - It stops when the relative bracket width is at most 1e-6, which
+      needs five passes by the rule. The instruction's "two passes, below
+      1e-4" does not hold: two passes give about 1.2e-2.
+    - New criterion E3: |beta_grid / beta_held - 1| <= 1e-6 against
+      exactcal.beta_on_ensemble on a held 1M stream.
+    - E2 is withdrawn with D5a.
+  - Recorded in CALPREC_V2_SPEC sections 6, 11 and 11b. CLOSED.
 
 ## Checked and found sound
 

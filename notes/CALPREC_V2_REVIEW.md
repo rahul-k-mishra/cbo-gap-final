@@ -267,3 +267,142 @@ Assumed, not verified:
 - D1: the case (b) interpretation.
 - F1: whether to adopt costprobe2's process-per-task scheduler with a
   timeout.
+
+---
+
+## 2026-10-11, second pass: Rahul's decisions applied, items closed and left
+
+What changed:
+
+- scripts/calprec2.py went from md5 1a21bae5cc25041248da95acd62e3276
+  (1377 lines, 203a564) to md5 0b82f0805700b449f2d6faf836fa5649 (1515
+  lines). Diff against 203a564: 888 lines inserted, 750 deleted.
+- New script: scripts/memprobe.py, md5 1919354565689574db411a42e40a48a6.
+- Nothing was executed. Both scripts were parsed under the Python 3.8
+  grammar only.
+
+### Decisions applied
+
+- A3. D5a and E2 are withdrawn (ledger N24). The case (a) and (b) solves
+  are a streamed grid solve on Kaggle:
+  - 64 betas per pass, on one pass over an independent kind-34 stream;
+  - passes stop at relative width <= 1e-6;
+  - E3 checks the grid solve against beta_on_ensemble on a held 1M
+    stream, within 1e-6.
+  Rahul's "two passes, below 1e-4" was corrected: two passes give about
+  1.2e-2. The rule needs five, and the script prints the number.
+- A1, A2. Phase A goes to its own file. Continuation jobs read it, and the
+  climb rows, through --inputs (verified). Each cell's rung range is
+  derived from the inputs, and the continuation point is the highest
+  evaluated rung. No task id is written twice.
+- A4. A held solve above 1M no longer exists: case (b) also uses the grid
+  solve. scripts/memprobe.py measures the 64M held solve before any held
+  solve is reintroduced. Using the grid solve for case (b) as well was my
+  choice, and it is put to Rahul for approval.
+- D1 (case (b)). The independent stream with all six replicates stands. It
+  is recorded in the spec (section 6) with the reason: the median of six
+  matches c6, and judging is kept separate from choosing.
+- F1. costprobe2's process-per-task scheduler with a timeout is adopted:
+  error rows for timeouts and dead workers, and exit codes 3 and 4.
+
+### Closed by this pass
+
+- A1, A2: closed by design. See new item N1 for a remaining edge.
+- A3: closed by design. The cost is now about eleven 1G passes per
+  case-(a) cell, not 200; see N5.
+- A4: no held solve above 1M remains to need the number. The probe is
+  written.
+- B2: finalize labels a cell with missing rows "incomplete (<phase>)",
+  never as a case.
+- B3: the projection is called an "estimate (perfect scaling; barrier idle
+  and tails ignored; NOT a bound)" and a "best case", never a bound. See N3
+  for a gap in the estimate itself.
+- B4: R1 compares rows only when their env (Python and NumPy) is equal.
+  Otherwise it reports "not applicable (env differs)", which is not a
+  failure. With D5a gone, all rows should come from Kaggle anyway.
+- B5: the correlation of reference streams across tau0 is stated in the
+  docstring.
+- C2: every cell's first job starts at 1M, so E1 always runs. finalize
+  flags "E1 not run" (exit 4) if it is absent.
+- C6: an errored or timed-out task gives exit 4. Exit 3 takes precedence.
+- D1: recorded in spec and review, with the reason.
+- D2: the chunk index in the seed key is now in the spec (11b).
+- F1: closed by the adopted scheduler.
+
+### Left, not in this pass's list
+
+- B6: beta_adq's own tau.
+- B7: the smoke's t_beta sign.
+- C1: V2 checks the module line, not probe_sample.
+- C3: the V0(b) factor choice.
+- C4: R1 after a resume.
+- C5: G-CAP is only as good as the smoke.
+- D3: merged output files. There are now two: phaseA and tasks.
+- D4: C5m at beta_prod is still not reported.
+- D5: the G-RSS verdict is not in the beta table, X1/X2 relative errors
+  are not computed, and S1 shares are not summarised.
+- D6, D7, D8: reporting and plan details.
+- E1 to E4: the assumptions.
+- G1 to G4: nothing has run.
+
+### New issues found re-reading the diff
+
+- N1. A cell already resolved in an earlier job keeps climbing if it is
+  given to a continuation job.
+  - starts = highest climbed + 1 does not look at whether the inputs
+    already show an adequate rung or case (a). The job then climbs past
+    n*, judges the wrong pair of rungs in-run, and can run a C1 pass at a
+    higher rung (new task ids, wasted work).
+  - finalize recomputes n* as the first adequate rung from all rows, so
+    the beta table is right. The in-run status is wrong, and compute is
+    wasted.
+  - Fix would be: judge every pair of rungs already in the inputs before
+    choosing the start.
+- N2. finalize does not recompute E3, or check that beta_s came from a
+  grid solve that met its stop rule.
+  - It trusts the E rows' first beta, and a cell whose E3 failed in-run
+    simply lacks E rows.
+  - Such a cell gets "incomplete (solve, ...)" and exit 4 in finalize, not
+    "E3 FAIL" and exit 3. The job itself exits 3.
+- N3. The worst-case estimate omits a C1 pass at 256M when --max-rung is
+  1G.
+  - With --max-rung 5, the estimate counts the climb and a 1G solve, but
+    not the C1 pass, C' and an n* solve at 256M, which happen if the cell
+    is adequate at 256M.
+  - The same gap is in the largest-task figure that sets TIMEOUT_S. A
+    256M C1 pass at 145 betas can exceed a 1G climb replicate at one beta
+    when t_beta x 145 > 3 t_draw. TIMEOUT_S would then be too short, and
+    those tasks would time out (error rows, exit 4).
+- N4. Process-per-task overhead in phase A.
+  - Phase A is 144 tasks per cell (6 levels x 24 draws). With one fresh
+    process per task, a job of many cells forks one process for every
+    small task, at N = 4000 too, where the work takes milliseconds.
+  - The fork overhead is not in the estimate. Its size has not been
+    measured.
+- N5. A case-(a) cell is still expensive.
+  - Climb rungs up to 1G (six replicates each), E3, five grid passes over
+    a 1G stream, and six 1G evaluation replicates.
+  - At refscale's ackley d = 40 1G wall (3225.4 to 3236.8 s per replicate),
+    that is of the order of tens of thousands of worker-seconds per cell.
+    This is arithmetic on logged walls, not a measurement of calprec2.
+  - The number of case-(a) cells is unknown until calprec2 runs. The
+    calprec2 smoke and plan will give the job estimate.
+- N6. finalize finds the grid passes by splitting task ids on "|p". That
+  works because no module, objective or law name contains "|p", but it is
+  fragile.
+- N7. The grid solve requires the first grid point to lie above the goal
+  and takes the largest index above it. If the computed log-ESS were not
+  monotone across the grid (rounding in a flat region), this choice could
+  differ from the bisection's path. E3 would catch the difference only at
+  1M, not at the solve size.
+- N8. Smoke timeout. TIMEOUT_S is max(600 s, 5 x 2 x (6e6 points /
+  3.16e5)), from refscale's ackley rate. The solve and the 145-beta pass are
+  not modelled; the doubling and the 600 s floor are judgement, not
+  measurement.
+
+### What the first executions must show
+
+- calprec2 --plan: V0, V1 and V2 PASS; the cell count per module; each
+  cell's rung range.
+- memprobe: the 4M and 16M solve peaks; the gate decision; and, if 64M
+  ran, its solve peak against 3072 MB.

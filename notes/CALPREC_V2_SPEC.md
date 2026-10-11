@@ -212,13 +212,27 @@ For every cell the script takes three things from the row's module:
   at the top rung if none is adequate. It is recorded with tau(beta)
   (median over the six replicates) and the replicate range, and the cell is
   labelled by beta, never by a target. Solving beta on a reference needs
-  the reference held. If that rung exceeds the held cap of G-RSS, see
-  D5 (streamed bisection, criterion E2).
+  the reference held. SUPERSEDED 2026-10-11: the case (a) solve is a
+  streamed grid solve with criterion E3, run with the climb on Kaggle
+  (section 11b). The streamed bisection (D5, D5a) is withdrawn.
 - Case (b), adequate reference, but no level of L_cal is sufficient (C1),
   or C6 fails. Accepted (D5): solve beta on one replicate of the
   adequate rung and evaluate it on the other five. If the median of those
   five passes C6's 0.05, label the cell by target with that beta;
   otherwise label it by beta, as in case (a).
+  - DEPARTURE FROM THIS WORDING, accepted by Rahul on 2026-10-11:
+    - The script solves on an INDEPENDENT stream (kind 34) of the
+      adequate rung's size and evaluates on ALL SIX kind-32 replicates of
+      that rung.
+    - Why that is better than "one replicate and the other five":
+      - the estimate is then the same median-of-six estimator that C5m's
+        constant (c6, ledger N23) was computed for; a median of five is
+        not covered by c6;
+      - none of the evaluation replicates was used to choose beta, so
+        tau_ref is not pulled toward tau0 by judging beta on the sample
+        that chose it.
+    - The same applies to case (a) at 1G.
+    - Recorded in notes/CALPREC_V2_REVIEW.md, item D1.
 
 ## 7. Seeding
 
@@ -343,6 +357,8 @@ For every cell the script takes three things from the row's module:
     within that margin of the goal can branch differently. Worked example (illustrative values):
     held beta 6.028534528294139, streamed 6.028534528294161, ratio - 1 =
     3.6e-15: pass.
+  - [WITHDRAWN 2026-10-11, section 11b and ledger N24. The streamed
+    bisection, E2 and D5a below are kept as first written.]
   - D5a (Rahul, 2026-10-10). The streamed solve of a case (a) cell runs on
     the laptop, not on Kaggle. On the laptop, CLAUDE.md rule 17 resumption
     works (ledger K5), there is no 12-hour cap, and the solve is one cell at
@@ -360,3 +376,70 @@ For every cell the script takes three things from the row's module:
 - D7, the throughput run. A calprec v2 smoke on Kaggle produces the
   throughput table. It runs only after costprobe2's smoke and after
   refscale has finished, with one Kaggle job at a time.
+
+## 11b. Revision of 2026-10-11 (Rahul), before calprec v2's first execution
+
+- D5a WITHDRAWN.
+  - It was decided before refscale measured a 1G replicate. refscale then
+    measured one ackley d = 40 1G replicate at 3225.4 to 3236.8 s on one
+    Kaggle worker (ledger N18).
+  - A 200-pass streamed bisection would therefore be about 645,000
+    worker-seconds per cell. That is arithmetic on the logged walls, in
+    notes/CALPREC_V2_REVIEW.md A3. It is not viable on the laptop or on
+    Kaggle.
+  - E2 goes with it. Ledger N24.
+- The case (a) and case (b) solve is a STREAMED GRID SOLVE, on Kaggle,
+  with the climb.
+  - Each pass evaluates K = 64 betas, log-spaced, on one streamed pass over
+    an independent kind-34 stream of the solve size. lse(-b f) and
+    lse(-2b f) are accumulated for every beta at once, as refscale does for
+    two betas.
+  - Pass 1 spans [1e-10, 1e10], the bracket of exactcal.beta_on_ensemble.
+    Each later pass spans the two grid neighbours that bracket the target.
+  - Stop rule: the relative bracket width hi/lo - 1 is at most 1e-6.
+    beta_s = sqrt(lo hi).
+  - Correction to the instruction "two passes ... below 1e-4": with 64
+    points over 20 decades the width falls roughly as 46 / 63^p after p
+    passes:
+    - about 1.2e-2 after two passes;
+    - about 1.8e-4 after three;
+    - about 2.9e-6 after four;
+    - about 4.6e-8 after five.
+    The stop rule therefore needs five passes. The script computes and
+    prints this number itself (grid_passes()); it is not stated here as a
+    result.
+  - The cost of a pass is one objective evaluation per point plus 2 x 64
+    exp evaluations, not 64 passes.
+- Criterion E3 replaces E2. On the cell's lowest held rung (1M, the
+  kind-34 stream, rep 0), the grid solve and exactcal.beta_on_ensemble on
+  the held values must agree to |beta_grid / beta_held - 1| <= 1e-6,
+  printed. Nothing is derived from a cell's grid solve without E3.
+- No held solve above 1M exists in the design. The case (b) solve also
+  uses the grid solve.
+  - This is Claude's choice, put to Rahul for approval: it removes the
+    dependence on the unmeasured 64M memory (review A4).
+  - The only held arrays are phase A (at most 4M values) and the 1M arrays
+    of E1 and E3.
+  - The 64M memory probe (scripts/memprobe.py) still runs before any held
+    solve is reintroduced.
+- Multi-job cells (review A1, A2).
+  - Phase A of a cell is computed once, in the first job that touches it,
+    and written to that job's calprec2_phaseA.csv.
+  - A continuation job names earlier folders with --inputs. Each is
+    verified against its sha256.txt and must agree on the script and
+    costprobe2 hashes, rows, Python and NumPy. The job reads phase A and
+    the climb rows from them, and runs only the rungs above each cell's
+    highest evaluated rung, up to --max-rung.
+  - The highest evaluated rung is judged in the continuation job, once the
+    rung above it exists. A2's off-by-one is corrected: the continuation
+    point is the highest evaluated rung, not one above it.
+  - No task id is produced twice, so finalize's merge rule (a repeated id
+    is accepted only over an earlier error row) is unchanged.
+  - --resume-from remains rule-17 resumption, with every parameter equal.
+- The scheduler is costprobe2's, adopted whole: one process per task;
+  TIMEOUT_S = 5 x the projected wall of the job's largest task; error rows
+  for timed-out and dead workers. Exit codes: 3 for E1, E3 or R1; 4 for an
+  errored task or an incomplete cell.
+- Seeds: a chunk index is appended to every key (SeedSequence(key +
+  (chunk,))), so a chunk can be regenerated alone. This is an addition to
+  section 7.
