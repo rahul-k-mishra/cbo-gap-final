@@ -428,6 +428,51 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     his "two passes, below 1e-4" was wrong. Also his decision of
     2026-10-11: case (b) is solved by the same grid solve, which removes
     the last held solve above 1M (CALPREC_V2_SPEC 11b).
+- N25 (result, memory probe; resolves notes/CALPREC_V2_REVIEW.md A4).
+  Sources: logs/memprobe.log and runs/memprobe-20261011-110235/memprobe.csv
+  (manifest verified).
+  - Run: Python 3.12.3, NumPy 2.5.3, the laptop, one worker, sizes run one
+    at a time. ackley d = 40, centred law, tau0 0.01, through
+    exactcal.draw_initial and exactcal.beta_on_ensemble. Baseline 20.7 MB
+    at every size.
+  - 4M: held 294.3 MB, solve peak 294.3 MB, draw 13.4 s, solve 47.4 s.
+  - 16M: held 386.0 MB, solve peak 641.7 MB, draw 52.0 s, solve 222.4 s.
+  - 64M: held 752.2 MB, solve peak 2472.8 MB, draw 219.9 s, solve 710.1 s.
+    "M-RSS 64M solve peak 2472.8 MB: within budget" (3072 MB).
+  - The safety gate let 64M run: its linear extrapolation gave 2031 MB
+    against a limit of 6264 MB (0.8 x MemAvailable 7830 MB). The measured
+    peak, 2472.8 MB, is above that extrapolation. A linear gate from 4M and
+    16M under-predicts the 64M peak, so it would not be a safe gate for a
+    larger size.
+  - Consequence: the design no longer holds anything above 1M (CALPREC_V2
+    SPEC 11b: phase A at most 4M values, E1 and E3 at 1M). This figure
+    therefore bounds a path the design does not take. It is recorded so
+    that a future held solve can be sized without rerunning the probe.
+  - 128M: arithmetic on the probe's numbers, NOT a measurement. The solve
+    peak rose by 1831.1 MB from 16M to 64M, about 38.1 MB per million
+    values. Continuing that slope from 64M to 128M gives about 4900 MB,
+    above the 3072 MB budget. Plain proportional scaling of the 64M peak
+    gives the same order. So a held 128M solve would exceed the budget, on
+    this arithmetic.
+  CLOSED (A4 resolved).
+- N26 (repo, a crash removed before any execution). In scripts/calprec2.py
+  at 03d0174, grid_solve_round checked a pass's stored betas against
+      [float(repr(x)) for x in s["grid"]]
+  where s["grid"] was list(np.geomspace(...)), a list of numpy.float64.
+  - Under NumPy 2, repr of a numpy scalar is the string
+    "np.float64(<value>)", not the bare number. float() of that string
+    raises ValueError.
+  - The check ran in the job's parent process after the first grid pass,
+    outside any task's try block. On Kaggle (NumPy 2.1.3), the first grid
+    pass of the first E3 would therefore have crashed the whole job. The
+    task rows written before it would remain, and no solve would complete.
+  - Found by Claude while re-reading the diff on 2026-10-11, outside
+    Rahul's list of items to fix.
+  - The N2 rework REMOVED the code rather than patching it: grid_of now
+    returns Python floats, and the shared grid_step compares the stored
+    list with the replayed grid directly (calprec2.py at 0bd7011).
+  - It never executed. Recorded in notes/CALPREC_V2_REVIEW.md (third
+    pass). CLOSED by 0bd7011.
 
 ## Checked and found sound
 

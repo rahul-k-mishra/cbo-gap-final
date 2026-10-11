@@ -1,0 +1,25 @@
+========================================================================================
+CBO-GAP memprobe -- peak RSS of a held reference and the archived beta_on_ensemble
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 1 (sizes run one at a time)
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  cell     ackley d=40 centred tau0 0.01   sizes [4000000, 16000000, 64000000]   chunk 250000
+  seeds    default_rng(SeedSequence((ENTROPY 20261011, kind 61, n, chunk))), full width
+  gate     64M only if extrapolated solve peak <= 0.8 x MemAvailable
+  budget   3072 MB per worker (reported, M-RSS)
+  run dir  /home/rahul/Research/cbo-gap-final/runs/memprobe-20261011-110235
+
+  n   4000000   baseline    20.7 MB   held   294.3 MB   solve peak   294.3 MB   draw   13.4 s   solve   47.4 s   MemAvailable before 7966 MB
+
+  n  16000000   baseline    20.7 MB   held   386.0 MB   solve peak   641.7 MB   draw   52.0 s   solve  222.4 s   MemAvailable before 7895 MB
+
+  gate: extrapolated 64M solve peak 2031 MB, MemAvailable 7830 MB, limit 6264 MB
+
+  n  64000000   baseline    20.7 MB   held   752.2 MB   solve peak  2472.8 MB   draw  219.9 s   solve  710.1 s   MemAvailable before 7830 MB
+
+  M-RSS  64M solve peak 2472.8 MB: within budget
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/memprobe-20261011-110235
+========================================================================================

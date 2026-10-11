@@ -492,3 +492,14 @@ What changed:
 - B6, B7, C1, C3, C4, C5, D3, D4, D5, D6, D7, D8, E1 to E4, G1 to G4.
 - Second-pass N7 (grid monotonicity) and N8 (the smoke timeout's judgement
   constants).
+
+## 2026-10-11: A4 resolved by measurement (ledger N25)
+
+- logs/memprobe.log: the 64M held beta_on_ensemble peaked at 2472.8 MB,
+  within the 3072 MB budget (held array 752.2 MB; solve 710.1 s on the
+  laptop). The 4M and 16M peaks were 294.3 and 641.7 MB.
+- The design holds nothing above 1M, so the number bounds an unused path.
+- 128M would exceed the budget, by arithmetic on the probe's numbers (not
+  measured).
+- The probe's linear gate under-predicted 64M (2031 MB extrapolated against
+  2472.8 MB measured).

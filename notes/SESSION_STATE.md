@@ -80,6 +80,11 @@ full run finished.
   - T_mc 0.054682 (se 0.000013); T_spec 0.054672 (se 0.000011);
   - M1 PASS, M2 PASS; 2.5 s.
   The C5m threshold is fixed at 0.054682.
+- Memory probe (ledger N25; logs/memprobe.log;
+  runs/memprobe-20261011-110235): the 64M held solve peaks at 2472.8 MB
+  (held 752.2 MB, solve 710.1 s on the laptop); 4M and 16M peak at 294.3
+  and 641.7 MB. calprec v2 holds nothing above 1M, so this bounds an
+  unused path.
 
 ## 3. Measured so far about the science
 
