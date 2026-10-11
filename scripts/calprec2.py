@@ -103,7 +103,8 @@ replicates and draws)
   C'  PRODUCTION CHECK.
       - beta_prod is evaluated on six NEW N_LO replicates (kind 32, reps 6
         to 11): C6.
-      - C5m of those six is reported, without a threshold (review D4).
+      - C5m of those six is reported, without a threshold (review D4;
+        confirmed by Rahul 2026-10-11).
 
 PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
 ------------------------------------------------------------------
@@ -141,7 +142,8 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
         functions, chunk_terms and combine_terms, at other betas.
       E1 has not been run at 64M before. refscale ran it at 4M and 16M
       (ledger N18). If it fails at 1e-12, the run exits 3. The tolerance is
-      not loosened in advance.
+      not loosened in advance (Rahul, 2026-10-11: "if it fails, exit 3 and
+      we look at the number").
       Worked example (refscale): 10.596634733096073 against
       10.596634733096080 gives 6.6e-16: pass.
   R1  REGENERATION IDENTITY.
@@ -183,14 +185,18 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
           tau_ref and range are those of the six phase-C N_LO replicates.
           Label "target" if |tau_ref/tau0 - 1| <= 0.05, otherwise "beta".
           (Rule CB of the earlier design, applied to beta_adq because no
-          solve exists.)
+          solve exists.) Confirmed by Rahul, 2026-10-11. A beta_prod that
+          fails C6 has been measured to miss the target, so carrying it
+          forward would label the cell by a beta just shown to be wrong.
           Worked example: tau0 0.1, tau_ref(beta_adq) 0.0962: deviation
           0.038, so "target". At 0.0941 the deviation is 0.059: "beta".
       O2  Not adequate: "beta" with beta_adq (ledger N18 O2).
           - The median and range of BOTH sizes are reported, with C5m and
             D1 and which of them failed.
           - tau_ref and its range are those of N_HI, the larger reference.
-            The label says "not adequate".
+            The label says "not adequate". Confirmed by Rahul, 2026-10-11:
+            N_HI is the larger reference, and D1 could not vouch for it
+            against anything bigger.
           This is the expected outcome at the tight targets. It is a
           finding, not a failure, and it does not change the exit code.
       INCOMPLETE  A cell whose rows for a phase are missing or errored is
@@ -230,12 +236,30 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
       - One held log_ess_of costs n x t_solve / 201, because
         beta_on_ensemble calls log_ess_of 200 times in its loop and once at
         return (exactcal.py 176-183).
-      The plan also prints the smallest --nshards k for which every shard,
-      cells assigned by index modulo k, has an estimate within the ceiling.
+      SHARD COUNT. The plan prints two shard counts. Cells are assigned to
+      shards by index modulo k.
+      - The count at the TARGET: the smallest k for which every shard's
+        estimate is at most --shard-target x 21600 s (default 0.5, so
+        10800 s). This is the recommended count, because the estimate
+        ignores barrier idle and phase tails and is not a bound.
+      - The count at the full ceiling, 21600 s.
+      G-CAP itself still refuses a job only against the full ceiling,
+      never against the target.
+      Worked example (illustrative values): shard estimates must fall to
+      10800 s at the target. A count of 40 that leaves a largest shard of
+      19968 s fits the ceiling but not the target; the target needs more.
       The estimate assumes perfect scaling. It ignores barrier idle time
       and the tail of each phase. It is an estimate, NOT a bound.
       Worked example (illustrative values): 6 x 64M at one beta with
       t_draw 3e-6 and t_beta 5e-8 costs 6 x 6.4e7 x 3.05e-6 = 1171 s.
+  G-MEM  MEMORY GUARD, full mode only (Rahul, 2026-10-11; review U3).
+      Before any draw, MemAvailable is read from /proc/meminfo. The job
+      refuses (exit 2) when it is below 2 x 2472.8 = 4945.6 MB, or cannot
+      be read. 2472.8 MB is N25's measured peak of one held 64M
+      beta_on_ensemble. The message says the job belongs on Kaggle.
+      Worked example: MemAvailable 30000 MB passes; 3900 MB refuses.
+      The guard does not scale with --workers: with 4 workers, up to four
+      held 64M tasks can run at once.
   T1  PER-TASK TIMEOUT (costprobe2's scheduler).
       - Each task runs in its own process, at most --workers at once.
       - A task still running after TIMEOUT_S is terminated and written as
@@ -256,7 +280,7 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-11, before first execution)
 
 EXIT CODES
   0  completed, every task ok, and no flag. O2 cells are not flags;
-  2  setup error (V0, V1, V2, G-CAP, resume, finalize merge);
+  2  setup error (V0, V1, V2, G-CAP, G-MEM, resume, finalize merge);
   3  E1 or R1 failed;
   4  a task errored or timed out, or (in finalize) a cell is incomplete
      or "E1 not run".
@@ -289,7 +313,7 @@ MODES
   --finalize DIR[,DIR]
                     No draws. Merges the verified folders, recomputes every
                     verdict per cell and writes calprec2_beta.csv.
-  Selection: --rows, --cells, --shard i --nshards k.
+  Selection: --rows, --cells, --shard i --nshards k, --shard-target f.
   Resumption: --resume-from DIR[,DIR] (CLAUDE.md rule 17; every parameter
   must be equal).
 
@@ -312,6 +336,9 @@ HOW TO RUN (from the repository root, venv active)
     python scripts/calprec2.py --plan --workers 4 --throughput DIR
     python scripts/calprec2.py --workers 4 --smoke
     python scripts/calprec2.py --workers 4 --throughput DIR --shard 0 --nshards K
+    python scripts/calprec2.py --workers 4 --throughput DIR --shard 0 --nshards K --resume-from DIR[,DIR]
+  On Kaggle, kgrun.py ships DIR (--data-dirs) and the resume folders
+  (--resume-dirs). notes/CALPREC2_RUNBOOK.md gives the sequence.
     python scripts/calprec2.py --finalize DIR[,DIR]
   --archive and --outdir are resolved by scripts/cbopaths.py.
 
@@ -364,6 +391,8 @@ C6_MAX = 0.05
 E1_TOL = 1e-12
 LOG_ESS_PER_SOLVE = 201            # exactcal.beta_on_ensemble: 200 in the loop, 1 at return
 RSS_BUDGET_MB = 3072.0
+N25_HELD64_PEAK_MB = 2472.8        # ledger N25, logs/memprobe.log: 64M solve peak
+MEM_GUARD_FACTOR = 2.0             # Rahul, 2026-10-11 (review U3)
 SHARD_CEIL_S = 21600.0
 TIMEOUT_FACTOR = 5.0
 TIMEOUT_FLOOR_SMOKE = 600.0
@@ -768,7 +797,8 @@ def read_folders(folders, compare_keys):
             else:
                 order.append(t)
             store[t] = r
-        print("  read {}: shard {} of {}, {} rows".format(f, pr.get("shard"), pr.get("nshards"), len(rows)))
+        print("  read {}: shard {} of {}, {} rows, {} complete".format(
+            f, pr.get("shard"), pr.get("nshards"), len(rows), sum(1 for r in rows if r.get("end") == "ok")))
     return params, [store[t] for t in order]
 
 
@@ -865,15 +895,26 @@ def estimates(cells, thr):
     return best, worst, big, missing
 
 
-def shards_needed(cells, thr, workers):
+def shards_needed(cells, thr, workers, limit):
     """Smallest k for which every shard (index modulo k) has a worst-case
-    estimate within the ceiling: (k, its largest shard estimate) or (None, x)."""
+    estimate at most limit: (k, its largest shard estimate) or (None, x)."""
     w = [cell_costs(c, thr)[1] / workers for c in cells]
     for k in range(1, len(cells) + 1):
         top = max(sum(w[i::k]) for i in range(k))
-        if top <= SHARD_CEIL_S:
+        if top <= limit:
             return k, top
     return None, max(w) if w else 0.0
+
+
+def mem_available_mb():
+    try:
+        with open("/proc/meminfo") as fh:
+            for ln in fh:
+                if ln.startswith("MemAvailable:"):
+                    return float(ln.split()[1]) / 1024.0
+    except (IOError, OSError, ValueError):
+        return None
+    return None
 
 
 # --------------------------------------------------------------------------
@@ -1127,6 +1168,7 @@ def main():
     p.add_argument("--cells", default=None)
     p.add_argument("--shard", type=int, default=0)
     p.add_argument("--nshards", type=int, default=1)
+    p.add_argument("--shard-target", type=float, default=0.5)
     p.add_argument("--plan", action="store_true")
     p.add_argument("--smoke", action="store_true")
     p.add_argument("--throughput", default=None)
@@ -1140,8 +1182,8 @@ def main():
         if r not in ROWMOD:
             sys.stderr.write("setup error: {} is not a calibrated row (spec 2, ledger N27)\n".format(r))
             return 2
-    if not (0 <= a.shard < a.nshards) or a.workers < 1:
-        sys.stderr.write("setup error: shard or worker arguments out of range\n")
+    if not (0 <= a.shard < a.nshards) or a.workers < 1 or not (0.0 < a.shard_target <= 1.0):
+        sys.stderr.write("setup error: shard, worker or shard-target arguments out of range\n")
         return 2
     mode = "finalize" if a.finalize else "plan" if a.plan else "smoke" if a.smoke else "full"
     me = cp.sha256_file(os.path.abspath(__file__))
@@ -1158,7 +1200,8 @@ def main():
     print("  archive  {}".format(cp.ARCH))
     print("  script   sha256 {}".format(me))
     print("  costprobe2.py sha256 {}".format(cps))
-    print("  mode     {}   rows {}   shard {} of {}".format(mode, ",".join(rows), a.shard, a.nshards))
+    print("  mode     {}   rows {}   shard {} of {}   shard target {} x {:.0f} s".format(
+        mode, ",".join(rows), a.shard, a.nshards, a.shard_target, SHARD_CEIL_S))
     print("  L_CAL {}  R {}   reference sizes {} and {}, reps {}   C' reps {}   chunk {}".format(
         L_CAL, R_CAL, N_LO, N_HI, REPS, PRODCHECK_REPS, CHUNK))
     print("  C5m <= {} at {}  D1 <= {} between {} and {}  C1 <= {}  C6 <= {}  E1 <= {:g} at {} rep 0  "
@@ -1241,12 +1284,21 @@ def main():
         if miss:
             print("  {} cells lack throughput: {}".format(len(miss), ", ".join(miss[:5])))
         else:
-            k, top = shards_needed(sel, thr, a.workers)
-            if k is None:
-                print("  no shard count fits: one cell alone is estimated at {:.0f} s".format(top))
-            else:
-                print("  smallest --nshards with every shard within the ceiling: {}   (largest shard {:.0f} s "
-                      "at {} workers, over the {} selected cells)".format(k, top, a.workers, len(sel)))
+            tgt = a.shard_target * SHARD_CEIL_S
+            kt, tt = shards_needed(sel, thr, a.workers, tgt)
+            kc, tc = shards_needed(sel, thr, a.workers, SHARD_CEIL_S)
+            for nm, lim, k, top in (("target", tgt, kt, tt), ("full ceiling", SHARD_CEIL_S, kc, tc)):
+                if k is None:
+                    print("  at the {} ({:.0f} s): no shard count fits; one cell alone is estimated at {:.0f} s".format(
+                        nm, lim, top))
+                else:
+                    print("  at the {} ({:.0f} s): smallest --nshards {}   largest shard {:.0f} s = {:.1f}% of {:.0f} s, "
+                          "at {} workers, over the {} selected cells".format(
+                              nm, lim, k, top, 100.0 * top / SHARD_CEIL_S, SHARD_CEIL_S, a.workers, len(sel)))
+            if kt is not None:
+                print("  RECOMMENDED: --nshards {}, the count at the target. The estimate assumes perfect scaling, "
+                      "ignores barrier idle and phase tails, and is not a bound. G-CAP refuses only above "
+                      "{:.0f} s.".format(kt, SHARD_CEIL_S))
     if mode == "smoke":
         proj = (N_SMOKE_DRAW + 2 * N_SMOKE_REF) / REFSCALE_ACKLEY_RATE
         timeout_s = max(TIMEOUT_FLOOR_SMOKE, TIMEOUT_FACTOR * 2.0 * proj)
@@ -1271,6 +1323,17 @@ def main():
             sys.stderr.write("G-CAP: worst-case estimate {:.0f} s exceeds {:.0f} s, or cells lack throughput; "
                              "select fewer --cells or add shards\n".format(worst / a.workers, SHARD_CEIL_S))
             return 2
+        avail = mem_available_mb()
+        need = MEM_GUARD_FACTOR * N25_HELD64_PEAK_MB
+        cp.hdr("G-MEM -- MEMORY GUARD")
+        print("  MemAvailable {}   required {:.1f} MB (2 x N25's held-64M peak {} MB)".format(
+            "unreadable" if avail is None else "{:.0f} MB".format(avail), need, N25_HELD64_PEAK_MB))
+        if avail is None or avail < need:
+            sys.stderr.write("G-MEM: available memory {} is below {:.1f} MB. This job holds 64M arrays; it belongs on "
+                             "Kaggle (notes/CALPREC2_RUNBOOK.md), not on this machine.\n".format(
+                                 "unreadable" if avail is None else "{:.0f} MB".format(avail), need))
+            return 2
+        print("  G-MEM PASS")
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     tag = "" if a.nshards == 1 else "-s{}of{}".format(a.shard, a.nshards)

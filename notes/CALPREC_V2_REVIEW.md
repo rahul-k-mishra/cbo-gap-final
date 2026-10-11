@@ -649,3 +649,107 @@ the new one.
   - the best and worst case at the stated workers;
   - the largest task;
   - the smallest --nshards.
+
+---
+
+## 2026-10-11, fifth pass: shard margin, memory guard, Kaggle resumption
+
+What changed (Rahul's decisions of 2026-10-11, ledger N28 addendum and K5):
+
+- scripts/calprec2.py: md5 dd3aa2508be868906c34e40266d2467e to
+  c0801f490fa49d6d35e0f7c007a4cee0 (1380 lines).
+  - --shard-target, default 0.5. The plan prints the count at the target
+    (recommended) and at the full ceiling, each with its largest shard as
+    a percentage of 21600 s.
+  - G-MEM: a full job refuses below 2 x 2472.8 MB MemAvailable.
+  - Resume prints complete rows per folder.
+  - The docstring records the five confirmed answers and the E1 decision.
+- scripts/kgrun.py: md5 902a9edc895e764f8ba00176db390944 to
+  d8a053691f3a5774d2975f5cde07ee44 (655 lines).
+  - --resume-dirs, --data-dirs and --warn-mb.
+  - Folders are verified before upload, shipped flat with an index, and
+    rebuilt and re-verified by the runner under /tmp/kgrun-ship.
+  - A git guard on run and push.
+- notes/CALPREC2_RUNBOOK.md, new.
+- Nothing was executed.
+  - Both scripts parse under the Python 3.8 grammar, and a static pass
+    found no undefined names.
+  - The runner template was rendered with and without shipped folders,
+    and both renderings parse.
+
+### Closed
+
+- U3: G-MEM added as specified. See V1 for its limit.
+- U4: decided. 1e-12 stays, and a failure exits 3.
+- U6: the BA rule, O2's 256M tau_ref, the separate C1 pass with R1, and
+  finalize's expected cells were all confirmed. The reasons are in spec
+  11c and N28.
+- D4: C5m at beta_prod is reported, confirmed.
+- Ledger K5: closed by kgrun's resumption, with the limits stated there.
+- Found while writing, and fixed before commit: the full job reads
+  --throughput, a folder that existed only on the laptop. On Kaggle every
+  full job would have exited 2 at load_throughput. --data-dirs exists for
+  this, and the runbook passes the smoke folder through it.
+- Found while writing, and fixed before commit: a backslash-n inside the
+  runner template would have rendered as a raw newline inside a string
+  literal, so the generated runner would not have parsed. It now uses
+  chr(10), as the template already did elsewhere. The rendered-runner
+  parse is the check that catches this.
+
+### Departure from the instruction
+
+- Rahul asked for the resume folders to be passed with their MOUNTED
+  paths. They are passed as rebuilt paths under /tmp/kgrun-ship instead.
+  - kgrun versions the dataset with --dir-mode skip, so a run folder's
+    subdirectory (calprec2-full-.../) would not be uploaded at all.
+  - What Kaggle does with an uploaded zip or tar is not recorded in this
+    repository.
+  - The flat copy with an index needs neither, and the runner verifies
+    every rebuilt file against the folder's own sha256.txt before the
+    script starts.
+
+### New issues
+
+- V1. G-MEM does not scale with --workers.
+  - On the laptop, memprobe saw MemAvailable 7830 MB (N25). That is above
+    the 4945.6 MB threshold, so the guard would not stop a full run there
+    at that moment.
+  - With 2 workers, two held 64M E1 tasks at once need about twice the
+    N25 peak. That is arithmetic, not a measurement.
+  - workers x 2472.8 would be the stricter threshold. I applied Rahul's
+    figure as given.
+- V2. No clean stop before the cap.
+  - calprec2 has no deadline, so a job that overruns is killed. Whether
+    /kaggle/working survives that is unknown (K5).
+  - The 0.5 target leaves the estimate a quarter of the 12-hour cap.
+  - A --stop-after flag would make every overrun a fetchable partial
+    folder rather than a possible loss: no new task after T seconds, then
+    write, then a distinct exit code. Not written; Rahul's decision.
+- V3. Kaggle's status for a nonzero script exit is not known.
+  - kgrun fetches automatically only on "complete". A job that exits 3 or
+    4 probably reports "error", and must then be fetched by hand.
+  - The runbook says so.
+- V4. A second fetch of the same kernel makes a second folder with the same
+  rows, and finalize then stops (exit 2). The runbook warns; nothing in
+  kgrun prevents it.
+- V5. The git guard covers runs/ and HEAD only.
+  - The previous job's kgrun log in logs/ is not checked: the new job's
+    own log is created by the shell redirect before kgrun starts.
+  - The runbook commits the logs with the folder.
+- V6. kgrun push alone, with shipped folders, does not rebuild the bundle.
+  The dataset's current version must already hold them. The runner exits 2
+  otherwise.
+- V7. Every attempt is a new kernel (cbo-calprec2-s<i>of<K>-a<n>), so
+  kernels accumulate on Kaggle. Every dataset version holds only that
+  job's shipped folders. Kaggle keeps the version history, so stored
+  volume grows with the number of jobs. The --warn-mb threshold is a local
+  choice: Kaggle's limits are not recorded here.
+- V8. Never executed: the folder verification, the flat copy, the
+  runner's rebuild and its row counts, the args substitution, the git
+  guard, G-MEM and the target shard count. The first resumed attempt is
+  their first test.
+
+### Still left
+
+- From the fourth pass: B6, C1, C3 to C5, D3, D5, D6, D8, E1, E3, G1, G3,
+  G4, second-pass N8, and U1, U2 and U5.

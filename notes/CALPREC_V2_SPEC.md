@@ -602,12 +602,17 @@ Labels in calprec2_beta.csv (each cell gets exactly one):
   256M median, the larger reference. Both sizes are reported.
 - incomplete (<phase>): missing or errored rows, exit 4.
 
-Decisions made by Claude in writing this, for Rahul to confirm or change:
+Decisions made by Claude in writing this, all CONFIRMED by Rahul on
+2026-10-11 (ledger N28 addendum):
 - BA. Without a solve, an adequate cell that fails C1 or C6 has no beta of
   its own. It takes beta_adq. It is labelled by rule CB of the old design
   (5% on an adequate reference), applied to beta_adq. The alternative for
-  a C6 failure is beta_prod with its C' median.
-- O2's tau_ref is the 256M median, not the 64M one. Both are in the table.
+  a C6 failure, beta_prod with its C' median, is rejected. A beta_prod that
+  fails C6 has been measured to miss the target, so carrying it forward
+  would label a cell by a beta just shown to be wrong.
+- O2's tau_ref is the 256M median, not the 64M one. Both are in the
+  table. It is the larger reference, and D1 could not vouch for it against
+  anything bigger.
 - The C1 pass stays a separate regeneration of the 64M replicates, as
   before, so R1 still checks regeneration. Folding the 145 betas into
   phase C would save one 64M draw per replicate, at the cost of a
@@ -640,3 +645,15 @@ What this answers (Rahul's reasoning, recorded):
   reference adequacy, across 336 cells. Rahul's instruction said refscale
   had two. By N18 it had four: two objectives (ackley and sphere, d = 40)
   at two targets each (tau0 0.01 and 0.1).
+
+Further decisions of 2026-10-11 (Rahul), after logs/calprec2-plan-fixed2-thr.log:
+- The full design runs: both sizes, all 336 cells, six replicates. Runtime
+  is not a constraint; losing work is.
+- G-MEM: a full job refuses below 2 x 2472.8 MB MemAvailable (N25),
+  because it belongs on Kaggle.
+- E1's 1e-12 at 64M is not pre-loosened.
+- Shards are sized against --shard-target x 21600 s, 0.5 by default.
+  G-CAP refuses only against 21600 s.
+- Every Kaggle job is resumable (kgrun --resume-dirs, ledger K5 closed).
+  After each job its output is committed and pushed before the next
+  starts. The sequence is notes/CALPREC2_RUNBOOK.md.

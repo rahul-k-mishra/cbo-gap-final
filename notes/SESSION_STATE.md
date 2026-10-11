@@ -74,6 +74,14 @@ full run finished.
   workers. The design was changed to two fixed reference sizes, 64M and
   256M (N28; CALPREC_V2_SPEC 11c; script md5
   dd3aa2508be868906c34e40266d2467e). Next: its plan with --throughput.
+- That plan (logs/calprec2-plan-fixed2-thr.log) gave 40 shards at the full
+  ceiling, with the largest at 19968 s. Rahul decided the full design runs,
+  with shards sized to 50% of the ceiling (--shard-target), every Kaggle
+  job resumable (kgrun --resume-dirs; K5 closed), and each job committed
+  and pushed before the next. The sequence is notes/CALPREC2_RUNBOOK.md.
+  calprec2 md5 c0801f490fa49d6d35e0f7c007a4cee0, kgrun md5
+  d8a053691f3a5774d2975f5cde07ee44, neither executed. Next: the plan at
+  the target (runbook 0.1).
 - Decided by Rahul, 2026-10-11:
   - calprec v2 does not wait for the 4G sphere rung;
   - the analysis criteria (bootstrap level, fit window, resamples,

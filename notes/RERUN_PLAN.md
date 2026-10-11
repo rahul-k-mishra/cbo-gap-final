@@ -180,6 +180,11 @@ Ledger K5, the Kaggle resumption gap, does not bind for this rerun:
   earlier session's output.
 - If a job fails, it is rerun whole, as a new run folder.
 
+[2026-10-11: K5 is CLOSED. kgrun --resume-dirs lets a Kaggle job resume
+from fetched, committed attempt folders; the runbook is
+notes/CALPREC2_RUNBOOK.md. The paragraph below is the earlier record. What
+remains true: an attempt whose /kaggle/working is lost at the cap cannot
+be recovered, and shards cannot resume from each other.]
 K5 stays open as a limit, for these reasons:
 - A job that hits the cap or is pre-empted loses its whole output (answer 7
   of 2026-10-10).

@@ -565,6 +565,37 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   Script: scripts/calprec2.py, md5 dd3aa2508be868906c34e40266d2467e, not
   executed. Review: notes/CALPREC_V2_REVIEW.md, fourth pass. OPEN until the
   new plan's G-CAP estimate is read and the full run is done.
+  - Addendum, 2026-10-11, Rahul's decisions:
+    - The full design runs: 64M and 256M, 336 cells, no size and no
+      replicate dropped. Runtime is not a constraint; losing work is.
+    - logs/calprec2-plan-fixed2-thr.log (script a3f18560...a0c2, 4
+      workers):
+      - "best case (no cell adequate) 368357 s   worst-case estimate
+        (every cell adequate) 699034 s";
+      - "largest single task, estimated 1289 s";
+      - "smallest --nshards with every shard within the ceiling: 40
+        (largest shard 19968 s at 4 workers, over the 336 selected cells)".
+    - Answers to the five put questions:
+      1. BA confirmed. Reason: a beta_prod that fails C6 has been measured
+         to miss the target, so carrying it forward would label a cell by
+         a beta just shown to be wrong.
+      2. The 256M median for not-adequate cells is confirmed: it is the
+         larger reference, and D1 could not vouch for it against
+         anything bigger.
+      3. The separate C1 pass and R1 are kept.
+      4. finalize expecting every cell is confirmed.
+      5. C5m at beta_prod is reported, with no threshold.
+    - U4: E1's 1e-12 at 64M is not pre-loosened. A failure exits 3, and
+      the number is examined.
+    - U3: G-MEM added. A full job refuses below 2 x 2472.8 = 4945.6 MB
+      MemAvailable, saying it belongs on Kaggle.
+    - Shard margin: --shard-target (default 0.5 of 21600 s). The plan
+      prints the count at the target (recommended) and at the full ceiling.
+      G-CAP still refuses only against the full ceiling.
+    - Kaggle resumption, with K5 closed above; runbook
+      notes/CALPREC2_RUNBOOK.md.
+    scripts/calprec2.py is now md5 c0801f490fa49d6d35e0f7c007a4cee0, not
+    executed.
 
 ## Checked and found sound
 
@@ -800,3 +831,39 @@ ENVIRONMENT.md (G2 closed).
   - resumption is a recovery from fetched output only.
   kgrun is not changed. It is fixed only if a shard actually needs to
   resume on Kaggle. OPEN as a known limit.
+  CLOSED 2026-10-11 (Rahul: "every Kaggle job must be resumable"; losing
+  work, not runtime, is the constraint). scripts/kgrun.py md5
+  d8a053691f3a5774d2975f5cde07ee44, not executed.
+  - --resume-dirs ships earlier fetched run folders, which the runner
+    passes as --resume-from. --data-dirs ships input folders and replaces
+    runs/<name> in --args (the calprec2 smoke folder is --throughput).
+  - Before upload, every shipped folder must be a direct subfolder of
+    runs/; its sha256.txt must list exactly the files present, with
+    matching hashes; and it must be tracked and unmodified in git.
+  - Files go into the bundle flat, with an index. The reason: kgrun
+    versions with --dir-mode skip, which drops subdirectories, and Kaggle's
+    handling of uploaded archives is not recorded here.
+  - The runner rebuilds each folder under /tmp/kgrun-ship, verifies it
+    against its sha256.txt (exit 2 on mismatch), and prints each folder
+    with its rows and complete rows. /tmp is not /kaggle/working, so the
+    inputs are not fetched back as output.
+  - The bundle's size and file count are printed. A warning appears above
+    --warn-mb (1000 MB by default), a local choice and not Kaggle's limit,
+    which is not recorded here.
+  - A git guard refuses run and push while runs/ has uncommitted paths
+    or HEAD is ahead of its upstream.
+  What it now permits: a Kaggle job of a script with rule-17 resumption
+  (calprec2 --resume-from) can continue from any attempt that was fetched
+  and committed. The runbook is notes/CALPREC2_RUNBOOK.md.
+  What it still does not do:
+  - recover an attempt whose /kaggle/working is lost at the cap. Whether
+    it survives is still not known; the first death will show it. The loss
+    is bounded by one attempt;
+  - let one shard resume from another. Their tasks are disjoint, and
+    calprec2 refuses differing parameters;
+  - pin Kaggle's image. A Python or NumPy change between attempts makes
+    calprec2 refuse the resume (exit 2), and rule 16 then needs detcheck
+    on the new image;
+  - stop a job cleanly before the cap. No deadline exists in calprec2;
+  - check that logs/ is committed. The guard covers runs/ and HEAD only.
+  - Nothing of this has run on Kaggle yet.
