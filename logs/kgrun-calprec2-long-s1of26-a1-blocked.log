@@ -1,0 +1,6 @@
+==============================================================================
+kgrun  action run  job calprec2-long-s1of26-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+git guard: HEAD is 1 commit(s) ahead of its upstream. Push before the next job starts. Nothing was pushed to Kaggle.
