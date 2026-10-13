@@ -1,0 +1,82 @@
+==============================================================================
+kgrun  action fetch  job calprec2-long-s2of26-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+FETCH OUTPUT into /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s2of26-a1-kaggle-20261013-213019
+  $ kaggle kernels output ericsom/cbo-calprec2-long-s2of26-a1 -p /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s2of26-a1-kaggle-20261013-213019
+Traceback (most recent call last):
+  File "/home/rahul/Research/cbo-gap-final/.venv/bin/kaggle", line 3, in <module>
+    from kaggle.cli import main
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kaggle/__init__.py", line 9, in <module>
+    api.authenticate()
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kaggle/api/kaggle_api_extended.py", line 1239, in authenticate
+    if self._authenticate_with_access_token():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kaggle/api/kaggle_api_extended.py", line 1310, in _authenticate_with_access_token
+    username = self._introspect_token(access_token)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kaggle/api/kaggle_api_extended.py", line 1352, in _introspect_token
+    response = kaggle.security.oauth_client.introspect_token(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kagglesdk/security/services/oauth_service.py", line 44, in introspect_token
+    return self._client.call("security.OAuthService", "IntrospectToken", request, IntrospectTokenResponse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/kagglesdk/kaggle_http_client.py", line 104, in call
+    http_response = self._session.send(http_request, **settings)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 540, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/rahul/Research/cbo-gap-final/.venv/lib/python3.12/site-packages/urllib3/connection.py", line 638, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1457, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1252, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1104, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/rahul/Research/cbo-gap-final/scripts/kgrun.py", line 655, in <module>
+    main()
+  File "/home/rahul/Research/cbo-gap-final/scripts/kgrun.py", line 634, in main
+    fetch(kid, a.job, dry)
+  File "/home/rahul/Research/cbo-gap-final/scripts/kgrun.py", line 552, in fetch
+    run_cmd(["kaggle", "kernels", "output", kid, "-p", outdir], dry)
+  File "/home/rahul/Research/cbo-gap-final/scripts/kgrun.py", line 302, in run_cmd
+    rc = subprocess.call(cmd)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 391, in call
+    return p.wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
