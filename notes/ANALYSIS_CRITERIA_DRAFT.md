@@ -850,3 +850,13 @@ if Rahul wants any of them.
 
 Coverage at 12 to 15 realizations (items 1 and 3) cannot be measured from
 the archive. It needs a simulation with a known slope.
+
+Written 2026-10-15, not executed: scripts/m1_estimands.py,
+m2_window.py, m3_bootmc.py, m4_slopese.py, m5_gapwidth.py and
+m6_hetero.py, with shared helpers in scripts/measlib.py. Also
+scripts/m7_pairing.py (M7), which tests ledger N31's claim that the
+archived "paired" diffusion intervals stand. M2 also reconstructs the
+point estimates of Table 3 on the full grid and on J >= 1/tau_0 (N30), and
+M4 prints three candidate reconstructions of the 0.0260 scale (N30). Each
+docstring states what its result can and cannot inform. None of them
+covers calprec betas.

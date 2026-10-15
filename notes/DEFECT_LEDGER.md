@@ -811,7 +811,11 @@ instruction of 2026-10-15.
     - the reboot.py severity and onset bootstraps;
     - the rmapj.py trend bootstrap.
     The same reasoning applies: the intervals stand, but the word "paired"
-    and any implied variance reduction do not. This part goes beyond
+    and any implied variance reduction do not.
+  - 2026-10-15: "the intervals themselves are not invalidated" is to be
+    tested by scripts/m7_pairing.py on the Part D diffusion gaps (decision
+    rule in its docstring). Until its log exists, the sentence is reasoning,
+    not a finding. M7 does not test the r and d pairings. This part goes beyond
     Rahul's instruction of 2026-10-15 and was added by Claude on reading
     the seeds.
   - control.py does share seeds between its fixed and adaptive arms (line
