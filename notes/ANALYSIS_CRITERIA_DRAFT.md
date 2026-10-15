@@ -79,10 +79,12 @@ ledger entries is Rahul's decision.
 - The archived seeds confirm it. In rmapj_real.csv, ackley, d = 5,
   r = 0.75, rep 0 has seed 20260830 for isotropic and 20261910 for
   anisotropic.
-- So the "paired" intervals pair independent realizations by position. As
-  far as I can see this does not make the intervals wrong for a difference
-  of means with equal counts, but the pairing gave no common-random-number
-  benefit and the word is wrong. I have not checked this numerically.
+- So the "paired" intervals pair independent realizations by position.
+  This bullet used to say that this "does not make the intervals wrong".
+  M7 tested that and it is false in 3 of the 30 Part D cells
+  (logs/m7-20261015-2146.log; ledger N31): there the archived interval is
+  narrower than the independent-arm interval (rho 0.900, 0.868, 0.870). No
+  verdict changes. Withdrawn 2026-10-15.
 - control.py does share seeds between its fixed and adaptive arms (line
   345, "same seed s in both arms").
 - Consequence for the rerun: whether iso and aniso share a seed key is a
@@ -466,6 +468,19 @@ twelve-unit bootstrap is withdrawn (Rahul).
   - Applies to iso and aniso only if the rerun keys the seed without the
     diffusion coordinate. The archive never did (0.2). This decision
     belongs to the rerun script's seed table and is open.
+  - M7 (logs/m7-20261015-2146.log; ledger N31) shows what happens when
+    3B's by-key differencing is applied to arms that do NOT share keys, as
+    the archive did. Of the 30 Part D cells, 3 come out materially narrower
+    than the independent-arm interval (rho 0.900, 0.868, 0.870), and 20 of
+    30 move by more than 0.02 in |rho - 1|. No verdict changes (0 of 30).
+    So for iso and aniso the rerun has exactly two consistent choices, and
+    neither is made here:
+    - share seed keys across the two arms, so that pairing is real and 3B
+      applies; or
+    - keep the arms independent and resample each arm separately, as
+      3A does for any two cells (no by-index differencing), and say in
+      the text that the arms are independent.
+    By-index differencing of independent arms is not an option.
 - 3C. (objective, realization) keys resampled jointly across a panel, as
   partm, reboot and rmapj did.
   - A resample can then contain one objective several times and another
@@ -507,7 +522,9 @@ twelve-unit bootstrap is withdrawn (Rahul).
   independent seeds. That is an analysis-only script.
 - Coverage at 12 to 15 realizations (item 1).
 - The variance reduction from a shared iso/aniso seed key. It would need a
-  pilot with shared keys; the archive has none.
+  pilot with shared keys; the archive has none. M7 does not answer this:
+  it measured the effect of a false pairing, not the benefit of a real
+  one.
 
 ---
 
@@ -644,7 +661,11 @@ calprec betas.
 - regimemap.py paired_ci (260-271) and reboot.py paired_gaps: the
   per-realization slopes of three objectives are pooled (36 values per
   arm), differenced by index, bootstrapped (1000 or 4000), 90% interval,
-  same rule. The index pairing is not a seed pairing (0.2).
+  same rule. The index pairing is not a seed pairing (0.2). M7
+  (logs/m7-20261015-2146.log; ledger N31) found these intervals materially
+  narrower than independent-arm intervals in 3 of 30 cells (d 5 r 1.25,
+  d 5 r 1.5, d 10 r 2.0), with 0 of 30 verdict changes and no cell EQUIV
+  under either construction.
 - crossed.py's own decision rule (line 457) compares point-estimate gaps
   with 0.05. No interval enters it.
 - The margin's stated basis, 0.0260, has no archived generating code
@@ -689,10 +710,22 @@ Sub-decisions that are not the margin but determine what it means:
   aggregated over objectives as audit and regimemap did. An aggregate gap
   mixes objectives, and its heterogeneity is item 6.
 - 5(ii). Pairing: whether the rerun's seed table gives iso and aniso the
-  same seed key (3B). With independent arms, the 90% interval for a gap
-  at 12 realizations per arm may be too wide for any cell to be declared
-  equivalent at a small margin. That is a power question, and the archive
-  cannot answer it for the rerun's design.
+  same seed key (3B), or the arms stay independent and the gap interval
+  is built from independent per-arm resamples. These are the only two
+  consistent options (item 3; ledger N31); by-index differencing of
+  independent arms is ruled out by M7. With independent arms, the 90%
+  interval for a gap at 12 realizations per arm may be too wide for any
+  cell to be declared equivalent at a small margin. That is a power
+  question, and the archive cannot answer it for the rerun's design.
+- Bearing of M7 on the margin. Any margin is judged against an interval.
+  In the archive, that interval was too narrow in 3 of 30 Part D cells
+  because of the false pairing, which makes a verdict, equivalence or
+  difference, easier to reach than the design supports. M7 found no verdict that changed, and
+  no Part D cell was EQUIV under either construction, so no archived
+  equivalence verdict was produced this way in Part D. The 7.11 "3 of 18"
+  equivalence (audit.py A3) is built differently and was not tested.
+  Whatever margin 5A to 5C sets, it has to be applied to an interval
+  built under one of the two options in 5(ii).
 - 5(iii). Which comparisons are equivalence comparisons at all: ANISO arm A
   (matched sigma), arm B (matched r), and the ONSET and RMAP gaps. tex 497
   applies equivalence to arm A only.
@@ -855,7 +888,10 @@ Written 2026-10-15, not executed: scripts/m1_estimands.py,
 m2_window.py, m3_bootmc.py, m4_slopese.py, m5_gapwidth.py and
 m6_hetero.py, with shared helpers in scripts/measlib.py. Also
 scripts/m7_pairing.py (M7), which tests ledger N31's claim that the
-archived "paired" diffusion intervals stand. M2 also reconstructs the
+archived "paired" diffusion intervals stand. M7 has run
+(logs/m7-20261015-2146.log, M7-0 PASS): "N31 MUST BE CORRECTED", 3 of 30
+cells material in width, 0 of 30 in verdict. N31, 0.2 and items 3 and 5
+are updated from it. M2 also reconstructs the
 point estimates of Table 3 on the full grid and on J >= 1/tau_0 (N30), and
 M4 prints three candidate reconstructions of the 0.0260 scale (N30). Each
 docstring states what its result can and cannot inform. None of them

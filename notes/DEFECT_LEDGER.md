@@ -872,13 +872,109 @@ instruction of 2026-10-15.
   - Same class as referee point 7 (R7). There, two runs without shared
     seeds were described as a measured effect of a protocol change; here,
     arms without shared seeds are described as paired.
-  - What it does not invalidate. Differencing independent realizations by
-    position and bootstrapping the differences estimates the variance of a
-    difference of two independent means with equal counts. So the
-    intervals themselves are not invalidated by this. This is reasoning
-    and has not been checked numerically. What is false is the pairing
-    claim, and with it any implied common-random-number variance
-    reduction.
+  - WITHDRAWN 2026-10-15 (Rahul's instruction, on the M7 log). This
+    bullet used to say that differencing by position estimates the variance
+    of a difference of two independent means, "So the intervals themselves
+    are not invalidated by this". That sentence was reasoning and was never
+    checked. M7 measured it and it is false in three of the thirty Part D
+    cells. The measurement follows.
+  - What M7 measured. Source: logs/m7-20261015-2146.log, run folder
+    runs/m7-20261015-214629/ (m7_cells.csv). The log names itself
+    m7-20261015-2146.log, not -214629; the run folder has the longer stamp.
+    - Setup, from its header: Python 3.12.3, NumPy 2.5.3, Linux, 2 workers;
+      archive files regimemap.py, reboot.py and regimemap_D_real.csv
+      verified against zenodo-v1.sha256; 30 (d, r) cells, 36 keys per arm,
+      tau_0 0.1. Exit 0.
+    - M7-0 PASS: C-ARCH reproduces all ten gaps printed in tex 650 within
+      0.0005. M7 was reading the comparison the paper reports.
+    - Decision line: "N31 MUST BE CORRECTED". M7-A width: 3 of 30 cells
+      material. M7-B verdict: 0 of 30.
+    - The three material cells (rho = archived C-ARCH 90% width over the
+      independent-arm C-IND width; criterion |rho - 1| > 0.1 and > 3 sd_mc):
+          d 5   r 1.25  rho 0.900  sd_mc 0.017  rho - 1 -0.1003
+          d 5   r 1.5   rho 0.868  sd_mc 0.018  rho - 1 -0.1321
+          d 10  r 2.0   rho 0.870  sd_mc 0.017  rho - 1 -0.1299
+      Archived against independent-arm intervals in those cells:
+          d 5   r 1.25  C-ARCH [+0.0887,+0.1693]  C-IND [+0.0841,+0.1737]
+          d 5   r 1.5   C-ARCH [+0.0956,+0.1933]  C-IND [+0.0873,+0.1998]
+          d 10  r 2.0   C-ARCH [+0.1252,+0.2019]  C-IND [+0.1199,+0.2080]
+    - Over all 30 cells (log, "FULL DISTRIBUTION"): rho - 1 min -0.1321,
+      q25 -0.0353, median -0.0046, q75 +0.0281, max +0.0979, mean -0.0034.
+      Cells with |rho - 1| above 0.02: 20 of 30; above 0.05: 8 of 30;
+      above 0.10: 3 of 30; above 0.20: 0 of 30.
+  - Direction. All three material cells are narrowings: the archived
+    interval is shorter than the independent-arm interval. Read with
+    C-IND as the interval the independent-arm design supports, the
+    archived intervals are anti-conservative in those cells, not merely
+    different. M7 measured widths, not coverage; the anti-conservative
+    reading rests on C-IND being the right reference for independent arms,
+    which is the construction's premise, not something the log tests.
+    The two largest widenings, d 40 r 1.25 (rho - 1 +0.0979, sd_mc 0.0186)
+    and d 40 r 1.5 (+0.0965, 0.0241), exceed 3 sd_mc but fall below the
+    0.10 threshold, so they are not material under M7-A. In those two cells
+    the archived intervals are wider than C-IND, which is conservative.
+  - Mechanism, as the log shows it. The corr column of the log (the
+    within-objective index correlation of isotropic and anisotropic slopes,
+    objective means removed, pooled over the 36 keys; m7_pairing.py lines
+    243-245) reads +0.19, +0.28 and +0.24 for the three material cells.
+    - REASONING, NOT MEASUREMENT, and it is Rahul's (his message of
+      2026-10-15), not Claude's: for independent arms the true correlation
+      is zero, and its sampling spread at this size is near 1/sqrt(36). A
+      chance positive index correlation makes the bootstrap of
+      by-index differences subtract a covariance that the independent
+      design does not have, so the interval narrows.
+    - Claude's notes on that reasoning, also not measurement: the corr is
+      computed after removing three objective means, so 1/sqrt(36) is an
+      approximation to its null spread; M7 tested neither that spread nor
+      whether +0.28 is unusual for it. The log shows the sign pattern is
+      not one-to-one with the width change: d 80 r 1.0 has corr +0.23 and
+      rho 0.963, d 80 r 1.25 has +0.27 and 0.940 (not material); d 80 r 2.0
+      has -0.35 and 0.992, d 20 r 1.25 has -0.38 and 1.065; the two d 40
+      widenings have -0.31 and -0.41.
+  - What is NOT affected, per the log.
+    - M7-B: 0 of 30 verdicts change under the archived rule (margin 0.05).
+      Every cell is DIFF or incon under both C-ARCH and C-IND; no cell is
+      EQUIV under either, so Part D carries no equivalence conclusion that
+      could change.
+    - The five cells tex 650 describes as excluding the 0.05 margin
+      (r 0.75 at d 20, 40, 80; r 3.0 at d 40, 80) are DIFF under both
+      constructions. The three material cells are at r 1.25, 1.5 and 2.0;
+      tex 650 prints no interval for them. Whether fig:severity (right)
+      draws their intervals has not been checked.
+    - The width change is not small in general: 20 of 30 cells move by
+      more than 0.02 in |rho - 1|. [Rahul's instruction said "20 of 30
+      cells within 2%". The log line is "cells with |rho - 1| > 0.02: 20 of
+      30", the reverse. Recorded from the log.]
+  - ALIGN ranks at the extremes (log, "context"; the rank is the fraction
+    of 200 random within-objective relabellings of the anisotropic reps,
+    each run through C-ARCH's algorithm with C-ARCH's seed, whose width is
+    at most the archived width):
+          d 40  r 1.5   rank 0.99   ALIGN as rho - 1 [-0.0631,+0.0677]
+          d 40  r 1.25  rank 0.98   ALIGN as rho - 1 [-0.1119,+0.0927]
+          d 80  r 1.25  rank 0.04   ALIGN as rho - 1 [-0.0659,+0.0549]
+          d 5   r 1.5   rank 0.05   ALIGN as rho - 1 [-0.1430,+0.1675]
+    - What they show: the archived width depends on which arbitrary rep
+      alignment the seed counter happened to produce. In these four cells
+      that alignment gave one of the widest (d 40) or narrowest (d 80
+      r 1.25, d 5 r 1.5) widths among the 200 relabellings. At d 40 r 1.25
+      and r 1.5 the archived rho - 1 lies above the 97.5th percentile of
+      ALIGN. The ALIGN ranges also show how far relabelling alone moves a
+      width: as far as [-0.2206,+0.1449] at d 10 r 2.0.
+    - What they do not show: any selection or tuning of the alignment. The
+      alignment came from the seed counter, and some ranks near 0 or 1
+      among 30 cells are what an arbitrary alignment produces; M7 did not
+      test the distribution of the ranks. They are context, not a
+      criterion.
+  - Scope, as the log states it: "COVERS the probe-beta Part D diffusion
+    gaps only". Not tested: the r and d index pairings of the next bullet;
+    calprec betas; shared seed keys across diffusions; the 7.11 "3 of 18"
+    result.
+  - What the rerun must do (no choice made here). Either share seed keys
+    across the two arms, so that the pairing is real and a paired bootstrap
+    is valid, or keep the arms independent, difference them as independent
+    samples (no by-index differencing), and say so in the text. The archive
+    did neither: it differenced independent arms by index and called them
+    paired. ANALYSIS_CRITERIA_DRAFT items 3 and 5 carry the decision.
   - The same holds for pairings across r, tau_0 and d within one
     diffusion. The seed counter also runs across those loops. Specimen,
     rmapj_real.csv, isotropic ackley, rep 0:
@@ -891,17 +987,19 @@ instruction of 2026-10-15.
       across all five dimensions" (severity trend);
     - the reboot.py severity and onset bootstraps;
     - the rmapj.py trend bootstrap.
-    The same reasoning applies: the intervals stand, but the word "paired"
-    and any implied variance reduction do not. This part goes beyond
-    Rahul's instruction of 2026-10-15 and was added by Claude on reading
-    the seeds.
-  - 2026-10-15: "the intervals themselves are not invalidated" is to be
-    tested by scripts/m7_pairing.py on the Part D diffusion gaps (decision
-    rule in its docstring). Until its log exists, the sentence is reasoning,
-    not a finding. M7 does not test the r and d pairings. [Correction,
-    later the same day: in commit 2cf22ee this note was inserted before the
-    sentence attributing the r and d part to Claude, which then read as
-    part of this note. The sentence is restored to its bullet above.]
+    The word "paired" and any implied variance reduction are false here as
+    well. This part goes beyond Rahul's instruction of 2026-10-15 and was
+    added by Claude on reading the seeds. [Corrected 2026-10-15 after M7:
+    this bullet used to end "The same reasoning applies: the intervals
+    stand". That reasoning failed its only test (Part D, above). Whether
+    these intervals stand is UNTESTED: the same chance index correlation
+    can narrow or widen them, and M7 does not cover them.]
+  - 2026-10-15: "the intervals themselves are not invalidated" was put to
+    test by scripts/m7_pairing.py on the Part D diffusion gaps. The result
+    is recorded above (logs/m7-20261015-2146.log). [Correction, later the
+    same day: in commit 2cf22ee this note was inserted before the sentence
+    attributing the r and d part to Claude, which then read as part of
+    this note. The sentence is restored to its bullet above.]
   - Evidence that the pairing claim was believed at run time, not merely
     mis-written afterwards (round1-zip, N34). logs_M_full.log, the console
     of the Part M run on Windows 7 (Python 3.8.10, NumPy 1.24.4, workers 3),
@@ -916,9 +1014,10 @@ instruction of 2026-10-15.
     345 and the comment after it). Its pairing (Section 7.4, Table 4) is
     not affected.
   - Open decision for the rerun: whether the seed key omits the diffusion
-    coordinate, so that the two arms share X0 and the Brownian increments.
-    No such decision has been made (ANALYSIS_CRITERIA_DRAFT items 3 and
-    5).
+    coordinate, so that the two arms share X0 and the Brownian increments,
+    or the arms stay independent and are analysed as independent (see
+    "What the rerun must do" above). No such decision has been made
+    (ANALYSIS_CRITERIA_DRAFT items 3 and 5).
   OPEN.
 - N32 (archive, criteria; record and rule). Three archived criteria repeat
   analysis-design errors catalogued in supplement S3 (ledger S1):
