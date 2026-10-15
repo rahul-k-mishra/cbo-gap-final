@@ -57,3 +57,26 @@ Measured in that run (4-worker pass, each realization in its own worker):
   R3  wall 29.7 s   peak RSS of its worker 330 MB
   pass 2: 1 worker, for D3   wall 46.4 s
 ```
+
+## Round-1 Windows 7 machine, as recorded in round1-zip (2026-10-15)
+
+round1-zip/ is a second read-only source beside zenodo-v1/. It is a round-1
+working directory from Rahul's earlier laptop, extracted by Rahul and made
+read-only. It is never written to. Its manifest is round1-zip.sha256 at the
+repository root (143 files, paths relative to round1-zip/), verified with:
+
+```
+cd /home/rahul/Research/cbo-gap-final/round1-zip
+sha256sum -c --quiet ../round1-zip.sha256 && echo "ROUND1 INTACT"
+```
+
+Platform of the round-1 runs, copied from the headers of its console logs
+(for example round1-zip/cbo-gap/logs_M_full.log):
+
+```
+    python 3.8.10   numpy 1.24.4
+    platform Windows-7-6.1.7601-SP1   workers 3
+```
+
+No determinism gate was ever run on that machine (ledger K4). Its contents
+are recorded in ledger N34.

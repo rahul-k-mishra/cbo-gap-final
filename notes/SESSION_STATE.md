@@ -37,6 +37,17 @@ full run finished.
   ARC1 to ARC7, opened 2026-10-08 (423a4d4). ARC1 to ARC5 are still open.
 - The archive bytes the gate reads are identical on the laptop and on Kaggle,
   and equal to zenodo-v1.sha256 (ledger K4(a)).
+- 2026-10-15: a second read-only source, round1-zip/, a round-1 working
+  directory from Rahul's earlier laptop. It is never written to. Its
+  manifest is round1-zip.sha256 (143 files), and ENVIRONMENT.md gives the
+  check command. Contents are in ledger N34:
+  - code identical to the deposit;
+  - eight round-1 console logs;
+  - the ess_extend and ess_panel outputs (ARC6);
+  - the submitted sn-article.tex;
+  - a CertUtil manifest listing an earlier exactcal_real.csv.
+  It holds no code for the N30 numbers. Its logs settle part of N8 and
+  add evidence to N31.
 
 ### 1.3 Kaggle pipeline
 
@@ -299,6 +310,14 @@ Source: runs/refscale-smoke-kaggle-20261009-102942/cbo-refscale-smoke.log.
   (MECH/CAL collapse, R7), N18 (refscale verdict; O3 open), N19
   (tight-target calibration error) and N21 (refscale.py amended, additive), open;
   N20 (rastrigin evaluation order) closed as a record.
+- 2026-10-15: N30 to N34 opened:
+  - N30: N30 numbers with no generating code;
+  - N31: a false pairing claim;
+  - N32: S3-type criteria;
+  - N33: two slope estimands;
+  - N34: round1-zip, a record.
+  Written, not executed: scripts/m1_estimands.py to m7_pairing.py (with
+  measlib.py) and scripts/n30_reconstruct.py.
 - Kaggle: K5 (no resumption on Kaggle), a known limit.
 - Closed: G1 (e945d17), G2 (23a46c8), G3 (acf1786), K1 (closed through K3),
   K3 (4c9824c). K4 is a record, not a defect.

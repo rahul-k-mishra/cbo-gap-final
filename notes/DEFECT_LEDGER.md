@@ -40,7 +40,10 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   S1). OPEN.
 - ARC6 (self, declared). ess_extend.py and ess_panel.py present, their CSV
   outputs absent, as declared (EXP-BMATCH, EXP-REFPANEL). No action beyond
-  ARC1.
+  ARC1. 2026-10-15: round1-zip holds ess_extend_raw.csv,
+  ess_extend_summary.csv, ess_panel_raw.csv and ess_panel_summary.csv
+  (N34). Whether they produce the Section 7.2 exponents (0.608, 0.519,
+  0.565) has not been checked.
 - ARC7 (new, T). The 70-file submission package was the 68 files plus
   cover-letter.tex and cover-letter.pdf; the statement does not promise a
   cover letter. No action.
@@ -90,6 +93,8 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   visibility, regime: 97.5). State 97.5%, or recompute at 95% where
   per-realization data exist (7.12, 7.14, 7.15); Table 5 and the other
   verdict counts cannot be recomputed (ARC2). OPEN.
+  2026-10-15: the interval level each logged quantity carries is
+  tabulated in N34, from the round-1 logs.
 - R10 (ref, T, last). Shorten and reorganize. Deferred until the science is
   settled. OPEN.
 
@@ -152,6 +157,40 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   value" is false for Table 4, Table 5, the 7.10/7.11 counts and every
   verdict column: those are the 400-resample intervals of the generating
   scripts (N_BOOT = 400), with no per-realization data to redo them. OPEN.
+  Addendum 2026-10-15, from round1-zip (N34):
+  - round1-zip/cbo-gap/logs_reboot.log (Python 3.8.10, NumPy 1.24.4) is a
+    console of reboot.py. It prints the 30 Part D paired gaps at 400 and
+    4000 resamples side by side: "largest endpoint shift: 0.0163",
+    "verdicts changed: 0". This supports tex 309's "move an interval
+    endpoint by less than 0.02 and no equivalence verdict changes", for
+    those 30 cells only.
+  - The same log ends: "NOT RECOMPUTED ... The tolerance table of Section
+    7.5 comes from boundary.py ... Its intervals cannot be recomputed
+    here." So the script tex 309 calls the single re-analysis script says,
+    in its own output, that it did not recompute the Section 7.5 intervals.
+    N8 is confirmed by a log.
+  - Which value the manuscript quotes:
+    - The severity trends (+0.1440 [+0.1232,+0.1637]; +0.1330
+      [+0.1169,+0.1497]; -0.0019 [-0.0302,+0.0270]; -0.0014
+      [-0.0263,+0.0225]), the onset intervals of the Part D onset table
+      (tex 605-) and the four b3 intervals (tex 545) equal the log's
+      4000-resample lines. The log prints those only at 4000.
+    - For the paired gaps the manuscript quotes point gaps, which do not
+      depend on B, and the qualitative "paired intervals excluding the 0.05
+      margin at d = 20, 40, 80" (tex 650). At r = 0.75 that holds at both
+      400 and 4000 (d = 20 lower ends +0.0874 and +0.0871; d = 40 +0.0558
+      and +0.0562; d = 80 +0.1308 and +0.1304). No paired-gap endpoint is
+      quoted, so the log cannot show which B the text used for them.
+    - The Part M counts of tex 549 (13/15/19, 38/49/54, 10/12/13, 7/15/22;
+      Bonferroni 13, 43, 11, 10) equal logs_M_full.log section P11.4. That
+      section comes from regimemap.py, whose N_BOOT is 400. The manuscript
+      therefore quotes 400-resample values there, against tex 309.
+  - Not settled: Tables 4 and 5 and the 7.10 and 7.11 counts. No round-1
+    log of control, boundary, sigma or crossed exists in round1-zip.
+  - tex 309's claim that the re-analysis ran on two installations,
+    "NumPy 1.24.4 with Python 3.8.10 and NumPy 2.4.4 with Python 3.12.3",
+    agreeing "to four decimals", has one log behind it: the NumPy 1.24.4
+    one. No second log was found.
 - N9 (new, T). Section 7.12 says the three failing admissible cells are "of
   Section 7.15"; Conclusions say "three of the thirty in Section 7.12". They
   are EXP-ONSET r = 0.75 cells in rmapj_real.csv. OPEN.
@@ -757,6 +796,48 @@ instruction of 2026-10-15.
     The archive was produced on a Windows 7 machine (CLAUDE.md rule 7), so
     the round-1 working directory, if it survives, is most likely there.
     That is an inference, not a finding.
+  - Search of round1-zip, 2026-10-15 (N34): a round-1 working directory
+    from Rahul's earlier laptop, read and hashed in full by Claude.
+    - Its 21 root .py files, and the 24 .py files of the copy under
+      Paper/version_1/Latex/cbo-gap-final/, are byte-identical to the
+      deposit's. The nested zips hold the same 70-file package and
+      nothing else. The two .pyc files under __pycache__ (exactcal,
+      regimemap; cpython-38) record source sizes 16596 and 27824 bytes,
+      equal to the archived .py sizes. So round1-zip holds no code beyond
+      the deposit, and none that computes an N30 number.
+    - No N30 number appears in any of its eight logs:
+      - Table 3's upper-block intervals [0.021,0.083], [0.005,0.126],
+        [0.003,0.199] and the d = 5 and d = 10 entries;
+      - the middle-block intervals [0.022,0.083], [0.006,0.124],
+        [0.117,0.381];
+      - b_dtau, b_tau, b_d with their intervals;
+      - the pairwise contrasts and +0.1940 [+0.0682,+0.3105];
+      - 0.0260 [0.0191,0.0341].
+    - What the logs do contain. logs_exact_full.log (exactcal.py P-E2)
+      prints, at tau_0 = 0.5, 0.1, 0.01: d = 2 slopes -1.0655, -1.0629,
+      -1.1299; d = 40 slopes -1.0113, -1.0037, -0.8766; changes 0.0542,
+      0.0592, 0.2533; intervals [0.0132,0.0965], [0.0155,0.1031],
+      [0.1985,0.3101].
+      - The d = 2 and d = 40 entries and the changes of Table 3's middle
+        block (-1.066, -1.011, +0.054; -1.063, -1.004, +0.059; -1.130,
+        -0.877, +0.253) are these values rounded. Their intervals are not.
+      - The tau_0 = 0.5 and 0.1 rows of the upper block have the same
+        points, as they must: at those targets J >= 1/tau_0 is the full
+        grid.
+    - 0.078. It is in no log as a computed value. It appears in
+      perjcal.py as a typed constant, NESTED = {0.5: 0.054, 0.01: 0.078}
+      with the comment "exactcal, same window, for comparison". perjcal's
+      log prints it back in the column "nested". So the J >= 1/tau_0
+      value at tau_0 = 0.01 existed before perjcal.py was written
+      (round1 timestamp 2026-08-23 00:05), and the code that computed it
+      is not in round1-zip either.
+    - Also without a generating log or code: tex 593's "[0.0069,0.2087]",
+      perjcal's contrast "on the finer (objective, realization) unit".
+      perjcal.py's own bootstrap is over objectives (lines 233-240), and
+      its log prints only [0.0059,0.2265]. Added to this entry 2026-10-15.
+  - Forensic reconstruction: scripts/n30_reconstruct.py (2026-10-15, not
+    executed) evaluates every N30 number under an enumeration fixed in its
+    docstring before any run.
   OPEN.
 - N31 (manuscript, T; same class as R7). The isotropic and anisotropic arms
   are not paired, although the text says they are.
@@ -811,13 +892,26 @@ instruction of 2026-10-15.
     - the reboot.py severity and onset bootstraps;
     - the rmapj.py trend bootstrap.
     The same reasoning applies: the intervals stand, but the word "paired"
-    and any implied variance reduction do not.
+    and any implied variance reduction do not. This part goes beyond
+    Rahul's instruction of 2026-10-15 and was added by Claude on reading
+    the seeds.
   - 2026-10-15: "the intervals themselves are not invalidated" is to be
     tested by scripts/m7_pairing.py on the Part D diffusion gaps (decision
     rule in its docstring). Until its log exists, the sentence is reasoning,
-    not a finding. M7 does not test the r and d pairings. This part goes beyond
-    Rahul's instruction of 2026-10-15 and was added by Claude on reading
-    the seeds.
+    not a finding. M7 does not test the r and d pairings. [Correction,
+    later the same day: in commit 2cf22ee this note was inserted before the
+    sentence attributing the r and d part to Claude, which then read as
+    part of this note. The sentence is restored to its bullet above.]
+  - Evidence that the pairing claim was believed at run time, not merely
+    mis-written afterwards (round1-zip, N34). logs_M_full.log, the console
+    of the Part M run on Windows 7 (Python 3.8.10, NumPy 1.24.4, workers 3),
+    prints in its header: "Bootstrap unit: the independent coupled
+    realization; the two-arm comparison resamples PAIRED on the shared
+    realization index", and above section P11.3: "Paired on the shared
+    realization index, which the earlier files could not support". The
+    same lines appear in logs_M_smoke.log. reboot.py's log heads its table
+    "PAIRED anisotropic minus isotropic". The claim was printed by the
+    scripts themselves at execution.
   - control.py does share seeds between its fixed and adaptive arms (line
     345 and the comment after it). Its pairing (Section 7.4, Table 4) is
     not affected.
@@ -864,6 +958,93 @@ instruction of 2026-10-15.
   (ANALYSIS_CRITERIA_DRAFT, "A choice that comes before items 1 to 6").
   The rerun files store E_J per realization, so either can be computed.
   OPEN until that docstring is committed.
+- N34 (record; second read-only source). round1-zip/, a round-1 working
+  directory from Rahul's earlier laptop, extracted by Rahul and made
+  read-only (dr-xr-xr-x throughout). Treated exactly as zenodo-v1: read,
+  never written. Manifest round1-zip.sha256 (143 files, sha256sum format,
+  paths relative to round1-zip/), written by Claude on 2026-10-15 and
+  verified with sha256sum -c.
+  Contents, checked by Claude against zenodo-v1.sha256:
+  - round1-zip/cbo-gap/ holds 64 files:
+    - 50 byte-identical to deposit files, including all 21 .py files.
+    - 14 not in the deposit under their own names: eight console logs
+      (logs_M_full, logs_M_smoke, logs_exact_full, logs_exact_smoke,
+      logs_finitej, logs_perjcal_full, logs_reboot, logs_rmapj_full),
+      ess_extend_raw.csv, ess_extend_summary.csv, ess_panel_raw.csv,
+      ess_panel_summary.csv, regimemap_D_summary.csv and MANIFEST.txt.
+    - regimemap_D_summary.csv is byte-identical to the deposit's
+      regimemap_summary.csv, so only its name is new (cf. ARC4).
+    - Absent there, present in the deposit: the figures, mkfig2/4/5.py,
+      regimemap_real.csv, regimemap_summary.csv and the LaTeX files.
+  - __pycache__/exactcal.cpython-38.pyc and regimemap.cpython-38.pyc. Their
+    headers record source sizes equal to the archived .py sizes. The code
+    objects were not compared.
+  - Paper/version_1/Latex/cbo-gap-final/ holds 70 files, the submission
+    package (ARC7):
+    - 66 are byte-identical to the deposit;
+    - cover-letter.tex and cover-letter.pdf;
+    - sn-article.tex and sn-article.pdf, which differ from the deposit.
+      That sn-article.tex is byte-identical to manuscript/sn-article.tex,
+      the submitted text with the DOI sentence (ARC3).
+  - Paper/version_1/Latex.zip holds sn-article.tex, sn-article.pdf,
+    cover-letter.pdf and cbo-gap-final.zip. Each is byte-identical to the
+    file of that name in Paper/version_1/Latex/. That cbo-gap-final.zip
+    has 70 members: 66 identical to the deposit, plus sn-article.tex,
+    sn-article.pdf, cover-letter.tex and cover-letter.pdf, as in the
+    folder above. Read in memory by Claude; nothing extracted.
+  - Paper/version_1/sn-supplementary.tex and "sn-supplementary (2).pdf"
+    are byte-identical to the deposit's.
+  - MANIFEST.txt is a CertUtil record of ten hashes. Eight equal the
+    deposit's. It also lists an EARLIER exactcal_real.csv (sha256
+    ebf4cdff...2e87d0) and exactcal_summary.csv (c0d1990f...320cb8) before
+    the deposited pair. That earlier run's files are in neither round1-zip
+    nor the deposit. Which run it was is not recorded. exactcal.py's
+    comment on a sigma = 0.1 run is consistent with it but does not
+    identify it.
+  What the eight logs reproduce (all Windows-7, Python 3.8.10, NumPy
+  1.24.4):
+  - logs_exact_full.log: Table 3 middle-block d = 2 and d = 40 values and
+    changes (rounded); tex 563's 0.253 and the "moved ... by 0.300" (P-E3
+    prints -0.2997). Not the Table 3 intervals (N30).
+  - logs_exact_smoke.log: a 24-realization smoke; nothing reported.
+  - logs_finitej.log: tex 587's numbers: the p5 values 10.000, 5.000,
+    2.500; "22 of 30"; -0.123, -0.057; -1.449, -10.070; -0.050, -0.456.
+  - logs_perjcal_full.log: tex 593's 0.0156 [0.0010,0.0576], 0.0964
+    [0.0059,0.2265], width 0.2206 (tex: 0.221), outcome (c).
+  - logs_rmapj_full.log: P-R1 "largest absolute slope discrepancy:
+    4.998e-07" (tex 624: "within 5.0 x 10^-7"); tex 626's at most 0.045
+    (0.0454), 0.1440 to 0.1617, 0.0019 to 0.0025, shifts 0.018 and 0.001.
+    The log prints the severity as gamma(r=1) - gamma(r=3), so negative
+    (trend -0.1440 [-0.1632,-0.1229]). The manuscript quotes reboot's
+    gamma(3) - gamma(1) version, +0.1440 [+0.1232,+0.1637], whose interval
+    comes from a different seed. tex 626 drops the sign. This is a sign
+    convention difference between two scripts, recorded under R8, not a
+    numerical error.
+  - logs_reboot.log: tex 650's gaps (+0.016 ... -0.212, the sign change
+    between r = 1.5 and 2.0 at d = 40 and 80); the S(1,3) and S(0.75,3)
+    values and trends of tex 648; the onset table and "nine of ten"; the
+    b3 intervals of tex 545. See N8 for the 400/4000 question.
+  - logs_M_full.log: Table 7's map values (tex 514-532); the Part M counts
+    of tex 549; "MAP VERDICT: both axes matter"; P11.3 paired gaps at
+    90% (1000 resamples, seed 7). Run wall 26512.8 s.
+  - logs_M_smoke.log: a 96-realization smoke; nothing reported.
+  Interval level each logged quantity carries (code read, not assumed):
+  - Rate-consistency verdicts and counts (logs_M_full P11.1 stars and
+    P11.4): labelled "bootstrap 95% upper bound". regimemap.boot_ci at
+    level 95 compares the 97.5th percentile of 400 resampled mean slopes
+    with -0.85.
+  - Bonferroni column: upper end at the 100 - 2.5/nb percentile.
+  - Equivalence (logs_M_full P11.3; logs_reboot paired table): two-sided
+    90%, the 5th and 95th percentiles, that is TOST at 5% per side. 1000
+    resamples in regimemap, 400 and 4000 in reboot.
+  - Severity trends, onset, b3 (reboot), rmapj trend, exactcal P-E2,
+    finitej P-F3, perjcal P-C2: two-sided 95%, 2.5th and 97.5th
+    percentiles.
+  - The 97.5th-percentile path of item 1 is visible in no log as a
+    number. The logs print only verdict symbols and counts for rate
+    consistency, never the upper bound itself. It is visible only in the
+    code (regimemap.py lines 250-257; the boot_ci of every other script).
+  OPEN as a record. Its role is evidence for N8, N30, N31 and ARC6.
 
 ## Checked and found sound
 

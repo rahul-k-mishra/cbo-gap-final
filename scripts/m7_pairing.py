@@ -92,9 +92,18 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-15, before first execution)
     rho, sd_mc and both verdicts. In that case the ledger sentence "the
     intervals themselves are not invalidated" is wrong for those cells and
     is corrected from this log.
-  The 0.10 in M7-A is a threshold fixed by Claude for this measurement on
-  2026-10-15 and confirmed by Rahul before execution. It is not a proposal
-  for any rerun criterion.
+  The 0.10 in M7-A, the 3 x sd_mc guard and the verdict-flip rule were
+  proposed by Claude on 2026-10-15 and confirmed by Rahul the same day,
+  before any execution. They are not proposals for any rerun criterion.
+  REPORTED REGARDLESS OF THE DECISION (added 2026-10-15 at Rahul's request,
+  before execution): the full distribution of the width change rho - 1
+  over all 30 cells. Every cell's value is printed in increasing order
+  with its d, r, sd_mc and the ALIGN range expressed the same way,
+  (ALIGN width / w_ind) - 1. Then the minimum, quartiles and maximum, the
+  mean, and the counts of cells with |rho - 1| above 0.02, 0.05, 0.10 and
+  0.20. The result can then be judged directly, not only through the
+  binary decision. These counts are description; only M7-A, M7-B and the
+  DECISION line decide.
 
 WHAT THE RESULT CAN INFORM
   - Whether the archived Part D "paired" intervals and their equivalence
@@ -351,6 +360,20 @@ def main():
     rhos = np.array([x["rho"] for x in res])
     print("  rho over cells: min {:.3f}  median {:.3f}  max {:.3f}".format(
         rhos.min(), np.median(rhos), rhos.max()))
+    print("\n  FULL DISTRIBUTION of the width change rho - 1 = w_arch / w_ind - 1, all cells,")
+    print("  in increasing order (reported regardless of the decision):")
+    print("  {:>4} {:<3} {:<5} {:>9} {:>8} {:>24}".format(
+        "rank", "d", "r", "rho - 1", "sd_mc", "ALIGN range, as rho - 1"))
+    for i, x in enumerate(sorted(res, key=lambda y: y["rho"])):
+        print("  {:>4} {:<3} {:<5} {:>+9.4f} {:>8.4f}      [{:+.4f},{:+.4f}]".format(
+            i + 1, x["d"], x["r"], x["rho"] - 1.0, x["sd_mc"],
+            x["align_lo"] / x["w_ind"] - 1.0, x["align_hi"] / x["w_ind"] - 1.0))
+    dv = rhos - 1.0
+    q = np.percentile(dv, [0, 25, 50, 75, 100])
+    print("  rho - 1: min {:+.4f}  q25 {:+.4f}  median {:+.4f}  q75 {:+.4f}  max {:+.4f}  mean {:+.4f}".format(
+        q[0], q[1], q[2], q[3], q[4], float(dv.mean())))
+    for c in (0.02, 0.05, 0.10, 0.20):
+        print("  cells with |rho - 1| > {:.2f}: {} of {}".format(c, int((np.abs(dv) > c).sum()), dv.size))
     if not ma and not mb:
         print("\n  DECISION: N31 STANDS -- removing the false rep alignment changes no width")
         print("  materially and no equivalence verdict.")
