@@ -1,0 +1,149 @@
+========================================================================================
+CBO-GAP Phase 11 — regime map, onset curve, diffusion energy
+========================================================================================
+  PRE-REGISTERED (fixed before the first run):
+    RATE-CONSISTENT AT TOLERANCE 0.15 iff bootstrap 95% upper bound <= -0.85;
+    counts also at [0.1, 0.15, 0.2] and with Bonferroni adjustment.
+    Bootstrap unit: the independent coupled realization; the two-arm
+    comparison resamples PAIRED on the shared realization index.
+    EQUIVALENCE by two one-sided tests at margin 0.05, not by absence
+    of significance. ONSET by free-breakpoint profile least squares;
+    it differs from r = 1 only if the interval excludes 1.
+    Measured noise floor from audit.py: 0.0219.
+
+  DIFFUSION ENERGY, the referee's question answered:
+    isotropic   trace of covariance = d sigma^2 |x-v|^2
+    anisotropic trace of covariance =   sigma^2 |x-v|^2
+    so matched sigma means the isotropic system injects d times the
+    total quadratic variation, and matching the trace requires
+    sigma_aniso = sqrt(d) sigma_iso, which is exactly matched r.
+    Phase 9 called matched r the unfair comparison. The algebra says
+    matched r is the matched-energy comparison. Both arms are
+    legitimate; the realised trace is measured below either way.
+
+  REPRODUCIBILITY
+    python 3.8.10   numpy 1.24.4
+    platform Windows-7-6.1.7601-SP1   workers 3
+    seed 20260829   J grid [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]   Jinf 50000   reps/cell 12
+    lambda 1.0   dt 0.01   T 1.0   steps 100
+
+  EXPERIMENT MATRIX
+    part M  2 diff x 3 obj x 2 d x 5 r x 4 tau = 240
+    240 cells x 12 realizations = 2880 coupled realizations
+
+  2880 realizations queued on 3 workers
+
+  sweep finished in 26495.3 s
+
+----------------------------------------------------------------------------------------
+P11.1 — THE REGIME MAP: fitted exponent over tau_0 and r
+----------------------------------------------------------------------------------------
+  r = 1 is the boundary of the parameter condition. Values are means
+  over 3 objectives; * marks cells not rate-consistent.
+
+  isotropic , d = 10
+       tau_0      r=0.5      r=1.0      r=1.5      r=2.0      r=3.0
+         0.5     -1.037     -1.016     -0.992     -0.980     -0.959
+         0.1     -0.981     -1.018    -0.952*    -0.965*    -0.915*
+        0.03    -0.933*    -0.935*    -0.932*    -0.885*    -0.850*
+        0.01    -0.816*    -0.830*    -0.805*    -0.759*    -0.720*
+                     in        OUT        OUT        OUT        OUT
+
+  isotropic , d = 40
+       tau_0      r=0.5      r=1.0      r=1.5      r=2.0      r=3.0
+         0.5     -1.012     -1.017     -1.017     -0.957    -0.682*
+         0.1     -0.967    -0.985*    -0.902*    -0.729*    -0.543*
+        0.03    -0.845*    -0.833*    -0.714*    -0.609*    -0.450*
+        0.01    -0.690*    -0.709*    -0.539*    -0.437*    -0.375*
+                     in        OUT        OUT        OUT        OUT
+
+  anisotropic , d = 10
+       tau_0      r=0.5      r=1.0      r=1.5      r=2.0      r=3.0
+         0.5     -1.019     -0.969    -0.906*    -0.852*    -0.787*
+         0.1     -0.965    -0.914*    -0.903*    -0.830*    -0.721*
+        0.03    -0.851*    -0.845*    -0.771*    -0.741*    -0.580*
+        0.01    -0.694*    -0.655*    -0.626*    -0.676*    -0.544*
+                     in        OUT        OUT        OUT        OUT
+
+  anisotropic , d = 40
+       tau_0      r=0.5      r=1.0      r=1.5      r=2.0      r=3.0
+         0.5     -1.004     -0.957    -0.908*    -0.903*    -0.781*
+         0.1    -0.892*    -0.830*    -0.791*    -0.766*    -0.575*
+        0.03    -0.724*    -0.689*    -0.656*    -0.588*    -0.508*
+        0.01    -0.558*    -0.563*    -0.494*    -0.465*    -0.352*
+                     in        OUT        OUT        OUT        OUT
+
+  variation along each axis, to test whether both matter:
+  diffusion        d range over tau_0 (fixed r) range over r (fixed tau_0)
+  isotropic       10                     0.2395                     0.1097
+  isotropic       40                     0.5200                     0.4422
+  anisotropic     10                     0.3243                     0.2702
+  anisotropic     40                     0.4452                     0.3167
+
+  MAP VERDICT: both axes matter
+
+----------------------------------------------------------------------------------------
+P11.3 — PAIRED isotropic versus anisotropic, and the realised energy
+----------------------------------------------------------------------------------------
+  Paired on the shared realization index, which the earlier files could
+  not support. Equivalence at margin 0.05 by two one-sided tests.
+
+  part     d      r     tau       gap              90% CI                verdict    trace ratio
+  M       10    0.5     0.5    0.0183     [-0.017,+0.058]           inconclusive          1.000
+  M       10    0.5     0.1    0.0156     [-0.020,+0.051]           inconclusive          1.000
+  M       10    0.5    0.03    0.0825     [+0.053,+0.112]              DIFFERENT          1.000
+  M       10    0.5    0.01    0.1220     [+0.083,+0.159]              DIFFERENT          1.001
+  M       10      1     0.5    0.0461     [-0.004,+0.097]           inconclusive          0.999
+  M       10      1     0.1    0.1039     [+0.063,+0.145]              DIFFERENT          0.995
+  M       10      1    0.03    0.0906     [+0.051,+0.133]              DIFFERENT          1.004
+  M       10      1    0.01    0.1740     [+0.132,+0.209]              DIFFERENT          1.002
+  M       10    1.5     0.5    0.0861     [+0.037,+0.135]           inconclusive          1.002
+  M       10    1.5     0.1    0.0496     [+0.001,+0.095]           inconclusive          1.000
+  M       10    1.5    0.03    0.1603     [+0.118,+0.201]              DIFFERENT          1.017
+  M       10    1.5    0.01    0.1790     [+0.131,+0.233]              DIFFERENT          1.006
+  M       10      2     0.5    0.1282     [+0.074,+0.187]              DIFFERENT          1.040
+  M       10      2     0.1    0.1345     [+0.078,+0.190]              DIFFERENT          0.985
+  M       10      2    0.03    0.1437     [+0.087,+0.195]              DIFFERENT          0.953
+  M       10      2    0.01    0.0826     [+0.028,+0.132]           inconclusive          1.013
+  M       10      3     0.5    0.1728     [+0.110,+0.231]              DIFFERENT          1.231
+  M       10      3     0.1    0.1947     [+0.129,+0.256]              DIFFERENT          1.140
+  M       10      3    0.03    0.2697     [+0.199,+0.340]              DIFFERENT          1.128
+  M       10      3    0.01    0.1755     [+0.105,+0.248]              DIFFERENT          0.988
+  M       40    0.5     0.5    0.0087     [-0.012,+0.030]             EQUIVALENT          0.999
+  M       40    0.5     0.1    0.0754     [+0.055,+0.095]              DIFFERENT          0.999
+  M       40    0.5    0.03    0.1202     [+0.093,+0.146]              DIFFERENT          1.000
+  M       40    0.5    0.01    0.1320     [+0.099,+0.167]              DIFFERENT          1.000
+  M       40      1     0.5    0.0603     [+0.038,+0.082]           inconclusive          0.999
+  M       40      1     0.1    0.1546     [+0.125,+0.185]              DIFFERENT          0.997
+  M       40      1    0.03    0.1440     [+0.096,+0.198]              DIFFERENT          1.003
+  M       40      1    0.01    0.1462     [+0.094,+0.199]              DIFFERENT          1.009
+  M       40    1.5     0.5    0.1089     [+0.078,+0.137]              DIFFERENT          0.999
+  M       40    1.5     0.1    0.1106     [+0.053,+0.168]              DIFFERENT          1.012
+  M       40    1.5    0.03    0.0575     [-0.011,+0.134]           inconclusive          0.990
+  M       40    1.5    0.01    0.0453     [-0.012,+0.101]           inconclusive          1.028
+  M       40      2     0.5    0.0544     [+0.014,+0.093]           inconclusive          1.015
+  M       40      2     0.1   -0.0366     [-0.118,+0.043]           inconclusive          0.990
+  M       40      2    0.03    0.0213     [-0.057,+0.102]           inconclusive          1.044
+  M       40      2    0.01   -0.0276     [-0.083,+0.027]           inconclusive          1.095
+  M       40      3     0.5   -0.0991     [-0.180,-0.028]           inconclusive          0.884
+  M       40      3     0.1   -0.0324     [-0.110,+0.049]           inconclusive          1.098
+  M       40      3    0.03   -0.0575     [-0.118,-0.004]           inconclusive          1.057
+  M       40      3    0.01    0.0226     [-0.036,+0.078]           inconclusive          1.066
+
+  The trace ratio is the realised isotropic-to-anisotropic diffusion
+  energy. At matched r it should be near 1, confirming that matched r is
+  the matched-energy comparison and matched sigma is not.
+
+----------------------------------------------------------------------------------------
+P11.4 — tolerance and multiplicity, split by region
+----------------------------------------------------------------------------------------
+  part   diffusion     region     tol 0.10     tol 0.15     tol 0.20       Bonferroni
+  M      isotropic         in        13/24        15/24        19/24            13/24
+  M      isotropic        out        38/96        49/96        54/96            43/96
+  M      anisotropic       in        10/24        12/24        13/24            11/24
+  M      anisotropic      out         7/96        15/96        22/96            10/96
+
+========================================================================================
+wrote regimemap_real.csv (per realization) and regimemap_summary.csv
+total wall 26512.8 s
+========================================================================================

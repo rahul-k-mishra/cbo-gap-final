@@ -1,0 +1,30 @@
+SHA256 hash of file regimemap_D_real.csv:
+e6 41 81 6b 02 4c 2e 60 6a 52 c0 02 c9 7f 7c 2d 23 85 59 cb 92 66 37 41 f3 bf cc c4 30 40 26 ab
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file regimemap_D_summary.csv:
+27 b8 a9 2f 90 3a 47 d2 70 3a c1 dc 5b 38 66 6a 65 bd d1 24 40 59 d0 cb 75 ee 77 e4 05 4a e5 be
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file regimemap_M_real.csv:
+44 d1 e6 7f d7 7a 63 62 fa 40 79 ee 7e 0b 13 d3 b8 36 87 c1 55 73 ec aa 9d 41 0f ce 27 2a 79 b5
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file regimemap_M_summary.csv:
+7d 8f 88 d1 00 cc 82 16 fd ee 9e b8 dc 5c a9 7b e0 47 6d eb 88 05 6c 89 06 ae de 61 16 dc 17 a1
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file exactcal_real.csv:
+eb f4 cd ff 9f 78 6f e1 9f 0b b9 ae 19 08 6e ff 21 bd c3 ea f3 b0 d4 e6 14 7c 7b 5c 0b 2e 87 d0
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file exactcal_summary.csv:
+c0 d1 99 0f 9f 8c 9b 11 23 15 c2 ca 94 24 63 21 5d 26 09 cf 24 62 a0 16 f6 7b 80 c2 fa 32 0c b8
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file exactcal_real.csv:
+47 c8 43 59 61 4e 3f 69 90 aa 46 a9 40 13 9e 9f 31 d8 4d bc a9 bc 72 08 4a 1a 6e de 54 58 f5 96
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file exactcal_summary.csv:
+71 39 bf 53 44 a4 7e 14 2d c4 d0 17 72 82 e9 ea 61 2c ce de 52 65 3e 1c f8 40 3b 54 81 e7 ab 30
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file rmapj_real.csv:
+cf c5 64 62 55 ef f4 99 fe dd 90 5b e0 ae 55 ea 09 e8 e2 a3 f5 2f fa 1a 3e d5 fe bc c9 04 82 42
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of file perjcal_real.csv:
+62 3e 51 96 c1 50 2a 67 24 c4 b6 4a 7e 51 63 68 be df 30 9f 79 1d 4a 4d 12 98 f6 f4 f2 fe ca 9f
+CertUtil: -hashfile command completed successfully.

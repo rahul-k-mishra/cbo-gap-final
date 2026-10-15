@@ -13,7 +13,7 @@ experiment. Everything in this file is non-negotiable.
     CLAUDE.md                      this file
     README.md                      what the repository is and how to run anything
     .claude/settings.json          allow git add, commit, push; deny edits under
-                                   zenodo-v1 and runs/, every rm form, chmod, force
+                                   zenodo-v1, round1-zip and runs/, every rm form, chmod, force
                                    push, history rewrite, and every kaggle command;
                                    ask on mv, cp, unzip, tar
     .gitattributes                 "* -text": git never rewrites line endings; the
@@ -26,6 +26,12 @@ experiment. Everything in this file is non-negotiable.
                                    byte-identical, chmod a-w, NEVER written to
     zenodo-v1.sha256               per-file manifest computed on Rahul's machine
     zenodo-v1-manifest-claude.sha256   the same manifest computed on the zip he uploaded
+    round1-zip/                    a round-1 working directory from Rahul's earlier
+                                   laptop (ledger N34): a second read-only source,
+                                   chmod a-w, NEVER written to, under rule 1 exactly
+                                   as zenodo-v1
+    round1-zip.sha256              its per-file manifest (143 files, paths relative
+                                   to round1-zip/)
     referee/                       JOGO_report.pdf and the submitted PDF JOGO-D-26-00563.pdf
     notes/DEFECT_LEDGER.md         every known defect, its fix type, its status, the
                                    commit that closed it
@@ -48,7 +54,8 @@ experiment. Everything in this file is non-negotiable.
 1. zenodo-v1 is the deposited archive. Never create, modify, delete, move or
    overwrite anything in it. It is chmod a-w and denied in .claude/settings.json;
    those are backstops, not permission. Scripts may read from it and import
-   modules from it; nothing else.
+   modules from it; nothing else. round1-zip/ is under this rule exactly as
+   zenodo-v1 is (added 2026-10-15, Rahul's decision).
 
 2. Never assume or compute a number independently. Every number that enters
    the manuscript, the ledger, a table, a caption or a reply must come from the
@@ -197,7 +204,7 @@ experiment. Everything in this file is non-negotiable.
 - runs/ and logs/ are tracked. A run folder is never modified after its
   sha256.txt is written; a corrected run is a new run folder.
 - No Git LFS. Any single file above 50 MB: gzip it or stop and ask.
-- After a fresh clone, run: chmod -R a-w zenodo-v1
+- After a fresh clone, run: chmod -R a-w zenodo-v1 round1-zip
 
 ## Kaggle compute
 

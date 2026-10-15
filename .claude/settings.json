@@ -9,6 +9,7 @@
     ],
     "deny": [
       "Edit(/zenodo-v1/**)",
+      "Edit(/round1-zip/**)",
       "Edit(/runs/**)",
       "Read(~/.kaggle/**)",
       "Edit(~/.kaggle/**)",

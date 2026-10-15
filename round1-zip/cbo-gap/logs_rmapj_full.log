@@ -1,0 +1,54 @@
+==========================================================================================
+CBO-GAP — Phase 11 Part D rerun with per-J errors archived
+==========================================================================================
+  dynamics, beta and slope fitting are imported from regimemap.py; nothing is retyped
+  python 3.8.10   numpy 1.24.4   workers 3
+  J grid [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]   Jinf 50000   reps/cell 12
+  seeds start at 20260829 and increment by one, matching --part D
+
+  2160 realizations queued
+
+  sweep finished in 24368.9 s
+
+------------------------------------------------------------------------------------------
+P-R1 — does this rerun reproduce the archived Part D slopes exactly?
+------------------------------------------------------------------------------------------
+  cells compared: 2160   not found in archive: 0
+  largest absolute slope discrepancy: 4.998e-07
+  P-R1 PASS
+
+------------------------------------------------------------------------------------------
+P-R2 — refit on J >= 20, the window in which tau_0 = 0.1 is not on the bound
+------------------------------------------------------------------------------------------
+  non-admissible severity, gamma(r=1) - gamma(r=3)
+
+  diffusion    d       full grid     J >= 20     shift
+  isotropic    5         -0.0865     -0.0551   +0.0314
+  isotropic    10        -0.0667     -0.0573   +0.0094
+  isotropic    20        -0.2145     -0.1904   +0.0242
+  isotropic    40        -0.4615     -0.4759   -0.0144
+  isotropic    80        -0.6090     -0.6545   -0.0454
+  anisotropic  5         -0.1993     -0.1666   +0.0327
+  anisotropic  10        -0.1584     -0.1478   +0.0106
+  anisotropic  20        -0.1623     -0.1779   -0.0157
+  anisotropic  40        -0.1570     -0.1370   +0.0200
+  anisotropic  80        -0.1906     -0.1596   +0.0310
+
+  dimension trend of that severity, per doubling of d
+
+  diffusion    window            trend               95% interval
+  isotropic    full grid       -0.1440      [-0.1632,-0.1229]
+  isotropic    J >= 20         -0.1617      [-0.1832,-0.1409]
+  anisotropic  full grid       +0.0019      [-0.0273,+0.0296]
+  anisotropic  J >= 20         +0.0025      [-0.0275,+0.0334]
+
+------------------------------------------------------------------------------------------
+P-R3 — which window does the manuscript report?
+------------------------------------------------------------------------------------------
+  isotropic    full -0.1440   restricted -0.1617   shift -0.0177   restriction changes nothing, report full grid
+  anisotropic  full +0.0019   restricted +0.0025   shift +0.0006   restriction changes nothing, report full grid
+
+==========================================================================================
+wrote rmapj_real.csv
+Send this entire console output and rmapj_real.csv.
+==========================================================================================

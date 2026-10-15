@@ -22,8 +22,9 @@ Then read notes/DEFECT_LEDGER.md.
 ## After a fresh clone
 
     cd cbo-gap-final
-    chmod -R a-w zenodo-v1
+    chmod -R a-w zenodo-v1 round1-zip
     cd zenodo-v1 && sha256sum * | LC_ALL=C sort -k2 | diff - ../zenodo-v1-manifest-claude.sha256 && echo "ARCHIVE INTACT"; cd ..
+    cd round1-zip && sha256sum -c --quiet ../round1-zip.sha256 && echo "ROUND1 INTACT"; cd ..
     python3 -m venv .venv
     . .venv/bin/activate
     python -m pip install -r requirements.lock

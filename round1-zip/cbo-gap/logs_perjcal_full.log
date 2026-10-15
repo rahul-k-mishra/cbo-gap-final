@@ -1,0 +1,44 @@
+==========================================================================================
+CBO-GAP — finite-J concentration held fixed, one beta per ensemble size
+==========================================================================================
+  beta varies with J by construction, so the fitted exponent here is a
+  DIFFERENT ESTIMAND from Sections 7.3 and 7.13 and is not pooled with them.
+  python 3.8.10   numpy 1.24.4   workers 3
+  lambda 1.0  sigma 0.2  dt 0.01  T 1.0  K 100  Jinf 50000  reps 15
+  tau_0 = 0.5   non-vacuous sizes: [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  tau_0 = 0.01  non-vacuous sizes: [160, 320, 640, 1280, 2560, 5000]
+
+  2880 reference evolutions queued on 3 workers
+
+  sweep finished in 18938.8 s
+
+------------------------------------------------------------------------------------------
+P-C1 — was the finite-J control achieved at every ensemble size?
+------------------------------------------------------------------------------------------
+  achieved/target over 2880 points: mean 1.000000  min 1.000000  max 1.000000
+  points outside 1% of target: 0 of 2880
+  for comparison, the nested design gave ratios from 0.65 to 19.1 at these targets
+  P-C1 PASS
+
+------------------------------------------------------------------------------------------
+P-C2 — the d = 2 to d = 40 contrast under finite-J control
+------------------------------------------------------------------------------------------
+  tau_0           d=2       d=40     change             95% interval       nested
+  0.5         -1.0233    -1.0388     0.0156  [0.0010,0.0576]        0.054
+  0.01        -1.1291    -1.2255     0.0964  [0.0059,0.2265]        0.078
+
+------------------------------------------------------------------------------------------
+P-C3 — does the residual survive control of finite-J concentration?
+------------------------------------------------------------------------------------------
+  tau_0 = 0.50 change 0.0156  interval [0.0010,0.0576]
+  tau_0 = 0.01 change 0.0964  interval [0.0059,0.2265]
+
+  OUTCOME (c): the intervals overlap without resolving. Not powered to
+  separate the two. The manuscript says exactly that.
+
+  interval width at the tight target: 0.2206
+
+==========================================================================================
+wrote perjcal_real.csv
+Send this entire console output and perjcal_real.csv.
+==========================================================================================

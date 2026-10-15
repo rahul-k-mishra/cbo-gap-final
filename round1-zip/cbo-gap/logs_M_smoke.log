@@ -1,0 +1,118 @@
+========================================================================================
+CBO-GAP Phase 11 — regime map, onset curve, diffusion energy
+========================================================================================
+  PRE-REGISTERED (fixed before the first run):
+    RATE-CONSISTENT AT TOLERANCE 0.15 iff bootstrap 95% upper bound <= -0.85;
+    counts also at [0.1, 0.15, 0.2] and with Bonferroni adjustment.
+    Bootstrap unit: the independent coupled realization; the two-arm
+    comparison resamples PAIRED on the shared realization index.
+    EQUIVALENCE by two one-sided tests at margin 0.05, not by absence
+    of significance. ONSET by free-breakpoint profile least squares;
+    it differs from r = 1 only if the interval excludes 1.
+    Measured noise floor from audit.py: 0.0219.
+
+  DIFFUSION ENERGY, the referee's question answered:
+    isotropic   trace of covariance = d sigma^2 |x-v|^2
+    anisotropic trace of covariance =   sigma^2 |x-v|^2
+    so matched sigma means the isotropic system injects d times the
+    total quadratic variation, and matching the trace requires
+    sigma_aniso = sqrt(d) sigma_iso, which is exactly matched r.
+    Phase 9 called matched r the unfair comparison. The algebra says
+    matched r is the matched-energy comparison. Both arms are
+    legitimate; the realised trace is measured below either way.
+
+  REPRODUCIBILITY
+    python 3.8.10   numpy 1.24.4
+    platform Windows-7-6.1.7601-SP1   workers 3
+    seed 20260829   J grid [10, 40, 160, 400]   Jinf 4000   reps/cell 3
+    lambda 1.0   dt 0.01   T 1.0   steps 100
+
+  EXPERIMENT MATRIX
+    part M  2 diff x 2 obj x 1 d x 2 r x 2 tau = 16
+    part D  2 diff x 2 obj x 2 d x 2 r x 1 tau = 16
+    32 cells x 3 realizations = 96 coupled realizations
+
+  96 realizations queued on 3 workers
+
+  sweep finished in 42.6 s
+
+----------------------------------------------------------------------------------------
+P11.1 — THE REGIME MAP: fitted exponent over tau_0 and r
+----------------------------------------------------------------------------------------
+  r = 1 is the boundary of the parameter condition. Values are means
+  over 2 objectives; * marks cells not rate-consistent.
+
+  isotropic , d = 10
+       tau_0      r=0.5      r=2.0
+         0.5    -1.006*     -1.122
+        0.01    -0.727*    -0.516*
+                     in        OUT
+
+  anisotropic , d = 10
+       tau_0      r=0.5      r=2.0
+         0.5    -0.954*    -0.991*
+        0.01    -0.658*    -0.610*
+                     in        OUT
+
+  variation along each axis, to test whether both matter:
+  diffusion        d range over tau_0 (fixed r) range over r (fixed tau_0)
+  isotropic       10                     0.6062                     0.2114
+  anisotropic     10                     0.3805                     0.0484
+
+  MAP VERDICT: only the concentration axis matters
+
+----------------------------------------------------------------------------------------
+P11.2 — THE ONSET CURVE: does the degradation onset move with d?
+----------------------------------------------------------------------------------------
+  Mean exponent at tau_0 = 0.1; free-breakpoint estimate with a
+  bootstrap interval over objectives and realizations.
+
+  isotropic
+        d     r=1.0     r=2.0     r_onset              95% CI
+       10    -1.003    -0.972       1.000         [1.00,1.00]
+       40    -0.903    -0.414       1.000         [1.00,1.00]
+
+  anisotropic
+        d     r=1.0     r=2.0     r_onset              95% CI
+       10    -1.038    -0.588       1.000         [1.00,1.00]
+       40    -0.752    -0.552       1.000         [1.00,1.00]
+
+  If r_onset is constant in d, the sufficient condition is the right
+  normalisation and its boundary is merely conservative. If it falls
+  with d, the condition is the wrong normalisation.
+
+----------------------------------------------------------------------------------------
+P11.3 — PAIRED isotropic versus anisotropic, and the realised energy
+----------------------------------------------------------------------------------------
+  Paired on the shared realization index, which the earlier files could
+  not support. Equivalence at margin 0.05 by two one-sided tests.
+
+  part     d      r     tau       gap              90% CI                verdict    trace ratio
+  M       10    0.5     0.5    0.0523     [-0.038,+0.135]           inconclusive          1.004
+  M       10    0.5    0.01    0.0688     [-0.056,+0.181]           inconclusive          1.012
+  M       10      2     0.5    0.1315     [-0.073,+0.349]           inconclusive          1.067
+  M       10      2    0.01   -0.0942     [-0.289,+0.100]           inconclusive          1.032
+  D       10      1     0.1   -0.0352     [-0.206,+0.131]           inconclusive          1.000
+  D       10      2     0.1    0.3846     [+0.229,+0.551]              DIFFERENT          1.196
+  D       40      1     0.1    0.1511     [+0.107,+0.201]              DIFFERENT          0.994
+  D       40      2     0.1   -0.1386     [-0.240,-0.034]           inconclusive          1.204
+
+  The trace ratio is the realised isotropic-to-anisotropic diffusion
+  energy. At matched r it should be near 1, confirming that matched r is
+  the matched-energy comparison and matched sigma is not.
+
+----------------------------------------------------------------------------------------
+P11.4 — tolerance and multiplicity, split by region
+----------------------------------------------------------------------------------------
+  part   diffusion     region     tol 0.10     tol 0.15     tol 0.20       Bonferroni
+  M      isotropic         in          0/4          0/4          1/4              0/4
+  M      isotropic        out          2/4          2/4          2/4              2/4
+  M      anisotropic       in          1/4          1/4          2/4              1/4
+  M      anisotropic      out          1/4          1/4          1/4              1/4
+  D      isotropic        out          3/8          4/8          5/8              4/8
+  D      anisotropic      out          0/8          1/8          2/8              1/8
+
+========================================================================================
+wrote regimemap_real.csv (per realization) and regimemap_summary.csv
+total wall 45.6 s
+========================================================================================

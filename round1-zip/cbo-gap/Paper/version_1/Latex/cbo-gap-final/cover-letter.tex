@@ -1,0 +1,52 @@
+\documentclass[10.5pt,a4paper]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{parskip}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\pagestyle{empty}
+\begin{document}
+
+\noindent
+\textbf{Rahul Kumar Mishra}\\
+Independent Researcher\\
+Ranchi, Jharkhand, India\\
+\url{mishra.rahul98@gmail.com}\\
+ORCID 0009-0004-9671-4055
+
+\vspace{0.9em}
+\noindent
+The Editors\\
+\textit{Journal of Global Optimization}
+
+\vspace{0.9em}
+\noindent
+\textbf{Submission: ``Finite-ensemble observability of the mean-field convergence rate in consensus-based optimization''}
+
+\vspace{0.6em}
+\noindent
+Dear Editors,
+
+I submit the manuscript above for consideration as a regular article. It is a numerical-experiment study of consensus-based optimization (CBO). Its central finding is that the parameter region in which the published convergence theorems apply and the region in which their $J^{-1}$ benchmark exponent is visible in the fitted slope of a finite run are not the same set: admissible parameter cells fail an operational rate-consistency criterion, and non-admissible ones pass it.
+
+I am submitting to this journal because its scope names numerical experiments and new testbeds explicitly, and because the journal has published CBO twice recently, a multi-swarm consensus method in 2024 and the few-particle analysis of Beddrich et al.\ in 2026. The manuscript is a numerical-experiment paper and I am not presenting it as anything else.
+
+\textbf{What the paper does not claim.} It proposes no new algorithm. The finite-sample inequality in Section~5 is stated as a lens for interpreting the experiments and is explicitly not claimed to be new. No theorem is contradicted: every quantity measured is a finite-window fitted slope, and the empirical error functional differs in the order of its expectation, supremum and particle average from the functionals appearing in the cited bounds, which the manuscript states and does not paper over. If an empirical characterisation without an algorithmic contribution falls outside what the journal wants, I would rather learn that at desk stage than after review.
+
+\textbf{What the paper reports against itself.} Six results obtained during this work were subsequently withdrawn, and nine analysis-design errors were identified and corrected. Both are documented in the Supplementary Material, with the evidence that produced each finding and the evidence that withdrew it. Several headline numbers in earlier drafts did not survive: a residual dimension effect first estimated at $0.553$ fell to $0.253$ when the inverse temperature was calibrated on the reference ensemble rather than a probe, and to $0.078$ when the slope was fitted only over ensemble sizes at which the concentration target is attainable at all. The formal concentration-dimension interaction, resolved on the full grid, is not resolved on the restricted one. A dedicated experiment controlling finite-ensemble concentration exactly returns an interval too wide to identify the mechanism of what remains, and the manuscript says so rather than claiming the residual is dimensional. I have chosen to report this history rather than present only the surviving results. Referees may read this either as care or as an unsettled project; I would rather be judged on the full record.
+
+\textbf{Reproducibility.} All generating and analysis scripts, all per-realization result files and both compiled documents are deposited at \url{https://doi.org/10.5281/zenodo.22068685}. Every interval reported in the paper is produced by a single archived re-analysis script, executed on two independent Python and NumPy installations that agree to four decimal places. Two exploratory runs lost a per-realization file to an output overwrite; this is disclosed in the Data Availability statement and no reported conclusion rests on either.
+
+\textbf{Referees.} The natural referees for this manuscript are the authors whose constants and assumptions it audits. I do not propose them, since the paper examines the visibility of their results, and I leave the choice entirely to the editors.
+
+The manuscript is original, is not under consideration elsewhere, and has not been published previously. I am the sole author, there is no funding to declare, and I have no competing interests.
+
+\vspace{0.8em}
+\noindent
+Yours sincerely,
+
+\vspace{1.3em}
+\noindent
+Rahul Kumar Mishra
+
+\end{document}

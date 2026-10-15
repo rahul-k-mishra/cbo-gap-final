@@ -1,0 +1,46 @@
+========================================================================================
+CBO-GAP — concentration arm with beta solved on the ACTUAL reference ensemble
+========================================================================================
+  PRE-REGISTERED (fixed before the first run of this script):
+    P-E1 the achieved initial ESS fraction must be within 1% of target in
+         all 144 cells; misses are counted and excluded.
+    P-E2 the d=2 to d=40 change is recomputed at every target with a
+         bootstrap interval and reported whatever it shows.
+    P-E3 it is differenced against the probe-calibrated 0.030 / 0.099 /
+         0.553. Both outcomes are written up.
+  THE ONLY CHANGE from mechanism.py is where beta is solved.
+
+  REPRODUCIBILITY
+    python 3.8.10   numpy 1.24.4
+    platform Windows-7-6.1.7601-SP1   workers 3
+    lambda 1.0  sigma 0.2  dt 0.01  T 1.0  K 100
+    J grid [10, 40, 160, 400]   Jinf 4000   reps/cell 3
+
+  8 cells x 3 realizations = 24 coupled realizations
+  24 realizations queued on 3 workers
+
+  sweep finished in 16.1 s
+
+----------------------------------------------------------------------------------------
+P-E1 — was the control actually achieved?
+----------------------------------------------------------------------------------------
+  achieved/target over all 24 realizations: mean 1.000000  min 1.000000  max 1.000000
+  cells outside 1% of target: 0 of 8
+  compare mechanism.py, recovered from its archive:
+    target 0.5 mean 1.0002 range [0.909,1.042]
+    target 0.1 mean 0.9619 range [0.481,1.141]
+    target .01 mean 0.8104 range [0.106,1.363]
+
+----------------------------------------------------------------------------------------
+P-E2 / P-E3 — the headline under exact control
+----------------------------------------------------------------------------------------
+  target        d=2      d=40     change             95% interval     probe
+  0.5       -1.0577   -1.0175     0.0402  [0.0120,0.5104]     0.030
+        difference from probe-calibrated value: +0.0102
+  0.01      -1.1766   -0.7084     0.4682  [0.1156,0.8231]     0.553
+        difference from probe-calibrated value: -0.0848
+
+========================================================================================
+wrote exactcal_real.csv and exactcal_summary.csv
+Send this entire console output and both CSV files.
+========================================================================================

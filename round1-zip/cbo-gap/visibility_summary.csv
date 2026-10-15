@@ -1,0 +1,145 @@
+objective,d,init,beta,slope,ci_lo,ci_hi,log_ESS,N_vis,verdict
+ackley,2,centred,5.68228,-1.301539,-1.376053,-1.204263,5.19877,10,recovered
+ackley,2,mix-0.01,5.37515,-1.205521,-1.335443,-1.098801,1.05893,10,recovered
+ackley,2,mix-0.1,3.46143,-1.619728,-1.746176,-1.463292,3.62869,10,recovered
+ackley,2,offset,5.56518,-0.422863,-0.489929,-0.376778,0.447796,not in range,NOT observed
+ackley,3,centred,6.80779,-0.987952,-1.062379,-0.898586,2.95138,10,recovered
+ackley,3,mix-0.01,6.79295,-0.965137,-1.063045,-0.886970,0.546708,10,recovered
+ackley,3,mix-0.1,3.81646,-1.302128,-1.406348,-1.172656,1.95713,10,recovered
+ackley,3,offset,7.04088,-0.343680,-0.379948,-0.307411,0.240464,not in range,NOT observed
+ackley,5,centred,8.66327,-0.600189,-0.650582,-0.545872,0.657302,not in range,NOT observed
+ackley,5,mix-0.01,8.85634,-0.917300,-0.971686,-0.866395,0.294792,10,recovered
+ackley,5,mix-0.1,4.06174,-0.993713,-1.069880,-0.866077,1.55522,10,recovered
+ackley,5,offset,9.18899,-0.292357,-0.330489,-0.259374,0.0672304,not in range,NOT observed
+ackley,10,centred,12.047,-0.389060,-0.442145,-0.338758,0.275568,not in range,NOT observed
+ackley,10,mix-0.01,12.6178,-0.889442,-0.945694,-0.830418,0.217693,not in range,UNDECIDED
+ackley,10,mix-0.1,4.34036,-0.930506,-0.990540,-0.839508,2.53175,not in range,UNDECIDED
+ackley,10,offset,13.0202,-0.254408,-0.302572,-0.208526,0.0532857,not in range,NOT observed
+ackley,20,centred,16.7752,-0.309190,-0.342755,-0.280089,0.194155,not in range,NOT observed
+ackley,20,mix-0.01,18.0249,-0.778229,-0.816733,-0.727677,0.07047,not in range,NOT observed
+ackley,20,mix-0.1,4.58448,-0.855772,-0.924679,-0.764944,3.4339,not in range,UNDECIDED
+ackley,20,offset,18.6032,-0.244476,-0.263903,-0.223394,0.0185982,not in range,NOT observed
+ackley,40,centred,23.8662,-0.253095,-0.276329,-0.233855,0.0183512,not in range,NOT observed
+ackley,40,mix-0.01,25.4412,-0.598644,-0.647484,-0.541829,0.000584184,not in range,NOT observed
+ackley,40,mix-0.1,4.75183,-0.898933,-0.987012,-0.780682,4.26764,not in range,UNDECIDED
+ackley,40,offset,26.3767,-0.231234,-0.249340,-0.212333,0.00508297,not in range,NOT observed
+griewank,2,centred,23.7841,-1.079541,-1.200904,-0.951281,8.62394,10,recovered
+griewank,2,mix-0.01,21.682,-1.415074,-1.539060,-1.039433,7.81907,10,recovered
+griewank,2,mix-0.1,21.649,-1.136353,-1.302656,-1.027340,7.8286,10,recovered
+griewank,2,offset,21.6455,-1.144537,-1.264720,-1.043782,7.808,10,recovered
+griewank,3,centred,25.6136,-1.057458,-1.162229,-0.953213,7.77907,10,recovered
+griewank,3,mix-0.01,34.0417,-0.334548,-0.547226,-0.234207,3.28798,not in range,NOT observed
+griewank,3,mix-0.1,28.9436,-1.475383,-1.614902,-1.304977,5.39464,10,recovered
+griewank,3,offset,35.1988,0.012455,-0.299305,0.134095,2.59293,not in range,NOT observed
+griewank,5,centred,30.3032,-0.976869,-1.032515,-0.923434,6.21003,10,recovered
+griewank,5,mix-0.01,223.692,-1.097648,-1.165336,-1.039175,0.136704,10,recovered
+griewank,5,mix-0.1,70.9281,-1.142550,-1.208886,-1.032463,2.23558,10,recovered
+griewank,5,offset,238.301,-0.011244,-0.076800,0.042521,9.31167e-06,not in range,NOT observed
+griewank,10,centred,39.6776,-0.668007,-0.709045,-0.622782,3.071,not in range,NOT observed
+griewank,10,mix-0.01,1746.98,-0.803008,-0.852916,-0.746940,4.44089e-17,57,UNDECIDED
+griewank,10,mix-0.1,109.594,-0.751949,-0.835803,-0.609211,0.387782,not in range,NOT observed
+griewank,10,offset,1801.48,-0.014996,-0.050275,0.014635,9.54792e-16,not in range,NOT observed
+griewank,20,centred,54.3007,-0.423990,-0.442068,-0.404033,1.09489,not in range,NOT observed
+griewank,20,mix-0.01,1298.43,-0.748403,-0.785843,-0.709386,0,not in range,NOT observed
+griewank,20,mix-0.1,136.575,-0.556301,-0.660163,-0.413624,0.0409108,not in range,NOT observed
+griewank,20,offset,1330.56,-0.225374,-0.263831,-0.190723,0.0453402,not in range,NOT observed
+griewank,40,centred,74.9501,-0.203823,-0.238750,-0.165440,0.0817821,not in range,NOT observed
+griewank,40,mix-0.01,911.671,-0.586744,-0.630142,-0.547776,0,not in range,NOT observed
+griewank,40,mix-0.1,136.553,-0.241030,-0.295811,-0.173178,9.28394e-05,not in range,NOT observed
+griewank,40,offset,936.482,-0.286868,-0.299987,-0.272992,0.516021,not in range,NOT observed
+levy,2,centred,14.5848,-1.103769,-1.218995,-0.993571,8.9832,10,recovered
+levy,2,mix-0.01,2.14594,-0.769499,-0.902546,-0.640466,7.70598,160,UNDECIDED
+levy,2,mix-0.1,2.0353,-1.244441,-1.326847,-1.126530,8.41407,10,recovered
+levy,2,offset,2.11984,-0.900106,-1.018104,-0.735941,8.48786,not in range,UNDECIDED
+levy,3,centred,11.8459,-1.074796,-1.177197,-0.927041,8.52247,10,recovered
+levy,3,mix-0.01,1.73446,-0.556688,-0.673659,-0.456845,6.88508,not in range,NOT observed
+levy,3,mix-0.1,1.62919,-1.210854,-1.324639,-1.076581,8.17624,10,recovered
+levy,3,offset,1.73511,-0.941956,-1.035336,-0.845411,8.40864,not in range,UNDECIDED
+levy,5,centred,8.92141,-1.043650,-1.121119,-0.968490,7.79109,10,recovered
+levy,5,mix-0.01,1.09724,-0.736566,-0.816456,-0.677229,6.38655,not in range,NOT observed
+levy,5,mix-0.1,1.00764,-1.212749,-1.293304,-1.089265,8.14985,10,recovered
+levy,5,offset,1.10941,-0.920415,-0.975087,-0.854041,8.24121,10,recovered
+levy,10,centred,5.59707,-0.899517,-0.941099,-0.856869,6.47363,10,recovered
+levy,10,mix-0.01,0.688165,-0.949083,-1.026907,-0.887267,5.75681,10,recovered
+levy,10,mix-0.1,0.572426,-1.242681,-1.315101,-1.130139,8.1261,10,recovered
+levy,10,offset,0.700701,-0.916264,-0.979906,-0.851259,6.69324,10,recovered
+levy,20,centred,3.80579,-0.728176,-0.752285,-0.702308,4.40881,226,NOT observed
+levy,20,mix-0.01,0.46986,-1.082319,-1.134825,-1.035653,5.63371,10,recovered
+levy,20,mix-0.1,0.320651,-1.260114,-1.364858,-1.112581,8.19852,10,recovered
+levy,20,offset,0.477624,-0.684128,-0.745132,-0.621025,3.93581,not in range,NOT observed
+levy,40,centred,2.69402,-0.510239,-0.549243,-0.476603,2.14345,not in range,NOT observed
+levy,40,mix-0.01,0.326876,-1.074628,-1.132836,-1.007814,5.52276,10,recovered
+levy,40,mix-0.1,0.176132,-1.222194,-1.311251,-1.078849,8.25059,10,recovered
+levy,40,offset,0.332395,-0.380157,-0.425853,-0.341320,1.44314,not in range,NOT observed
+rastrigin,2,centred,0.876687,-1.114160,-1.183254,-1.030394,6.99082,10,recovered
+rastrigin,2,mix-0.01,0.683121,-0.733819,-0.804784,-0.664696,3.46835,not in range,NOT observed
+rastrigin,2,mix-0.1,0.649364,-1.057711,-1.140615,-0.965542,5.28704,10,recovered
+rastrigin,2,offset,0.683728,-0.696340,-0.762677,-0.633493,3.50832,not in range,NOT observed
+rastrigin,3,centred,0.721117,-0.944979,-1.002764,-0.890416,5.55001,10,recovered
+rastrigin,3,mix-0.01,0.556282,-0.618876,-0.664379,-0.575879,1.70783,not in range,NOT observed
+rastrigin,3,mix-0.1,0.508152,-0.885146,-0.969071,-0.801426,4.04251,452,UNDECIDED
+rastrigin,3,offset,0.563834,-0.460623,-0.546038,-0.385047,1.59637,not in range,NOT observed
+rastrigin,5,centred,0.565195,-0.506443,-0.568262,-0.452259,2.87256,not in range,NOT observed
+rastrigin,5,mix-0.01,0.425554,-0.497777,-0.537421,-0.460162,0.343752,not in range,NOT observed
+rastrigin,5,mix-0.1,0.366886,-0.595330,-0.647426,-0.527516,1.98964,not in range,NOT observed
+rastrigin,5,offset,0.437287,-0.289923,-0.332057,-0.254759,0.535613,not in range,NOT observed
+rastrigin,10,centred,0.400037,-0.104636,-0.140051,-0.074552,0.0661696,not in range,NOT observed
+rastrigin,10,mix-0.01,0.298383,-0.493053,-0.534422,-0.447086,0.0151022,not in range,NOT observed
+rastrigin,10,mix-0.1,0.216671,-0.340957,-0.396513,-0.272172,0.415887,not in range,NOT observed
+rastrigin,10,offset,0.306775,-0.140869,-0.177514,-0.107304,0.0513488,not in range,NOT observed
+rastrigin,20,centred,0.283792,-0.050985,-0.073887,-0.033195,0.0021148,not in range,NOT observed
+rastrigin,20,mix-0.01,0.212318,-0.494234,-0.534884,-0.446503,0.00127523,not in range,NOT observed
+rastrigin,20,mix-0.1,0.121243,-0.367985,-0.449162,-0.269406,0.290909,not in range,NOT observed
+rastrigin,20,offset,0.217121,-0.113063,-0.133048,-0.096434,0.00316313,not in range,NOT observed
+rastrigin,40,centred,0.198342,-0.040815,-0.055896,-0.025436,7.08268e-05,not in range,NOT observed
+rastrigin,40,mix-0.01,0.148996,-0.442922,-0.503553,-0.375878,5.65973e-05,not in range,NOT observed
+rastrigin,40,mix-0.1,0.0660224,-0.385251,-0.476133,-0.274980,0.586376,not in range,NOT observed
+rastrigin,40,offset,0.154274,-0.117605,-0.139721,-0.099415,0.00061939,not in range,NOT observed
+rosenbrock,2,centred,0.00810036,-1.026675,-1.116758,-0.921555,10.1789,10,recovered
+rosenbrock,2,mix-0.01,0.000388625,-0.991019,-1.107502,-0.859838,9.37193,10,recovered
+rosenbrock,2,mix-0.1,0.000394579,-0.990453,-1.094098,-0.886371,9.57968,10,recovered
+rosenbrock,2,offset,0.000384078,-1.116224,-1.244828,-0.984053,9.35268,10,recovered
+rosenbrock,3,centred,0.0044222,-1.091052,-1.165549,-1.024938,9.94886,10,recovered
+rosenbrock,3,mix-0.01,0.000261167,-0.896707,-0.983394,-0.823142,8.25109,28,UNDECIDED
+rosenbrock,3,mix-0.1,0.000259012,-1.125577,-1.178300,-1.074836,8.85676,10,recovered
+rosenbrock,3,offset,0.000261818,-1.043213,-1.123159,-0.962116,8.27465,10,recovered
+rosenbrock,5,centred,0.00274409,-1.024571,-1.099372,-0.945648,9.48315,10,recovered
+rosenbrock,5,mix-0.01,0.00018162,-1.084485,-1.124852,-1.042386,6.51232,10,recovered
+rosenbrock,5,mix-0.1,0.000158688,-1.237922,-1.338101,-1.150331,8.45805,10,recovered
+rosenbrock,5,offset,0.000184335,-0.912301,-0.947417,-0.875191,6.68061,10,recovered
+rosenbrock,10,centred,0.00160905,-1.061774,-1.105471,-1.011908,8.61965,10,recovered
+rosenbrock,10,mix-0.01,0.000118576,-1.101040,-1.157286,-1.042357,6.00962,10,recovered
+rosenbrock,10,mix-0.1,8.71254e-05,-1.266704,-1.343860,-1.161876,8.38853,10,recovered
+rosenbrock,10,offset,0.000120306,-0.685864,-0.732049,-0.646201,4.15319,not in range,NOT observed
+rosenbrock,20,centred,0.00102727,-0.976223,-1.021108,-0.929314,7.37415,10,recovered
+rosenbrock,20,mix-0.01,8.0799e-05,-1.107931,-1.135878,-1.070227,5.96522,10,recovered
+rosenbrock,20,mix-0.1,4.77968e-05,-1.269947,-1.344280,-1.152336,8.39862,10,recovered
+rosenbrock,20,offset,8.20536e-05,-0.515617,-0.546543,-0.485071,2.41325,not in range,NOT observed
+rosenbrock,40,centred,0.000687695,-0.850119,-0.881860,-0.818001,5.65351,28,UNDECIDED
+rosenbrock,40,mix-0.01,5.5692e-05,-1.074022,-1.112252,-1.031626,5.91652,10,recovered
+rosenbrock,40,mix-0.1,2.57646e-05,-1.201430,-1.308004,-1.062421,8.42465,10,recovered
+rosenbrock,40,offset,5.71116e-05,-0.398259,-0.427166,-0.367608,1.2643,not in range,NOT observed
+sphere,2,centred,5.13233,-1.087775,-1.164267,-0.997448,9.04744,10,recovered
+sphere,2,mix-0.01,1.04062,-1.159892,-1.267453,-1.062337,5.95968,10,recovered
+sphere,2,mix-0.1,0.882044,-1.318232,-1.426584,-1.120798,8.03988,10,recovered
+sphere,2,offset,1.05528,-0.873447,-0.956717,-0.798624,5.25919,not in range,UNDECIDED
+sphere,3,centred,4.05271,-1.042182,-1.135623,-0.940378,8.46176,10,recovered
+sphere,3,mix-0.01,0.849009,-1.200962,-1.276871,-1.138076,5.48055,10,recovered
+sphere,3,mix-0.1,0.65388,-1.258722,-1.342381,-1.132336,7.94217,10,recovered
+sphere,3,offset,0.862418,-0.703286,-0.760551,-0.645376,3.49536,not in range,NOT observed
+sphere,5,centred,3.02153,-1.037434,-1.095919,-0.977914,7.49759,10,recovered
+sphere,5,mix-0.01,0.654063,-1.128643,-1.198035,-1.052481,5.26259,10,recovered
+sphere,5,mix-0.1,0.433699,-1.289585,-1.392379,-1.132591,7.90697,10,recovered
+sphere,5,offset,0.672235,-0.542920,-0.616256,-0.483232,2.36871,not in range,NOT observed
+sphere,10,centred,2.09148,-0.864599,-0.918526,-0.814564,5.5784,57,UNDECIDED
+sphere,10,mix-0.01,0.457223,-1.136237,-1.181814,-1.077836,4.91705,10,recovered
+sphere,10,mix-0.1,0.243466,-1.189722,-1.254740,-1.106281,7.94335,10,recovered
+sphere,10,offset,0.46845,-0.421168,-0.449193,-0.394418,1.37837,not in range,NOT observed
+sphere,20,centred,1.44176,-0.638219,-0.665026,-0.613725,3.3897,not in range,NOT observed
+sphere,20,mix-0.01,0.32475,-1.032143,-1.078696,-0.982450,4.61063,10,recovered
+sphere,20,mix-0.1,0.132871,-1.270791,-1.362993,-1.131643,8.06327,10,recovered
+sphere,20,offset,0.332579,-0.342028,-0.366477,-0.319298,1.07547,not in range,NOT observed
+sphere,40,centred,1.02785,-0.467476,-0.490015,-0.444928,1.63875,not in range,NOT observed
+sphere,40,mix-0.01,0.227749,-0.915421,-0.954274,-0.870747,3.93568,10,recovered
+sphere,40,mix-0.1,0.0706349,-1.261653,-1.323268,-1.174723,8.12848,10,recovered
+sphere,40,offset,0.23412,-0.299380,-0.323128,-0.273581,0.5995,not in range,NOT observed
