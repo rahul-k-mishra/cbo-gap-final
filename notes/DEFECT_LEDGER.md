@@ -773,7 +773,11 @@ instruction of 2026-10-15.
     (lines 266, 315).
   - Consequences:
     - Those numbers cannot be reproduced from the deposit. tex 309's
-      assurance is false for them.
+      assurance is false for them. [Qualified 2026-10-16 by
+      logs/n30-20261015-2201.log, below: the code is still absent, but
+      every point estimate except one is recomputable from the deposited
+      per-realization files. The intervals' construction is not
+      identified.]
     - The rmapj P-R3 rule and the stated basis of the 0.05 equivalence
       margin (tex 309) rest on 0.0260.
   - Not known: what code produced them.
@@ -835,10 +839,232 @@ instruction of 2026-10-15.
       perjcal's contrast "on the finer (objective, realization) unit".
       perjcal.py's own bootstrap is over objectives (lines 233-240), and
       its log prints only [0.0059,0.2265]. Added to this entry 2026-10-15.
-  - Forensic reconstruction: scripts/n30_reconstruct.py (2026-10-15, not
-    executed) evaluates every N30 number under an enumeration fixed in its
-    docstring before any run.
-  OPEN.
+  - Forensic reconstruction: scripts/n30_reconstruct.py (2026-10-15)
+    evaluates every N30 number under an enumeration fixed in its
+    docstring before any run. RESULT, recorded 2026-10-16 from
+    logs/n30-20261015-2201.log; run folder runs/n30-20261015-220127/
+    (n30_points.csv, n30_intervals.csv, n30_se.csv, n30_verdicts.csv).
+    - Header: Python 3.12.3, NumPy 2.5.3, Linux, 2 workers. The laptop
+      passed the determinism gate (ENVIRONMENT.md,
+      logs/detcheck-v3-full-repo.log). Ten archive files were checked
+      against zenodo-v1.sha256, and logs_exact_full.log against
+      round1-zip.sha256; all ok. Exit 0.
+    - R6 positive control: PC PASS. All fifteen values of exactcal.py's
+      P-E2 (three rows: d = 2, d = 40, change and interval at tau_0 0.5,
+      0.1, 0.01), as printed in round1-zip's logs_exact_full.log, are
+      reproduced. So the machinery reproduces a Windows-7 round-1
+      bootstrap exactly, seed and draw order included, when the
+      construction is known.
+    - Match rule (R3): within half a unit of the last printed digit. That
+      is 0.0005 for 3-decimal values and 0.00005 for 4-decimal ones. For an
+      interval, both ends must match under one specification. "Spec" below
+      is the log's own label.
+    OUTCOME 1. POINT ESTIMATES REPRODUCED. These are deterministic: no seed
+    enters. The count is the number of matching specifications, out of
+    the 2 estimands x 5 windows (x the V variants).
+          T3M tau 0.01  d2 -1.130, d5 -1.048, d10 -0.968, d40 -0.877
+                        1 each (E=slope, W-full); change +0.253: 2
+                        (W-full, signed and abs)
+          T3M/T3U tau 0.1   d2 -1.063, d5 -1.036, d10 -0.999, d40 -1.004
+                        2 each (W-full, W-ge); change +0.059: 4
+          T3M/T3U tau 0.5   d2 -1.066, d5 -1.001, d10 -1.041, d40 -1.011
+                        3 each (W-full, W-ge, W-gt); change +0.054: 6
+          T3U tau 0.01  d2 -1.071, d5 -1.091, d10 -1.006, d40 -0.994
+                        2 each (W-ge, W-gt)
+          REGR          b_dtau +0.0073, b_tau -0.0288, b_d +0.0069
+                        1 each (E=slope, W-ge, resp gamma)
+          REGF          b_dtau +0.0305: 1 (E=slope, W-full, gamma)
+          CON           0.1-0.01 -0.0182: 1 (W-ge, signed);
+                        0.5-0.01 -0.0233: 2 (W-ge, W-gt);
+                        0.5-0.1 -0.0050: 2 (W-full, W-ge)
+          SEP           +0.1940: 2 (E=slope, W-full, def S1, signed/abs)
+      - Every reproduced point is E=slope (S-mean-slope), and no point is
+        reproduced by E=curve. This bears on N33.
+      - Claude's reasoning, not tested by the script. The multiple matches
+        at tau_0 0.5 and 0.1 are not ambiguity. The grid starts at J = 10
+        (docstring, W-full), so at tau_0 0.5 the windows W-full, W-ge and
+        W-gt select the same J, and at tau_0 0.1 W-full and W-ge do. These
+        are one specification under several names. Signed and abs agree
+        whenever the change is positive. So the point estimates pin down
+        the estimand (S-mean-slope) and the window: full grid for the
+        "full grid" rows, J >= 1/tau_0 for the restricted rows. The log
+        does not separate W-ge from W-gt at tau_0 0.01.
+      - The SE statistics of tex 78 are bootstrap outputs, so they are
+        seed-dependent and listed separately. Median 0.0260: 18
+        specifications. q25 0.0191: 18. q75 0.0341: 4. The "IQR"
+        [0.0191,0.0341] as a pair: 1 (SE-a, B 400, ddof 0, S 20260822).
+        That one specification is NOT among the 18 that give the median.
+        So no single specification reproduces tex 78's "0.0260, IQR
+        [0.0191,0.0341]" as stated. Each part is reproduced separately.
+    OUTCOME 2. INTERVALS REPRODUCED. Each count is the number of matching
+    specifications, with the R5 count of consistent families (seed and
+    scope left free) after it.
+          REGR b_d CI    [-0.0025,+0.0160]    1   (R5 19)
+                         W-ge, O=A, U12p, B 2000, L95, S 20260824
+          REGR b_dtau CI [-0.0091,+0.0227]    1   (R5 11)
+                         W-gt, O=X, U12p, B 400, L95, S 11
+          REGR b_tau CI  [-0.0754,+0.0208]    1   (R5 26)
+                         W-ge, O=A, U12p, B 4000, L95, S 20260821
+          SE IQR         [0.0191,0.0341]      1   (see above)
+          T3U tau 0.01 CI [0.003,0.199]      10   (R5 12)
+          T3U tau 0.1 CI  [0.005,0.126]      16   (R5 32)
+          T3M tau 0.1 CI  [0.006,0.124]      34   (R5 40)
+          T3U tau 0.5 CI  [0.021,0.083]      96   (R5 54)
+          T3M tau 0.5 CI  [0.022,0.083]      96   (R5 60)
+      - A match under ninety-six specifications identifies no method. A
+        "REPRODUCED" verdict on T3M/T3U tau 0.5 (96), T3M tau 0.1 (34),
+        T3U tau 0.1 (16) or T3U tau 0.01 (10) says the interval is
+        insensitive to the choices enumerated: unit, order, B, seed, scope,
+        sign. It does not say that the original construction has been
+        recovered. These intervals are computable from the deposit. Their
+        construction is unknown.
+      - A match under one specification is not evidence in this log either.
+        Claude's reading of the log lines, not a criterion of the script:
+        - The three REGR intervals come from one regression, which in any
+          construction is fitted to one set of resamples. They matched
+          under three different specifications: windows W-ge, W-gt, W-ge;
+          orders A, X, A; B 2000, 400, 4000; seeds 20260824, 11,
+          20260821. No single specification reproduces all three.
+        - The b_dtau interval matched only under W-gt. The b_dtau point
+          estimate is reproduced only under W-ge. The specification that
+          gives the interval does not give the point it surrounds.
+        - Each interval was tried against all 80 (E, W, O, U) combinations
+          x 4 B x 7 seeds x 2 levels x the V and G variants. The log reports
+          8960 interval bootstraps in total. Among that many draws, a
+          single coincidence within half a unit in the fourth decimal is
+          what chance can produce. R5 shows 11 to 26 families consistent
+          with each REGR interval. These one-specification matches are
+          therefore best read as coincidences, not identifications. The log
+          does not measure the chance rate, so this reading is not tested.
+        - The SE IQR match is subject to the same point. Its specification
+          does not reproduce the median quoted with it.
+      - What IS stable across the matches (description of the log lines):
+        - every reproduced T3 or REGR interval is L95, never L90;
+        - every match of T3M tau 0.1, T3U tau 0.1 and T3U tau 0.01 is
+          V=abs: no signed specification reproduces those three. In this
+          enumeration, the published intervals at those targets behave as
+          bootstraps of an absolute value. That is the N32 error. At
+          tau 0.5 the change is positive in every resample that matters,
+          so signed and abs coincide there and the matches include both.
+          This is consistent with the absolute-value construction; it is
+          not proof of it.
+    OUTCOME 3. NOT REPRODUCED. Seven quantities, with the nearest
+    specification's maximum endpoint error, against the R3 tolerance, and
+    the R5 count:
+          CON 0.1-0.01 CI  [-0.1096,+0.0480]  nearest error 0.00788  R5 0
+          CON 0.5-0.01 CI  [-0.1482,+0.0567]  nearest error 0.01272  R5 0
+          CON 0.5-0.1 CI   [-0.0701,+0.0545]  nearest error 0.00087  R5 16
+          REGF b_dtau CI   [+0.0123,+0.0479]  nearest error 0.00016  R5 10
+          SEP CI           [+0.0682,+0.3105]  nearest error 0.00045  R5 82
+          T3M tau 0.01 CI  [0.117,0.381]      nearest error 0.00060  R5 16
+          T3U tau 0.01 change +0.078 (a point) nearest +0.07747,
+                           E=slope, W-ge, signed; error 0.00053 against
+                           tolerance 0.0005
+      - Two kinds. CON 0.1-0.01 CI and CON 0.5-0.01 CI have no
+        consistent family (R5 0) and miss by 0.008 and 0.013, so their
+        construction lies outside the enumeration altogether. The other
+        four intervals have consistent families (R5 10 to 82): some
+        enumerated construction, under some seed, could give them, but no
+        enumerated seed does. The script cannot tell a construction it
+        lacks from a seed or draw order it lacks.
+      - Where they are quoted:
+        - Abstract (tex 34): 0.078, and "+0.0305 with interval
+          [+0.0123,+0.0479]". The REGF point is reproduced, its interval
+          is not.
+        - Conclusions (tex 703): 0.078. It does not quote the CON
+          intervals, but it states the verdict they carry: "with no
+          difference detected between any pair and no pair shown
+          equivalent".
+        - Body: 0.078 at tex 371 (Table 3), 394, 396 (twice), 593, 595.
+          The CON and SEP intervals at tex 394. REGF at tex 392. [0.117,
+          0.381] at tex 376 (Table 3) and 563.
+        - The abstract and the Conclusions also quote +0.0073
+          [-0.0091,+0.0227], whose interval is one of the
+          one-specification matches discussed under outcome 2.
+    ANALYSIS: 0.078, the only point estimate not reproduced.
+      - Facts:
+        - Every other number in its table row (tex 371) is reproduced under
+          E=slope, W-ge: d2 -1.07110, d5 -1.09096, d10 -1.00588, d40
+          -0.99362 (log).
+        - Under that same specification, the change from the deposited
+          data is +0.07747. The published +0.078 differs by 0.00053, just
+          outside the 0.0005 tolerance.
+        - In code, 0.078 exists only as the constant typed into perjcal.py
+          line 101, NESTED = {0.5: 0.054, 0.01: 0.078}, commented
+          "exactcal, same window, for comparison". The same value appears
+          in perjcal.py's docstring (lines 10, 55). No deposited or round-1
+          script emits it (above).
+        - round1-zip's MANIFEST.txt lists an exactcal_real.csv (ebf4cdff…)
+          that is in neither source (N34).
+      - What this supports:
+        - 0.078 was carried into the text and into perjcal.py by hand,
+          from a computation not in the deposit or in round1-zip.
+        - That computation used the same estimand and window as the rest of
+          the row, or something very close. The deposit reproduces the four
+          slopes of the row and comes within 0.00053 of the change.
+        - The value the deposited data give under the specification that
+          reproduces the row is +0.07747. If the new paper quotes this
+          round-1 change at all, the deposit supports that value, not
+          +0.078.
+      - What it does not support:
+        - Which of several causes produced the difference. Each of the
+          following is consistent with the facts above, and the log cannot
+          separate them:
+          - an earlier version of the per-realization data, such as the
+            unrecovered exactcal_real.csv in MANIFEST.txt;
+          - a window or estimand outside the enumeration;
+          - rounding of a value computed elsewhere;
+          - a transcription slip.
+        - That the difference matters substantively. It is 0.00053 against
+          an interval of [0.003,0.199].
+        - Anything about intent.
+    STATUS AFTER THE RUN. The defect stands and its scope narrows.
+      - Still true:
+        - The deposit lacks the code that produced every N30 number.
+        - tex 309's "no reported interval originates from a computation
+          that is not in the archive" is false. So is tex 719's claim that
+          each criterion is in the archived scripts, for these numbers.
+      - Now shown:
+        - Every published N30 point estimate except 0.078 is computable from
+          the deposited per-realization files, under a named estimand
+          (S-mean-slope) and window (full grid or J >= 1/tau_0).
+        - The published intervals other than the six in outcome 3 are
+          computable from the deposit under at least one specification.
+          For most of them "computable" means insensitive to the
+          construction, not recovered.
+        - No single specification reproduces the three REGR intervals
+          together, nor the 0.0260 median together with its IQR.
+      - Not evaluated by n30_reconstruct.py: tex 593's [0.0069,0.2087]
+        (perjcal's "finer unit" contrast). It was not in the script's
+        quantity list.
+    WHAT THE NEW PAPER SHOULD STATE about round-1 reproducibility, on this
+    basis (guidance for the text, no manuscript edit made):
+      - Drop tex 309's assurance and tex 719's claim as they stand. Neither
+        can be repeated.
+      - Say what holds:
+        - the round-1 point estimates of Table 3, the Section 7.3
+          regression, the pairwise contrasts and the separation recompute
+          from the deposited per-realization file under the stated
+          estimand and window;
+        - the one exception, the restricted tau_0 = 0.01 change printed as
+          0.078, recomputes as 0.07747 from the deposit (log value).
+      - Say what does not hold:
+        - the round-1 intervals were produced by code that was not
+          deposited;
+        - their construction cannot be identified from the deposit;
+        - several match many constructions, two match none.
+      - The new paper does not reuse any round-1 interval. Every interval it
+        reports comes from its own archived rerun under the criteria of
+        ANALYSIS_CRITERIA_DRAFT, once decided.
+      - The 0.0260 scale cannot serve as a stated basis for anything,
+        including the equivalence margin (draft item 5). Its median and its
+        IQR are not reproduced together by any one construction.
+    Note on Rahul's message of 2026-10-16. It says "all three exactcal
+    values reproduced". The log reproduces three rows of five values,
+    fifteen in all, as R6 requires.
+  OPEN. The scope is narrowed by logs/n30-20261015-2201.log. Closing needs
+  the new paper's text on round-1 reproducibility, verified by the rule 8
+  diff.
 - N31 (manuscript, T; same class as R7). The isotropic and anisotropic arms
   are not paired, although the text says they are.
   - The claims:

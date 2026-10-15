@@ -1,0 +1,1086 @@
+========================================================================================
+CBO-GAP N30 -- forensic reconstruction of numbers with no archived code
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/n30-20261015-220127
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 0, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  (E,W,O,U) combos per interval target 80
+  B              [400, 1000, 2000, 4000]
+  E              ['curve', 'slope']
+  G              fresh / shared (T3, CON); single (SEP, REG)
+  L              L95 (2.5, 97.5), L90 (5, 95)
+  O              ['X', 'A']
+  S              [7, 11, 20260821, 20260822, 20260824, 20260827, 20260828]
+  SE             SE-a, SE-b, SE-c, SE-d over 180 D + 240 M cells; ddof 0/1; z 1.96/1.959963984540054
+  U              ['U12p', 'U12u-a', 'U12u-b', 'URp-a', 'URp-b']
+  V              signed/abs (change, contrast, separation); gamma/delta (regression); S1/S2/S3
+  W              ['W-full', 'W-ge', 'W-gt', 'W-20', 'W-1250']
+  match          |x - p| <= half a unit in p's last printed digit (+1e-12)
+  rules          R1-R6 in the docstring, fixed before execution
+  seeds note     bootstrap seeds here are the archive's integer seeds, numpy.random.default_rng(S); no SeedSequence keys
+  archive files checked against zenodo-v1.sha256:
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    e641816b024c2e606a52c002c97f7c2d238559cb92663741f3bfccc4304026ab  regimemap_D_real.csv  ok
+    44d1e67fd77a6362fa4079ee7e0b13d3b83687c15573ecaa9d410fce272a79b5  regimemap_M_real.csv  ok
+    27b8a92f903a47d2703ac1dc5b38666a65bdd1244059d0cb75ee77e4054ae5be  regimemap_summary.csv  ok
+    7d8f88d100cc8216fdee9eb8dc5ca97be0476deb88056c8906aede6116dc17a1  regimemap_M_summary.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+  positive-control source /home/rahul/Research/cbo-gap-final/round1-zip/cbo-gap/logs_exact_full.log  sha256 ok
+  slopes prepared for 5 windows in 0.8 s
+
+  R6 POSITIVE CONTROL: exactcal.py P-E2 as printed in cbo-gap/logs_exact_full.log
+    tau 0.5   d2 -1.0655  d40 -1.0113  change 0.0542  [0.0132,0.0965]   ok
+    tau 0.1   d2 -1.0629  d40 -1.0037  change 0.0592  [0.0155,0.1031]   ok
+    tau 0.01  d2 -1.1299  d40 -0.8766  change 0.2533  [0.1985,0.3101]   ok
+  PC PASS
+
+  interval tasks: 8960 (each a full bootstrap per quantity and scope)
+  interval bootstraps done in 3771.4 s;  per-worker peak RSS max 36.3 MB
+  SE bootstraps done in 1961.5 s;  per-worker peak RSS max 155.5 MB
+
+========================================================================================
+VERDICTS  (R4: REPRODUCED or NOT REPRODUCED; R5 lines are secondary)
+========================================================================================
+
+  CON 0.1-0.01               published -0.0182              REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|V=signed
+      nearest: E=slope|W=W-ge|V=signed  value -0.01823  max error 0.00003
+
+  CON 0.1-0.01 CI            published [-0.1096,+0.0480]    NOT REPRODUCED
+      R5 consistent families: 0
+      nearest: E=slope|W=W-ge|O=X|U=URp-a|B=400|L=L90|V=signed|S=20260824|G=fresh  value [-0.1017,+0.0527]  max error 0.00788
+
+  CON 0.5-0.01               published -0.0233              REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-ge|V=signed
+      reproduced by  E=slope|W=W-gt|V=signed
+      nearest: E=slope|W=W-ge|V=signed  value -0.02326  max error 0.00004
+
+  CON 0.5-0.01 CI            published [-0.1482,+0.0567]    NOT REPRODUCED
+      R5 consistent families: 0
+      nearest: E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=signed|S=11|G=shared  value [-0.1366,+0.0694]  max error 0.01272
+
+  CON 0.5-0.1                published -0.0050              REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-ge|V=signed
+      nearest: E=slope|W=W-full|V=signed  value -0.00503  max error 0.00003
+
+  CON 0.5-0.1 CI             published [-0.0701,+0.0545]    NOT REPRODUCED
+      R5 consistent families: 16
+        E=slope|W=W-full|O=X|U=U12u-b|B=400|L=L90|V=signed
+        E=slope|W=W-full|O=X|U=URp-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=URp-a|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=URp-b|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=URp-b|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L90|V=signed
+        E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L90|V=signed
+        E=slope|W=W-ge|O=X|U=URp-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=URp-a|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=URp-b|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=URp-b|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L90|V=signed
+      nearest: E=slope|W=W-full|O=X|U=URp-a|B=400|L=L95|V=signed|S=20260827|G=fresh  value [-0.0692,+0.0542]  max error 0.00087
+
+  REGF b_dtau                published +0.0305              REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-full|resp=gamma
+      nearest: E=slope|W=W-full|resp=gamma  value +0.03047  max error 0.00003
+
+  REGF b_dtau CI             published [+0.0123,+0.0479]    NOT REPRODUCED
+      R5 consistent families: 10
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|resp=gamma
+        E=slope|W=W-20|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-20|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-20|O=A|U=U12p|B=1000|L=L95|resp=gamma
+      nearest: E=slope|W=W-20|O=A|U=U12p|B=1000|L=L95|resp=gamma|S=20260827|G=single  value [+0.0125,+0.0479]  max error 0.00016
+
+  REGR b_d                   published +0.0069              REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|resp=gamma
+      nearest: E=slope|W=W-ge|resp=gamma  value +0.00694  max error 0.00004
+
+  REGR b_d CI                published [-0.0025,+0.0160]    REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma|S=20260824|G=single
+      R5 consistent families: 19
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L90|resp=delta
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L90|resp=delta
+        E=slope|W=W-full|O=A|U=URp-a|B=400|L=L95|resp=delta
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-b|B=1000|L=L90|resp=gamma
+        E=slope|W=W-ge|O=X|U=URp-a|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-b|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-b|B=1000|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-b|B=2000|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=URp-b|B=400|L=L90|resp=gamma
+        E=slope|W=W-ge|O=A|U=URp-b|B=2000|L=L90|resp=gamma
+      nearest: E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma|S=20260824|G=single  value [-0.0025,+0.0160]  max error 0.00004
+
+  REGR b_dtau                published +0.0073              REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|resp=gamma
+      nearest: E=slope|W=W-ge|resp=gamma  value +0.00733  max error 0.00003
+
+  REGR b_dtau CI             published [-0.0091,+0.0227]    REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|resp=gamma|S=11|G=single
+      R5 consistent families: 11
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|resp=gamma
+      nearest: E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|resp=gamma|S=11|G=single  value [-0.0091,+0.0227]  max error 0.00005
+
+  REGR b_tau                 published -0.0288              REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|resp=gamma
+      nearest: E=slope|W=W-ge|resp=gamma  value -0.02885  max error 0.00005
+
+  REGR b_tau CI              published [-0.0754,+0.0208]    REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma|S=20260821|G=single
+      R5 consistent families: 26
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-a|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=X|U=U12u-b|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-a|B=1000|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-b|B=400|L=L95|resp=gamma
+        E=slope|W=W-ge|O=A|U=U12u-b|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12u-a|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12u-a|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=X|U=U12u-b|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|resp=gamma
+        E=slope|W=W-gt|O=A|U=U12u-b|B=400|L=L95|resp=gamma
+      nearest: E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma|S=20260821|G=single  value [-0.0754,+0.0208]  max error 0.00004
+
+  SE IQR                     published [0.0191,0.0341]      REPRODUCED by 1 spec(s)
+      reproduced by  SE-a|B=400|ddof=0|S=20260822
+
+  SE median                  published 0.0260               REPRODUCED by 18 spec(s)
+      reproduced by  SE-a|B=2000|ddof=1|S=11
+      reproduced by  SE-a|B=2000|ddof=0|S=20260827
+      reproduced by  SE-a|B=2000|ddof=1|S=20260827
+      reproduced by  SE-a|B=2000|ddof=0|S=20260828
+      reproduced by  SE-a|B=2000|ddof=1|S=20260828
+      reproduced by  SE-a|B=4000|ddof=0|S=7
+      reproduced by  SE-a|B=4000|ddof=1|S=7
+      reproduced by  SE-a|B=4000|ddof=0|S=11
+      reproduced by  SE-a|B=4000|ddof=1|S=11
+      reproduced by  SE-a|B=4000|ddof=0|S=20260821
+      reproduced by  SE-a|B=4000|ddof=1|S=20260821
+      reproduced by  SE-a|B=4000|ddof=0|S=20260822
+      reproduced by  SE-a|B=4000|ddof=1|S=20260822
+      reproduced by  SE-a|B=4000|ddof=0|S=20260824
+      reproduced by  SE-a|B=4000|ddof=1|S=20260824
+      reproduced by  SE-d|B=400|ddof=1|S=7
+      reproduced by  SE-d|B=1000|ddof=0|S=11
+      reproduced by  SE-d|B=1000|ddof=1|S=11
+      R5 consistent families: 12
+        SE-a|B=400|ddof=0
+        SE-a|B=400|ddof=1
+        SE-a|B=1000|ddof=0
+        SE-a|B=1000|ddof=1
+        SE-a|B=2000|ddof=0
+        SE-a|B=2000|ddof=1
+        SE-a|B=4000|ddof=0
+        SE-a|B=4000|ddof=1
+        SE-d|B=400|ddof=0
+        SE-d|B=400|ddof=1
+        SE-d|B=1000|ddof=0
+        SE-d|B=1000|ddof=1
+      nearest: SE-a|B=2000|ddof=1|S=20260827  value +0.02600  max error 0.00000
+
+  SE q25                     published 0.0191               REPRODUCED by 18 spec(s)
+      reproduced by  SE-a|B=400|ddof=1|S=7
+      reproduced by  SE-a|B=400|ddof=0|S=20260822
+      reproduced by  SE-a|B=400|ddof=1|S=20260824
+      reproduced by  SE-a|B=1000|ddof=0|S=7
+      reproduced by  SE-a|B=1000|ddof=1|S=7
+      reproduced by  SE-a|B=1000|ddof=0|S=20260828
+      reproduced by  SE-a|B=2000|ddof=0|S=7
+      reproduced by  SE-a|B=2000|ddof=1|S=7
+      reproduced by  SE-a|B=2000|ddof=0|S=20260827
+      reproduced by  SE-a|B=2000|ddof=1|S=20260827
+      reproduced by  SE-a|B=2000|ddof=0|S=20260828
+      reproduced by  SE-a|B=2000|ddof=1|S=20260828
+      reproduced by  SE-a|B=4000|ddof=0|S=20260827
+      reproduced by  SE-a|B=4000|ddof=1|S=20260827
+      reproduced by  SE-a|B=4000|ddof=0|S=20260828
+      reproduced by  SE-a|B=4000|ddof=1|S=20260828
+      reproduced by  SE-d|B=1000|ddof=0|S=11
+      reproduced by  SE-d|B=1000|ddof=1|S=11
+      R5 consistent families: 10
+        SE-a|B=400|ddof=0
+        SE-a|B=400|ddof=1
+        SE-a|B=1000|ddof=0
+        SE-a|B=1000|ddof=1
+        SE-a|B=2000|ddof=0
+        SE-a|B=2000|ddof=1
+        SE-a|B=4000|ddof=0
+        SE-a|B=4000|ddof=1
+        SE-d|B=400|ddof=0
+        SE-d|B=400|ddof=1
+      nearest: SE-a|B=1000|ddof=0|S=7  value +0.01910  max error 0.00000
+
+  SE q75                     published 0.0341               REPRODUCED by 4 spec(s)
+      reproduced by  SE-a|B=400|ddof=0|S=20260822
+      reproduced by  SE-a|B=400|ddof=0|S=20260824
+      reproduced by  SE-a|B=1000|ddof=0|S=20260824
+      reproduced by  SE-a|B=1000|ddof=1|S=20260824
+      R5 consistent families: 6
+        SE-a|B=400|ddof=0
+        SE-a|B=400|ddof=1
+        SE-a|B=1000|ddof=0
+        SE-a|B=1000|ddof=1
+        SE-a|B=2000|ddof=0
+        SE-a|B=2000|ddof=1
+      nearest: SE-a|B=400|ddof=0|S=20260824  value +0.03412  max error 0.00002
+
+  SEP                        published +0.1940              REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full|def=S1|V=signed
+      reproduced by  E=slope|W=W-full|def=S1|V=abs
+      nearest: E=slope|W=W-full|def=S1|V=signed  value +0.19404  max error 0.00004
+
+  SEP CI                     published [+0.0682,+0.3105]    NOT REPRODUCED
+      R5 consistent families: 82
+        E=slope|W=W-full|O=X|U=U12p|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=1000|def=S1|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S2|L=L90|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S2|L=L90|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|def=S1|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|def=S2|L=L90|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|def=S2|L=L90|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=2000|def=S1|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=4000|def=S1|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=4000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S2|L=L90|V=signed
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S2|L=L90|V=abs
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12p|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12p|B=1000|def=S2|L=L90|V=signed
+        E=slope|W=W-20|O=X|U=U12p|B=1000|def=S2|L=L90|V=abs
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S2|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S2|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-a|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-a|B=1000|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-a|B=1000|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-a|B=4000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-a|B=4000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S2|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S2|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=1000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=1000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=1000|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=1000|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=2000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=2000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=X|U=U12u-b|B=4000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=X|U=U12u-b|B=4000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S2|L=L90|V=signed
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S2|L=L90|V=abs
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12p|B=400|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12p|B=1000|def=S2|L=L90|V=signed
+        E=slope|W=W-20|O=A|U=U12p|B=1000|def=S2|L=L90|V=abs
+        E=slope|W=W-20|O=A|U=U12p|B=1000|def=S3|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12p|B=1000|def=S3|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-a|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-a|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-a|B=400|def=S2|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-a|B=400|def=S2|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-a|B=1000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-a|B=1000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-a|B=2000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-a|B=2000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-a|B=4000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-a|B=4000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-b|B=400|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-b|B=400|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-b|B=400|def=S2|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-b|B=400|def=S2|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-b|B=1000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-b|B=1000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-b|B=2000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-b|B=2000|def=S1|L=L95|V=abs
+        E=slope|W=W-20|O=A|U=U12u-b|B=4000|def=S1|L=L95|V=signed
+        E=slope|W=W-20|O=A|U=U12u-b|B=4000|def=S1|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=A|U=U12p|B=4000|def=S1|L=L95|V=signed|S=20260824|G=single  value [+0.0687,+0.3109]  max error 0.00045
+
+  T3M tau=0.01 CI            published [0.117,0.381]        NOT REPRODUCED
+      R5 consistent families: 16
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L90|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L90|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed|S=11|G=fresh  value [+0.1164,+0.3804]  max error 0.00060
+
+  T3M tau=0.01 change        published +0.253               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-full|V=abs
+      nearest: E=slope|W=W-full|V=signed  value +0.25328  max error 0.00028
+
+  T3M tau=0.01 d=10          published -0.968               REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-full
+      nearest: E=slope|W=W-full  value -0.96831  max error 0.00031
+
+  T3M tau=0.01 d=2           published -1.130               REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-full
+      nearest: E=slope|W=W-full  value -1.12991  max error 0.00009
+
+  T3M tau=0.01 d=40          published -0.877               REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-full
+      nearest: E=slope|W=W-full  value -0.87664  max error 0.00036
+
+  T3M tau=0.01 d=5           published -1.048               REPRODUCED by 1 spec(s)
+      reproduced by  E=slope|W=W-full
+      nearest: E=slope|W=W-full  value -1.04784  max error 0.00016
+
+  T3M tau=0.1 CI             published [0.006,0.124]        REPRODUCED by 34 spec(s)
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-a|B=2000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-a|B=4000|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-b|B=400|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=2000|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=2000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-a|B=2000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-a|B=4000|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-b|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=2000|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=2000|L=L95|V=abs|S=20260824|G=shared
+      R5 consistent families: 40
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-b|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-b|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-b|B=1000|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=X|U=U12u-b|B=400|L=L95|V=abs|S=20260824|G=fresh  value [+0.0060,+0.1240]  max error 0.00003
+
+  T3M tau=0.1 change         published +0.059               REPRODUCED by 4 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-full|V=abs
+      reproduced by  E=slope|W=W-ge|V=signed
+      reproduced by  E=slope|W=W-ge|V=abs
+      nearest: E=slope|W=W-full|V=signed  value +0.05924  max error 0.00024
+
+  T3M tau=0.1 d=10           published -0.999               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -0.99894  max error 0.00006
+
+  T3M tau=0.1 d=2            published -1.063               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.06293  max error 0.00007
+
+  T3M tau=0.1 d=40           published -1.004               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.00369  max error 0.00031
+
+  T3M tau=0.1 d=5            published -1.036               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.03612  max error 0.00012
+
+  T3M tau=0.5 CI             published [0.022,0.083]        REPRODUCED by 96 spec(s)
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=11|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=11|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260824|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260824|G=shared
+      R5 consistent families: 60
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260821|G=fresh  value [+0.0219,+0.0831]  max error 0.00012
+
+  T3M tau=0.5 change         published +0.054               REPRODUCED by 6 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-full|V=abs
+      reproduced by  E=slope|W=W-ge|V=signed
+      reproduced by  E=slope|W=W-ge|V=abs
+      reproduced by  E=slope|W=W-gt|V=signed
+      reproduced by  E=slope|W=W-gt|V=abs
+      nearest: E=slope|W=W-full|V=signed  value +0.05421  max error 0.00021
+
+  T3M tau=0.5 d=10           published -1.041               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.04054  max error 0.00046
+
+  T3M tau=0.5 d=2            published -1.066               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.06553  max error 0.00047
+
+  T3M tau=0.5 d=40           published -1.011               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.01132  max error 0.00032
+
+  T3M tau=0.5 d=5            published -1.001               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.00122  max error 0.00022
+
+  T3U tau=0.01 CI            published [0.003,0.199]        REPRODUCED by 10 spec(s)
+      reproduced by  E=curve|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=curve|W=W-ge|O=X|U=U12u-b|B=400|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=curve|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=curve|W=W-gt|O=X|U=U12u-b|B=400|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260824|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260824|G=shared
+      R5 consistent families: 12
+        E=curve|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=curve|W=W-ge|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=curve|W=W-ge|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=curve|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=curve|W=W-gt|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=curve|W=W-gt|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=abs
+      nearest: E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs|S=7|G=fresh  value [+0.0030,+0.1991]  max error 0.00005
+
+  T3U tau=0.01 change        published +0.078               NOT REPRODUCED
+      nearest: E=slope|W=W-ge|V=signed  value +0.07747  max error 0.00053
+
+  T3U tau=0.01 d=10          published -1.006               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-ge  value -1.00588  max error 0.00012
+
+  T3U tau=0.01 d=2           published -1.071               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-ge  value -1.07110  max error 0.00010
+
+  T3U tau=0.01 d=40          published -0.994               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-ge  value -0.99362  max error 0.00038
+
+  T3U tau=0.01 d=5           published -1.091               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-ge  value -1.09096  max error 0.00004
+
+  T3U tau=0.1 CI             published [0.005,0.126]        REPRODUCED by 16 spec(s)
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-a|B=2000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12u-b|B=1000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-a|B=2000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12u-b|B=1000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      R5 consistent families: 32
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-b|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-b|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-b|B=1000|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=X|U=U12u-b|B=1000|L=L95|V=abs|S=20260827|G=shared  value [+0.0050,+0.1258]  max error 0.00015
+
+  T3U tau=0.1 change         published +0.059               REPRODUCED by 4 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-full|V=abs
+      reproduced by  E=slope|W=W-ge|V=signed
+      reproduced by  E=slope|W=W-ge|V=abs
+      nearest: E=slope|W=W-full|V=signed  value +0.05924  max error 0.00024
+
+  T3U tau=0.1 d=10           published -0.999               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -0.99894  max error 0.00006
+
+  T3U tau=0.1 d=2            published -1.063               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.06293  max error 0.00007
+
+  T3U tau=0.1 d=40           published -1.004               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.00369  max error 0.00031
+
+  T3U tau=0.1 d=5            published -1.036               REPRODUCED by 2 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      nearest: E=slope|W=W-full  value -1.03612  max error 0.00012
+
+  T3U tau=0.5 CI             published [0.021,0.083]        REPRODUCED by 96 spec(s)
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-full|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-ge|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=7|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-gt|O=X|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=signed|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=abs|S=20260821|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260827|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260827|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs|S=20260828|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=fresh
+      reproduced by  E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=signed|S=20260822|G=shared
+      reproduced by  E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=abs|S=20260822|G=shared
+      R5 consistent families: 54
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-full|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-ge|O=A|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=X|U=U12u-a|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=400|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=1000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=2000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12p|B=4000|L=L95|V=abs
+        E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=signed
+        E=slope|W=W-gt|O=A|U=U12u-a|B=400|L=L95|V=abs
+      nearest: E=slope|W=W-full|O=A|U=U12p|B=4000|L=L95|V=signed|S=20260828|G=fresh  value [+0.0211,+0.0832]  max error 0.00018
+
+  T3U tau=0.5 change         published +0.054               REPRODUCED by 6 spec(s)
+      reproduced by  E=slope|W=W-full|V=signed
+      reproduced by  E=slope|W=W-full|V=abs
+      reproduced by  E=slope|W=W-ge|V=signed
+      reproduced by  E=slope|W=W-ge|V=abs
+      reproduced by  E=slope|W=W-gt|V=signed
+      reproduced by  E=slope|W=W-gt|V=abs
+      nearest: E=slope|W=W-full|V=signed  value +0.05421  max error 0.00021
+
+  T3U tau=0.5 d=10           published -1.041               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.04054  max error 0.00046
+
+  T3U tau=0.5 d=2            published -1.066               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.06553  max error 0.00047
+
+  T3U tau=0.5 d=40           published -1.011               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.01132  max error 0.00032
+
+  T3U tau=0.5 d=5            published -1.001               REPRODUCED by 3 spec(s)
+      reproduced by  E=slope|W=W-full
+      reproduced by  E=slope|W=W-ge
+      reproduced by  E=slope|W=W-gt
+      nearest: E=slope|W=W-full  value -1.00122  max error 0.00022
+
+========================================================================================
+ONE LINE PER PUBLISHED QUANTITY
+========================================================================================
+  CON 0.1-0.01               -0.0182              REPRODUCED by E=slope|W=W-ge|V=signed
+  CON 0.1-0.01 CI            [-0.1096,+0.0480]    NOT REPRODUCED
+  CON 0.5-0.01               -0.0233              REPRODUCED by E=slope|W=W-ge|V=signed  (+1 more, see above)
+  CON 0.5-0.01 CI            [-0.1482,+0.0567]    NOT REPRODUCED
+  CON 0.5-0.1                -0.0050              REPRODUCED by E=slope|W=W-full|V=signed  (+1 more, see above)
+  CON 0.5-0.1 CI             [-0.0701,+0.0545]    NOT REPRODUCED
+  REGF b_dtau                +0.0305              REPRODUCED by E=slope|W=W-full|resp=gamma
+  REGF b_dtau CI             [+0.0123,+0.0479]    NOT REPRODUCED
+  REGR b_d                   +0.0069              REPRODUCED by E=slope|W=W-ge|resp=gamma
+  REGR b_d CI                [-0.0025,+0.0160]    REPRODUCED by E=slope|W=W-ge|O=A|U=U12p|B=2000|L=L95|resp=gamma|S=20260824|G=single
+  REGR b_dtau                +0.0073              REPRODUCED by E=slope|W=W-ge|resp=gamma
+  REGR b_dtau CI             [-0.0091,+0.0227]    REPRODUCED by E=slope|W=W-gt|O=X|U=U12p|B=400|L=L95|resp=gamma|S=11|G=single
+  REGR b_tau                 -0.0288              REPRODUCED by E=slope|W=W-ge|resp=gamma
+  REGR b_tau CI              [-0.0754,+0.0208]    REPRODUCED by E=slope|W=W-ge|O=A|U=U12p|B=4000|L=L95|resp=gamma|S=20260821|G=single
+  SE IQR                     [0.0191,0.0341]      REPRODUCED by SE-a|B=400|ddof=0|S=20260822
+  SE median                  0.0260               REPRODUCED by SE-a|B=2000|ddof=1|S=11  (+17 more, see above)
+  SE q25                     0.0191               REPRODUCED by SE-a|B=400|ddof=1|S=7  (+17 more, see above)
+  SE q75                     0.0341               REPRODUCED by SE-a|B=400|ddof=0|S=20260822  (+3 more, see above)
+  SEP                        +0.1940              REPRODUCED by E=slope|W=W-full|def=S1|V=signed  (+1 more, see above)
+  SEP CI                     [+0.0682,+0.3105]    NOT REPRODUCED
+  T3M tau=0.01 CI            [0.117,0.381]        NOT REPRODUCED
+  T3M tau=0.01 change        +0.253               REPRODUCED by E=slope|W=W-full|V=signed  (+1 more, see above)
+  T3M tau=0.01 d=10          -0.968               REPRODUCED by E=slope|W=W-full
+  T3M tau=0.01 d=2           -1.130               REPRODUCED by E=slope|W=W-full
+  T3M tau=0.01 d=40          -0.877               REPRODUCED by E=slope|W=W-full
+  T3M tau=0.01 d=5           -1.048               REPRODUCED by E=slope|W=W-full
+  T3M tau=0.1 CI             [0.006,0.124]        REPRODUCED by E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=abs|S=20260821|G=shared  (+33 more, see above)
+  T3M tau=0.1 change         +0.059               REPRODUCED by E=slope|W=W-full|V=signed  (+3 more, see above)
+  T3M tau=0.1 d=10           -0.999               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3M tau=0.1 d=2            -1.063               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3M tau=0.1 d=40           -1.004               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3M tau=0.1 d=5            -1.036               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3M tau=0.5 CI             [0.022,0.083]        REPRODUCED by E=slope|W=W-full|O=X|U=U12p|B=400|L=L95|V=signed|S=20260822|G=fresh  (+95 more, see above)
+  T3M tau=0.5 change         +0.054               REPRODUCED by E=slope|W=W-full|V=signed  (+5 more, see above)
+  T3M tau=0.5 d=10           -1.041               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3M tau=0.5 d=2            -1.066               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3M tau=0.5 d=40           -1.011               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3M tau=0.5 d=5            -1.001               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3U tau=0.01 CI            [0.003,0.199]        REPRODUCED by E=curve|W=W-ge|O=X|U=U12u-a|B=400|L=L95|V=abs|S=20260824|G=shared  (+9 more, see above)
+  T3U tau=0.01 change        +0.078               NOT REPRODUCED
+  T3U tau=0.01 d=10          -1.006               REPRODUCED by E=slope|W=W-ge  (+1 more, see above)
+  T3U tau=0.01 d=2           -1.071               REPRODUCED by E=slope|W=W-ge  (+1 more, see above)
+  T3U tau=0.01 d=40          -0.994               REPRODUCED by E=slope|W=W-ge  (+1 more, see above)
+  T3U tau=0.01 d=5           -1.091               REPRODUCED by E=slope|W=W-ge  (+1 more, see above)
+  T3U tau=0.1 CI             [0.005,0.126]        REPRODUCED by E=slope|W=W-full|O=X|U=U12p|B=1000|L=L95|V=abs|S=20260821|G=fresh  (+15 more, see above)
+  T3U tau=0.1 change         +0.059               REPRODUCED by E=slope|W=W-full|V=signed  (+3 more, see above)
+  T3U tau=0.1 d=10           -0.999               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3U tau=0.1 d=2            -1.063               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3U tau=0.1 d=40           -1.004               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3U tau=0.1 d=5            -1.036               REPRODUCED by E=slope|W=W-full  (+1 more, see above)
+  T3U tau=0.5 CI             [0.021,0.083]        REPRODUCED by E=slope|W=W-full|O=X|U=U12p|B=2000|L=L95|V=signed|S=7|G=fresh  (+95 more, see above)
+  T3U tau=0.5 change         +0.054               REPRODUCED by E=slope|W=W-full|V=signed  (+5 more, see above)
+  T3U tau=0.5 d=10           -1.041               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3U tau=0.5 d=2            -1.066               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3U tau=0.5 d=40           -1.011               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+  T3U tau=0.5 d=5            -1.001               REPRODUCED by E=slope|W=W-full  (+2 more, see above)
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/n30-20261015-220127
+========================================================================================
