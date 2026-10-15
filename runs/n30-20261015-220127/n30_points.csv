@@ -1,0 +1,561 @@
+quantity,published,spec,computed,reproduces,window_vs_label
+T3U tau=0.5 d=2,-1.066,E=curve|W=W-full,-1.0620537109893957,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=curve|W=W-full,-0.9967041008603367,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=curve|W=W-full,-1.036040410543175,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=curve|W=W-full,-1.0103746347329323,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-full|V=signed,0.0516790762564634,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-full|V=abs,0.0516790762564634,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=curve|W=W-full,-1.0948666787281627,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=curve|W=W-full,-1.0723464523403436,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=curve|W=W-full,-1.0097900964314823,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=curve|W=W-full,-1.0586966498748025,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-full|V=signed,0.03617002885336018,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-full|V=abs,0.03617002885336018,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=curve|W=W-full,-1.1572510016472701,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=curve|W=W-full,-1.0960184159500739,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=curve|W=W-full,-1.0150610656599006,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=curve|W=W-full,-0.9141645323519482,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-full|V=signed,0.24308646929532196,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-full|V=abs,0.24308646929532196,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=curve|W=W-full,-1.0620537109893957,no,label
+T3M tau=0.5 d=5,-1.001,E=curve|W=W-full,-0.9967041008603367,no,label
+T3M tau=0.5 d=10,-1.041,E=curve|W=W-full,-1.036040410543175,no,label
+T3M tau=0.5 d=40,-1.011,E=curve|W=W-full,-1.0103746347329323,no,label
+T3M tau=0.5 change,+0.054,E=curve|W=W-full|V=signed,0.0516790762564634,no,label
+T3M tau=0.5 change,+0.054,E=curve|W=W-full|V=abs,0.0516790762564634,no,label
+T3M tau=0.1 d=2,-1.063,E=curve|W=W-full,-1.0948666787281627,no,label
+T3M tau=0.1 d=5,-1.036,E=curve|W=W-full,-1.0723464523403436,no,label
+T3M tau=0.1 d=10,-0.999,E=curve|W=W-full,-1.0097900964314823,no,label
+T3M tau=0.1 d=40,-1.004,E=curve|W=W-full,-1.0586966498748025,no,label
+T3M tau=0.1 change,+0.059,E=curve|W=W-full|V=signed,0.03617002885336018,no,label
+T3M tau=0.1 change,+0.059,E=curve|W=W-full|V=abs,0.03617002885336018,no,label
+T3M tau=0.01 d=2,-1.130,E=curve|W=W-full,-1.1572510016472701,no,label
+T3M tau=0.01 d=5,-1.048,E=curve|W=W-full,-1.0960184159500739,no,label
+T3M tau=0.01 d=10,-0.968,E=curve|W=W-full,-1.0150610656599006,no,label
+T3M tau=0.01 d=40,-0.877,E=curve|W=W-full,-0.9141645323519482,no,label
+T3M tau=0.01 change,+0.253,E=curve|W=W-full|V=signed,0.24308646929532196,no,label
+T3M tau=0.01 change,+0.253,E=curve|W=W-full|V=abs,0.24308646929532196,no,label
+CON 0.5-0.1,-0.0050,E=curve|W=W-full|V=signed,0.015509047403103216,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-full|V=abs,0.015509047403103216,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-full|V=signed,-0.19140739303885856,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-full|V=abs,0.19140739303885856,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-full|V=signed,-0.20691644044196178,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-full|V=abs,0.20691644044196178,no,differs from label
+SEP,+0.1940,E=curve|W=W-full|def=S1|V=signed,0.20691644044196178,no,label
+SEP,+0.1940,E=curve|W=W-full|def=S1|V=abs,0.20691644044196178,no,label
+SEP,+0.1940,E=curve|W=W-full|def=S2|V=signed,0.19140739303885856,no,label
+SEP,+0.1940,E=curve|W=W-full|def=S2|V=abs,0.19140739303885856,no,label
+SEP,+0.1940,E=curve|W=W-full|def=S3|V=signed,0.19916191674041017,no,label
+SEP,+0.1940,E=curve|W=W-full|def=S3|V=abs,0.19916191674041017,no,label
+REGR b_dtau,+0.0073,E=curve|W=W-full|resp=gamma,0.03011085798052207,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-full|resp=delta,-0.03011085798052207,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-full|resp=gamma,-0.09975474419711534,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-full|resp=delta,0.09975474419711534,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-full|resp=gamma,-0.007846603397653525,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-full|resp=delta,0.007846603397653525,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-full|resp=gamma,0.03011085798052207,no,label
+REGF b_dtau,+0.0305,E=curve|W=W-full|resp=delta,-0.03011085798052207,no,label
+T3U tau=0.5 d=2,-1.066,E=curve|W=W-ge,-1.0620537109893957,no,label
+T3U tau=0.5 d=5,-1.001,E=curve|W=W-ge,-0.9967041008603367,no,label
+T3U tau=0.5 d=10,-1.041,E=curve|W=W-ge,-1.036040410543175,no,label
+T3U tau=0.5 d=40,-1.011,E=curve|W=W-ge,-1.0103746347329323,no,label
+T3U tau=0.5 change,+0.054,E=curve|W=W-ge|V=signed,0.0516790762564634,no,label
+T3U tau=0.5 change,+0.054,E=curve|W=W-ge|V=abs,0.0516790762564634,no,label
+T3U tau=0.1 d=2,-1.063,E=curve|W=W-ge,-1.0948666787281627,no,label
+T3U tau=0.1 d=5,-1.036,E=curve|W=W-ge,-1.0723464523403436,no,label
+T3U tau=0.1 d=10,-0.999,E=curve|W=W-ge,-1.0097900964314823,no,label
+T3U tau=0.1 d=40,-1.004,E=curve|W=W-ge,-1.0586966498748025,no,label
+T3U tau=0.1 change,+0.059,E=curve|W=W-ge|V=signed,0.03617002885336018,no,label
+T3U tau=0.1 change,+0.059,E=curve|W=W-ge|V=abs,0.03617002885336018,no,label
+T3U tau=0.01 d=2,-1.071,E=curve|W=W-ge,-1.0506312539159979,no,label
+T3U tau=0.01 d=5,-1.091,E=curve|W=W-ge,-1.1070269876279284,no,label
+T3U tau=0.01 d=10,-1.006,E=curve|W=W-ge,-1.0053516021045252,no,label
+T3U tau=0.01 d=40,-0.994,E=curve|W=W-ge,-1.0133636283246144,no,label
+T3U tau=0.01 change,+0.078,E=curve|W=W-ge|V=signed,0.037267625591383524,no,label
+T3U tau=0.01 change,+0.078,E=curve|W=W-ge|V=abs,0.037267625591383524,no,label
+T3M tau=0.5 d=2,-1.066,E=curve|W=W-ge,-1.0620537109893957,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=curve|W=W-ge,-0.9967041008603367,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=curve|W=W-ge,-1.036040410543175,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=curve|W=W-ge,-1.0103746347329323,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-ge|V=signed,0.0516790762564634,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-ge|V=abs,0.0516790762564634,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=curve|W=W-ge,-1.0948666787281627,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=curve|W=W-ge,-1.0723464523403436,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=curve|W=W-ge,-1.0097900964314823,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=curve|W=W-ge,-1.0586966498748025,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-ge|V=signed,0.03617002885336018,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-ge|V=abs,0.03617002885336018,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=curve|W=W-ge,-1.0506312539159979,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=curve|W=W-ge,-1.1070269876279284,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=curve|W=W-ge,-1.0053516021045252,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=curve|W=W-ge,-1.0133636283246144,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-ge|V=signed,0.037267625591383524,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-ge|V=abs,0.037267625591383524,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-ge|V=signed,0.015509047403103216,no,label
+CON 0.5-0.1,-0.0050,E=curve|W=W-ge|V=abs,0.015509047403103216,no,label
+CON 0.5-0.01,-0.0233,E=curve|W=W-ge|V=signed,0.014411450665079872,no,label
+CON 0.5-0.01,-0.0233,E=curve|W=W-ge|V=abs,0.014411450665079872,no,label
+CON 0.1-0.01,-0.0182,E=curve|W=W-ge|V=signed,-0.0010975967380233431,no,label
+CON 0.1-0.01,-0.0182,E=curve|W=W-ge|V=abs,0.0010975967380233431,no,label
+SEP,+0.1940,E=curve|W=W-ge|def=S1|V=signed,0.0010975967380233431,no,differs from label
+SEP,+0.1940,E=curve|W=W-ge|def=S1|V=abs,0.0010975967380233431,no,differs from label
+SEP,+0.1940,E=curve|W=W-ge|def=S2|V=signed,-0.014411450665079872,no,differs from label
+SEP,+0.1940,E=curve|W=W-ge|def=S2|V=abs,0.014411450665079872,no,differs from label
+SEP,+0.1940,E=curve|W=W-ge|def=S3|V=signed,-0.006656926963528265,no,differs from label
+SEP,+0.1940,E=curve|W=W-ge|def=S3|V=abs,0.006656926963528265,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-ge|resp=gamma,0.0032813055541005658,no,label
+REGR b_dtau,+0.0073,E=curve|W=W-ge|resp=delta,-0.0032813055541005658,no,label
+REGR b_tau,-0.0288,E=curve|W=W-ge|resp=gamma,-0.01855149110934682,no,label
+REGR b_tau,-0.0288,E=curve|W=W-ge|resp=delta,0.01855149110934682,no,label
+REGR b_d,+0.0069,E=curve|W=W-ge|resp=gamma,0.0071781222151721565,no,label
+REGR b_d,+0.0069,E=curve|W=W-ge|resp=delta,-0.0071781222151721565,no,label
+REGF b_dtau,+0.0305,E=curve|W=W-ge|resp=gamma,0.0032813055541005658,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-ge|resp=delta,-0.0032813055541005658,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=curve|W=W-gt,-1.0620537109893957,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=curve|W=W-gt,-0.9967041008603367,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=curve|W=W-gt,-1.036040410543175,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=curve|W=W-gt,-1.0103746347329323,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-gt|V=signed,0.0516790762564634,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-gt|V=abs,0.0516790762564634,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=curve|W=W-gt,-1.0790489485417631,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=curve|W=W-gt,-1.0854187745996355,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=curve|W=W-gt,-1.0103412757318384,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=curve|W=W-gt,-1.0611071503497376,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-gt|V=signed,0.01794179819202557,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-gt|V=abs,0.01794179819202557,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=curve|W=W-gt,-1.0506312539159979,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=curve|W=W-gt,-1.1070269876279284,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=curve|W=W-gt,-1.0053516021045252,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=curve|W=W-gt,-1.0133636283246144,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-gt|V=signed,0.037267625591383524,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-gt|V=abs,0.037267625591383524,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=curve|W=W-gt,-1.0620537109893957,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=curve|W=W-gt,-0.9967041008603367,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=curve|W=W-gt,-1.036040410543175,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=curve|W=W-gt,-1.0103746347329323,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-gt|V=signed,0.0516790762564634,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-gt|V=abs,0.0516790762564634,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=curve|W=W-gt,-1.0790489485417631,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=curve|W=W-gt,-1.0854187745996355,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=curve|W=W-gt,-1.0103412757318384,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=curve|W=W-gt,-1.0611071503497376,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-gt|V=signed,0.01794179819202557,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-gt|V=abs,0.01794179819202557,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=curve|W=W-gt,-1.0506312539159979,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=curve|W=W-gt,-1.1070269876279284,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=curve|W=W-gt,-1.0053516021045252,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=curve|W=W-gt,-1.0133636283246144,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-gt|V=signed,0.037267625591383524,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-gt|V=abs,0.037267625591383524,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-gt|V=signed,0.033737278064437826,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-gt|V=abs,0.033737278064437826,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-gt|V=signed,0.014411450665079872,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-gt|V=abs,0.014411450665079872,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-gt|V=signed,-0.019325827399357953,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-gt|V=abs,0.019325827399357953,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S1|V=signed,0.019325827399357953,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S1|V=abs,0.019325827399357953,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S2|V=signed,-0.014411450665079872,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S2|V=abs,0.014411450665079872,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S3|V=signed,0.0024571883671390404,no,differs from label
+SEP,+0.1940,E=curve|W=W-gt|def=S3|V=abs,0.0024571883671390404,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-gt|resp=gamma,0.003478629561494695,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-gt|resp=delta,-0.003478629561494695,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-gt|resp=gamma,-0.01913805503896616,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-gt|resp=delta,0.01913805503896616,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-gt|resp=gamma,0.006005053449558919,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-gt|resp=delta,-0.006005053449558919,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-gt|resp=gamma,0.003478629561494695,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-gt|resp=delta,-0.003478629561494695,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=curve|W=W-20,-1.0542524859518305,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=curve|W=W-20,-0.9986426555242657,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=curve|W=W-20,-1.0420892717693142,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=curve|W=W-20,-1.0177109327058471,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-20|V=signed,0.036541553245983405,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-20|V=abs,0.036541553245983405,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=curve|W=W-20,-1.0790489485417631,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=curve|W=W-20,-1.0854187745996355,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=curve|W=W-20,-1.0103412757318384,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=curve|W=W-20,-1.0611071503497376,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-20|V=signed,0.01794179819202557,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-20|V=abs,0.01794179819202557,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=curve|W=W-20,-1.1533351072908926,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=curve|W=W-20,-1.1096045497463507,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=curve|W=W-20,-1.030492347789514,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=curve|W=W-20,-0.926816326260112,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-20|V=signed,0.2265187810307806,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-20|V=abs,0.2265187810307806,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=curve|W=W-20,-1.0542524859518305,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=curve|W=W-20,-0.9986426555242657,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=curve|W=W-20,-1.0420892717693142,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=curve|W=W-20,-1.0177109327058471,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-20|V=signed,0.036541553245983405,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-20|V=abs,0.036541553245983405,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=curve|W=W-20,-1.0790489485417631,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=curve|W=W-20,-1.0854187745996355,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=curve|W=W-20,-1.0103412757318384,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=curve|W=W-20,-1.0611071503497376,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-20|V=signed,0.01794179819202557,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-20|V=abs,0.01794179819202557,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=curve|W=W-20,-1.1533351072908926,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=curve|W=W-20,-1.1096045497463507,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=curve|W=W-20,-1.030492347789514,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=curve|W=W-20,-0.926816326260112,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-20|V=signed,0.2265187810307806,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-20|V=abs,0.2265187810307806,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-20|V=signed,0.018599755053957834,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-20|V=abs,0.018599755053957834,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-20|V=signed,-0.1899772277847972,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-20|V=abs,0.1899772277847972,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-20|V=signed,-0.20857698283875503,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-20|V=abs,0.20857698283875503,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S1|V=signed,0.20857698283875503,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S1|V=abs,0.20857698283875503,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S2|V=signed,0.1899772277847972,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S2|V=abs,0.1899772277847972,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S3|V=signed,0.19927710531177611,no,differs from label
+SEP,+0.1940,E=curve|W=W-20|def=S3|V=abs,0.19927710531177611,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-20|resp=gamma,0.03008070690162888,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-20|resp=delta,-0.03008070690162888,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-20|resp=gamma,-0.10445257008512135,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-20|resp=delta,0.10445257008512135,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-20|resp=gamma,-0.011000215141340568,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-20|resp=delta,0.011000215141340568,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-20|resp=gamma,0.03008070690162888,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-20|resp=delta,-0.03008070690162888,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=curve|W=W-1250,-1.0557970742531682,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=curve|W=W-1250,-0.9791065789518248,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=curve|W=W-1250,-1.019796444312158,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=curve|W=W-1250,-0.9812517222737736,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-1250|V=signed,0.0745453519793946,no,differs from label
+T3U tau=0.5 change,+0.054,E=curve|W=W-1250|V=abs,0.0745453519793946,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=curve|W=W-1250,-1.0931808628277448,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=curve|W=W-1250,-1.0866371380539195,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=curve|W=W-1250,-1.0182853832785947,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=curve|W=W-1250,-1.0514659814986091,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-1250|V=signed,0.0417148813291357,no,differs from label
+T3U tau=0.1 change,+0.059,E=curve|W=W-1250|V=abs,0.0417148813291357,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=curve|W=W-1250,-1.2331898483479533,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=curve|W=W-1250,-1.0881067773821314,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=curve|W=W-1250,-1.017690978086988,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=curve|W=W-1250,-0.8598444425716583,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-1250|V=signed,0.37334540577629505,no,differs from label
+T3U tau=0.01 change,+0.078,E=curve|W=W-1250|V=abs,0.37334540577629505,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=curve|W=W-1250,-1.0557970742531682,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=curve|W=W-1250,-0.9791065789518248,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=curve|W=W-1250,-1.019796444312158,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=curve|W=W-1250,-0.9812517222737736,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-1250|V=signed,0.0745453519793946,no,differs from label
+T3M tau=0.5 change,+0.054,E=curve|W=W-1250|V=abs,0.0745453519793946,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=curve|W=W-1250,-1.0931808628277448,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=curve|W=W-1250,-1.0866371380539195,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=curve|W=W-1250,-1.0182853832785947,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=curve|W=W-1250,-1.0514659814986091,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-1250|V=signed,0.0417148813291357,no,differs from label
+T3M tau=0.1 change,+0.059,E=curve|W=W-1250|V=abs,0.0417148813291357,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=curve|W=W-1250,-1.2331898483479533,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=curve|W=W-1250,-1.0881067773821314,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=curve|W=W-1250,-1.017690978086988,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=curve|W=W-1250,-0.8598444425716583,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-1250|V=signed,0.37334540577629505,no,differs from label
+T3M tau=0.01 change,+0.253,E=curve|W=W-1250|V=abs,0.37334540577629505,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-1250|V=signed,0.0328304706502589,no,differs from label
+CON 0.5-0.1,-0.0050,E=curve|W=W-1250|V=abs,0.0328304706502589,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-1250|V=signed,-0.29880005379690044,no,differs from label
+CON 0.5-0.01,-0.0233,E=curve|W=W-1250|V=abs,0.29880005379690044,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-1250|V=signed,-0.33163052444715935,no,differs from label
+CON 0.1-0.01,-0.0182,E=curve|W=W-1250|V=abs,0.33163052444715935,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S1|V=signed,0.33163052444715935,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S1|V=abs,0.33163052444715935,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S2|V=signed,0.29880005379690044,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S2|V=abs,0.29880005379690044,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S3|V=signed,0.3152152891220299,no,differs from label
+SEP,+0.1940,E=curve|W=W-1250|def=S3|V=abs,0.3152152891220299,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-1250|resp=gamma,0.0441080305265558,no,differs from label
+REGR b_dtau,+0.0073,E=curve|W=W-1250|resp=delta,-0.0441080305265558,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-1250|resp=gamma,-0.1533924271604658,no,differs from label
+REGR b_tau,-0.0288,E=curve|W=W-1250|resp=delta,0.1533924271604658,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-1250|resp=gamma,-0.01183282505754582,no,differs from label
+REGR b_d,+0.0069,E=curve|W=W-1250|resp=delta,0.01183282505754582,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-1250|resp=gamma,0.0441080305265558,no,differs from label
+REGF b_dtau,+0.0305,E=curve|W=W-1250|resp=delta,-0.0441080305265558,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=slope|W=W-full,-1.06552731629488,yes,differs from label
+T3U tau=0.5 d=5,-1.001,E=slope|W=W-full,-1.0012235109071126,yes,differs from label
+T3U tau=0.5 d=10,-1.041,E=slope|W=W-full,-1.040535598418091,yes,differs from label
+T3U tau=0.5 d=40,-1.011,E=slope|W=W-full,-1.0113175597090003,yes,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-full|V=signed,0.054209756585879676,yes,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-full|V=abs,0.054209756585879676,yes,differs from label
+T3U tau=0.1 d=2,-1.063,E=slope|W=W-full,-1.0629328186255622,yes,differs from label
+T3U tau=0.1 d=5,-1.036,E=slope|W=W-full,-1.0361153360761766,yes,differs from label
+T3U tau=0.1 d=10,-0.999,E=slope|W=W-full,-0.9989422151531137,yes,differs from label
+T3U tau=0.1 d=40,-1.004,E=slope|W=W-full,-1.0036933698085162,yes,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-full|V=signed,0.059239448817046014,yes,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-full|V=abs,0.059239448817046014,yes,differs from label
+T3U tau=0.01 d=2,-1.071,E=slope|W=W-full,-1.1299133055212025,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=slope|W=W-full,-1.047838488508623,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=slope|W=W-full,-0.9683123993644052,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=slope|W=W-full,-0.8766356679723812,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-full|V=signed,0.25327763754882127,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-full|V=abs,0.25327763754882127,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=slope|W=W-full,-1.06552731629488,yes,label
+T3M tau=0.5 d=5,-1.001,E=slope|W=W-full,-1.0012235109071126,yes,label
+T3M tau=0.5 d=10,-1.041,E=slope|W=W-full,-1.040535598418091,yes,label
+T3M tau=0.5 d=40,-1.011,E=slope|W=W-full,-1.0113175597090003,yes,label
+T3M tau=0.5 change,+0.054,E=slope|W=W-full|V=signed,0.054209756585879676,yes,label
+T3M tau=0.5 change,+0.054,E=slope|W=W-full|V=abs,0.054209756585879676,yes,label
+T3M tau=0.1 d=2,-1.063,E=slope|W=W-full,-1.0629328186255622,yes,label
+T3M tau=0.1 d=5,-1.036,E=slope|W=W-full,-1.0361153360761766,yes,label
+T3M tau=0.1 d=10,-0.999,E=slope|W=W-full,-0.9989422151531137,yes,label
+T3M tau=0.1 d=40,-1.004,E=slope|W=W-full,-1.0036933698085162,yes,label
+T3M tau=0.1 change,+0.059,E=slope|W=W-full|V=signed,0.059239448817046014,yes,label
+T3M tau=0.1 change,+0.059,E=slope|W=W-full|V=abs,0.059239448817046014,yes,label
+T3M tau=0.01 d=2,-1.130,E=slope|W=W-full,-1.1299133055212025,yes,label
+T3M tau=0.01 d=5,-1.048,E=slope|W=W-full,-1.047838488508623,yes,label
+T3M tau=0.01 d=10,-0.968,E=slope|W=W-full,-0.9683123993644052,yes,label
+T3M tau=0.01 d=40,-0.877,E=slope|W=W-full,-0.8766356679723812,yes,label
+T3M tau=0.01 change,+0.253,E=slope|W=W-full|V=signed,0.25327763754882127,yes,label
+T3M tau=0.01 change,+0.253,E=slope|W=W-full|V=abs,0.25327763754882127,yes,label
+CON 0.5-0.1,-0.0050,E=slope|W=W-full|V=signed,-0.005029692231166338,yes,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-full|V=abs,0.005029692231166338,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-full|V=signed,-0.1990678809629416,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-full|V=abs,0.1990678809629416,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-full|V=signed,-0.19403818873177525,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-full|V=abs,0.19403818873177525,no,differs from label
+SEP,+0.1940,E=slope|W=W-full|def=S1|V=signed,0.19403818873177525,yes,label
+SEP,+0.1940,E=slope|W=W-full|def=S1|V=abs,0.19403818873177525,yes,label
+SEP,+0.1940,E=slope|W=W-full|def=S2|V=signed,0.1990678809629416,no,label
+SEP,+0.1940,E=slope|W=W-full|def=S2|V=abs,0.1990678809629416,no,label
+SEP,+0.1940,E=slope|W=W-full|def=S3|V=signed,0.19655303484735842,no,label
+SEP,+0.1940,E=slope|W=W-full|def=S3|V=abs,0.19655303484735842,no,label
+REGR b_dtau,+0.0073,E=slope|W=W-full|resp=gamma,0.030467241354041094,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-full|resp=delta,-0.030467241354041094,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-full|resp=gamma,-0.07664136772339795,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-full|resp=delta,0.07664136772339795,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-full|resp=gamma,-0.006015674640148846,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-full|resp=delta,0.006015674640148846,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-full|resp=gamma,0.030467241354041094,yes,label
+REGF b_dtau,+0.0305,E=slope|W=W-full|resp=delta,-0.030467241354041094,no,label
+T3U tau=0.5 d=2,-1.066,E=slope|W=W-ge,-1.06552731629488,yes,label
+T3U tau=0.5 d=5,-1.001,E=slope|W=W-ge,-1.0012235109071126,yes,label
+T3U tau=0.5 d=10,-1.041,E=slope|W=W-ge,-1.040535598418091,yes,label
+T3U tau=0.5 d=40,-1.011,E=slope|W=W-ge,-1.0113175597090003,yes,label
+T3U tau=0.5 change,+0.054,E=slope|W=W-ge|V=signed,0.054209756585879676,yes,label
+T3U tau=0.5 change,+0.054,E=slope|W=W-ge|V=abs,0.054209756585879676,yes,label
+T3U tau=0.1 d=2,-1.063,E=slope|W=W-ge,-1.0629328186255622,yes,label
+T3U tau=0.1 d=5,-1.036,E=slope|W=W-ge,-1.0361153360761766,yes,label
+T3U tau=0.1 d=10,-0.999,E=slope|W=W-ge,-0.9989422151531137,yes,label
+T3U tau=0.1 d=40,-1.004,E=slope|W=W-ge,-1.0036933698085162,yes,label
+T3U tau=0.1 change,+0.059,E=slope|W=W-ge|V=signed,0.059239448817046014,yes,label
+T3U tau=0.1 change,+0.059,E=slope|W=W-ge|V=abs,0.059239448817046014,yes,label
+T3U tau=0.01 d=2,-1.071,E=slope|W=W-ge,-1.0710956696035265,yes,label
+T3U tau=0.01 d=5,-1.091,E=slope|W=W-ge,-1.0909567633062371,yes,label
+T3U tau=0.01 d=10,-1.006,E=slope|W=W-ge,-1.005880964280773,yes,label
+T3U tau=0.01 d=40,-0.994,E=slope|W=W-ge,-0.9936240712942183,yes,label
+T3U tau=0.01 change,+0.078,E=slope|W=W-ge|V=signed,0.07747159830930828,no,label
+T3U tau=0.01 change,+0.078,E=slope|W=W-ge|V=abs,0.07747159830930828,no,label
+T3M tau=0.5 d=2,-1.066,E=slope|W=W-ge,-1.06552731629488,yes,differs from label
+T3M tau=0.5 d=5,-1.001,E=slope|W=W-ge,-1.0012235109071126,yes,differs from label
+T3M tau=0.5 d=10,-1.041,E=slope|W=W-ge,-1.040535598418091,yes,differs from label
+T3M tau=0.5 d=40,-1.011,E=slope|W=W-ge,-1.0113175597090003,yes,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-ge|V=signed,0.054209756585879676,yes,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-ge|V=abs,0.054209756585879676,yes,differs from label
+T3M tau=0.1 d=2,-1.063,E=slope|W=W-ge,-1.0629328186255622,yes,differs from label
+T3M tau=0.1 d=5,-1.036,E=slope|W=W-ge,-1.0361153360761766,yes,differs from label
+T3M tau=0.1 d=10,-0.999,E=slope|W=W-ge,-0.9989422151531137,yes,differs from label
+T3M tau=0.1 d=40,-1.004,E=slope|W=W-ge,-1.0036933698085162,yes,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-ge|V=signed,0.059239448817046014,yes,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-ge|V=abs,0.059239448817046014,yes,differs from label
+T3M tau=0.01 d=2,-1.130,E=slope|W=W-ge,-1.0710956696035265,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=slope|W=W-ge,-1.0909567633062371,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=slope|W=W-ge,-1.005880964280773,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=slope|W=W-ge,-0.9936240712942183,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-ge|V=signed,0.07747159830930828,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-ge|V=abs,0.07747159830930828,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-ge|V=signed,-0.005029692231166338,yes,label
+CON 0.5-0.1,-0.0050,E=slope|W=W-ge|V=abs,0.005029692231166338,no,label
+CON 0.5-0.01,-0.0233,E=slope|W=W-ge|V=signed,-0.0232618417234286,yes,label
+CON 0.5-0.01,-0.0233,E=slope|W=W-ge|V=abs,0.0232618417234286,no,label
+CON 0.1-0.01,-0.0182,E=slope|W=W-ge|V=signed,-0.018232149492262262,yes,label
+CON 0.1-0.01,-0.0182,E=slope|W=W-ge|V=abs,0.018232149492262262,no,label
+SEP,+0.1940,E=slope|W=W-ge|def=S1|V=signed,0.018232149492262262,no,differs from label
+SEP,+0.1940,E=slope|W=W-ge|def=S1|V=abs,0.018232149492262262,no,differs from label
+SEP,+0.1940,E=slope|W=W-ge|def=S2|V=signed,0.0232618417234286,no,differs from label
+SEP,+0.1940,E=slope|W=W-ge|def=S2|V=abs,0.0232618417234286,no,differs from label
+SEP,+0.1940,E=slope|W=W-ge|def=S3|V=signed,0.02074699560784543,no,differs from label
+SEP,+0.1940,E=slope|W=W-ge|def=S3|V=abs,0.02074699560784543,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-ge|resp=gamma,0.007331913657408285,yes,label
+REGR b_dtau,+0.0073,E=slope|W=W-ge|resp=delta,-0.007331913657408285,no,label
+REGR b_tau,-0.0288,E=slope|W=W-ge|resp=gamma,-0.028848570347271993,yes,label
+REGR b_tau,-0.0288,E=slope|W=W-ge|resp=delta,0.028848570347271993,no,label
+REGR b_d,+0.0069,E=slope|W=W-ge|resp=gamma,0.006940260855159731,yes,label
+REGR b_d,+0.0069,E=slope|W=W-ge|resp=delta,-0.006940260855159731,no,label
+REGF b_dtau,+0.0305,E=slope|W=W-ge|resp=gamma,0.007331913657408285,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-ge|resp=delta,-0.007331913657408285,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=slope|W=W-gt,-1.06552731629488,yes,differs from label
+T3U tau=0.5 d=5,-1.001,E=slope|W=W-gt,-1.0012235109071126,yes,differs from label
+T3U tau=0.5 d=10,-1.041,E=slope|W=W-gt,-1.040535598418091,yes,differs from label
+T3U tau=0.5 d=40,-1.011,E=slope|W=W-gt,-1.0113175597090003,yes,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-gt|V=signed,0.054209756585879676,yes,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-gt|V=abs,0.054209756585879676,yes,differs from label
+T3U tau=0.1 d=2,-1.063,E=slope|W=W-gt,-1.051662010127477,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=slope|W=W-gt,-1.0410922616905276,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=slope|W=W-gt,-1.001578029357138,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=slope|W=W-gt,-1.01520442582614,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-gt|V=signed,0.036457584301337054,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-gt|V=abs,0.036457584301337054,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=slope|W=W-gt,-1.0710956696035265,yes,differs from label
+T3U tau=0.01 d=5,-1.091,E=slope|W=W-gt,-1.0909567633062371,yes,differs from label
+T3U tau=0.01 d=10,-1.006,E=slope|W=W-gt,-1.005880964280773,yes,differs from label
+T3U tau=0.01 d=40,-0.994,E=slope|W=W-gt,-0.9936240712942183,yes,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-gt|V=signed,0.07747159830930828,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-gt|V=abs,0.07747159830930828,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=slope|W=W-gt,-1.06552731629488,yes,differs from label
+T3M tau=0.5 d=5,-1.001,E=slope|W=W-gt,-1.0012235109071126,yes,differs from label
+T3M tau=0.5 d=10,-1.041,E=slope|W=W-gt,-1.040535598418091,yes,differs from label
+T3M tau=0.5 d=40,-1.011,E=slope|W=W-gt,-1.0113175597090003,yes,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-gt|V=signed,0.054209756585879676,yes,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-gt|V=abs,0.054209756585879676,yes,differs from label
+T3M tau=0.1 d=2,-1.063,E=slope|W=W-gt,-1.051662010127477,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=slope|W=W-gt,-1.0410922616905276,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=slope|W=W-gt,-1.001578029357138,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=slope|W=W-gt,-1.01520442582614,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-gt|V=signed,0.036457584301337054,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-gt|V=abs,0.036457584301337054,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=slope|W=W-gt,-1.0710956696035265,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=slope|W=W-gt,-1.0909567633062371,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=slope|W=W-gt,-1.005880964280773,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=slope|W=W-gt,-0.9936240712942183,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-gt|V=signed,0.07747159830930828,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-gt|V=abs,0.07747159830930828,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-gt|V=signed,0.017752172284542622,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-gt|V=abs,0.017752172284542622,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-gt|V=signed,-0.0232618417234286,yes,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-gt|V=abs,0.0232618417234286,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-gt|V=signed,-0.04101401400797122,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-gt|V=abs,0.04101401400797122,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S1|V=signed,0.04101401400797122,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S1|V=abs,0.04101401400797122,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S2|V=signed,0.0232618417234286,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S2|V=abs,0.0232618417234286,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S3|V=signed,0.03213792786569991,no,differs from label
+SEP,+0.1940,E=slope|W=W-gt|def=S3|V=abs,0.03213792786569991,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-gt|resp=gamma,0.007655470406678302,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-gt|resp=delta,-0.007655470406678302,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-gt|resp=gamma,-0.029681389866362273,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-gt|resp=delta,0.029681389866362273,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-gt|resp=gamma,0.005016752806219049,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-gt|resp=delta,-0.005016752806219049,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-gt|resp=gamma,0.007655470406678302,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-gt|resp=delta,-0.007655470406678302,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=slope|W=W-20,-1.0516174666933722,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=slope|W=W-20,-1.003544768472524,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=slope|W=W-20,-1.0440220999825052,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=slope|W=W-20,-1.019909775185425,no,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-20|V=signed,0.03170769150794728,no,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-20|V=abs,0.03170769150794728,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=slope|W=W-20,-1.051662010127477,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=slope|W=W-20,-1.0410922616905276,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=slope|W=W-20,-1.001578029357138,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=slope|W=W-20,-1.01520442582614,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-20|V=signed,0.036457584301337054,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-20|V=abs,0.036457584301337054,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=slope|W=W-20,-1.1259717109757315,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=slope|W=W-20,-1.0648945405824113,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=slope|W=W-20,-0.9842334015176798,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=slope|W=W-20,-0.8987427462801354,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-20|V=signed,0.22722896469559606,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-20|V=abs,0.22722896469559606,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=slope|W=W-20,-1.0516174666933722,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=slope|W=W-20,-1.003544768472524,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=slope|W=W-20,-1.0440220999825052,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=slope|W=W-20,-1.019909775185425,no,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-20|V=signed,0.03170769150794728,no,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-20|V=abs,0.03170769150794728,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=slope|W=W-20,-1.051662010127477,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=slope|W=W-20,-1.0410922616905276,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=slope|W=W-20,-1.001578029357138,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=slope|W=W-20,-1.01520442582614,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-20|V=signed,0.036457584301337054,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-20|V=abs,0.036457584301337054,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=slope|W=W-20,-1.1259717109757315,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=slope|W=W-20,-1.0648945405824113,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=slope|W=W-20,-0.9842334015176798,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=slope|W=W-20,-0.8987427462801354,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-20|V=signed,0.22722896469559606,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-20|V=abs,0.22722896469559606,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-20|V=signed,-0.004749892793389776,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-20|V=abs,0.004749892793389776,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-20|V=signed,-0.19552127318764878,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-20|V=abs,0.19552127318764878,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-20|V=signed,-0.190771380394259,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-20|V=abs,0.190771380394259,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S1|V=signed,0.190771380394259,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S1|V=abs,0.190771380394259,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S2|V=signed,0.19552127318764878,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S2|V=abs,0.19552127318764878,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S3|V=signed,0.1931463267909539,no,differs from label
+SEP,+0.1940,E=slope|W=W-20|def=S3|V=abs,0.1931463267909539,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-20|resp=gamma,0.030098742123651937,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-20|resp=delta,-0.030098742123651937,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-20|resp=gamma,-0.08322422863556908,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-20|resp=delta,0.08322422863556908,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-20|resp=gamma,-0.010544166030499798,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-20|resp=delta,0.010544166030499798,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-20|resp=gamma,0.030098742123651937,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-20|resp=delta,-0.030098742123651937,no,differs from label
+T3U tau=0.5 d=2,-1.066,E=slope|W=W-1250,-1.0739204851813453,no,differs from label
+T3U tau=0.5 d=5,-1.001,E=slope|W=W-1250,-0.9809627772610862,no,differs from label
+T3U tau=0.5 d=10,-1.041,E=slope|W=W-1250,-1.0200564499111493,no,differs from label
+T3U tau=0.5 d=40,-1.011,E=slope|W=W-1250,-0.9857101667521618,no,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-1250|V=signed,0.08821031842918348,no,differs from label
+T3U tau=0.5 change,+0.054,E=slope|W=W-1250|V=abs,0.08821031842918348,no,differs from label
+T3U tau=0.1 d=2,-1.063,E=slope|W=W-1250,-1.058250373144668,no,differs from label
+T3U tau=0.1 d=5,-1.036,E=slope|W=W-1250,-1.0505431468351085,no,differs from label
+T3U tau=0.1 d=10,-0.999,E=slope|W=W-1250,-0.9899587733447189,no,differs from label
+T3U tau=0.1 d=40,-1.004,E=slope|W=W-1250,-0.9678062095219203,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-1250|V=signed,0.09044416362274765,no,differs from label
+T3U tau=0.1 change,+0.059,E=slope|W=W-1250|V=abs,0.09044416362274765,no,differs from label
+T3U tau=0.01 d=2,-1.071,E=slope|W=W-1250,-1.168411104168045,no,differs from label
+T3U tau=0.01 d=5,-1.091,E=slope|W=W-1250,-1.0104688393774708,no,differs from label
+T3U tau=0.01 d=10,-1.006,E=slope|W=W-1250,-0.9406685125813375,no,differs from label
+T3U tau=0.01 d=40,-0.994,E=slope|W=W-1250,-0.7975599217524211,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-1250|V=signed,0.37085118241562387,no,differs from label
+T3U tau=0.01 change,+0.078,E=slope|W=W-1250|V=abs,0.37085118241562387,no,differs from label
+T3M tau=0.5 d=2,-1.066,E=slope|W=W-1250,-1.0739204851813453,no,differs from label
+T3M tau=0.5 d=5,-1.001,E=slope|W=W-1250,-0.9809627772610862,no,differs from label
+T3M tau=0.5 d=10,-1.041,E=slope|W=W-1250,-1.0200564499111493,no,differs from label
+T3M tau=0.5 d=40,-1.011,E=slope|W=W-1250,-0.9857101667521618,no,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-1250|V=signed,0.08821031842918348,no,differs from label
+T3M tau=0.5 change,+0.054,E=slope|W=W-1250|V=abs,0.08821031842918348,no,differs from label
+T3M tau=0.1 d=2,-1.063,E=slope|W=W-1250,-1.058250373144668,no,differs from label
+T3M tau=0.1 d=5,-1.036,E=slope|W=W-1250,-1.0505431468351085,no,differs from label
+T3M tau=0.1 d=10,-0.999,E=slope|W=W-1250,-0.9899587733447189,no,differs from label
+T3M tau=0.1 d=40,-1.004,E=slope|W=W-1250,-0.9678062095219203,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-1250|V=signed,0.09044416362274765,no,differs from label
+T3M tau=0.1 change,+0.059,E=slope|W=W-1250|V=abs,0.09044416362274765,no,differs from label
+T3M tau=0.01 d=2,-1.130,E=slope|W=W-1250,-1.168411104168045,no,differs from label
+T3M tau=0.01 d=5,-1.048,E=slope|W=W-1250,-1.0104688393774708,no,differs from label
+T3M tau=0.01 d=10,-0.968,E=slope|W=W-1250,-0.9406685125813375,no,differs from label
+T3M tau=0.01 d=40,-0.877,E=slope|W=W-1250,-0.7975599217524211,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-1250|V=signed,0.37085118241562387,no,differs from label
+T3M tau=0.01 change,+0.253,E=slope|W=W-1250|V=abs,0.37085118241562387,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-1250|V=signed,-0.0022338451935641768,no,differs from label
+CON 0.5-0.1,-0.0050,E=slope|W=W-1250|V=abs,0.0022338451935641768,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-1250|V=signed,-0.2826408639864404,no,differs from label
+CON 0.5-0.01,-0.0233,E=slope|W=W-1250|V=abs,0.2826408639864404,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-1250|V=signed,-0.2804070187928762,no,differs from label
+CON 0.1-0.01,-0.0182,E=slope|W=W-1250|V=abs,0.2804070187928762,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S1|V=signed,0.2804070187928762,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S1|V=abs,0.2804070187928762,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S2|V=signed,0.2826408639864404,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S2|V=abs,0.2826408639864404,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S3|V=signed,0.2815239413896583,no,differs from label
+SEP,+0.1940,E=slope|W=W-1250|def=S3|V=abs,0.2815239413896583,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-1250|resp=gamma,0.041221716221851785,no,differs from label
+REGR b_dtau,+0.0073,E=slope|W=W-1250|resp=delta,-0.041221716221851785,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-1250|resp=gamma,-0.10107324349771607,no,differs from label
+REGR b_tau,-0.0288,E=slope|W=W-1250|resp=delta,0.10107324349771607,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-1250|resp=gamma,-0.0044013927286514565,no,differs from label
+REGR b_d,+0.0069,E=slope|W=W-1250|resp=delta,0.0044013927286514565,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-1250|resp=gamma,0.041221716221851785,no,differs from label
+REGF b_dtau,+0.0305,E=slope|W=W-1250|resp=delta,-0.041221716221851785,no,differs from label
