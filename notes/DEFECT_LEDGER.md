@@ -928,9 +928,10 @@ instruction of 2026-10-15.
         - The b_dtau interval matched only under W-gt. The b_dtau point
           estimate is reproduced only under W-ge. The specification that
           gives the interval does not give the point it surrounds.
-        - Each interval was tried against all 80 (E, W, O, U) combinations
-          x 4 B x 7 seeds x 2 levels x the V and G variants. The log reports
-          8960 interval bootstraps in total. Among that many draws, a
+        - Each interval target was tried under every enumerated
+          combination: 80 (E, W, O, U) combinations per target, each under
+          4 B, 7 seeds, 2 levels and the variant and scope options. The log
+          reports "interval tasks: 8960". Among that many draws, a
           single coincidence within half a unit in the fourth decimal is
           what chance can produce. R5 shows 11 to 26 families consistent
           with each REGR interval. These one-specification matches are
@@ -944,9 +945,8 @@ instruction of 2026-10-15.
           V=abs: no signed specification reproduces those three. In this
           enumeration, the published intervals at those targets behave as
           bootstraps of an absolute value. That is the N32 error. At
-          tau 0.5 the change is positive in every resample that matters,
-          so signed and abs coincide there and the matches include both.
-          This is consistent with the absolute-value construction; it is
+          tau 0.5 the matches come in signed/abs pairs: the two variants
+          gave the same interval there. This is consistent with the absolute-value construction; it is
           not proof of it.
     OUTCOME 3. NOT REPRODUCED. Seven quantities, with the nearest
     specification's maximum endpoint error, against the R3 tolerance, and
@@ -1052,7 +1052,9 @@ instruction of 2026-10-15.
         - the round-1 intervals were produced by code that was not
           deposited;
         - their construction cannot be identified from the deposit;
-        - several match many constructions, two match none.
+        - several match many constructions; two match no enumerated
+          construction under any seed, and four more match no enumerated
+          seed.
       - The new paper does not reuse any round-1 interval. Every interval it
         reports comes from its own archived rerun under the criteria of
         ANALYSIS_CRITERIA_DRAFT, once decided.
