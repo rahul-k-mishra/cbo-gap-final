@@ -44,6 +44,10 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
 - ARC7 (new, T). The 70-file submission package was the 68 files plus
   cover-letter.tex and cover-letter.pdf; the statement does not promise a
   cover letter. No action.
+- See also N30 (2026-10-15): several reported intervals have no generating
+  code in the archive. It is the same kind of defect as ARC1 and ARC5, a
+  Data Availability claim the deposit does not meet, and is recorded in
+  full under "Newly found (2026-10-15)".
 
 ## Referee points
 
@@ -678,6 +682,184 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     --data-dirs on every attempt.
   CLOSED by f83eefb (kgrun md5 d8a053691f3a5774d2975f5cde07ee44). Not yet
   exercised on Kaggle.
+
+## Newly found (2026-10-15)
+
+Found by Claude while reading the archive for
+notes/ANALYSIS_CRITERIA_DRAFT.md (ef57dc4), section 0. Entered on Rahul's
+instruction of 2026-10-15.
+
+- N30 (archive, T; same kind as ARC1 and ARC5). Reported intervals with no
+  generating code in the archive.
+  - The claims in the submitted manuscript:
+    - Supplementary information (tex 719): "Each pre-specified criterion
+      is stated in the docstring of the script that applies it and is
+      present in the archived copy of that script".
+    - Data availability (tex 728): "scripts and result files are deposited
+      ... with one exception", the dagger rows.
+    - Section 6, "Uncertainty" (tex 309): "every interval reported in this
+      paper is the 4,000-resample value emitted by the single archived
+      re-analysis script, so that no reported interval originates from a
+      computation that is not in the archive".
+  - What the archive holds. The only archived 4000-resample re-analysis
+    script covering more than one claim is reboot.py. It reads only
+    regimemap_D_real.csv and regimemap_M_real.csv (docstring; main, lines
+    285-305). It covers:
+    - the 7.15 paired gaps;
+    - the severity trends;
+    - the onset intervals;
+    - the 7.12 b3 intervals.
+  - Reported numbers for which no file in zenodo-v1 contains the computing
+    code. Every .py file in zenodo-v1 was searched:
+    - Table 3 upper block (tex 363-370): the d = 2 to d = 40 changes on
+      J >= 1/tau_0 with their intervals, bootstrapped over twelve
+      objective-law units.
+    - Section 7.3 regression on J >= 1/tau_0 and on the full grid (tex 392):
+      b_dtau +0.0073 [-0.0091,+0.0227], b_tau, b_d, and the full-grid
+      b_dtau +0.0305 [+0.0123,+0.0479]. The abstract (tex 34) and the
+      Conclusions (tex 703) quote these.
+    - Section 7.3 pairwise target contrasts (tex 394) and the full-grid
+      separation +0.1940 [+0.0682,+0.3105].
+    - Table 3 middle block, full grid, with the twelve-unit intervals.
+      exactcal.py P-E2 fits the full grid, but it bootstraps pooled
+      realizations of an absolute value (lines 352-372), not twelve units.
+      tex 563 attributes 0.253 [0.117,0.381] to the Table 3 unit.
+    - The bootstrap slope-SE reference scale 0.0260, IQR [0.0191,0.0341],
+      over 420 cells (tex 78). The constant 0.026 appears in the archive
+      only as an input (rmapj.py lines 51, 254). The 0.0219 delta-method
+      floor is computed by audit.py A1, so it is not in this list.
+  - Code evidence. J >= 1/tau_0 appears in archived code only in
+    perjcal.py line 168, a different experiment. rmapj.py refits on
+    J >= 20 (line 193). exactcal.py fits every slope on the full grid
+    (lines 266, 315).
+  - Consequences:
+    - Those numbers cannot be reproduced from the deposit. tex 309's
+      assurance is false for them.
+    - The rmapj P-R3 rule and the stated basis of the 0.05 equivalence
+      margin (tex 309) rest on 0.0260.
+  - Not known: what code produced them.
+  - Search of the laptop, 2026-10-15, by file and directory names only. No
+    file was opened.
+    - Searched: /home/rahul (Research, Downloads, Desktop, Documents, the
+      home directory), /media, /mnt and /tmp, for the archived script
+      names, sn-article*, *cbo*, *zenodo*, *JOGO*, and every zip, tar, 7z,
+      rar, *backup* and *.bak file.
+    - Found: no round-1 working directory.
+    - /home/rahul/cbo-archive-test holds 68 files with the same names as
+      zenodo-v1. It is the separate read-only copy used by the determinism
+      gate (ENVIRONMENT.md; logs/detcheck-v2-full-separate.log), so it
+      holds no code beyond the deposit.
+    - /home/rahul/Downloads/cbo-gap-final.zip (2033498 bytes, 2026-10-08)
+      is unopened; its contents are not known.
+    - Every other archive found belongs to other projects (ERL, PLEF,
+      por_project). /media/rahul is empty and no external drive is
+      mounted.
+    The archive was produced on a Windows 7 machine (CLAUDE.md rule 7), so
+    the round-1 working directory, if it survives, is most likely there.
+    That is an inference, not a finding.
+  OPEN.
+- N31 (manuscript, T; same class as R7). The isotropic and anisotropic arms
+  are not paired, although the text says they are.
+  - The claims:
+    - tex 650: "Paired on the shared realization index, the
+      anisotropic-minus-isotropic gap ...";
+    - tex 309: "Where two arms share seeds the resample is paired on the
+      realization index";
+    - the docstrings of regimemap.py ("PAIRED on the shared realization
+      index"), reboot.py ("Two-arm comparisons resample PAIRED on the
+      shared realization index") and audit.py ("which shared seeds", of
+      the crossed.py arms).
+  - The code. In each of these scripts the diffusion loop sits outside the
+    seed counter, so realization k of the isotropic arm and realization k
+    of the anisotropic arm receive different seeds:
+    - regimemap.py: diffusion loop line 367, "s += 1" line 375;
+    - crossed.py: 327 and 334;
+    - sigma.py: 311 and 318;
+    - cliff.py: 315 and 322.
+    rmapj.py rebuilds Part D's task list in the same order, so its seeds
+    follow the same pattern.
+  - Specimen, from the archived seed column of rmapj_real.csv: ackley,
+    d = 5, r = 0.75, tau 0.1:
+        isotropic    rep 0 seed 20260830   rep 1 seed 20260831
+        anisotropic  rep 0 seed 20261910   rep 1 seed 20261911
+  - Consequence. Every paired diffusion comparison in the paper compares
+    independent runs under a pairing claim. That covers:
+    - the 7.15 paired gaps and their equivalence verdicts (regimemap.py
+      paired_ci; reboot.py paired_gaps);
+    - the 7.11 "3 of 18" equivalence, which the text itself calls unpaired
+      (tex 497) but whose basis audit.py describes as shared seeds.
+  - Same class as referee point 7 (R7). There, two runs without shared
+    seeds were described as a measured effect of a protocol change; here,
+    arms without shared seeds are described as paired.
+  - What it does not invalidate. Differencing independent realizations by
+    position and bootstrapping the differences estimates the variance of a
+    difference of two independent means with equal counts. So the
+    intervals themselves are not invalidated by this. This is reasoning
+    and has not been checked numerically. What is false is the pairing
+    claim, and with it any implied common-random-number variance
+    reduction.
+  - The same holds for pairings across r, tau_0 and d within one
+    diffusion. The seed counter also runs across those loops. Specimen,
+    rmapj_real.csv, isotropic ackley, rep 0:
+        d = 5:  r = 0.75 seed 20260830, r = 1.0 seed 20260842;
+        d = 10: r = 0.75 seed 20260902, r = 1.0 seed 20260914.
+    So these are index pairings of independent runs too:
+    - tex 545, "a bootstrap paired on the 36 objective-realization indices
+      and resampled jointly across the panel" (b3, Part M);
+    - tex 648, "a bootstrap over the 36 objective-realization pairs shared
+      across all five dimensions" (severity trend);
+    - the reboot.py severity and onset bootstraps;
+    - the rmapj.py trend bootstrap.
+    The same reasoning applies: the intervals stand, but the word "paired"
+    and any implied variance reduction do not. This part goes beyond
+    Rahul's instruction of 2026-10-15 and was added by Claude on reading
+    the seeds.
+  - control.py does share seeds between its fixed and adaptive arms (line
+    345 and the comment after it). Its pairing (Section 7.4, Table 4) is
+    not affected.
+  - Open decision for the rerun: whether the seed key omits the diffusion
+    coordinate, so that the two arms share X0 and the Brownian increments.
+    No such decision has been made (ANALYSIS_CRITERIA_DRAFT items 3 and
+    5).
+  OPEN.
+- N32 (archive, criteria; record and rule). Three archived criteria repeat
+  analysis-design errors catalogued in supplement S3 (ledger S1):
+  - boundary.py line 373, monotonicity in tau_0 as "np.all(diffs >= -0.02)":
+    a monotonicity tolerance fixed by hand below the measured spread. The
+    error is named in law.py's docstring ("the previous phase set a
+    monotonicity tolerance of 0.02 against a measured floor of 0.055 and
+    the test could not have passed").
+  - control.py criterion (iii), "mean slope within 0.15 of -1" (docstring;
+    line 313): a two-sided criterion for a one-sided bound.
+  - exactcal.py P-E2 (lines 365-369) and perjcal.py P-C2 (lines 235-239)
+    bootstrap the absolute value of the d = 2 to d = 40 change. A
+    percentile interval of an absolute value cannot extend below zero and
+    is biased away from it when the true change is near zero.
+  Rule: none of the three is inherited by the rerun. The rerun analysis
+  docstring states its replacement for each, or states that the comparison
+  is not made. The archived results computed under them stay in the
+  supplement, labelled with this entry. OPEN until the rerun analysis
+  docstring is committed.
+- N33 (archive and manuscript, T; design rule). Two per-cell slope
+  estimands, reported without distinction.
+  - Slope of the averaged curve: E_J averaged over realizations at each J,
+    one slope fitted, the bootstrap refitting per resample. Used by
+    mechanism, control, boundary, sigma, crossed, cliff, regime, law and
+    visibility (each boot_ci; for example sigma.py lines 218-230).
+    Reported in Tables 4 and 5 and in the 7.5, 7.10 and 7.11 counts.
+  - Mean of per-realization slopes: a slope fitted within each realization
+    and averaged, the bootstrap resampling slopes. Used by regimemap.py
+    (boot_ci lines 250-257; one_realisation lines 237-238), and so by
+    partm, reboot and rmapj, and by exactcal P-E2 and perjcal P-C2.
+    Reported in Tables 7 and 9 and in the 7.12 and 7.15 counts.
+  - The two are different estimands: the log of a mean is not the mean of
+    the logs. The manuscript never says which a given number is.
+  Rule: the rerun chooses one per-cell slope, or declares one primary and
+  the other secondary, and states the choice in the rerun analysis
+  docstring with a worked example before the first rerun number exists
+  (ANALYSIS_CRITERIA_DRAFT, "A choice that comes before items 1 to 6").
+  The rerun files store E_J per realization, so either can be computed.
+  OPEN until that docstring is committed.
 
 ## Checked and found sound
 
