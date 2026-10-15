@@ -1,0 +1,16 @@
+==============================================================================
+kgrun  action fetch  job calprec2-long-s5of26-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+FETCH OUTPUT into /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009
+  $ kaggle kernels output ericsom/cbo-calprec2-long-s5of26-a1 -p /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009/calprec2-full-20261014-180438-s5of26/calprec2_params.csv
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009/calprec2-full-20261014-180438-s5of26/calprec2_plan.csv
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009/calprec2-full-20261014-180438-s5of26/calprec2_tasks.csv
+Kernel log downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s5of26-a1-kaggle-20261015-191009/cbo-calprec2-long-s5of26-a1.log 
+  4 files, manifest written to sha256.txt
+    c591f9a84fcb7a2092e2937f4dbbc9c9e254bbaa7c8f06cc75f8aecc4c462f79  calprec2-full-20261014-180438-s5of26/calprec2_params.csv
+    f92b2c0f9e82481b1122177b84545900cc37b11b5f435bed28cc3f16ecd2b406  calprec2-full-20261014-180438-s5of26/calprec2_plan.csv
+    a7ca547cba77b816fd6098a844e16fb9014968723a491fe577564c82838e6833  calprec2-full-20261014-180438-s5of26/calprec2_tasks.csv
+    1e7219cb4ee045f3c9a0eb22f0a1f2a6e6334e4e157810913dfe80ab8d6540e1  cbo-calprec2-long-s5of26-a1.log
+==============================================================================
