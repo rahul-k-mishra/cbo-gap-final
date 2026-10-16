@@ -38,7 +38,10 @@ its own section for Rahul's approval. A ninth message decided H1 to H3
 and approved the layout with one change, marked "(ninth message)"; the
 audit was run again (thirteenth to fifteenth passes). A tenth message
 put J1 to J5 in scope, marked "(tenth message)", specified in section 8;
-the audit was run again (sixteenth to eighteenth passes).
+the audit was run again (sixteenth to eighteenth passes). An eleventh
+message decided K1 and K2, marked "(eleventh message)"; the audit was run
+again (nineteenth to twenty-first passes), and the trajectory script was
+written.
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -1253,14 +1256,36 @@ than reporting the first alone") was sound.
   reproduced on W-ge; CON(0.5, 0.1) -0.0050 on W-full.
 - Each pair is printed once with both orientations, as contrast 7 is.
 
-**SEP.** The manuscript does not define it (n30_reconstruct.py docstring:
-"The text does not define it"). N30 reproduced the published +0.1940
-only under definition S1 = c(0.01) - c(0.1) on W-full (N30 log lines 280
-to 283 and 1046). S1 is P3 above, on the primary window: the same
-number, under round 1's name. Whether SEP is S1 (and so already
-computed as P3) or S3 = c(0.01) - (c(0.5) + c(0.1)) / 2, which matches
-the text's words "differ from the moderate ones", is NOT DECIDED (K1,
-under "Decisions still needed").
+**Naming of the pairs (eleventh message, from K1).** CON keeps round 1's
+definition, CON(t1, t2) = change(t1) - change(t2); under the sign rule
+the arguments are written tighter first. The three pairs are reported as
+CON(0.1, 0.5), CON(0.01, 0.5) and CON(0.01, 0.1) (in TAU8 and GEOM:
+CON(0.1, 0.3), CON(0.01, 0.3), CON(0.01, 0.1)). Contrast 7 is CON(0.01,
+0.5) (CON(0.01, 0.3) in TAU8 and GEOM). Round 1's CON(0.5, 0.01) is the
+same function with its arguments reversed. Applied by Claude from the
+eleventh message's "CON(0.01, 0.1)".
+
+**SEP is retired (eleventh message, K1).** Rahul's decision: both
+quantities are reported, and neither is called SEP.
+- Round 1's SEP has no definition in the manuscript (n30_reconstruct.py
+  docstring: "The text does not define it"). Its published +0.1940
+  reproduces only as the third CON pair, c(0.01) - c(0.1) on W-full (N30
+  log lines 280 to 283 and 1046). The text's wording ("the tightest
+  target appeared to differ from the moderate ones", tex line 394)
+  describes the mean-based quantity instead. The label covered two
+  different things, and is retired so the ambiguity cannot recur.
+- The third CON pair is reported as CON(0.01, 0.1), never as SEP. It is
+  already computed under J1.
+- The mean-based quantity is added with its own name, TMM (tight minus
+  moderate mean; name chosen by Claude):
+    TMM = change(0.01) - (change(0.5) + change(0.1)) / 2
+  in CONC and PROBEARM, and, by the loosest-target substitution,
+    TMM = change(0.01) - (change(0.3) + change(0.1)) / 2
+  in TAU8 and GEOM. Per unit and pooled, both windows, interval and
+  DIFFERENCE rule, as every section-8 quantity.
+- Worked example (illustrative numbers): change(0.5) = +0.05, change(0.1)
+  = +0.06, change(0.01) = +0.15. TMM = 0.15 - (0.05 + 0.06) / 2 = +0.095.
+  CON(0.01, 0.1) = 0.15 - 0.06 = +0.09.
 
 ### 8.2 J2: severity and its trend (tenth message)
 
@@ -1389,14 +1414,25 @@ script prints the audit phase's wall time and peak RSS.
   floor is 1/(40 x 0.01) = 2.5. Mean ratio 2.6 at d = 2 and 3.4 at d =
   40 gives a difference of +0.8 (round 1's orientation: -0.8).
 
-**Not covered: the per-J-beta experiment.** The abstract's second result
-also rests on "a dedicated experiment that controls finite-ensemble
-concentration exactly, at the cost of one inverse temperature per
-ensemble size" (tex line 36). That is perjcal.py (tex lines 591 to 593;
-zenodo-v1/perjcal.py, perjcal_real.csv), not the audit. It evolves
-trajectories at a per-J beta, so it would need new rows. Its cost is not
-in costprobe2's projection, which models none of perjcal's cells. Whether
-it is in scope is NOT DECIDED (K2).
+**The per-J-beta experiment, perjcal (eleventh message, K2: in
+scope).** The abstract's second result also rests on "a dedicated
+experiment that controls finite-ensemble concentration exactly, at the
+cost of one inverse temperature per ensemble size" (tex line 36). That is
+perjcal.py (tex lines 591 to 593; zenodo-v1/perjcal.py,
+perjcal_real.csv), not the audit.
+- perjcal is a different estimand from the fixed-beta results, as the
+  archive itself says ("The fitted exponent is a different estimand ...
+  the two should not be pooled or compared as if they were the same
+  quantity", perjcal.py docstring; tex line 591, "It is a different
+  estimand and we do not pool it with the rest of the paper"). It is
+  reported separately and never pooled with them (Rahul).
+- Its rows need trajectories. Rule 6: no design whose cost and peak RSS
+  are unmeasured. scripts/perjcalprobe.py times one call of the archived
+  perjcal.one_J for every unit of perjcal's archived design and projects
+  its cost. Rahul approves the rows only after seeing that projection.
+- Until then perjcal is in no grid and in no rerun script. Its analysis
+  criteria are listed under "Decisions still needed", to be decided with
+  the rows.
 
 **Correction to the fifteenth pass's J5 (Claude's error).** J5 named "the
 whole-run experiment, tex line 398". Tex line 398 is "Holding
@@ -2117,6 +2153,109 @@ K2. perjcal (8.5): the per-J-beta experiment behind the abstract's
 Nothing new. The audit stops on K1 and K2. The rerun script is not
 started.
 
+### Eleventh message: K1 and K2 decided
+
+- K1: SEP retired; the third CON pair is reported as CON(0.01, 0.1); the
+  mean-based quantity added as TMM, with its formula; Rahul records that
+  the label covered two different things (8.1).
+- K2: perjcal in scope, a different estimand, reported separately and
+  never pooled with the fixed-beta results; its cost probe first, its
+  rows approved after the projection (8.5).
+
+### Nineteenth pass (against the eleventh message)
+
+Applied, as following from fixed rules:
+N1. CON keeps round 1's function, CON(t1, t2) = change(t1) - change(t2),
+    with the tighter target written first, for all three pairs; contrast 7
+    is CON(0.01, 0.5) (8.1).
+N2. TMM in TAU8 and GEOM uses 0.3 for 0.5, by the substitution already used
+    (8.1).
+N3. scripts/perjcalprobe.py written: one call of the archived perjcal.one_J
+    per unit of perjcal's archived design (6 objectives x d 2, 40 x tau_0
+    0.5, 0.01, J >= 1/tau_0), plan identity read from perjcal.py, seed
+    pass-through and determinism, RSS budget, seed-dependence evidence,
+    projection at the archived M. Seed kind 91 (new; no other script uses
+    it).
+N4. perjcal's analysis criteria are not specified until Rahul approves its
+    rows; they are listed under "Decisions still needed".
+
+### Twentieth pass (the trajectory script against this file)
+
+scripts/rerun.py and scripts/rerunlib.py written. Choices made in
+writing them, each following from a fixed rule or from the code:
+O1. The Kaggle bundle ships two archived CSVs only (kgrun.py
+    ARCHIVE_CSVS). So every check that reads the archive's CSVs or the
+    manuscript runs once on the laptop (--precheck) and writes a plan
+    folder; Kaggle runs read the plan. The onset control is in the
+    precheck, so no trajectory can run before it passes.
+O2. The archived betas of the non-calprec2 rows are recomputed by each
+    module's own code; only the 4000-point probe samplers are retyped, and
+    A-BETA checks every recomputed beta against the archived CSV, to half
+    a unit in the last printed digit. The same for sigma (A-SIGMA).
+O3. A shared cell is run by the job whose --rows contain its owner row,
+    so it is run once whichever jobs run.
+O4. Owners are computed over all seventeen rows in every plan, so keys do
+    not depend on which rows a job selects, or on whether calprec2's table
+    exists yet. Its four rows are "beta pending" until a plan is built
+    with the table.
+O5. Shards by longest-processing-time first over costprobe2's measured unit
+    walls; G-STOP at 36000 s, as calprec2; resume under rule 17.
+O6. A determinism smoke (kind 83) per module, bitwise.
+O7. The trajectory script prints no slope, interval or verdict. Its output
+    is per-realization E_J only, so running it shows no result before the
+    analysis criteria are complete.
+Nothing in the trajectory script needs Rahul's decision.
+
+### Twenty-first pass (the analysis script against this file)
+
+Writing rerun_analysis.py against the checklist found three points that
+need Rahul's decision. The analysis script is not written; it will be
+written in one piece once they are settled, and committed before its
+first execution.
+L1. The sixth message (S3) says the comparisons not made report "estimates
+    and intervals for these quantities, with no verdict" (checklist:
+    "their quantities are printed with intervals only"). Item 7 says "no
+    other contrast is computed". The two conflict, because those
+    quantities are contrasts or regressions. Read from the code:
+    (a) cliff (i): S(r) - S(0.5) at r = 0.9 and 1.0; (ii): S(5.0) -
+        S(0.5); on the objective-mean slope, per (diffusion, d) (cliff.py
+        lines 62, 63, 120, 121);
+    (b) regimemap "map informative": per (diffusion, d), the largest range
+        (max - min) of the objective-mean slope over tau_0 at fixed r, and
+        over r at fixed tau_0 (regimemap.py lines 466 to 482): a range
+        between levels the data select, not two named levels;
+    (c) crossed small_A: the ANISO arm-A diffusion gaps, which contrast 3
+        already reports. Nothing to add;
+    (d) audit.py A2: per (diffusion, d, tau_0) in SIGMA, the OLS
+        coefficient of slope on r (audit.py lines 174 to 215);
+    (e) partm P-M2 is J3, already specified. P-M3 compares RMAP's d40 - d10
+        change at r <= 1 with Section 7.3's published values (partm.py
+        lines 330 to 353), that is with round-1 numbers from another
+        design. P-M4 compares RMAP with ONSET at tau_0 0.1, r 1.0, and
+        those cells are now shared, so the comparison is identically zero
+        by construction (applied: reported as vacuous, no number).
+L2. The variance-explained quantities "printed with no verdict" (item 4;
+    sixth message S5): mechanism P3.4's three R^2 (OLS of cell slopes on
+    log tau_0; plus log d; plus objective dummies; mechanism.py lines 432
+    to 456); regime P6.3's in-sample and out-of-sample R^2 of three nested
+    models trained on SYNTH and tested on NAMED (regime.py lines 441 to
+    470); ess_surface P1.3. Item 1 gives every reported interval at 95%,
+    but no message says whether these carry an interval. And P1.3 defines
+    "slope breakdown" by the retired rule abs(slope + 1) < 0.15
+    (ess_surface.py docstring lines 33 to 40; item 4), so it cannot be
+    computed as specified.
+L3. Straightness: "the quadratic term is printed with its interval only".
+    regime.fit_curv is importable. The archive applied it to the mean curve
+    (regime.py line 362), the S-curve analogue. Item 0 makes the
+    per-realization mean primary for slopes and says nothing about
+    curvature.
+Applied, no decision: ess_surface's minimum ESS, reference and
+subensemble, is printed per cell as the mean over realizations of the
+values one_realisation returns, with no SATURATED label.
+
+The audit stops on L1 to L3 for the analysis script. The trajectory
+script is complete.
+
 ---
 
 ## Corrections to the first decision message, from the logs
@@ -2295,7 +2434,7 @@ Tolerances and margin
 - [ ] No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO,
       BETA-ANI.
 - [ ] Section 8: REGF b_d, b_tau, b_dtau (CONC, PROBEARM, TAU8, GEOM; both
-      windows); the three CON pairs, both orientations; SEP per K1;
+      windows); the three CON pairs named CON(tighter, looser), both orientations; TMM; no quantity labelled SEP;
       S(1, 3) and S(0.75, 3) per (diffusion, d) and their trends in
       log2 d; RMAP b1, b2, b3 per (diffusion, d), both windows; onset
       intervals against 1 with counts and denominators; each per unit
@@ -2364,42 +2503,49 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The tenth message put J1 to J5 in scope; section 8 specifies them. Left:
+The eleventh message decided K1 and K2. The trajectory script
+(scripts/rerun.py, scripts/rerunlib.py) is written and needs nothing
+further. Left, for the analysis script only:
 
-1. K1, SEP's definition. N30 reproduced the published +0.1940 only as S1
-   = c(0.01) - c(0.1) on W-full, and S1 is the third CON pair (P3),
-   already computed. The text's words, "differ from the moderate ones",
-   fit S3 = c(0.01) - (c(0.5) + c(0.1)) / 2. Options: SEP is S1 (no new
-   number; P3 is reported under both names), or S3 is added as a new
-   quantity, or both.
-2. K2, perjcal. The abstract's second result also rests on the per-J-beta
-   experiment (tex lines 36 and 591 to 593). It is not the audit, it
-   needs trajectory rows outside the grid, and its cost is not in any
-   projection. In scope or not? If in scope, a cost probe for its cells
-   comes first (rule 6), and then your approval of the rows.
+1. L1. Which of the not-made comparisons' quantities are computed, given
+   item 7's "no other contrast is computed": cliff (i) and (ii); the
+   regimemap axis ranges; audit A2's coefficient of slope on r; partm
+   P-M3 (a comparison with round-1 numbers). Details under the
+   twenty-first pass.
+2. L2. Whether the R^2 values (mechanism P3.4, regime P6.3) carry
+   intervals, and what becomes of ess_surface P1.3, whose "breakdown" is
+   defined by the retired abs(slope + 1) < 0.15.
+3. L3. Whether the curvature estimand is the mean of per-realization
+   curvatures (item 0's form) or the curvature of the mean curve (the
+   archive's).
 
-## What the rerun script needs that this file does not yet give
+After the perjcal projection, with its rows:
+4. perjcal's analysis criteria. Its archived rules: P-C1, control within
+   1% at every point and more than 5% misses stopping the analysis;
+   P-C2, the absolute value of the d2 to d40 change bootstrapped over
+   objectives (items 3 and 4 already replace that with the signed change
+   resampled within cells); P-C3, a three-branch decision comparing the
+   tight-target change with the moderate-target interval; and P-C2's
+   printing of the nested-design values beside its own, which compares
+   two estimands the archive says not to compare.
 
-Needs Rahul's decision: K1 and K2. K1 changes one reported quantity. K2
-decides whether rows are added. The eighteenth pass found nothing
-further. Once both are settled, the file is complete enough for the
-script to be written.
+## What the rerun needs that this file does not yet give
 
-For J5 nothing enters the grid: the audit adds no row and no trajectory
-(8.5). Rahul asked to approve rows before they are written into the
-grid; there are none to approve.
+For the trajectories: nothing. The order of work is:
+- the precheck on the laptop, which writes the plan (O1 to O4); then the
+  schedule, the smoke and the shards of the thirteen rows on archived
+  betas;
+- calprec2's beta table (shards 0 to 7 committed, 8 running), then a
+  second precheck with --calprec2, and the four calibrated rows.
 
-Waiting, with nothing for Rahul to decide:
-- calprec2's beta table, calprec2_beta.csv, written by its finalize step
-  after all 26 long shards (0 to 25). Run folders for shards 0 to 7 are
-  under runs/ (shard 2 in two folders); shard 8's log is uncommitted.
-  The script can be written before the table exists. CONC, TAU8, SIGMA
-  and ANISO cannot run, and the reference-adequacy columns cannot be
-  filled, until it does.
-- Script work, waiting on neither: reproducing each archived-beta row's
-  beta by importing the archived module (rule 4), checked against
-  costprobe2's P0 constants; the onset positive control; the F1 check.
+For the analysis: L1 to L3 above. The analysis script is written after
+them and committed before its first execution.
+
+For perjcal: the projection from scripts/perjcalprobe.py, Rahul's approval
+of the rows, then item 4 above.
 
 Already in place: item 3's bootstrap key (fixed by the approved layout);
 the Kaggle determinism gate passed (ENVIRONMENT.md line 49); peak RSS at
-J_inf 100000 was measured (SESSION_STATE.md line 206, RERUN_PLAN F6).
+J_inf 100000 measured (SESSION_STATE.md line 206, RERUN_PLAN F6); every
+unit of every row measured by costprobe2 at 354.2 MB or less
+(runs/costprobe2-finalize-20261011-101659).
