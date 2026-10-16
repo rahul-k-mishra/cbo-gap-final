@@ -41,7 +41,9 @@ put J1 to J5 in scope, marked "(tenth message)", specified in section 8;
 the audit was run again (sixteenth to eighteenth passes). An eleventh
 message decided K1 and K2, marked "(eleventh message)"; the audit was run
 again (nineteenth to twenty-first passes), and the trajectory script was
-written.
+written. A twelfth message decided L1 to L3, marked "(twelfth
+message)"; the twenty-second pass found nothing further, and the analysis
+script was written.
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -2256,6 +2258,61 @@ values one_realisation returns, with no SATURATED label.
 The audit stops on L1 to L3 for the analysis script. The trajectory
 script is complete.
 
+### Twelfth message: L1 to L3 decided
+
+L1. Where the sixth message (S3) and item 7 conflict, item 7 governs.
+    Rahul records that his sixth-message wording created the conflict:
+    "quantities printed with intervals" meant the row's estimates, not
+    reconstructed comparisons.
+    - cliff (i) and (ii): not computed. They are contrasts between r
+      levels that item 7 does not list, and listing them now would be
+      adding comparisons after seeing which ones exist. CLIFF prints its
+      per-cell S-slopes with intervals and its diffusion contrast, nothing
+      else.
+    - regimemap "map informative": not computed. A max-minus-min over
+      levels the data choose is the objection item 2 made to N_vis.
+    - audit A2, the coefficient of slope on r: computed, a regression
+      coefficient fixed in the docstring, with its interval, under the
+      estimand/shape line. Per (diffusion, d, tau_0) in SIGMA, per
+      objective and pooled; OLS of the cell S-slopes on r with intercept
+      over SIGMA's six r (audit.py lines 174 to 215); W-ge line at tau_0
+      0.01.
+    - partm P-M3: not computed. Comparing with round-1 published numbers
+      from another design is the comparability error N30 and N33 record.
+    - P-M4: vacuous under sharing (twenty-first pass); no number.
+L2. R^2 values carry no interval: they are descriptive, and an interval
+    would invite the verdict the estimand/shape line forbids. Each is
+    printed as a point value with the fit it comes from named
+    (mechanism P3.4 for CONC and PROBEARM; regime P6.3, train SYNTH,
+    test NAMED).
+    ess_surface P1.3 is reduced to printing the minimum ESS beside each
+    slope. Redefining "breakdown" would invent a criterion after the fact;
+    dropping it would lose a real measurement.
+L3. The curvature estimand is the mean of per-realization curvatures
+    (regime.fit_curv per realization), matching item 0. Departure from the
+    archive, stated explicitly: regime.py line 362 applied fit_curv to the
+    mean curve, the S-curve analogue, which is one of the two-estimand
+    defects N33 records. Rows: the regime rows (REFSIZE, SYNTH, NAMED,
+    HORIZON), with its interval only.
+perjcal's P-C1 to P-C3 wait for its rows.
+
+### Twenty-second pass (against the twelfth message)
+
+Applied, as following from fixed rules:
+Q1. P6.3's response is the cell S-slope on W-full (item 0), where the
+    archive's regime_B and regime_C files held the mean-curve slope
+    (regime.py cell_summary). The features are the cell means of the
+    values regime.one_realisation returns, as cell_summary took them.
+    regime.fit_predict is imported; the three feature lists are copied
+    from regime.py lines 451 to 453.
+Q2. mechanism P3.4's response is the cell S-slope on W-full; the design is
+    mechanism.py lines 436 to 450 (log tau_0, log d, objective dummies);
+    mechanism.r2_of is imported.
+Q3. The minimum ESS printed beside each BETA-ISO and BETA-ANI slope is
+    the mean over realizations of ess_min_ref and of ess_min_sub at each
+    J, as ess_surface.one_realisation returns them.
+Nothing needs Rahul's decision. The analysis script is written.
+
 ---
 
 ## Corrections to the first decision message, from the logs
@@ -2462,11 +2519,16 @@ Tolerances and margin
 - [ ] Before each fit, every E on the window is checked finite and > 0; a
       realization failing it is handled by item 3's realization rule for
       that window, with the bad-point count printed.
-- [ ] Not computed as verdicts: cliff (i), (ii), map informative, crossed
-      small_A, audit A2, partm P-M2 to P-M4; their quantities are printed
-      with intervals only.
-- [ ] mechanism's three R^2 values, regime P6.3 and ess_surface P1.3 are
-      printed with no verdict.
+- [ ] Not computed (twelfth message, L1): cliff (i) and (ii), regimemap
+      "map informative", partm P-M3; P-M4 reported as vacuous; crossed
+      small_A is contrast 3. Computed: audit A2's coefficient of slope on
+      r, with its interval.
+- [ ] mechanism P3.4's three R^2 and regime P6.3's R^2 printed as point
+      values with the fit named, no interval, no verdict; ess_surface P1.3
+      reduced to the minimum ESS beside each slope (L2).
+- [ ] Curvature in the regime rows is the mean of per-realization
+      fit_curv values, with its interval; the departure from the
+      archive's mean-curve value is stated (L3).
 - [ ] ESS printed with no SATURATED label; no "outside FKR hypothesis"
       label; regions labelled "r < 1" and "r >= 1", never "in",
       "admissible" or "inside the hypothesis".
@@ -2503,24 +2565,10 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The eleventh message decided K1 and K2. The trajectory script
-(scripts/rerun.py, scripts/rerunlib.py) is written and needs nothing
-further. Left, for the analysis script only:
+The twelfth message decided L1 to L3. Left, after the perjcal projection,
+with its rows:
 
-1. L1. Which of the not-made comparisons' quantities are computed, given
-   item 7's "no other contrast is computed": cliff (i) and (ii); the
-   regimemap axis ranges; audit A2's coefficient of slope on r; partm
-   P-M3 (a comparison with round-1 numbers). Details under the
-   twenty-first pass.
-2. L2. Whether the R^2 values (mechanism P3.4, regime P6.3) carry
-   intervals, and what becomes of ess_surface P1.3, whose "breakdown" is
-   defined by the retired abs(slope + 1) < 0.15.
-3. L3. Whether the curvature estimand is the mean of per-realization
-   curvatures (item 0's form) or the curvature of the mean curve (the
-   archive's).
-
-After the perjcal projection, with its rows:
-4. perjcal's analysis criteria. Its archived rules: P-C1, control within
+1. perjcal's analysis criteria. Its archived rules: P-C1, control within
    1% at every point and more than 5% misses stopping the analysis;
    P-C2, the absolute value of the d2 to d40 change bootstrapped over
    objectives (items 3 and 4 already replace that with the signed change
@@ -2538,11 +2586,11 @@ For the trajectories: nothing. The order of work is:
 - calprec2's beta table (shards 0 to 7 committed, 8 running), then a
   second precheck with --calprec2, and the four calibrated rows.
 
-For the analysis: L1 to L3 above. The analysis script is written after
-them and committed before its first execution.
+For the analysis: nothing. scripts/rerun_analysis.py is written and is
+committed before its first execution.
 
 For perjcal: the projection from scripts/perjcalprobe.py, Rahul's approval
-of the rows, then item 4 above.
+of the rows, then item 1 above.
 
 Already in place: item 3's bootstrap key (fixed by the approved layout);
 the Kaggle determinism gate passed (ENVIRONMENT.md line 49); peak RSS at
