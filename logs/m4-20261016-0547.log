@@ -1,0 +1,62 @@
+========================================================================================
+CBO-GAP M4 -- realization-level slope SE per cell (draft items 4, 5; N30)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m4-20261016-054755
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 64, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  P0             refit vs stored slope (per-J files), tol half-unit + 1e-7; exit 3 on fail
+  boot B         4000
+  candidates     C-a, C-b over 420 regimemap cells; C-c over 180 rmapj cells
+  constructions  se_boot_curve, se_boot_slope, se_plain_slope
+  covers         random-beta (exactcal) and probe-beta (rmapj, regimemap) designs ONLY; not calprec betas
+  verdict        none; descriptive
+  window         full grid J = 10..5000 (per-J files)
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+    e641816b024c2e606a52c002c97f7c2d238559cb92663741f3bfccc4304026ab  regimemap_D_real.csv  ok
+    44d1e67fd77a6362fa4079ee7e0b13d3b83687c15573ecaa9d410fce272a79b5  regimemap_M_real.csv  ok
+
+  P0 exactcal_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 rmapj_real.csv:    2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+  cells: exactcal 144, rmapj 180, regimemap_D 180, regimemap_M 240
+
+  744 cells in 94.5 s;  per-worker peak RSS max 40.9 MB
+
+  exactcal     se_boot_curve   n 144  median 0.0449  IQR [0.0301,0.0578]  min 0.0100  max 0.1292
+  exactcal     se_boot_slope   n 144  median 0.0435  IQR [0.0298,0.0568]  min 0.0102  max 0.1169
+  exactcal     se_plain_slope  n 144  median 0.0454  IQR [0.0312,0.0590]  min 0.0105  max 0.1210
+  rmapj        se_boot_curve   n 180  median 0.0275  IQR [0.0201,0.0420]  min 0.0074  max 0.3430
+  rmapj        se_boot_slope   n 180  median 0.0261  IQR [0.0193,0.0376]  min 0.0078  max 0.1232
+  rmapj        se_plain_slope  n 180  median 0.0273  IQR [0.0201,0.0394]  min 0.0082  max 0.1298
+  regimemap_D  se_boot_slope   n 180  median 0.0261  IQR [0.0195,0.0374]  min 0.0078  max 0.1250
+  regimemap_D  se_plain_slope  n 180  median 0.0273  IQR [0.0201,0.0394]  min 0.0082  max 0.1298
+  regimemap_M  se_boot_slope   n 240  median 0.0257  IQR [0.0187,0.0328]  min 0.0096  max 0.0927
+  regimemap_M  se_plain_slope  n 240  median 0.0270  IQR [0.0195,0.0339]  min 0.0101  max 0.0969
+  exactcal tau 0.5   se_boot_curve  n  48  median 0.0428  IQR [0.0277,0.0531]  min 0.0108  max 0.1009
+  exactcal tau 0.1   se_boot_curve  n  48  median 0.0486  IQR [0.0301,0.0622]  min 0.0100  max 0.0941
+  exactcal tau 0.01  se_boot_curve  n  48  median 0.0435  IQR [0.0330,0.0617]  min 0.0133  max 0.1292
+  regimemap_M tau 0.5   se_boot_slope n  60  median 0.0261  IQR [0.0167,0.0320]  min 0.0096  max 0.0887
+  regimemap_M tau 0.1   se_boot_slope n  60  median 0.0255  IQR [0.0178,0.0330]  min 0.0097  max 0.0878
+  regimemap_M tau 0.03  se_boot_slope n  60  median 0.0259  IQR [0.0203,0.0331]  min 0.0103  max 0.0927
+  regimemap_M tau 0.01  se_boot_slope n  60  median 0.0255  IQR [0.0186,0.0331]  min 0.0112  max 0.0690
+
+  candidate reconstructions of tex 78 (0.0260, IQR [0.0191,0.0341], 420 cells); not judged
+  C-a se_boot_slope  over regimemap D+M  n 420  median 0.0259  IQR [0.0191,0.0337]  min 0.0078  max 0.1250
+  C-b se_plain_slope over regimemap D+M  n 420  median 0.0270  IQR [0.0199,0.0353]  min 0.0082  max 0.1298
+  C-c se_boot_curve  over rmapj          n 180  median 0.0275  IQR [0.0201,0.0420]  min 0.0074  max 0.3430
+
+  COVERS random-beta and probe-beta designs only; says nothing about calprec betas.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m4-20261016-054755
+========================================================================================

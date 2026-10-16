@@ -1,0 +1,121 @@
+========================================================================================
+CBO-GAP M3 -- Monte Carlo error of percentile endpoints against B (draft item 3; N8)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m3-20261016-055516
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 63, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  B list         [400, 1000, 2000, 4000, 10000]
+  P0             refit vs stored slope, tol half-unit + 1e-7; exit 3 on fail
+  covers         random-beta (exactcal) and probe-beta (rmapj) designs ONLY; not calprec betas; not coverage
+  percentiles    [2.5, 5.0, 95.0, 97.5]
+  repeats K      20
+  seed key       [20261015, 63, source, cell index, B, repeat]
+  statistics     S_curve and S_slope (as M1), full grid
+  verdict        none; descriptive
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+
+  P0 exactcal_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 rmapj_real.csv:    2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+
+  324 cells in 8206.6 s;  per-worker peak RSS max 53.6 MB
+
+  source   stat        B   pct     mc_sd med    mc_sd max   ratio med  ratio max
+  exactcal curve     400   2.5      0.004908     0.015123      0.1174     0.2022
+  exactcal curve     400   5.0      0.004068     0.011522      0.0943     0.1554
+  exactcal curve     400  95.0      0.004452     0.018997      0.1054     0.2059
+  exactcal curve     400  97.5      0.005660     0.017325      0.1330     0.2845
+  exactcal curve    1000   2.5      0.003200     0.008695      0.0746     0.1406
+  exactcal curve    1000   5.0      0.002668     0.006332      0.0607     0.1029
+  exactcal curve    1000  95.0      0.002838     0.008980      0.0663     0.1030
+  exactcal curve    1000  97.5      0.003671     0.011423      0.0840     0.1755
+  exactcal curve    2000   2.5      0.002282     0.006521      0.0518     0.0859
+  exactcal curve    2000   5.0      0.001832     0.005045      0.0422     0.0640
+  exactcal curve    2000  95.0      0.002116     0.005979      0.0477     0.0824
+  exactcal curve    2000  97.5      0.002657     0.008721      0.0592     0.1056
+  exactcal curve    4000   2.5      0.001644     0.003848      0.0382     0.0593
+  exactcal curve    4000   5.0      0.001277     0.003354      0.0309     0.0484
+  exactcal curve    4000  95.0      0.001494     0.004719      0.0330     0.0631
+  exactcal curve    4000  97.5      0.001781     0.005781      0.0400     0.0829
+  exactcal curve   10000   2.5      0.001060     0.002522      0.0237     0.0399
+  exactcal curve   10000   5.0      0.000852     0.002152      0.0193     0.0303
+  exactcal curve   10000  95.0      0.000963     0.002872      0.0212     0.0342
+  exactcal curve   10000  97.5      0.001183     0.003188      0.0265     0.0491
+  exactcal slope     400   2.5      0.005455     0.013835      0.1250     0.1866
+  exactcal slope     400   5.0      0.004517     0.016286      0.1029     0.1627
+  exactcal slope     400  95.0      0.004285     0.012044      0.1012     0.1450
+  exactcal slope     400  97.5      0.005418     0.015550      0.1270     0.1942
+  exactcal slope    1000   2.5      0.003455     0.010121      0.0821     0.1317
+  exactcal slope    1000   5.0      0.002886     0.008321      0.0670     0.1083
+  exactcal slope    1000  95.0      0.002634     0.007858      0.0641     0.0958
+  exactcal slope    1000  97.5      0.003465     0.010501      0.0798     0.1332
+  exactcal slope    2000   2.5      0.002379     0.006954      0.0556     0.0872
+  exactcal slope    2000   5.0      0.001930     0.005592      0.0450     0.0728
+  exactcal slope    2000  95.0      0.001869     0.005744      0.0453     0.0725
+  exactcal slope    2000  97.5      0.002426     0.007745      0.0573     0.0913
+  exactcal slope    4000   2.5      0.001772     0.004762      0.0413     0.0593
+  exactcal slope    4000   5.0      0.001368     0.004075      0.0322     0.0503
+  exactcal slope    4000  95.0      0.001470     0.004306      0.0328     0.0667
+  exactcal slope    4000  97.5      0.001752     0.006256      0.0403     0.0659
+  exactcal slope   10000   2.5      0.001188     0.003434      0.0267     0.0379
+  exactcal slope   10000   5.0      0.000881     0.002396      0.0211     0.0311
+  exactcal slope   10000  95.0      0.000828     0.002615      0.0202     0.0332
+  exactcal slope   10000  97.5      0.001026     0.003603      0.0257     0.0414
+  rmapj    curve     400   2.5      0.003250     0.021568      0.1124     0.1829
+  rmapj    curve     400   5.0      0.002575     0.016804      0.0912     0.1552
+  rmapj    curve     400  95.0      0.002859     0.015190      0.1009     0.1555
+  rmapj    curve     400  97.5      0.003425     0.020590      0.1241     0.2697
+  rmapj    curve    1000   2.5      0.002072     0.011717      0.0718     0.1267
+  rmapj    curve    1000   5.0      0.001742     0.008415      0.0574     0.0953
+  rmapj    curve    1000  95.0      0.001770     0.013132      0.0628     0.1106
+  rmapj    curve    1000  97.5      0.002099     0.014338      0.0802     0.1693
+  rmapj    curve    2000   2.5      0.001497     0.011759      0.0511     0.1093
+  rmapj    curve    2000   5.0      0.001196     0.006806      0.0410     0.0796
+  rmapj    curve    2000  95.0      0.001243     0.008355      0.0451     0.0829
+  rmapj    curve    2000  97.5      0.001520     0.011913      0.0564     0.1264
+  rmapj    curve    4000   2.5      0.001009     0.006342      0.0372     0.0575
+  rmapj    curve    4000   5.0      0.000815     0.004721      0.0293     0.0484
+  rmapj    curve    4000  95.0      0.000897     0.006142      0.0327     0.0530
+  rmapj    curve    4000  97.5      0.001080     0.007135      0.0398     0.0704
+  rmapj    curve   10000   2.5      0.000649     0.005474      0.0231     0.0398
+  rmapj    curve   10000   5.0      0.000501     0.003105      0.0181     0.0303
+  rmapj    curve   10000  95.0      0.000581     0.003994      0.0206     0.0377
+  rmapj    curve   10000  97.5      0.000693     0.005373      0.0255     0.0522
+  rmapj    slope     400   2.5      0.003311     0.021833      0.1264     0.2114
+  rmapj    slope     400   5.0      0.002639     0.020557      0.1005     0.2035
+  rmapj    slope     400  95.0      0.002536     0.010348      0.0944     0.1484
+  rmapj    slope     400  97.5      0.003075     0.011672      0.1203     0.2046
+  rmapj    slope    1000   2.5      0.002168     0.014397      0.0839     0.1352
+  rmapj    slope    1000   5.0      0.001698     0.012349      0.0664     0.1125
+  rmapj    slope    1000  95.0      0.001530     0.006810      0.0622     0.1077
+  rmapj    slope    1000  97.5      0.001982     0.008006      0.0747     0.1249
+  rmapj    slope    2000   2.5      0.001502     0.008347      0.0589     0.1047
+  rmapj    slope    2000   5.0      0.001196     0.006067      0.0474     0.0885
+  rmapj    slope    2000  95.0      0.001188     0.005801      0.0434     0.0689
+  rmapj    slope    2000  97.5      0.001399     0.006764      0.0537     0.0973
+  rmapj    slope    4000   2.5      0.001026     0.006409      0.0409     0.0650
+  rmapj    slope    4000   5.0      0.000840     0.005214      0.0327     0.0599
+  rmapj    slope    4000  95.0      0.000830     0.003600      0.0314     0.0509
+  rmapj    slope    4000  97.5      0.001003     0.004257      0.0386     0.0724
+  rmapj    slope   10000   2.5      0.000669     0.004999      0.0263     0.0435
+  rmapj    slope   10000   5.0      0.000519     0.003627      0.0207     0.0329
+  rmapj    slope   10000  95.0      0.000536     0.001976      0.0202     0.0329
+  rmapj    slope   10000  97.5      0.000625     0.002464      0.0247     0.0419
+  non-finite resampled values, total: 0
+
+  COVERS random-beta and probe-beta designs only; says nothing about calprec betas
+  and nothing about coverage.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m3-20261016-055516
+========================================================================================

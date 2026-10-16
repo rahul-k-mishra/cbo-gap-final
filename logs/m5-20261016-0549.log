@@ -1,0 +1,55 @@
+========================================================================================
+CBO-GAP M5 -- 90% half-width of iso/aniso gaps, independent arms (draft item 5; N31)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m5-20261016-054952
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 65, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  P0             refit vs stored slope (rmapj), tol half-unit + 1e-7; exit 3 on fail
+  boot B         4000
+  covers         probe-beta design, independent arms ONLY; not calprec betas, not shared seed keys
+  estimands      Part D: S_curve and S_slope; Part M: S_slope only
+  gap            S(anisotropic) - S(isotropic)
+  interval       5 / 95 percentiles; half-width = (p95 - p5) / 2
+  levels         L-cell (12 v 12), L-pool-u (36 v 36), L-pool-s (stratified by objective)
+  verdict        none; no margin is compared
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+    44d1e67fd77a6362fa4079ee7e0b13d3b83687c15573ecaa9d410fce272a79b5  regimemap_M_real.csv  ok
+
+  P0 rmapj_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+  groups: Part D 30, Part M 40;  tasks 500
+  group index rule: 10 x (position in sorted group list) + objective position (ackley 0, rastrigin 1, sphere 2), or + 9 for the pooled levels
+
+  500 tasks in 112.3 s;  per-worker peak RSS max 52.2 MB
+
+  90% half-width of the gap, independent arms
+  part D S_curve L-cell    n  90  min 0.0293  p10 0.0435  q25 0.0553  med 0.0785  q75 0.1108  p90 0.1529  max 0.4925
+  part D S_curve L-pool-u  n  30  min 0.0315  p10 0.0492  q25 0.0586  med 0.0656  q75 0.0841  p90 0.1303  max 0.3840
+  part D S_curve L-pool-s  n  30  min 0.0234  p10 0.0292  q25 0.0374  med 0.0472  q75 0.0643  p90 0.0858  max 0.2026
+  part D S_slope L-cell    n  90  min 0.0297  p10 0.0411  q25 0.0523  med 0.0668  q75 0.0889  p90 0.1031  max 0.2165
+  part D S_slope L-pool-u  n  30  min 0.0305  p10 0.0432  q25 0.0464  med 0.0533  q75 0.0723  p90 0.0981  max 0.1144
+  part D S_slope L-pool-s  n  30  min 0.0217  p10 0.0267  q25 0.0312  med 0.0393  q75 0.0499  p90 0.0552  max 0.0911
+  part M S_slope L-cell    n 120  min 0.0271  p10 0.0400  q25 0.0497  med 0.0630  q75 0.0817  p90 0.1028  max 0.1531
+  part M S_slope L-pool-u  n  40  min 0.0200  p10 0.0356  q25 0.0463  med 0.0597  q75 0.0748  p90 0.0886  max 0.1069
+  part M S_slope L-pool-s  n  40  min 0.0189  p10 0.0257  q25 0.0313  med 0.0363  q75 0.0489  p90 0.0609  max 0.0725
+  part M S_slope L-pool-u tau 0.5   n  10  min 0.0200  p10 0.0232  q25 0.0345  med 0.0425  q75 0.0519  p90 0.0666  max 0.0879
+  part M S_slope L-pool-u tau 0.1   n  10  min 0.0356  p10 0.0363  q25 0.0404  med 0.0546  q75 0.0794  p90 0.0889  max 0.1044
+  part M S_slope L-pool-u tau 0.03  n  10  min 0.0445  p10 0.0487  q25 0.0518  med 0.0626  q75 0.0769  p90 0.1054  max 0.1069
+  part M S_slope L-pool-u tau 0.01  n  10  min 0.0486  p10 0.0491  q25 0.0603  med 0.0691  q75 0.0783  p90 0.0842  max 0.0948
+  non-finite resampled gaps, total: 0
+
+  COVERS the probe-beta design with independent arms only; says nothing about
+  calprec betas or shared seed keys.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m5-20261016-054952
+========================================================================================

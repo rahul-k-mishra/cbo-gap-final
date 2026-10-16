@@ -1,0 +1,137 @@
+========================================================================================
+CBO-GAP M2 -- fit-window sensitivity on archived per-J files (draft item 2; N30)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m2-20261016-052740
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 62, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  P0             refit vs stored slope, tol half-unit + 1e-7; exit 3 on fail
+  boot B         4000
+  covers         random-beta (exactcal) and probe-beta (rmapj) designs ONLY; not calprec betas
+  estimands      S_curve and S_slope (as M1)
+  shift          S(W) - S(W-full), paired on shared resample indices
+  tau_0          read exactly as a fraction from the CSV string
+  verdict        none; descriptive
+  windows        W-full, W-ge (J>=1/tau0), W-gt (J>1/tau0), W-4 (J>4(1/tau0-1)), W-100 (exactcal, J>=100)
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+  window sizes by tau_0:
+    tau 0.5   W-full  [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.5   W-ge    [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.5   W-gt    [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.5   W-4     [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.5   W-100   [160, 320, 640, 1280, 2560, 5000]
+    tau 0.1   W-full  [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.1   W-ge    [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.1   W-gt    [20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.1   W-4     [40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.1   W-100   [160, 320, 640, 1280, 2560, 5000]
+    tau 0.01  W-full  [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+    tau 0.01  W-ge    [160, 320, 640, 1280, 2560, 5000]
+    tau 0.01  W-gt    [160, 320, 640, 1280, 2560, 5000]
+    tau 0.01  W-4     [640, 1280, 2560, 5000]
+    tau 0.01  W-100   [160, 320, 640, 1280, 2560, 5000]
+
+  P0 exactcal_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 rmapj_real.csv:    2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+
+  324 cells in 384.4 s;  per-worker peak RSS max 42.1 MB
+
+  shift = S(window) - S(W-full); |shift| / shift SD in the second line
+  exactcal tau 0.5   W-ge   S_curve n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-ge   S_slope n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-gt   S_curve n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-gt   S_slope n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-4    S_curve n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-4    S_slope n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.5   W-100  S_curve n  48  min -0.1677  q25 -0.0636  med -0.0199  q75 +0.0350  max +0.1193
+                                    |shift|/SD n  48  min +0.0409  q25 +0.4772  med +0.9034  q75 +1.2344  max +2.3881   intervals excluding 0: 3 of 48
+  exactcal tau 0.5   W-100  S_slope n  48  min -0.1585  q25 -0.0642  med -0.0270  q75 +0.0074  max +0.1775
+                                    |shift|/SD n  48  min +0.0135  q25 +0.3900  med +0.7530  q75 +1.1234  max +2.6648   intervals excluding 0: 4 of 48
+  exactcal tau 0.5   W-full S_curve bootstrap SD of S: n  48  min +0.0108  q25 +0.0275  med +0.0422  q75 +0.0533  max +0.1010
+  exactcal tau 0.5   W-full S_slope bootstrap SD of S: n  48  min +0.0106  q25 +0.0289  med +0.0401  q75 +0.0556  max +0.0814
+  exactcal tau 0.1   W-ge   S_curve n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.1   W-ge   S_slope n  48  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 48
+  exactcal tau 0.1   W-gt   S_curve n  48  min -0.1839  q25 -0.0167  med -0.0022  q75 +0.0200  max +0.0977
+                                    |shift|/SD n  48  min +0.1479  q25 +0.5989  med +1.1513  q75 +1.7861  max +3.9717   intervals excluding 0: 12 of 48
+  exactcal tau 0.1   W-gt   S_slope n  48  min -0.1293  q25 -0.0136  med -0.0012  q75 +0.0164  max +0.0888
+                                    |shift|/SD n  48  min +0.0567  q25 +0.6554  med +0.8768  q75 +1.4439  max +3.8572   intervals excluding 0: 10 of 48
+  exactcal tau 0.1   W-4    S_curve n  48  min -0.3393  q25 -0.0382  med -0.0059  q75 +0.0579  max +0.1934
+                                    |shift|/SD n  48  min +0.0210  q25 +0.6975  med +1.3889  q75 +2.2621  max +4.4486   intervals excluding 0: 13 of 48
+  exactcal tau 0.1   W-4    S_slope n  48  min -0.2110  q25 -0.0268  med -0.0045  q75 +0.0227  max +0.1398
+                                    |shift|/SD n  48  min +0.0183  q25 +0.5146  med +0.9091  q75 +1.7392  max +4.8545   intervals excluding 0: 11 of 48
+  exactcal tau 0.1   W-100  S_curve n  48  min -0.4939  q25 -0.0513  med +0.0124  q75 +0.1273  max +0.2629
+                                    |shift|/SD n  48  min +0.0316  q25 +0.4496  med +1.2899  q75 +2.1886  max +4.4200   intervals excluding 0: 15 of 48
+  exactcal tau 0.1   W-100  S_slope n  48  min -0.2638  q25 -0.0610  med -0.0029  q75 +0.0839  max +0.2122
+                                    |shift|/SD n  48  min +0.0396  q25 +0.4396  med +1.1886  q75 +1.9301  max +4.0197   intervals excluding 0: 12 of 48
+  exactcal tau 0.1   W-full S_curve bootstrap SD of S: n  48  min +0.0101  q25 +0.0302  med +0.0498  q75 +0.0625  max +0.0923
+  exactcal tau 0.1   W-full S_slope bootstrap SD of S: n  48  min +0.0102  q25 +0.0325  med +0.0461  q75 +0.0573  max +0.0804
+  exactcal tau 0.01  W-ge   S_curve n  48  min -0.3620  q25 -0.1007  med -0.0182  q75 +0.1159  max +0.4224
+                                    |shift|/SD n  48  min +0.0379  q25 +0.6150  med +1.5964  q75 +2.5153  max +5.2278   intervals excluding 0: 22 of 48
+  exactcal tau 0.01  W-ge   S_slope n  48  min -0.2488  q25 -0.1161  med -0.0676  q75 +0.0524  max +0.2940
+                                    |shift|/SD n  48  min +0.1677  q25 +0.8809  med +1.4546  q75 +2.4133  max +5.3320   intervals excluding 0: 16 of 48
+  exactcal tau 0.01  W-gt   S_curve n  48  min -0.3620  q25 -0.1007  med -0.0182  q75 +0.1159  max +0.4224
+                                    |shift|/SD n  48  min +0.0379  q25 +0.6150  med +1.5964  q75 +2.5153  max +5.2278   intervals excluding 0: 22 of 48
+  exactcal tau 0.01  W-gt   S_slope n  48  min -0.2488  q25 -0.1161  med -0.0676  q75 +0.0524  max +0.2940
+                                    |shift|/SD n  48  min +0.1677  q25 +0.8809  med +1.4546  q75 +2.4133  max +5.3320   intervals excluding 0: 16 of 48
+  exactcal tau 0.01  W-4    S_curve n  48  min -0.7686  q25 -0.1340  med -0.0338  q75 +0.1032  max +0.5633
+                                    |shift|/SD n  48  min +0.0443  q25 +0.5679  med +1.2995  q75 +2.1409  max +5.1737   intervals excluding 0: 14 of 48
+  exactcal tau 0.01  W-4    S_slope n  48  min -0.3052  q25 -0.1399  med -0.0594  q75 +0.0333  max +0.4040
+                                    |shift|/SD n  48  min +0.0017  q25 +0.4441  med +0.9657  q75 +2.3415  max +3.4395   intervals excluding 0: 17 of 48
+  exactcal tau 0.01  W-100  S_curve n  48  min -0.3620  q25 -0.1007  med -0.0182  q75 +0.1159  max +0.4224
+                                    |shift|/SD n  48  min +0.0379  q25 +0.6150  med +1.5964  q75 +2.5153  max +5.2278   intervals excluding 0: 22 of 48
+  exactcal tau 0.01  W-100  S_slope n  48  min -0.2488  q25 -0.1161  med -0.0676  q75 +0.0524  max +0.2940
+                                    |shift|/SD n  48  min +0.1677  q25 +0.8809  med +1.4546  q75 +2.4133  max +5.3320   intervals excluding 0: 16 of 48
+  exactcal tau 0.01  W-full S_curve bootstrap SD of S: n  48  min +0.0136  q25 +0.0331  med +0.0436  q75 +0.0620  max +0.1293
+  exactcal tau 0.01  W-full S_slope bootstrap SD of S: n  48  min +0.0143  q25 +0.0322  med +0.0457  q75 +0.0571  max +0.1179
+  rmapj    tau 0.1   W-ge   S_curve n 180  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 180
+  rmapj    tau 0.1   W-ge   S_slope n 180  min +0.0000  q25 +0.0000  med +0.0000  q75 +0.0000  max +0.0000   (same as W-full)
+                                    |shift|/SD n   0   intervals excluding 0: 0 of 180
+  rmapj    tau 0.1   W-gt   S_curve n 180  min -0.1275  q25 -0.0324  med -0.0137  q75 +0.0046  max +0.1178
+                                    |shift|/SD n 180  min +0.0081  q25 +0.5983  med +1.4502  q75 +2.4138  max +15.2264   intervals excluding 0: 64 of 180
+  rmapj    tau 0.1   W-gt   S_slope n 180  min -0.1031  q25 -0.0327  med -0.0187  q75 -0.0082  max +0.0416
+                                    |shift|/SD n 180  min +0.0019  q25 +0.7767  med +1.5285  q75 +2.5442  max +13.1310   intervals excluding 0: 71 of 180
+  rmapj    tau 0.1   W-4    S_curve n 180  min -0.2100  q25 -0.0567  med -0.0226  q75 +0.0032  max +0.2174
+                                    |shift|/SD n 180  min +0.0016  q25 +0.5905  med +1.4497  q75 +2.4085  max +15.6173   intervals excluding 0: 63 of 180
+  rmapj    tau 0.1   W-4    S_slope n 180  min -0.1879  q25 -0.0608  med -0.0313  q75 -0.0121  max +0.0758
+                                    |shift|/SD n 180  min +0.0435  q25 +0.8736  med +1.5779  q75 +2.7582  max +15.0976   intervals excluding 0: 78 of 180
+  rmapj    tau 0.1   W-full S_curve bootstrap SD of S: n 180  min +0.0076  q25 +0.0203  med +0.0278  q75 +0.0422  max +0.3439
+  rmapj    tau 0.1   W-full S_slope bootstrap SD of S: n 180  min +0.0080  q25 +0.0195  med +0.0264  q75 +0.0377  max +0.1265
+
+  Table 3 reconstruction (exactcal; mean over 12 objective-init units; change = d40 - d2; no verdict)
+  tau 0.5   W-full  S_curve  d=2 -1.0621  d=40 -1.0104  change +0.0517  (units 12 / 12)
+  tau 0.5   W-full  S_slope  d=2 -1.0655  d=40 -1.0113  change +0.0542  (units 12 / 12)
+  tau 0.5   W-ge    S_curve  d=2 -1.0621  d=40 -1.0104  change +0.0517  (units 12 / 12)
+  tau 0.5   W-ge    S_slope  d=2 -1.0655  d=40 -1.0113  change +0.0542  (units 12 / 12)
+  tau 0.1   W-full  S_curve  d=2 -1.0949  d=40 -1.0587  change +0.0362  (units 12 / 12)
+  tau 0.1   W-full  S_slope  d=2 -1.0629  d=40 -1.0037  change +0.0592  (units 12 / 12)
+  tau 0.1   W-ge    S_curve  d=2 -1.0949  d=40 -1.0587  change +0.0362  (units 12 / 12)
+  tau 0.1   W-ge    S_slope  d=2 -1.0629  d=40 -1.0037  change +0.0592  (units 12 / 12)
+  tau 0.01  W-full  S_curve  d=2 -1.1573  d=40 -0.9142  change +0.2431  (units 12 / 12)
+  tau 0.01  W-full  S_slope  d=2 -1.1299  d=40 -0.8766  change +0.2533  (units 12 / 12)
+  tau 0.01  W-ge    S_curve  d=2 -1.0506  d=40 -1.0134  change +0.0373  (units 12 / 12)
+  tau 0.01  W-ge    S_slope  d=2 -1.0711  d=40 -0.9936  change +0.0775  (units 12 / 12)
+
+  COVERS random-beta and probe-beta designs only; says nothing about calprec betas.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m2-20261016-052740
+========================================================================================

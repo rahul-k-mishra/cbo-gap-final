@@ -1,0 +1,82 @@
+========================================================================================
+CBO-GAP M6 -- within-unit variance against between-unit spread (draft item 6)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m6-20261016-055203
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 66, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  N6             exactcal ackley and sphere share seeds; exactcal groups flagged
+  P0             refit vs stored slope (per-J files), tol half-unit + 1e-7; exit 3 on fail
+  boot B         4000
+  covers         random-beta (exactcal) and probe-beta (rmapj, regimemap) designs ONLY; not calprec betas; no population inference
+  statistics     sd_units, vbar, tau2_mm = max(0, s2 - vbar), ratio = vbar/s2, Q, I2
+  units          exactcal: 12 (objective, init) per (d, tau0); rmapj: 3 objectives per (diffusion, d, r); regimemap_M: 3 objectives per (diffusion, d, r, tau0)
+  verdict        none; descriptive
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+    44d1e67fd77a6362fa4079ee7e0b13d3b83687c15573ecaa9d410fce272a79b5  regimemap_M_real.csv  ok
+
+  P0 exactcal_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 rmapj_real.csv:    2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+
+  564 cells in 79.3 s;  per-worker peak RSS max 41.0 MB
+
+  exactcal-change  S_curve groups   3  k 12
+      ratio vbar/s2   n   3  min 0.0528  q25 0.1704  med 0.2881  q75 0.4898  max 0.6914
+      sd_units        n   3  min 0.0808  q25 0.1114  med 0.1421  q75 0.2621  max 0.3821
+      sqrt(tau2_mm)   n   3  min 0.0449  q25 0.0824  med 0.1199  q75 0.2459  max 0.3719
+      I2              n   3  min 0.3738  q25 0.5857  med 0.7976  q75 0.8754  max 0.9532
+      tau2_mm truncated at 0: 0 of 3
+  exactcal-change  S_slope groups   3  k 12
+      ratio vbar/s2   n   3  min 0.1172  q25 0.2536  med 0.3900  q75 1.0098  max 1.6296
+      sd_units        n   3  min 0.0569  q25 0.0867  med 0.1166  q75 0.1841  max 0.2516
+      sqrt(tau2_mm)   n   3  min 0.0000  q25 0.0455  med 0.0910  q75 0.1637  max 0.2364
+      I2              n   3  min 0.0000  q25 0.3300  med 0.6601  q75 0.7831  max 0.9061
+      tau2_mm truncated at 0: 1 of 3
+  exactcal-slope   S_curve groups  12  k 12
+      ratio vbar/s2   n  12  min 0.0476  q25 0.1082  med 0.2920  q75 0.7809  max 1.4193
+      sd_units        n  12  min 0.0313  q25 0.0597  med 0.0953  q75 0.1589  max 0.3141
+      sqrt(tau2_mm)   n  12  min 0.0000  q25 0.0245  med 0.0800  q75 0.1502  max 0.3065
+      I2              n  12  min 0.0000  q25 0.4688  med 0.6589  q75 0.9357  max 0.9438
+      tau2_mm truncated at 0: 2 of 12
+  exactcal-slope   S_slope groups  12  k 12
+      ratio vbar/s2   n  12  min 0.1145  q25 0.1795  med 0.4330  q75 1.1185  max 1.6645
+      sd_units        n  12  min 0.0229  q25 0.0470  med 0.0661  q75 0.0997  max 0.2015
+      sqrt(tau2_mm)   n  12  min 0.0000  q25 0.0000  med 0.0552  q75 0.0889  max 0.1865
+      I2              n  12  min 0.0000  q25 0.2425  med 0.5883  q75 0.8762  max 0.9308
+      tau2_mm truncated at 0: 4 of 12
+  regimemap_M      S_slope groups  80  k 3
+      ratio vbar/s2   n  80  min 0.0014  q25 0.0250  med 0.0845  q75 0.4189  max 49.1204
+      sd_units        n  80  min 0.0038  q25 0.0587  med 0.0964  q75 0.1516  max 0.4130
+      sqrt(tau2_mm)   n  80  min 0.0000  q25 0.0393  med 0.0927  q75 0.1491  max 0.4124
+      I2              n  80  min 0.0000  q25 0.6303  med 0.9273  q75 0.9759  max 0.9988
+      tau2_mm truncated at 0: 8 of 80
+  rmapj            S_curve groups  60  k 3
+      ratio vbar/s2   n  60  min 0.0007  q25 0.0300  med 0.0934  q75 0.7823  max 8.2190
+      sd_units        n  60  min 0.0171  q25 0.0550  med 0.0931  q75 0.1491  max 0.4773
+      sqrt(tau2_mm)   n  60  min 0.0000  q25 0.0318  med 0.0909  q75 0.1473  max 0.4771
+      I2              n  60  min 0.0000  q25 0.3063  med 0.9070  q75 0.9738  max 0.9992
+      tau2_mm truncated at 0: 12 of 60
+  rmapj            S_slope groups  60  k 3
+      ratio vbar/s2   n  60  min 0.0007  q25 0.0267  med 0.0878  q75 0.9030  max 35.0021
+      sd_units        n  60  min 0.0053  q25 0.0369  med 0.0944  q75 0.1410  max 0.4783
+      sqrt(tau2_mm)   n  60  min 0.0000  q25 0.0132  med 0.0907  q75 0.1377  max 0.4781
+      I2              n  60  min 0.0000  q25 0.2938  med 0.9147  q75 0.9740  max 0.9992
+      tau2_mm truncated at 0: 12 of 60
+
+  exactcal groups assume independent units; Ackley and Sphere share seeds (N6).
+  COVERS random-beta and probe-beta designs only; says nothing about calprec betas
+  and nothing about objectives outside the test set.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m6-20261016-055203
+========================================================================================

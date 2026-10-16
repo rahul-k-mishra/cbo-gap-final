@@ -1,0 +1,57 @@
+========================================================================================
+CBO-GAP M1 -- S-curve against S-slope on archived per-J files (ledger N33)
+========================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 2
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  run dir  /home/rahul/Research/cbo-gap-final/runs/m1-20261016-052412
+  seeds    default_rng(SeedSequence([ENTROPY 20261015, kind 61, source code, cell index, statistic or repeat ...])), full width
+  source codes {'exactcal': 1, 'rmapj': 2, 'regimemap_D': 3, 'regimemap_M': 4}
+  slope fit: archived regimemap.fit_slope (exactcal.fit_slope only for the P0 check)
+  P0             refit vs stored slope, tol half-unit + 1e-7; exit 3 on fail
+  boot B         4000
+  covers         random-beta (exactcal) and probe-beta (rmapj) designs ONLY; not calprec betas
+  gap            S_slope - S_curve (positive = mean of slopes flatter)
+  interval       2.5 / 97.5 percentiles of the paired resampled gap
+  verdict        none; descriptive
+  window         full grid J = 10..5000
+  archive files checked against zenodo-v1.sha256:
+    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  regimemap.py  ok
+    b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  exactcal.py  ok
+    d8834cbb921cb3c7abdb4055243b3f0e5c768ba364b50374c5f3b4ea3af31ffc  reboot.py  ok
+    5ec543057f8c16d8cbd8624f21d2d1dd9aa4e049e7d740b71e79eea922452d37  rmapj.py  ok
+    47c84359614e3f6990aa46a940139e9f31d84dbca9bc72084a1a6ede5458f596  exactcal_real.csv  ok
+    cfc5646255eff499fedd905be0ae55ea09e8e2a3f52ffa1a3ed5febcc9048242  rmapj_real.csv  ok
+
+  P0 exactcal_real.csv: 2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 rmapj_real.csv:    2160 slopes, 0 outside tolerance (worst excess 0.00e+00)
+  P0 PASS
+
+  324 cells in 88.1 s;  per-worker peak RSS max 41.1 MB
+
+  gap = S_slope - S_curve, full grid
+  exactcal  all           n 144  min -0.3659  q25 -0.0051  median +0.0108  q75 +0.0473  max +0.2462
+  exactcal  intervals excluding 0: 48 of 144
+  rmapj     all           n 180  min -0.1038  q25 +0.0053  median +0.0203  q75 +0.0424  max +0.6831
+  rmapj     intervals excluding 0: 129 of 180
+  exactcal  tau 0.5       n  48  min -0.0786  q25 -0.0225  median -0.0015  q75 +0.0083  max +0.1463
+  exactcal  tau 0.1       n  48  min -0.0891  q25 +0.0020  median +0.0189  q75 +0.0607  max +0.2462
+  exactcal  tau 0.01      n  48  min -0.3659  q25 +0.0064  median +0.0256  q75 +0.1016  max +0.1970
+  rmapj     isotropic   d 5   n  18  min -0.0067  q25 +0.0128  median +0.0204  q75 +0.0320  max +0.1108
+  rmapj     isotropic   d 10  n  18  min -0.0013  q25 +0.0060  median +0.0124  q75 +0.0198  max +0.0534
+  rmapj     isotropic   d 20  n  18  min -0.0073  q25 +0.0007  median +0.0086  q75 +0.0149  max +0.0335
+  rmapj     isotropic   d 40  n  18  min -0.0196  q25 -0.0037  median +0.0026  q75 +0.0112  max +0.0231
+  rmapj     isotropic   d 80  n  18  min -0.0712  q25 -0.0060  median +0.0007  q75 +0.0069  max +0.0354
+  rmapj     anisotropic d 5   n  18  min +0.0037  q25 +0.0399  median +0.0626  q75 +0.0838  max +0.1995
+  rmapj     anisotropic d 10  n  18  min -0.1038  q25 +0.0287  median +0.0500  q75 +0.0847  max +0.6831
+  rmapj     anisotropic d 20  n  18  min -0.0211  q25 +0.0237  median +0.0398  q75 +0.0817  max +0.2380
+  rmapj     anisotropic d 40  n  18  min -0.0102  q25 +0.0191  median +0.0315  q75 +0.0563  max +0.1654
+  rmapj     anisotropic d 80  n  18  min +0.0033  q25 +0.0119  median +0.0220  q75 +0.0330  max +0.0757
+  bootstrap SD of the gap, all cells: n 324  min +0.0009  q25 +0.0049  median +0.0117  q75 +0.0240  max +0.2563
+  non-finite resampled gaps, total: 0
+
+  COVERS random-beta and probe-beta designs only; says nothing about calprec betas.
+========================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/m1-20261016-052412
+========================================================================================
