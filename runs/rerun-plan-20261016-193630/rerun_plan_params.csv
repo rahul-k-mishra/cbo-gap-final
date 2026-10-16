@@ -1,0 +1,23 @@
+name,value
+mode,precheck
+env,python 3.12.3 numpy 2.5.3
+platform,Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+archive,/home/rahul/Research/cbo-gap-final/zenodo-v1
+calprec2_dir,none
+calprec2_sha256,
+entropy,20261016
+kind_traj,81
+kind_boot,71
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+rerun_sha256,a314dce44761ab3cd5465d20de9a0f9f7ed99b32b442b5c7c5e9b229f52f8813
+rerunlib_sha256,5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+V0,PASS
+P1,PASS
+S1,PASS
+O1,PASS
+A-BETA/A-SIGMA,PASS
+C2,PASS
+K1,PASS
+K2,PASS
+K4,PASS
+calprec2_rows,pending

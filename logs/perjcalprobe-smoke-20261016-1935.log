@@ -1,0 +1,77 @@
+================================================================================================
+CBO-GAP perjcalprobe -- cost of the per-J-beta experiment (perjcal.one_J)
+================================================================================================
+  script   /home/rahul/Research/cbo-gap-final/scripts/perjcalprobe.py  sha256 c13734eae330cf8f07d3ecfc8954324d4b491ba3cf37447643ac10e7912f7e48
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  2   mode smoke   timeout 7200 s
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  Jgrid  [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  Jinf   50000
+  M      15
+  T      1.0
+  dims   [2, 40]
+  dt     0.01
+  init   centred
+  lam    1.0
+  objs   ['ackley', 'rastrigin', 'sphere', 'griewank', 'levy', 'rosenbrock']
+  sigma  0.2
+  taus   [0.5, 0.01]
+  K 100   J list after cap [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  seeds    default_rng(SeedSequence(key)), key = (ENTROPY 20261016, kind 91, objective code, d, tau0 x 1e6, J, variant)
+  budget   3072 MB per probe   ratio threshold 1.25   shard ceiling 21600 s
+  perjcal is a DIFFERENT ESTIMAND (beta varies with J); nothing here is pooled
+  with or compared to the fixed-beta rerun.
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  P1 exactcal  /home/rahul/Research/cbo-gap-final/zenodo-v1/exactcal.py  b17e1be3c024ec4d...  ok
+  P1 perjcal   /home/rahul/Research/cbo-gap-final/zenodo-v1/perjcal.py  f0b304306d3afc87...  ok
+
+------------------------------------------------------------------------------------------------
+P0  plan identity against perjcal.py main()
+------------------------------------------------------------------------------------------------
+  P0 ok   Jgrid  [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  P0 ok   Jinf   50000
+  P0 ok   M      15
+  P0 ok   T      1.0
+  P0 ok   dims   [2, 40]
+  P0 ok   dt     0.01
+  P0 ok   init   centred
+  P0 ok   lam    1.0
+  P0 ok   objs   ['ackley', 'rastrigin', 'sphere', 'griewank', 'levy', 'rosenbrock']
+  P0 ok   sigma  0.2
+  P0 ok   taus   [0.5, 0.01]
+  not checked against source (expressions): J <= Jinf // 10; J >= 1.0 / tau
+
+------------------------------------------------------------------------------------------------
+PLAN
+------------------------------------------------------------------------------------------------
+  tau_0 0.5   sizes [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]
+  tau_0 0.01  sizes [160, 320, 640, 1280, 2560, 5000]
+  units 192   tasks this mode 2
+  P2 unit ('ackley', 2, 0.5, 10)   A1 unit ('ackley', 40, 0.5, 5000)
+
+  run dir  /home/rahul/Research/cbo-gap-final/runs/perjcalprobe-20261016-193516-smoke
+
+------------------------------------------------------------------------------------------------
+PROBES  2 task(s), at most 2 at once, one fresh process each
+------------------------------------------------------------------------------------------------
+  [   1/2   ] P2 a  ackley      d=2   tau=0.5   J=10    wall      3.8 s  RSS    34.7 MB  ach/tau 1.000000  elapsed       4 s
+  [   2/2   ] P2 b  ackley      d=2   tau=0.5   J=10    wall      4.1 s  RSS    34.7 MB  ach/tau 1.000000  elapsed       4 s
+  probes finished in 4.4 s
+
+------------------------------------------------------------------------------------------------
+P2  seed pass-through and determinism
+------------------------------------------------------------------------------------------------
+  member a  E 0.0055531100089299835  beta 1.03186349519711  ach 0.50000000000000011  wall 3.8 s  ok
+  member b  E 0.0055531100089299835  beta 1.03186349519711  ach 0.50000000000000011  wall 4.1 s  ok
+  P2 PASS
+  A3 timing noise: P2 wall ratio 1.074
+
+================================================================================================
+files  /home/rahul/Research/cbo-gap-final/runs/perjcalprobe-20261016-193516-smoke   exit 0
+================================================================================================

@@ -220,7 +220,7 @@ OUTPUT (every file opened "x", every row flushed and fsynced)
 
 HOW TO RUN (from the repository root, venv active; Kaggle through kgrun)
     python scripts/rerun.py --precheck [--calprec2 runs/<calprec2 finalize>]
-    python scripts/manifest.py runs/rerun-plan-<stamp>
+    python scripts/manifest.py
     python scripts/rerun.py --schedule --plan-from runs/rerun-plan-<stamp> \
         --timing-from runs/<costprobe2 s0> --timing-from runs/<costprobe2 s1> \
         --rows ROWS --nshards K --workers 4
@@ -547,7 +547,7 @@ def precheck(a):
     if not good:
         print("\n  A precheck criterion failed: this plan is recorded but no run accepts it.")
         sys.exit(2)
-    print("\n  Next: python scripts/manifest.py {}".format(outdir))
+    print("\n  Next: python scripts/manifest.py   (it manifests every run folder without sha256.txt)")
     sys.exit(0)
 
 

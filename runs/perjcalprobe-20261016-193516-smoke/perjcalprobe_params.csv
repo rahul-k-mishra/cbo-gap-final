@@ -1,0 +1,22 @@
+script_sha256,c13734eae330cf8f07d3ecfc8954324d4b491ba3cf37447643ac10e7912f7e48
+mode,smoke
+workers,2
+timeout_s,7200.0
+python,3.12.3
+numpy,2.5.3
+platform,Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+entropy,20261016
+kind,91
+K,100
+jlist,"[10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]"
+Jgrid,"[10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]"
+Jinf,50000
+M,15
+T,1.0
+dims,"[2, 40]"
+dt,0.01
+init,centred
+lam,1.0
+objs,"['ackley', 'rastrigin', 'sphere', 'griewank', 'levy', 'rosenbrock']"
+sigma,0.2
+taus,"[0.5, 0.01]"

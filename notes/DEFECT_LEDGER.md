@@ -1373,6 +1373,107 @@ instruction of 2026-10-15.
     code (regimemap.py lines 250-257; the boot_ci of every other script).
   OPEN as a record. Its role is evidence for N8, N30, N31 and ARC6.
 
+## Newly found (2026-10-16)
+
+- N35 (result, rerun precheck). What scripts/rerun.py --precheck
+  established on the laptop, before any trajectory of the fixed-beta rerun.
+  Sources:
+  - logs/rerun-precheck-20261016-1935.log;
+  - runs/rerun-plan-20261016-193630 (rerun_plan_params.csv,
+    rerun_plan.csv, rerun_archive_check.csv, rerun_onset_control.csv),
+    whose manifest Claude verified with sha256sum -c.
+
+  Environment and code:
+  - Python 3.12.3, NumPy 2.5.3, Linux, 2 workers.
+  - Script hashes printed: rerun.py a314dce4...8813, rerunlib.py
+    5d55050e...9b06, costprobe2.py ea5cb2e1...f64b. These equal the files
+    at commit 7270807, so the run used the reviewed code (notes/RERUN_REVIEW.md,
+    first and second passes).
+
+  Results:
+  - V0 (plan identity). Every GRID factor of the seventeen rows reads "ok"
+    against the archived source, and every row's cell and realization
+    count equals Table 2 (BETA-ISO 42/840 through ONSET 180/2160).
+  - P1 (archive identity). Twelve archived modules and finitej.py hash to
+    zenodo-v1.sha256. S1: the X0 line of mechanism, boundary and law equals
+    the expected line.
+  - O1, the onset positive control (ninth message; it replaces the import
+    rule 4 cannot cover). The retyped estimator reproduced all ten
+    archived onsets exactly, against the manuscript's onset table
+    (tex lines 608 to 612 and 615 to 619):
+    - isotropic d 5, 10, 20, 40, 80: 1.50, 1.25, 2.00, 1.25, 1.00;
+    - anisotropic: 2.00, 1.00, 1.25, 1.00, 2.00.
+
+    The sixty per-r means, recomputed from regimemap_D_real.csv, equal the
+    table's three-decimal values in 60 of 60 (log lines 172 to 191;
+    rerun_onset_control.csv). The control checks point estimates only; the
+    archive's onset intervals are not reproduced or compared.
+  - A-BETA and A-SIGMA: 2034 ok, 0 FAIL, 288 not applicable. The 288 are
+    CONC (144) and TAU8 (144), whose betas are calprec2's and have no
+    archived counterpart. Per row:
+    - ADAPT 72 ok;
+    - BETA-ISO 42, BETA-ANI 12;
+    - LAWPANEL 144, PROBEARM 144;
+    - REFSIZE 12, SYNTH 72, NAMED 36, HORIZON 24;
+    - GEOM 336;
+    - RMAP 240, ONSET 180, CLIFF 144: beta and sigma;
+    - SIGMA 288, ANISO 288: sigma only, their betas being calprec2's.
+
+    The tolerance is half a unit in the sixth significant digit of the
+    archive's "{:.6g}" columns, which is the stricter form after review
+    fix F2.
+    - ADAPT: all 72 cells, both arms, agree with the fixed arm's archived
+      beta_first. That is review fix F1 (85ec11d). The check never ran in
+      its earlier form against the adaptive arm's row. The statement that
+      it would have failed rests on the archived values alone
+      (control_summary.csv: adaptive 2.17581 against fixed 2.19167, ackley
+      d 5 tau0 0.01), not on a run.
+  - C2: PASS with no calprec2 table given. CONC, TAU8, SIGMA and ANISO are
+    "beta pending" in this plan (calprec2_rows pending).
+  - K4 (sharing): 28 groups with more than one row, exactly the expected
+    set:
+    - ackley, sphere and rosenbrock in REFSIZE, NAMED and HORIZON, owned
+      by REFSIZE;
+    - rastrigin in NAMED and HORIZON, owned by NAMED;
+    - 24 regimemap cells in RMAP and ONSET, owned by RMAP.
+  - K1: 23748 distinct (group, rep) keys. K2 PASS.
+
+  What it does not establish:
+  - anything about calprec2's betas. A second precheck with --calprec2 is
+    needed after the finalize step;
+  - anything about trajectories: no realization has been evolved under
+    this plan.
+
+  Repository note: the precheck's last line printed "Next: python
+  scripts/manifest.py <folder>", but manifest.py takes no folder argument.
+  The hint and the docstring line are corrected in rerun.py (cosmetic).
+  The run mode checks the hashes of rerunlib.py and costprobe2.py against
+  the plan, not that of rerun.py, so this plan stays valid.
+  OPEN as a record until the second precheck.
+
+- N36 (result, perjcal probe smoke; ledger K2 of notes/ANALYSIS_CRITERIA.md).
+  Sources:
+  - logs/perjcalprobe-plan-20261016-1934.log;
+  - logs/perjcalprobe-smoke-20261016-1935.log;
+  - runs/perjcalprobe-20261016-193516-smoke, manifest verified with
+    sha256sum -c.
+
+  Python 3.12.3, NumPy 2.5.3, Linux, 2 workers; script sha256
+  c13734ea...7e48.
+  - P1 (exactcal.py, perjcal.py) ok. P0: every constant equals perjcal.py
+    main()'s literal: objs, dims [2, 40], taus [0.5, 0.01], M 15, Jinf
+    50000, J10 grid, lam 1.0, sigma 0.2, dt 0.01, T 1.0, centred.
+  - The plan has 192 units: ten sizes at tau0 0.5 and six at 0.01.
+  - P2 PASS: two members on (ackley, d 2, tau0 0.5, J 10) give bitwise
+    identical E 0.0055531100089299835, beta 1.03186349519711 and achieved
+    fraction 0.50000000000000011.
+    - Walls 3.8 s and 4.1 s, A3 ratio 1.074.
+    - RSS 34.7 MB each.
+    - Achieved / tau0 1.000000.
+  - No projection: the smoke runs the pair only. The full probe is the
+    next run.
+  OPEN until the full probe.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
