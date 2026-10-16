@@ -2313,6 +2313,29 @@ Q3. The minimum ESS printed beside each BETA-ISO and BETA-ANI slope is
     J, as ess_surface.one_realisation returns them.
 Nothing needs Rahul's decision. The analysis script is written.
 
+### Thirteenth message: D1 to D3 (from notes/RERUN_REVIEW.md, first pass)
+
+D1. Audit A2's coefficient takes the DIFFERENCE rule, like every other
+    regression coefficient of section 8. Rahul's reason: treating it
+    differently would mean two standards for the same kind of quantity,
+    which is the failure the whole audit exists to prevent.
+D2. Equivalence and attainability verdicts are per cell only. The pooled
+    diffusion gap gets its estimate, interval, DIFFERENCE rule and item 6's
+    heterogeneity, and no equivalence or attainability verdict. Rahul's
+    reason: the margin is derived from per-cell SDs, so applying it to a
+    pooled quantity compares a number against a scale built for a
+    different unit. Rahul records that his H2 wording ("reported the same
+    way") was ambiguous; the reading that governs is "reported alongside
+    with its heterogeneity", not "given the per-cell verdicts".
+D3. The analysis runs only when all seventeen rows are complete. Rahul's
+    reason: analysing the thirteen archived-beta rows first would produce a
+    partial set of numbers before the calibrated rows exist, and partial
+    numbers invite a conclusion drawn before the evidence is in. One stop,
+    no partial analysis: rerun_analysis.py exits 7 before creating any
+    output.
+The review's noted items N1 to N5 are accepted as recorded. The ONSET
+ownership point (N2) goes into the rerun runbook when it is written.
+
 ---
 
 ## Corrections to the first decision message, from the logs
@@ -2565,13 +2588,9 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The twelfth message decided L1 to L3. Raised by the first review of the
-scripts (notes/RERUN_REVIEW.md, 2026-10-16), for the analysis script:
-D1, whether audit A2's coefficient carries the DIFFERENCE verdict; D2,
-whether the pooled diffusion gap carries an equivalence verdict; D3,
-whether the analysis may run before all seventeen rows are complete.
-
-Left, after the perjcal projection, with its rows:
+The twelfth message decided L1 to L3; a thirteenth decided D1 to D3,
+raised by the first review of the scripts (notes/RERUN_REVIEW.md). Left,
+after the perjcal projection, with its rows:
 
 1. perjcal's analysis criteria. Its archived rules: P-C1, control within
    1% at every point and more than 5% misses stopping the analysis;

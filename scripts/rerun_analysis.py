@@ -35,13 +35,18 @@ INPUTS AND CHECKS BEFORE ANY STATISTIC
       Worked example: a SIGMA realization whose beta reads 2.5e2 while the
       plan says 2.4e2: exit 2, naming the task. An anisotropic row whose
       seed_key differs from its task id's key: exit 2.
-  A1  A row is analysed only when every realization of every one of its
-      cells (shared cells included) is present and complete. Incomplete
-      rows are listed with their missing counts and skipped; every
-      statistic that needs them is skipped and says so.
-      Worked example: ONSET with 2148 of 2160 realizations present: "ONSET
-      INCOMPLETE, skipped"; its onsets, severities and gaps are not
-      computed, and neither is the margin (5b).
+  A1  ALL SEVENTEEN ROWS COMPLETE (Rahul, D3, 2026-10-16). A row is
+      complete when every realization of every one of its cells (shared
+      cells included) is present and complete, and no cell's beta is
+      pending. If any row is not complete, the script prints every row's
+      count, "INCOMPLETE: analysis refused (D3)", creates no output folder,
+      computes no statistic and exits 7. Rahul's reason: analysing the
+      thirteen archived-beta rows first would produce a partial set of
+      numbers before the calibrated rows exist, and partial numbers invite
+      a conclusion drawn before the evidence is in. One stop, no partial
+      analysis.
+      Worked example: ONSET with 2148 of 2160 realizations present, or
+      CONC with its beta pending: exit 7, nothing computed.
 
 ITEM 0  ESTIMAND. Each realization's slope is regimemap.fit_slope on the
   window. S-slope = the mean of the realization slopes (primary; every
@@ -127,11 +132,21 @@ ITEM 5b  MARGIN, computed and printed before any gap.
     the ratio and "MARGIN REVISIT REQUIRED", computes no gap, prints no
     DIFFERENCE or equivalence verdict for the paired rows, writes what it
     has and exits 6.
-  - If any of the five rows is incomplete, the margin is not computed and
-    no diffusion gap is computed.
-  - Attainability: in each gap, equivalence is attainable iff the 90%
-    half-width (p95 - p5) / 2 is below m. Otherwise "equivalence not
+  - Attainability: in each per-cell gap, equivalence is attainable iff the
+    90% half-width (p95 - p5) / 2 is below m. Otherwise "equivalence not
     attainable at this margin" and no equivalence verdict.
+  - PER CELL ONLY (Rahul, D2, 2026-10-16). The equivalence and
+    attainability verdicts apply to the per-cell gap. The pooled diffusion
+    gap gets its estimate, its 95% interval, the DIFFERENCE rule and item
+    6's heterogeneity, and no equivalence or attainability verdict.
+    Rahul's reason: the margin is derived from per-cell SDs, so applying
+    it to a pooled quantity compares a number against a scale built for a
+    different unit. His H2 wording ("reported the same way") was
+    ambiguous; it meant reported alongside with its heterogeneity.
+    Worked example: SIGMA d 10 r 0.5 tau0 0.1, four objectives: each
+    objective's gap prints DIFFERENCE and the equivalence line; the pooled
+    row prints its estimate, interval, DIFFERENCE verdict, k, sd_units and
+    I2, and no equivalence line.
   Worked example (Rahul's): group medians 0.026 and 0.030, ratio 1.15, no
   revisit; 0.026 and 0.042, ratio 1.62, REVISIT. With S = 0.026, m =
   0.078; a gap with half-width 0.085 is not attainable; one with 5th and
@@ -235,7 +250,9 @@ SECTION 8  (tenth to twelfth messages).
       identically zero under sharing and is printed as vacuous.
       Example: S-slopes -1.02, -1.01, -1.00, -0.99, -0.98, -0.97 at r 0.1,
       0.25, 0.5, 0.75, 0.9, 0.99 give the OLS coefficient of slope on r, with
-      its interval and the DIFFERENCE rule (see the review note on A2).
+      its interval and the DIFFERENCE rule (Rahul, D1, 2026-10-16: like
+      every other regression coefficient of section 8; treating it
+      differently would mean two standards for one kind of quantity).
   L2  R^2, point values only, the fit named: mechanism P3.4 in CONC and
       PROBEARM (OLS of cell S-slopes on log tau_0; plus log d; plus
       objective dummies; mechanism.r2_of); regime P6.3 (regime.fit_predict,
@@ -272,7 +289,10 @@ OUTPUT (new folder <outdir>/rerun-analysis-<stamp>/, every file "x")
 HOW TO RUN (from the repository root, venv active)
     python scripts/rerun_analysis.py --plan-from runs/rerun-plan-<stamp> \
         --runs runs/<run folder> --runs runs/<run folder> ... --workers 2
-  Exit codes: 0 completed; 2 setup or A0; 6 MARGIN REVISIT REQUIRED.
+  Exit codes: 0 completed; 2 setup or A0; 6 MARGIN REVISIT REQUIRED; 7
+  INCOMPLETE, analysis refused (A1, D3). Each is final when it occurs:
+  2 and 7 stop before any statistic, 6 after the per-cell phase and the
+  margin.
 
 NumPy only. Python 3.8 to 3.11 syntax.
 """
@@ -690,7 +710,9 @@ class Stats(object):
             vi = [float(np.nanvar(u[2], ddof=1)) for u in units]
             het = hetero(pts, vi)
             self.one(row, quantity, group, "pooled", "mean of {} units".format(len(units)), wlabel,
-                     float(np.mean(pts)), vecs.mean(axis=0), primary, equiv, orient, note, het)
+                     float(np.mean(pts)), vecs.mean(axis=0), primary, False, orient,
+                     note + ("; " if note and equiv else "") +
+                     ("equivalence per cell only (D2)" if equiv else ""), het)
 
 
 def windows_for(cs):
@@ -1190,8 +1212,13 @@ def main():
         if ok:
             complete.append(row)
         comp_rows.append([row, len(need), have, "complete" if ok else
-                          ("beta pending" if pending else "INCOMPLETE, skipped")])
+                          ("beta pending" if pending else "INCOMPLETE")])
         say("  {:<9} realizations {:>5} present {:>5}  {}".format(row, len(need), have, comp_rows[-1][3]))
+    if len(complete) != len(rl.ROWS):
+        say("\n  INCOMPLETE: analysis refused (D3). Rows not complete: {}".format(
+            ",".join(r for r in rl.ROWS if r not in complete)))
+        say("  No output folder is created and no statistic is computed. Exit 7.")
+        sys.exit(7)
 
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     outdir = os.path.join(OUTROOT, "rerun-analysis-{}".format(stamp))

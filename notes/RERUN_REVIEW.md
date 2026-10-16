@@ -241,3 +241,55 @@ rerun_analysis.py:
 - rerun.py run: no ERROR, OVER BUDGET, F1 FAILED or T1 STALL line.
 - rerun_analysis.py, first run: every row present in its run folders
   marked complete; no A0 stop.
+
+## 2026-10-16, second pass: D1 to D3 decided and applied
+
+- Rahul's decisions (recorded in notes/ANALYSIS_CRITERIA.md, thirteenth
+  message):
+  - D1: A2 takes the DIFFERENCE rule, for consistency with every other
+    section-8 coefficient;
+  - D2: equivalence and attainability per cell only;
+  - D3: no analysis until all seventeen rows are complete.
+- N1 to N5 accepted as recorded. N2, the ONSET ownership point, is to be
+  stated in the rerun runbook: a job running ONSET alone does not run the
+  cells RMAP owns (d 10 and 40, r 1.0 to 3.0, tau0 0.1), so ONSET reads as
+  incomplete until RMAP's job has run. Launch them together, or RMAP first.
+
+### Applied (scripts/rerun_analysis.py only)
+
+- D1: no code change; the code already applied the DIFFERENCE rule to A2.
+  The docstring now states the rule and Rahul's reason, in place of "see
+  the review note".
+- D2: Stats.family passes no equivalence to the pooled row. The note
+  "equivalence per cell only (D2)" is written on it. Docstring item 5b
+  states the rule, the reason, the reading of H2 that governs, and a worked
+  example.
+- D3: after the completeness table, any row that is not complete stops
+  the run. The script prints "INCOMPLETE: analysis refused (D3)" with the
+  rows, creates no output folder and exits 7.
+  - The A1 docstring is rewritten to state the rule, the reason and an
+    example.
+  - Exit code 7 is added to the documented list, and each code says when
+    it fires: 2 and 7 before any statistic, 6 after the per-cell phase and
+    the margin.
+
+### Re-review of the changed code
+
+- With D3, every later statistic sees all seventeen rows. Two branches
+  are now unreachable: the "paired rows incomplete" branch of the margin,
+  and the "not analysed: incomplete" lines of phase 3. They are left as
+  defensive code; their messages cannot appear in a run that passes A1.
+- The pooled diffusion gap still prints its 95% interval and DIFFERENCE
+  verdict. Item 1's DIFFERENCE rule applies to every reported interval,
+  and D2 removes only equivalence and attainability.
+- Exit codes: rerun_analysis.py 0, 2, 6, 7; rerun.py 0, 2, 3, 4, 5;
+  perjcalprobe.py 0, 2, 3, 4. Distinct within each script and documented.
+- rerun.py and rerunlib.py are unchanged by this pass.
+- The parse under the 3.8 grammar was repeated after the edit.
+
+### Before the precheck
+
+Nothing further needs Rahul's decision before rerun.py --precheck runs.
+The precheck reads no analysis criterion. Its own criteria (V0, P1, S1,
+A-BETA, A-SIGMA, C2, O1, K1, K2, K4) are fixed, and on any failure it
+stops and reports the numbers without loosening a tolerance.
