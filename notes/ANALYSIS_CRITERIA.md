@@ -27,7 +27,10 @@ A fifth message decided the audit's items A1 to A8 and the margin split,
 marked "(fifth message)", and asked for the audit to be repeated against
 those answers; that is the section's second pass. A sixth message
 decided the six points that remained, marked "(sixth message)"; the audit
-was run again against it (fourth to sixth passes).
+was run again against it (fourth to sixth passes). A seventh message
+fixed the pre-specified contrasts (item 7), the concentration rows, the
+reference-adequacy reporting and REFSIZE's window, marked "(seventh
+message)"; the audit was run again (seventh to ninth passes).
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -200,7 +203,8 @@ slope.
 - The paper says plainly that the result depends on the window.
 
 **Criterion (docstring text).**
-- Primary window W-full: every J in the row's grid (costprobe2.py lines
+- Primary window W-full: every J in the row's grid, except REFSIZE
+  (below, seventh message) (costprobe2.py lines
   340 to 343: J10 = 10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000; J10b
   with 1250 and 2500 in place of 1280 and 2560; J19 for LAWPANEL).
 - Sensitivity window W-ge: every grid J with J >= 1/tau_0, compared in
@@ -291,18 +295,22 @@ rep 3 is dropped, "rep 3 key ... 1 bad point; M 11 of 12". W-ge at tau_0
 0.01 starts at J = 160, so rep 3's W-ge slope exists and that column keeps
 M = 12.
 
-**REFSIZE's window (fourth pass, NOT DECIDED).** regime.py Part A fits
-all four J_inf on a common grid, J <= min(J_inf)/10 = 1250 (regime.py
-docstring lines 25 and 26, code lines 515 to 518), so that the comparison
-across J_inf is not confounded by different fitting ranges. RERUN_PLAN
-row EXP-REFSIZE records the same. That window is fixed by the design, not
-chosen from the data, so item 2's objection to N_vis does not apply. But
-item 2 says the full grid is primary for every row. For REFSIZE it is
-either the common J <= 1250 window or the full grid. Part A also fits the
-extrapolation gamma(J_inf) = gamma_inf + a / J_inf, with a bootstrap
-interval (docstring lines 22 to 24). That belongs to the
-reference-adequacy reporting the sixth message keeps, and its form and
-interval are not decided either.
+**REFSIZE's window (seventh message).** REFSIZE is the one row whose
+primary window is not the full grid.
+- Primary: regime.py's common cap, J <= 1250 = min(J_inf)/10, for all
+  four J_inf (regime.py docstring lines 25 and 26, code lines 515 to 518).
+  Rahul's reason: the comparison across J_inf is the row's whole purpose,
+  and a common fitting range is what makes it a comparison rather than an
+  artefact. The cap is fixed by the design, not chosen from the data.
+- Sensitivity column: the full grid. For this row the full grid of a cell
+  is the J10b grid capped at that cell's J_inf/10 (regime.py line 329, and
+  RERUN_PLAN row EXP-REFSIZE: "J10b capped at J <= J_inf/10"). Applied by
+  Claude from those two sources: J_inf 12500 gives J up to 1250, the same
+  as the primary window; 25000 adds 2500; 50000 and 100000 give the whole
+  J10b grid.
+- The J_inf extrapolation gamma(J_inf) = gamma_inf + a / J_inf is dropped.
+  Rahul's reason: it is a fitted form nobody has justified, and the row's
+  point is the comparison, not the limit.
 
 **Limit of the measurement.** M2 measured only tau_0 0.5, 0.1 and 0.01.
 How much the window matters at 0.07, 0.05, 0.03 and 0.02 is unmeasured;
@@ -837,6 +845,118 @@ say which is right.
 
 ---
 
+## 7. Pre-specified contrasts and the rows that make them (seventh message)
+
+**The line between a contrast and a monotonicity claim (Claude's line,
+adopted by Rahul).** The difference is pre-specification.
+- A contrast between two named levels, fixed in the docstring before the
+  run, is a comparison under item 1.
+- A claim that a quantity rises, falls or moves across a variable's levels
+  is a monotonicity claim under A4 and is not made.
+
+Rahul records that his sixth-message onset ruling (S4) was wrong as
+stated: applied consistently, it would have deleted Table 3 and the tau_0
+contrasts, which are the main text. Restated: pre-specified two-level
+onset contrasts are made; any "onset falls with d" claim is not.
+
+**Rows (seventh message).**
+- Concentration-dependence rows: CONC, PROBEARM, TAU8 and GEOM.
+- Supplementary: SYNTH and NAMED report estimates and intervals, with no
+  contrast.
+- Reference-adequacy reporting: REFSIZE, plus calprec2's per-cell
+  adequacy verdict, C5m, D1 and both reference medians (calprec2.py lines
+  157 to 196). That is the reference-estimability result. It is reported
+  as measured, per cell, with no pooled verdict.
+
+**The contrasts (seventh message). No other contrast is computed.**
+- Dimension, every concentration row: d = 2 against d = 40 where both
+  exist, otherwise the lowest against the highest d in that row's grid.
+- Target, every row with more than one tau_0: 0.5 against 0.01 where both
+  exist, otherwise the loosest (largest) against the tightest (smallest)
+  tau_0 in that row's grid.
+- Diffusion, the five paired rows: anisotropic against isotropic, per
+  cell, as 5a fixes.
+- Law, the rows with a law list: centred against mix-0.1.
+
+If a row's grid makes one of these undefined, the row reports estimates
+and intervals for that factor and no contrast. Read from costprobe2.py
+GRID, no contrast is undefined in a row it applies to: every
+concentration row has at least two d, every row with more than one tau_0
+has a loosest and a tightest, and every law row has both centred and
+mix-0.1. Rows with a single tau_0 (CLIFF, ONSET, REFSIZE, HORIZON) are not
+rows "with more than one tau_0", so no target contrast is defined there,
+and none is missing.
+
+**Per row, as the rules give them (read by Claude from costprobe2.py
+GRID).**
+
+| Row | Dimension | Target | Diffusion | Law |
+|---|---|---|---|---|
+| CONC | 2 v 40 | 0.5 v 0.01 | - | centred v mix-0.1 |
+| PROBEARM | 2 v 40 | 0.5 v 0.01 | - | centred v mix-0.1 |
+| TAU8 | 5 v 40 (no d 2) | 0.3 v 0.01 (no 0.5) | - | - |
+| GEOM | 5 v 40 (no d 2) | 0.3 v 0.01 (no 0.5) | - | - |
+| ADAPT | - | 0.1 v 0.01, per arm [see 7-B] | - | - |
+| SIGMA | - | 0.1 v 0.01, per arm | per cell | - |
+| ANISO | - | 0.1 v 0.01, per arm | per cell | - |
+| RMAP | - | 0.5 v 0.01, per arm | per cell | - |
+| CLIFF | - | single tau_0 | per cell | - |
+| ONSET | - [see 7-C] | single tau_0 | per cell | - |
+| LAWPANEL | - | no tau_0 | - | centred v mix-0.1 [see 7-B] |
+| HORIZON | - | single tau_0 | - | centred v mix-0.1 [see 7-B] |
+| REFSIZE | [see 7-A] | single tau_0 | - | - |
+| SYNTH, NAMED | none (supplementary) | none (supplementary) | - | - |
+| BETA-ISO, BETA-ANI | - | no tau_0 | - | - |
+
+SYNTH and NAMED have two tau_0 each, so the target rule's wording would
+reach them. Rahul's explicit "SYNTH and NAMED ... report estimates and
+intervals with no contrast" is the specific rule and governs. Applied by
+Claude.
+
+**How each contrast is computed (follows from items 1 to 3; applied by
+Claude).**
+- Every contrast is on S-slope (item 0), on the primary window (item 2;
+  REFSIZE's common cap), with a two-sided 95% percentile interval and the
+  DIFFERENCE rule of item 1. No contrast here is an equivalence claim, so
+  none touches the margin pool of 5b.
+- A contrast between two cells whose seed keys differ is resampled
+  independently in each cell (item 3) and never called "paired". If two
+  cells share keys, it is resampled jointly and every 5a rule applies
+  (A7). Whether target contrasts share keys depends on whether the
+  trajectory seed key carries tau_0 (see the readiness section). Dimension
+  contrasts cannot share keys, since X0 has a different dimension.
+- Where a contrast involves a tau_0 below 0.1, it is also printed on the
+  W-ge window as a sensitivity line with no verdict, as item 2 does for
+  slopes. Round 1's Table 3 W-ge value (+0.0775) is a contrast of that
+  kind.
+
+**NOT DECIDED (raised by the seventh pass).**
+- 7-S. The sign of each contrast. CLAUDE.md lists a sign reversal among
+  this project's failures (severity defined as gamma(r1) - gamma(r2), the
+  numbers reported as gamma(r2) - gamma(r1)), and rule 5 requires every
+  sign convention in the docstring. The seventh message's wording "A
+  against B" gives aniso - iso for diffusion, matching 5a. Read the same
+  way, "d = 2 against d = 40" would be d2 - d40. Round 1's Table 3 change
+  is d40 - d2: M2 gives d = 2 -1.0655, d = 40 -1.0113, change +0.0542.
+  N30's target labels, "CON 0.5-0.01", read as looser minus tighter. One
+  rule is needed for all four contrasts.
+- 7-A. REFSIZE's comparison across J_inf, the reason item 2 keeps its
+  common window, is none of the four contrasts, so "no other contrast is
+  computed" removes it. Which J_inf levels it compares (for example
+  12500 against 100000, by the lowest-against-highest form) is needed if
+  it stays.
+- 7-B. The literal rules reach three rows that the sixth message's MADE
+  list (S3) did not name: ADAPT (target contrast; S3 said "ADAPT reports
+  its bound"), LAWPANEL and HORIZON (law contrast). Confirm that they are
+  made.
+- 7-C. The restated onset ruling makes "pre-specified two-level onset
+  contrasts", but the dimension rule covers only concentration rows, so no
+  onset contrast is defined. ONSET's d grid is 5, 10, 20, 40, 80. The
+  lowest-against-highest form would give 5 against 80. The two levels are
+  needed.
+
+---
+
 ## Decisions made for one row that apply to others (audit)
 
 Rahul asked for every place where a decision made for one row should
@@ -930,7 +1050,9 @@ P1. A4, "no monotonicity in any variable", reaches three more claims:
     - regimemap.py Part D: "r_onset falls with d" (lines 65 to 67, 526 to
       528), monotone in d. Dropped by A4. "Onset moves with d", read as a
       difference between two d values, remains available under item 1's
-      DIFFERENCE rule; Claude's reading, to confirm.
+      DIFFERENCE rule; Claude's reading, to confirm. [Rejected in S4,
+      then restored in the seventh message as pre-specified two-level
+      contrasts only (item 7).]
     - crossed.py "grows_B": already dropped under A5.
 P2. A1 and N_vis, "a quantity built on the old rule carries no verdict":
     law.py's crossing at 0.15 is the third such quantity, already dropped
@@ -1017,6 +1139,9 @@ S3. Which comparisons the rerun makes. Rule, applied uniformly: a
 S4. "Onset moves with d" does not survive: Rahul's ruling is that it is a
     monotonicity claim in a different costume, which A4 forbids. The
     onsets are reported per d with intervals, and the text describes them.
+    [Superseded in the seventh message: Rahul records the ruling as wrong
+    as stated. Pre-specified two-level onset contrasts are made; "onset
+    falls with d" is not (item 7).]
 S5. regime P6.3 and ess_surface P1.3: reported with no verdict. Rahul's
     reason: A3's reason covers both, and dropping the verdict while
     keeping the numbers is the honest form.
@@ -1100,7 +1225,65 @@ F9. REFSIZE's window and its J_inf extrapolation (item 2).
 ### Sixth pass
 
 Claude checked the fifth pass's findings again and found nothing new.
-F7 to F9 need Rahul's decision, so the audit is not closed on them.
+F7 to F9 went to Rahul and were decided in the seventh message, below.
+
+### Seventh message: F7 to F9 decided
+
+- F7: the two-level contrast line adopted; S4 restated; the four
+  contrasts fixed (item 7).
+- F8: concentration rows CONC, PROBEARM, TAU8, GEOM; SYNTH and NAMED
+  supplementary; reference adequacy is REFSIZE plus calprec2's per-cell
+  adequacy verdict, C5m, D1 and both reference medians (item 7).
+- F9: REFSIZE's common cap is primary, the full grid is its sensitivity
+  column, and the extrapolation is dropped (item 2).
+- F2 and F4 confirmed, and F1, F3, F5 and F6 too ("all correct").
+
+### Seventh pass (against the seventh message)
+
+Applied, as following from fixed rules:
+G1. Each contrast's computation: S-slope, primary window, item 1's
+    interval and DIFFERENCE rule, item 3's resampling (independent unless
+    keys are shared, A7), and a W-ge sensitivity line with no verdict
+    where tau_0 < 0.1 (item 7).
+G2. SYNTH and NAMED take no target contrast. The specific rule governs
+    the general wording (item 7).
+G3. REFSIZE's sensitivity column is each cell's grid capped at J_inf/10,
+    per regime.py line 329 and RERUN_PLAN (item 2).
+G4. No contrast in item 7 is an equivalence claim, so 5b's pool stays the
+    five paired rows.
+G5. The rows reporting estimates without contrast (SYNTH, NAMED, BETA-ISO,
+    BETA-ANI, and the factors not in item 7: r, sigma, beta, T, J_inf
+    unless 7-A) still print item 4's per-cell rate verdict (F4, confirmed).
+
+Needs Rahul's decision (item 7, NOT DECIDED): 7-S (the sign of each
+contrast), 7-A (REFSIZE's J_inf comparison against "no other contrast"),
+7-B (ADAPT, LAWPANEL, HORIZON reached by the wording but absent from S3),
+7-C (the onset contrast's two levels).
+G6. Raised by G1: whether the trajectory seed key carries tau_0. If it
+    does not, cells that differ only in tau_0 share X0 and Brownian
+    increments, and every target contrast becomes paired, with 5a's rules
+    (A7). If it does, they are independent. That is a design choice with
+    the same trade-off 5a settled for diffusion, and it changes the
+    analysis. NOT DECIDED. The same question arises for law: X0 differs
+    by law, but the Brownian increments could be shared.
+
+### Eighth pass (against G1 to G6)
+
+- G1's W-ge line applies to target contrasts with 0.01 (CONC, PROBEARM,
+  TAU8, GEOM, SIGMA, ANISO, RMAP, ADAPT if 7-B) and to dimension
+  contrasts in rows at tau_0 0.01, whose W-ge cells are already printed
+  by item 2. No new rows.
+- G3: at J_inf 12500 the sensitivity window equals the primary one, so
+  that cell's sensitivity line repeats the primary value. That is what
+  the definition gives, and it is printed, not suppressed.
+- G6 bears on 7-B: if ADAPT's arms share keys (control.py did) and its
+  target contrast is made per arm, the arms are not being compared, so
+  A7 does not apply to them either way.
+
+### Ninth pass
+
+Nothing new. The audit stops on 7-S, 7-A, 7-B, 7-C and G6, which need
+Rahul.
 
 ---
 
@@ -1164,6 +1347,7 @@ Estimand and window
       column labelled secondary and read by no verdict. Archive: S-curve in
       nine scripts and S-slope in others, without distinction (N33).
 - [ ] The primary window is the full grid for every row.
+- [ ] Every row's primary window is the full grid except REFSIZE.
 - [ ] Every (row, tau_0) with tau_0 < 0.1 prints the J >= 1/tau_0 slope
       beside the primary one, carrying no verdict, with the window computed
       in exact fractions: TAU8 and GEOM at 0.07, 0.05, 0.03, 0.02, 0.01;
@@ -1251,7 +1435,16 @@ Tolerances and margin
       TOST.
 - [ ] Any compared arm pair follows every 5a rule.
 - [ ] Any interval for the onset resamples realizations within cells, not
-      objectives. Onsets are printed per d with intervals; no trend in d.
+      objectives. Onsets are printed per d with intervals; no trend in d;
+      only the pre-specified onset contrast (7-C pending).
+- [ ] The contrasts of item 7 and no others, each with its sign convention
+      stated in the docstring [7-S pending], its 95% interval, DIFFERENCE
+      verdict, and a W-ge sensitivity line where tau_0 < 0.1.
+- [ ] SYNTH and NAMED: estimates and intervals only, no contrast.
+- [ ] REFSIZE: primary window J <= 1250 for all J_inf; sensitivity column
+      on each cell's J_inf/10-capped grid; no J_inf extrapolation.
+- [ ] calprec2's per-cell adequacy verdict, C5m, D1 and both reference
+      medians are printed per cell, with no pooled verdict.
 - [ ] Before each fit, every E on the window is checked finite and > 0; a
       realization failing it is handled by item 3's realization rule for
       that window, with the bad-point count printed.
@@ -1296,41 +1489,43 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The sixth message decided the six points that remained. The fourth to
-sixth passes applied F1 to F6 as following from fixed rules, and left:
+The seventh message decided F7 to F9. The seventh to ninth passes left
+five points, all from item 7:
 
-1. F7: whether a contrast between two levels of an ordered variable (d =
-   2 against d = 40; tau_0 contrasts) is a comparison or a monotonicity
-   claim in a costume, given S4's ruling on the onset. Then the list of
-   pre-specified contrasts in the concentration-dependence rows.
-2. F8: which rows are "the concentration-dependence rows", and what "the
-   reference-adequacy reporting" consists of.
-3. F9: REFSIZE's window (the common J <= 1250, or the full grid) and its
-   J_inf extrapolation, form and interval.
-4. F4 and F2 were applied on Claude's reading. They need a word only if
-   Rahul meant otherwise.
+1. 7-S: the sign of each contrast. "A against B" read as A - B gives
+   aniso - iso (as 5a) but d2 - d40, the reverse of round 1's Table 3
+   (d40 - d2, +0.0542 in M2). One rule for all four contrasts.
+2. 7-A: REFSIZE's J_inf comparison is not among the four contrasts, so
+   "no other contrast" removes the comparison its window was kept for.
+   Keep it, and with which two levels.
+3. 7-B: ADAPT (target), LAWPANEL and HORIZON (law) are reached by the
+   contrast rules but were not in the sixth message's MADE list.
+4. 7-C: the two d levels of the onset contrast (ONSET's grid is 5 to 80).
+5. G6: whether the trajectory seed key carries tau_0 (and law), which
+   decides whether target (and law) contrasts are paired.
 
 ## What the rerun script needs that this file does not yet give
 
-From this file:
-- F7, F8 and F9 above. Without them the script does not know which
-  comparisons to compute in the rows the paper's main text rests on.
+Decisions (above): 7-S, 7-A, 7-B, 7-C and G6. Without 7-S no contrast can
+be stated in the docstring; without G6 the seed-key layout cannot be
+fixed.
 
-From outside this file (state as of 2026-10-16, from the repository):
+Waiting, with no decision of Rahul's needed beyond G6:
 - calprec2's beta table, calprec2_beta.csv, written by its finalize step
   after all 26 long shards (0 to 25). Run folders for shards 0 to 6 are
   under runs/ (shard 2 in two folders), and shard 7's log is uncommitted,
-  so the table does not exist yet.
-  CONC, TAU8, SIGMA and ANISO cannot run without it.
-- The trajectory seed-key layout: the fields of the key (row, module,
-  objective, d, law, tau_0, r or sigma or beta, J_inf, T, arm, rep), with
-  the diffusion coordinate omitted (5a), an ENTROPY, and trajectory kinds
-  that avoid 31 to 35 (calprec2), 51, 61 to 67 and 71 (this file's
-  bootstrap kind). Item 3's bootstrap key is defined from it, so it must
-  be fixed first.
-- The archived-beta rows: how each row's archived beta is reproduced by
-  importing the archived module (rule 4), checked against costprobe2's
-  P0 constants.
-- Already in place, no action: the Kaggle determinism gate passed
-  (ENVIRONMENT.md line 49); peak RSS at J_inf 100000 was measured
-  (SESSION_STATE.md line 206, RERUN_PLAN F6).
+  so the table does not exist yet. CONC, TAU8, SIGMA and ANISO cannot run
+  without it, and the reference-adequacy columns come from it.
+- The trajectory seed-key layout, which Claude drafts for Rahul's
+  approval once G6 is settled: the key's fields (row, module, objective,
+  d, law, tau_0, r or sigma or beta, J_inf, T, arm, rep), with diffusion
+  omitted (5a), an ENTROPY, and trajectory kinds that avoid 31 to 35
+  (calprec2), 51, 61 to 67, and 71 (this file's bootstrap kind). Item 3's
+  bootstrap key is built from it.
+- Script work, not waiting on anyone: reproducing each archived-beta
+  row's beta by importing the archived module (rule 4), checked against
+  costprobe2's P0 constants.
+
+Already in place: the Kaggle determinism gate passed (ENVIRONMENT.md line
+49); peak RSS at J_inf 100000 was measured (SESSION_STATE.md line 206,
+RERUN_PLAN F6).
