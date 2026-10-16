@@ -2565,8 +2565,13 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The twelfth message decided L1 to L3. Left, after the perjcal projection,
-with its rows:
+The twelfth message decided L1 to L3. Raised by the first review of the
+scripts (notes/RERUN_REVIEW.md, 2026-10-16), for the analysis script:
+D1, whether audit A2's coefficient carries the DIFFERENCE verdict; D2,
+whether the pooled diffusion gap carries an equivalence verdict; D3,
+whether the analysis may run before all seventeen rows are complete.
+
+Left, after the perjcal projection, with its rows:
 
 1. perjcal's analysis criteria. Its archived rules: P-C1, control within
    1% at every point and more than 5% misses stopping the analysis;

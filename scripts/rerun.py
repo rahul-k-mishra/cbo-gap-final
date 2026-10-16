@@ -60,13 +60,20 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
   A-BETA  ARCHIVED BETAS REPRODUCE (precheck). For every cell of a row
       that keeps archived betas, the recomputed beta is compared with every
       matching row of the archived CSV named in rerunlib.ARCH_CHECK. It
-      agrees iff |recomputed - archived| <= half a unit in the archived
-      string's last printed digit, plus 1e-9 relative. A cell with no
-      matching archived row, or any disagreement, is a FAIL; any FAIL:
-      exit 2, after the whole check is printed and written.
-      Worked example: archived "1.9047" (regime_A_reference.csv); a
-      recomputed 1.904731 differs by 3.1e-5 <= 5e-5 + 1.9e-9: agrees. A
-      recomputed 1.90485 differs by 1.5e-4: FAIL.
+      agrees iff |recomputed - archived| <= half a unit in the last digit
+      the archive printed, plus 1e-9 relative. Every beta and sigma column
+      checked was written with "{:.6g}" except ess_surface's design beta, so
+      the last printed digit is the sixth significant one (trailing zeros
+      are dropped by "g", so the string alone would understate the
+      precision). ADAPT is checked against the fixed arm's beta_first for
+      both arms: both start at the same beta0 (control.py 347), but the
+      adaptive arm's beta_first is the beta after its first re-solve. A cell
+      with no matching archived row, or any disagreement, is a FAIL; any
+      FAIL: exit 2, after the whole check is printed and written.
+      Worked example: archived "1.9047" (regime_A_reference.csv, "{:.6g}",
+      so 1.90470): tolerance 0.5 x 10^(0 - 5) = 5e-6 plus 1.9e-9. A
+      recomputed 1.904702 differs by 2e-6: agrees. A recomputed 1.904731
+      differs by 3.1e-5: FAIL.
   A-SIGMA  The same test for sigma, per (cell, diffusion), where the
       archived CSV has a sigma column (SIGMA, ANISO, RMAP, CLIFF, ONSET).
       Worked example: regimemap_D_real.csv sigma "0.547723" against
@@ -98,11 +105,20 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
       pass. Computed 1.00: "ONSET CONTROL FAILED", exit 2.
   K1  INJECTIVITY. No two distinct (cell group, rep) tasks share a key; a
       shared cell is one group. Otherwise exit 2.
+      Worked example: BETA-ISO and BETA-ANI cells (ackley, d 2, beta 3)
+      have equal coordinates; their owner rows differ (field 3: 0 and 1),
+      so their keys differ: pass.
   K2  PAIRING. In SIGMA, ANISO, RMAP, CLIFF and ONSET each cell's isotropic
       and anisotropic tasks have identical keys; elsewhere a cell has one
       diffusion. Otherwise exit 2.
+      Worked example: CLIFF (sphere, d 10, r 1.5, tau0 0.1, rep 4): both
+      tasks carry key ...-4, with task ids ending "|isotropic" and
+      "|anisotropic": pass.
   K3  The seed key and the bootstrap key are written for every realization
       (rerun_real.csv) and every cell (rerun_plan.csv).
+      Worked example: a rerun_real.csv row carries seed_key
+      20261016-81-13-8-1-10-0-100000-500000-0-0-50000-1000000-0-2-3 and
+      boot_key 20261016-71-13-8-1-10-0-100000-500000-0-0-50000-1000000-0-2.
   K4  SHARING. Cells of different rows with identical arguments (key fields
       4 to 15, beta, M, J grid, diffusions) form one group, owned by the
       first row in ROW_ORDER. The computed multi-row groups must equal
@@ -127,15 +143,31 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
       smallest task twice in separate worker processes with the same key
       (kind 83). Every E_J must be identical as a %.17g string. Otherwise
       exit 3.
+      Worked example: the regimemap pair's E_10 reads
+      0.0123456789012345678 in member a and 0.0123456789012345679 in b:
+      DIFFER, exit 3.
   G-RSS  Every task reports its worker's peak RSS (resource.getrusage,
       Linux kB / 1024), a running maximum over that worker's tasks. Above
       3072 MB (costprobe2's budget) the row is flagged OVER BUDGET and the
       run ends with exit 4. costprobe2 measured every unit of every row at
       354.2 MB or less (runs/costprobe2-finalize-20261011-101659).
+      Worked example: a worker reporting 3100.0 MB: the row prints OVER
+      BUDGET and the run ends with exit 4.
   G-STOP  --stop-after SECONDS (default 36000, a margin choice under
       Kaggle's 43200 s cap, as in calprec2): no task starts after that;
       running tasks finish; the run ends with exit 5 and the remaining
       tasks are run by a resume (CLAUDE.md rule 17).
+      Worked example: at 36000.4 s elapsed with 812 tasks pending, none of
+      them starts; the in-flight tasks finish and are written; exit 5.
+  T1  STALL. If tasks are in flight and none has completed for STALL_S
+      seconds, the pool is terminated, every in-flight task is written as an
+      error row ("stalled"), and the run ends with exit 4. A worker killed
+      outside Python (for memory) would otherwise leave its task pending
+      forever. STALL_S = 5 x the largest measured unit wall of this shard's
+      tasks (--timing-from), at least 600 s; without --timing-from, 7200 s.
+      This is a guard against a hang, not a criterion on cost.
+      Worked example: largest unit wall 84 s: STALL_S = 600 s. 300 s: 1500
+      s.
   SHARDS  Tasks of --rows are assigned to --nshards shards by longest-
       processing-time first over costprobe2's measured unit walls (--timing-
       from DIR, repeatable, one folder per flag so that kgrun rewrites each
@@ -157,6 +189,11 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
       folder list must equal this run's, or it stops; every folder read and
       the number of tasks skipped from each are printed. Output goes to a
       new folder.
+      Worked example: shard 2 of 6 stopped by G-STOP after 1430 complete
+      tasks; the resume with --resume-from that folder prints "completed
+      tasks 1430", skips them, and runs the rest into a new folder. Had it
+      been started with --workers 2 instead of 4, it stops: "RESUME param
+      workers differs".
 
 SEEDS
   Trajectory: SeedSequence(key), key as in rerunlib (kind 81), passed
@@ -191,7 +228,10 @@ HOW TO RUN (from the repository root, venv active; Kaggle through kgrun)
     python scripts/rerun.py --plan-from ... --timing-from ... --rows ROWS \
         --shard i --nshards K --workers 4
   Exit codes: 0 complete; 2 setup or a precheck criterion failed; 3 F1 or
-  D-SMOKE failed; 4 task errors or OVER BUDGET; 5 stopped by G-STOP.
+  D-SMOKE failed; 4 task errors, OVER BUDGET or T1 stall; 5 stopped by
+  G-STOP. When several apply, the code is the first of 5, 3, 4 in that
+  order: a stopped run must be resumed whatever else happened, and an F1
+  failure outranks errors. Every condition is also printed in the summary.
 
 NumPy only. Python 3.8 to 3.11 syntax.
 """
@@ -651,9 +691,9 @@ def real_row(t, o):
     return row
 
 
-def run_pool(tasks, workers, outpath, stop_after, label, fresh=False):
+def run_pool(tasks, workers, outpath, stop_after, label, fresh=False, stall_s=7200.0):
     """Run tasks on a Pool; write each row as it completes. Returns
-    (rows written as dicts, stopped flag, number not started)."""
+    (rows written as dicts, stopped flag, number not started, stalled flag)."""
     hdr("{}  {} task(s) on {} worker(s); stop-after {:.0f} s".format(label, len(tasks), workers,
                                                                     stop_after))
     fh = open(outpath, "x", newline="")
@@ -665,7 +705,9 @@ def run_pool(tasks, workers, outpath, stop_after, label, fresh=False):
     pending = list(tasks)
     inflight = {}
     t0 = time.time()
+    last = time.time()
     stopped = False
+    stalled = False
     pool = multiprocessing.Pool(processes=workers, maxtasksperchild=1 if fresh else None)
     try:
         while pending or inflight:
@@ -708,17 +750,36 @@ def run_pool(tasks, workers, outpath, stop_after, label, fresh=False):
                 else:
                     print("  [{:>6}/{:<6}] ERROR {} {}".format(len(done), len(tasks), tid, o["error"]))
                 sys.stdout.flush()
-            if not progressed:
+            if progressed:
+                last = time.time()
+            else:
                 time.sleep(0.2)
+            if inflight and time.time() - last > stall_s:
+                print("  T1 STALL: no task completed in {:.0f} s; terminating the pool".format(stall_s))
+                pool.terminate()
+                for tid in list(inflight):
+                    t, _ar = inflight.pop(tid)
+                    o = {"tid": tid, "error": "stalled (T1)", "end": "err", "E": {}, "extras": {},
+                         "audit": None, "le0": None, "le_redraw": None, "F1": "",
+                         "wall": float("nan"), "rss": float("nan"), "pid": ""}
+                    row = real_row(t, o)
+                    w.writerow(row)
+                    done.append(dict(zip(REAL_COLS, [str(x) for x in row])))
+                fh.flush()
+                os.fsync(fh.fileno())
+                stalled = True
+                stopped = True
+                break
             if stopped and not inflight:
                 break
     finally:
-        pool.close()
+        if not stalled:
+            pool.close()
         pool.join()
         fh.close()
     print("  finished {} task(s) in {:.1f} s; {} not started".format(len(done), time.time() - t0,
                                                                     len(pending)))
-    return done, stopped, len(pending)
+    return done, (stopped and not stalled), len(pending), stalled
 
 
 # --------------------------------------------------------------------------
@@ -847,8 +908,8 @@ def main():
                        "workers": a.workers, "env": ENV})
         write_rows(os.path.join(outdir, "rerun_params.csv"), ["name", "value"],
                    [[k, v] for k, v in sorted(params.items())])
-        done, _, _ = run_pool(tasks, max(2, a.workers), os.path.join(outdir, "rerun_real.csv"),
-                              1e18, "D-SMOKE", fresh=True)
+        done, _, _, _ = run_pool(tasks, max(2, a.workers), os.path.join(outdir, "rerun_real.csv"),
+                                 1e18, "D-SMOKE", fresh=True)
         hdr("D-SMOKE  bitwise comparison of the two members")
         ok = True
         by = {}
@@ -907,8 +968,12 @@ def main():
                [[k, v] for k, v in sorted(params.items())] +
                [["resume_from", ";".join(a.resume_from.split(","))]])
     print("  run dir  {}".format(outdir))
-    done, stopped, notrun = run_pool(todo, a.workers, os.path.join(outdir, "rerun_real.csv"),
-                                     a.stop_after, "TRAJECTORIES")
+    stall_s = 7200.0
+    if a.timing_from and mine:
+        stall_s = max(600.0, 5.0 * max(t["est"] for t in mine))
+    print("  T1 stall guard {:.0f} s".format(stall_s))
+    done, stopped, notrun, stalled = run_pool(todo, a.workers, os.path.join(outdir, "rerun_real.csv"),
+                                              a.stop_after, "TRAJECTORIES", stall_s=stall_s)
 
     hdr("SUMMARY")
     nerr = sum(1 for r in done if r["end"] != "ok")
@@ -920,8 +985,10 @@ def main():
     print("  peak RSS max {:.1f} MB; OVER BUDGET {}".format(max(rss) if rss else float("nan"), nover))
     print("  F1: {} ok, {} FAILED".format(naud, nf1))
     code = 0
-    if nerr or nover:
+    if nerr or nover or stalled:
         code = 4
+    if stalled:
+        print("  T1 STALL: in-flight tasks written as errors; resume with --resume-from {}".format(outdir))
     if nf1:
         code = 3
     if stopped:

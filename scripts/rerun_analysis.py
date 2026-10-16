@@ -29,12 +29,19 @@ INPUTS AND CHECKS BEFORE ANY STATISTIC
       realization (end "ok") must match its plan cell: task id, beta
       (repr), sigma (repr) and bootstrap key equal; a realization not in
       the plan, or a task id complete in two folders, exits 2.
+      The seed_key column must equal the key part of the task id, so the two
+      arms of a paired cell provably hold the same key (5a; checklist "a
+      check in the script stops the run if not").
       Worked example: a SIGMA realization whose beta reads 2.5e2 while the
-      plan says 2.4e2: exit 2, naming the task.
+      plan says 2.4e2: exit 2, naming the task. An anisotropic row whose
+      seed_key differs from its task id's key: exit 2.
   A1  A row is analysed only when every realization of every one of its
       cells (shared cells included) is present and complete. Incomplete
       rows are listed with their missing counts and skipped; every
       statistic that needs them is skipped and says so.
+      Worked example: ONSET with 2148 of 2160 realizations present: "ONSET
+      INCOMPLETE, skipped"; its onsets, severities and gaps are not
+      computed, and neither is the margin (5b).
 
 ITEM 0  ESTIMAND. Each realization's slope is regimemap.fit_slope on the
   window. S-slope = the mean of the realization slopes (primary; every
@@ -104,6 +111,10 @@ ITEM 4  RATE VERDICT, every row, W-full only: "upper bound <= -1: yes" iff
 
 ITEM 5a  PAIRING. SIGMA, ANISO, RMAP, CLIFF and ONSET: the gap is
   anisotropic minus isotropic, resampled jointly by key (item 3).
+  Worked example: ANISO, rastrigin, d 10, r 0.5, tau0 0.1: both arms' rows
+  carry the same key for each rep; one index matrix is drawn from the
+  cell's bootstrap key and applied to both arms' slopes, so resample b's
+  gap is the mean over the drawn reps of (aniso - iso).
 
 ITEM 5b  MARGIN, computed and printed before any gap.
   - S = the median of the per-cell bootstrap SDs (numpy.nanstd, ddof 1, of
@@ -154,7 +165,17 @@ ITEM 7  CONTRASTS (second level minus first; baseline subtracted).
   6  ONSET: onset(d80) - onset(d5) per (diffusion, objective) and pooled
      (pooled onsets) per diffusion.
   7  interaction = CON(0.01, 0.5) (TAU8, GEOM: CON(0.01, 0.3)).
-  Worked example: S -1.06 at d2 and -1.01 at d40 gives +0.05 (contrast 1).
+  Worked examples (illustrative numbers): S -1.06 at d2 and -1.01 at d40
+  gives +0.05 (contrast 1); S -1.01 at tau0 0.5 and -0.85 at 0.01 gives
+  +0.16 (2); aniso -0.93 and iso -1.01 give +0.08 (3); mix-0.1 -0.98 and
+  centred -1.02 give +0.04 (4); J_inf 100000 -1.04 and 12500 -1.06 give
+  +0.02 (5); onsets 1.00 at d80 and 1.50 at d5 give -0.50 (6); changes
+  +0.15 at 0.01 and +0.05 at 0.5 give +0.10 (7), whose round-1 orientation
+  CON(0.5, 0.01) is -0.10.
+  A unit lacking a cell (a cell with no finite S-slope on the window) is
+  excluded from that quantity, named, and the reduced k printed (section
+  8, common rules). Example: CONC REGF with rastrigin/mix-0.1 lacking its
+  d40, tau0 0.01 cell: "excluded units: rastrigin/mix-0.1", k 11.
   Every contrast is printed per unit and pooled, with the W-ge line where
   any cell involved has tau_0 < 0.1. No contrast in ADAPT, LAWPANEL,
   HORIZON, SYNTH, NAMED, BETA-ISO, BETA-ANI, CLIFF (beyond 3).
@@ -179,6 +200,9 @@ SECTION 8  (tenth to twelfth messages).
       S(r 3) - S(r 0.75), per (diffusion, objective, d), pooled per
       (diffusion, d). Trend: OLS slope of the severity on log2 d (five d,
       intercept), per (diffusion, objective) and pooled per diffusion.
+      Example: S(1, 3) = 0.09, 0.07, 0.21, 0.46, 0.61 at d 5 to 80: the
+      trend is the OLS slope on log2 d = 2.32 .. 6.32, printed with its
+      interval; no sentence says the severity grows.
   8.3 Panel model, RMAP: Delta = -1 - S fitted as a + b1 g + b2 h + b3 g h,
       g = log10(0.5 / tau_0), h = log2(r / 0.5), over the 20 cells of a
       (diffusion, d) panel per objective, pooled; b1, b2, b3, both
@@ -209,6 +233,9 @@ SECTION 8  (tenth to twelfth messages).
       (diffusion, d, tau_0); W-ge line at tau_0 0.01. Not computed: cliff
       (i), (ii), regimemap "map informative", partm P-M3; P-M4 is
       identically zero under sharing and is printed as vacuous.
+      Example: S-slopes -1.02, -1.01, -1.00, -0.99, -0.98, -0.97 at r 0.1,
+      0.25, 0.5, 0.75, 0.9, 0.99 give the OLS coefficient of slope on r, with
+      its interval and the DIFFERENCE rule (see the review note on A2).
   L2  R^2, point values only, the fit named: mechanism P3.4 in CONC and
       PROBEARM (OLS of cell S-slopes on log tau_0; plus log d; plus
       objective dummies; mechanism.r2_of); regime P6.3 (regime.fit_predict,
@@ -217,13 +244,21 @@ SECTION 8  (tenth to twelfth messages).
       regime.one_realisation's values). ess_surface P1.3: the minimum ESS
       (mean over realizations of ess_min_ref and of ess_min_sub per J)
       printed beside each BETA-ISO and BETA-ANI slope.
+      Example: "P3.4 target alone (log tau0)  R^2 = 0.2000  (OLS of the 144
+      cell S-slopes, W-full)": a number and the fit, with no interval and no
+      verdict.
   L3  Curvature, regime rows: the mean over realizations of
       regime.fit_curv on the window, with its interval, no verdict.
       Departure from the archive (regime.py line 362 fitted the mean
       curve), stated in the output.
+      Example: per-realization curvatures 0.004, 0.006, 0.002 give 0.004,
+      printed with its interval and no straightness verdict.
   Reference adequacy: calprec2's label, tau_ref, adequacy, C5m, D1 and
   both reference medians per calibration cell, from the plan, with no
   pooled verdict; REFSIZE's cells and contrast 5.
+  Example: "crossed ackley d=40 centred tau0=0.01 beta (not adequate) C5m
+  0.0712 D1 0.031 64M ... 256M ...": copied as calprec2 wrote it; no count
+  of adequate cells is turned into a verdict.
   No round-1 interval is reused or compared: the approved key shares no
   realization across d, tau_0 or r.
 
@@ -476,6 +511,8 @@ def load_runs(folders, expected):
                 bad.append("sigma {} vs plan {!r}".format(r["sigma"], c["sigma"][df]))
             if r["boot_key"] != rl.key_str(rl.boot_key(c, c["owner"])):
                 bad.append("boot key")
+            if r["seed_key"] != tid.rsplit("|", 1)[0]:
+                bad.append("seed_key {} differs from the task id's key".format(r["seed_key"]))
             if bad:
                 sys.stderr.write("A0: task {}: {}\n".format(tid, "; ".join(bad)))
                 sys.exit(2)
@@ -619,16 +656,32 @@ class Stats(object):
         if het is not None:
             d.update(het)
         self.rows.append(d)
-        say("  {:<9} {:<26} {:<34} {:<7} {:<22} {:<7} {} [{}, {}] {}{}{}".format(
+        extra = ""
+        if d.get("equivalence"):
+            extra += "  90% (TOST 5% each side) [{}, {}] half-width {} m {}: {}".format(
+                fmt(q["p5"]), fmt(q["p95"]), fmt(d.get("half_width_90")), fmt(self.margin),
+                d["equivalence"])
+        if orient:
+            extra += "  round-1 orientation {}".format(fmt(d["round1_orientation"]))
+        if het is not None:
+            extra += "  k {} sd_units {} vbar {} tau2_mm {} I2 {} {}".format(
+                het["k"], fmt(het["sd_units"]), fmt(het["vbar"], 6), fmt(het["tau2_mm"], 6), het["I2"],
+                het["trunc"])
+        say("  {:<9} {:<26} {:<34} {:<7} {:<22} {:<7} {} [{}, {}] {}{}".format(
             row, quantity[:26], group[:34], level, unit[:22], wlabel, fmt(point), fmt(q["lo"]),
-            fmt(q["hi"]), d["verdict"], ("  " + d.get("equivalence", "")) if d.get("equivalence") else "",
-            ("  I2 " + str(het["I2"]) + " sd_units " + fmt(het["sd_units"])) if het else ""))
+            fmt(q["hi"]), d["verdict"], extra))
         return d
 
     def family(self, row, quantity, group, units, wlabel, primary, equiv=False, orient=False,
                note=""):
         """units: list of (label, point, vec). Emits each unit and the pooled
         unweighted mean with item 6's statistics."""
+        excl = [u[0] for u in units if not np.isfinite(u[1])]
+        units = [u for u in units if np.isfinite(u[1])]
+        if excl:
+            note = (note + "; " if note else "") + "excluded units (a cell without a finite S-slope): " + \
+                ",".join(excl)
+            say("  {} {} {}: excluded units {}; k {}".format(row, quantity, group, ",".join(excl), len(units)))
         for lab, p, v in units:
             self.one(row, quantity, group, "unit", lab, wlabel, p, v, primary, equiv, orient, note)
         if len(units) >= 1:
@@ -909,6 +962,8 @@ def onset_block(ctx, st, onset_rows):
             tot[0] += k
             tot[1] += n
             say("  J4 {:<9} {:<11} {} of {} intervals contain 1".format(lvl, df, k, n))
+            onset_rows.append({"diffusion": df, "objective": "J4 count " + lvl,
+                               "contains_1": "{} of {}".format(k, n)})
         say("  J4 {:<9} {:<11} {} of {} intervals contain 1".format(lvl, "both", tot[0], tot[1]))
         onset_rows.append({"diffusion": "both", "objective": "J4 count " + lvl,
                            "contains_1": "{} of {}".format(tot[0], tot[1])})
@@ -982,13 +1037,14 @@ def audit_block(ctx, st, row, audit_rows):
                     for J in rl.jlist_of(c))
         ref = np.array([ctx.real[task_tid(c, "none", rep)]["audit"][0] for rep in reps])
         R[id(c)] = mats
+        tf = tau_frac(c)
         for J, v in sorted(mats.items()):
-            fl = 1.0 / (J * c["tau"])
+            fl = float(1 / (J * tf))
             audit_rows.append({"row": row, "objective": c["obj"], "d": c["d"], "law": c["law"],
                                "tau0": c["tau"], "J": J, "n": v.size, "mean": float(v.mean()),
                                "sd": float(np.std(v, ddof=1)), "p5": float(np.percentile(v, 5)),
                                "p95": float(np.percentile(v, 95)), "ref_ratio_mean": float(ref.mean()),
-                               "floor": fl, "floor_flag": "floor (J tau0 < 1)" if J * c["tau"] < 1 else ""})
+                               "floor": fl, "floor_flag": "floor (J tau0 < 1)" if J * tf < 1 else ""})
     say("  per-cell ratio summaries written to analysis_audit.csv ({} rows)".format(len(audit_rows)))
     dims = g["dims"]
     dlo, dhi = min(dims), max(dims)
@@ -1008,7 +1064,7 @@ def audit_block(ctx, st, row, audit_rows):
                 us.append((u[0] if len(laws) == 1 else "{}/{}".format(*u),
                            float(a1.mean() - a0.mean()), a1[i1].mean(axis=1) - a0[i0].mean(axis=1)))
             st.family(row, "audit ratio(J) d{}-d{}".format(dhi, dlo), "tau0={} J={}".format(t, J), us,
-                      "J={}".format(J), True, orient=True, note="round 1 printed d{} - d{}".format(dlo, dhi))
+                      "audit", True, orient=True, note="round 1 printed d{} - d{}".format(dlo, dhi))
             pooled = st.rows[-1]
             nex[1] += 1
             nex[0] += 1 if pooled["verdict"] == "DIFFERENCE" else 0
@@ -1105,9 +1161,10 @@ def main():
         sys.exit(2)
     pparams, cells, plan_sha = rerun.load_plan(a.plan_from)
     say("  plan rerun_plan.csv sha256 {}   calprec2 rows {}".format(plan_sha, pparams.get("calprec2_rows")))
-    if pparams.get("rerunlib_sha256") != hs["rerunlib_sha256"]:
-        sys.stderr.write("plan built with a different rerunlib.py\n")
-        sys.exit(2)
+    for k in ("rerunlib_sha256", "costprobe2_sha256"):
+        if pparams.get(k) != hs[k]:
+            sys.stderr.write("plan built with a different {} ({} vs {})\n".format(k, pparams.get(k), hs[k]))
+            sys.exit(2)
 
     expected = {}
     for c in cells:

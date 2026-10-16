@@ -382,52 +382,71 @@ def read_calprec2(path):
 # --------------------------------------------------------------------------
 
 # row -> (file, [(csv column, cell field or ("=", constant) or "diff")],
-#         beta column or None, sigma column or None)
+#         beta column or None, sigma column or None, print format)
+# Print format: "g6" where the archive wrote the column with "{:.6g}"
+# (visibility.py 416, mechanism.py 378, control.py 381-383, regime.py 383,
+# law.py 582, sigma.py 356-357, crossed.py 373-375, cliff.py 360-361,
+# regimemap.py 395-396); "str" for ess_surface's design beta, written as the
+# float itself (ess_surface.py 321).
+# ADAPT matches the FIXED arm's row for both arms: control.py 347 passes the
+# same beta0 to both arms, but control_summary.csv's beta_first is the mean
+# of b_first, and in the adaptive arm b_first is the beta after the first
+# re-solve (control.py 223 to 250), not beta0.
 ARCH_CHECK = {
     "BETA-ISO": ("ess_surface_summary.csv", [("objective", "obj"), ("diffusion", "diff"),
-                                             ("beta", "beta_design"), ("d", "d")], "beta", None),
+                                             ("beta", "beta_design"), ("d", "d")], "beta", None, "str"),
     "BETA-ANI": ("ess_surface_summary.csv", [("objective", "obj"), ("diffusion", "diff"),
-                                             ("beta", "beta_design"), ("d", "d")], "beta", None),
+                                             ("beta", "beta_design"), ("d", "d")], "beta", None, "str"),
     "LAWPANEL": ("visibility_summary.csv", [("objective", "obj"), ("d", "d"), ("init", "law")],
-                 "beta", None),
+                 "beta", None, "g6"),
     "PROBEARM": ("mechanism_summary.csv", [("objective", "obj"), ("d", "d"), ("init", "law"),
-                                           ("tau", "tau")], "beta", None),
+                                           ("tau", "tau")], "beta", None, "g6"),
     "ADAPT": ("control_summary.csv", [("objective", "obj"), ("d", "d"), ("tau", "tau"),
-                                      ("arm", "arm")], "beta_first", None),
+                                      ("arm", ("=", "fixed"))], "beta_first", None, "g6"),
     "REFSIZE": ("regime_A_reference.csv", [("name", "obj"), ("d", "d"), ("init", "law"),
-                                           ("tau", "tau"), ("Jinf", "jinf"), ("T", "T")], "beta", None),
+                                           ("tau", "tau"), ("Jinf", "jinf"), ("T", "T")], "beta", None, "g6"),
     "SYNTH": ("regime_B_synth.csv", [("name", "obj"), ("d", "d"), ("init", "law"), ("tau", "tau"),
-                                     ("Jinf", "jinf"), ("T", "T")], "beta", None),
+                                     ("Jinf", "jinf"), ("T", "T")], "beta", None, "g6"),
     "NAMED": ("regime_C_named.csv", [("name", "obj"), ("d", "d"), ("init", "law"), ("tau", "tau"),
-                                     ("Jinf", "jinf"), ("T", "T")], "beta", None),
+                                     ("Jinf", "jinf"), ("T", "T")], "beta", None, "g6"),
     "HORIZON": ("regime_D_horizon.csv", [("name", "obj"), ("d", "d"), ("init", "law"),
-                                         ("tau", "tau"), ("Jinf", "jinf"), ("T", "T")], "beta", None),
-    "GEOM": ("law_synth.csv", [("name", "obj"), ("d", "d"), ("tau", "tau")], "beta", None),
+                                         ("tau", "tau"), ("Jinf", "jinf"), ("T", "T")], "beta", None, "g6"),
+    "GEOM": ("law_synth.csv", [("name", "obj"), ("d", "d"), ("tau", "tau")], "beta", None, "g6"),
     "RMAP": ("regimemap_M_real.csv", [("part", ("=", "M")), ("diffusion", "diff"),
                                       ("objective", "obj"), ("d", "d"), ("r", "r"), ("tau", "tau")],
-             "beta", "sigma"),
+             "beta", "sigma", "g6"),
     "ONSET": ("regimemap_D_real.csv", [("part", ("=", "D")), ("diffusion", "diff"),
                                        ("objective", "obj"), ("d", "d"), ("r", "r"), ("tau", "tau")],
-              "beta", "sigma"),
+              "beta", "sigma", "g6"),
     "CLIFF": ("cliff_summary.csv", [("diffusion", "diff"), ("objective", "obj"), ("d", "d"),
-                                    ("r", "r"), ("tau", "tau")], "beta", "sigma"),
+                                    ("r", "r"), ("tau", "tau")], "beta", "sigma", "g6"),
     "SIGMA": ("sigma_summary.csv", [("diffusion", "diff"), ("objective", "obj"), ("d", "d"),
-                                    ("r", "r"), ("tau", "tau")], None, "sigma"),
+                                    ("r", "r"), ("tau", "tau")], None, "sigma", "g6"),
     "ANISO": ("crossed_summary.csv", [("arm", "armAB"), ("diffusion", "diff"), ("objective", "obj"),
-                                      ("d", "d"), ("level", "level"), ("tau", "tau")], None, "sigma"),
+                                      ("d", "d"), ("level", "level"), ("tau", "tau")], None, "sigma",
+              "g6"),
 }
 
 
-def printed_tol(s):
-    """Half a unit in the last printed digit of the decimal string s, plus a
-    relative slack of 1e-9 for a value that sits on a rounding boundary."""
+def printed_tol(s, fmt):
+    """Half a unit in the last digit the archive printed, plus a relative
+    slack of 1e-9 for a value on a rounding boundary.
+    fmt "g6": the column was written with "{:.6g}", which keeps six
+    significant digits but drops trailing zeros, so the last printed digit is
+    the sixth significant one: 0.5 x 10^(floor(log10|v|) - 5).
+    fmt "str": the last digit of the string itself."""
+    v = float(s)
+    if fmt == "g6":
+        if v == 0.0:
+            return 1e-12
+        return 0.5 * 10.0 ** (math.floor(math.log10(abs(v))) - 5) + 1e-9 * abs(v)
     dv = Decimal(s.strip())
     q = float(Decimal(1).scaleb(dv.as_tuple().exponent))
-    return 0.5 * q + 1e-9 * abs(float(dv))
+    return 0.5 * q + 1e-9 * abs(v)
 
 
-def agrees(x, s):
-    return abs(float(x) - float(s)) <= printed_tol(s)
+def agrees(x, s, fmt):
+    return abs(float(x) - float(s)) <= printed_tol(s, fmt)
 
 
 _CSV_CACHE = {}
@@ -467,16 +486,16 @@ def archive_check(c, diff, beta, sigma):
     spec = ARCH_CHECK.get(c["row"])
     if spec is None:
         return "not applicable", "no archived beta or sigma for this row"
-    fname, match, bcol, scol = spec
+    fname, match, bcol, scol, pfmt = spec
     want = [(col, _field_value(c, f, diff)) for col, f in match]
     hits = [r for r in archived_rows(fname) if all(_matches(r[col], v) for col, v in want)]
     if not hits:
         return "FAIL", "no row of {} matches {}".format(fname, want)
     bad = []
     for r in hits:
-        if bcol is not None and not agrees(beta, r[bcol]):
+        if bcol is not None and not agrees(beta, r[bcol], pfmt):
             bad.append("beta {!r} vs archived {}".format(beta, r[bcol]))
-        if scol is not None and not agrees(sigma, r[scol]):
+        if scol is not None and not agrees(sigma, r[scol], pfmt):
             bad.append("sigma {!r} vs archived {}".format(sigma, r[scol]))
     if bad:
         return "FAIL", "{} ({} archived rows): {}".format(fname, len(hits), "; ".join(sorted(set(bad))))
