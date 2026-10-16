@@ -34,7 +34,9 @@ message)"; the audit was run again (seventh to ninth passes). An eighth
 message fixed the sign rule, two more contrasts, the contrast scope and
 the seed-key coordinates, marked "(eighth message)"; the audit was run
 again (tenth to twelfth passes), and the seed-key layout is drafted in
-its own section for Rahul's approval.
+its own section for Rahul's approval. A ninth message decided H1 to H3
+and approved the layout with one change, marked "(ninth message)"; the
+audit was run again (thirteenth to fifteenth passes).
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -741,6 +743,11 @@ the gaps, avoids this.
   then covers every beta design present in the pool, not only calprec2
   against probe (second-pass finding P7 below). (Sixth message.) No row
   outside the five makes an equivalence claim, so none joins.
+- (Thirteenth pass, applied from the ninth message's reason for sharing
+  cells.) A cell shared between RMAP and ONSET (layout section) enters the
+  median for S and the probe-group median once, not once per row.
+  Counting it twice would treat one physical experiment as two pieces of
+  evidence, which is what the ninth message's reason excludes.
 
 **Decided by.** M4: the three candidate constructions of tex 78's scale
 give medians 0.0259 (C-a), 0.0270 (C-b) and 0.0275 (C-c). M5: half-widths
@@ -807,6 +814,35 @@ law) pairs) with per-unit estimates y_i:
 
 Printed with every pooled estimate and its interval: k, sd_units, vbar,
 tau2_mm, I2, and "tau2 truncated at 0" whenever s2 <= vbar.
+
+(Ninth message.) Every contrast of item 7, and the onset, is reported
+per cell and pooled over units. A pooled figure is never printed without
+the statistics above. Rahul's choice; his reasons are in item 7.
+
+Rules for the pooled figures (thirteenth pass; applied by Claude from
+the ninth message's stated reason, comparability with round 1, and from
+items 3 and 6 as fixed):
+- The pooled point estimate is the unweighted mean of the per-unit
+  estimates y_i. That is the form of round 1's Table 3: "Table 3's per-d
+  entry = the mean over the 12 units at (d, tau_0)" (n30_reconstruct.py
+  line 92). The 1/v_i-weighted mean y_w enters Q only, as m6_hetero.py
+  defines it, and is never reported as the estimate.
+- The pooled interval: each cell is resampled independently (item 3),
+  the per-unit estimates and their unweighted mean are recomputed on each
+  resample, and the 2.5th and 97.5th percentiles of the B means are
+  taken. Shared-key cells are resampled jointly across arms (5a).
+- v_i is the bootstrap variance of that unit's own estimate under the
+  same resamples.
+- I2 is undefined when Q = 0 (all y_i equal) or when any v_i = 0 (a unit
+  whose estimate is the same in every resample, which a grid-valued onset
+  can be). The script then prints "I2 undefined" with the reason and the
+  unit, and prints no substitute value. This follows from rule 2: no
+  number is filled in.
+- Worked example (illustrative): k = 2 objectives, per-unit contrasts
+  +0.04 and +0.06. Pooled estimate (0.04 + 0.06) / 2 = +0.05. If the
+  first unit's v_i is 0.0004 and the second's 0.0001, y_w = (0.04 / 0.0004
+  + 0.06 / 0.0001) / (1 / 0.0004 + 1 / 0.0001) = 700 / 12500 = +0.056,
+  which is used in Q and never printed as the estimate.
 
 **Worked example (m6_hetero.py's own, illustrative numbers).**
 - k = 3 units with y = -1.00, -0.95 and -0.90 have s2 = 0.0025.
@@ -875,7 +911,11 @@ onset contrasts are made; any "onset falls with d" claim is not.
   as measured, per cell, with no pooled verdict.
 
 **The contrasts (seventh message; scope, sign and the fifth and sixth
-contrasts from the eighth message). No other contrast is computed.**
+contrasts from the eighth message; the seventh contrast, the onset
+statistic and per-cell plus pooled reporting from the ninth message). No
+other contrast is computed.** The thirteenth pass found main-text
+quantities that this sentence still excludes (J1 to J4, under "Decisions
+still needed").
 
 Sign rule (eighth message), one rule for all contrasts: second level
 minus first, with the levels listed in the docstring so that the
@@ -902,8 +942,14 @@ Table 3.
    that he should have listed it in the seventh message, since the
    comparison is the row's purpose.
 6. Onset, ONSET only (eighth message): onset(d = 80) - onset(d = 5),
-   highest minus lowest by the sign rule. The onset statistic is not yet
-   defined (NOT DECIDED, H3 below).
+   highest minus lowest by the sign rule, within each diffusion arm. The
+   onset statistic is defined below (ninth message, H3).
+7. Interaction, every concentration row (CONC, PROBEARM, TAU8, GEOM)
+   (ninth message): change(tightest) - change(loosest), where change(tau)
+   is contrast 1 computed at that tau_0. In CONC and PROBEARM: [S(d40,
+   0.01) - S(d2, 0.01)] - [S(d40, 0.5) - S(d2, 0.5)]. In TAU8 and GEOM:
+   [S(d40, 0.01) - S(d5, 0.01)] - [S(d40, 0.3) - S(d5, 0.3)]. Per
+   (objective, law) in CONC and PROBEARM, per objective in TAU8 and GEOM.
 
 No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO or
 BETA-ANI (eighth message for the first three). ADAPT reports its bound
@@ -923,12 +969,12 @@ in a row it applies to.
 
 | Row | Contrasts |
 |---|---|
-| CONC, PROBEARM | d40 - d2; tau 0.01 - 0.5; mix-0.1 - centred |
-| TAU8, GEOM | d40 - d5 (no d 2); tau 0.01 - 0.3 (no 0.5) |
+| CONC, PROBEARM | d40 - d2; tau 0.01 - 0.5; mix-0.1 - centred; change(0.01) - change(0.5) |
+| TAU8, GEOM | d40 - d5 (no d 2); tau 0.01 - 0.3 (no 0.5); change(0.01) - change(0.3) |
 | SIGMA, ANISO | aniso - iso per cell; tau 0.01 - 0.1, per arm |
 | RMAP | aniso - iso per cell; tau 0.01 - 0.5, per arm |
 | CLIFF | aniso - iso per cell (single tau_0) |
-| ONSET | aniso - iso per cell; onset d80 - d5 (H3) |
+| ONSET | aniso - iso per cell; onset d80 - d5, per objective and pooled |
 | REFSIZE | J_inf 100000 - 12500 on J <= 1250 |
 | ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO, BETA-ANI | none |
 
@@ -953,7 +999,7 @@ Claude).**
   costs the variance reduction that sharing would give.
 - Applied by Claude, from "diffusion is the single exception": every
   other coordinate is in the key too (d, J_inf, T, r, sigma, beta, arm,
-  row), so contrasts 1, 2, 4, 5 and 6 are all between independent cells.
+  row), so contrasts 1, 2, 4, 5, 6 and 7 are all between independent cells.
   Each is resampled independently in each cell (item 3) and never called
   "paired". The seed-key layout section below lists the fields.
 - Precision guide (eighth message): for these independent contrasts,
@@ -977,53 +1023,151 @@ Claude).**
 7-B (no contrasts in ADAPT, LAWPANEL, HORIZON), 7-C (contrast 6), G6
 (tau_0 and law in the key).
 
-**NOT DECIDED (raised by the tenth pass).**
-- H1. Round 1's "tau_0 contrasts" were interaction contrasts, not target
-  contrasts. scripts/n30_reconstruct.py lines 146 to 148 and 337 to 338
-  (from the archive's construction): change(tau) = S(d40) - S(d2) at that
-  tau, and CON(t1, t2) = change(t1) - change(t2), "CON 0.5-0.01" etc.;
+**Decided in the ninth message: H1, H2, H3.**
+
+H1, the interaction (contrast 7 above).
+- Raised by the tenth pass: round 1's "tau_0 contrasts" were interaction
+  contrasts, not target contrasts. scripts/n30_reconstruct.py lines 146
+  to 148 and 337 to 338 (from the archive's construction): change(tau) =
+  S(d40) - S(d2) at that tau, and CON(t1, t2) = change(t1) - change(t2);
   SEP and REGF b_dtau are of the same family. They ask whether the
-  dimension effect depends on the target, which is the concentration
-  dependence of the dimension change. Contrast 2 instead asks whether the
-  slope depends on the target at fixed d. "No other contrast is
-  computed" excludes the interaction. When the seventh message said the
-  onset ruling "would have deleted Table 3 and the tau_0 contrasts, which
-  are the main text", those tau_0 contrasts were CON. Is an interaction
-  contrast added in the concentration rows, and between which two
-  targets? Under the sign rule it would be change(tightest) -
-  change(loosest), the negative of round 1's CON(0.5, 0.01) orientation.
-- H2. Per cell or pooled. 5a fixes diffusion per cell. For contrasts 1, 2,
-  4, 5 and 6 the unit is not fixed. Round 1's Table 3 change pooled over
-  units: twelve (objective, initial law) units per (d, tau_0) on exactcal
-  (M6 header). If a contrast is pooled, item 6 requires sd_units, I2 and
-  the rest with it. For contrast 4 the item 6 unit (objective, law) cannot
-  apply, since law is the factor being contrasted; the unit there would
-  be the objective. Per cell, pooled over units, or both?
-- H3. The onset statistic. regimemap.py computes it from the mean exponent
-  over the objectives at each r (ms, the mean over OBJ3), by
-  free-breakpoint profile least squares in log r, per (diffusion, d)
-  (docstring lines 62 to 67 and 94 to 96). That pools over objectives.
-  Per (diffusion, d) pooled as archived, or per objective? If pooled,
-  item 6 applies. Its interval resamples realizations within cells (P4),
-  not the archive's pool of slopes across objectives at each r (lines 508
-  to 518).
-  - Found while checking (Claude): the estimator cannot be imported. bp
-    is a function nested inside regimemap.py's main (lines 499 to 505):
-    a two-segment fit in log r with the breakpoint restricted to the grid
-    values of r except the last, returning exp of the best one. Rule 4
-    names dynamics and fit_slope; it does not cover this. If the rerun
-    retypes bp, the retyped version should first reproduce the archived
-    onset point estimates from zenodo-v1/regimemap_D_real.csv, as
-    n30_reconstruct's positive control did for exactcal. That check is a
-    proposal, not decided.
+  dimension effect depends on the target. Contrast 2 asks whether the
+  slope depends on the target at fixed d.
+- Decision: added as contrast 7, scoped to the concentration rows,
+  change(tightest) - change(loosest).
+- Rahul records that he omitted the interaction, and that "no other
+  contrast is computed" would have deleted the quantity the abstract
+  rests on.
+  - Claude's note on that record (thirteenth pass, J1): the abstract's
+    interaction figure (tex line 34, "+0.0305 with interval
+    [+0.0123,+0.0479]" over the full grid, "+0.0073 with
+    [-0.0091,+0.0227]" over the restricted one) is REGF b_dtau, the
+    coefficient of log2 d x log10(1/tau_0) in an OLS fit to the twelve
+    (d, tau_0) cell means (tex line 392; n30_reconstruct.py's regression
+    family). Contrast 7 is the CON family of tex line 394, which is in
+    the body, not the abstract. So contrast 7 restores CON(0.5, 0.01)
+    and does not restore the abstract's figure. Whether b_dtau is
+    computed is J1 below.
+- Orientation, stated once here and once in the eventual text (Rahul's
+  instruction), so that no reader sees a reversal that is only a
+  convention:
+  - Round 1: CON(0.5, 0.01) = change(0.5) - change(0.01). Published
+    -0.0233 with [-0.1482,+0.0567] (tex line 394). N30 reproduced the
+    point estimate under E=slope, W=W-ge, V=signed, and did not reproduce
+    the interval (logs/n30-20261015-2201.log lines 62, 67 and 1030 to
+    1031).
+  - New: contrast 7 = change(0.01) - change(0.5) = -CON(0.5, 0.01). The
+    same quantity in the two conventions carries opposite signs: on the
+    same data, a round-1 value of -0.0233 is the new convention's
+    +0.0233.
+  - Two further limits on comparing the numbers, from the logs and the
+    design, not from the orientation (Claude):
+    - round 1's published CON(0.5, 0.01) is the W-ge value (N30 above).
+      The rerun's primary is W-full (item 2), so the round-1-comparable
+      figure is the rerun's W-ge sensitivity line, which carries no
+      verdict.
+    - round 1's CON came from exactcal (random beta, solved on each
+      realization's reference); CONC runs on calprec2 fixed betas. The
+      two are the same contrast in definition, on different designs.
+- Window: contrast 7 involves tau_0 0.01, so item 2's W-ge sensitivity
+  line applies (eleventh pass). On that line, both changes are computed
+  on each cell's own W-ge window (the 0.01 cells on J >= 100, the 0.5 or
+  0.3 cells on the full grid, since J >= 1/tau_0 removes no J there).
+- Worked example (illustrative numbers): CONC, one (objective, law)
+  unit. S(d40, 0.01) = -0.85, S(d2, 0.01) = -1.00, so change(0.01) =
+  +0.15. S(d40, 0.5) = -1.01, S(d2, 0.5) = -1.06, so change(0.5) = +0.05.
+  Contrast 7 = +0.15 - (+0.05) = +0.10. Round 1's CON(0.5, 0.01) on the
+  same numbers would be +0.05 - (+0.15) = -0.10.
+
+H2, per cell and pooled.
+- Decision: every contrast is computed per cell and pooled over units,
+  and both are reported. Per cell is primary: it is where the
+  measurement lives and where heterogeneity is visible. The pooled
+  figure is reported beside it with item 6's statistics (sd_units, I2
+  and the rest), because that is the form the round-1 numbers took and
+  comparability matters.
+- Reporting both is Rahul's choice. The pooled figure is never reported
+  without its heterogeneity.
+- Units (item 6): (objective, law) in CONC and PROBEARM for contrasts 1,
+  2 and 7; the objective alone for the law contrast 4 (law is the factor
+  contrasted) and in every other row. The pooled diffusion gap is
+  reported the same way, unit the objective, within each (row, d, r,
+  tau_0 and the row's other coordinates).
+- "Per cell" for a contrast means per unit: the contrast within one
+  (objective, law) or one objective, every other coordinate fixed.
+- How the pooled figure is formed, and when I2 is undefined: item 6,
+  "Rules for the pooled figures".
+
+H3, the onset statistic.
+- Decision: computed per objective, and pooled per (diffusion, d) as the
+  archive did; both reported under the rule of H2. Per objective is
+  primary.
+- The estimator (regimemap.py lines 496 to 505, retyped; see the
+  positive control below): x = log of ONSET's r grid (0.75, 1.0, 1.25,
+  1.5, 2.0, 3.0). For y, the S-slope at each r, fit by least squares y =
+  a + b1 x + b2 max(x - c, 0), for each candidate c in x without its
+  last value, and take the c with the smallest residual sum of squares.
+  The onset is exp(c), so it is one of 0.75, 1.0, 1.25, 1.5, 2.0. Ties go
+  to the smaller c (Python's min returns the first minimum, the archive's
+  rule).
+  - Per objective: y is that objective's S-slope at each r.
+  - Pooled: y is the mean over OBJ3 of the per-objective S-slopes at each
+    r, the archive's ms (lines 436 to 438). The pooled onset is the onset
+    of the mean curve. It is not the mean of the three per-objective
+    onsets. Item 6's statistics are computed from the per-objective
+    onsets, with that difference stated beside them.
+  - Interval: item 3, resampling realizations within each cell, never the
+    archive's pool over objectives (second pass, P4). On each resample
+    the S-slopes are recomputed and the onset refitted.
+  - The onset takes grid values only, so its interval endpoints are grid
+    values, and a unit whose onset never moves under resampling has v_i =
+    0 (item 6: I2 is then undefined).
+  - Worked example (illustrative numbers): y = (-1.04, -1.03, -1.04,
+    -1.06, -0.99, -0.94) at r = 0.75 .. 3.0. If c = log 1.5 gives the
+    smallest residual sum of squares of the five candidates, the onset is
+    1.5. Contrast 6 for an objective with onset 1.0 at d = 80 and 1.5 at
+    d = 5 is 1.0 - 1.5 = -0.5.
+- Rule 4 does not cover this estimator: bp is a function nested inside
+  regimemap.py's main (lines 499 to 505) and cannot be imported. The
+  positive control below replaces the import (ninth message).
+- Positive control (Claude's proposal of the eighth message, adopted by
+  Rahul and not optional): before the retyped estimator is used for
+  anything, the script recomputes the archived onsets from
+  zenodo-v1/regimemap_D_real.csv and stops if they do not match.
+  - Input: the rows with part D. For each (diffusion, objective, d, r,
+    tau 0.1), the mean of the archived slope column over rep (the
+    archive's rec mean, a nanmean); then the mean over OBJ3 at each r
+    (ms); then the retyped estimator on that curve.
+  - Reference: the archive holds no onset values, only the slopes. The
+    archived onsets are the r_onset column of the submitted manuscript's
+    onset table, zenodo-v1/sn-article.tex lines 608 to 612 (iso) and 615
+    to 619 (aniso): ten values, one per (diffusion, d), printed to two
+    decimals.
+  - Criterion: every one of the ten recomputed onsets equals the
+    table's value exactly (the onset is a grid value, so no tolerance
+    applies). Any mismatch: the script prints the cell, both values and
+    "ONSET CONTROL FAILED", and stops before any trajectory runs.
+  - The sixty per-r means are printed beside the table's values (three
+    decimals) as a diagnostic, with no stop: a disagreement in the third
+    decimal can come from rounding.
+  - The control checks the point estimate only. The archive's interval
+    used 300 panel resamples with a fixed seed and is not reproduced or
+    compared.
+  - Worked example: iso, d = 40. The table gives r_onset 1.25 (tex line
+    611). If the recomputed onset is 1.25, that cell passes; if it is
+    1.0, the run stops with "ONSET CONTROL FAILED iso d 40: computed 1.0,
+    archived 1.25".
 
 ---
 
-## Trajectory seed-key layout (DRAFT for Rahul's approval)
+## Trajectory seed-key layout (approved in the ninth message, with one change)
 
-Drafted by Claude at the eighth message's request. Nothing here is
-decided until Rahul approves it. It implements the eighth message's rule
-that every coordinate except diffusion is in the key, and items 3 and 5a.
+Drafted by Claude at the eighth message's request. It implements the
+eighth message's rule that every coordinate except diffusion is in the
+key, and items 3 and 5a. Rahul approved it in the ninth message with one
+change: cells that appear identically in two rows are run once and
+shared, not run independently in each row. The change is applied below
+(field 3 and "Shared cells").
 
 **Constants.**
 - ENTROPY 20261016. Entropies used by scripts/ today: 20261009 (calprec,
@@ -1038,7 +1182,7 @@ that every coordinate except diffusion is in the key, and items 3 and 5a.
 |---|---|---|
 | 1 | ENTROPY | 20261016 |
 | 2 | kind | 81 trajectory, 71 bootstrap |
-| 3 | row | index in costprobe2.py ROW_ORDER |
+| 3 | row | index in costprobe2.py ROW_ORDER of the cell's owner row (see "Shared cells") |
 | 4 | module | index in costprobe2.py MODULES |
 | 5 | objective | index in costprobe2.py OBJ_NAMES |
 | 6 | d | the integer |
@@ -1060,11 +1204,81 @@ that every coordinate except diffusion is in the key, and items 3 and 5a.
 - Field 15 exists because ANISO's two arms vary different factors. Without
   it, an arm-A cell and an arm-B cell with equal (sigma, r) would collide.
   Whether they can is not checked here; the field makes it impossible.
-- Row is in the key, so a cell that appears in two rows with identical
-  coordinates (regime cells can: NAMED, REFSIZE and HORIZON all include
-  ackley, d 10, centred, tau_0 0.1, J_inf 50000, T 1) is run
-  independently in each row. That follows from "every coordinate except
-  diffusion is in the key"; sharing them would be a different design.
+- Field 3 holds the owner row, not the row being reported, so a cell
+  shared between rows has one key (ninth message; "Shared cells" below).
+  For every cell that is not shared the owner row is its own row, and
+  the key is as drafted.
+
+**Shared cells (ninth message).** Cells that appear identically in two
+rows are run once and shared. Rahul's reason: they are the same physical
+experiment, and running them twice spends compute to produce two draws
+of one quantity while inviting a reader to treat them as independent
+evidence.
+
+Identity, the test for sharing (Claude, from the code): two cells are the
+same experiment iff they call the same archived module's one_realisation
+with identical arguments other than the seed: objective, d, initial law,
+diffusion, sigma, beta, dt, K, J_inf, J list, and the same M. Cells of
+different modules are never shared, even where the dynamics might
+coincide, because no check has shown the modules' code to be
+equivalent.
+
+Which rows share cells, read from costprobe2.py GRID and the archived
+source:
+- regime.py (REFSIZE, NAMED, HORIZON). A regime cell is (objective, d,
+  law, tau_0, J_inf, T) (regime.py lines 316 to 333). Its beta depends on
+  (objective, d, law, tau_0) only (lines 321 to 326), sigma is 0.2 and M
+  is 12 in every part (lines 479 and 483), and the J list is
+  J10b capped at J_inf / 10 (line 329), the whole grid at J_inf 50000.
+  REFSIZE's cells at J_inf 50000 (line 513), NAMED's at d 10 and tau_0
+  0.1 (line 578) and HORIZON's at law centred and T 1.0 (line 601) are
+  all (objective, 10, centred, 0.1, 50000, 1.0). Shared:
+  - ackley, sphere, rosenbrock: in REFSIZE, NAMED and HORIZON; owner
+    REFSIZE.
+  - rastrigin: in NAMED and HORIZON (REFSIZE has no rastrigin); owner
+    NAMED.
+  No SYNTH cell is shared: the synthetic names (regime.py line 171,
+  "syn_k...") are not named objectives.
+- regimemap.py (RMAP, ONSET). A cell is (diffusion, objective, d, r,
+  tau_0) with beta keyed (objective, d, tau_0) (lines 337 to 344), sigma
+  from sigma_of(diffusion, d, r) (line 371), J_inf 50000, the same J10
+  grid and M 12 in both parts. RMAP (d 10, 40; r 0.5, 1.0, 1.5, 2.0, 3.0;
+  tau_0 0.5, 0.1, 0.03, 0.01) and ONSET (d 5, 10, 20, 40, 80; r 0.75,
+  1.0, 1.25, 1.5, 2.0, 3.0; tau_0 0.1) share every cell with d in {10,
+  40}, r in {1.0, 1.5, 2.0, 3.0}, tau_0 0.1, for each objective of OBJ3
+  and both diffusions. Owner RMAP.
+- No other pair of rows uses the same module, except CONC and PROBEARM
+  (mechanism.py), which differ in beta (calprec2 against probe) and so are
+  not the same experiment, and are not shared.
+
+Implementation:
+- The owner row is the first row in ROW_ORDER that contains the cell.
+  Field 3 of the key is the owner's index, so every row that uses the
+  cell computes the same key.
+- The task list is built from the set of distinct keys: each shared cell
+  is run once, M realizations. Every row that uses it reads the same
+  per-realization records.
+- The output CSV writes each realization once, with a column listing the
+  rows that use it, so the sharing is visible in the record.
+- The bootstrap key is built from the same key (item 3), so a shared
+  cell is resampled with the same index stream in every row that reads
+  it. Its per-cell estimate on a given window is therefore the same
+  number in every row.
+- Rows still apply their own windows: REFSIZE fits the shared cells on J
+  <= 1250 (its primary window), NAMED and HORIZON on the full grid. One
+  set of trajectories, two fits.
+- The script prints, per row, its cell count, the number of its cells
+  owned by another row, and the owner of each; and the total number of
+  distinct cells and realizations run.
+- In pooled statistics across rows, a shared cell counts once: the
+  margin pool of 5b (thirteenth pass). No other statistic pools across
+  rows.
+- Worked example: NAMED's (rastrigin, d 10, centred, tau_0 0.1, J_inf
+  50000, T 1.0) has owner NAMED, and HORIZON's identical cell gets the
+  same key with field 3 = index of NAMED. HORIZON's (ackley, ...) cell
+  has owner REFSIZE, as has NAMED's. ONSET's (anisotropic, sphere, d 40,
+  r 1.5, tau_0 0.1) has owner RMAP; ONSET's (anisotropic, sphere, d 40,
+  r 1.25, tau_0 0.1) is not in RMAP and is owned by ONSET.
 
 **How a seed is used.**
 - Trajectory: numpy.random.SeedSequence(key) is passed unchanged as the
@@ -1076,7 +1290,12 @@ that every coordinate except diffusion is in the key, and items 3 and 5a.
   key with kind 71 and field 16 removed (item 3).
 
 **Checks the script runs before any trajectory; each stops the run.**
-- K1 injectivity: no two (cell, rep) tasks share a key.
+- K1 injectivity: no two distinct (cell, rep) tasks share a key, where a
+  shared cell is one task.
+- K4 identity (ninth message): every row that reads a shared cell
+  passes identical arguments (the identity list above, the beta value
+  included) to one_realisation; the script compares them before the run
+  and stops on any difference, printing the cell and the rows.
 - K2 pairing: in SIGMA, ANISO, RMAP, CLIFF and ONSET, each cell's
   isotropic and anisotropic tasks have identical keys.
 - K3 printed: the seed table (key and cell) is written to the output CSV,
@@ -1488,6 +1707,99 @@ imported). Also the seed-key layout, which is a draft.
 
 Nothing new. The audit stops on H1, H2, H3 and the layout's approval.
 
+### Ninth message: H1, H2, H3 and the layout decided
+
+- H1: contrast 7, the interaction change(tightest) - change(loosest), in
+  the concentration rows; the orientation against round 1's CON stated
+  in the file and in the eventual text; Rahul records the omission
+  (item 7).
+- H2: every contrast per cell and pooled over units, both reported, per
+  cell primary; the pooled figure never without its heterogeneity;
+  Rahul's choice (items 6 and 7).
+- H3: the onset per objective and pooled per (diffusion, d), both
+  reported; the positive control against the archived onsets is
+  mandatory and stops the run on failure; rule 4 does not cover the
+  nested estimator and the control replaces the import (item 7).
+- Layout approved, with repeated cells run once and shared (layout
+  section).
+
+### Thirteenth pass (against the ninth message)
+
+Applied, as following from fixed rules:
+L1. The pooled point estimate is the unweighted mean over units, Table
+    3's form (n30_reconstruct.py line 92), from the ninth message's
+    comparability reason. y_w enters Q only (item 6).
+L2. I2 is printed as undefined when Q = 0 or any v_i = 0, with no
+    substitute (rule 2). The grid-valued onset makes v_i = 0 possible
+    (item 6).
+L3. The pooled onset is the onset of the mean curve, not the mean of the
+    per-objective onsets; item 6's statistics are computed from the
+    per-objective onsets with that stated (item 7, H3).
+L4. Onset control: the reference is the manuscript's onset table, since
+    the archive stores slopes and no onsets; ten exact matches required;
+    the per-r means printed as a diagnostic without a stop; the interval
+    not compared (item 7, H3).
+L5. Contrast 7's W-ge line computes each change on its own cells' W-ge
+    window (item 7).
+L6. Sharing: the identity test, the shared cells (four regime cells; the
+    RMAP-ONSET overlap), owner row in field 3, check K4, one record per
+    realization with its rows listed (layout section).
+L7. A shared cell counts once in 5b's margin pool (5b).
+L8. Two limits on comparing contrast 7 with round 1's CON, besides the
+    orientation: the published CON(0.5, 0.01) is a W-ge value, so the
+    comparable rerun figure is the sensitivity line; and the designs
+    differ (exactcal random beta against calprec2 fixed beta) (item 7).
+
+Needs Rahul's decision. The ninth message's record says "no other
+contrast" would have deleted the quantity the abstract rests on. Checking
+the abstract (zenodo-v1/sn-article.tex lines 32 to 40) against item 7
+shows that contrast 7 is not that quantity, and that three more
+main-text results are still excluded:
+J1. The abstract's interaction is REGF b_dtau, not CON (item 7, H1 note).
+J2. The abstract's third result is the severity trend, which is not a
+    two-level contrast.
+J3. The panel interaction b_3 of the joint sweep, which the conclusions
+    open with.
+J4. The onset compared with r = 1, also in the abstract's third result.
+Details under "Decisions still needed".
+
+### Fourteenth pass (against L1 to L8 and J1 to J4)
+
+- J2 and J3 are regression coefficients over more than two levels. Item
+  7's line, as drafted, separates a two-level contrast from "a claim that
+  a quantity rises, falls or moves across a variable's levels", and does
+  not say on which side a single pre-specified regression coefficient
+  falls. J1 is the same question for b_dtau. Folded into J1 to J3.
+- J2's archived interval came from "a bootstrap over the 36
+  objective-realization pairs shared across all five dimensions" (tex
+  line 648). Under the approved key, d is in the key, so no realization
+  is shared across dimensions, and item 3 forbids resampling objectives.
+  If J2 is made, its interval resamples realizations within each cell
+  independently. That follows from items 3 and the layout; no further
+  decision.
+- The same holds for J3: the archive's "bootstrap paired on the 36
+  objective-realization indices and resampled jointly across the panel"
+  (tex line 545) relied on keys shared across tau_0 and r, which the
+  eighth message removed. If J3 is made, its interval resamples
+  realizations within cells independently.
+- "The two diffusion types cross" (tex line 650): the per-cell gaps are
+  computed under contrast 3. A statement that the gap changes sign
+  between two r values is a claim about how the gap moves across r, which
+  A4 excludes as a claim. The text can report each cell's gap and
+  verdict. This follows from A4; no decision.
+- The abstract's second result (the finite-J concentration audit, tex
+  lines 587 to 589, and the whole-run experiment of tex line 398) is in
+  no row of the
+  rerun's grid (costprobe2.py ROW_ORDER). This file does not cover it.
+  Whether the new paper repeats it is a scope question outside this
+  file; I do not know whether it is intended. Listed as J5 for Rahul to
+  confirm.
+
+### Fifteenth pass
+
+Nothing new. The audit stops on J1 to J5, which need Rahul. The rerun
+script is not started.
+
 ---
 
 ## Corrections to the first decision message, from the logs
@@ -1638,19 +1950,41 @@ Tolerances and margin
       TOST.
 - [ ] Any compared arm pair follows every 5a rule.
 - [ ] Any interval for the onset resamples realizations within cells, not
-      objectives. Onsets are printed per d with intervals; no trend in d;
-      only the onset contrast d80 - d5 (statistic pending, H3).
-- [ ] The six contrasts of item 7 and no others, each stated in the
+      objectives. Onsets are printed per d with intervals, per objective
+      and pooled per (diffusion, d); no trend in d; only the onset
+      contrast d80 - d5.
+- [ ] The onset estimator's docstring states the candidate set (r grid
+      without its last value), the tie rule (smaller c) and that the
+      pooled onset is the onset of the mean curve.
+- [ ] Before any trajectory, the onset control recomputes the ten
+      archived onsets from regimemap_D_real.csv and matches the
+      manuscript's onset table (tex lines 608 to 612, 615 to 619)
+      exactly, or prints "ONSET CONTROL FAILED" and stops; the per-r
+      means are printed beside the table's as a diagnostic.
+- [ ] The seven contrasts of item 7 and no others, each stated in the
       docstring as second level minus first with the baseline as
       subtrahend (d40 - d2, tau 0.01 - 0.5, aniso - iso, mix-0.1 -
-      centred, J_inf 100000 - 12500, onset d80 - d5), with its 95%
-      interval, DIFFERENCE verdict, and a W-ge sensitivity line where
-      tau_0 < 0.1 (none for contrast 5). [H1, H2, H3 pending]
+      centred, J_inf 100000 - 12500, onset d80 - d5, change(tightest) -
+      change(loosest)), with its 95% interval, DIFFERENCE verdict, and a
+      W-ge sensitivity line where tau_0 < 0.1 (none for contrast 5).
+      [J1 to J4 pending]
+- [ ] Contrast 7's docstring shows both orientations once: round 1's
+      CON(0.5, 0.01) = change(0.5) - change(0.01), published -0.0233 on
+      W-ge, and the new change(0.01) - change(0.5), its negative.
+- [ ] Every contrast is printed per cell and pooled over units; the
+      pooled figure is the unweighted mean of the per-unit estimates and
+      is printed with k, sd_units, vbar, tau2_mm, I2 and the truncation
+      flag, or "I2 undefined" with its reason.
 - [ ] No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO,
       BETA-ANI.
 - [ ] The seed key follows the approved layout: diffusion absent, every
-      other coordinate present; K1 and K2 stop the run on failure; the
-      key is written per realization. [layout pending approval]
+      other coordinate present, field 3 the owner row; K1, K2 and K4 stop
+      the run on failure; the key is written per realization.
+- [ ] Shared cells (four regime cells; the RMAP-ONSET overlap at d 10
+      and 40, r 1.0 to 3.0, tau_0 0.1) are run once; each realization is
+      written once with the rows that use it; per row, the owned-elsewhere
+      count and owners are printed.
+- [ ] A shared cell enters 5b's margin pool once.
 - [ ] SYNTH and NAMED: estimates and intervals only, no contrast.
 - [ ] REFSIZE: primary window J <= 1250 for all J_inf; sensitivity column
       on each cell's J_inf/10-capped grid; no J_inf extrapolation.
@@ -1700,44 +2034,86 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The eighth message decided 7-S, 7-A, 7-B, 7-C and G6. Left:
+The ninth message decided H1, H2, H3 and the layout. The thirteenth and
+fourteenth passes checked the abstract and conclusions (zenodo-v1/
+sn-article.tex lines 32 to 40 and 703 to 707) against item 7 and found
+main-text quantities that "no other contrast is computed" still
+excludes. Left:
 
-1. H1: round 1's main-text "tau_0 contrasts" (CON, SEP, REGF b_dtau)
-   were interactions, the d40 - d2 change at one tau_0 minus that at
-   another. Item 7's target contrast is a different quantity, and "no
-   other contrast" excludes the interaction. Is it added in the
-   concentration rows, and between which targets? By the sign rule it
-   would be change(tightest) - change(loosest), the negative of round 1's
-   CON orientation.
-2. H2: are contrasts per cell, pooled over units with item 6's statistics,
-   or both? This includes any pooled diffusion gap. Table 3 pooled.
-3. H3: the onset statistic: pooled over objectives per (diffusion, d) as
-   archived, or per objective. And bp is nested in regimemap.py's main,
-   so it cannot be imported; a reproduction check against
-   regimemap_D_real.csv is proposed.
-4. Approval of the seed-key layout draft, including running repeated
-   regime cells independently in each row.
+1. J1, the abstract's interaction. The abstract (tex line 34) and the
+   conclusions (tex line 703) report REGF b_dtau: in an OLS fit of the
+   twelve (d, tau_0) cell means on [1, log2 d, log10(1/tau_0), log2 d x
+   log10(1/tau_0)] (tex line 392), the coefficient of the last term;
+   +0.0305 over the full grid and +0.0073 over J >= 1/tau_0. Contrast 7
+   is not this quantity. The body (tex line 392) also reports b_d and
+   b_tau, and tex line 394 reports all three CON pairs (0.5 - 0.1, 0.5 -
+   0.01, 0.1 - 0.01; "We call all three inconclusive rather than
+   reporting the first alone") and the full-grid separation, +0.1940.
+   Contrast 7 covers one of the three CON pairs. Questions: is the REGF
+   fit computed, and in which rows (CONC and PROBEARM have exactly 4 d x 3
+   tau_0; TAU8 and GEOM have 3 d x 8 tau_0)? Are the other two CON pairs
+   computed? SEP?
+2. J2, the severity, the abstract's third result (tex line 38) and the
+   conclusions' "result that is resolved" (tex line 707). S(1, 3) =
+   gamma(r = 3) - gamma(r = 1) per (diffusion, d) in ONSET, with S(0.75,
+   3) as its boundary-spanning sensitivity (tex line 648, Table
+   tab:severity); and its trend, the OLS slope of the severity on log2 d
+   per diffusion: +0.144 per doubling, [+0.123,+0.164], isotropic. S(1, 3)
+   is a two-level r contrast that item 7 does not list; under the sign
+   rule (r = 1, the boundary, as baseline) it has the archive's
+   orientation. Questions: is S(1, 3) added, with S(0.75, 3) as
+   sensitivity? Is the trend coefficient computed?
+3. J3, the joint-sweep panel model in RMAP (tex lines 540 to 545), with
+   which the conclusions open (tex line 707): Delta = -1 - gamma fitted
+   per (diffusion, d) panel as a + b1 g(tau_0) + b2 h(r) + b3 g h, g =
+   log10(0.5 / tau_0), h = log2(r / 0.5). The sixth message dropped
+   partm P-M2's three-of-four counting rule; it did not decide whether
+   b1, b2 and b3 are computed. Are they?
+4. J4, the onset against r = 1 (tex line 38: "nine of ten bootstrap
+   intervals containing it"). The second pass (P4) read the archive's
+   "interval excludes 1" as item 1's form, but it is not a contrast
+   between levels, and no message decided it. Is it reported, per
+   objective and pooled: "95% interval excludes 1" or "95% interval
+   contains 1", never "onset at 1"?
+5. J5, scope. The abstract's second result (the finite-J concentration
+   audit, tex lines 587 to 589; the whole-run experiment, tex line 398)
+   is in no row of the rerun grid. This file does not cover it. Is that
+   intended? I do not know.
+
+The question common to J1 to J3: item 7's line separates a two-level
+contrast from "a claim that a quantity rises, falls or moves across a
+variable's levels", and does not say where a single regression
+coefficient falls when it is fixed in the docstring before the run and
+reported with its interval. One rule for all three would settle it.
+Claude's view, not a decision: such a coefficient is a pre-specified
+estimand, not a monotonicity claim, provided the text reports the
+coefficient and its interval and claims nothing about the shape of the
+dependence. Under that rule J1 to J3 would be made; under the opposite
+rule the abstract's first and third results are not recomputed by the
+rerun.
 
 ## What the rerun script needs that this file does not yet give
 
-Needs Rahul's decision: H1, H2, H3, and approval of the seed-key layout.
-H1 and H2 decide what the main-text comparisons compute; H3 decides the
-onset contrast. Once they are settled and the layout is approved, the
-file is complete enough for the script to be written.
+Needs Rahul's decision: J1 to J5. J1 to J4 decide what the rerun computes
+for the abstract's first and third results and the conclusions' opening;
+J5 decides whether the abstract's second result is in scope at all. The
+fifteenth pass found nothing further. Once J1 to J5 are settled, the file
+is complete enough for the script to be written.
 
-Waiting on the beta table or the seed-key layout, with nothing for Rahul
-to decide:
+Waiting, with nothing for Rahul to decide:
 - calprec2's beta table, calprec2_beta.csv, written by its finalize step
-  after all 26 long shards (0 to 25). Run folders for shards 0 to 6 are
-  under runs/ (shard 2 in two folders); shard 7's log is uncommitted. The
-  script can be written before the table exists. CONC, TAU8, SIGMA and
-  ANISO cannot run, and the reference-adequacy columns cannot be filled,
-  until it does.
-- Item 3's bootstrap key, which is defined from the layout and is fixed
-  the moment the layout is approved.
+  after all 26 long shards (0 to 25). Run folders for shards 0 to 7 are
+  under runs/ (shard 2 in two folders); shard 8's log is uncommitted.
+  The script can be written before the table exists. CONC, TAU8, SIGMA
+  and ANISO cannot run, and the reference-adequacy columns cannot be
+  filled, until it does.
 - Script work, waiting on neither: reproducing each archived-beta row's
   beta by importing the archived module (rule 4), checked against
-  costprobe2's P0 constants.
+  costprobe2's P0 constants; the onset positive control.
+
+Resolved since the eighth message: item 3's bootstrap key, which is now
+fixed by the approved layout (kind 71, field 16 removed, field 3 the
+owner row).
 
 Already in place: the Kaggle determinism gate passed (ENVIRONMENT.md line
 49); peak RSS at J_inf 100000 was measured (SESSION_STATE.md line 206,
