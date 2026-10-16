@@ -23,6 +23,9 @@ same day decided the rest; its decisions are marked "(third message)".
 A fourth message settled the three points the third raised and asked for
 a cross-row audit; its decisions are marked "(fourth message)", and the
 audit is the section "Decisions made for one row that apply to others".
+A fifth message decided the audit's items A1 to A8 and the margin split,
+marked "(fifth message)", and asked for the audit to be repeated against
+those answers; that is the section's second pass.
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -407,8 +410,9 @@ because both arms hold the same 11 keys.
 
 **Criterion (docstring text), per N32 item.**
 - boundary.py line 373, monotonicity in tau_0 with tolerance 0.02: NOT
-  INHERITED, and (second message) the comparison is not made at all. The
-  rerun makes no monotonicity claim in tau_0. TAU8 and GEOM report each
+  INHERITED, and (second message) the comparison is not made at all.
+  (Fifth message, A4.) The rerun makes no monotonicity claim in any
+  variable, in any row. TAU8 and GEOM report each
   tau_0's S-slope with its interval; the text describes them and does not
   call the sequence monotone or non-monotone.
 - control.py criterion (iii), "within 0.15 of -1", which is two-sided for a
@@ -489,10 +493,18 @@ control.py's (i), (ii) and RECOVERED. No measurement sets any of them.
   (RECOVERED or "rate-consistent"), appears with the same constant in nine
   scripts besides control.py: visibility (line 109), regime (117), law
   (123), boundary (107), mechanism (121), sigma (106), crossed (111), cliff
-  (117) and regimemap (137). All nine change. Rerun rows affected:
+  (117) and regimemap (137). All nine change. (Fifth message.) A tenth
+  carrier, ess_surface.py line 348, "J^-1 recovered" iff abs(slope + 1)
+  < 0.15 on the point estimate (BETA-ISO, BETA-ANI), takes the same
+  criterion; Rahul records that his count of nine was wrong. Rerun rows
+  affected:
   LAWPANEL (visibility), REFSIZE, SYNTH, NAMED, HORIZON (regime), GEOM
   (law), TAU8 (boundary), CONC, PROBEARM (mechanism), SIGMA (sigma), ANISO
-  (crossed), CLIFF (cliff), RMAP, ONSET (regimemap), and ADAPT (control).
+  (crossed), CLIFF (cliff), RMAP, ONSET (regimemap), ADAPT (control),
+  and BETA-ISO, BETA-ANI (ess_surface): every rerun row.
+- (Fifth message.) Nothing is added to -1 anywhere. The archived counts at
+  tolerances 0.10, 0.15 and 0.20 (cliff.py 115 and 467, crossed.py 109
+  and 482, regimemap.py 135 and 580) are not inherited.
 - Where visibility and regime took the 97.5th percentile for that
   one-sided bound (visibility.py line 273; draft line 180), that is the R9
   error and is not inherited.
@@ -501,16 +513,22 @@ control.py's (i), (ii) and RECOVERED. No measurement sets any of them.
   from -1 as "rate-consistent", so the new criterion is stricter, and some
   archived verdicts will not survive it. That is expected and is a
   finding, not a failure.
-- A qualification (Claude's, from the definitions, not measured): the
+- A qualification (Claude's, from the definitions, not measured;
+  accepted by Rahul in the fifth message, and to be stated wherever the
+  change of rule is described): the
   change has two parts that pull in opposite directions. The threshold
   moves from -0.85 to -1, which is stricter. The percentile moves from the
   97.5th to the 95th, which is more lenient at a fixed threshold. A cell
   passes the new rule and fails the old one only if its 95th and 97.5th
   percentiles lie more than 0.15 apart (95th at most -1, 97.5th above
   -0.85). So the new rule is stricter in every cell except those with a
-  wide upper tail; it is not stricter in every cell by construction.
-- LAWPANEL's N_vis (visibility.py lines 276 to 286) carries no rate
-  verdict under the new rule. Its other role, choosing a fit window
+  wide upper tail; it is not stricter in every cell by construction. A
+  cell with a wide upper tail can pass now having failed before.
+- LAWPANEL's N_vis (visibility.py lines 276 to 286) and (fifth message)
+  ess_surface's P1.2 beta threshold, the largest beta still "recovered"
+  (ess_surface.py lines 372 to 379), carry no verdict under the new rule.
+  Both were built on the old rule and lose their basis. N_vis's window
+  role is separate. Its other role, choosing a fit window
   (the smallest J0 whose suffix fit meets the bound), is a separate matter
   that item 2 does not cover. NOT DECIDED; no rule is proposed here.
 - Worked example (illustrative numbers): a TAU8 cell with 95th and 97.5th
@@ -582,7 +600,8 @@ by this decision.
 - (Second message.) k = 3, and S is one pooled number, not a per-cell
   value. So one margin applies to every equivalence comparison.
 - (Fourth message.) S is the median of the per-cell S-slope bootstrap
-  SDs over the cells of SIGMA, ANISO, RMAP, CLIFF and ONSET: one S. This
+  SDs over the cells of SIGMA, ANISO, RMAP, CLIFF and ONSET, plus the
+  cells of any row that joins under A8 (fifth message): one S. This
   reverses the third message's "whole rerun". Rahul's reason: it is the
   objection of correction 4, that one design's scale cannot set another's
   margin, applied inside the rerun; cells that enter no equivalence
@@ -626,18 +645,30 @@ units. A noisier cell gets a wider margin, which is the opposite of what
 an equivalence claim is meant to deliver. One pooled margin, fixed before
 the gaps, avoids this.
 
-**Remaining tension in the five-row pool (Claude's finding, NOT
-DECIDED).** The five paired rows are not one design. SIGMA and ANISO run
-on calprec2 betas; RMAP, CLIFF and ONSET keep archived probe betas
-(calprec2.py lines 74 and 75). Rahul's reason for the five-row pool, that
-one design's scale cannot set another's margin, applies between these two
-groups as well. It cannot be met together with his reason for one pool,
-a single margin everywhere: one margin over two designs, or two margins,
-one per design. M4 measured probe betas near 0.026 and never measured
-calprec2 betas, so whether the two groups' scales differ is unknown until
-the rerun prints them. Also, the five-row pool equals "the cells entering
-equivalence comparisons" only if the paper makes equivalence comparisons
-in those rows alone; see the cross-row section.
+**One margin over the five rows (fifth message).**
+- One margin applies over all five paired rows, although SIGMA and ANISO
+  run on calprec2 betas and RMAP, CLIFF and ONSET on archived probe betas.
+  Rahul's reason: a single margin in slope units is the point of 5b, and
+  splitting it by design would reintroduce the per-cell problem at the
+  row level.
+- Known limitation, stated in the text: the pool mixes two beta designs,
+  and M4 never measured calprec2 betas, so whether their SD scale differs
+  from the probe-beta scale is unknown until the rerun prints it.
+- Revisit condition (docstring text): the rerun prints the median per-cell
+  S-slope bootstrap SD separately for the calprec2 rows and the probe
+  rows, before any gap is computed. If they differ materially, the margin
+  is revisited before any equivalence verdict is claimed.
+- Because S is printed before any gap (criterion above), the revisit, if
+  triggered, happens with no gap yet computed. Otherwise the margin would
+  be chosen with the gaps in view.
+- NOT DECIDED: what "differ materially" means, as a criterion with a
+  threshold and a worked example (CLAUDE.md rule 5). Without it, the
+  revisit condition cannot be checked mechanically.
+- (Fifth message, A8.) Any equivalence claim anywhere uses this margin. A
+  row outside the five that needs an equivalence claim joins the pooled
+  set that defines S; it does not borrow the margin. The revisit condition
+  then covers every beta design present in the pool, not only calprec2
+  against probe (second-pass finding P7 below).
 
 **Decided by.** M4: the three candidate constructions of tex 78's scale
 give medians 0.0259 (C-a), 0.0270 (C-b) and 0.0275 (C-c). M5: half-widths
@@ -748,86 +779,161 @@ say which is right.
 
 ---
 
-## Decisions made for one row that apply to others (fourth message's audit)
+## Decisions made for one row that apply to others (audit)
 
 Rahul asked for every place where a decision made for one row should
-apply to all, as the -0.85 rule did. Claude checked each decision in items
-0 to 6 against the archived criteria table (ANALYSIS_CRITERIA_DRAFT,
-"Archived analysis tolerances") and the archived scripts of every rerun
-row. Nothing below is decided unless it says so.
+apply to all, as the -0.85 rule did. Claude checked each decision against
+the archived criteria table (ANALYSIS_CRITERIA_DRAFT, "Archived analysis
+tolerances") and the archived scripts of every rerun row.
 
-Already general, no action:
-- Item 0 (S-slope), item 2 (W-ge wherever tau_0 < 0.1), item 3
-  (B, seeding, both non-finite rules), item 6 (unit rule): stated for
-  every row.
-- Item 1, no multiplicity correction: the archived Bonferroni counts in
-  sigma, crossed, cliff and regimemap are not inherited.
-- Item 2 supersedes rmapj's P-R3 window rule (report the restricted
-  window if the trend shifts by > 0.026) in every row.
+### First pass (fourth message), decided in the fifth message
 
-Found, by the same logic as the -0.85 rule:
+Already general before the audit: item 0 (S-slope), item 2 (W-ge wherever
+tau_0 < 0.1), item 3 (B, seeding, both non-finite rules), item 6 (unit
+rule), item 1 (no multiplicity correction: the archived Bonferroni counts
+in sigma, crossed, cliff and regimemap are not inherited), and item 2's
+supersession of rmapj's P-R3 window rule.
 
-A1. A tenth rate verdict, in BETA-ISO and BETA-ANI. ess_surface.py line
-    348: "J^-1 recovered" iff abs(slope + 1) < 0.15, on the point
-    estimate, with no interval. It is two-sided, like control.py (iii).
-    Rahul's wording, "every row that carried a per-cell rate verdict",
-    covers it; his count of nine does not. To confirm: it takes the
-    one-sided 95% bound at most -1. Its P1.2 "beta threshold", the largest
-    beta still recovered (lines 372 to 379), is built on that verdict as
-    N_vis is on visibility's, and would lose its basis the same way.
-A2. Counts at tolerances 0.10, 0.15 and 0.20: cliff.py (lines 115, 467),
-    crossed.py (109, 482) and regimemap.py (135, 580) count cells with
-    bound at most -1 + tol, for each tol. This adds a tolerance to -1,
-    which the fourth message rules out ("nothing added"). Claude's
-    reading, to confirm: the counts are not inherited.
-A3. control.py (ii), dropped because item 6 forbids heterogeneity
-    thresholds, also sits in mechanism.py: COLLAPSE_SD = 0.10 (line 122),
-    for CONC and PROBEARM. Rahul's reason drops it there too. To confirm.
-    mechanism.py's other criterion, MECHANISM_DR2 = 0.05 (line 123:
-    adding objective identity raises R^2 by less than 0.05), is a
-    variance-explained criterion (supplement S3), not covered by any
-    decision. NOT DECIDED.
-A4. Monotonicity. The tau_0 monotonicity comparison is dropped for
-    boundary (TAU8). The same kind of claim appears in two more rows:
-    - law.py (GEOM) keeps only cells where delta is monotone in log tau
-      within a noise floor (lines 75 to 78, 589 to 596), and fits its law
-      to the crossing of delta at 0.15, which is the -0.85 tolerance;
-    - cliff.py (CLIFF) criterion (iii), monotone in r within the noise
-      floor (lines 64, 65, 398 to 407).
-    The noise floor in both is a measured spread over three levels, not
-    k x SE, so item 4's general rule does not admit it as it stands.
-    NOT DECIDED: whether the monotonicity drop extends to GEOM and CLIFF,
-    and what law.py's crossing at 0.15 becomes now that 0.15 is gone.
-A5. Other hand-fixed tolerances, governed by item 4's general rule
-    (3 x SE) if the comparison is made at all: cliff.py (i) FLAT_TOL 0.10
-    and (ii) DROP_MIN 0.30 (lines 120, 121); regimemap "map informative",
-    range > 0.10; crossed.py's diffusion gap rule, point-estimate gap
-    < 0.05 and "grows with d" with no tolerance (lines 114, 457, 458),
-    which also uses no interval, against item 1; law.py's "law useful",
-    cross-validated R^2 > 0.5. Which of these comparisons the rerun makes
-    is open (draft section "Which comparisons the rerun analysis makes").
-A6. Straightness, regime.py (lines 70 to 73): straightness is claimed when
-    a quadratic term's interval contains zero. That reads a
-    non-significant result as evidence of absence, which item 1's "95%
-    interval contains 0, never no difference" and CLAUDE.md rule 10
-    forbid. NOT DECIDED: dropped, or recast as an equivalence claim with
-    a margin.
-A7. Pairing outside the five rows. control.py shares seeds between the
-    fixed and adaptive arms (lines 345 and 346). If the rerun keeps that and
-    compares the arms, every rule of 5a applies to ADAPT: key without the
-    arm coordinate, joint resampling, the one-arm drop rule, the pairing
-    check, and "paired" only where keys are shared. If not, the arms are
-    independent and analysed as such. The same question arises for
-    BETA-ISO against BETA-ANI (a diffusion contrast across two rows) and
-    CONC against PROBEARM (a beta-source contrast), if they are compared.
-    NOT DECIDED.
-A8. Equivalence outside the five rows. audit.py A2, "r has no effect of
-    practical size" (interval inside +-0.10), is an equivalence claim with
-    its own margin. Any equivalence claim the rerun keeps must use item
-    5's TOST and margin; if its cells lie outside SIGMA, ANISO, RMAP,
-    CLIFF and ONSET, they fall outside S's pool, which is the converse of
-    the fourth message's reason. NOT DECIDED: whether any equivalence
-    claim is made outside the five rows.
+A1. ess_surface's "J^-1 recovered" (line 348) is a tenth rate verdict.
+    Decided: it takes the one-sided 95% upper bound at most -1. Its P1.2
+    beta threshold carries no verdict, as N_vis carries none (item 4).
+A2. Decided: the counts at tolerances 0.10, 0.15 and 0.20 are not
+    inherited. Nothing is added to -1 anywhere (item 4).
+A3. Decided: mechanism.py's COLLAPSE_SD = 0.10 (line 122) is dropped, for
+    the reason control.py (ii) was: item 6 forbids heterogeneity
+    thresholds. MECHANISM_DR2 = 0.05 (line 123), a variance-explained
+    criterion that no decision covered, is dropped too. It was dropped so
+    as not to inherit it unexamined, not because it was shown wrong.
+A4. Decided: the rerun makes no monotonicity claim in any variable. Not in
+    TAU8 (boundary.py line 373), not in GEOM (law.py lines 75 to 78 and
+    589 to 596), not in CLIFF (cliff.py criterion (iii), lines 64, 65,
+    398 to 407). law.py's crossing at 0.15 goes with it.
+A5. Decided: every hand-fixed tolerance listed is dropped. Where the
+    comparison is still made, it is made under item 4's 3 x SE rule with
+    the SE measured in the rerun; where it is not, the row reports its
+    estimates and intervals and makes no verdict. Per item (whether each
+    comparison is made at all is the draft's open question "Which
+    comparisons the rerun analysis makes", so where that is all that
+    remains, it is marked NOT DECIDED):
+    - cliff.py (i), FLAT_TOL 0.10 (line 120): the slope for r <= 1 stays
+      within 0.10 of its r = 0.5 value. This is a claim of no change, an
+      equivalence claim, so if made it falls under A8 (TOST at the 5b
+      margin; CLIFF is in the pool), not under 3 x SE. Whether made: NOT
+      DECIDED.
+    - cliff.py (ii), DROP_MIN 0.30 (line 121): at least 0.30 flatter at
+      r = 5. A minimum-size difference. Whether made, and how: NOT
+      DECIDED. Claude's concern: "difference > 3 x SE" is a significance
+      test at a level other than item 1's, the ADAPT double-counting
+      problem in another form; item 1's DIFFERENCE rule may be the
+      consistent replacement.
+    - regimemap "map informative", range > 0.10 along each axis
+      (regimemap.py lines 98 to 100): a claim that the exponent varies,
+      a difference claim. Whether made, and whether under 3 x SE or item
+      1's DIFFERENCE rule between axis levels: NOT DECIDED.
+    - crossed.py's gap rule (lines 114, 457, 458): "small_A", every gap
+      below 0.05 in absolute value, is a claim of no difference, so if
+      made it is an equivalence claim under A8 (ANISO is in the pool).
+      "grows_B", the d = 40 gap above the smallest-d gap, is a
+      monotonicity claim in d and is dropped by A4. Whether small_A is
+      made: NOT DECIDED.
+    - law.py's "law useful", cross-validated R^2 > 0.5 and held-out R^2
+      > 0 (lines 89 to 91): not made. The quantity the law predicts is
+      the crossing at 0.15, which A4 drops, and the criterion is
+      variance-explained, which A3 drops. Determined.
+A6. Decided: regime.py's straightness claim (lines 70 to 73) is dropped.
+    An interval containing zero is not evidence of straightness, and
+    CLAUDE.md rule 10 forbids reading it so. The quadratic term is
+    reported with its interval and no verdict.
+A7. Decided, as a general rule: if a comparison between two arms is made
+    at all, every rule of 5a applies to it: shared keys (the key omits the
+    arm coordinate), joint resampling, the one-arm drop rule, the pairing
+    check, and the word "paired" only where keys are shared. Arm pairs the
+    rerun compares:
+    - the isotropic and anisotropic arms of SIGMA, ANISO, RMAP, CLIFF and
+      ONSET: compared, decided in 5a;
+    - ADAPT fixed against adaptive (control.py lines 345 and 346 share
+      seeds): NOT DECIDED;
+    - BETA-ISO against BETA-ANI: NOT DECIDED;
+    - CONC against PROBEARM: NOT DECIDED;
+    - ANISO's arm A (sigma levels) against arm B (r levels): different
+      factor levels, not one key in two treatments; Claude's reading is
+      that A7 does not apply. To confirm.
+A8. Decided: any equivalence claim anywhere uses the margin of item 5b. A
+    row outside the five that needs one joins the pooled set that defines
+    S, rather than borrowing a margin (item 5b).
+
+### Second pass (against the fifth message's answers)
+
+Each fifth-message decision was checked for other places it belongs.
+
+P1. A4, "no monotonicity in any variable", reaches three more claims:
+    - sigma.py P8.1: "the isotropic rows should degrade from left to
+      right" (lines 403 to 405), monotone in r. Dropped by A4.
+    - regimemap.py Part D: "r_onset falls with d" (lines 65 to 67, 526 to
+      528), monotone in d. Dropped by A4. "Onset moves with d", read as a
+      difference between two d values, remains available under item 1's
+      DIFFERENCE rule; Claude's reading, to confirm.
+    - crossed.py "grows_B": already dropped under A5.
+P2. A1 and N_vis, "a quantity built on the old rule carries no verdict":
+    law.py's crossing at 0.15 is the third such quantity, already dropped
+    by A4. sigma.py, regimemap.py and cliff.py also mark or count cells
+    that are "not rate-consistent" (sigma.py line 399, regimemap.py lines
+    456 to 458, cliff.py 467 and 468). Those are displays of the per-cell
+    verdict and change with it to the -1 rule; their Bonferroni versions
+    ("bhi") go under item 1. No new decision.
+P3. A3, "a variance-explained criterion no decision covers is dropped",
+    reaches two more analyses:
+    - regime.py P6.3 (lines 440 to 465): nested models scored by
+      out-of-sample R^2, with "the paper must say so" if it is negative.
+      No numeric threshold but zero. NOT DECIDED: dropped by A3's reason,
+      or reported descriptively with no verdict.
+    - ess_surface.py P1.3, ESS as a predictor of slope breakdown
+      (docstring lines 34 to 40), defines breakdown through the old rate
+      verdict and asks whether ESS predicts it. NOT DECIDED, for the same
+      reason; its definition of breakdown also changes with A1.
+P4. Item 3's no-panel-resampling rule, against regimemap's onset interval:
+    regimemap.py lines 94 to 96 bootstrap the onset "over objectives and
+    realizations", a panel resampling that item 3 forbids. If the onset
+    is estimated, its interval resamples realizations within cells. This
+    follows from item 3 as decided; no new decision. The onset's
+    "interval excludes r = 1" rule is item 1's form already.
+P5. A6, "an interval containing zero is not evidence": item 1 already
+    states it for every row ("95% interval contains 0, never no
+    difference"). The same holds for the onset: an interval containing 1
+    does not show the onset is at 1. No new decision.
+P6. A7: ess_surface also prints a verdict "outside FKR hypothesis" for d
+    failing 2 lambda > d sigma^2 (lines 346, 347), and a "SATURATED" label
+    for ESS below 1.01 (line 344). Neither is a rate verdict or a
+    tolerance on a slope. The 1.01 is a hand-fixed threshold of the A5
+    kind, not in the A5 list. NOT DECIDED: whether it is inherited.
+    Separately, whether "FKR hypothesis" names a hypothesis of the cited
+    theorem is a rule 9 and ledger N1 question for the text, not for this
+    file.
+P7. A8 with the 5b revisit condition: if a row joins the pool under A8,
+    it may bring a third beta design (design betas in BETA-ISO and
+    BETA-ANI, the spread rule in LAWPANEL). The revisit condition then
+    compares every design group in the pool, not only calprec2 against
+    probe. Recorded in 5b.
+P8. A8 against A5: the A5 items that are claims of no change (cliff (i),
+    crossed small_A) fall under A8's margin, not under 3 x SE. Recorded
+    per item in A5. audit.py A2, "r has no effect of practical size"
+    (interval inside +-0.10), and partm P-M3 and P-M4, "agreement within
+    2 x 0.0219", are equivalence claims of the same kind: if made, they
+    use the 5b margin and TOST. Whether made: NOT DECIDED. partm P-M2's
+    "at least 3 of 4 panels" is a counting rule of the A5 kind; whether
+    made: NOT DECIDED.
+
+### Third pass
+
+Claude checked the second pass's findings for further places they belong.
+P1 and P4 add no rows: the trend-in-d and onset claims are in RMAP and
+ONSET, already in the pool. Of P8's equivalence claims, partm reads
+regimemap Parts M and D (partm.py line 86), which are the RMAP and ONSET
+rows, so it needs no join. Which data audit.py A2's r comparison reads
+was not checked; if it lies outside the five rows, A8 makes that row
+join. The third pass found nothing new. The audit is
+not closed: the NOT DECIDED items above are Rahul's, and each answer
+needs its own pass.
 
 ---
 
@@ -952,8 +1058,10 @@ Seeds and pairing
       is injective. Archive: exactcal's formula collided (N6).
 
 Tolerances and margin
-- [ ] No monotonicity comparison in tau_0, with or without a tolerance.
-      Archive: boundary.py 0.02 (N32).
+- [ ] No monotonicity claim in any variable, in any row, with or without
+      a tolerance. Archive: boundary.py 0.02 (N32); law.py and cliff.py
+      (iii) noise floors; sigma P8.1; regimemap "r_onset falls with d";
+      crossed "grows_B".
 - [ ] No two-sided "within 0.15 of -1" criterion; the ADAPT adaptive arm
       prints its one-sided 95% upper bound (95th percentile), its 95%
       interval and "upper bound <= -1: yes/no", with nothing added to -1.
@@ -963,15 +1071,28 @@ Tolerances and margin
       (i), (ii), RECOVERED.
 - [ ] Every row's per-cell rate verdict is "one-sided 95% upper bound
       (95th percentile) <= -1", nothing added. No -0.85, no 97.5th
-      percentile labelled one-sided. Archive: nine scripts plus control.py.
-- [ ] LAWPANEL prints no N_vis rate verdict. [N_vis window pending]
-- [ ] [pending A1, A2, A3] ess_surface's abs(slope + 1) < 0.15 verdict,
-      the tolerance counts at 0.10/0.15/0.20, mechanism's COLLAPSE_SD.
+      percentile labelled one-sided. Archive: ten scripts plus control.py.
+- [ ] BETA-ISO and BETA-ANI use the -1 rule, not abs(slope + 1) < 0.15.
+- [ ] N_vis and the P1.2 beta threshold carry no verdict. [N_vis window
+      pending]
+- [ ] No counts at tolerances 0.10, 0.15, 0.20; nothing added to -1.
+- [ ] No COLLAPSE_SD and no MECHANISM_DR2 criterion in CONC/PROBEARM; no
+      "law useful" R^2 criterion; no straightness verdict (the quadratic
+      term is printed with its interval only).
+- [ ] No hand-fixed tolerance anywhere; a comparison that survives uses
+      3 x SE (rerun SE) or, for a claim of no change, the 5b margin and
+      TOST.
+- [ ] Any compared arm pair follows every 5a rule.
+- [ ] Any interval for the onset resamples realizations within cells, not
+      objectives.
 - [ ] Every tolerance in the docstring is 3 x SE with the SE's source named.
 - [ ] The equivalence margin is 3 x S, S the median of the per-cell
       S-slope bootstrap SDs over the cells of SIGMA, ANISO, RMAP, CLIFF
       and ONSET, printed before any gap is computed: the log order shows
-      margin before gaps. [calprec2/probe mixing within the five pending]
+      margin before gaps.
+- [ ] Before any gap, the median per-cell SD is printed per beta design in
+      the pool (calprec2, probe, and any design a joining row brings), and
+      the revisit condition is evaluated. ["materially" pending]
 - [ ] The margin's stated basis is not 0.0260. Archive: tex 309 (N30).
 - [ ] Every equivalence comparison prints its 90% half-width and the
       attainability flag before any verdict.
@@ -993,25 +1114,22 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The fourth message settled the three points the third raised. What
-remains comes from the fourth message's answers and the cross-row audit:
+The fifth message decided the margin split and A1 to A8. What remains:
 
-1. Item 5b: the five paired rows mix calprec2 betas (SIGMA, ANISO) and
-   probe betas (RMAP, CLIFF, ONSET). The reason for the five-row pool
-   applies between those groups, and conflicts with the reason for a
-   single margin. One margin over both, or one per design.
-2. Item 4: LAWPANEL's N_vis fit-window selection (Rahul: NOT DECIDED, no
-   rule invented).
-3. Audit A1: ess_surface's "abs(slope + 1) < 0.15" verdict in BETA-ISO and
-   BETA-ANI takes the -1 rule (covered by the wording, not by the count
-   of nine), and its beta threshold P1.2 with it.
-4. Audit A2: the counts at 0.10, 0.15, 0.20 are not inherited.
-5. Audit A3: mechanism's COLLAPSE_SD dropped; MECHANISM_DR2.
-6. Audit A4: the monotonicity drop for GEOM (law.py) and CLIFF (cliff.py
-   (iii)), and law.py's crossing at 0.15.
-7. Audit A6: regime's straightness criterion.
-8. Audit A7: pairing for ADAPT's arms, BETA-ISO/BETA-ANI and
-   CONC/PROBEARM, if compared.
-9. Audit A5 and A8, both part of the open draft question of which
-   comparisons the rerun makes: the hand-fixed tolerances that fall to
-   3 x SE, and any equivalence claim outside the five rows.
+1. Item 5b: what "differ materially" means in the revisit condition, as a
+   criterion with a threshold and a worked example (rule 5).
+2. Item 4: LAWPANEL's N_vis fit-window selection (Rahul's NOT DECIDED).
+3. Which comparisons the rerun makes (the draft's open question), item by
+   item where the audit needs it:
+   - A5: cliff (i) (would be equivalence, A8), cliff (ii) (and whether
+     3 x SE or item 1's DIFFERENCE rule), regimemap "map informative"
+     (same question), crossed small_A (would be equivalence, A8);
+   - P8: audit.py A2, partm P-M3 and P-M4 (would be equivalence), partm
+     P-M2's "3 of 4 panels";
+   - A7: whether ADAPT fixed/adaptive, BETA-ISO/BETA-ANI and CONC/PROBEARM
+     are compared; whether ANISO arm A against arm B is outside A7.
+4. Second pass P1: whether "onset moves with d" is kept as pairwise
+   differences under item 1 once "falls with d" is dropped.
+5. Second pass P3: regime.py P6.3 (out-of-sample R^2) and ess_surface P1.3
+   (ESS as predictor): dropped by A3's reason, or reported with no verdict.
+6. Second pass P6: ess_surface's ESS < 1.01 "SATURATED" threshold.
