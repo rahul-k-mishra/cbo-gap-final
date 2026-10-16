@@ -1,0 +1,428 @@
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  1 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:  19068 tasks  summed wall     201542 s  estimate    50385 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  2 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   9534 tasks  summed wall     100771 s  estimate    25193 s at 4 workers
+  shard  1:   9534 tasks  summed wall     100771 s  estimate    25193 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  3 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   6356 tasks  summed wall      67180 s  estimate    16795 s at 4 workers
+  shard  1:   6356 tasks  summed wall      67180 s  estimate    16795 s at 4 workers
+  shard  2:   6356 tasks  summed wall      67181 s  estimate    16795 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  4 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   4767 tasks  summed wall      50385 s  estimate    12596 s at 4 workers
+  shard  1:   4767 tasks  summed wall      50385 s  estimate    12596 s at 4 workers
+  shard  2:   4767 tasks  summed wall      50385 s  estimate    12596 s at 4 workers
+  shard  3:   4767 tasks  summed wall      50385 s  estimate    12596 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  5 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   3814 tasks  summed wall      40309 s  estimate    10077 s at 4 workers
+  shard  1:   3814 tasks  summed wall      40309 s  estimate    10077 s at 4 workers
+  shard  2:   3813 tasks  summed wall      40308 s  estimate    10077 s at 4 workers
+  shard  3:   3813 tasks  summed wall      40308 s  estimate    10077 s at 4 workers
+  shard  4:   3814 tasks  summed wall      40309 s  estimate    10077 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  6 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+  shard  1:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+  shard  2:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+  shard  3:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+  shard  4:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+  shard  5:   3178 tasks  summed wall      33590 s  estimate     8398 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  7 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  1:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  2:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  3:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  4:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  5:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+  shard  6:   2724 tasks  summed wall      28792 s  estimate     7198 s at 4 workers
+
+  --schedule: nothing run, nothing written.
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode schedule)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  plan     runs/rerun-plan-20261016-193630  rerun_plan.csv sha256 1928d06143d89e9b24dc1c8d1f06b40db9c9fc1aaee932527e96125863ad5777
+  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET
+  tasks    19068 (groups owned by these rows x diffusions x reps)
+
+------------------------------------------------------------------------------------------------
+SHARDS  8 shard(s), 4 worker(s); lower bound (perfect scaling; walls from costprobe2's timing beta)
+------------------------------------------------------------------------------------------------
+  shard  0:   2383 tasks  summed wall      25192 s  estimate     6298 s at 4 workers
+  shard  1:   2383 tasks  summed wall      25192 s  estimate     6298 s at 4 workers
+  shard  2:   2384 tasks  summed wall      25193 s  estimate     6298 s at 4 workers
+  shard  3:   2384 tasks  summed wall      25193 s  estimate     6298 s at 4 workers
+  shard  4:   2383 tasks  summed wall      25192 s  estimate     6298 s at 4 workers
+  shard  5:   2383 tasks  summed wall      25192 s  estimate     6298 s at 4 workers
+  shard  6:   2384 tasks  summed wall      25193 s  estimate     6298 s at 4 workers
+  shard  7:   2384 tasks  summed wall      25193 s  estimate     6298 s at 4 workers
+
+  --schedule: nothing run, nothing written.

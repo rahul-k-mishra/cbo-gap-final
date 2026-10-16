@@ -1474,6 +1474,33 @@ instruction of 2026-10-15.
     next run.
   OPEN until the full probe.
 
+- N37 (decision, Rahul 2026-10-16; the archived-beta shard set). Source:
+  logs/rerun-schedule-20261016-1945.log. That is rerun.py --schedule on
+  the laptop, for --nshards 1 to 8, against runs/rerun-plan-20261016-193630
+  and costprobe2's measured walls (runs/costprobe2-s0-kaggle-20261010-103952,
+  runs/costprobe2-s1-kaggle-20261011-101343). Script hashes printed:
+  rerun.py 756c4069...818e, rerunlib.py 5d55050e...9b06, costprobe2.py
+  ea5cb2e1...f64b.
+
+  The thirteen archived-beta rows are BETA-ISO, BETA-ANI, LAWPANEL,
+  PROBEARM, ADAPT, REFSIZE, SYNTH, NAMED, HORIZON, GEOM, RMAP, CLIFF and
+  ONSET:
+  - 19068 tasks;
+  - summed measured unit wall 201542 s, or 50385 s at 4 workers in one
+    shard;
+  - per-shard estimates at 4 workers, labelled lower bounds (perfect
+    scaling; walls from costprobe2's timing beta): 2 shards 25193 s; 3
+    shards 16795 s; 4 shards 12596 s; 5 shards 10077 s.
+
+  Decision: 4 shards. Rahul's reason: the estimate is a stated lower
+  bound, and calprec2's shards have consistently run above their
+  estimates. 3 shards leaves too little margin under the 21600 s per-shard
+  ceiling for the saving of one launch.
+  - The launch procedure is notes/RERUN_RUNBOOK.md: one job at a time,
+    smoke first, every shard with the same --rows list, and RMAP launched
+    with ONSET. A shared cell is run by its owner's job.
+  OPEN until the four shards have exited 0.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
