@@ -36,7 +36,9 @@ the seed-key coordinates, marked "(eighth message)"; the audit was run
 again (tenth to twelfth passes), and the seed-key layout is drafted in
 its own section for Rahul's approval. A ninth message decided H1 to H3
 and approved the layout with one change, marked "(ninth message)"; the
-audit was run again (thirteenth to fifteenth passes).
+audit was run again (thirteenth to fifteenth passes). A tenth message
+put J1 to J5 in scope, marked "(tenth message)", specified in section 8;
+the audit was run again (sixteenth to eighteenth passes).
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -913,9 +915,8 @@ onset contrasts are made; any "onset falls with d" claim is not.
 **The contrasts (seventh message; scope, sign and the fifth and sixth
 contrasts from the eighth message; the seventh contrast, the onset
 statistic and per-cell plus pooled reporting from the ninth message). No
-other contrast is computed.** The thirteenth pass found main-text
-quantities that this sentence still excludes (J1 to J4, under "Decisions
-still needed").
+other contrast is computed**, apart from the quantities of section 8,
+added in the tenth message (J1 to J5).
 
 Sign rule (eighth message), one rule for all contrasts: second level
 minus first, with the levels listed in the docstring so that the
@@ -1157,6 +1158,251 @@ H3, the onset statistic.
     611). If the recomputed onset is 1.25, that cell passes; if it is
     1.0, the run stops with "ONSET CONTROL FAILED iso d 40: computed 1.0,
     archived 1.25".
+
+---
+
+## 8. Main-text estimands added in the tenth message (J1 to J5)
+
+A tenth message put J1 to J5 in scope, marked "(tenth message)". Runtime
+is not a constraint (Rahul).
+
+**The estimand/shape line (Claude's line, adopted by Rahul in the tenth
+message).** A regression coefficient fixed in the docstring before the
+run and reported with its interval is an estimand. What A4 forbids is
+the text claiming a shape: "rises with d", "falls with r". The number is
+reported; a sentence asserting a direction is not written. This completes
+item 7's line between a contrast and a monotonicity claim.
+
+**No round-1 interval is reused (tenth message).** No round-1 interval
+for any quantity in this section, or in item 7, is carried into the new
+paper. Round 1's intervals for these quantities resampled realizations
+shared across d, tau_0 and r: "a bootstrap over the 36
+objective-realization pairs shared across all five dimensions" (tex line
+648), "paired on the 36 objective-realization indices and resampled
+jointly across the panel" (tex line 545), "paired on the same twelve
+objective-law cells" (tex line 394). The approved key puts d, tau_0 and r
+in the key, so no realization is shared across them. Every interval here
+resamples realizations within each cell independently (item 3) and
+recomputes the statistic from the per-cell resamples.
+
+**Common rules for every quantity in this section** (from items 0 to 3,
+6 and 7; applied by Claude):
+- Input: per-cell S-slopes (item 0).
+- Windows: W-full primary; where any cell entering the quantity has tau_0
+  < 0.1, the quantity is also computed with each cell's S-slope on its
+  own W-ge window, as a sensitivity line with no verdict (item 2).
+- Interval: two-sided 95% percentile over B = 10000 resamples, each cell
+  resampled independently with its own bootstrap key; shared cells
+  (layout section) use their one key in every row.
+- Verdict: DIFFERENCE iff the 95% interval excludes zero, otherwise "95%
+  interval contains 0" (item 1). No other verdict.
+- Per unit and pooled (H2): each quantity is computed per unit (item 6's
+  unit for the row) and pooled as the unweighted mean of the per-unit
+  values, with item 6's statistics.
+- For an OLS coefficient the pooled value equals the coefficient of the
+  same OLS on the per-cell means pooled over units, because OLS is linear
+  in the response and every unit has the same design. That is round 1's
+  form (n30_reconstruct.py: "OLS of the 12 cell means"). If a unit lacks
+  a cell (a dropped realization does not remove a cell; a cell with no
+  finite slope does), the unit is excluded from that coefficient, named,
+  and the reduced k printed.
+- No shape sentence (the line above).
+
+### 8.1 J1: REGF, the CON pairs and SEP (tenth message)
+
+**REGF.** Rows and design:
+- CONC and PROBEARM: the 4 d (2, 5, 10, 40) x 3 tau_0 (0.5, 0.1, 0.01)
+  cells of each (objective, law) unit, per unit and pooled over the
+  twelve units of each row.
+- TAU8 and GEOM: the 3 d (5, 10, 40) x 8 tau_0 (0.3, 0.2, 0.1, 0.07,
+  0.05, 0.03, 0.02, 0.01) cells of each objective.
+- Model (tex line 392; n30_reconstruct.py design()): OLS of the cells'
+  S-slopes gamma on [1, log2 d, log10(1/tau_0), log2 d x log10(1/tau_0)].
+  Response gamma, not Delta, as round 1's REGF and REGR (N30 log lines
+  1034 to 1041: resp=gamma).
+- Reported: b_d, b_tau and b_dtau, each with its interval and the
+  DIFFERENCE rule, on W-full (primary) and on W-ge (sensitivity), in all
+  four rows (every row has tau_0 < 0.1).
+- Round-1 reference: REGF b_dtau +0.0305 was reproduced on W-full; REGR
+  b_d +0.0069, b_tau -0.0288 and b_dtau +0.0073 on W-ge (N30 log lines
+  1034 to 1041). Round 1 did not report REGF's b_d and b_tau.
+- Worked example (illustrative numbers): one CONC unit whose twelve
+  S-slopes are exactly gamma = -1.06 + 0.01 log2 d + 0.02 log10(1/tau_0)
+  + 0.005 log2 d log10(1/tau_0) gives b_d = +0.01, b_tau = +0.02, b_dtau
+  = +0.005. If the 95% interval of b_dtau is [-0.004, +0.014], it is
+  printed as "95% interval contains 0", and no sentence says the
+  interaction rises or falls with d.
+
+**The three CON pairs.** Rahul records that contrast 7 is one CON pair,
+that covering only one was his oversight, and that the other two are now
+added; round 1's reason for reporting all three (tex line 394, "rather
+than reporting the first alone") was sound.
+- Sign rule (item 7): tighter target minus looser, so each pair is the
+  negative of round 1's orientation, as for contrast 7.
+- CONC and PROBEARM, per (objective, law) and pooled:
+  - P1 = change(0.1) - change(0.5) = -CON(0.5, 0.1);
+  - P2 = change(0.01) - change(0.5) = -CON(0.5, 0.01) = contrast 7;
+  - P3 = change(0.01) - change(0.1) = -CON(0.1, 0.01).
+- TAU8 and GEOM, per objective and pooled, with the loosest target 0.3
+  in place of 0.5 as contrasts 2 and 7 do: change(0.1) - change(0.3);
+  change(0.01) - change(0.3) (= contrast 7); change(0.01) - change(0.1).
+  change(tau) = S(d40, tau) - S(d5, tau). Applied by Claude from the
+  "otherwise loosest" substitution already used by contrasts 2 and 7.
+- Both windows. Round-1 references, in round 1's orientation (N30 log
+  lines 1028 to 1033): CON(0.1, 0.01) -0.0182 and CON(0.5, 0.01) -0.0233
+  reproduced on W-ge; CON(0.5, 0.1) -0.0050 on W-full.
+- Each pair is printed once with both orientations, as contrast 7 is.
+
+**SEP.** The manuscript does not define it (n30_reconstruct.py docstring:
+"The text does not define it"). N30 reproduced the published +0.1940
+only under definition S1 = c(0.01) - c(0.1) on W-full (N30 log lines 280
+to 283 and 1046). S1 is P3 above, on the primary window: the same
+number, under round 1's name. Whether SEP is S1 (and so already
+computed as P3) or S3 = c(0.01) - (c(0.5) + c(0.1)) / 2, which matches
+the text's words "differ from the moderate ones", is NOT DECIDED (K1,
+under "Decisions still needed").
+
+### 8.2 J2: severity and its trend (tenth message)
+
+- Row: ONSET (r grid 0.75, 1.0, 1.25, 1.5, 2.0, 3.0; tau_0 0.1; d 5,
+  10, 20, 40, 80; OBJ3; both diffusions).
+- Severity S(1, 3) = S-slope(r = 3) - S-slope(r = 1), per (diffusion,
+  objective, d) and pooled over OBJ3 per (diffusion, d). The baseline is
+  r = 1, the boundary, so the sign rule gives the archive's orientation
+  (tex line 685: "Positive values mean the exponent has flattened toward
+  zero"). Sensitivity: S(0.75, 3) = S-slope(r = 3) - S-slope(r = 0.75),
+  the same way, labelled boundary-spanning.
+- Trend: per diffusion, the OLS slope of S(1, 3) on log2 d over the five
+  d, with intercept; per objective and pooled (the pooled trend equals
+  the OLS on the pooled severities). The same for S(0.75, 3), as
+  sensitivity. Each with its interval and the DIFFERENCE rule.
+- Cells r = 1 and r = 3 have different keys (r is in the key), so the
+  two ends of a severity are independent cells. Cells at d 10 and 40, r
+  1.0 and 3.0, are shared with RMAP (layout section); that changes no
+  computation.
+- tau_0 is 0.1, so no W-ge line.
+- Round-1 reference (tex lines 648 and 38): isotropic +0.1440 per
+  doubling, [+0.1232,+0.1637]; anisotropic -0.0019, [-0.0302,+0.0270].
+  The interval is not reused (above).
+- Worked example (illustrative numbers): one objective, isotropic,
+  S(1, 3) = 0.09, 0.07, 0.21, 0.46, 0.61 at d = 5, 10, 20, 40, 80.
+  log2 d = 2.32, 3.32, 4.32, 5.32, 6.32, so the OLS slope is the
+  covariance over the variance of log2 d, reported per doubling. The
+  text prints the coefficient and its interval; it does not say the
+  severity "grows with d".
+
+### 8.3 J3: the RMAP panel model (tenth message)
+
+- Row: RMAP. A panel is one (diffusion, d): 4 tau_0 (0.5, 0.1, 0.03,
+  0.01) x 5 r (0.5, 1.0, 1.5, 2.0, 3.0) = 20 cells per objective.
+- Model (tex lines 540 to 545): Delta = -1 - gamma, fitted by OLS as
+  Delta = a + b1 g(tau_0) + b2 h(r) + b3 g h, with g = log10(0.5/tau_0)
+  and h = log2(r/0.5), so both vanish at (0.5, 0.5). Response Delta, as
+  archived. A positive b means a larger deficit, a flatter slope.
+- Reported: b1, b2, b3 per (diffusion, d), per objective and pooled over
+  OBJ3, each with its interval and the DIFFERENCE rule, on W-full and on
+  W-ge (tau_0 0.03 and 0.01 are below 0.1).
+- The three-of-four counting rule (partm P-M2) stays dropped (sixth
+  message, confirmed in the tenth). No count of panels is made.
+- Worked example (illustrative numbers): a panel whose twenty Delta are
+  exactly 0.02 + 0.10 g + 0.05 h + 0.01 g h gives b1 = 0.10, b2 = 0.05,
+  b3 = 0.01. At (0.01, 3.0), g = log10(50) = 1.699 and h = log2(6) =
+  2.585.
+
+### 8.4 J4: the onset against r = 1 (tenth message)
+
+- For each onset (H3: per (diffusion, objective, d), and pooled per
+  (diffusion, d)), print its 95% interval and "contains 1: yes/no".
+- Report the count with its denominator: "k of 30 per-objective
+  intervals contain 1" (2 diffusions x 5 d x 3 objectives) and "k of 10
+  pooled intervals contain 1". Also per diffusion.
+- That is a description of where the intervals fall, not a claim that
+  the onset is at 1 (Rahul). A6 holds: an interval containing 1 does not
+  show the onset is at 1.
+- The onset is grid-valued, so an interval such as [1.00, 1.00] or
+  [1.25, 2.00] has grid endpoints; "contains 1" means lo <= 1 <= hi.
+- Worked example: intervals [1.00, 2.00] (contains 1), [1.25, 2.00]
+  (does not), [1.00, 1.00] (contains 1). Count: 2 of 3.
+
+### 8.5 J5: the finite-J concentration audit (tenth message)
+
+Rahul's framing: the reference-estimability result in new form, in the
+main text.
+
+**Which rows the grid needs: none.** Round 1's audit (zenodo-v1/finitej.py)
+ran no trajectory. It redrew each realization's initial ensemble from its
+seed and beta and computed the initial ESS fraction of each nested
+subensemble. The rerun draws every realization's initial ensemble anyway.
+So the audit is computed from the rerun's own seeds and betas, with no
+new cell, no new row and no trajectory. Nothing is written into the
+grid.
+
+**Rows it covers (Claude's reading, for Rahul to reverse if wrong).** The
+concentration rows CONC, PROBEARM, TAU8 and GEOM, whose dimension
+contrast the audit checks, as round 1's covered exactcal's. Each at its
+own betas: calprec2 betas in CONC and TAU8, archived probe betas in
+PROBEARM and GEOM.
+
+**Cost: not measured.** The audit adds no trajectory; it adds one redraw
+of the (J_inf, d) initial ensemble per realization and one log-ESS per
+nested J. costprobe2's projection covers trajectories only and gives no
+figure for it, and round 1's logs_finitej.log records no time. The
+script prints the audit phase's wall time and peak RSS.
+
+**Computation (rule 4: everything imported).**
+- For each realization: rng = default_rng(SeedSequence(key)), then the
+  module's own first draw: mechanism.draw_initial(rng, J_inf, d,
+  objective, law) (mechanism.py line 222); for boundary.py and law.py the
+  inline line X0 = rng.standard_normal((Jinf, d)) + x* (boundary.py line
+  181, law.py line 452), checked against the module source as calprec2's
+  V2 does.
+- fv = the module's objective on X0; ratio(J) = finitej.ess_frac(fv[:J],
+  beta) / tau_0 for each J of the row's grid; ref = finitej.ess_frac(fv,
+  beta) / tau_0 (zenodo-v1/finitej.py lines 133 to 138, imported).
+- Identity check F1 (replaces round 1's P-F1, which required the
+  reference ratio to be 1.000; under a fixed beta it is not 1 by
+  design): each module's one_realisation returns the reference's initial
+  log-ESS (mechanism le0, line 242; boundary les[0], line 204; law
+  les[0], line 475). The redrawn log-ESS at J_inf must equal it to within
+  1e-12 relative, the tolerance of calprec2's E1. A failure prints the
+  key and "F1 FAILED" and stops the audit.
+
+**Reported.**
+- Per cell and J: mean, SD, 5th and 95th percentiles of ratio(J) over
+  realizations (finitej.py's P-F2 form), and the reference ratio.
+- The attainability floor: where J tau_0 < 1, ratio(J) >= 1/(J tau_0)
+  holds by construction (ESS >= 1); such J are flagged "floor", as tex
+  line 587 describes.
+- The dimension difference, the check that matters (finitej.py P-F3):
+  ratio(J; d40) - ratio(J; d2) at each (tau_0, J), per unit and pooled
+  (CONC, PROBEARM: unit (objective, law), d40 - d2; TAU8, GEOM: unit
+  objective, d40 - d5), each with its 95% interval and the DIFFERENCE
+  rule.
+  - Sign: second level minus first (item 7). Round 1 printed d2 - d40;
+    the new figure is its negative. Shown once in both orientations, as
+    for contrast 7.
+  - Count, as J4: "k of n pooled intervals exclude 0", per row, with n
+    the number of (tau_0, J) pairs. Round 1's compound P-F3 PASS/FAIL is
+    not inherited: it is a pass/fail over many intervals, of the kind
+    item 4 dropped. Applied by Claude.
+- Worked example (illustrative numbers): CONC, tau_0 0.01, J = 40. The
+  floor is 1/(40 x 0.01) = 2.5. Mean ratio 2.6 at d = 2 and 3.4 at d =
+  40 gives a difference of +0.8 (round 1's orientation: -0.8).
+
+**Not covered: the per-J-beta experiment.** The abstract's second result
+also rests on "a dedicated experiment that controls finite-ensemble
+concentration exactly, at the cost of one inverse temperature per
+ensemble size" (tex line 36). That is perjcal.py (tex lines 591 to 593;
+zenodo-v1/perjcal.py, perjcal_real.csv), not the audit. It evolves
+trajectories at a per-J beta, so it would need new rows. Its cost is not
+in costprobe2's projection, which models none of perjcal's cells. Whether
+it is in scope is NOT DECIDED (K2).
+
+**Correction to the fifteenth pass's J5 (Claude's error).** J5 named "the
+whole-run experiment, tex line 398". Tex line 398 is "Holding
+concentration for the whole run", the beta re-solved at every step: that
+is control.py, the ADAPT row, already in the grid. The experiment J5
+should have named is perjcal (above).
 
 ---
 
@@ -1800,6 +2046,77 @@ Details under "Decisions still needed".
 Nothing new. The audit stops on J1 to J5, which need Rahul. The rerun
 script is not started.
 
+### Tenth message: J1 to J5 in scope
+
+- The estimand/shape line adopted, recorded as Claude's (section 8).
+- J1: REGF in CONC, PROBEARM, TAU8 and GEOM; b_d, b_tau, b_dtau on both
+  windows; all three CON pairs; SEP. Rahul records that contrast 7 is one
+  CON pair and the others are now added (8.1).
+- J2: S(1, 3) per (diffusion, d), S(0.75, 3) as sensitivity, and the
+  trend coefficient (8.2).
+- J3: b1, b2, b3 of the RMAP panel model; the counting rule stays dropped
+  (8.3).
+- J4: the onset intervals against 1, as a count with its denominator
+  (8.4).
+- J5: the finite-J audit in scope, in the main text; rows and cost to be
+  reported to Rahul before anything enters the grid (8.5).
+- No round-1 interval reused, and why (section 8).
+
+### Sixteenth pass (against the tenth message)
+
+Applied, as following from fixed rules:
+M1. The pooled OLS coefficient is the unweighted mean of the per-unit
+    coefficients, which equals the OLS on the pooled cell means (round
+    1's form); a unit missing a cell is excluded from that coefficient
+    and named (section 8, common rules).
+M2. TAU8 and GEOM's three CON pairs use 0.3 for 0.5, by the substitution
+    contrasts 2 and 7 already use (8.1).
+M3. REGF's response is gamma and the panel model's is Delta, as each was
+    archived (N30 resp=gamma; tex line 540) (8.1, 8.3).
+M4. J5 needs no grid row: the audit reads the initial ensembles the rerun
+    draws anyway. Its cost is unmeasured; the script prints it (8.5).
+M5. The audit covers CONC, PROBEARM, TAU8 and GEOM (Claude's reading, for
+    Rahul to reverse) (8.5).
+M6. Round 1's P-F1 (reference ratio 1.000) cannot hold under a fixed
+    beta; it is replaced by F1, the redrawn reference log-ESS against
+    the value one_realisation returns (8.5).
+M7. Round 1's P-F3 PASS/FAIL over thirty intervals is not inherited (the
+    item 4 kind); the per-(tau_0, J) differences are reported with the
+    DIFFERENCE rule and a count, as J4 (8.5).
+M8. The audit's dimension difference follows the sign rule, d40 - d2, the
+    negative of round 1's d2 - d40; both orientations shown once (8.5).
+M9. Correction: the fifteenth pass's J5 named tex line 398 as the
+    whole-run experiment. That section is control.py, the ADAPT row,
+    already in the grid. The experiment the abstract names is perjcal
+    (8.5).
+
+Needs Rahul's decision:
+K1. SEP's definition (8.1). N30 reproduced the published +0.1940 only
+    under S1 = c(0.01) - c(0.1), which is P3, already computed. The
+    text's words ("differ from the moderate ones") fit S3 = c(0.01) -
+    (c(0.5) + c(0.1)) / 2, which no round-1 point estimate matches.
+K2. perjcal (8.5): the per-J-beta experiment behind the abstract's
+    second result. It needs trajectory rows that are not in the grid and
+    whose cost costprobe2 does not project. In scope or not?
+
+### Seventeenth pass (against M1 to M9, K1 and K2)
+
+- No section-8 quantity is an equivalence claim, so 5b's margin pool is
+  unchanged.
+- J2's severity reads cells shared with RMAP at d 10 and 40; the sharing
+  rule already covers it.
+- If K2 is in scope, perjcal's per-J beta varies beta along the J-curve,
+  which tex line 591 calls "a different estimand" and does not pool. It
+  would be reported apart from every fixed-beta quantity, and its rows
+  would need a cost probe that Rahul runs before they enter any grid
+  (CLAUDE.md rule 6). That follows from rule 6 and the archive's own
+  statement; no further decision.
+
+### Eighteenth pass
+
+Nothing new. The audit stops on K1 and K2. The rerun script is not
+started.
+
 ---
 
 ## Corrections to the first decision message, from the logs
@@ -1967,7 +2284,7 @@ Tolerances and margin
       centred, J_inf 100000 - 12500, onset d80 - d5, change(tightest) -
       change(loosest)), with its 95% interval, DIFFERENCE verdict, and a
       W-ge sensitivity line where tau_0 < 0.1 (none for contrast 5).
-      [J1 to J4 pending]
+      Plus the quantities of section 8.
 - [ ] Contrast 7's docstring shows both orientations once: round 1's
       CON(0.5, 0.01) = change(0.5) - change(0.01), published -0.0233 on
       W-ge, and the new change(0.01) - change(0.5), its negative.
@@ -1977,6 +2294,19 @@ Tolerances and margin
       flag, or "I2 undefined" with its reason.
 - [ ] No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO,
       BETA-ANI.
+- [ ] Section 8: REGF b_d, b_tau, b_dtau (CONC, PROBEARM, TAU8, GEOM; both
+      windows); the three CON pairs, both orientations; SEP per K1;
+      S(1, 3) and S(0.75, 3) per (diffusion, d) and their trends in
+      log2 d; RMAP b1, b2, b3 per (diffusion, d), both windows; onset
+      intervals against 1 with counts and denominators; each per unit
+      and pooled, with interval and DIFFERENCE rule, and no shape
+      sentence anywhere in the output or docstring.
+- [ ] No round-1 interval is printed as, or compared with, a rerun
+      interval; the docstring says why.
+- [ ] Finite-J audit in CONC, PROBEARM, TAU8, GEOM: F1 per realization;
+      ratio(J) summaries; floor flags; d40 - d2 (d40 - d5) differences
+      per (tau_0, J) per unit and pooled, with counts; no PASS/FAIL; its
+      wall time and RSS printed.
 - [ ] The seed key follows the approved layout: diffusion absent, every
       other coordinate present, field 3 the owner row; K1, K2 and K4 stop
       the run on failure; the key is written per realization.
@@ -2034,71 +2364,30 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The ninth message decided H1, H2, H3 and the layout. The thirteenth and
-fourteenth passes checked the abstract and conclusions (zenodo-v1/
-sn-article.tex lines 32 to 40 and 703 to 707) against item 7 and found
-main-text quantities that "no other contrast is computed" still
-excludes. Left:
+The tenth message put J1 to J5 in scope; section 8 specifies them. Left:
 
-1. J1, the abstract's interaction. The abstract (tex line 34) and the
-   conclusions (tex line 703) report REGF b_dtau: in an OLS fit of the
-   twelve (d, tau_0) cell means on [1, log2 d, log10(1/tau_0), log2 d x
-   log10(1/tau_0)] (tex line 392), the coefficient of the last term;
-   +0.0305 over the full grid and +0.0073 over J >= 1/tau_0. Contrast 7
-   is not this quantity. The body (tex line 392) also reports b_d and
-   b_tau, and tex line 394 reports all three CON pairs (0.5 - 0.1, 0.5 -
-   0.01, 0.1 - 0.01; "We call all three inconclusive rather than
-   reporting the first alone") and the full-grid separation, +0.1940.
-   Contrast 7 covers one of the three CON pairs. Questions: is the REGF
-   fit computed, and in which rows (CONC and PROBEARM have exactly 4 d x 3
-   tau_0; TAU8 and GEOM have 3 d x 8 tau_0)? Are the other two CON pairs
-   computed? SEP?
-2. J2, the severity, the abstract's third result (tex line 38) and the
-   conclusions' "result that is resolved" (tex line 707). S(1, 3) =
-   gamma(r = 3) - gamma(r = 1) per (diffusion, d) in ONSET, with S(0.75,
-   3) as its boundary-spanning sensitivity (tex line 648, Table
-   tab:severity); and its trend, the OLS slope of the severity on log2 d
-   per diffusion: +0.144 per doubling, [+0.123,+0.164], isotropic. S(1, 3)
-   is a two-level r contrast that item 7 does not list; under the sign
-   rule (r = 1, the boundary, as baseline) it has the archive's
-   orientation. Questions: is S(1, 3) added, with S(0.75, 3) as
-   sensitivity? Is the trend coefficient computed?
-3. J3, the joint-sweep panel model in RMAP (tex lines 540 to 545), with
-   which the conclusions open (tex line 707): Delta = -1 - gamma fitted
-   per (diffusion, d) panel as a + b1 g(tau_0) + b2 h(r) + b3 g h, g =
-   log10(0.5 / tau_0), h = log2(r / 0.5). The sixth message dropped
-   partm P-M2's three-of-four counting rule; it did not decide whether
-   b1, b2 and b3 are computed. Are they?
-4. J4, the onset against r = 1 (tex line 38: "nine of ten bootstrap
-   intervals containing it"). The second pass (P4) read the archive's
-   "interval excludes 1" as item 1's form, but it is not a contrast
-   between levels, and no message decided it. Is it reported, per
-   objective and pooled: "95% interval excludes 1" or "95% interval
-   contains 1", never "onset at 1"?
-5. J5, scope. The abstract's second result (the finite-J concentration
-   audit, tex lines 587 to 589; the whole-run experiment, tex line 398)
-   is in no row of the rerun grid. This file does not cover it. Is that
-   intended? I do not know.
-
-The question common to J1 to J3: item 7's line separates a two-level
-contrast from "a claim that a quantity rises, falls or moves across a
-variable's levels", and does not say where a single regression
-coefficient falls when it is fixed in the docstring before the run and
-reported with its interval. One rule for all three would settle it.
-Claude's view, not a decision: such a coefficient is a pre-specified
-estimand, not a monotonicity claim, provided the text reports the
-coefficient and its interval and claims nothing about the shape of the
-dependence. Under that rule J1 to J3 would be made; under the opposite
-rule the abstract's first and third results are not recomputed by the
-rerun.
+1. K1, SEP's definition. N30 reproduced the published +0.1940 only as S1
+   = c(0.01) - c(0.1) on W-full, and S1 is the third CON pair (P3),
+   already computed. The text's words, "differ from the moderate ones",
+   fit S3 = c(0.01) - (c(0.5) + c(0.1)) / 2. Options: SEP is S1 (no new
+   number; P3 is reported under both names), or S3 is added as a new
+   quantity, or both.
+2. K2, perjcal. The abstract's second result also rests on the per-J-beta
+   experiment (tex lines 36 and 591 to 593). It is not the audit, it
+   needs trajectory rows outside the grid, and its cost is not in any
+   projection. In scope or not? If in scope, a cost probe for its cells
+   comes first (rule 6), and then your approval of the rows.
 
 ## What the rerun script needs that this file does not yet give
 
-Needs Rahul's decision: J1 to J5. J1 to J4 decide what the rerun computes
-for the abstract's first and third results and the conclusions' opening;
-J5 decides whether the abstract's second result is in scope at all. The
-fifteenth pass found nothing further. Once J1 to J5 are settled, the file
-is complete enough for the script to be written.
+Needs Rahul's decision: K1 and K2. K1 changes one reported quantity. K2
+decides whether rows are added. The eighteenth pass found nothing
+further. Once both are settled, the file is complete enough for the
+script to be written.
+
+For J5 nothing enters the grid: the audit adds no row and no trajectory
+(8.5). Rahul asked to approve rows before they are written into the
+grid; there are none to approve.
 
 Waiting, with nothing for Rahul to decide:
 - calprec2's beta table, calprec2_beta.csv, written by its finalize step
@@ -2109,12 +2398,8 @@ Waiting, with nothing for Rahul to decide:
   filled, until it does.
 - Script work, waiting on neither: reproducing each archived-beta row's
   beta by importing the archived module (rule 4), checked against
-  costprobe2's P0 constants; the onset positive control.
+  costprobe2's P0 constants; the onset positive control; the F1 check.
 
-Resolved since the eighth message: item 3's bootstrap key, which is now
-fixed by the approved layout (kind 71, field 16 removed, field 3 the
-owner row).
-
-Already in place: the Kaggle determinism gate passed (ENVIRONMENT.md line
-49); peak RSS at J_inf 100000 was measured (SESSION_STATE.md line 206,
-RERUN_PLAN F6).
+Already in place: item 3's bootstrap key (fixed by the approved layout);
+the Kaggle determinism gate passed (ENVIRONMENT.md line 49); peak RSS at
+J_inf 100000 was measured (SESSION_STATE.md line 206, RERUN_PLAN F6).
