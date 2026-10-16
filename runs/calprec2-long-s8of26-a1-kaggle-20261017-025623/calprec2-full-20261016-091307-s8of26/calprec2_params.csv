@@ -1,0 +1,13 @@
+script_sha256,c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+mode,full
+rows,"CONC,TAU8,SIGMA,ANISO"
+cells,
+shard,8
+nshards,26
+ref_sizes,64000000;256000000
+workers,4
+stop_after,36000.0
+ceiling,36000.0
+python,3.13.15
+numpy,2.1.3
