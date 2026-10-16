@@ -25,7 +25,9 @@ a cross-row audit; its decisions are marked "(fourth message)", and the
 audit is the section "Decisions made for one row that apply to others".
 A fifth message decided the audit's items A1 to A8 and the margin split,
 marked "(fifth message)", and asked for the audit to be repeated against
-those answers; that is the section's second pass.
+those answers; that is the section's second pass. A sixth message
+decided the six points that remained, marked "(sixth message)"; the audit
+was run again against it (fourth to sixth passes).
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -266,6 +268,41 @@ For S-curve, the secondary column, the same comparison gives median
   J = 100 (tex 703). Making W-full primary means reporting the slope over
   ensemble sizes where the target is unattainable. That is the judgement
   being made, and the text must say so.
+
+**Points the imported fit_slope drops (fourth pass, applied by
+Claude).** The archived regimemap.fit_slope that item 0 imports (lines 191
+to 196) keeps only grid points with finite E > 0 and fits whatever
+remains if at least three points are left. Every trajectory script has
+the same mask. That is a data-dependent window. A slope fitted that way
+is not a W-full slope, which item 2 defines as using every J in the grid.
+So:
+- the rerun keeps importing fit_slope unchanged (CLAUDE.md rule 4), and
+  checks before each fit that every E on the window is finite and > 0;
+- a realization that fails the check has no slope on that window, and is
+  handled by item 3's realization rule for that window: dropped, named
+  with its key and the number of bad points, the reduced M printed, the
+  cell flagged if more than one is dropped, and in a paired cell the key
+  dropped from both arms.
+This is applied per window, so a realization can lack a W-full slope and
+still have a W-ge slope. If Rahul wants a realization that fails on either
+window dropped from both, that is a change to this paragraph.
+Worked example: in a cell of M = 12, rep 3's E at J = 10 is 0. W-full:
+rep 3 is dropped, "rep 3 key ... 1 bad point; M 11 of 12". W-ge at tau_0
+0.01 starts at J = 160, so rep 3's W-ge slope exists and that column keeps
+M = 12.
+
+**REFSIZE's window (fourth pass, NOT DECIDED).** regime.py Part A fits
+all four J_inf on a common grid, J <= min(J_inf)/10 = 1250 (regime.py
+docstring lines 25 and 26, code lines 515 to 518), so that the comparison
+across J_inf is not confounded by different fitting ranges. RERUN_PLAN
+row EXP-REFSIZE records the same. That window is fixed by the design, not
+chosen from the data, so item 2's objection to N_vis does not apply. But
+item 2 says the full grid is primary for every row. For REFSIZE it is
+either the common J <= 1250 window or the full grid. Part A also fits the
+extrapolation gamma(J_inf) = gamma_inf + a / J_inf, with a bootstrap
+interval (docstring lines 22 to 24). That belongs to the
+reference-adequacy reporting the sixth message keeps, and its form and
+interval are not decided either.
 
 **Limit of the measurement.** M2 measured only tau_0 0.5, 0.1 and 0.01.
 How much the window matters at 0.07, 0.05, 0.03 and 0.02 is unmeasured;
@@ -527,8 +564,12 @@ control.py's (i), (ii) and RECOVERED. No measurement sets any of them.
 - LAWPANEL's N_vis (visibility.py lines 276 to 286) and (fifth message)
   ess_surface's P1.2 beta threshold, the largest beta still "recovered"
   (ess_surface.py lines 372 to 379), carry no verdict under the new rule.
-  Both were built on the old rule and lose their basis. N_vis's window
-  role is separate. Its other role, choosing a fit window
+  Both were built on the old rule and lose their basis.
+- (Sixth message.) N_vis's window selection is dropped too. It chose a
+  window by fitting every suffix with at least four points, a
+  data-dependent window choice of the kind item 2 was written to prevent.
+  LAWPANEL reports its slopes on the full grid with intervals and no
+  N_vis. Its other role, choosing a fit window
   (the smallest J0 whose suffix fit meets the bound), is a separate matter
   that item 2 does not cover. NOT DECIDED; no rule is proposed here.
 - Worked example (illustrative numbers): a TAU8 cell with 95th and 97.5th
@@ -661,14 +702,31 @@ the gaps, avoids this.
 - Because S is printed before any gap (criterion above), the revisit, if
   triggered, happens with no gap yet computed. Otherwise the margin would
   be chosen with the gaps in view.
-- NOT DECIDED: what "differ materially" means, as a criterion with a
-  threshold and a worked example (CLAUDE.md rule 5). Without it, the
-  revisit condition cannot be checked mechanically.
+- (Sixth message.) "Differ materially": the median per-cell SD of one
+  design group differs from another's by more than a factor of 1.5. The
+  threshold is Rahul's judgement; no measurement sets it.
+  - Docstring text: for every pair of design groups in the pool, ratio =
+    larger median / smaller median. REVISIT iff any ratio > 1.5. The pool
+    is the five paired rows, since no other row makes an equivalence
+    claim (sixth message, item 3), so there are two groups: calprec2
+    (SIGMA, ANISO) and probe (RMAP, CLIFF, ONSET).
+  - Worked example (Rahul's): calprec2 0.026 against probe 0.030, ratio
+    1.15, no revisit; 0.026 against 0.042, ratio 1.6, revisit before any
+    equivalence verdict.
+  - What the script does on REVISIT (follows from the two fixed rules
+    "revisited before any equivalence verdict" and "S printed before any
+    gap"; applied by Claude): it prints both medians, the ratio and
+    "MARGIN REVISIT REQUIRED", computes no gap in the pooled rows, prints
+    no DIFFERENCE or equivalence verdict for them, and stops there with
+    its own exit status. DIFFERENCE verdicts stop too, although they do
+    not use the margin, because computing them would put the gaps in view
+    before the margin is revisited.
 - (Fifth message, A8.) Any equivalence claim anywhere uses this margin. A
   row outside the five that needs an equivalence claim joins the pooled
   set that defines S; it does not borrow the margin. The revisit condition
   then covers every beta design present in the pool, not only calprec2
-  against probe (second-pass finding P7 below).
+  against probe (second-pass finding P7 below). (Sixth message.) No row
+  outside the five makes an equivalence claim, so none joins.
 
 **Decided by.** M4: the three candidate constructions of tex 78's scale
 give medians 0.0259 (C-a), 0.0270 (C-b) and 0.0275 (C-c). M5: half-widths
@@ -931,9 +989,118 @@ ONSET, already in the pool. Of P8's equivalence claims, partm reads
 regimemap Parts M and D (partm.py line 86), which are the RMAP and ONSET
 rows, so it needs no join. Which data audit.py A2's r comparison reads
 was not checked; if it lies outside the five rows, A8 makes that row
-join. The third pass found nothing new. The audit is
-not closed: the NOT DECIDED items above are Rahul's, and each answer
-needs its own pass.
+join. The third pass found nothing new. The NOT DECIDED items above went to
+Rahul and were decided in the sixth message, below.
+
+### Sixth message: the open items decided
+
+S1. Margin revisit: ratio of design-group medians above 1.5 (item 5b).
+S2. N_vis's window selection dropped (item 4).
+S3. Which comparisons the rerun makes. Rule, applied uniformly: a
+    comparison is made only if it answers a question the new paper asks.
+    The main text is fixed-beta concentration dependence, the limits of
+    calibration including reference-estimability, two diffusion regimes,
+    and the corrected assumption audit.
+    - MADE: the five paired diffusion comparisons (SIGMA, ANISO, RMAP,
+      CLIFF, ONSET), the concentration-dependence rows, and the
+      reference-adequacy reporting.
+    - NOT MADE: cliff (i) and (ii), regimemap "map informative", crossed
+      small_A, audit.py A2, partm P-M2 to P-M4. Those rows report
+      estimates and intervals for these quantities, with no verdict.
+    - Arm pairs compared: none beyond the five. ADAPT reports its bound;
+      BETA-ISO against BETA-ANI and CONC against PROBEARM are not
+      compared. ANISO arm A against arm B is outside A7, being different
+      factor levels, not one key in two treatments (Claude's reading,
+      accepted).
+    This resolves every A5 and P8 item to "not made", and A7's list to the
+    five rows.
+S4. "Onset moves with d" does not survive: Rahul's ruling is that it is a
+    monotonicity claim in a different costume, which A4 forbids. The
+    onsets are reported per d with intervals, and the text describes them.
+S5. regime P6.3 and ess_surface P1.3: reported with no verdict. Rahul's
+    reason: A3's reason covers both, and dropping the verdict while
+    keeping the numbers is the honest form.
+S6. ess_surface's ESS 1.01 saturation threshold is not inherited. ESS is
+    reported with no saturation label.
+
+### Fourth pass (against the sixth message)
+
+Items that follow from rules already fixed are applied, as Rahul asked.
+
+Applied:
+F1. S1's REVISIT action. The script stops before any gap in the pooled
+    rows (item 5b). Follows from "S before any gap" and "revisited before
+    any equivalence verdict".
+F2. fit_slope's point mask. W-full needs every grid point, so a
+    realization with a bad point has no slope on that window and falls
+    under item 3's realization rule (item 2). Follows from item 2's
+    definition of W-full, from rule 4, and from item 3.
+F3. S5's "drop the verdict, keep the numbers" also governs mechanism's R^2
+    values. A3 dropped MECHANISM_DR2 as a criterion. The three R^2 values
+    (target, + dimension, + objective; mechanism.py lines 448 to 450) are
+    printed with no verdict.
+F4. S3's "those rows report estimates and intervals with no verdict"
+    refers to the dropped comparisons. Item 4's per-cell rate verdict was
+    decided for every row and still prints in CLIFF, RMAP, ONSET and
+    ANISO. That is Claude's reading of S3 against item 4; say if S3 was
+    meant to remove the rate verdict there too.
+F5. ess_surface's "outside FKR hypothesis" label (lines 346 and 347).
+    Ledger N1: 2 lambda > d sigma^2 is a hypothesis of FKR's
+    convergence-to-minimizer theorem, not of the result that owns the J^-1
+    exponent. CLAUDE.md rule 10 forbids calling it that theorem's
+    admissibility. So the label is not inherited. Those cells get item 4's
+    -1 rule like every cell, and the condition, if printed, is printed as
+    the parameter fact "2 lambda > d sigma^2: holds" or "fails".
+F6. S4 and F5 together. regimemap.py and cliff.py split cells into "in"
+    and "OUT" at r = 1 (regimemap.py lines 460 and 461; cliff.py lines
+    461 to 463). The script labels these regions "r < 1" and "r >= 1",
+    never "in", "admissible" or "inside the hypothesis" (rule 10, N1).
+    Counts per region are summaries of the per-cell verdict, not
+    comparisons between regions.
+
+Needs Rahul's decision:
+F7. S4 against the concentration-dependence comparisons that S3 keeps.
+    S4 rules that "onset moves with d", read as differences between d
+    values, is monotonicity in a costume. The concentration-dependence
+    rows are about exactly that kind of claim. Round 1's were "the slope
+    changes from d = 2 to d = 40" (Table 3; exactcal P-E2) and the tau_0
+    contrasts (N30's CON 0.1-0.01, 0.5-0.01, 0.5-0.1). If a difference
+    between two levels of an ordered variable is monotonicity in a
+    costume, these fall too, and the main text has no comparison left. If
+    they stand, the line between them and the onset needs stating. One
+    candidate line, Claude's, not decided: a contrast between two named
+    levels, fixed in the docstring before the run and answering a paper
+    question, is a comparison under item 1; a statement that a quantity
+    rises, falls or moves with a variable across its levels is a
+    monotonicity claim under A4. Under that line the onset could keep
+    pre-specified two-level contrasts, so S4 would also need restating.
+    Either way, the list of contrasts in the concentration-dependence
+    rows is needed, and it does not exist yet.
+F8. Which rows are "the concentration-dependence rows", and what "the
+    reference-adequacy reporting" consists of. Both are needed to decide
+    which comparisons the script computes. Candidates by name: CONC,
+    PROBEARM, TAU8, GEOM, SYNTH and NAMED for the first; REFSIZE and
+    calprec2's target/beta labels for the second. Not decided.
+F9. REFSIZE's window and its J_inf extrapolation (item 2).
+
+### Fifth pass (against F1 to F6)
+
+- F1 affects only the pooled rows' gaps. Per-cell outputs and the other
+  rows are unaffected, so it creates nothing elsewhere.
+- F2 feeds item 3's flags, which are already general. For REFSIZE, the
+  window that F2 checks is whichever F9 decides.
+- F5 and F6: visibility.py drops dimensions that fail the same condition
+  (lines 342 and 343). In the rerun grid this removes nothing, because
+  LAWPANEL's GRID dims stop at 40 (visibility prints "grid stops before
+  failure at d=50"). Its printed wording, "FKR condition", falls under
+  F5's rule if the script prints it.
+- F3 and S5 cover every R^2 analysis found: mechanism, regime P6.3, and
+  ess_surface P1.3. law.py's R^2 has no target left (A5).
+
+### Sixth pass
+
+Claude checked the fifth pass's findings again and found nothing new.
+F7 to F9 need Rahul's decision, so the audit is not closed on them.
 
 ---
 
@@ -1073,8 +1240,8 @@ Tolerances and margin
       (95th percentile) <= -1", nothing added. No -0.85, no 97.5th
       percentile labelled one-sided. Archive: ten scripts plus control.py.
 - [ ] BETA-ISO and BETA-ANI use the -1 rule, not abs(slope + 1) < 0.15.
-- [ ] N_vis and the P1.2 beta threshold carry no verdict. [N_vis window
-      pending]
+- [ ] N_vis and the P1.2 beta threshold carry no verdict; no N_vis window
+      selection; LAWPANEL slopes on the full grid.
 - [ ] No counts at tolerances 0.10, 0.15, 0.20; nothing added to -1.
 - [ ] No COLLAPSE_SD and no MECHANISM_DR2 criterion in CONC/PROBEARM; no
       "law useful" R^2 criterion; no straightness verdict (the quadratic
@@ -1084,7 +1251,20 @@ Tolerances and margin
       TOST.
 - [ ] Any compared arm pair follows every 5a rule.
 - [ ] Any interval for the onset resamples realizations within cells, not
-      objectives.
+      objectives. Onsets are printed per d with intervals; no trend in d.
+- [ ] Before each fit, every E on the window is checked finite and > 0; a
+      realization failing it is handled by item 3's realization rule for
+      that window, with the bad-point count printed.
+- [ ] Not computed as verdicts: cliff (i), (ii), map informative, crossed
+      small_A, audit A2, partm P-M2 to P-M4; their quantities are printed
+      with intervals only.
+- [ ] mechanism's three R^2 values, regime P6.3 and ess_surface P1.3 are
+      printed with no verdict.
+- [ ] ESS printed with no SATURATED label; no "outside FKR hypothesis"
+      label; regions labelled "r < 1" and "r >= 1", never "in",
+      "admissible" or "inside the hypothesis".
+- [ ] No comparison and no "paired" for ADAPT fixed/adaptive,
+      BETA-ISO/BETA-ANI or CONC/PROBEARM.
 - [ ] Every tolerance in the docstring is 3 x SE with the SE's source named.
 - [ ] The equivalence margin is 3 x S, S the median of the per-cell
       S-slope bootstrap SDs over the cells of SIGMA, ANISO, RMAP, CLIFF
@@ -1092,7 +1272,9 @@ Tolerances and margin
       margin before gaps.
 - [ ] Before any gap, the median per-cell SD is printed per beta design in
       the pool (calprec2, probe, and any design a joining row brings), and
-      the revisit condition is evaluated. ["materially" pending]
+      the revisit condition is evaluated: REVISIT iff any pairwise ratio
+      of group medians > 1.5; on REVISIT the script prints "MARGIN REVISIT
+      REQUIRED", computes no gap in the pooled rows and stops.
 - [ ] The margin's stated basis is not 0.0260. Archive: tex 309 (N30).
 - [ ] Every equivalence comparison prints its 90% half-width and the
       attainability flag before any verdict.
@@ -1114,22 +1296,41 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The fifth message decided the margin split and A1 to A8. What remains:
+The sixth message decided the six points that remained. The fourth to
+sixth passes applied F1 to F6 as following from fixed rules, and left:
 
-1. Item 5b: what "differ materially" means in the revisit condition, as a
-   criterion with a threshold and a worked example (rule 5).
-2. Item 4: LAWPANEL's N_vis fit-window selection (Rahul's NOT DECIDED).
-3. Which comparisons the rerun makes (the draft's open question), item by
-   item where the audit needs it:
-   - A5: cliff (i) (would be equivalence, A8), cliff (ii) (and whether
-     3 x SE or item 1's DIFFERENCE rule), regimemap "map informative"
-     (same question), crossed small_A (would be equivalence, A8);
-   - P8: audit.py A2, partm P-M3 and P-M4 (would be equivalence), partm
-     P-M2's "3 of 4 panels";
-   - A7: whether ADAPT fixed/adaptive, BETA-ISO/BETA-ANI and CONC/PROBEARM
-     are compared; whether ANISO arm A against arm B is outside A7.
-4. Second pass P1: whether "onset moves with d" is kept as pairwise
-   differences under item 1 once "falls with d" is dropped.
-5. Second pass P3: regime.py P6.3 (out-of-sample R^2) and ess_surface P1.3
-   (ESS as predictor): dropped by A3's reason, or reported with no verdict.
-6. Second pass P6: ess_surface's ESS < 1.01 "SATURATED" threshold.
+1. F7: whether a contrast between two levels of an ordered variable (d =
+   2 against d = 40; tau_0 contrasts) is a comparison or a monotonicity
+   claim in a costume, given S4's ruling on the onset. Then the list of
+   pre-specified contrasts in the concentration-dependence rows.
+2. F8: which rows are "the concentration-dependence rows", and what "the
+   reference-adequacy reporting" consists of.
+3. F9: REFSIZE's window (the common J <= 1250, or the full grid) and its
+   J_inf extrapolation, form and interval.
+4. F4 and F2 were applied on Claude's reading. They need a word only if
+   Rahul meant otherwise.
+
+## What the rerun script needs that this file does not yet give
+
+From this file:
+- F7, F8 and F9 above. Without them the script does not know which
+  comparisons to compute in the rows the paper's main text rests on.
+
+From outside this file (state as of 2026-10-16, from the repository):
+- calprec2's beta table, calprec2_beta.csv, written by its finalize step
+  after all 26 long shards (0 to 25). Run folders for shards 0 to 6 are
+  under runs/ (shard 2 in two folders), and shard 7's log is uncommitted,
+  so the table does not exist yet.
+  CONC, TAU8, SIGMA and ANISO cannot run without it.
+- The trajectory seed-key layout: the fields of the key (row, module,
+  objective, d, law, tau_0, r or sigma or beta, J_inf, T, arm, rep), with
+  the diffusion coordinate omitted (5a), an ENTROPY, and trajectory kinds
+  that avoid 31 to 35 (calprec2), 51, 61 to 67 and 71 (this file's
+  bootstrap kind). Item 3's bootstrap key is defined from it, so it must
+  be fixed first.
+- The archived-beta rows: how each row's archived beta is reproduced by
+  importing the archived module (rule 4), checked against costprobe2's
+  P0 constants.
+- Already in place, no action: the Kaggle determinism gate passed
+  (ENVIRONMENT.md line 49); peak RSS at J_inf 100000 was measured
+  (SESSION_STATE.md line 206, RERUN_PLAN F6).
