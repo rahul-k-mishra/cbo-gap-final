@@ -20,6 +20,9 @@ seven corrections in his second message; they are listed at the end. The
 second message also decided most of what the first left open. Each
 decision taken in it is marked "(second message)". A third message of the
 same day decided the rest; its decisions are marked "(third message)".
+A fourth message settled the three points the third raised and asked for
+a cross-row audit; its decisions are marked "(fourth message)", and the
+audit is the section "Decisions made for one row that apply to others".
 
 Measurements cited (all exit 0, all P0 PASS; Python 3.12.3, NumPy 2.5.3,
 Linux, 2 workers; the laptop passed the determinism gate, ENVIRONMENT.md):
@@ -379,12 +382,16 @@ B does not enter trajectory time.
 **Limits of the measurement.** M3 measured on archived designs with 12 to
 15 realizations per cell, not under calprec2 betas, and not coverage.
 
-**NOT DECIDED.**
-- (Raised by the third message's realization rule.) A paired cell where
-  a realization is excluded in one arm only. The two arms then no longer
-  hold the same keys, and the check above stops the run. Whether the key
-  is dropped from both arms (keeping the pairing, losing one valid
-  realization) or the stop stands is not decided.
+**Paired cells (fourth message).** When a realization is dropped in one
+arm of a paired cell (5a), its key is dropped from both arms. The log
+prints the key and "dropped from both arms", and the reduced M is printed
+for both arms. Rahul's reason: the pairing is the point of 5a, and keeping
+an unpaired key would silently turn a paired comparison into a mixed one.
+Worked example: in an ANISO cell of M = 12, rep 4's anisotropic slope is
+not finite. Key rep 4 is dropped from both arms; both print "M 11 of 12";
+the shared bootstrap stream draws 11 indices applied to both arms. The
+cell is not flagged (one realization). The pairing check then passes,
+because both arms hold the same 11 keys.
 
 ---
 
@@ -473,20 +480,45 @@ how the rerun's results are judged:
 the one-sided criterion "upper bound at most -1" for ADAPT, and dropping
 control.py's (i), (ii) and RECOVERED. No measurement sets any of them.
 
-**Inconsistency raised by the third message (Claude's finding, NOT
-DECIDED).** The RECOVERED or "rate-consistent" rule dropped for ADAPT, a
-bootstrap upper bound at most -0.85, is also the per-cell verdict of nine
-other archived scripts, with the same constant: visibility (line 109),
-regime (117), law (123), boundary (107), mechanism (121), sigma (106),
-crossed (111), cliff (117) and regimemap (137). visibility.py and
-regime.py take the 97.5th percentile for it (draft line 180). Rahul's
-reason for dropping it in control.py applies to all of them, and the
-general rule above already forbids the hand-fixed 0.15. Not decided:
-whether every row's per-cell rate verdict becomes "one-sided 95% upper
-bound at most -1", as for ADAPT, or no row carries one. LAWPANEL's N_vis
-(visibility.py lines 276 to 286: the smallest J0 whose fit on J >= J0
-meets -0.85) is built on the same rule and falls with it; it also chooses
-a window, which item 2 does not provide for.
+**Per-cell rate verdict, every row (fourth message).**
+- Every row that carried a per-cell rate verdict takes ADAPT's criterion:
+  the one-sided 95% upper bound (95th percentile) of the cell's resampled
+  S-slope is at most -1, with nothing added. The output prints the bound,
+  the two-sided 95% interval and "upper bound <= -1: yes/no".
+- The archived rule it replaces, "bootstrap upper bound at most -0.85"
+  (RECOVERED or "rate-consistent"), appears with the same constant in nine
+  scripts besides control.py: visibility (line 109), regime (117), law
+  (123), boundary (107), mechanism (121), sigma (106), crossed (111), cliff
+  (117) and regimemap (137). All nine change. Rerun rows affected:
+  LAWPANEL (visibility), REFSIZE, SYNTH, NAMED, HORIZON (regime), GEOM
+  (law), TAU8 (boundary), CONC, PROBEARM (mechanism), SIGMA (sigma), ANISO
+  (crossed), CLIFF (cliff), RMAP, ONSET (regimemap), and ADAPT (control).
+- Where visibility and regime took the 97.5th percentile for that
+  one-sided bound (visibility.py line 273; draft line 180), that is the R9
+  error and is not inherited.
+- The rule now reads -1, not -0.85.
+- What that changes (Rahul's statement): -0.85 admitted slopes a long way
+  from -1 as "rate-consistent", so the new criterion is stricter, and some
+  archived verdicts will not survive it. That is expected and is a
+  finding, not a failure.
+- A qualification (Claude's, from the definitions, not measured): the
+  change has two parts that pull in opposite directions. The threshold
+  moves from -0.85 to -1, which is stricter. The percentile moves from the
+  97.5th to the 95th, which is more lenient at a fixed threshold. A cell
+  passes the new rule and fails the old one only if its 95th and 97.5th
+  percentiles lie more than 0.15 apart (95th at most -1, 97.5th above
+  -0.85). So the new rule is stricter in every cell except those with a
+  wide upper tail; it is not stricter in every cell by construction.
+- LAWPANEL's N_vis (visibility.py lines 276 to 286) carries no rate
+  verdict under the new rule. Its other role, choosing a fit window
+  (the smallest J0 whose suffix fit meets the bound), is a separate matter
+  that item 2 does not cover. NOT DECIDED; no rule is proposed here.
+- Worked example (illustrative numbers): a TAU8 cell with 95th and 97.5th
+  percentiles -0.93 and -0.90. Archive: -0.90 <= -0.85, RECOVERED. Rerun:
+  -0.93 > -1, "upper bound <= -1: no".
+
+**Judgement (Rahul's).** Extending ADAPT's criterion to every row, so that
+one claim has one standard.
 
 ---
 
@@ -549,19 +581,24 @@ by this decision.
   computed.
 - (Second message.) k = 3, and S is one pooled number, not a per-cell
   value. So one margin applies to every equivalence comparison.
-- (Third message.) S is the median of the per-cell S-slope bootstrap SDs
-  over every cell of the whole rerun: one S. This replaces this file's
-  earlier "over the cells entering equivalence comparisons".
+- (Fourth message.) S is the median of the per-cell S-slope bootstrap
+  SDs over the cells of SIGMA, ANISO, RMAP, CLIFF and ONSET: one S. This
+  reverses the third message's "whole rerun". Rahul's reason: it is the
+  objection of correction 4, that one design's scale cannot set another's
+  margin, applied inside the rerun; cells that enter no equivalence
+  comparison do not set the margin for cells that do.
   - Median rather than mean (Rahul's reason): the SD distribution has a
     long right tail, and a mean would be pulled by it.
-  - One pool rather than per row (Rahul's reason): a single margin in
-    slope units then applies everywhere, the reason per-cell scaling was
-    rejected.
-  - The M4 figures behind the tail argument, corrected from the third
-    message: its "maxima 0.12 to 0.34 against medians near 0.026" mixes
-    estimands. For se_boot_slope, the S-slope SD that S is built from, M4
-    gives medians 0.0257 to 0.0261 on the probe-beta sources (rmapj,
-    regimemap_D, regimemap_M) and 0.0435 on exactcal, with maxima 0.0927
+  - One pool rather than per row (Rahul's reason, third message): a
+    single margin in slope units then applies everywhere, the reason
+    per-cell scaling was rejected.
+  - The M4 figures behind the tail argument (correction accepted in the
+    fourth message: Rahul cited S-curve maxima where S-slope was the
+    relevant column): the third message's "maxima 0.12 to 0.34 against
+    medians near 0.026" mixes estimands. For se_boot_slope, the S-slope
+    SD that S is built from, M4 gives medians 0.0257 to 0.0261 on the
+    probe-beta sources (rmapj, regimemap_D, regimemap_M) and 0.0435 on
+    exactcal, with maxima 0.0927
     to 0.1250 and q75 at most 0.0568. The 0.3430 maximum is rmapj's
     se_boot_curve (S-curve). The right tail is there under S-slope too, so
     the reason for the median stands.
@@ -572,7 +609,8 @@ by this decision.
   Claude's; Rahul confirmed it in the second message.
 
 **Worked example (illustrative numbers).** Suppose the median of the
-per-cell S-slope SDs over the whole rerun is 0.026, so S = 0.026.
+per-cell S-slope SDs over the cells of the five paired rows is 0.026, so
+S = 0.026.
 Then m = 3 x 0.026 = 0.078.
 - A cell whose gap has 90% half-width 0.085 is not attainable: 0.085 >
   0.078. It is reported as such whatever its interval is.
@@ -588,22 +626,18 @@ units. A noisier cell gets a wider margin, which is the opposite of what
 an equivalence claim is meant to deliver. One pooled margin, fixed before
 the gaps, avoids this.
 
-**Tension raised by the third message (Claude's finding, NOT DECIDED).**
-M4, the measurement this item rests on, found that the SD scale depends
-on the design: medians near 0.026 for probe betas against 0.0435 for
-random betas. The whole-rerun pool mixes designs. calprec2 betas in CONC,
-TAU8, SIGMA and ANISO; archived betas elsewhere, including the paired
-rows RMAP, CLIFF and ONSET (probe betas), and rows outside the paired
-set of 5a, such as BETA-ISO, BETA-ANI (design betas) and LAWPANEL (the
-B / spread rule). So S, and with it the margin, depends on how many cells
-each design contributes, and cells that enter no equivalence comparison
-still set the margin of those that do. That is
-what "the scale depends on design, so one design's scale cannot set
-another's margin" (correction 4) warns against, now applied inside the
-rerun. Options: keep the whole-rerun pool and say so; pool over the cells
-entering equivalence comparisons (SIGMA, ANISO, RMAP, CLIFF, ONSET), as
-the earlier text had it; or both, the second governing. Rahul's to
-decide.
+**Remaining tension in the five-row pool (Claude's finding, NOT
+DECIDED).** The five paired rows are not one design. SIGMA and ANISO run
+on calprec2 betas; RMAP, CLIFF and ONSET keep archived probe betas
+(calprec2.py lines 74 and 75). Rahul's reason for the five-row pool, that
+one design's scale cannot set another's margin, applies between these two
+groups as well. It cannot be met together with his reason for one pool,
+a single margin everywhere: one margin over two designs, or two margins,
+one per design. M4 measured probe betas near 0.026 and never measured
+calprec2 betas, so whether the two groups' scales differ is unknown until
+the rerun prints them. Also, the five-row pool equals "the cells entering
+equivalence comparisons" only if the paper makes equivalence comparisons
+in those rows alone; see the cross-row section.
 
 **Decided by.** M4: the three candidate constructions of tex 78's scale
 give medians 0.0259 (C-a), 0.0270 (C-b) and 0.0275 (C-c). M5: half-widths
@@ -714,6 +748,89 @@ say which is right.
 
 ---
 
+## Decisions made for one row that apply to others (fourth message's audit)
+
+Rahul asked for every place where a decision made for one row should
+apply to all, as the -0.85 rule did. Claude checked each decision in items
+0 to 6 against the archived criteria table (ANALYSIS_CRITERIA_DRAFT,
+"Archived analysis tolerances") and the archived scripts of every rerun
+row. Nothing below is decided unless it says so.
+
+Already general, no action:
+- Item 0 (S-slope), item 2 (W-ge wherever tau_0 < 0.1), item 3
+  (B, seeding, both non-finite rules), item 6 (unit rule): stated for
+  every row.
+- Item 1, no multiplicity correction: the archived Bonferroni counts in
+  sigma, crossed, cliff and regimemap are not inherited.
+- Item 2 supersedes rmapj's P-R3 window rule (report the restricted
+  window if the trend shifts by > 0.026) in every row.
+
+Found, by the same logic as the -0.85 rule:
+
+A1. A tenth rate verdict, in BETA-ISO and BETA-ANI. ess_surface.py line
+    348: "J^-1 recovered" iff abs(slope + 1) < 0.15, on the point
+    estimate, with no interval. It is two-sided, like control.py (iii).
+    Rahul's wording, "every row that carried a per-cell rate verdict",
+    covers it; his count of nine does not. To confirm: it takes the
+    one-sided 95% bound at most -1. Its P1.2 "beta threshold", the largest
+    beta still recovered (lines 372 to 379), is built on that verdict as
+    N_vis is on visibility's, and would lose its basis the same way.
+A2. Counts at tolerances 0.10, 0.15 and 0.20: cliff.py (lines 115, 467),
+    crossed.py (109, 482) and regimemap.py (135, 580) count cells with
+    bound at most -1 + tol, for each tol. This adds a tolerance to -1,
+    which the fourth message rules out ("nothing added"). Claude's
+    reading, to confirm: the counts are not inherited.
+A3. control.py (ii), dropped because item 6 forbids heterogeneity
+    thresholds, also sits in mechanism.py: COLLAPSE_SD = 0.10 (line 122),
+    for CONC and PROBEARM. Rahul's reason drops it there too. To confirm.
+    mechanism.py's other criterion, MECHANISM_DR2 = 0.05 (line 123:
+    adding objective identity raises R^2 by less than 0.05), is a
+    variance-explained criterion (supplement S3), not covered by any
+    decision. NOT DECIDED.
+A4. Monotonicity. The tau_0 monotonicity comparison is dropped for
+    boundary (TAU8). The same kind of claim appears in two more rows:
+    - law.py (GEOM) keeps only cells where delta is monotone in log tau
+      within a noise floor (lines 75 to 78, 589 to 596), and fits its law
+      to the crossing of delta at 0.15, which is the -0.85 tolerance;
+    - cliff.py (CLIFF) criterion (iii), monotone in r within the noise
+      floor (lines 64, 65, 398 to 407).
+    The noise floor in both is a measured spread over three levels, not
+    k x SE, so item 4's general rule does not admit it as it stands.
+    NOT DECIDED: whether the monotonicity drop extends to GEOM and CLIFF,
+    and what law.py's crossing at 0.15 becomes now that 0.15 is gone.
+A5. Other hand-fixed tolerances, governed by item 4's general rule
+    (3 x SE) if the comparison is made at all: cliff.py (i) FLAT_TOL 0.10
+    and (ii) DROP_MIN 0.30 (lines 120, 121); regimemap "map informative",
+    range > 0.10; crossed.py's diffusion gap rule, point-estimate gap
+    < 0.05 and "grows with d" with no tolerance (lines 114, 457, 458),
+    which also uses no interval, against item 1; law.py's "law useful",
+    cross-validated R^2 > 0.5. Which of these comparisons the rerun makes
+    is open (draft section "Which comparisons the rerun analysis makes").
+A6. Straightness, regime.py (lines 70 to 73): straightness is claimed when
+    a quadratic term's interval contains zero. That reads a
+    non-significant result as evidence of absence, which item 1's "95%
+    interval contains 0, never no difference" and CLAUDE.md rule 10
+    forbid. NOT DECIDED: dropped, or recast as an equivalence claim with
+    a margin.
+A7. Pairing outside the five rows. control.py shares seeds between the
+    fixed and adaptive arms (lines 345 and 346). If the rerun keeps that and
+    compares the arms, every rule of 5a applies to ADAPT: key without the
+    arm coordinate, joint resampling, the one-arm drop rule, the pairing
+    check, and "paired" only where keys are shared. If not, the arms are
+    independent and analysed as such. The same question arises for
+    BETA-ISO against BETA-ANI (a diffusion contrast across two rows) and
+    CONC against PROBEARM (a beta-source contrast), if they are compared.
+    NOT DECIDED.
+A8. Equivalence outside the five rows. audit.py A2, "r has no effect of
+    practical size" (interval inside +-0.10), is an equivalence claim with
+    its own margin. Any equivalence claim the rerun keeps must use item
+    5's TOST and margin; if its cells lie outside SIGMA, ANISO, RMAP,
+    CLIFF and ONSET, they fall outside S's pool, which is the converse of
+    the fourth message's reason. NOT DECIDED: whether any equivalence
+    claim is made outside the five rows.
+
+---
+
 ## Corrections to the first decision message, from the logs
 
 All seven accepted by Rahul in the second message (2026-10-16) and
@@ -813,7 +930,10 @@ Intervals and bootstrap
       they draw the same index stream; the script stops if not.
 - [ ] A realization with a non-finite slope is dropped before resampling,
       named with its key, the reduced M printed; more than one dropped in
-      a cell flags the cell. [one-arm drop in a paired cell pending]
+      a cell flags the cell.
+- [ ] In a paired cell, a key dropped in one arm is dropped from both;
+      the log prints the key, "dropped from both arms", and both arms'
+      reduced M.
 - [ ] Non-finite resamples are counted, excluded and printed per cell; a
       FLAG line names every cell above 1% of B.
 
@@ -841,14 +961,17 @@ Tolerances and margin
 - [ ] ADAPT prints no compound verdict, no drift criterion, no SD-across-
       objectives criterion and no RECOVERED at -0.85. Archive: control.py
       (i), (ii), RECOVERED.
-- [ ] [pending] The per-cell -0.85 "rate-consistent"/RECOVERED verdict of
-      the nine other archived scripts, and LAWPANEL's N_vis: replaced by
-      "upper bound <= -1" or absent.
+- [ ] Every row's per-cell rate verdict is "one-sided 95% upper bound
+      (95th percentile) <= -1", nothing added. No -0.85, no 97.5th
+      percentile labelled one-sided. Archive: nine scripts plus control.py.
+- [ ] LAWPANEL prints no N_vis rate verdict. [N_vis window pending]
+- [ ] [pending A1, A2, A3] ess_surface's abs(slope + 1) < 0.15 verdict,
+      the tolerance counts at 0.10/0.15/0.20, mechanism's COLLAPSE_SD.
 - [ ] Every tolerance in the docstring is 3 x SE with the SE's source named.
 - [ ] The equivalence margin is 3 x S, S the median of the per-cell
-      S-slope bootstrap SDs over the whole rerun, printed before any gap
-      is computed: the log order shows margin before gaps. [pool pending:
-      the design-mixing tension of item 5b]
+      S-slope bootstrap SDs over the cells of SIGMA, ANISO, RMAP, CLIFF
+      and ONSET, printed before any gap is computed: the log order shows
+      margin before gaps. [calprec2/probe mixing within the five pending]
 - [ ] The margin's stated basis is not 0.0260. Archive: tex 309 (N30).
 - [ ] Every equivalence comparison prints its 90% half-width and the
       attainability flag before any verdict.
@@ -870,20 +993,25 @@ General (CLAUDE.md rule 5)
 
 ## Decisions still needed from Rahul
 
-The third message decided every item the second left open. The tau_0 of
-the five rows was read from the code (item 2). What remains was raised by
-the third message's answers or by that reading:
+The fourth message settled the three points the third raised. What
+remains comes from the fourth message's answers and the cross-row audit:
 
-1. Item 4: the per-cell "rate-consistent" or RECOVERED verdict, upper
-   bound at most -0.85, in visibility, regime, law, boundary, mechanism,
-   sigma, crossed, cliff and regimemap. The reason ADAPT's was dropped
-   applies to all of them. Each row either takes ADAPT's "one-sided 95%
-   upper bound at most -1" or carries no per-cell rate verdict. LAWPANEL's
-   N_vis is built on the same rule and goes with it.
-2. Item 5b: the whole-rerun pool for S mixes calprec2, probe and design
-   betas, which M4 says have different SD scales, and lets cells that are
-   never compared set the margin. Keep it, or pool over the five paired
-   rows.
-3. Item 3 with 5a: a paired cell where a realization is dropped in one arm
-   only. Drop the key from both arms, or let the pairing check stop the
-   run.
+1. Item 5b: the five paired rows mix calprec2 betas (SIGMA, ANISO) and
+   probe betas (RMAP, CLIFF, ONSET). The reason for the five-row pool
+   applies between those groups, and conflicts with the reason for a
+   single margin. One margin over both, or one per design.
+2. Item 4: LAWPANEL's N_vis fit-window selection (Rahul: NOT DECIDED, no
+   rule invented).
+3. Audit A1: ess_surface's "abs(slope + 1) < 0.15" verdict in BETA-ISO and
+   BETA-ANI takes the -1 rule (covered by the wording, not by the count
+   of nine), and its beta threshold P1.2 with it.
+4. Audit A2: the counts at 0.10, 0.15, 0.20 are not inherited.
+5. Audit A3: mechanism's COLLAPSE_SD dropped; MECHANISM_DR2.
+6. Audit A4: the monotonicity drop for GEOM (law.py) and CLIFF (cliff.py
+   (iii)), and law.py's crossing at 0.15.
+7. Audit A6: regime's straightness criterion.
+8. Audit A7: pairing for ADAPT's arms, BETA-ISO/BETA-ANI and
+   CONC/PROBEARM, if compared.
+9. Audit A5 and A8, both part of the open draft question of which
+   comparisons the rerun makes: the hand-fixed tolerances that fall to
+   3 x SE, and any equivalence claim outside the five rows.
