@@ -1,0 +1,14 @@
+cell,shard,rows
+boundary|ackley|40|centred|0.1,13,TAU8
+boundary|griewank|40|centred|0.3,13,TAU8
+boundary|levy|5|centred|0.02,13,TAU8
+boundary|rastrigin|5|centred|0.05,13,TAU8
+boundary|rosenbrock|5|centred|0.1,13,TAU8
+boundary|sphere|5|centred|0.3,13,TAU8
+mechanism|ackley|10|centred|0.1,13,CONC
+mechanism|griewank|10|mix-0.1|0.01,13,CONC
+mechanism|levy|10|mix-0.1|0.5,13,CONC
+mechanism|rastrigin|2|centred|0.1,13,CONC
+mechanism|rosenbrock|2|mix-0.1|0.01,13,CONC
+mechanism|sphere|2|mix-0.1|0.5,13,CONC
+sigma|rosenbrock|10|centred|0.1,13,SIGMA
