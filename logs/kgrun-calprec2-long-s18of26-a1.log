@@ -1,0 +1,859 @@
+==============================================================================
+kgrun  action run  job calprec2-long-s18of26-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/rahul/Research/cbo-gap-final/.kaggle-bundle
+  ship data   calprec2-smoke-kaggle-20261011-121225   5 files, manifest verified, tracked and clean in git
+  26 archive files + 23 round-2 scripts + 1 shipped folder(s); bundle 56 files, 1.8 MB
+  dataset id ericsom/cbo-gap-archive
+VERSION DATASET
+  $ kaggle datasets version -p /home/rahul/Research/cbo-gap-final/.kaggle-bundle -m kgrun calprec2-long-s18of26-a1 2026-10-20T14:24:53 -r skip
+Starting upload for file visibility.py
+  0%|          | 0.00/20.5k [00:00<?, ?B/s] 78%|███████▊  | 16.0k/20.5k [00:00<00:00, 43.7kB/s]100%|██████████| 20.5k/20.5k [00:02<00:00, 10.5kB/s]
+Upload successful: visibility.py (20KB)
+Starting upload for file control.py
+  0%|          | 0.00/22.1k [00:00<?, ?B/s] 72%|███████▏  | 16.0k/22.1k [00:00<00:00, 81.5kB/s]100%|██████████| 22.1k/22.1k [00:01<00:00, 16.4kB/s]
+Upload successful: control.py (22KB)
+Starting upload for file reboot.py
+  0%|          | 0.00/12.8k [00:00<?, ?B/s]100%|██████████| 12.8k/12.8k [00:00<00:00, 20.6kB/s]100%|██████████| 12.8k/12.8k [00:02<00:00, 6.35kB/s]
+Upload successful: reboot.py (13KB)
+Starting upload for file audit.py
+  0%|          | 0.00/18.4k [00:00<?, ?B/s] 87%|████████▋ | 16.0k/18.4k [00:00<00:00, 72.8kB/s]100%|██████████| 18.4k/18.4k [00:01<00:00, 17.8kB/s]
+Upload successful: audit.py (18KB)
+Starting upload for file kgrun-ship-000-0003-calprec2_throughput.csv
+  0%|          | 0.00/17.7k [00:00<?, ?B/s] 90%|█████████ | 16.0k/17.7k [00:00<00:00, 40.1kB/s]100%|██████████| 17.7k/17.7k [00:02<00:00, 8.86kB/s]
+Upload successful: kgrun-ship-000-0003-calprec2_throughput.csv (18KB)
+Starting upload for file cliff.py
+  0%|          | 0.00/20.7k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.7k [00:00<00:00, 89.6kB/s]100%|██████████| 20.7k/20.7k [00:01<00:00, 20.3kB/s]
+Upload successful: cliff.py (21KB)
+Starting upload for file rerun.py
+  0%|          | 0.00/48.4k [00:00<?, ?B/s] 33%|███▎      | 16.0k/48.4k [00:00<00:00, 78.4kB/s]100%|██████████| 48.4k/48.4k [00:01<00:00, 38.2kB/s]
+Upload successful: rerun.py (48KB)
+Starting upload for file mkfig2.py
+  0%|          | 0.00/1.78k [00:00<?, ?B/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 6.70kB/s]100%|██████████| 1.78k/1.78k [00:01<00:00, 1.66kB/s]
+Upload successful: mkfig2.py (2KB)
+Starting upload for file m4_slopese.py
+  0%|          | 0.00/11.5k [00:00<?, ?B/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 36.4kB/s]100%|██████████| 11.5k/11.5k [00:02<00:00, 5.76kB/s]
+Upload successful: m4_slopese.py (11KB)
+Starting upload for file partm.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 31.5kB/s]100%|██████████| 17.2k/17.2k [00:02<00:00, 8.39kB/s]
+Upload successful: partm.py (17KB)
+Starting upload for file mkfig5.py
+  0%|          | 0.00/2.33k [00:00<?, ?B/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 10.2kB/s]100%|██████████| 2.33k/2.33k [00:01<00:00, 2.25kB/s]
+Upload successful: mkfig5.py (2KB)
+Starting upload for file mechanism.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████▏ | 16.0k/19.7k [00:00<00:00, 48.7kB/s]100%|██████████| 19.7k/19.7k [00:02<00:00, 10.0kB/s]
+Upload successful: mechanism.py (20KB)
+Starting upload for file finitej.py
+  0%|          | 0.00/9.66k [00:00<?, ?B/s]100%|██████████| 9.66k/9.66k [00:00<00:00, 46.0kB/s]100%|██████████| 9.66k/9.66k [00:01<00:00, 9.17kB/s]
+Upload successful: finitej.py (10KB)
+Starting upload for file m3_bootmc.py
+  0%|          | 0.00/9.99k [00:00<?, ?B/s]100%|██████████| 9.99k/9.99k [00:00<00:00, 36.6kB/s]100%|██████████| 9.99k/9.99k [00:02<00:00, 5.10kB/s]
+Upload successful: m3_bootmc.py (10KB)
+Starting upload for file regimemap.py
+  0%|          | 0.00/27.2k [00:00<?, ?B/s] 59%|█████▉    | 16.0k/27.2k [00:00<00:00, 71.4kB/s]100%|██████████| 27.2k/27.2k [00:01<00:00, 25.0kB/s]
+Upload successful: regimemap.py (27KB)
+Starting upload for file m6_hetero.py
+  0%|          | 0.00/14.2k [00:00<?, ?B/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 68.7kB/s]100%|██████████| 14.2k/14.2k [00:01<00:00, 12.3kB/s]
+Upload successful: m6_hetero.py (14KB)
+Starting upload for file mkfig4.py
+  0%|          | 0.00/2.17k [00:00<?, ?B/s]100%|██████████| 2.17k/2.17k [00:00<00:00, 13.8kB/s]100%|██████████| 2.17k/2.17k [00:01<00:00, 2.19kB/s]
+Upload successful: mkfig4.py (2KB)
+Starting upload for file kgrun-ship-000-0001-calprec2_params.csv
+  0%|          | 0.00/286 [00:00<?, ?B/s]100%|██████████| 286/286 [00:00<00:00, 1.19kB/s]100%|██████████| 286/286 [00:01<00:00, 264B/s]  
+Upload successful: kgrun-ship-000-0001-calprec2_params.csv (286B)
+Starting upload for file c6.py
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 74.3kB/s]100%|██████████| 11.2k/11.2k [00:01<00:00, 11.3kB/s]
+Upload successful: c6.py (11KB)
+Starting upload for file m5_gapwidth.py
+  0%|          | 0.00/12.3k [00:00<?, ?B/s]100%|██████████| 12.3k/12.3k [00:00<00:00, 86.2kB/s]100%|██████████| 12.3k/12.3k [00:01<00:00, 8.21kB/s]
+Upload successful: m5_gapwidth.py (12KB)
+Starting upload for file kgrun-ship-000-0000-sha256.txt
+  0%|          | 0.00/442 [00:00<?, ?B/s]100%|██████████| 442/442 [00:00<00:00, 2.20kB/s]100%|██████████| 442/442 [00:01<00:00, 427B/s]  
+Upload successful: kgrun-ship-000-0000-sha256.txt (442B)
+Starting upload for file detcheck.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 100kB/s]100%|██████████| 15.2k/15.2k [00:02<00:00, 7.17kB/s]
+Upload successful: detcheck.py (15KB)
+Starting upload for file rerun_analysis.py
+  0%|          | 0.00/68.8k [00:00<?, ?B/s] 23%|██▎       | 16.0k/68.8k [00:00<00:00, 64.2kB/s]100%|██████████| 68.8k/68.8k [00:02<00:00, 33.9kB/s]
+Upload successful: rerun_analysis.py (69KB)
+Starting upload for file perjcal.py
+  0%|          | 0.00/12.6k [00:00<?, ?B/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 46.4kB/s]100%|██████████| 12.6k/12.6k [00:02<00:00, 6.33kB/s]
+Upload successful: perjcal.py (13KB)
+Starting upload for file verify.py
+  0%|          | 0.00/15.3k [00:00<?, ?B/s]100%|██████████| 15.3k/15.3k [00:00<00:00, 102kB/s]100%|██████████| 15.3k/15.3k [00:01<00:00, 13.4kB/s]
+Upload successful: verify.py (15KB)
+Starting upload for file rmapj.py
+  0%|          | 0.00/11.4k [00:00<?, ?B/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 77.1kB/s]100%|██████████| 11.4k/11.4k [00:01<00:00, 11.1kB/s]
+Upload successful: rmapj.py (11KB)
+Starting upload for file kgrun-ship-index.json
+  0%|          | 0.00/750 [00:00<?, ?B/s]100%|██████████| 750/750 [00:00<00:00, 2.68kB/s]100%|██████████| 750/750 [00:02<00:00, 372B/s]  
+Upload successful: kgrun-ship-index.json (750B)
+Starting upload for file exactcal.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▊| 16.0k/16.2k [00:00<00:00, 77.6kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 8.50kB/s]
+Upload successful: exactcal.py (16KB)
+Starting upload for file memprobe.py
+  0%|          | 0.00/9.50k [00:00<?, ?B/s]100%|██████████| 9.50k/9.50k [00:01<00:00, 8.82kB/s]100%|██████████| 9.50k/9.50k [00:02<00:00, 4.77kB/s]
+Upload successful: memprobe.py (10KB)
+Starting upload for file ess_surface.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▉| 16.0k/16.2k [00:00<00:00, 51.1kB/s]100%|██████████| 16.2k/16.2k [00:02<00:00, 8.12kB/s]
+Upload successful: ess_surface.py (16KB)
+Starting upload for file crossed.py
+  0%|          | 0.00/22.8k [00:00<?, ?B/s] 70%|███████   | 16.0k/22.8k [00:00<00:00, 103kB/s]100%|██████████| 22.8k/22.8k [00:01<00:00, 22.4kB/s]
+Upload successful: crossed.py (23KB)
+Starting upload for file m7_pairing.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 102kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 19.7kB/s]
+Upload successful: m7_pairing.py (20KB)
+Starting upload for file kgrun-ship-000-0004-cbo-calprec2-smoke.log
+  0%|          | 0.00/83.9k [00:00<?, ?B/s] 19%|█▉        | 16.0k/83.9k [00:00<00:00, 89.8kB/s]100%|██████████| 83.9k/83.9k [00:01<00:00, 64.6kB/s]
+Upload successful: kgrun-ship-000-0004-cbo-calprec2-smoke.log (84KB)
+Starting upload for file calprec2.py
+  0%|          | 0.00/70.2k [00:00<?, ?B/s] 23%|██▎       | 16.0k/70.2k [00:00<00:00, 101kB/s]100%|██████████| 70.2k/70.2k [00:02<00:00, 35.7kB/s]
+Upload successful: calprec2.py (70KB)
+Starting upload for file m1_estimands.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 28.1kB/s]100%|██████████| 10.8k/10.8k [00:02<00:00, 5.44kB/s]
+Upload successful: m1_estimands.py (11KB)
+Starting upload for file refscale.py
+  0%|          | 0.00/35.1k [00:00<?, ?B/s] 46%|████▌     | 16.0k/35.1k [00:00<00:00, 59.5kB/s]100%|██████████| 35.1k/35.1k [00:01<00:00, 28.0kB/s]
+Upload successful: refscale.py (35KB)
+Starting upload for file boundary.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 96.9kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 19.8kB/s]
+Upload successful: boundary.py (20KB)
+Starting upload for file rmapj_real.csv
+  0%|          | 0.00/371k [00:00<?, ?B/s]  4%|▍         | 16.0k/371k [00:00<00:03, 118kB/s]100%|██████████| 371k/371k [00:02<00:00, 186kB/s] 
+Upload successful: rmapj_real.csv (371KB)
+Starting upload for file kgrun-ship-000-0002-calprec2_plan.csv
+  0%|          | 0.00/21.2k [00:00<?, ?B/s] 75%|███████▌  | 16.0k/21.2k [00:00<00:00, 90.9kB/s]100%|██████████| 21.2k/21.2k [00:01<00:00, 17.4kB/s]
+Upload successful: kgrun-ship-000-0002-calprec2_plan.csv (21KB)
+Starting upload for file rerunlib.py
+  0%|          | 0.00/31.1k [00:00<?, ?B/s] 51%|█████▏    | 16.0k/31.1k [00:00<00:00, 96.6kB/s]100%|██████████| 31.1k/31.1k [00:01<00:00, 27.4kB/s]
+Upload successful: rerunlib.py (31KB)
+Starting upload for file cbopaths.py
+  0%|          | 0.00/3.36k [00:00<?, ?B/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 17.2kB/s]100%|██████████| 3.36k/3.36k [00:01<00:00, 3.18kB/s]
+Upload successful: cbopaths.py (3KB)
+Starting upload for file measlib.py
+  0%|          | 0.00/12.0k [00:00<?, ?B/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 67.3kB/s]100%|██████████| 12.0k/12.0k [00:01<00:00, 11.3kB/s]
+Upload successful: measlib.py (12KB)
+Starting upload for file exactcal_real.csv
+  0%|          | 0.00/413k [00:00<?, ?B/s]  4%|▍         | 16.0k/413k [00:00<00:04, 94.7kB/s]100%|██████████| 413k/413k [00:02<00:00, 199kB/s]  
+Upload successful: exactcal_real.csv (413KB)
+Starting upload for file costprobe2.py
+  0%|          | 0.00/75.2k [00:00<?, ?B/s] 21%|██▏       | 16.0k/75.2k [00:00<00:00, 74.0kB/s]100%|██████████| 75.2k/75.2k [00:02<00:00, 37.9kB/s]
+Upload successful: costprobe2.py (75KB)
+Starting upload for file regime.py
+  0%|          | 0.00/25.8k [00:00<?, ?B/s] 62%|██████▏   | 16.0k/25.8k [00:00<00:00, 105kB/s]100%|██████████| 25.8k/25.8k [00:01<00:00, 18.8kB/s]
+Upload successful: regime.py (26KB)
+Starting upload for file law.py
+  0%|          | 0.00/34.3k [00:00<?, ?B/s] 47%|████▋     | 16.0k/34.3k [00:00<00:00, 97.7kB/s]100%|██████████| 34.3k/34.3k [00:01<00:00, 30.8kB/s]
+Upload successful: law.py (34KB)
+Starting upload for file ess_extend.py
+  0%|          | 0.00/13.6k [00:00<?, ?B/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 72.1kB/s]100%|██████████| 13.6k/13.6k [00:01<00:00, 8.33kB/s]
+Upload successful: ess_extend.py (14KB)
+Starting upload for file manifest.py
+  0%|          | 0.00/8.29k [00:00<?, ?B/s]100%|██████████| 8.29k/8.29k [00:00<00:00, 37.5kB/s]100%|██████████| 8.29k/8.29k [00:01<00:00, 7.79kB/s]
+Upload successful: manifest.py (8KB)
+Starting upload for file ess_panel.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 99.3kB/s]100%|██████████| 17.2k/17.2k [00:02<00:00, 7.90kB/s]
+Upload successful: ess_panel.py (17KB)
+Starting upload for file m2_window.py
+  0%|          | 0.00/14.6k [00:00<?, ?B/s]100%|██████████| 14.6k/14.6k [00:00<00:00, 83.9kB/s]100%|██████████| 14.6k/14.6k [00:01<00:00, 14.0kB/s]
+Upload successful: m2_window.py (15KB)
+Starting upload for file costprobe.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 38.6kB/s]100%|██████████| 10.8k/10.8k [00:01<00:00, 5.69kB/s]
+Upload successful: costprobe.py (11KB)
+Starting upload for file perjcalprobe.py
+  0%|          | 0.00/29.2k [00:00<?, ?B/s] 55%|█████▍    | 16.0k/29.2k [00:00<00:00, 84.7kB/s]100%|██████████| 29.2k/29.2k [00:01<00:00, 26.7kB/s]
+Upload successful: perjcalprobe.py (29KB)
+Starting upload for file sigma.py
+  0%|          | 0.00/20.2k [00:00<?, ?B/s] 79%|███████▉  | 16.0k/20.2k [00:00<00:00, 78.4kB/s]100%|██████████| 20.2k/20.2k [00:01<00:00, 16.1kB/s]
+Upload successful: sigma.py (20KB)
+Starting upload for file calprec.py
+  0%|          | 0.00/19.8k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.8k [00:00<00:00, 113kB/s]100%|██████████| 19.8k/19.8k [00:01<00:00, 19.9kB/s]
+Upload successful: calprec.py (20KB)
+Starting upload for file n30_reconstruct.py
+  0%|          | 0.00/36.5k [00:00<?, ?B/s] 44%|████▍     | 16.0k/36.5k [00:00<00:00, 90.8kB/s]100%|██████████| 36.5k/36.5k [00:01<00:00, 37.2kB/s]
+Upload successful: n30_reconstruct.py (36KB)
+Dataset version is being created. Please check progress at https://www.kaggle.com/datasets/ericsom/cbo-gap-archive
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+ready
+  4 s: status 'ready'
+GENERATE KERNEL  ericsom/cbo-calprec2-long-s18of26-a1
+  wrote /home/rahul/Research/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: calprec2.py --archive <found path> --outdir /kaggle/working --workers 4 --rows CONC,TAU8,SIGMA,ANISO --throughput runs/calprec2-smoke-kaggle-20261011-121225 --ceiling 36000 --shard 18 --nshards 26
+  runner will rebuild calprec2-smoke-kaggle-20261011-121225 under /tmp/kgrun-ship and replace runs/calprec2-smoke-kaggle-20261011-121225 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/rahul/Research/cbo-gap-final/.kaggle-push
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-calprec2-long-s18of26-a1
+POLL until the run finishes (every 60 s)
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s18of26-a1
+ericsom/cbo-calprec2-long-s18of26-a1 has status "KernelWorkerStatus.COMPLETE"
+  finished after 21417 s
+FETCH OUTPUT into /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441
+  $ kaggle kernels output ericsom/cbo-calprec2-long-s18of26-a1 -p /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441/calprec2-full-20261020-085751-s18of26/calprec2_params.csv
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441/calprec2-full-20261020-085751-s18of26/calprec2_plan.csv
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441/calprec2-full-20261020-085751-s18of26/calprec2_tasks.csv
+Kernel log downloaded to /home/rahul/Research/cbo-gap-final/runs/calprec2-long-s18of26-a1-kaggle-20261020-202441/cbo-calprec2-long-s18of26-a1.log 
+  4 files, manifest written to sha256.txt
+    d363861cc711b8bdb2d35b5554a65a68893ff22608bff1e8d69d72d05f3a5926  calprec2-full-20261020-085751-s18of26/calprec2_params.csv
+    d3a7f9edc625291ae492bb47b154253937840e32962fd0b86edf5774b0e4b730  calprec2-full-20261020-085751-s18of26/calprec2_plan.csv
+    7517b31119d5455523b558cba08a890ebfd80aeaaea328af67fdf91aa5ef4ebc  calprec2-full-20261020-085751-s18of26/calprec2_tasks.csv
+    48b3b50de2a0dac68aec58c948de10e5844bc7c505cf1b6e54344419865af668  cbo-calprec2-long-s18of26-a1.log
+==============================================================================
