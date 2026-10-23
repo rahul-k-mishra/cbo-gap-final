@@ -339,8 +339,35 @@ exists on main, and main still reads RUNNING.
   - Restored: the line was removed with the Edit tool. git status and
     git diff then showed no difference from a638ba1.
   - Rechecked: wc -c on the file was refused by the hook again.
-  - Not tested: a missing script and a timeout. The documentation puts
-    both under the same "failure" that onFailure governs.
+  - Missing script and timeout, tested afterwards at Rahul's request.
+    Each was broken with the Edit tool and probed with git status
+    --short, which does not name the file:
+    - Script file missing (the args path changed to a file that does not
+      exist): refused, "python3: can't open file ... No such file or
+      directory". python3 exits with code 2 when it cannot open its
+      script, and 2 is the hook's own block code. So this case blocks
+      without onFailure being involved; the message does not mention it.
+    - Interpreter missing (command "python3-MISSING"): refused, "failed;
+      blocking because onFailure is "block". Error occurred while
+      executing hook command: Executable not found in $PATH". This case
+      shows onFailure itself acting on a hook that cannot start.
+    - Timeout ("timeout": 2 in the hook entry, a 10-second sleep at the
+      top of main()): refused, "timed out; blocking because onFailure is
+      "block"".
+    - Restored: the sleep, the timeout field, the command and the path
+      were all put back with the Edit tool. git status and git diff then
+      showed no difference from fd2374a. wc -c on the file was refused by
+      the hook again.
+  - Found while testing: a change to .claude/settings.json reached the
+    next command late. Three times, the first command after a settings
+    edit was handled as before the edit, and the second under the new
+    configuration. Twice this was visible directly, because the hook
+    message names the command it ran. Once, after the first edit, git
+    status simply ran. A working hook passes a command without a message,
+    so whether the old hook checked it or no hook ran cannot be told
+    from that. An edited hook therefore takes effect from the second
+    command after the edit, not the first. I do not know the actual delay
+    or what sets it.
 - Still not covered: a file name assembled at run time from pieces that
   do not contain "rerun_queue"; a glob; a program that opens the file
   itself; git commands on the whole notes/ folder. Only the sandbox
