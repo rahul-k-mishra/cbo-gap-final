@@ -87,7 +87,7 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "RUNNING",
+  "status": "HALTED",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
@@ -99,7 +99,7 @@
     "runs/costprobe2-s1-kaggle-20261011-101343"
   ],
   "anomaly": null,
-  "halt_reason": "",
+  "halt_reason": "R1: header of runs/rerun-arch-s0of4-a1-kaggle-20261024-020220: run dir /kaggle/working/rerun-s0of4-20261023-164555, expected a name ending -s0of4",
   "kernel_check": null,
   "attempts": {
     "smoke-arch": [
@@ -126,6 +126,20 @@
         "resume_dirs": [],
         "fetched_run": "39988773802.1",
         "fetched_at": "2026-10-23T22:11:10+05:30"
+      }
+    ],
+    "arch-s0of4": [
+      {
+        "attempt": 1,
+        "job": "rerun-arch-s0of4-a1",
+        "folder": "runs/rerun-arch-s0of4-a1-kaggle-20261024-020220",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 4767,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261023T203212Z",
+        "fetched_at": "2026-10-24T02:02:30+05:30"
       }
     ]
   },
@@ -237,6 +251,15 @@
       "attempt": 1,
       "job": "rerun-arch-s0of4-a1",
       "note": "logs/kgrun-rerun-arch-s0of4-a1.log"
+    },
+    {
+      "at": "2026-10-24T02:02:30+05:30",
+      "run": "laptop.20261023T203212Z",
+      "event": "halt",
+      "item": "arch-s0of4",
+      "attempt": 1,
+      "job": "rerun-arch-s0of4-a1",
+      "note": "R1: header of runs/rerun-arch-s0of4-a1-kaggle-20261024-020220: run dir /kaggle/working/rerun-s0of4-20261023-164555, expected a name ending -s0of4"
     }
   ]
 }
