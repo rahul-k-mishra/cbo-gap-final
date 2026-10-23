@@ -87,7 +87,7 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
@@ -127,6 +127,15 @@
       "attempt": 1,
       "job": "rerun-smoke-arch-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-23T19:22:13+05:30",
+      "run": "39964625544.1",
+      "event": "launched",
+      "item": "smoke-arch",
+      "attempt": 1,
+      "job": "rerun-smoke-arch-a1",
+      "note": "logs/kgrun-rerun-smoke-arch-a1.log"
     }
   ]
 }
