@@ -2017,6 +2017,20 @@ ENVIRONMENT.md (G2 closed).
     is answered. The workflow must be enabled during the hour for the
     test to mean anything. The scheduled tick's own action is
     unaffected: it reads the committed state like any tick.
+    Interim observation, not the result: Rahul's run list at 14:40:41Z
+    (date -u in his paste; the list was pasted in summary form) shows
+    the three workflow_dispatch runs only, so the 14:37Z slot produced no
+    scheduled run. Claude's own read at 14:41:35Z (gh api
+    repos/.../actions/runs) agrees: total_count 3 for the whole
+    repository, and 0 runs with event=schedule of any status. The 14:52,
+    15:07 and 15:22Z slots remain, and GitHub's documentation allows
+    for delay.
+    Also read at 14:41Z through the API. Actions is enabled for the
+    repository, allowed_actions "all", default workflow permissions
+    "write". It is the only workflow in the repository, state "active".
+    No commit message in the history holds a skip-CI marker. The
+    account's billing usage could not be read with the CLI's token
+    scopes.
     Result: not yet observed.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
