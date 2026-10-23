@@ -1586,6 +1586,34 @@ instruction of 2026-10-15.
     with ONSET. A shared cell is run by its owner's job.
   OPEN until the four shards have exited 0.
 
+- N38 (decision, 2026-10-23; the calibrated-row shard set). Source:
+  logs/rerun-schedule-cal-20261023-1332.log. That is rerun.py --schedule
+  on the laptop for --rows CONC,TAU8,SIGMA,ANISO, --nshards 1 to 12,
+  against runs/rerun-plan-20261023-112643 (rerun_plan.csv sha256
+  4aec4b1e...72f2) and costprobe2's measured walls. Python 3.12.3, NumPy
+  2.5.3, --workers 4; nothing was run or written. Script hashes printed:
+  rerun.py 756c4069...818e, rerunlib.py 5d55050e...9b06, costprobe2.py
+  ea5cb2e1...f64b, the values notes/RERUN_RUNBOOK.md pins.
+
+  The four calibrated rows:
+  - 11232 tasks;
+  - summed measured unit wall 99616 s, or 24904 s at 4 workers in one
+    shard;
+  - per-shard estimates at 4 workers, labelled lower bounds (perfect
+    scaling; walls from costprobe2's timing beta): 2 shards 12452 s; 3
+    shards 8301 s; 4 shards 6226 s.
+
+  Decision: 2 shards, as stated in the 2026-10-23 instruction for the
+  rerun queue. One shard, at 24904 s, is above the 21600 s per-shard
+  ceiling. Two shards, at 12452 s each, sit at about the per-shard load
+  of the archived-beta set, 12596 s, which Rahul chose under N37 for the
+  same reason: the estimate is a lower bound, and calprec2's shards ran
+  above their estimates.
+  - Both shards use the identical --rows list and --nshards 2
+    (notes/RERUN_RUNBOOK.md, "The rule that ties RMAP and ONSET
+    together"). Job names: rerun-cal-s0of2-a<A>, rerun-cal-s1of2-a<A>.
+  OPEN until both shards have exited 0.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
