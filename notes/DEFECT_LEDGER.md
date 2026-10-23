@@ -1965,5 +1965,19 @@ ENVIRONMENT.md (G2 closed).
     three key failures it is, and whether the secrets KAGGLE_USERNAME
     and KAGGLE_KEY are ericsom's current key, is not known from this log:
     the raw CLI text of that tick was not recorded.
+  - Cause, found by Rahul on the laptop the same day (reported by him; no
+    console log of it is stored under logs/): with ~/.kaggle/access_token
+    moved aside, kgrun status for the control is refused on the laptop
+    exactly as on Actions. Every Kaggle call of this project, by kgrun and
+    by hand, has authenticated through ~/.kaggle/access_token, not through
+    kaggle.json; this was never written down before. The workflow wrote
+    only kaggle.json. Fixed: a third secret, KAGGLE_ACCESS_TOKEN, stored
+    from the laptop's file; the workflow's credentials step writes
+    ~/.kaggle/access_token from it with mode 600 beside kaggle.json,
+    prints only each file's name and mode, and the last step removes both.
+    CLAUDE.md rule 14, the rerunq.py and kgrun.py docstrings and
+    notes/RERUNQ_REVIEW.md updated to match. Not yet confirmed on Actions:
+    the next tick must show the denial for rerun-smoke-arch-a1, the
+    control's COMPLETE, then "L3: kernel absent on Kaggle, name unused".
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.

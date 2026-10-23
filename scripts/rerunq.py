@@ -24,8 +24,9 @@ fetched in ONE commit, pushes it, and exits:
 
 It talks to Kaggle only through scripts/kgrun.py (CLAUDE.md rule 13), with
 its subcommands launch, status and fetch. It never reads, prints or writes
-the Kaggle credentials; the workflow writes ~/.kaggle/kaggle.json and the
-kaggle CLI reads it.
+the Kaggle credentials; the workflow writes ~/.kaggle/kaggle.json and
+~/.kaggle/access_token (the file that actually authenticates; ledger K6)
+and the kaggle CLI reads them.
 
 THE QUEUE (notes/rerun_queue.json; ledger N37, N38, K6)
   index 0     smoke-arch   rerun.py --smoke, the 13 archived-beta rows

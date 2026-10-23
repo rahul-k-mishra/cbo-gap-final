@@ -230,15 +230,17 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     the Kaggle web editor: the next push overwrites it and the repository
     stops being the source of truth.
 
-14. Credentials never leave the laptop. ~/.kaggle/kaggle.json is denied to
-    Claude in .claude/settings.json; the kaggle CLI reads it itself. Never
-    print it, copy it, put it in a notebook, or add a GitHub token to Kaggle
+14. Credentials never leave the laptop. ~/.kaggle/ (kaggle.json and
+    access_token; the token file is what authenticates, ledger K6) is
+    denied to Claude in .claude/settings.json; the kaggle CLI reads it
+    itself. Never print it, copy it, put it in a notebook, or add a GitHub token to Kaggle
     Secrets. Every kaggle command is denied to Claude outright in
     .claude/settings.json: under rule 21 Claude executes nothing, and
     kgrun.py, with every kaggle command it issues, is run by Rahul.
-    One exception (rule 22): the Kaggle username and key are stored as the
-    GitHub Actions secrets KAGGLE_USERNAME and KAGGLE_KEY of this
-    repository, for the rerun queue only. Claude never reads, prints or
+    One exception (rule 22): the Kaggle username, key and access token are
+    stored as the GitHub Actions secrets KAGGLE_USERNAME, KAGGLE_KEY and
+    KAGGLE_ACCESS_TOKEN of this repository, for the rerun queue only
+    (token added 2026-10-23, Rahul's decision). Claude never reads, prints or
     sets them.
 
 15. On Kaggle the archive is mounted read-only under /kaggle/input, at a

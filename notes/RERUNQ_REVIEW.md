@@ -38,7 +38,7 @@
 | Halt on manifest mismatch | verify_manifest, F1 | ok |
 | Halt on kgrun exit other than 0 | launch, fetch: HALT. status: HALT (fixed in this pass, Q3) | ok |
 | Same shard failing twice the same way | L5 | see "Interpretation" below |
-| Secrets as KAGGLE_USERNAME, KAGGLE_KEY; written to ~/.kaggle/kaggle.json; never logged | workflow step 4 | ok: written by Python from the environment with umask 077, mode "x"; nothing echoes them; GitHub also masks secret values in logs |
+| Secrets as KAGGLE_USERNAME, KAGGLE_KEY, KAGGLE_ACCESS_TOKEN (added 2026-10-23, K6); written to ~/.kaggle/kaggle.json and ~/.kaggle/access_token; never logged | workflow step 4 | ok: written by Python from the environment with umask 077, O_EXCL, mode 600; only file name and mode are printed; GitHub also masks secret values in logs; both files removed in the last step |
 | Commits with the built-in GITHUB_TOKEN | actions/checkout persists it; permissions contents: write | ok |
 
 ### Walk 1: can two invocations launch the same job?

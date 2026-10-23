@@ -30,7 +30,8 @@ the notebook in the Kaggle web editor: the next push overwrites it.
 
 WHAT IT DOES NOT DO
   It does not read, print or transmit your Kaggle credentials; the kaggle CLI
-  reads ~/.kaggle/kaggle.json itself. It does not write to zenodo-v1. It does
+  reads ~/.kaggle/access_token and ~/.kaggle/kaggle.json itself (the token
+  file is what authenticates; ledger K6). It does not write to zenodo-v1. It does
   not overwrite an existing run folder.
 
 RESUMPTION ON KAGGLE (ledger K5, closed 2026-10-11)
