@@ -699,6 +699,54 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       written.
     scripts/calprec2.py is now md5 9ee2436b14c152df9d63c690eae3be36, not
     executed.
+  - Result, 2026-10-23: the calibration is complete. Sources:
+    - logs/calprec2-finalize.log (calprec2.py --finalize on the laptop);
+    - runs/calprec2-finalize-20261023-112503/calprec2_beta.csv, sha256
+      0fc98d23...2668 (logs/calprec2-finalize-manifest.log), committed in
+      b663797;
+    - the 26 long shards, runs/calprec2-long-s0of26-a1-kaggle-20261012-074403
+      through runs/calprec2-long-s25of26-a1-kaggle-20261023-085912, every
+      one attempt 1; Rahul reports every shard exited 0.
+
+    Environment and code (log header):
+    - Python 3.12.3, NumPy 2.5.3, Linux, 2 workers;
+    - calprec2.py sha256 c339ca9d...c14d, costprobe2.py ea5cb2e1...f64b;
+    - criteria as pre-registered: C5m <= 0.054682 at 64M, D1 <= 0.025
+      between 64M and 256M, C1 <= 0.05, C6 <= 0.05, E1 <= 1e-12 at 64M
+      rep 0, RSS <= 3072 MB.
+
+    Checks: V1 (twelve archived modules) PASS, V0 (grid values and the
+    Table 2 counts CONC 144, TAU8 144, SIGMA 288, ANISO 288) PASS, V2
+    (sampler lines) PASS. Cells: boundary 144, crossed 24, mechanism 144,
+    sigma 24, total 336. Every shard folder read reports all its rows
+    complete; 56132 rows in all.
+
+    Finalize (log lines, verbatim counts):
+    - labels: target 309, beta 27;
+    - adequacy: adequate 309; not adequate (C5m FAIL) 14; not adequate
+      (C5m FAIL, D1 FAIL) 13;
+    - no FLAG line, so no cell carries E1 FAIL, E1 not run, R1 FAIL or
+      R1 not applicable; no cell is labelled incomplete. With neither, the
+      finalize return code is 0, which matches the exit Rahul reports
+      (the log does not print the exit code itself).
+
+    What the counts imply, from calprec2.py finalize() alone: a cell
+    judged not adequate is always labelled "beta, not adequate (...)", so
+    the 27 beta cells are exactly the 14 + 13 not-adequate cells, and every
+    one of the 309 adequate cells is labelled target. No adequate cell
+    fell back to a beta label through C1 or C6.
+
+    What the log does not say:
+    - which rows or cells the 27 beta cells are (calprec2_beta.csv, label
+      column);
+    - how many of the 309 targets carry beta_prod (C6 passed) and how many
+      beta_adq with dev_adq <= 0.05 (provenance column). Neither split may
+      be quoted until a script prints it.
+
+    The 27 beta-labelled cells are a finding about reference adequacy, not
+    a failure (design above; N18 O2). Their tau_ref is the 256M median.
+  CLOSED by b663797 (finalize run folder and log). The table's use in the
+  rerun is N35's second precheck.
 - N29 (repo, defect found before execution; calprec2 with kgrun). Every
   calprec2 full job on Kaggle would have exited 2 before any draw.
   - calprec2's full mode requires --throughput, a verified smoke folder.
@@ -1449,7 +1497,44 @@ instruction of 2026-10-15.
   The hint and the docstring line are corrected in rerun.py (cosmetic).
   The run mode checks the hashes of rerunlib.py and costprobe2.py against
   the plan, not that of rerun.py, so this plan stays valid.
-  OPEN as a record until the second precheck.
+  - Second precheck, 2026-10-23, with --calprec2
+    runs/calprec2-finalize-20261023-112503. Sources:
+    logs/rerun-precheck2-20261023-1126.log; plan
+    runs/rerun-plan-20261023-112643, committed in a7f4256, whose manifest
+    Claude verified with sha256sum -c (four files OK).
+    - Script hashes printed: rerun.py 756c4069...818e, rerunlib.py
+      5d55050e...9b06, costprobe2.py ea5cb2e1...f64b, the values
+      notes/RERUN_RUNBOOK.md pins and the files at HEAD.
+    - The table read is the finalize table: sha256 0fc98d23...2668, 336
+      cells.
+    - V0, P1, S1 and O1 as in the first precheck (O1: the same ten onsets
+      and sixty per-r means).
+    - C2 PASS: every cell of CONC, TAU8, SIGMA and ANISO found one table
+      row with a beta and a label not "incomplete"; no C2 FAIL line.
+    - A-BETA and A-SIGMA: 2034 ok, 0 FAIL, 288 not applicable, the same
+      as the first precheck. Confirmed from the code that this is by
+      design, not a check failing silently:
+      - rerun.py build_plan sends a cell to rerunlib.archive_check
+        whenever its beta is known. archive_check returns "not
+        applicable" for any row with no entry in rerunlib.ARCH_CHECK.
+        CONC and TAU8 have no entry: their betas are calprec2's, and the
+        archive holds no beta to compare against;
+      - CONC and TAU8 cells carry the single diffusion "none"
+        (rerunlib._cell default), so 144 + 144 = 288 entries;
+      - SIGMA and ANISO have entries with beta column None and sigma
+        column "sigma": only their sigma is compared, which is why they
+        read ok with or without the table;
+      - the calprec2 betas themselves are checked by C2 only, for
+        presence and label. Nothing compares them with an archived value,
+        and nothing can.
+    - K4 PASS (the same 28 groups), K1 23748 distinct keys, K2 PASS.
+    - Plan comparison, by Claude, reading the two rerun_plan.csv files:
+      1752 rows each, same columns; every archived-beta row identical;
+      every calibrated row identical outside beta, beta_source and the
+      cal_ columns. So the archived-beta shard set (N37) may run from
+      either plan, and the seed keys of the calibrated rows did not move.
+  CLOSED as a record by this commit. Nothing about trajectories under
+  either plan is established yet.
 
 - N36 (result, perjcal probe smoke; ledger K2 of notes/ANALYSIS_CRITERIA.md).
   Sources:
