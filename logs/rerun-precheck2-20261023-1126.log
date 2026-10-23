@@ -1,0 +1,248 @@
+================================================================================================
+CBO-GAP rerun -- fixed-beta rerun, trajectories (mode precheck)
+================================================================================================
+  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  python   3.12.3   numpy 2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  2
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  outroot  /home/rahul/Research/cbo-gap-final/runs
+  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000
+  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke
+  budget   3072 MB peak RSS per worker
+
+------------------------------------------------------------------------------------------------
+V0  plan identity (costprobe2 P0(a); Table 2 counts)
+------------------------------------------------------------------------------------------------
+  BETA-ISO  M       ess_surface.py 241-246 M               ok
+  BETA-ISO  betas   ess_surface.py 241-246 betas           ok
+  BETA-ISO  dims    ess_surface.py 241-246 dims            ok
+  BETA-ISO  jgrid   ess_surface.py 241-246 J_list          ok
+  BETA-ISO  objs    ess_surface.py 273-273 obj             ok
+  BETA-ANI  M       ess_surface.py 241-246 M               ok
+  BETA-ANI  betas   ess_surface.py 241-246 aniso_betas     ok
+  BETA-ANI  dims    ess_surface.py 241-246 aniso_dims      ok
+  BETA-ANI  jgrid   ess_surface.py 241-246 J_list          ok
+  BETA-ANI  objs    ess_surface.py 280-280 obj             ok
+  LAWPANEL  M       visibility.py 321-326 M               ok
+  LAWPANEL  dims    visibility.py 321-326 dims            ok
+  LAWPANEL  jgrid   visibility.py 321-326 J_list          ok
+  LAWPANEL  laws    visibility.py 321-326 inits           ok
+  LAWPANEL  objs    visibility.py 321-326 objs            ok
+  CONC      M       mechanism.py 294-297 M               ok
+  CONC      dims    mechanism.py 294-297 dims            ok
+  CONC      jgrid   mechanism.py 294-297 J_list          ok
+  CONC      laws    mechanism.py 294-297 inits           ok
+  CONC      objs    mechanism.py 294-297 objs            ok
+  CONC      taus    mechanism.py 294-297 taus            ok
+  PROBEARM  M       mechanism.py 294-297 M               ok
+  PROBEARM  dims    mechanism.py 294-297 dims            ok
+  PROBEARM  jgrid   mechanism.py 294-297 J_list          ok
+  PROBEARM  laws    mechanism.py 294-297 inits           ok
+  PROBEARM  objs    mechanism.py 294-297 objs            ok
+  PROBEARM  taus    mechanism.py 294-297 taus            ok
+  ADAPT     M       control.py 297-300 M               ok
+  ADAPT     arms    control.py 305-305 arms            ok
+  ADAPT     dims    control.py 297-300 dims            ok
+  ADAPT     jgrid   control.py 297-300 J_list          ok
+  ADAPT     objs    control.py 297-300 objs            ok
+  ADAPT     taus    control.py 297-300 taus            ok
+  TAU8      M       boundary.py 252-256 M               ok
+  TAU8      dims    boundary.py 252-256 dims            ok
+  TAU8      jgrid   boundary.py 252-256 J_list          ok
+  TAU8      objs    boundary.py 252-256 objs            ok
+  TAU8      taus    boundary.py 252-256 taus            ok
+  TAU8      not checked against source: law centred: X0 drawn inline as standard normal + MINIMIZER, boundary.py 181
+  REFSIZE   M       regime.py 483-483 M               ok
+  REFSIZE   d       regime.py 512-512 dA              ok
+  REFSIZE   jgrid   regime.py 484-484 Jgrid           ok
+  REFSIZE   jinfs   regime.py 508-508 Jinfs           ok
+  REFSIZE   objs    regime.py 511-511 objsA           ok
+  REFSIZE   not checked against source: tau0 0.1, law centred, T 1.0 inside the cells comprehension, regime.py 513
+  SYNTH     M       regime.py 483-483 M               ok
+  SYNTH     dims    regime.py 549-549 dims            ok
+  SYNTH     jgrid   regime.py 484-484 Jgrid           ok
+  SYNTH     objs    regime.py 548-548 names           ok
+  SYNTH     taus    regime.py 550-550 taus            ok
+  SYNTH     not checked against source: law centred inside the cells comprehension, regime.py 553
+  NAMED     M       regime.py 483-483 M               ok
+  NAMED     dims    regime.py 576-576 dims            ok
+  NAMED     jgrid   regime.py 484-484 Jgrid           ok
+  NAMED     objs    regime.py 575-575 names           ok
+  NAMED     taus    regime.py 577-577 taus            ok
+  NAMED     not checked against source: law centred inside the cells comprehension, regime.py 578
+  HORIZON   M       regime.py 483-483 M               ok
+  HORIZON   Ts      regime.py 599-599 Ts              ok
+  HORIZON   jgrid   regime.py 484-484 Jgrid           ok
+  HORIZON   laws    regime.py 600-600 inits           ok
+  HORIZON   objs    regime.py 596-596 names           ok
+  HORIZON   not checked against source: d 10 and tau0 0.1 inside the cells comprehension, regime.py 601
+  GEOM      M       law.py 770-770 --realisations  ok
+  GEOM      dims    law.py 522-522 dims            ok
+  GEOM      jgrid   law.py 523-523 Jgrid           ok
+  GEOM      objs    law.py 521-521 names           ok
+  GEOM      taus    law.py 522-522 taus            ok
+  SIGMA     M       sigma.py 238-238 --realisations  ok
+  SIGMA     diffs   sigma.py 259-260 diffs           ok
+  SIGMA     dims    sigma.py 253-257 dims            ok
+  SIGMA     jgrid   sigma.py 253-257 Jgrid           ok
+  SIGMA     objs    sigma.py 253-257 objs            ok
+  SIGMA     rs      sigma.py 253-257 rs              ok
+  SIGMA     taus    sigma.py 253-257 taus            ok
+  ANISO     M       crossed.py 239-239 --realisations  ok
+  ANISO     diffs   crossed.py 248-248 diffs           ok
+  ANISO     dims    crossed.py 255-258 dims            ok
+  ANISO     jgrid   crossed.py 255-258 Jgrid           ok
+  ANISO     objs    crossed.py 255-258 objs            ok
+  ANISO     rs      crossed.py 255-258 rs              ok
+  ANISO     sigmas  crossed.py 255-258 sigmas          ok
+  ANISO     taus    crossed.py 255-258 taus            ok
+  ANISO     not checked against source: the two arms A and B: an expression over args.arm, crossed.py 260-262
+  RMAP      M       regimemap.py 279-279 --realisations  ok
+  RMAP      diffs   regimemap.py 288-288 diffs           ok
+  RMAP      dims    regimemap.py 300-302 dimsM           ok
+  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok
+  RMAP      objs    regimemap.py 289-289 objs            ok
+  RMAP      rs      regimemap.py 300-302 rsM             ok
+  RMAP      taus    regimemap.py 300-302 tausM           ok
+  CLIFF     M       cliff.py 244-244 --realisations  ok
+  CLIFF     diffs   cliff.py 253-253 diffs           ok
+  CLIFF     dims    cliff.py 260-264 dims            ok
+  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok
+  CLIFF     objs    cliff.py 260-264 objs            ok
+  CLIFF     rs      cliff.py 260-264 rs              ok
+  CLIFF     taus    cliff.py 260-264 taus            ok
+  ONSET     M       regimemap.py 279-279 --realisations  ok
+  ONSET     diffs   regimemap.py 288-288 diffs           ok
+  ONSET     dims    regimemap.py 300-302 dimsD           ok
+  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok
+  ONSET     objs    regimemap.py 289-289 objs            ok
+  ONSET     rs      regimemap.py 300-302 rsD             ok
+  ONSET     tau     regimemap.py 304-304 tauD            ok
+  V0(b) BETA-ISO  cells   42 realizations   840  Table 2 (42, 840)  ok
+  V0(b) BETA-ANI  cells   12 realizations   240  Table 2 (12, 240)  ok
+  V0(b) LAWPANEL  cells  144 realizations  2880  Table 2 (144, 2880)  ok
+  V0(b) CONC      cells  144 realizations  2160  Table 2 (144, 2160)  ok
+  V0(b) PROBEARM  cells  144 realizations  2160  Table 2 (144, 2160)  ok
+  V0(b) ADAPT     cells   72 realizations  1080  Table 2 (72, 1080)  ok
+  V0(b) TAU8      cells  144 realizations  2160  Table 2 (144, 2160)  ok
+  V0(b) REFSIZE   cells   12 realizations   144  Table 2 (12, 144)  ok
+  V0(b) SYNTH     cells   72 realizations   864  Table 2 (72, 864)  ok
+  V0(b) NAMED     cells   36 realizations   432  Table 2 (36, 432)  ok
+  V0(b) HORIZON   cells   24 realizations   288  Table 2 (24, 288)  ok
+  V0(b) GEOM      cells  336 realizations  4032  Table 2 (336, 4032)  ok
+  V0(b) SIGMA     cells  288 realizations  3456  Table 2 (288, 3456)  ok
+  V0(b) ANISO     cells  288 realizations  3456  Table 2 (288, 3456)  ok
+  V0(b) RMAP      cells  240 realizations  2880  Table 2 (240, 2880)  ok
+  V0(b) CLIFF     cells  144 realizations  1728  Table 2 (144, 1728)  ok
+  V0(b) ONSET     cells  180 realizations  2160  Table 2 (180, 2160)  ok
+
+------------------------------------------------------------------------------------------------
+P1  archive identity
+------------------------------------------------------------------------------------------------
+  boundary     93d2eb0452fc0e42...  ok
+  cliff        017082fac66327d6...  ok
+  control      4f50bbe5e94cfcf2...  ok
+  crossed      21ff6d389ec89147...  ok
+  ess_surface  e02f5287834bd100...  ok
+  exactcal     b17e1be3c024ec4d...  ok
+  law          2003d65b72abb86c...  ok
+  mechanism    74fee417de088b6d...  ok
+  regime       b671a58c63f0ba7d...  ok
+  regimemap    eb1d704f5cf150a0...  ok
+  sigma        414c61c3f8dfa3ab...  ok
+  visibility   7971bbcc93b7be82...  ok
+  finitej      5b7a81ef54433369...  ok
+
+------------------------------------------------------------------------------------------------
+S1  sampler identity (finite-J audit modules)
+------------------------------------------------------------------------------------------------
+  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok
+  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok
+  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok
+
+  calprec2 table runs/calprec2-finalize-20261023-112503/calprec2_beta.csv  sha256 0fc98d232892cc5e2ed0fc22d14a03700276b9eead293036ff8b0f2fbb7c2668  336 cells
+
+------------------------------------------------------------------------------------------------
+O1  onset control (before any use of the onset estimator, before any trajectory)
+------------------------------------------------------------------------------------------------
+  O1 isotropic   d 5   computed 1.50  archived 1.50 (tex line 608)  ok
+       per-r means (diagnostic): computed -1.041 -1.031 -1.042 -1.061 -0.995 -0.945  table -1.041 -1.031 -1.042 -1.061 -0.995 -0.945
+  O1 isotropic   d 10  computed 1.25  archived 1.25 (tex line 609)  ok
+       per-r means (diagnostic): computed -1.006 -0.995 -1.003 -0.987 -0.963 -0.928  table -1.006 -0.995 -1.003 -0.987 -0.963 -0.928
+  O1 isotropic   d 20  computed 2.00  archived 2.00 (tex line 610)  ok
+       per-r means (diagnostic): computed -1.020 -1.017 -1.034 -1.015 -0.977 -0.802  table -1.020 -1.017 -1.034 -1.015 -0.977 -0.802
+  O1 isotropic   d 40  computed 1.25  archived 1.25 (tex line 611)  ok
+       per-r means (diagnostic): computed -0.944 -0.994 -0.962 -0.933 -0.732 -0.532  table -0.944 -0.994 -0.962 -0.933 -0.732 -0.532
+  O1 isotropic   d 80  computed 1.00  archived 1.00 (tex line 612)  ok
+       per-r means (diagnostic): computed -0.998 -1.013 -0.947 -0.766 -0.593 -0.404  table -0.998 -1.013 -0.947 -0.766 -0.593 -0.404
+  O1 anisotropic d 5   computed 2.00  archived 2.00 (tex line 615)  ok
+       per-r means (diagnostic): computed -1.025 -0.996 -0.913 -0.916 -0.923 -0.796  table -1.025 -0.996 -0.913 -0.916 -0.923 -0.796
+  O1 anisotropic d 10  computed 1.00  archived 1.00 (tex line 616)  ok
+       per-r means (diagnostic): computed -0.929 -0.930 -0.877 -0.878 -0.799 -0.772  table -0.929 -0.930 -0.877 -0.878 -0.799 -0.772
+  O1 anisotropic d 20  computed 1.25  archived 1.25 (tex line 617)  ok
+       per-r means (diagnostic): computed -0.904 -0.906 -0.920 -0.888 -0.833 -0.744  table -0.904 -0.906 -0.920 -0.888 -0.833 -0.744
+  O1 anisotropic d 40  computed 1.00  archived 1.00 (tex line 618)  ok
+       per-r means (diagnostic): computed -0.856 -0.855 -0.816 -0.771 -0.757 -0.698  table -0.856 -0.855 -0.816 -0.771 -0.757 -0.698
+  O1 anisotropic d 80  computed 2.00  archived 2.00 (tex line 619)  ok
+       per-r means (diagnostic): computed -0.837 -0.807 -0.780 -0.725 -0.721 -0.616  table -0.837 -0.807 -0.780 -0.725 -0.721 -0.616
+  O1 PASS
+
+------------------------------------------------------------------------------------------------
+BETAS AND SIGMAS  (A-BETA, A-SIGMA, C2)
+------------------------------------------------------------------------------------------------
+  archive check: 2034 ok, 0 FAIL, 288 not applicable
+
+------------------------------------------------------------------------------------------------
+K4  shared cells
+------------------------------------------------------------------------------------------------
+  shared ('regime', 'ackley', 10, 'centred', 0.1, None, 50000, 1.0) rows ['REFSIZE', 'NAMED', 'HORIZON'] owner REFSIZE  ok
+  shared ('regime', 'rastrigin', 10, 'centred', 0.1, None, 50000, 1.0) rows ['NAMED', 'HORIZON'] owner NAMED  ok
+  shared ('regime', 'rosenbrock', 10, 'centred', 0.1, None, 50000, 1.0) rows ['REFSIZE', 'NAMED', 'HORIZON'] owner REFSIZE  ok
+  shared ('regime', 'sphere', 10, 'centred', 0.1, None, 50000, 1.0) rows ['REFSIZE', 'NAMED', 'HORIZON'] owner REFSIZE  ok
+  shared ('regimemap', 'ackley', 10, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 10, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 10, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 10, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 40, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 40, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 40, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'ackley', 40, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 10, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 10, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 10, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 10, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 40, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 40, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 40, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'rastrigin', 40, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 10, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 10, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 10, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 10, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 40, 'centred', 0.1, 1.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 40, 'centred', 0.1, 1.5, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 40, 'centred', 0.1, 2.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  shared ('regimemap', 'sphere', 40, 'centred', 0.1, 3.0, 50000, 1.0) rows ['RMAP', 'ONSET'] owner RMAP  ok
+  K4 PASS  (28 groups with more than one row)
+
+------------------------------------------------------------------------------------------------
+K1, K2  injectivity and pairing
+------------------------------------------------------------------------------------------------
+  K1 PASS  (23748 distinct (group, rep) keys)
+  K2 PASS  (diffusion absent from every key; paired rows carry both diffusions)
+
+------------------------------------------------------------------------------------------------
+PLAN WRITTEN
+------------------------------------------------------------------------------------------------
+  /home/rahul/Research/cbo-gap-final/runs/rerun-plan-20261023-112643
+  A      PASS
+  C2     PASS
+  K1     PASS
+  K2     PASS
+  K4     PASS
+
+  Next: python scripts/manifest.py   (it manifests every run folder without sha256.txt)
