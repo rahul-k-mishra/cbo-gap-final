@@ -13,8 +13,10 @@ experiment. Everything in this file is non-negotiable.
     CLAUDE.md                      this file
     README.md                      what the repository is and how to run anything
     .claude/settings.json          allow git add, commit, push; deny edits under
-                                   zenodo-v1, round1-zip, runs/ and notes/rerun_queue.json,
-                                   every rm form, chmod, force
+                                   zenodo-v1, round1-zip, runs/ and notes/rerun_queue.json
+                                   (plus any Bash command naming that file;
+                                   a heredoc body is not matched), every rm
+                                   form, chmod, force
                                    push, history rewrite, and every kaggle command;
                                    ask on mv, cp, unzip, tar
     .gitattributes                 "* -text": git never rewrites line endings; the

@@ -12,6 +12,7 @@
       "Edit(/round1-zip/**)",
       "Edit(/runs/**)",
       "Edit(/notes/rerun_queue.json)",
+      "Bash(*rerun_queue.json*)",
       "Read(~/.kaggle/**)",
       "Edit(~/.kaggle/**)",
       "Bash(rm *)",

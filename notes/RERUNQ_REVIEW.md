@@ -276,3 +276,35 @@ exists on main, and main still reads RUNNING.
   c6d29829f5feeb9984f87a75c61b672b).
   Static checks only: Python 3.8 grammar parse, and git status showing
   notes/rerun_queue.json unchanged. Nothing executed.
+
+## 2026-10-23, fourth pass: the shell deny for the state file
+
+- Added at Rahul's request: Bash(*rerun_queue.json*) in the deny list of
+  .claude/settings.json (Claude Code 2.1.309). The permissions
+  documentation (code.claude.com/docs/en/permissions, "Wildcard
+  patterns") says a * may stand at the start, in the middle or at the
+  end of a Bash rule, and that a Bash rule matches the command text
+  Claude writes, not the program however it is invoked: "isn't a
+  security boundary around the program".
+- Probed the same day with three read-only commands that name the file:
+  - wc -c notes/rerun_queue.json: refused;
+  - python3 -c with the path in the inline code: refused;
+  - python3 - with the path inside a quoted heredoc: NOT refused; it
+    printed the file's size, 2429 bytes. The heredoc body is not part of
+    the text the rule is matched against.
+- What the guard covers: any Bash command whose own text (program and
+  arguments, including python -c code) contains rerun_queue.json. That
+  includes git add and git show of the file, so a Claude session can no
+  longer stage it, which is intended. The Edit deny on
+  /notes/rerun_queue.json already covered Claude's file tools, the file
+  commands Claude Code recognises in Bash (sed, tee and the like) and
+  redirect targets, according to the same page.
+- What it does not cover:
+  - a heredoc script, the form of the third-pass incident;
+  - a name built at run time or matched by a glob;
+  - a program that opens the file itself (rerunq.py, which is intended);
+  - a git command on the whole notes/ folder.
+  Rule 22 still forbids all of these, but nothing enforces it. The
+  documentation names two mechanisms that would: a PreToolUse hook that
+  inspects the full command text, and the sandbox for operating-system
+  enforcement. Neither is installed. Adding one is Rahul's decision.
