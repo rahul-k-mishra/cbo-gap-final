@@ -1,0 +1,11 @@
+==============================================================================
+kgrun  action fetch  job rerun-smoke-arch-a1  dataset ericsom/cbo-gap-archive
+  repository /home/runner/work/cbo-gap-final/cbo-gap-final
+==============================================================================
+FETCH OUTPUT into /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143
+  $ kaggle kernels output ericsom/cbo-rerun-smoke-arch-a1 -p /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel log downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143/cbo-rerun-smoke-arch-a1.log 
+  1 files, manifest written to sha256.txt
+    d5894512ba501416f450e0ca8ba5f2e68e31c8442e374f74b0416438df06ad44  cbo-rerun-smoke-arch-a1.log
+==============================================================================

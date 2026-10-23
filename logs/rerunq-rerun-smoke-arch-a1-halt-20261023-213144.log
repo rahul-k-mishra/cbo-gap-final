@@ -1,0 +1,40 @@
+==============================================================================
+rerunq tick  run 39983265158.1  2026-10-23T21:31:41+05:30
+  python 3.12.15
+  state file notes/rerun_queue.json
+  state RUNNING  item 0  attempt 1  job rerun-smoke-arch-a1
+  plan runs/rerun-plan-20261023-112643 (rerun_plan.csv 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2)
+  timing runs/costprobe2-s0-kaggle-20261010-103952, runs/costprobe2-s1-kaggle-20261011-101343
+  expect python 3.13.15 numpy 2.1.3; rerun_sha256 756c4069; rerunlib_sha256 5d55050e; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  workers 4  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  rerun-smoke-arch-a1
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job rerun-smoke-arch-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job rerun-smoke-arch-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-rerun-smoke-arch-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-rerun-smoke-arch-a1 has status "KernelWorkerStatus.ERROR"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-rerun-smoke-arch-a1: ERROR  (judged: ericsom/cbo-rerun-smoke-arch-a1 has status "KernelWorkerStatus.ERROR")
+FETCH  rerun-smoke-arch-a1 (kaggle status ERROR)
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py fetch --job rerun-smoke-arch-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-rerun-smoke-arch-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job rerun-smoke-arch-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    | FETCH OUTPUT into /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143
+    |   $ kaggle kernels output ericsom/cbo-rerun-smoke-arch-a1 -p /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Kernel log downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-smoke-arch-a1-kaggle-20261023-213143/cbo-rerun-smoke-arch-a1.log 
+    |   1 files, manifest written to sha256.txt
+    |     d5894512ba501416f450e0ca8ba5f2e68e31c8442e374f74b0416438df06ad44  cbo-rerun-smoke-arch-a1.log
+    | ==============================================================================
+  runs/rerun-smoke-arch-a1-kaggle-20261023-213143: manifest verified, 1 files
+  runner exit 2  python None  numpy None  mode None  run dir None  D-SMOKE None  completed None
+HALT: R2: runner exit code 2 in runs/rerun-smoke-arch-a1-kaggle-20261023-213143; R1: python None, expected 3.13.15; numpy None, expected 2.1.3; rerun_sha256 None, expected 756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e; rerunlib_sha256 None, expected 5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06; costprobe2_sha256 None, expected ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b; plan sha256 None, expected 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2; mode None, expected smoke

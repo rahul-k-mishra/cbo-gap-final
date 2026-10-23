@@ -1,0 +1,18 @@
+[{"stream_name":"stdout","time":1.1252907109999999,"data":"kgrun runner: job rerun-smoke-arch-a1\n"}
+,{"stream_name":"stdout","time":1.1253340330000001,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.125340199,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.128905274,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.128937009,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.320044357,"data":"  listing  55 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.320080654,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/rerun.py\n"}
+,{"stream_name":"stdout","time":1.320091224,"data":"  args     --smoke --plan-from runs/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4\n"}
+,{"stream_name":"stdout","time":1.743687055,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":1.743723546,"data":"kgrun runner: SETUP ERROR, folder rerun-plan-20261023-112643 is not in /kaggle/input/datasets/ericsom/cbo-gap-archive/kgrun-ship-index.json\n"}
+,{"stream_name":"stdout","time":1.7437308809999998,"data":"kgrun runner: exit code 2\n"}
+,{"stream_name":"stderr","time":4.919182645,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4.9192213670000005,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5.510715857,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5.510749144,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7.801970167,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":9.50862398,"data":"[NbConvertApp] Writing 303961 bytes to __results__.html\n"}
+]
