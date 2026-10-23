@@ -1,0 +1,1006 @@
+================================================================================================
+CBO-GAP calprec2_hashaudit -- printed script hashes of the calprec2-long shards against their launch commits (ledger K7)
+================================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   workers 2
+  repository /home/rahul/Research/cbo-gap-final   HEAD 539fcd2656566198afa641c9f6cbdd520b52b233 (main)
+  shards   calprec2-long-s0of26 .. s25of26   launch time read at UTC+05:30
+  audited  scripts/calprec2.py, scripts/costprobe2.py, zenodo-v1/<m>.py for m in ess_surface, visibility, mechanism, control, boundary, regime, law, sigma, crossed, cliff, regimemap, exactcal
+  ledger pin  calprec2.py c339ca9d...c14d   costprobe2.py ea5cb2e1...f64b
+  rules A1 to A9 in the docstring; no seeds (nothing random); writes no file
+================================================================================================
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+/home/rahul/Research/cbo-gap-final/scripts/calprec2_hashaudit.py:263: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  local, datetime.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S"), c[:10], cci.strip(),
+shard s0of26
+  record runs/calprec2-long-s0of26-a1-kaggle-20261012-074403
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-11T21:47:51 local, 2026-10-11T16:17:51 UTC   A3 launch commit ee2b155f50 (2026-10-11 21:45:51 +0530)   log added in c9fc86564f
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at ee2b155f50 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at ee2b155f50 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at ee2b155f50 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at ee2b155f50 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at ee2b155f50 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at ee2b155f50 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at ee2b155f50 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at ee2b155f50 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at ee2b155f50 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at ee2b155f50 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at ee2b155f50 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at ee2b155f50 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at ee2b155f50 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at ee2b155f50 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s1of26
+  record runs/calprec2-long-s1of26-a1-kaggle-20261012-182725
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-12T07:50:12 local, 2026-10-12T02:20:12 UTC   A3 launch commit c9fc86564f (2026-10-12 07:46:47 +0530)   log added in 6c436e90c8
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at c9fc86564f c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at c9fc86564f ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at c9fc86564f e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at c9fc86564f 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at c9fc86564f 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at c9fc86564f 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at c9fc86564f 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at c9fc86564f b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at c9fc86564f 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at c9fc86564f 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at c9fc86564f 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at c9fc86564f 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at c9fc86564f eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at c9fc86564f b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s2of26
+  NOT A RECORD (no sha256.txt, 0 entries): runs/calprec2-long-s2of26-a1-kaggle-20261013-213019
+  record runs/calprec2-long-s2of26-a1-kaggle-20261014-043353
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-12T18:28:49 local, 2026-10-12T12:58:49 UTC   A3 launch commit 6c436e90c8 (2026-10-12 18:28:33 +0530)   log added in 9092121aed
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 6c436e90c8 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 6c436e90c8 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 6c436e90c8 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 6c436e90c8 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 6c436e90c8 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 6c436e90c8 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 6c436e90c8 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 6c436e90c8 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 6c436e90c8 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 6c436e90c8 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 6c436e90c8 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 6c436e90c8 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 6c436e90c8 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 6c436e90c8 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s3of26
+  record runs/calprec2-long-s3of26-a1-kaggle-20261014-134132
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-14T04:36:22 local, 2026-10-13T23:06:22 UTC   A3 launch commit 9092121aed (2026-10-14 04:35:26 +0530)   log added in b4942b3a74
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 9092121aed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 9092121aed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 9092121aed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 9092121aed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 9092121aed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 9092121aed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 9092121aed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 9092121aed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 9092121aed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 9092121aed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 9092121aed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 9092121aed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 9092121aed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 9092121aed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s4of26
+  record runs/calprec2-long-s4of26-a1-kaggle-20261014-233109
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-14T13:43:07 local, 2026-10-14T08:13:07 UTC   A3 launch commit b4942b3a74 (2026-10-14 13:42:39 +0530)   log added in 65979a8a20
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at b4942b3a74 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at b4942b3a74 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at b4942b3a74 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at b4942b3a74 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at b4942b3a74 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at b4942b3a74 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at b4942b3a74 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at b4942b3a74 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at b4942b3a74 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at b4942b3a74 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at b4942b3a74 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at b4942b3a74 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at b4942b3a74 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at b4942b3a74 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s5of26
+  record runs/calprec2-long-s5of26-a1-kaggle-20261015-191009
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-14T23:32:43 local, 2026-10-14T18:02:43 UTC   A3 launch commit 65979a8a20 (2026-10-14 23:31:30 +0530)   log added in c5d936d49d
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 65979a8a20 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 65979a8a20 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 65979a8a20 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 65979a8a20 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 65979a8a20 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 65979a8a20 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 65979a8a20 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 65979a8a20 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 65979a8a20 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 65979a8a20 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 65979a8a20 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 65979a8a20 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 65979a8a20 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 65979a8a20 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s6of26
+  record runs/calprec2-long-s6of26-a1-kaggle-20261016-023837
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-15T19:11:14 local, 2026-10-15T13:41:14 UTC   A3 launch commit c5d936d49d (2026-10-15 19:10:34 +0530)   log added in f4cca29fd7
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at c5d936d49d c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at c5d936d49d ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at c5d936d49d e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at c5d936d49d 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at c5d936d49d 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at c5d936d49d 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at c5d936d49d 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at c5d936d49d b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at c5d936d49d 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at c5d936d49d 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at c5d936d49d 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at c5d936d49d 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at c5d936d49d eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at c5d936d49d b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s7of26
+  record runs/calprec2-long-s7of26-a1-kaggle-20261016-125645
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-16T05:20:11 local, 2026-10-15T23:50:11 UTC   A3 launch commit f4cca29fd7 (2026-10-16 05:18:43 +0530)   log added in f027037b3b
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at f4cca29fd7 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at f4cca29fd7 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at f4cca29fd7 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at f4cca29fd7 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at f4cca29fd7 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at f4cca29fd7 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at f4cca29fd7 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at f4cca29fd7 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at f4cca29fd7 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at f4cca29fd7 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at f4cca29fd7 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at f4cca29fd7 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at f4cca29fd7 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at f4cca29fd7 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s8of26
+  record runs/calprec2-long-s8of26-a1-kaggle-20261017-025623
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-16T14:39:52 local, 2026-10-16T09:09:52 UTC   A3 launch commit f027037b3b (2026-10-16 14:39:29 +0530)   log added in 5713a28527
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at f027037b3b c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at f027037b3b ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at f027037b3b e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at f027037b3b 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at f027037b3b 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at f027037b3b 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at f027037b3b 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at f027037b3b b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at f027037b3b 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at f027037b3b 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at f027037b3b 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at f027037b3b 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at f027037b3b eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at f027037b3b b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s9of26
+  record runs/calprec2-long-s9of26-a1-kaggle-20261017-105022
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-17T02:59:13 local, 2026-10-16T21:29:13 UTC   A3 launch commit 5713a28527 (2026-10-17 02:57:14 +0530)   log added in 551116f73c
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 5713a28527 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 5713a28527 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 5713a28527 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 5713a28527 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 5713a28527 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 5713a28527 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 5713a28527 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 5713a28527 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 5713a28527 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 5713a28527 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 5713a28527 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 5713a28527 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 5713a28527 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 5713a28527 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s10of26
+  record runs/calprec2-long-s10of26-a1-kaggle-20261017-170951
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-17T10:58:41 local, 2026-10-17T05:28:41 UTC   A3 launch commit 551116f73c (2026-10-17 10:57:51 +0530)   log added in b81ff3ff38
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 551116f73c c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 551116f73c ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 551116f73c e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 551116f73c 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 551116f73c 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 551116f73c 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 551116f73c 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 551116f73c b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 551116f73c 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 551116f73c 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 551116f73c 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 551116f73c 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 551116f73c eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 551116f73c b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s11of26
+  record runs/calprec2-long-s11of26-a1-kaggle-20261018-011357
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-17T17:35:59 local, 2026-10-17T12:05:59 UTC   A3 launch commit b81ff3ff38 (2026-10-17 17:35:16 +0530)   log added in e015ecc09e
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at b81ff3ff38 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at b81ff3ff38 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at b81ff3ff38 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at b81ff3ff38 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at b81ff3ff38 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at b81ff3ff38 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at b81ff3ff38 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at b81ff3ff38 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at b81ff3ff38 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at b81ff3ff38 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at b81ff3ff38 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at b81ff3ff38 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at b81ff3ff38 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at b81ff3ff38 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s12of26
+  record runs/calprec2-long-s12of26-a1-kaggle-20261018-140932
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-18T08:34:58 local, 2026-10-18T03:04:58 UTC   A3 launch commit e015ecc09e (2026-10-18 08:34:02 +0530)   log added in 1c7949b50e
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at e015ecc09e c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at e015ecc09e ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at e015ecc09e e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at e015ecc09e 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at e015ecc09e 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at e015ecc09e 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at e015ecc09e 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at e015ecc09e b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at e015ecc09e 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at e015ecc09e 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at e015ecc09e 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at e015ecc09e 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at e015ecc09e eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at e015ecc09e b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s13of26
+  record runs/calprec2-long-s13of26-a1-kaggle-20261018-202200
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-18T14:12:28 local, 2026-10-18T08:42:28 UTC   A3 launch commit 1c7949b50e (2026-10-18 14:11:24 +0530)   log added in 53c8fdd140
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 1c7949b50e c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 1c7949b50e ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 1c7949b50e e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 1c7949b50e 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 1c7949b50e 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 1c7949b50e 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 1c7949b50e 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 1c7949b50e b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 1c7949b50e 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 1c7949b50e 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 1c7949b50e 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 1c7949b50e 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 1c7949b50e eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 1c7949b50e b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s14of26
+  record runs/calprec2-long-s14of26-a1-kaggle-20261019-024813
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-18T20:37:12 local, 2026-10-18T15:07:12 UTC   A3 launch commit 53c8fdd140 (2026-10-18 20:36:28 +0530)   log added in 2c1e2bdde7
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 53c8fdd140 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 53c8fdd140 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 53c8fdd140 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 53c8fdd140 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 53c8fdd140 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 53c8fdd140 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 53c8fdd140 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 53c8fdd140 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 53c8fdd140 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 53c8fdd140 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 53c8fdd140 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 53c8fdd140 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 53c8fdd140 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 53c8fdd140 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s15of26
+  record runs/calprec2-long-s15of26-a1-kaggle-20261019-093930
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-19T02:55:54 local, 2026-10-18T21:25:54 UTC   A3 launch commit 2c1e2bdde7 (2026-10-19 02:55:07 +0530)   log added in 85e3c1ad27
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 2c1e2bdde7 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 2c1e2bdde7 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 2c1e2bdde7 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 2c1e2bdde7 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 2c1e2bdde7 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 2c1e2bdde7 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 2c1e2bdde7 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 2c1e2bdde7 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 2c1e2bdde7 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 2c1e2bdde7 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 2c1e2bdde7 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 2c1e2bdde7 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 2c1e2bdde7 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 2c1e2bdde7 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s16of26
+  record runs/calprec2-long-s16of26-a1-kaggle-20261020-035025
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-19T21:24:09 local, 2026-10-19T15:54:09 UTC   A3 launch commit 85e3c1ad27 (2026-10-19 21:23:30 +0530)   log added in 1e30f948fc
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 85e3c1ad27 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 85e3c1ad27 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 85e3c1ad27 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 85e3c1ad27 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 85e3c1ad27 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 85e3c1ad27 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 85e3c1ad27 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 85e3c1ad27 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 85e3c1ad27 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 85e3c1ad27 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 85e3c1ad27 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 85e3c1ad27 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 85e3c1ad27 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 85e3c1ad27 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s17of26
+  record runs/calprec2-long-s17of26-a1-kaggle-20261020-140137
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-20T07:28:23 local, 2026-10-20T01:58:23 UTC   A3 launch commit 1e30f948fc (2026-10-20 07:27:20 +0530)   log added in 5bac68b4ee
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 1e30f948fc c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 1e30f948fc ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 1e30f948fc e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 1e30f948fc 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 1e30f948fc 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 1e30f948fc 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 1e30f948fc 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 1e30f948fc b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 1e30f948fc 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 1e30f948fc 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 1e30f948fc 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 1e30f948fc 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 1e30f948fc eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 1e30f948fc b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s18of26
+  record runs/calprec2-long-s18of26-a1-kaggle-20261020-202441
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-20T14:24:53 local, 2026-10-20T08:54:53 UTC   A3 launch commit 5bac68b4ee (2026-10-20 14:24:08 +0530)   log added in f83402e4bc
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 5bac68b4ee c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 5bac68b4ee ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 5bac68b4ee e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 5bac68b4ee 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 5bac68b4ee 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 5bac68b4ee 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 5bac68b4ee 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 5bac68b4ee b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 5bac68b4ee 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 5bac68b4ee 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 5bac68b4ee 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 5bac68b4ee 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 5bac68b4ee eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 5bac68b4ee b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s19of26
+  record runs/calprec2-long-s19of26-a1-kaggle-20261021-032837
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-20T20:35:49 local, 2026-10-20T15:05:49 UTC   A3 launch commit f83402e4bc (2026-10-20 20:35:05 +0530)   log added in 8d00936698
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at f83402e4bc c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at f83402e4bc ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at f83402e4bc e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at f83402e4bc 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at f83402e4bc 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at f83402e4bc 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at f83402e4bc 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at f83402e4bc b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at f83402e4bc 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at f83402e4bc 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at f83402e4bc 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at f83402e4bc 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at f83402e4bc eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at f83402e4bc b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s20of26
+  record runs/calprec2-long-s20of26-a1-kaggle-20261021-115415
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-21T05:29:10 local, 2026-10-20T23:59:10 UTC   A3 launch commit 8d00936698 (2026-10-21 05:28:18 +0530)   log added in 4cd3c65b28
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 8d00936698 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 8d00936698 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 8d00936698 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 8d00936698 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 8d00936698 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 8d00936698 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 8d00936698 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 8d00936698 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 8d00936698 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 8d00936698 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 8d00936698 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 8d00936698 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 8d00936698 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 8d00936698 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s21of26
+  record runs/calprec2-long-s21of26-a1-kaggle-20261021-172551
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-21T13:23:39 local, 2026-10-21T07:53:39 UTC   A3 launch commit 4cd3c65b28 (2026-10-21 13:23:02 +0530)   log added in 0ee1512499
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 4cd3c65b28 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 4cd3c65b28 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 4cd3c65b28 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 4cd3c65b28 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 4cd3c65b28 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 4cd3c65b28 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 4cd3c65b28 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 4cd3c65b28 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 4cd3c65b28 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 4cd3c65b28 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 4cd3c65b28 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 4cd3c65b28 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 4cd3c65b28 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 4cd3c65b28 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s22of26
+  record runs/calprec2-long-s22of26-a1-kaggle-20261022-005845
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-21T17:34:25 local, 2026-10-21T12:04:25 UTC   A3 launch commit 0ee1512499 (2026-10-21 17:33:48 +0530)   log added in d769445ec1
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 0ee1512499 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 0ee1512499 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 0ee1512499 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 0ee1512499 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 0ee1512499 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 0ee1512499 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 0ee1512499 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 0ee1512499 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 0ee1512499 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 0ee1512499 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 0ee1512499 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 0ee1512499 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 0ee1512499 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 0ee1512499 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s23of26
+  record runs/calprec2-long-s23of26-a1-kaggle-20261022-171639
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-22T09:00:10 local, 2026-10-22T03:30:10 UTC   A3 launch commit d769445ec1 (2026-10-22 08:59:27 +0530)   log added in 25b8acbaf2
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at d769445ec1 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at d769445ec1 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at d769445ec1 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at d769445ec1 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at d769445ec1 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at d769445ec1 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at d769445ec1 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at d769445ec1 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at d769445ec1 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at d769445ec1 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at d769445ec1 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at d769445ec1 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at d769445ec1 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at d769445ec1 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s24of26
+  record runs/calprec2-long-s24of26-a1-kaggle-20261023-000342
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-22T17:30:58 local, 2026-10-22T12:00:58 UTC   A3 launch commit 25b8acbaf2 (2026-10-22 17:30:16 +0530)   log added in bcd5ba18ba
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at 25b8acbaf2 c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at 25b8acbaf2 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at 25b8acbaf2 e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at 25b8acbaf2 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at 25b8acbaf2 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at 25b8acbaf2 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at 25b8acbaf2 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at 25b8acbaf2 b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at 25b8acbaf2 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at 25b8acbaf2 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at 25b8acbaf2 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at 25b8acbaf2 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at 25b8acbaf2 eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at 25b8acbaf2 b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+shard s25of26
+  record runs/calprec2-long-s25of26-a1-kaggle-20261023-085912
+    A1 manifest verified, tracked and clean
+    A2 launch 2026-10-23T02:27:15 local, 2026-10-22T20:57:15 UTC   A3 launch commit bcd5ba18ba (2026-10-23 02:26:22 +0530)   log added in edf7c05759
+    PASS scripts/calprec2.py        printed c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+                                    at bcd5ba18ba c339ca9dc939f683e703e3fca4920211f3b47f9e11d49e7426cb0ef17204c14d
+    PASS scripts/costprobe2.py      printed ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+                                    at bcd5ba18ba ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+    PASS zenodo-v1/ess_surface.py   printed e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+                                    at bcd5ba18ba e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436
+    PASS zenodo-v1/visibility.py    printed 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+                                    at bcd5ba18ba 7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa
+    PASS zenodo-v1/mechanism.py     printed 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+                                    at bcd5ba18ba 74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71
+    PASS zenodo-v1/control.py       printed 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+                                    at bcd5ba18ba 4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268
+    PASS zenodo-v1/boundary.py      printed 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+                                    at bcd5ba18ba 93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4
+    PASS zenodo-v1/regime.py        printed b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+                                    at bcd5ba18ba b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2
+    PASS zenodo-v1/law.py           printed 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+                                    at bcd5ba18ba 2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513
+    PASS zenodo-v1/sigma.py         printed 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+                                    at bcd5ba18ba 414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779
+    PASS zenodo-v1/crossed.py       printed 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+                                    at bcd5ba18ba 21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840
+    PASS zenodo-v1/cliff.py         printed 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+                                    at bcd5ba18ba 017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51
+    PASS zenodo-v1/regimemap.py     printed eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+                                    at bcd5ba18ba eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8
+    PASS zenodo-v1/exactcal.py      printed b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+                                    at bcd5ba18ba b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813
+    PASS  A5: params script_sha256 equals the header
+    PASS  A5: params costprobe2_sha256 equals the header
+  shard verdict PASS   ledger pin PASS
+------------------------------------------------------------------------------------------------
+  per-worker peak RSS: pid 1380441 26.7 MB  pid 1380442 26.9 MB
+================================================================================================
+VERDICT: PASS -- all 26 shards ran the code of their launch commits
+LEDGER PIN: PASS -- every record printed calprec2.py c339ca9d...c14d and costprobe2.py ea5cb2e1...f64b
+================================================================================================
