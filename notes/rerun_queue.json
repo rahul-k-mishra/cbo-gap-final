@@ -87,13 +87,15 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 2,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-smoke-arch-a2",
+  "args": "--smoke --plan-from runs/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -176,6 +178,15 @@
       "attempt": 2,
       "job": "",
       "note": "a1 exit 2, stale dataset version (K7); kgrun fixed in ab80ed3"
+    },
+    {
+      "at": "2026-10-23T21:47:27+05:30",
+      "run": "39985493061.1",
+      "event": "intent",
+      "item": "smoke-arch",
+      "attempt": 2,
+      "job": "rerun-smoke-arch-a2",
+      "note": "resume none"
     }
   ]
 }
