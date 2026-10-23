@@ -1981,3 +1981,54 @@ ENVIRONMENT.md (G2 closed).
     control's COMPLETE, then "L3: kernel absent on Kaggle, name unused".
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
+- K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
+  rerun-smoke-arch-a1, launched by the queue (commit ea5e6a1,
+  logs/kgrun-rerun-smoke-arch-a1.log), stopped on Kaggle with "kgrun
+  runner: SETUP ERROR, folder rerun-plan-20261023-112643 is not in
+  /kaggle/input/datasets/ericsom/cbo-gap-archive/kgrun-ship-index.json",
+  exit 2, before any trajectory (as reported by Rahul; the kernel log is
+  not yet fetched).
+  - The bundle was right. --data-dirs reached build_bundle ("ship data
+    rerun-plan-20261023-112643 5 files, manifest verified"), the five
+    kgrun-ship-000-* files and kgrun-ship-index.json (646 B) were
+    uploaded, and the runner was generated to rebuild that folder.
+  - The kernel did not mount that upload. The runner found a
+    kgrun-ship-index.json (otherwise its message is "folders were
+    requested but ... is not in the mounted dataset"), and the one it
+    found did not list the folder. Every earlier launch that shipped a
+    folder shipped calprec2-smoke-kaggle-20261011-121225 with an index of
+    750 B (logs/kgrun-calprec2-long-s*-a1.log). The index read is
+    consistent with the previous version's, not this one's.
+  - Why: wait_ready asks "kaggle datasets status", which reports the
+    dataset, not the version just uploaded. Here it said ready at 0 s,
+    right after "Dataset version is being created", and the kernel was
+    pushed at once. wait_ready was kept after K1 as a guard against an
+    unprocessed version; it was never measured to do that.
+  - Not a stale listing and not a lost --data-dirs: the index was built
+    from this launch's folder list. The stale thing was the mounted
+    dataset version.
+  - Consequence for earlier runs, OPEN: every calprec2-long shard shipped
+    the same folder, so a stale mount would not have stopped them; it
+    would have run the previous version's scripts. calprec2 prints
+    "script sha256" in its header. Settled by comparing, for each shard,
+    that printed hash with the sha256 of scripts/calprec2.py at the
+    commit the shard was launched from. Not done yet.
+  - Fix (scripts/kgrun.py, docstring BUNDLE IDENTITY): each bundle holds
+    kgrun-bundle-<id>.sha256, listing every uploaded file and its hash;
+    <id> is a hash of that list. Before the push, kgrun waits until
+    "kaggle datasets files <dataset> --page-size 200" lists that name.
+    The runner refuses (exit 2, before the script starts) unless that
+    file is in the mounted dataset and every file it lists hashes as
+    listed. The printed line "bundle <id>: N files verified" in the
+    runner header then shows the code run is the code uploaded.
+  - Not measured: what "kaggle datasets files" of kaggle 2.2.4 prints,
+    and whether it accepts --page-size. Measured by Rahul before the
+    next launch (output stored under logs/).
+  - What would have caught it before a twelve-hour shard: the smoke did,
+    being item 0 and failing in seconds. Without the smoke, a shard
+    whose folder name matched the stale index would have run the old
+    code for its full length with nothing in kgrun or rerunq to notice;
+    rerunq's R1 hash check would have caught a changed rerun.py,
+    rerunlib.py or costprobe2.py only after the fetch.
+  OPEN until a launch through the queue shows the wait and the runner's
+  bundle line.

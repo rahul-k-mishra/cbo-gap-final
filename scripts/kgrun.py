@@ -13,8 +13,10 @@ This script is the only thing that talks to Kaggle. It:
      per-realization CSVs the determinism gate needs, and the round-2 scripts
      from scripts/;
   2. creates the dataset the first time, versions it afterwards, and waits
-     until "kaggle datasets status" reports ready (--ready-poll, default 30 s;
-     --ready-timeout, default 1800 s; on timeout nothing is pushed);
+     until "kaggle datasets status" reports ready and then until Kaggle
+     lists this bundle's identity file (BUNDLE IDENTITY below; --ready-poll,
+     default 30 s; --ready-timeout, default 1800 s; on timeout nothing is
+     pushed);
   3. generates the Kaggle runner (a short script that calls one of our scripts
      with the flags you name) and its kernel-metadata.json;
   4. pushes the kernel, which starts a batch run;
@@ -66,6 +68,40 @@ RESUMPTION ON KAGGLE (ledger K5, closed 2026-10-11)
   is a local choice, not a Kaggle figure: Kaggle's dataset limits are not
   recorded in this repository.
 
+BUNDLE IDENTITY (ledger K7, 2026-10-23)
+  "kaggle datasets status" reports ready for the dataset, not for the
+  version just uploaded: on 2026-10-23 it said ready 0 s after the upload
+  of the rerun-smoke-arch-a1 bundle, the kernel was pushed, and the runner
+  read the previous version's kgrun-ship-index.json, which did not list the
+  folder just shipped (logs/kgrun-rerun-smoke-arch-a1.log). So every
+  bundle now carries its own identity:
+    - build_bundle writes kgrun-bundle-<id>.sha256 into the bundle: one
+      line "<sha256>  <name>" for every other bundle file except
+      dataset-metadata.json (which is not uploaded), sorted by name; <id>
+      is the first 16 hex digits of the sha256 of that text. Identical
+      bytes give the same <id>, so the id names the content, not the
+      upload.
+    - before the push, wait_version polls "kaggle datasets files <dataset>
+      --page-size 200" until the name kgrun-bundle-<id>.sha256 appears in
+      its output. Any line containing "error" or "usage" stops at once;
+      on timeout the kernel is NOT pushed.
+    - the runner, before anything else, requires
+      kgrun-bundle-<id>.sha256 in the mounted dataset and every file it
+      lists to hash as listed; otherwise SETUP ERROR, exit 2, before any
+      shipped folder is rebuilt and before the script starts.
+  Worked example: the bundle's id is 3f0c9a12d4e6b871. Kaggle still lists
+  kgrun-bundle-77ab01c4e5f62d90.sha256 (the previous version): not
+  pushed yet, polled again. Had the kernel been pushed anyway and mounted
+  that version, the runner prints "mounted dataset is not this launch's
+  bundle 3f0c9a12d4e6b871; it holds kgrun-bundle-77ab01c4e5f62d90.sha256"
+  and exits 2 within seconds, instead of running a 12-hour shard on the
+  previous version's code.
+  What this does not establish: which version a kernel attaches when two
+  are listed. The runner check is what makes that question harmless.
+  "push" alone does not rebuild the bundle; it takes the id from the one
+  kgrun-bundle-*.sha256 in .kaggle-bundle/ and refuses if there is not
+  exactly one.
+
 GIT GUARD (Rahul, 2026-10-11: after each job its output is committed and
 pushed before the next job starts)
   run and push refuse to start when runs/ has untracked or modified paths,
@@ -108,6 +144,7 @@ Python 3.8 to 3.11 syntax. Standard library only, plus scripts/manifest.py
 import argparse
 import csv
 import datetime
+import hashlib
 import json
 import os
 import shutil
@@ -146,6 +183,7 @@ BASE = "/kaggle/input"
 WORK = "/kaggle/working"
 STAGE = "/tmp/kgrun-ship"
 SHIP = {ship!r}
+BUNDLE_ID = "{bundle}"
 
 
 def find_archive():
@@ -228,6 +266,26 @@ def sha256_of(path):
             h.update(chunk)
     return h.hexdigest()
 
+
+bmf = os.path.join(ARCHIVE, "kgrun-bundle-" + BUNDLE_ID + ".sha256")
+if not os.path.isfile(bmf):
+    held = sorted(f for f in os.listdir(ARCHIVE) if f.startswith("kgrun-bundle-"))
+    fail("mounted dataset is not this launch's bundle " + BUNDLE_ID + "; it holds "
+         + (", ".join(held) if held else "no kgrun-bundle-*.sha256 file"))
+nb = 0
+with open(bmf) as fh:
+    for ln in fh:
+        ln = ln.rstrip(chr(10))
+        if not ln:
+            continue
+        h, rel = ln.split("  ", 1)
+        if not os.path.isfile(os.path.join(ARCHIVE, rel)):
+            fail("bundle " + BUNDLE_ID + ": " + rel + " is not in the mounted dataset")
+        if sha256_of(os.path.join(ARCHIVE, rel)) != h:
+            fail("bundle " + BUNDLE_ID + ": " + rel + " does not hash as listed")
+        nb += 1
+print("  bundle   " + BUNDLE_ID + ": " + str(nb) + " files verified against kgrun-bundle-" + BUNDLE_ID + ".sha256")
+sys.stdout.flush()
 
 if SHIP:
     idxp = os.path.join(ARCHIVE, "{index}")
@@ -413,10 +471,17 @@ def build_bundle(user, dataset, dry, ship=(), warn_mb=1000.0):
         say("  ship {:<6} {}   {} files, manifest verified, tracked and clean in git".format(role, name, len(rels)))
     meta = {"title": dataset, "id": "{}/{}".format(user, dataset),
             "licenses": [{"name": "unknown"}]}
+    bid = "dry-run"
     if not dry:
         if shipped:
             with open(os.path.join(BUNDLE, SHIP_INDEX), "w") as fh:
                 json.dump(index, fh, indent=2)
+        lines = ["{}  {}".format(sha256_of(os.path.join(BUNDLE, f)), f) for f in sorted(os.listdir(BUNDLE))]
+        text = "\n".join(lines) + "\n"
+        bid = hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+        with open(os.path.join(BUNDLE, "kgrun-bundle-{}.sha256".format(bid)), "x") as fh:
+            fh.write(text)
+        say("  bundle id {}  (kgrun-bundle-{}.sha256, {} files listed)".format(bid, bid, len(lines)))
         with open(os.path.join(BUNDLE, "dataset-metadata.json"), "w") as fh:
             json.dump(meta, fh, indent=2)
         names = os.listdir(BUNDLE)
@@ -429,7 +494,17 @@ def build_bundle(user, dataset, dry, ship=(), warn_mb=1000.0):
         say("  dataset id {}/{}".format(user, dataset))
     else:
         say("  would copy {} archive files, {} round-2 scripts and {} shipped folder(s)".format(n, m, len(shipped)))
-    return shipped
+    return shipped, bid
+
+
+def bundle_id_on_disk():
+    """For "push" alone: the id of the one kgrun-bundle-*.sha256 in .kaggle-bundle/, or SystemExit."""
+    found = [f for f in (os.listdir(BUNDLE) if os.path.isdir(BUNDLE) else [])
+             if f.startswith("kgrun-bundle-") and f.endswith(".sha256")]
+    if len(found) != 1:
+        raise SystemExit("push: expected one kgrun-bundle-*.sha256 in {}, found {}; rebuild with "
+                         "dataset-version first".format(BUNDLE, found))
+    return found[0][len("kgrun-bundle-"):-len(".sha256")]
 
 
 def dataset_create(user, dataset, dry):
@@ -479,11 +554,44 @@ def wait_ready(user, dataset, every, timeout, dry):
         time.sleep(every)
 
 
-def write_kernel(user, dataset, job, script, args, dry, shipped=()):
+def wait_version(user, dataset, bid, every, timeout, dry):
+    """Poll "kaggle datasets files" until this bundle's identity file is listed.
+
+    Listed means the exact name kgrun-bundle-<bid>.sha256 occurs in the
+    output. A line containing "error" or "usage" stops at once; on timeout
+    the script stops and the kernel is NOT pushed (BUNDLE IDENTITY in the
+    docstring; ledger K7)."""
+    did = "{}/{}".format(user, dataset)
+    want = "kgrun-bundle-{}.sha256".format(bid)
+    say("WAIT FOR THIS BUNDLE  {} lists {}  (every {} s, timeout {} s)".format(did, want, every, timeout))
+    cmd = ["kaggle", "datasets", "files", did, "--page-size", "200"]
+    if dry:
+        say("  $ " + " ".join(cmd))
+        say("  (dry run: would poll until the name is listed; not polling)")
+        return
+    t0 = time.time()
+    while True:
+        out = run_cmd(cmd, False, check=False, capture=True)
+        elapsed = time.time() - t0
+        held = sorted(set(w for w in out.split() if w.startswith("kgrun-bundle-")))
+        if want in out.split():
+            say("  {:.0f} s: {} listed".format(elapsed, want))
+            return
+        say("  {:.0f} s: not listed; kgrun-bundle files listed: {}".format(elapsed, ", ".join(held) or "none"))
+        bad = [ln for ln in out.splitlines() if "error" in ln.lower() or "usage" in ln.lower()]
+        if bad:
+            raise SystemExit("kaggle datasets files reports {!r}; kernel NOT pushed".format(bad[0].strip()))
+        if elapsed >= timeout:
+            raise SystemExit("{} not listed for {} after {:.0f} s; kernel NOT pushed".format(want, did, elapsed))
+        time.sleep(every)
+
+
+def write_kernel(user, dataset, job, script, args, dry, shipped=(), bid="dry-run"):
     kid = "{}/cbo-{}".format(user, job)
     say("GENERATE KERNEL  {}".format(kid))
     runner = RUNNER_TEMPLATE.format(user=user, dataset=dataset, script=script, job=job,
-                                    args=args, ship=[list(x) for x in shipped], index=SHIP_INDEX)
+                                    args=args, ship=[list(x) for x in shipped], index=SHIP_INDEX,
+                                    bundle=bid)
     meta = {
         "id": kid,
         "title": "cbo-{}".format(job),
@@ -506,6 +614,7 @@ def write_kernel(user, dataset, job, script, args, dry, shipped=()):
         with open(os.path.join(PUSHDIR, "kernel-metadata.json"), "w") as fh:
             json.dump(meta, fh, indent=2)
         say("  wrote {}/run.py and kernel-metadata.json".format(PUSHDIR))
+    say("  runner requires bundle {} in the mounted dataset, every file hashing as listed".format(bid))
     say("  private {}  internet {}  gpu {}".format(
         meta["is_private"], meta["enable_internet"], meta["enable_gpu"]))
     say("  runner will search /kaggle/input/{0}, then /kaggle/input/datasets/{1}/{0}, "
@@ -618,20 +727,24 @@ def main():
     if a.action == "bundle":
         build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
     elif a.action == "dataset-create":
-        build_bundle(a.user, a.dataset, dry)
+        _, bid = build_bundle(a.user, a.dataset, dry)
         dataset_create(a.user, a.dataset, dry)
         wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
+        wait_version(a.user, a.dataset, bid, a.ready_poll, a.ready_timeout, dry)
     elif a.action == "dataset-version":
-        build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
+        _, bid = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
         dataset_version(a.user, a.dataset, note, dry)
         wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
+        wait_version(a.user, a.dataset, bid, a.ready_poll, a.ready_timeout, dry)
     elif a.action == "push":
         git_guard()
         shipped = [[os.path.basename(os.path.normpath(x)), r] for x, r in ship]
+        bid = "dry-run" if dry else bundle_id_on_disk()
         if shipped:
             say("  push alone does not rebuild the bundle: the dataset's current version must already hold "
                 "these folders (the runner checks and exits 2 otherwise)")
-        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped)
+        wait_version(a.user, a.dataset, bid, a.ready_poll, a.ready_timeout, dry)
+        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped, bid)
         push(kid, dry)
     elif a.action == "status":
         status(kid, dry)
@@ -639,25 +752,27 @@ def main():
         fetch(kid, a.job, dry)
     elif a.action == "launch":
         git_guard()
-        shipped = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
+        shipped, bid = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
         if a.first:
             dataset_create(a.user, a.dataset, dry)
         else:
             dataset_version(a.user, a.dataset, note, dry)
         wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
-        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped)
+        wait_version(a.user, a.dataset, bid, a.ready_poll, a.ready_timeout, dry)
+        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped, bid)
         push(kid, dry)
         say("LAUNCHED {}; not polled, not fetched. Check it with:".format(kid))
         say("  python scripts/kgrun.py status --job {}".format(a.job))
     else:
         git_guard()
-        shipped = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
+        shipped, bid = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
         if a.first:
             dataset_create(a.user, a.dataset, dry)
         else:
             dataset_version(a.user, a.dataset, note, dry)
         wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
-        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped)
+        wait_version(a.user, a.dataset, bid, a.ready_poll, a.ready_timeout, dry)
+        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped, bid)
         push(kid, dry)
         verdict = poll(kid, a.poll, dry)
         if verdict in ("complete", "dry"):
