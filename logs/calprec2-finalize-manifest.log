@@ -1,0 +1,81 @@
+==============================================================================
+CBO-GAP manifest -- sha256.txt for run folders that lack one
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  runs     /home/rahul/Research/cbo-gap-final/runs
+  mode     WRITE
+==============================================================================
+c6-20261011-102531                           has manifest, left alone
+calprec-20261009-065642                      has manifest, left alone
+calprec-20261009-065734                      has manifest, left alone
+calprec-20261009-071626                      has manifest, left alone
+calprec-20261009-071815                      has manifest, left alone
+calprec-20261009-072623                      has manifest, left alone
+calprec-20261009-092252                      has manifest, left alone
+calprec2-finalize-20261023-112503            wrote sha256.txt, 1 file(s):
+    0fc98d232892cc5e2ed0fc22d14a03700276b9eead293036ff8b0f2fbb7c2668  calprec2_beta.csv
+calprec2-long-s0of26-a1-kaggle-20261012-074403 has manifest, left alone
+calprec2-long-s10of26-a1-kaggle-20261017-170951 has manifest, left alone
+calprec2-long-s11of26-a1-kaggle-20261018-011357 has manifest, left alone
+calprec2-long-s12of26-a1-kaggle-20261018-140932 has manifest, left alone
+calprec2-long-s13of26-a1-kaggle-20261018-202200 has manifest, left alone
+calprec2-long-s14of26-a1-kaggle-20261019-024813 has manifest, left alone
+calprec2-long-s15of26-a1-kaggle-20261019-093930 has manifest, left alone
+calprec2-long-s16of26-a1-kaggle-20261020-035025 has manifest, left alone
+calprec2-long-s17of26-a1-kaggle-20261020-140137 has manifest, left alone
+calprec2-long-s18of26-a1-kaggle-20261020-202441 has manifest, left alone
+calprec2-long-s19of26-a1-kaggle-20261021-032837 has manifest, left alone
+calprec2-long-s1of26-a1-kaggle-20261012-182725 has manifest, left alone
+calprec2-long-s20of26-a1-kaggle-20261021-115415 has manifest, left alone
+calprec2-long-s21of26-a1-kaggle-20261021-172551 has manifest, left alone
+calprec2-long-s22of26-a1-kaggle-20261022-005845 has manifest, left alone
+calprec2-long-s23of26-a1-kaggle-20261022-171639 has manifest, left alone
+calprec2-long-s24of26-a1-kaggle-20261023-000342 has manifest, left alone
+calprec2-long-s25of26-a1-kaggle-20261023-085912 has manifest, left alone
+calprec2-long-s2of26-a1-kaggle-20261013-213019 empty, skipped
+calprec2-long-s2of26-a1-kaggle-20261014-043353 has manifest, left alone
+calprec2-long-s3of26-a1-kaggle-20261014-134132 has manifest, left alone
+calprec2-long-s4of26-a1-kaggle-20261014-233109 has manifest, left alone
+calprec2-long-s5of26-a1-kaggle-20261015-191009 has manifest, left alone
+calprec2-long-s6of26-a1-kaggle-20261016-023837 has manifest, left alone
+calprec2-long-s7of26-a1-kaggle-20261016-125645 has manifest, left alone
+calprec2-long-s8of26-a1-kaggle-20261017-025623 has manifest, left alone
+calprec2-long-s9of26-a1-kaggle-20261017-105022 has manifest, left alone
+calprec2-s0of94-a1-kaggle-20261011-193148    has manifest, left alone
+calprec2-s1of94-a1-kaggle-20261011-212722    has manifest, left alone
+calprec2-smoke-kaggle-20261011-121225        has manifest, left alone
+costprobe-20261009-065311                    has manifest, left alone
+costprobe-20261009-092316                    has manifest, left alone
+costprobe2-finalize-20261011-101659          has manifest, left alone
+costprobe2-s0-kaggle-20261010-103952         has manifest, left alone
+costprobe2-s1-kaggle-20261011-101343         has manifest, left alone
+costprobe2-smoke-kaggle-20261010-101736      has manifest, left alone
+detcheck-20261008-204445                     has manifest, left alone
+detcheck-20261008-204541                     has manifest, left alone
+detcheck-20261009-082011                     has manifest, left alone
+detcheck-20261009-082306                     has manifest, left alone
+detcheck-20261009-083518                     has manifest, left alone
+detcheck-20261009-083804                     has manifest, left alone
+detcheck-20261009-091730                     has manifest, left alone
+detcheck-20261009-092021                     has manifest, left alone
+detcheck-kaggle-20261009-092908              has manifest, left alone
+detcheck-kaggle-20261009-094052              has manifest, left alone
+detcheck-kaggle-20261009-094848              has manifest, left alone
+detcheck-kaggle-20261009-094955              has manifest, left alone
+m1-20261016-052412                           has manifest, left alone
+m2-20261016-052740                           has manifest, left alone
+m3-20261016-055516                           has manifest, left alone
+m4-20261016-054755                           has manifest, left alone
+m5-20261016-054952                           has manifest, left alone
+m6-20261016-055203                           has manifest, left alone
+m7-20261015-214629                           has manifest, left alone
+memprobe-20261011-110235                     has manifest, left alone
+n30-20261015-220127                          has manifest, left alone
+perjcalprobe-20261016-193516-smoke           has manifest, left alone
+refscale-kaggle-20261010-094820              has manifest, left alone
+refscale-kaggle-20261010-101146              has manifest, left alone
+refscale-smoke-kaggle-20261009-102942        has manifest, left alone
+rerun-plan-20261016-193630                   has manifest, left alone
+==============================================================================
+  written 1   would write 0   has manifest 68   empty 1   unsafe 0   failed 0
+==============================================================================
