@@ -15,7 +15,10 @@ experiment. Everything in this file is non-negotiable.
     .claude/settings.json          allow git add, commit, push; deny edits under
                                    zenodo-v1, round1-zip, runs/ and notes/rerun_queue.json
                                    (plus any Bash command naming that file;
-                                   a heredoc body is not matched), every rm
+                                   a heredoc body is not matched by the
+                                   rule, so a PreToolUse hook,
+                                   .claude/hooks/deny-queue-state.py,
+                                   checks the full text), every rm
                                    form, chmod, force
                                    push, history rewrite, and every kaggle command;
                                    ask on mv, cp, unzip, tar

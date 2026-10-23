@@ -308,3 +308,34 @@ exists on main, and main still reads RUNNING.
   documentation names two mechanisms that would: a PreToolUse hook that
   inspects the full command text, and the sandbox for operating-system
   enforcement. Neither is installed. Adding one is Rahul's decision.
+
+## 2026-10-23, fifth pass: the PreToolUse hook
+
+- Added at Rahul's request: .claude/hooks/deny-queue-state.py, registered
+  in .claude/settings.json as a PreToolUse hook on Bash, in exec form
+  (python3 with the script path as its argument). It is set to
+  "onFailure": "block", so a crash, a missing script or a timeout blocks
+  the call instead of letting it through (Claude Code 2.1.295 or later;
+  this laptop runs 2.1.309).
+- Rule: it blocks (exit 2) any Bash command whose full text, heredoc
+  included, contains "rerun_queue". If its input cannot be parsed, it
+  searches the raw input instead. Its docstring gives the worked examples
+  and the limits.
+- Probed the same day with the three fourth-pass commands. All three
+  were refused, each with the message "PreToolUse:Bash hook error: ...
+  Blocked by .claude/hooks/deny-queue-state.py". The hook answered first
+  even where the deny rule also matches:
+  - wc -c on the file: refused;
+  - python3 -c with the path inside the inline code: refused;
+  - python3 reading a heredoc that names the path: refused. The deny rule
+    had let this one through, printing the file's size.
+  - Control: git status ran normally afterwards.
+- Not tested: that "onFailure": "block" really blocks when the script
+  crashes. That needs a deliberately broken script and was not done.
+- Still not covered: a file name assembled at run time from pieces that
+  do not contain "rerun_queue"; a glob; a program that opens the file
+  itself; git commands on the whole notes/ folder. Only the sandbox
+  enforces this at the operating-system level.
+- Side effect: any Bash command that merely mentions the name is refused,
+  for example a commit message or a heredoc that edits these notes.
+  Claude edits those files with the Edit tool.
