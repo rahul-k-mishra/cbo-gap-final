@@ -2007,15 +2007,41 @@ ENVIRONMENT.md (G2 closed).
   - Not a stale listing and not a lost --data-dirs: the index was built
     from this launch's folder list. The stale thing was the mounted
     dataset version.
-  - Consequence for earlier runs, OPEN: every calprec2-long shard shipped
-    the same folder, so a stale mount would not have stopped them; it
-    would have run the previous version's scripts. calprec2 prints
-    "script sha256" in its header. Settled by comparing, for each shard,
-    that printed hash with the sha256 of scripts/calprec2.py at the
-    commit the shard was launched from. Script written,
-    scripts/calprec2_hashaudit.py (rules A1 to A9 in its docstring; it
-    also audits costprobe2.py and the twelve archived modules V1 hashed),
-    not executed.
+  - Consequence for earlier runs, CLOSED 2026-10-23: the stale-mount
+    risk did not materialise for any calprec2-long shard. Every shard
+    shipped the same folder, so a stale mount would not have stopped it;
+    it would have run the previous version's scripts. Audited by
+    scripts/calprec2_hashaudit.py (rules A1 to A9 in its docstring), run
+    by Rahul on the laptop at HEAD 539fcd2, Python 3.12.3, 2 workers;
+    log logs/calprec2-hashaudit-20261023.log. From the log:
+    - "VERDICT: PASS -- all 26 shards ran the code of their launch
+      commits";
+    - "LEDGER PIN: PASS -- every record printed calprec2.py
+      c339ca9d...c14d and costprobe2.py ea5cb2e1...f64b";
+    - 26 record folders, one per shard, each "shard verdict PASS
+      ledger pin PASS"; 364 hash lines PASS (calprec2.py, costprobe2.py
+      and the twelve V1 modules, for each of the 26 records) and 52
+      params lines PASS (script_sha256 and costprobe2_sha256 equal to the
+      header, for each of the 26); no FAIL, no INCOMPLETE, no WINDOW line;
+    - one NOT A RECORD, runs/calprec2-long-s2of26-a1-kaggle-20261013-213019
+      (no sha256.txt, 0 entries; the aborted fetch), skipped under A1;
+    - launch commits from ee2b155f50 (s0, launched 2026-10-11T21:47:51
+      local) to bcd5ba18ba (s25, launched 2026-10-23T02:27:15 local).
+    What this establishes: each shard ran calprec2.py, costprobe2.py and
+    the twelve archived modules byte-identical to the files at its launch
+    commit, and those calprec2.py and costprobe2.py are the ones the N28
+    result names. It does not say which dataset version each kernel
+    mounted. A stale version holding the same bytes would pass, and
+    would be harmless for the same reason.
+    Not covered by a printed hash: scripts/cbopaths.py, the --archive and
+    --outdir resolver both scripts import. Its git history (git log --
+    scripts/cbopaths.py) shows its last change on 2026-10-09 (23a46c8),
+    before the first launch commit. So the committed file was the same at
+    every launch commit. Whether a mounted copy could have been older is
+    not established by any log.
+    The log also carries two Python 3.12 DeprecationWarnings for
+    datetime.utcfromtimestamp at scripts/calprec2_hashaudit.py:263, on
+    stderr. They do not affect any comparison.
   - Fix (scripts/kgrun.py, docstring BUNDLE IDENTITY): each bundle holds
     kgrun-bundle-<id>.sha256, listing every uploaded file and its hash;
     <id> is a hash of that list. Before the push, kgrun waits until
