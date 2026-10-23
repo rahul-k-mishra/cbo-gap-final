@@ -2179,6 +2179,20 @@ ENVIRONMENT.md (G2 closed).
       works from a systemd user service, which the install sequence
       checks with a git push --dry-run inside a transient user unit
       before the timer is enabled.
+    - Installed, 2026-10-23, as reported by Rahul (from the journal; no
+      copy stored under logs/ yet). The first tick, run
+      laptop.20261023T170947Z: ExecCondition and both ExecStartPre steps
+      exited 0; it polled rerun-arch-s0of4-a1, judged RUNNING from the
+      status line, printed "nothing to do" and exited 0. list-timers
+      shows one timer, next run 22:47 IST.
+      Credential helper: half verified. The ExecCondition step is a git
+      fetch of this private repository, so the gh credential helper
+      authenticated a read from inside the systemd user service. A
+      "nothing to do" tick pushes nothing, so the write was not exercised
+      by the tick. The step-2 git push --dry-run is the evidence for it,
+      and its output has not been reported. Fully verified once that
+      output, or the first commit made by "Rahul Kumar Mishra (rerunq
+      laptop timer)", is on record.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
