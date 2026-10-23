@@ -2063,6 +2063,72 @@ ENVIRONMENT.md (G2 closed).
     restarts the delay before its first scheduled run. rerun-queue's
     longest continuously enabled stretch before its halt at about 16:02Z
     began with the 13:50:59Z re-enable.
+  - Why the 60-minute test was not a fair test, from
+    logs/gh-schedule-cadence-20261023.log (read at 2026-10-23T16:16:05Z,
+    Rahul's run).
+    - racma: 34 scheduled runs; first run 175 min after the workflow was
+      created; gap minutes min 127, median 273, max 486 (n 33).
+    - rbudget, with the same cron line "*/15 * * * *": 42 scheduled runs;
+      first run 156 min after creation; gap minutes min 103, median 248,
+      max 435 (n 41).
+    - cbo-gap-final: 0 scheduled runs; rerun-queue.yml disabled_manually,
+      updated 2026-10-23T21:31:47+05:30 (the halt of tick 39983265158).
+    On this account, a working private-repository schedule fires hours
+    apart whatever its cron line, and its first run came 156 to 175
+    minutes after creation. A 60-minute window is shorter than the
+    shortest gap measured (103 min). rerun-queue's longest continuously
+    enabled stretch before the halt ran from 13:50:59Z (the re-enable,
+    from the API's updated_at) to 16:01:47Z (the halt's disable). That
+    is shorter than either first-run delay. The test's result line
+    above stands as an observation. Its conclusion, a referral to GitHub
+    Support, is withdrawn as premature. Whether rerun-queue's schedule
+    fires is untested: it needs the workflow left enabled for longer than
+    486 minutes.
+  - Dispatcher, Rahul's decision 2026-10-23: cron-job.org POSTs a
+    workflow_dispatch to rerun-queue.yml every 15 minutes, so ticks do
+    not depend on GitHub's schedule. CLAUDE.md rule 22 amended.
+    - Request: POST
+      https://api.github.com/repos/rahul-k-mishra/cbo-gap-final/actions/workflows/rerun-queue.yml/dispatches,
+      body {"ref":"main"}; headers Accept application/vnd.github+json,
+      Authorization Bearer <token>, X-GitHub-Api-Version 2022-11-28,
+      Content-Type application/json. Any 2xx is success.
+    - Token: fine-grained personal access token. Resource owner
+      rahul-k-mishra, only the repository cbo-gap-final, repository
+      permission Actions read and write (Metadata read is added by
+      GitHub), nothing else, with an expiry. GitHub's permission table
+      lists the dispatch endpoint under Actions (write). Actions write
+      also allows enabling and disabling workflows, cancelling,
+      re-running and deleting runs, and deleting logs, artifacts and
+      caches. It gives no access to repository contents or secrets.
+      Stored only in cron-job.org; Claude never sees it.
+    - Halts: a halt disables the workflow. A dispatch to a disabled
+      workflow starts no run; GitHub's reference page does not document
+      the error it returns, which the first halt will show in
+      cron-job.org's history. Re-enabling by any means, including a
+      leaked token, cannot continue past a halt, because the tick reads
+      HALTED from the committed state, exits 3 and disables the workflow
+      again. Not verified: whether cron-job.org disables a job after
+      repeated failures. Its job settings say.
+    - Double launch: the workflow's concurrency group (rerun-queue,
+      cancel-in-progress false) keeps one run executing and at most one
+      pending, a newer pending run cancelling an older one (GitHub's
+      concurrency documentation, queue single). Scheduled and dispatched
+      runs share the group. A pending run checks out main's tip when it
+      starts (checkout ref main), so it reads the state the previous tick
+      committed. Independently of the group, L1 and L2 cover it: the
+      LAUNCHING intent is committed and pushed before kgrun launch; a
+      tick whose push is rejected because the state on main changed
+      reports "lock lost" and launches nothing; L3 refuses a kernel name
+      already on Kaggle or in runs/; F1 refuses a second fetch folder.
+    - Cost: every tick is a billed Actions run on a private repository,
+      at least one minute each, so a 15-minute dispatch is at least 96
+      billed minutes a day, more on launch and fetch ticks. That comes
+      out of the same account allowance as racma and rbudget. Exhausted
+      minutes make runs fail, and a failed run disables the workflow: the
+      queue stops safely, it does not misbehave.
+    - Fallbacks: if the token expires or cron-job.org stops, GitHub's own
+      schedule, if it fires, still ticks hours apart, and a manual
+      "gh workflow run rerun-queue.yml" always works.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
@@ -2143,5 +2209,22 @@ ENVIRONMENT.md (G2 closed).
     code for its full length with nothing in kgrun or rerunq to notice;
     rerunq's R1 hash check would have caught a changed rerun.py,
     rerunlib.py or costprobe2.py only after the fetch.
-  OPEN until a launch through the queue shows the wait and the runner's
-  bundle line.
+  - kaggle datasets files, measured (logs/kaggle-datasets-files-20261023.log,
+    Rahul, before the a2 launch): kaggle 2.2.4 accepts --page-size 200 and
+    printed a table of 55 names. The listed version was the a1 upload
+    (creation dates 2026-10-23 13:52 UTC, kgrun-ship-index.json 646 B), so
+    by then the a1 version had become current.
+  - The race, observed directly in the a2 launch
+    (logs/kgrun-rerun-smoke-arch-a2.log): bundle id 2f72505d691cfde7;
+    after "VERSION DATASET", "WAIT FOR DATASET READY" passed, and then
+    "WAIT FOR THIS BUNDLE" printed "0 s: not listed; kgrun-bundle files
+    listed: none" and "31 s: kgrun-bundle-2f72505d691cfde7.sha256
+    listed"; only then "PUSH KERNEL". A push right after the ready check
+    would have gone out while Kaggle still served the previous version,
+    which is what a1 did.
+  - The a1 kernel log (runs/rerun-smoke-arch-a1-kaggle-20261023-213143)
+    printed "listing 55 files in the mounted dataset". The a1 upload and
+    the previous calprec2 bundles both had 55 files, so the count does not
+    say which version was mounted.
+  OPEN until the a2 runner header shows "bundle 2f72505d691cfde7: ... files
+  verified".

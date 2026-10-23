@@ -43,7 +43,8 @@ experiment. Everything in this file is non-negotiable.
                                    commit that closed it
     manuscript/                    round-2 LaTeX source; starts as zenodo-v1/sn-article.tex
                                    plus the DOI sentence, which reproduces the submitted text
-    .github/workflows/rerun-queue.yml   the rerun queue's 15-minute tick (rule 22)
+    .github/workflows/rerun-queue.yml   the rerun queue's tick, dispatched every
+                                   15 minutes from cron-job.org (rule 22)
     notes/rerun_queue.json         the rerun queue's state; written only by
                                    scripts/rerunq.py (rule 22)
     scripts/                       round-2 scripts only; they IMPORT dynamics from
@@ -307,8 +308,11 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     any other.
 
 22. The rerun queue (added 2026-10-23, Rahul's decision; ledger K6).
-    .github/workflows/rerun-queue.yml runs scripts/rerunq.py tick every 15
-    minutes. Each tick takes at most one action (launch, poll, or fetch and
+    .github/workflows/rerun-queue.yml runs scripts/rerunq.py tick. It is
+    started by a workflow_dispatch POST that cron-job.org sends every 15
+    minutes (amended 2026-10-23, Rahul's decision; ledger K6), and by
+    GitHub's own schedule, which on this account fires only hours apart.
+    Each tick takes at most one action (launch, poll, or fetch and
     commit) through kgrun.py, under the decision rules in rerunq.py's
     docstring, and commits as github-actions[bot].
     - While the workflow is enabled, nobody launches or fetches a Kaggle job
@@ -324,3 +328,10 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       workflow.
     - The queue covers the eight jobs listed in notes/rerun_queue.json.
       Anything else goes through the runbooks by hand.
+    - The dispatch token is a fine-grained personal access token of
+      Rahul's, limited to this repository, with Actions read and write
+      only, and an expiry date. It exists only in cron-job.org's job
+      configuration. Claude never reads, prints, creates or sets it. A
+      halt is enforced by the committed state, not by the dispatcher: a
+      dispatch to the disabled workflow starts nothing, and a tick that
+      finds the state HALTED exits 3 and disables the workflow again.
