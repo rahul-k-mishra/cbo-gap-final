@@ -1919,9 +1919,29 @@ ENVIRONMENT.md (G2 closed).
     --checked-by-hand. That closes the review's residual double-launch
     risk. Edit(/notes/rerun_queue.json) is denied to Claude in
     .claude/settings.json.
-  - Review: notes/RERUNQ_REVIEW.md. Nothing of this has run. The parts not
-    known until the first ticks: the kaggle CLI's text for a kernel that
-    does not exist (L4 assumes it contains "404"); whether GITHUB_TOKEN may
-    disable the workflow and push to main in this repository.
+  - Status reply for a kernel that does not exist, measured by Rahul on
+    the laptop on 2026-10-23 with kaggle 2.2.4 (requirements.lock), from
+    kgrun status --job rerun-smoke-arch-a1, as he pasted it (the "..." is
+    his elision; the full text is not yet stored under logs/):
+      Cannot access kernel 'ericsom/cbo-rerun-smoke-arch-a1' (Permission
+      'kernels.get' was denied). The most likely cause is a wrong kernel
+      slug. ... It can also occur if the notebook is private.
+    There is no "404" in it. This replaces the first draft's assumption
+    that the reply contains "404", which was wrong: under it the first
+    launch would have halted on its second tick. The reply, by its own
+    wording, covers both "no such kernel" and "exists but not readable",
+    and the CLI gives no way to tell them apart from that reply alone.
+    L4 now counts it as ABSENT only when a status request for a private
+    kernel of the same account that is known to exist
+    (calprec2-long-s25of26-a1), made in the same tick right after it,
+    succeeds. That shows the key is a working key of ericsom, whose own
+    private kernels it has always been able to read. A denial with a
+    failing control (an expired, revoked or wrong-account key) is UNKNOWN,
+    never ABSENT.
+  - Review: notes/RERUNQ_REVIEW.md. Nothing of this has run. Not known
+    until the first ticks: whether GITHUB_TOKEN may disable the workflow
+    and push to main (Rahul has set workflow permissions to read and
+    write, and there are no branch rules); what the CLI prints for an
+    expired or revoked key (L4 does not depend on it).
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.

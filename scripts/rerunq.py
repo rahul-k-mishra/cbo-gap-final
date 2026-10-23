@@ -86,7 +86,7 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       before step 4; main reads LAUNCHING rerun-arch-s1of4-a1. The next
       tick's kgrun status prints 'ericsom/cbo-rerun-arch-s1of4-a1 has
       status "KernelWorkerStatus.RUNNING"': RUNNING, adopted. Had it printed
-      a 404: HALT.
+      ABSENT (L4): HALT.
 
   L3  KERNEL NAMES ARE NEVER REUSED. In step (1) of L2, any recognised
       status (the kernel exists) is a HALT; also a HALT: any committed
@@ -97,13 +97,45 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
   L4  STATUS. The line '<user>/cbo-<job> has status "KernelWorkerStatus.X"'
       in kgrun status's output. X in QUEUED, RUNNING, NEW_SCRIPT,
       CANCEL_REQUESTED: wait. COMPLETE, ERROR, CANCEL_ACKNOWLEDGED:
-      finished, fetch. No such line and "404" in the output: ABSENT.
-      Anything else: UNKNOWN. kgrun status itself exiting other than 0
-      (it exits 0 whatever the kaggle CLI reports, so this is a crash):
-      HALT at once.
-      Worked example: '... has status "KernelWorkerStatus.ERROR"':
+      finished, fetch. Anything else: UNKNOWN, except this one case:
+      ABSENT. kaggle 2.2.4 answers a status request for a kernel that does
+      not exist with (ledger K6, measured 2026-10-23)
+        Cannot access kernel 'ericsom/cbo-rerun-smoke-arch-a1' (Permission
+        'kernels.get' was denied). The most likely cause is a wrong kernel
+        slug. ... It can also occur if the notebook is private.
+      and with no "404". The CLI's own text says the same reply covers a
+      kernel that exists but cannot be read, and from this one reply
+      nothing tells the two apart. What does: the account. Every kernel
+      kgrun pushes is private (is_private True), and the same account's
+      credentials have read the status of its own private kernels
+      throughout (logs/kgrun-calprec2-long-s25of26-a1.log, "private
+      True", then 'has status "KernelWorkerStatus.COMPLETE"'). So a denial
+      for <user>/cbo-<job> means "no such kernel" only when the credentials
+      in use are working credentials of <user>. That is tested in the same
+      tick: after the denial, kgrun status of CONTROL_JOB (a private kernel
+      of <user> known to exist, calprec2-long-s25of26-a1) must return a
+      recognised status line. ABSENT therefore requires both:
+        (a) the line "Cannot access kernel '<user>/cbo-<job>' (Permission
+            'kernels.get' was denied)" for exactly this kernel; and
+        (b) the control's status line, read after (a).
+      A denial whose control fails is UNKNOWN, never ABSENT: an expired,
+      revoked or wrong-account key is denied on the control too (it is
+      private), so it cannot read as a free name. Any other reply (401,
+      a network error, text not matching (a)) is UNKNOWN. The control
+      runs after the target, so a key that stops working between the two
+      calls fails the control; a key does not start working again.
+      What this does not cover: a kernel of <user> that the owner's own
+      credentials cannot read. No evidence of such a case exists, and the
+      CLI gives no way to detect it.
+      kgrun status itself exiting other than 0 (it exits 0 whatever the
+      kaggle CLI reports, so this is a crash): HALT at once.
+      Worked examples: '... has status "KernelWorkerStatus.ERROR"':
       finished; the runner log decides (a job killed at the 12-hour cap
-      prints no runner exit line, and R2 halts).
+      prints no runner exit line, and R2 halts). The denial for
+      rerun-smoke-arch-a1, then the control 'has status
+      "KernelWorkerStatus.COMPLETE"': ABSENT, launch. The same denial,
+      then a denial or an error for the control: UNKNOWN, anomaly; a
+      second one halts (L5).
 
   L5  TWICE THE SAME WAY. A tick that cannot classify what it sees
       (UNKNOWN status; ABSENT while RUNNING) records {job, kind} as the
@@ -275,6 +307,8 @@ PINNED = (("rerun.py", "rerun_sha256"), ("rerunlib.py", "rerunlib_sha256"),
 PUSH_TRIES = 3
 CHECK_GAP_MIN = 30
 HAND_STATUSES = FINISHED + ("ABSENT",)
+CONTROL_JOB = "calprec2-long-s25of26-a1"
+DENIED = re.compile(r"Cannot access kernel '([^']+)' \(Permission 'kernels\.get' was denied\)")
 
 LOG = []
 
@@ -425,8 +459,8 @@ def kgrun(argv, logrel=None):
     return p.returncode, out
 
 
-def kernel_status(s, job):
-    """L4: (class, detail), class one of WAIT, FINISHED, ABSENT, UNKNOWN."""
+def raw_status(s, job):
+    """One kgrun status call: (recognised status or None, denied for exactly this kernel, last line)."""
     rc, out = kgrun(["status", "--job", job, "--user", s["kaggle_user"]])
     kid = "{}/cbo-{}".format(s["kaggle_user"], job)
     found = None
@@ -434,19 +468,32 @@ def kernel_status(s, job):
         m = re.match(r'^(\S+) has status "([^"]+)"$', ln.strip())
         if m and m.group(1) == kid:
             found = m.group(2).split(".")[-1].upper()
+    denied = any(m.group(1) == kid for m in DENIED.finditer(out))
     lines = [ln for ln in out.splitlines() if ln.strip()]
-    say("  kaggle status: {}".format(found if found else (lines[-1] if lines else "(no output)")))
+    last = lines[-1] if lines else "(no output)"
+    say("  kaggle status of {}: {}".format(kid, found if found else ("DENIED" if denied else last)))
     if rc != 0:
         raise Halt("kgrun status exit {} for {}".format(rc, job))
+    return found, denied, last
+
+
+def kernel_status(s, job):
+    """L4: (class, detail), class one of WAIT, FINISHED, ABSENT, UNKNOWN."""
+    found, denied, last = raw_status(s, job)
     if found in WAIT:
         return "WAIT", found
     if found in FINISHED:
         return "FINISHED", found
     if found:
         return "UNKNOWN", "status " + found
-    if re.search(r"\b404\b", out):
-        return "ABSENT", "404"
-    return "UNKNOWN", lines[-1] if lines else "no output"
+    if not denied:
+        return "UNKNOWN", last
+    say("  denied: control status of {} (L4), to tell a free name from a credential failure".format(
+        CONTROL_JOB))
+    cfound, _, clast = raw_status(s, CONTROL_JOB)
+    if not cfound:
+        return "UNKNOWN", "denied, and the control {} gave no status either ({})".format(CONTROL_JOB, clast)
+    return "ABSENT", "denied; control {} {}".format(CONTROL_JOB, cfound)
 
 
 # --------------------------------------------------------------------------
@@ -914,6 +961,7 @@ def tick(a):
         "{} {}".format(k, s["expect"][k][:8]) for _, k in PINNED)))
     say("  kaggle user {}  workers {}  max attempts {}  max file {} MB".format(
         s["kaggle_user"], s["workers"], s["max_attempts"], s["max_file_mb"]))
+    say("  L4 control kernel {}/cbo-{}  K1 ABSENT gap {} min".format(s["kaggle_user"], CONTROL_JOB, CHECK_GAP_MIN))
     say("=" * 78)
     ctx = Ctx(s, base, a.run_id)
     if s["status"] == "HALTED":
