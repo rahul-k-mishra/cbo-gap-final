@@ -2193,6 +2193,36 @@ ENVIRONMENT.md (G2 closed).
       and its output has not been reported. Fully verified once that
       output, or the first commit made by "Rahul Kumar Mishra (rerunq
       laptop timer)", is on record.
+    - Install log, logs/rerunq-laptop-install-20261023.log (Rahul,
+      committed in 7711062).
+      - Journal: the first tick, run laptop.20261023T170947Z, started
+        22:39:45 IST. It polled rerun-arch-s0of4-a1, judged 'has status
+        "KernelWorkerStatus.RUNNING"', printed "RUNNING: nothing to do",
+        and systemd logged "Finished". This replaces the reported account
+        above as the source.
+      - Push dry-run in a transient user unit: "! [rejected] HEAD -> main
+        (non-fast-forward)", "the tip of your current branch is behind its
+        remote counterpart", exit status 1. The clone's local main was
+        behind: the command's git fetch updates origin/main, not main, and
+        main had moved since the clone. A real tick resets main to
+        origin/main first, so this cannot arise there.
+      - What the rejection shows. A dry run never uploads anything; git
+        decides "non-fast-forward" on the client by comparing its HEAD
+        with the refs GitHub advertises for the push service. To get that
+        advertisement for this private repository, the gh credential
+        helper had to supply a credential from inside the systemd user
+        service, and GitHub had to accept it. A credential failure would
+        have stopped before any ref comparison, with an authentication
+        error. So the helper works from the service on the push path.
+        That the credential carries write access is shown separately:
+        it is the same gh login whose pushes from the working copy succeed
+        throughout this ledger, and whose token scopes include repo
+        (gh auth status, read by Claude on this laptop, 2026-10-23).
+        Verdict: the credential path for pushing is verified. Not
+        exercised: an actual upload from the service. No dry run can show
+        that; the first commit by "Rahul Kumar Mishra (rerunq laptop
+        timer)" will. If it failed, that tick would exit 3 and disable
+        the timer (OnFailure), not fail unseen.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
