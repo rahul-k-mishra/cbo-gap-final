@@ -1,0 +1,8 @@
+==============================================================================
+kgrun  action status  job calprec2-long-s25of26-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+  $ kaggle kernels status ericsom/cbo-calprec2-long-s25of26-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE"
+==============================================================================

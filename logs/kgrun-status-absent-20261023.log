@@ -1,0 +1,8 @@
+==============================================================================
+kgrun  action status  job rerun-smoke-arch-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+  $ kaggle kernels status ericsom/cbo-rerun-smoke-arch-a1
+Cannot access kernel 'ericsom/cbo-rerun-smoke-arch-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+==============================================================================
