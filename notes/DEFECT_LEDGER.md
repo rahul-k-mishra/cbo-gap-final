@@ -2048,6 +2048,21 @@ ENVIRONMENT.md (G2 closed).
     - until it is answered, the queue runs on manual ticks
       (gh workflow run rerun-queue.yml).
     The cron line "7,22,37,52 * * * *" stays; it does no harm.
+  - Conclusion under review, 2026-10-23, after the result above. Two of
+    Rahul's other private repositories have working scheduled workflows,
+    racma (orchestrator.yml) and rbudget (rbudget_kaggle.yml; cron
+    "*/15 * * * *", the same line rerun-queue had). Claude read their run
+    lists through the API. Neither fires at its cron interval: their
+    scheduled runs come hours apart, and each first scheduled run came
+    hours after its workflow was created. If that holds, a 60-minute
+    window was not a fair test. "No scheduled run within 60 minutes" is
+    what a working schedule on this account also shows, and the
+    referral to GitHub Support above is premature. The figures enter
+    this entry only from logs/gh-schedule-cadence-20261023.log, run by
+    Rahul. Not established: whether disabling and re-enabling a workflow
+    restarts the delay before its first scheduled run. rerun-queue's
+    longest continuously enabled stretch before its halt at about 16:02Z
+    began with the 13:50:59Z re-enable.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
