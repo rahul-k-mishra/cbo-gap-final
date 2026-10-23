@@ -1,0 +1,11 @@
+# Run by rerunq-tick.service's OnFailure: a halted or failed tick disables the
+# laptop timer, the counterpart of the workflow disabling itself (ledger K6).
+# It stays disabled until Rahul has read the halt, released the state and run
+# "systemctl --user enable --now rerunq-tick.timer".
+
+[Unit]
+Description=Disable the rerun queue timer after a halted or failed tick
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl --user disable --now rerunq-tick.timer

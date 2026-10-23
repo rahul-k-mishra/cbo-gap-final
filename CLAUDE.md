@@ -45,6 +45,10 @@ experiment. Everything in this file is non-negotiable.
                                    plus the DOI sentence, which reproduces the submitted text
     .github/workflows/rerun-queue.yml   the rerun queue's tick, dispatched every
                                    15 minutes from cron-job.org (rule 22)
+    scripts/rerunq-tick.{service,timer}, scripts/rerunq-stop.service
+                                   the laptop driver of the same tick, a
+                                   systemd user timer in ~/cbo-gap-queue
+                                   (rule 22)
     notes/rerun_queue.json         the rerun queue's state; written only by
                                    scripts/rerunq.py (rule 22)
     scripts/                       round-2 scripts only; they IMPORT dynamics from
@@ -312,10 +316,16 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     started by a workflow_dispatch POST that cron-job.org sends every 15
     minutes (amended 2026-10-23, Rahul's decision; ledger K6), and by
     GitHub's own schedule, which on this account fires only hours apart.
-    Each tick takes at most one action (launch, poll, or fetch and
-    commit) through kgrun.py, under the decision rules in rerunq.py's
-    docstring, and commits as github-actions[bot].
-    - While the workflow is enabled, nobody launches or fetches a Kaggle job
+    A second driver runs the same tick from the laptop (amended
+    2026-10-23, Rahul's decision; ledger K6): the systemd user timer
+    scripts/rerunq-tick.timer, every 15 minutes at minutes 2, 17, 32 and
+    47, in the separate clone ~/cbo-gap-queue, which nobody edits by hand.
+    The drivers share no lock but the committed state file (L1); both may
+    run at once. Each tick takes at most one action (launch, poll, or
+    fetch and commit) through kgrun.py, under the decision rules in
+    rerunq.py's docstring, and commits as github-actions[bot] (workflow)
+    or as "Rahul Kumar Mishra (rerunq laptop timer)" (laptop).
+    - While any driver is enabled, nobody launches or fetches a Kaggle job
       by hand. Nobody edits notes/rerun_queue.json except through rerunq.py
       halt, check and release; a Claude session never edits it (denied in
       .claude/settings.json).
@@ -323,9 +333,11 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       unless the halted job's kernel status was checked since the halt,
       by "rerunq.py check" or by Rahul with --checked-by-hand (rule K1 in
       rerunq.py's docstring), so that two kernels never run one shard.
-    - A failed tick disables the workflow. Nothing continues until Rahul
-      has read the halt reason, released the state and re-enabled the
-      workflow.
+    - A failed tick disables its own driver: the workflow, or the laptop
+      timer (rerunq-stop.service). The other driver's next tick finds the
+      state HALTED, exits 3 and disables itself. Nothing continues until
+      Rahul has read the halt reason, released the state, checked the
+      laptop clone for unpushed commits, and re-enabled both drivers.
     - The queue covers the eight jobs listed in notes/rerun_queue.json.
       Anything else goes through the runbooks by hand.
     - The dispatch token is a fine-grained personal access token of

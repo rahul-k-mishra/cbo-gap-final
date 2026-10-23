@@ -2129,6 +2129,56 @@ ENVIRONMENT.md (G2 closed).
     - Fallbacks: if the token expires or cron-job.org stops, GitHub's own
       schedule, if it fires, still ticks hours apart, and a manual
       "gh workflow run rerun-queue.yml" always works.
+  - Laptop driver, Rahul's decision 2026-10-23. GitHub's schedule has
+    still never fired for rerun-queue, and Rahul keeps the laptop awake.
+    It is a systemd user timer running the same "rerunq.py tick" every 15
+    minutes, at minutes 2, 17, 32 and 47, in a separate clone
+    ~/cbo-gap-queue. The Actions workflow stays enabled as a slower
+    second driver. CLAUDE.md rule 22 amended. Units:
+    scripts/rerunq-tick.timer (OnCalendar *:2/15, Persistent true),
+    scripts/rerunq-tick.service and scripts/rerunq-stop.service; they
+    pass "systemd-analyze --user verify". Not yet installed or run.
+    - Why a separate clone: a tick runs only from a clean checkout at
+      main's tip, and the working copy is rarely that while it is being
+      edited.
+    - Why the clone is reset to origin/main before each tick: unlike an
+      Actions runner, the clone keeps what a tick leaves. After a lock
+      lost to the other driver (L1), it would hold an unpushed commit, and
+      every later tick would print "HEAD ... is not main's tip; nothing
+      done" and exit 0 forever, a silent stall. The reset runs only after
+      a tick that exited 0, since any other exit disables the timer, and
+      after exit 0 a local commit can only be a stale one.
+    - Why the timer is disabled, not only stopped, on any nonzero exit
+      (OnFailure, rerunq-stop.service): a stopped but enabled timer comes
+      back at the next login. Its reset would then discard a halt commit
+      whose push failed, and the queue would act on the state from before
+      the halt.
+    - No network, or GitHub unreachable: the unit's ExecCondition (git
+      fetch) fails, and systemd skips that tick rather than failing it,
+      so a wake without network does not disable the timer. The same
+      skip would also hide a broken GitHub credential, so the progress
+      check reads the journal and the time of the last commit.
+    - Two drivers. Neither the workflow's concurrency group nor any other
+      lock spans the laptop; the committed state file is the lock (L1),
+      as for two Actions ticks. A launch race is safe: the loser's intent
+      push is rejected, it reports "lock lost", launches nothing and
+      exits 0. A fetch race (both see the job finished) is safe for the
+      state, but the loser has downloaded a second copy, its push is
+      rejected, and it exits 3 (do_fetch: a publish other than "ok"
+      returns 3), so the losing driver disables itself. That means
+      re-enabling it and, if it was the laptop, discarding the clone's
+      duplicate commit. The minutes 2, 17, 32 and 47 keep the laptop off
+      the workflow's scheduled minutes, which makes such a race unlikely
+      but not impossible, given cron-job.org's minutes.
+    - Environment: Python and the kaggle CLI from the main working copy's
+      .venv (requirements.lock), named in the unit's PATH; Kaggle
+      credentials from ~/.kaggle as for every laptop run; pushes through
+      the existing gh credential helper. The clone commits as "Rahul
+      Kumar Mishra (rerunq laptop timer)".
+    - Not verified until Rahul runs it: that the gh credential helper
+      works from a systemd user service, which the install sequence
+      checks with a git push --dry-run inside a transient user unit
+      before the timer is enabled.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke

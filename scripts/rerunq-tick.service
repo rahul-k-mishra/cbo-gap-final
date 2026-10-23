@@ -1,0 +1,36 @@
+# One rerun-queue tick from the laptop clone ~/cbo-gap-queue (CLAUDE.md rule 22;
+# ledger K6). Installed by copying into ~/.config/systemd/user/; started only by
+# rerunq-tick.timer. The tick, its decision rules and its exit codes are those of
+# scripts/rerunq.py; this file only supplies the clone, the PATH and the guards.
+#
+# Guards, in order:
+#   ExecCondition  git fetch fails (no network after a wake, GitHub unreachable):
+#                  the tick is SKIPPED, not failed, and the timer keeps running.
+#   ExecStartPre   the clone is reset to origin/main. This runs only after a tick
+#                  that exited 0, because any other exit disables the timer
+#                  (OnFailure). After exit 0 a local commit can only be a stale one
+#                  whose push lost the lock (L1), which must be discarded.
+#                  Ignored files (scratch-rerunq/, the rescue copies) are kept;
+#                  an untracked file makes the tick refuse (exit 1) and stop.
+#   OnFailure      any nonzero exit (3 halt or push failure, 1 error), a timeout or
+#                  a failed reset runs rerunq-stop.service, which DISABLES the
+#                  timer, so it does not come back at the next login and reset
+#                  away a halt commit that was never pushed.
+# Python and the kaggle CLI come from the main working copy's .venv
+# (requirements.lock), which is why PATH names it.
+
+[Unit]
+Description=CBO-GAP rerun queue: one tick from ~/cbo-gap-queue (ledger K6)
+OnFailure=rerunq-stop.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/cbo-gap-queue
+Environment=PATH=%h/Research/cbo-gap-final/.venv/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=TZ=Asia/Kolkata
+ExecCondition=/usr/bin/git -C %h/cbo-gap-queue fetch -q origin main
+ExecStartPre=/usr/bin/git -C %h/cbo-gap-queue checkout -q main
+ExecStartPre=/usr/bin/git -C %h/cbo-gap-queue reset -q --hard origin/main
+ExecStart=/bin/sh -c 'exec python scripts/rerunq.py tick --run-id "laptop.$(date -u +%%Y%%m%%dT%%H%%M%%SZ)"'
+TimeoutStartSec=90min

@@ -245,6 +245,9 @@ EXIT CODES (tick)
      after a Kaggle side effect
   1  unexpected error: unreadable state, dirty checkout, an exception
   The workflow disables itself after any nonzero exit, and after DONE.
+  The laptop timer (scripts/rerunq-tick.service, CLAUDE.md rule 22)
+  disables itself after any nonzero exit; at DONE its ticks do nothing
+  and exit 0 until Rahul disables it.
 
 FILES WRITTEN (all new files opened "x")
   notes/rerun_queue.json        the state, rewritten in place by design:
@@ -260,7 +263,8 @@ FILES WRITTEN (all new files opened "x")
                                 ignored by git (scratch-*)
 
 SUBCOMMANDS
-  tick --run-id ID   one step; run by the workflow only
+  tick --run-id ID   one step; run by the workflow or by the laptop timer
+                     (run id "laptop.<UTC stamp>") only
   show               print the state (reads only)
   halt --note TEXT   set HALTED by hand; Rahul commits and pushes
   check --note TEXT  while HALTED: kgrun status for the halted job, the

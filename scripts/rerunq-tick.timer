@@ -1,0 +1,15 @@
+# Every 15 minutes at minutes 2, 17, 32 and 47: off the workflow's 7, 22, 37, 52,
+# so the laptop and a scheduled Actions tick rarely overlap (the state file is the
+# lock either way; ledger K6). Persistent=true runs one missed tick after a wake.
+
+[Unit]
+Description=CBO-GAP rerun queue tick every 15 minutes (ledger K6)
+
+[Timer]
+OnCalendar=*:2/15
+Persistent=true
+AccuracySec=1min
+Unit=rerunq-tick.service
+
+[Install]
+WantedBy=timers.target
