@@ -2012,7 +2012,10 @@ ENVIRONMENT.md (G2 closed).
     would have run the previous version's scripts. calprec2 prints
     "script sha256" in its header. Settled by comparing, for each shard,
     that printed hash with the sha256 of scripts/calprec2.py at the
-    commit the shard was launched from. Not done yet.
+    commit the shard was launched from. Script written,
+    scripts/calprec2_hashaudit.py (rules A1 to A9 in its docstring; it
+    also audits costprobe2.py and the twelve archived modules V1 hashed),
+    not executed.
   - Fix (scripts/kgrun.py, docstring BUNDLE IDENTITY): each bundle holds
     kgrun-bundle-<id>.sha256, listing every uploaded file and its hash;
     <id> is a hash of that list. Before the push, kgrun waits until
