@@ -1,0 +1,65 @@
+==============================================================================
+rerunq tick  run 39985493061.1  2026-10-23T21:47:26+05:30
+  python 3.12.15
+  state file notes/rerun_queue.json
+  state READY  item 0  attempt 2  job -
+  plan runs/rerun-plan-20261023-112643 (rerun_plan.csv 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2)
+  timing runs/costprobe2-s0-kaggle-20261010-103952, runs/costprobe2-s1-kaggle-20261011-101343
+  expect python 3.13.15 numpy 2.1.3; rerun_sha256 756c4069; rerunlib_sha256 5d55050e; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  workers 4  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+LAUNCH  item 0 (smoke-arch), attempt 2, job rerun-smoke-arch-a2
+  P1 code pin: rerun.py, rerunlib.py, costprobe2.py as pinned
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job rerun-smoke-arch-a2 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job rerun-smoke-arch-a2  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-rerun-smoke-arch-a2
+    | Cannot access kernel 'ericsom/cbo-rerun-smoke-arch-a2' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ==============================================================================
+  kaggle status of ericsom/cbo-rerun-smoke-arch-a2: DENIED  (judged: Cannot access kernel 'ericsom/cbo-rerun-smoke-arch-a2' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.)
+  denied: control status of calprec2-long-s25of26-a1 (L4), to tell a free name from a credential failure
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job calprec2-long-s25of26-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-long-s25of26-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-long-s25of26-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-long-s25of26-a1: COMPLETE  (judged: ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE")
+  L3: kernel absent on Kaggle, name unused
+  push 1 of 3: accepted
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py launch --job rerun-smoke-arch-a2 --user ericsom --script rerun.py --data-dirs runs/rerun-plan-20261023-112643 --args=--smoke --plan-from runs/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4
+  kgrun exit code 0  (console: logs/kgrun-rerun-smoke-arch-a2.log)
+    | regime.py                                     26398  2026-10-23 16:18:04.545000  
+    | regimemap.py                                  27824  2026-10-23 16:18:04.486000  
+    | rerun.py                                      49531  2026-10-23 16:18:04.600000  
+    | rerun_analysis.py                             70400  2026-10-23 16:18:04.511000  
+    | rerunlib.py                                   31885  2026-10-23 16:18:04.571000  
+    | rmapj.py                                      11680  2026-10-23 16:18:04.464000  
+    | rmapj_real.csv                               379782  2026-10-23 16:18:08.042000  
+    | sigma.py                                      20661  2026-10-23 16:18:04.417000  
+    | verify.py                                     15711  2026-10-23 16:18:04.386000  
+    | visibility.py                                 20942  2026-10-23 16:18:04.400000
+    |   31 s: kgrun-bundle-2f72505d691cfde7.sha256 listed
+    | GENERATE KERNEL  ericsom/cbo-rerun-smoke-arch-a2
+    |   wrote /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+    |   runner requires bundle 2f72505d691cfde7 in the mounted dataset, every file hashing as listed
+    |   private True  internet False  gpu False
+    |   runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+    |   runner will call: rerun.py --archive <found path> --outdir /kaggle/working --smoke --plan-from runs/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4
+    |   runner will rebuild rerun-plan-20261023-112643 under /tmp/kgrun-ship and replace runs/rerun-plan-20261023-112643 in the args
+    | PUSH KERNEL (this starts a batch run; 12 hour cap)
+    |   $ kaggle kernels push -p /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-rerun-smoke-arch-a2
+    | LAUNCHED ericsom/cbo-rerun-smoke-arch-a2; not polled, not fetched. Check it with:
+    |   python scripts/kgrun.py status --job rerun-smoke-arch-a2
+    | ==============================================================================
