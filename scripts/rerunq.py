@@ -136,6 +136,13 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       "KernelWorkerStatus.COMPLETE"': ABSENT, launch. The same denial,
       then a denial or an error for the control: UNKNOWN, anomaly; a
       second one halts (L5).
+      Every line kgrun status prints is copied into the tick log, and an
+      UNKNOWN detail quotes the line the verdict rests on (raw_status's
+      judged line), never merely the last line of the output, which is
+      kgrun's closing banner.
+      Worked example: both denied gives the detail 'denied, and the
+      control calprec2-long-s25of26-a1 was denied too: Cannot access
+      kernel 'ericsom/cbo-calprec2-long-s25of26-a1' (Permission ...'.
 
   L5  TWICE THE SAME WAY. A tick that cannot classify what it sees
       (UNKNOWN status; ABSENT while RUNNING) records {job, kind} as the
@@ -460,26 +467,59 @@ def kgrun(argv, logrel=None):
 
 
 def raw_status(s, job):
-    """One kgrun status call: (recognised status or None, denied for exactly this kernel, last line)."""
+    """One kgrun status call: (recognised status or None, denied for exactly this kernel, judged line).
+
+    Every line kgrun printed goes into the tick log. The judged line is the
+    line the verdict rests on: the status line, else the denial line for
+    exactly this kernel, else the kaggle CLI's reply (every line between
+    kgrun's "$ kaggle kernels status" echo and its closing banner, minus the
+    outdated-version warning, joined by " / "), else "(kaggle printed
+    nothing)". kgrun's banner rows of "=" are never judged.
+    Worked example: the reply 'Cannot access kernel
+    'ericsom/cbo-calprec2-long-s25of26-a1' (Permission 'kernels.get' was
+    denied). The most likely cause ...' for the control gives (None, True,
+    that whole line).
+    """
     rc, out = kgrun(["status", "--job", job, "--user", s["kaggle_user"]])
+    for ln in out.splitlines():
+        say("    | " + ln)
     kid = "{}/cbo-{}".format(s["kaggle_user"], job)
-    found = None
+    found, judged = None, None
     for ln in out.splitlines():
         m = re.match(r'^(\S+) has status "([^"]+)"$', ln.strip())
         if m and m.group(1) == kid:
-            found = m.group(2).split(".")[-1].upper()
-    denied = any(m.group(1) == kid for m in DENIED.finditer(out))
-    lines = [ln for ln in out.splitlines() if ln.strip()]
-    last = lines[-1] if lines else "(no output)"
-    say("  kaggle status of {}: {}".format(kid, found if found else ("DENIED" if denied else last)))
+            found, judged = m.group(2).split(".")[-1].upper(), ln.strip()
+    denied = False
+    for ln in out.splitlines():
+        if any(m.group(1) == kid for m in DENIED.finditer(ln)):
+            denied = True
+            if judged is None:
+                judged = ln.strip()
+    if judged is None:
+        reply, inside = [], False
+        for ln in out.splitlines():
+            st = ln.strip()
+            if st.startswith("$ kaggle kernels status"):
+                inside = True
+                continue
+            if not inside or not st:
+                continue
+            if set(st) == {"="}:
+                break
+            if st.startswith("Warning: Looks like you're using an outdated `kaggle` version"):
+                continue
+            reply.append(st)
+        judged = " / ".join(reply) if reply else "(kaggle printed nothing)"
+    say("  kaggle status of {}: {}  (judged: {})".format(
+        kid, found if found else ("DENIED" if denied else "no status line"), judged))
     if rc != 0:
         raise Halt("kgrun status exit {} for {}".format(rc, job))
-    return found, denied, last
+    return found, denied, judged
 
 
 def kernel_status(s, job):
     """L4: (class, detail), class one of WAIT, FINISHED, ABSENT, UNKNOWN."""
-    found, denied, last = raw_status(s, job)
+    found, denied, judged = raw_status(s, job)
     if found in WAIT:
         return "WAIT", found
     if found in FINISHED:
@@ -487,12 +527,14 @@ def kernel_status(s, job):
     if found:
         return "UNKNOWN", "status " + found
     if not denied:
-        return "UNKNOWN", last
+        return "UNKNOWN", "no status line and no denial for {}/cbo-{}; kaggle replied: {}".format(
+            s["kaggle_user"], job, judged)
     say("  denied: control status of {} (L4), to tell a free name from a credential failure".format(
         CONTROL_JOB))
-    cfound, _, clast = raw_status(s, CONTROL_JOB)
+    cfound, cdenied, cjudged = raw_status(s, CONTROL_JOB)
     if not cfound:
-        return "UNKNOWN", "denied, and the control {} gave no status either ({})".format(CONTROL_JOB, clast)
+        return "UNKNOWN", "denied, and the control {} {}: {}".format(
+            CONTROL_JOB, "was denied too" if cdenied else "gave no status line", cjudged)
     return "ABSENT", "denied; control {} {}".format(CONTROL_JOB, cfound)
 
 

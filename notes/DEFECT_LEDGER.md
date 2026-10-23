@@ -1943,5 +1943,27 @@ ENVIRONMENT.md (G2 closed).
     and push to main (Rahul has set workflow permissions to read and
     write, and there are no branch rules); what the CLI prints for an
     expired or revoked key (L4 does not depend on it).
+  - First scheduled tick, run 39960530374.1, 2026-10-23 18:51 IST
+    (logs/rerunq-rerun-smoke-arch-a1-anomaly-20261023-185159.log, commit
+    a647085): anomaly preflight-status, nothing launched. The target
+    rerun-smoke-arch-a1 was denied, and the control
+    calprec2-long-s25of26-a1 was denied too: the log line "kaggle status
+    of ericsom/cbo-calprec2-long-s25of26-a1: DENIED" is printed only when
+    the denial pattern matched with exactly the control's kernel id. The
+    same request from the laptop returns COMPLETE
+    (logs/kgrun-status-control-20261023.log). So the parser did not miss a
+    status line; on Actions the kaggle CLI was refused the control, which
+    is L4's "wrong-account, expired or revoked key" case, and L4 did what
+    it was written to do. The anomaly detail quoted "(==...==)" because
+    raw_status reported the last non-blank line of kgrun's output, which
+    is kgrun's closing banner. Both streams were read (kgrun merges the
+    CLI's stderr into its stdout; rerunq merges kgrun's), and the status
+    pattern scans every line, not the last. Fixed in scripts/rerunq.py:
+    every line kgrun status prints now goes into the tick log, and the
+    detail quotes the judged line (status line, else the denial line,
+    else the CLI's reply between kgrun's echo and banner). Which of the
+    three key failures it is, and whether the secrets KAGGLE_USERNAME
+    and KAGGLE_KEY are ericsom's current key, is not known from this log:
+    the raw CLI text of that tick was not recorded.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
