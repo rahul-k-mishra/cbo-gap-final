@@ -2031,7 +2031,23 @@ ENVIRONMENT.md (G2 closed).
     No commit message in the history holds a skip-CI marker. The
     account's billing usage could not be read with the CLI's token
     scopes.
-    Result: not yet observed.
+    Result, 2026-10-23: the prediction's second branch. Rahul's run list
+    at 15:52:22Z (date -u in his paste; the list pasted in summary form),
+    past the 15:34:40Z deadline, shows the three workflow_dispatch runs
+    only, with "gh workflow list" giving rerun-queue active 394021389.
+    So none of the four slots in the window (14:37, 14:52, 15:07,
+    15:22Z) produced a scheduled run. Claude's own read at 16:00:21Z
+    agrees: the same three runs, 0 runs with event=schedule, workflow
+    active. The workflow read active at every check (14:31, 14:41Z by
+    Claude; 15:52Z by Rahul; 16:00Z by Claude). Nothing shows it
+    disabled in between, but the API keeps no state history.
+    Consequences, Rahul's decision:
+    - the off-peak cron and a reactivation by a commit changing the cron
+      line are both ruled out as the fix;
+    - the cause is not established; it is a question for GitHub Support;
+    - until it is answered, the queue runs on manual ticks
+      (gh workflow run rerun-queue.yml).
+    The cron line "7,22,37,52 * * * *" stays; it does no harm.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
