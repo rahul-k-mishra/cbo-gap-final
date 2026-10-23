@@ -1886,3 +1886,42 @@ ENVIRONMENT.md (G2 closed).
     addendum.]
   - check that logs/ is committed. The guard covers runs/ and HEAD only.
   - Nothing of this has run on Kaggle yet.
+- K6 (Kaggle, the rerun queue on GitHub Actions; decision, 2026-10-23).
+  The eight jobs of the fixed-beta rerun are driven from GitHub Actions so
+  that nothing on the laptop has to stay awake. A Kaggle shard takes three
+  to twelve hours and an Actions job is capped at six, so the driver does
+  not wait for a job. It is a scheduled workflow: every 15 minutes one
+  tick reads committed state, takes at most one action and exits.
+  - Files: .github/workflows/rerun-queue.yml; scripts/rerunq.py (its
+    docstring carries every decision rule, each with a worked example);
+    notes/rerun_queue.json (the state and the lock); a new kgrun.py
+    subcommand, launch, which is run without poll and fetch. kgrun's bundle
+    now leaves out rerunq.py as it leaves out kgrun.py.
+  - Queue: smoke (13 archived-beta rows); archived-beta shards 0 to 3 of
+    4 (N37); smoke (CONC, TAU8, SIGMA, ANISO); calibrated shards 0 and 1
+    of 2 (N38). Both sets use runs/rerun-plan-20261023-112643. N35's
+    comparison found its archived-beta rows identical to the first plan's,
+    and the analysis runs against this plan.
+  - Halts on: runner exit 2, 3 or 4, or no runner exit line; a smoke
+    without D-SMOKE PASS; a header that is not the pinned Python, NumPy,
+    script hashes and plan; a manifest mismatch or an incomplete
+    download; a kgrun exit other than 0; a push failure after a Kaggle
+    side effect; the same unclassifiable observation twice for one job; a
+    G-STOP with no progress; a fifth attempt. Exit 5 relaunches the same
+    shard as attempt A + 1, resuming from every earlier attempt folder.
+  - Rule changes, made in CLAUDE.md with this entry: rules 3, 14 and 21
+    each gain one exception, and rule 22 is new. The Kaggle key is stored as
+    an Actions secret. The workflow, not Rahul, launches and commits the
+    queue's jobs. The state file is rewritten in place.
+  - Kernel check (rule K1, at Rahul's request): "release --mode
+    next-attempt" is refused unless the halted job's kernel status was
+    checked since the halt, by "rerunq.py check" or by Rahul with
+    --checked-by-hand. That closes the review's residual double-launch
+    risk. Edit(/notes/rerun_queue.json) is denied to Claude in
+    .claude/settings.json.
+  - Review: notes/RERUNQ_REVIEW.md. Nothing of this has run. The parts not
+    known until the first ticks: the kaggle CLI's text for a kernel that
+    does not exist (L4 assumes it contains "404"); whether GITHUB_TOKEN may
+    disable the workflow and push to main in this repository.
+  OPEN until the first tick has launched the smoke and a later tick has
+  fetched and committed it.

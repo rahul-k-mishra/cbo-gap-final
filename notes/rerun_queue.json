@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "kaggle_user": "ericsom",
+  "plan": "runs/rerun-plan-20261023-112643",
+  "plan_sha256": "4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2",
+  "timing": [
+    "runs/costprobe2-s0-kaggle-20261010-103952",
+    "runs/costprobe2-s1-kaggle-20261011-101343"
+  ],
+  "workers": 4,
+  "expect": {
+    "python": "3.13.15",
+    "numpy": "2.1.3",
+    "rerun_sha256": "756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e",
+    "rerunlib_sha256": "5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06",
+    "costprobe2_sha256": "ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b"
+  },
+  "max_attempts": 5,
+  "max_file_mb": 50,
+  "queue": [
+    {"id": "smoke-arch", "kind": "smoke", "set": "arch", "ledger": "N37",
+     "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"},
+    {"id": "arch-s0of4", "kind": "shard", "set": "arch", "ledger": "N37", "shard": 0, "nshards": 4,
+     "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"},
+    {"id": "arch-s1of4", "kind": "shard", "set": "arch", "ledger": "N37", "shard": 1, "nshards": 4,
+     "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"},
+    {"id": "arch-s2of4", "kind": "shard", "set": "arch", "ledger": "N37", "shard": 2, "nshards": 4,
+     "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"},
+    {"id": "arch-s3of4", "kind": "shard", "set": "arch", "ledger": "N37", "shard": 3, "nshards": 4,
+     "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"},
+    {"id": "smoke-cal", "kind": "smoke", "set": "cal", "ledger": "N38",
+     "rows": "CONC,TAU8,SIGMA,ANISO"},
+    {"id": "cal-s0of2", "kind": "shard", "set": "cal", "ledger": "N38", "shard": 0, "nshards": 2,
+     "rows": "CONC,TAU8,SIGMA,ANISO"},
+    {"id": "cal-s1of2", "kind": "shard", "set": "cal", "ledger": "N38", "shard": 1, "nshards": 2,
+     "rows": "CONC,TAU8,SIGMA,ANISO"}
+  ],
+  "status": "HALTED",
+  "index": 0,
+  "attempt": 1,
+  "resume_dirs": [],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
+  "anomaly": null,
+  "halt_reason": "initial state: release with python scripts/rerunq.py release --mode start once the setup steps are done",
+  "kernel_check": null,
+  "attempts": {},
+  "history": []
+}

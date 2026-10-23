@@ -81,6 +81,10 @@ SUBCOMMANDS
     status            print the kernel's current status
     fetch             download the kernel's output into a new run folder
     run               bundle, dataset-version (or create), push, poll, fetch
+    launch            run without the poll and the fetch: bundle,
+                      dataset-version (or create), push, then exit. Used by
+                      scripts/rerunq.py, which polls and fetches on later
+                      invocations (ledger K6)
 
 TYPICAL USE (from the repository root, venv active)
     python scripts/kgrun.py run --job detcheck --script detcheck.py \
@@ -389,7 +393,7 @@ def build_bundle(user, dataset, dry, ship=(), warn_mb=1000.0):
             n += 1
     m = 0
     for f in sorted(os.listdir(SCRIPTS)):
-        if f.endswith(".py") and f != "kgrun.py":
+        if f.endswith(".py") and f not in ("kgrun.py", "rerunq.py"):
             if not dry:
                 shutil.copy2(os.path.join(SCRIPTS, f), os.path.join(BUNDLE, f))
             m += 1
@@ -566,7 +570,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("action", choices=["bundle", "dataset-create",
                                       "dataset-version", "push", "status",
-                                      "fetch", "run"])
+                                      "fetch", "run", "launch"])
     p.add_argument("--job", default="job", help="short name; kernel is cbo-<job>")
     p.add_argument("--script", default="detcheck.py",
                    help="script in the bundle for the runner to call")
@@ -632,6 +636,18 @@ def main():
         status(kid, dry)
     elif a.action == "fetch":
         fetch(kid, a.job, dry)
+    elif a.action == "launch":
+        git_guard()
+        shipped = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)
+        if a.first:
+            dataset_create(a.user, a.dataset, dry)
+        else:
+            dataset_version(a.user, a.dataset, note, dry)
+        wait_ready(a.user, a.dataset, a.ready_poll, a.ready_timeout, dry)
+        write_kernel(a.user, a.dataset, a.job, a.script, a.args, dry, shipped)
+        push(kid, dry)
+        say("LAUNCHED {}; not polled, not fetched. Check it with:".format(kid))
+        say("  python scripts/kgrun.py status --job {}".format(a.job))
     else:
         git_guard()
         shipped = build_bundle(a.user, a.dataset, dry, ship, a.warn_mb)

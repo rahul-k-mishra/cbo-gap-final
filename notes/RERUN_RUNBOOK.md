@@ -282,3 +282,102 @@ python scripts/manifest.py
 
 Smoke folders never go into --runs; their task ids are kind 83 and A0
 rejects them.
+
+## 8. The queue on GitHub Actions (ledger K6; CLAUDE.md rule 22)
+
+Sections 1 to 6 are what the queue does, with these differences:
+- both sets run from runs/rerun-plan-20261023-112643 (ledger N35: its
+  archived-beta rows equal those of runs/rerun-plan-20261016-193630);
+- the calibrated set has 2 shards (ledger N38), job names
+  rerun-cal-s${S}of2-a${A}, and its smoke is rerun-smoke-cal-a1;
+- exit 4 and a death HALT the queue instead of being resumed (section 5
+  resumes them). After reading the folder, Rahul decides; "release --mode
+  next-attempt" then resumes as section 5 describes;
+- step 3's checks are made by rerunq.py (R1, F1, F2) and halt on any
+  mismatch. Before quoting a number, read the header yourself as before
+  (rule 18).
+
+While the workflow is enabled, do not run sections 1 to 5 by hand.
+Section 7, the analysis, is unchanged and runs on the laptop once the
+queue reads DONE.
+
+Progress:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+git pull
+python scripts/rerunq.py show
+gh run list --workflow rerun-queue.yml --limit 10
+```
+
+Halt by hand:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+gh workflow disable rerun-queue.yml
+gh run list --workflow rerun-queue.yml --status in_progress
+```
+
+Wait until the second command lists nothing; a tick already running
+finishes its one action. A Kaggle job already launched keeps running, and
+the next tick after re-enabling polls and fetches it. To record the reason
+in the state as well:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+git pull
+python scripts/rerunq.py halt --note "REASON"
+git add notes/rerun_queue.json
+git commit -m "rerun queue: halted by hand (K6)"
+git push
+```
+
+Release after a halt (automatic or by hand), once the reason is read:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+git pull
+python scripts/rerunq.py show
+python scripts/rerunq.py release --mode MODE --note "REASON FOR THE RELEASE"
+git add notes/rerun_queue.json
+git commit -m "rerun queue: released, MODE (K6)"
+git push
+gh workflow enable rerun-queue.yml
+```
+
+MODE is start, repoll, next-attempt or next-item (rerunq.py docstring).
+
+next-attempt gives the shard a new kernel name. It is refused unless the
+halted job's kernel status was checked since the halt (rule K1), so that a
+kernel still running under the old name never runs alongside the new one.
+Either let rerunq.py check it through kgrun:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+git pull
+python scripts/rerunq.py check --note "before next-attempt"
+python scripts/rerunq.py release --mode next-attempt --note "REASON FOR THE RELEASE"
+git add notes/rerun_queue.json
+git commit -m "rerun queue: kernel checked, released, next-attempt (K6)"
+git push
+gh workflow enable rerun-queue.yml
+```
+
+or, having looked at the kernel on Kaggle yourself, state what you saw:
+
+```
+cd /home/rahul/Research/cbo-gap-final
+git pull
+python scripts/rerunq.py release --mode next-attempt --checked-by-hand COMPLETE --note "REASON FOR THE RELEASE"
+git add notes/rerun_queue.json
+git commit -m "rerun queue: released, next-attempt, kernel checked by hand (K6)"
+git push
+gh workflow enable rerun-queue.yml
+```
+
+The status given must be COMPLETE, ERROR, CANCEL_ACKNOWLEDGED or ABSENT.
+A running or queued kernel is refused: wait for it, then release with
+repoll. ABSENT counts only when seen at least 30 minutes after the halt.
+Never commit anything from a rescue artifact: if a fetched folder could
+not be pushed, "repoll" fetches it again, and a hand-added copy would put
+its rows in two folders.

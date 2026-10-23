@@ -1,0 +1,86 @@
+# The rerun queue (scripts/rerunq.py; ledger K6). Every 15 minutes, one tick:
+# read notes/rerun_queue.json, take at most one action, commit, push, exit.
+# Any failed tick disables this workflow, so nothing continues past a halt
+# until Rahul has read it and re-enabled the workflow by hand.
+
+name: rerun-queue
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: rerun-queue
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      TZ: Asia/Kolkata
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python 3.12, as on the laptop
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the laptop's pinned environment
+        run: python -m pip install --quiet -r requirements.lock
+
+      - name: Write the Kaggle credentials (never printed)
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          umask 077
+          mkdir -p "$HOME/.kaggle"
+          python - <<'EOF'
+          import json, os, sys
+          u, k = os.environ.get("KAGGLE_USERNAME", ""), os.environ.get("KAGGLE_KEY", "")
+          if not u or not k:
+              sys.exit("secret KAGGLE_USERNAME or KAGGLE_KEY is missing")
+          with open(os.path.expanduser("~/.kaggle/kaggle.json"), "x") as fh:
+              json.dump({"username": u, "key": k}, fh)
+          print("kaggle.json written")
+          EOF
+
+      - name: Git identity for the queue's commits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: One tick
+        id: tick
+        run: python scripts/rerunq.py tick --run-id "${{ github.run_id }}.${{ github.run_attempt }}"
+
+      - name: Upload the rescue copy
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rerunq-rescue-${{ github.run_id }}-${{ github.run_attempt }}
+          path: scratch-rerunq/
+          if-no-files-found: ignore
+          retention-days: 90
+
+      - name: Disable this workflow (halt, failure, or queue done)
+        if: always() && (failure() || steps.tick.outputs.disable == 'true')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow disable rerun-queue.yml --repo "${{ github.repository }}"
+
+      - name: Remove the Kaggle credentials
+        if: always()
+        run: rm -f "$HOME/.kaggle/kaggle.json"

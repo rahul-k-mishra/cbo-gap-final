@@ -13,7 +13,8 @@ experiment. Everything in this file is non-negotiable.
     CLAUDE.md                      this file
     README.md                      what the repository is and how to run anything
     .claude/settings.json          allow git add, commit, push; deny edits under
-                                   zenodo-v1, round1-zip and runs/, every rm form, chmod, force
+                                   zenodo-v1, round1-zip, runs/ and notes/rerun_queue.json,
+                                   every rm form, chmod, force
                                    push, history rewrite, and every kaggle command;
                                    ask on mv, cp, unzip, tar
     .gitattributes                 "* -text": git never rewrites line endings; the
@@ -37,6 +38,9 @@ experiment. Everything in this file is non-negotiable.
                                    commit that closed it
     manuscript/                    round-2 LaTeX source; starts as zenodo-v1/sn-article.tex
                                    plus the DOI sentence, which reproduces the submitted text
+    .github/workflows/rerun-queue.yml   the rerun queue's 15-minute tick (rule 22)
+    notes/rerun_queue.json         the rerun queue's state; written only by
+                                   scripts/rerunq.py (rule 22)
     scripts/                       round-2 scripts only; they IMPORT dynamics from
                                    zenodo-v1 and never retype them
     runs/<run-id>/                 one folder per executed run: the output files the
@@ -70,6 +74,8 @@ experiment. Everything in this file is non-negotiable.
    destroyed by a later Part D run that opened the same filename in write mode,
    then wrongly declared fabricated) and the Part D near-miss both came from
    this. Analysis scripts that write nothing say so in their docstring.
+   One exception (rule 22): scripts/rerunq.py rewrites notes/rerun_queue.json
+   in place, because that file is the queue's state and its lock.
 
 4. Never retype dynamics. Round-2 scripts import one_realisation,
    beta_on_ensemble or solve_beta, fit_slope, sigma_of, draw_initial and the
@@ -225,6 +231,10 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     Secrets. Every kaggle command is denied to Claude outright in
     .claude/settings.json: under rule 21 Claude executes nothing, and
     kgrun.py, with every kaggle command it issues, is run by Rahul.
+    One exception (rule 22): the Kaggle username and key are stored as the
+    GitHub Actions secrets KAGGLE_USERNAME and KAGGLE_KEY of this
+    repository, for the rerun queue only. Claude never reads, prints or
+    sets them.
 
 15. On Kaggle the archive is mounted read-only under /kaggle/input, at a
     path the kgrun runner discovers rather than assumes (it tries
@@ -284,3 +294,26 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     result Claude does not have, Claude writes the script and the exact
     command sequence for him to run, then stops and waits. Never record a
     result that was not received from him.
+    One exception (rule 22): the rerun queue's jobs are launched, fetched
+    and committed by the GitHub Actions workflow that Rahul enabled. Their
+    results are the committed run folders and logs, read under rule 18 like
+    any other.
+
+22. The rerun queue (added 2026-10-23, Rahul's decision; ledger K6).
+    .github/workflows/rerun-queue.yml runs scripts/rerunq.py tick every 15
+    minutes. Each tick takes at most one action (launch, poll, or fetch and
+    commit) through kgrun.py, under the decision rules in rerunq.py's
+    docstring, and commits as github-actions[bot].
+    - While the workflow is enabled, nobody launches or fetches a Kaggle job
+      by hand. Nobody edits notes/rerun_queue.json except through rerunq.py
+      halt, check and release; a Claude session never edits it (denied in
+      .claude/settings.json).
+    - A new attempt after a halt ("release --mode next-attempt") is refused
+      unless the halted job's kernel status was checked since the halt,
+      by "rerunq.py check" or by Rahul with --checked-by-hand (rule K1 in
+      rerunq.py's docstring), so that two kernels never run one shard.
+    - A failed tick disables the workflow. Nothing continues until Rahul
+      has read the halt reason, released the state and re-enabled the
+      workflow.
+    - The queue covers the eight jobs listed in notes/rerun_queue.json.
+      Anything else goes through the runbooks by hand.
