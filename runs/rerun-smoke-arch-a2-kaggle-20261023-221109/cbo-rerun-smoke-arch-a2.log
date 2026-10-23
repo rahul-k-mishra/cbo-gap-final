@@ -1,0 +1,103 @@
+[{"stream_name":"stdout","time":1.2126562,"data":"kgrun runner: job rerun-smoke-arch-a2\n"}
+,{"stream_name":"stdout","time":1.212823142,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.212832764,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.212836725,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.212840979,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.354234466,"data":"  listing  57 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.354271781,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/rerun.py\n"}
+,{"stream_name":"stdout","time":1.354277597,"data":"  args     --smoke --plan-from runs/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4\n"}
+,{"stream_name":"stdout","time":3.9187270979999997,"data":"  bundle   2f72505d691cfde7: 56 files verified against kgrun-bundle-2f72505d691cfde7.sha256\n"}
+,{"stream_name":"stdout","time":3.919449227,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":3.939700019,"data":"    data  rerun-plan-20261023-112643  -\u003e  /tmp/kgrun-ship/rerun-plan-20261023-112643   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":3.960260999,"data":"        rerun_archive_check.csv: 2322 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.961005769,"data":"        rerun_onset_control.csv: 10 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.980340736,"data":"        rerun_plan.csv: 1752 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.981702198,"data":"        rerun_plan_params.csv: 22 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.981732197,"data":"        args: runs/rerun-plan-20261023-112643 -\u003e /tmp/kgrun-ship/rerun-plan-20261023-112643 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":3.981738987,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/rerun.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --smoke --plan-from /tmp/kgrun-ship/rerun-plan-20261023-112643 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --workers 4\n"}
+,{"stream_name":"stdout","time":4.7137018059999996,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":4.713740889,"data":"CBO-GAP rerun -- fixed-beta rerun, trajectories (mode smoke)\n"}
+,{"stream_name":"stdout","time":4.713746031,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":4.71374998,"data":"  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":4.713753736,"data":"  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e\n"}
+,{"stream_name":"stdout","time":4.713757891,"data":"  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06\n"}
+,{"stream_name":"stdout","time":4.7137611790000005,"data":"  python   3.13.15   numpy 2.1.3\n"}
+,{"stream_name":"stdout","time":4.713764513,"data":"  platform Linux-6.18.48+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":4.71376789,"data":"  workers  4\n"}
+,{"stream_name":"stdout","time":4.713771072,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":4.713790455,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":4.71379406,"data":"  outroot  /kaggle/working\n"}
+,{"stream_name":"stdout","time":4.713797298,"data":"  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000\n"}
+,{"stream_name":"stdout","time":4.713801017,"data":"  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke\n"}
+,{"stream_name":"stdout","time":4.713806663,"data":"  budget   3072 MB peak RSS per worker\n"}
+,{"stream_name":"stdout","time":4.713810014,"data":"\n"}
+,{"stream_name":"stdout","time":4.713813346,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4.713816884,"data":"P1  archive identity\n"}
+,{"stream_name":"stdout","time":4.713820732,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4.720395374,"data":"  boundary     93d2eb0452fc0e42...  ok\n"}
+,{"stream_name":"stdout","time":4.720430224,"data":"  cliff        017082fac66327d6...  ok\n"}
+,{"stream_name":"stdout","time":4.720434766,"data":"  control      4f50bbe5e94cfcf2...  ok\n"}
+,{"stream_name":"stdout","time":4.720438781,"data":"  crossed      21ff6d389ec89147...  ok\n"}
+,{"stream_name":"stdout","time":4.72044241,"data":"  ess_surface  e02f5287834bd100...  ok\n"}
+,{"stream_name":"stdout","time":4.720446207,"data":"  exactcal     b17e1be3c024ec4d...  ok\n"}
+,{"stream_name":"stdout","time":4.720449898,"data":"  law          2003d65b72abb86c...  ok\n"}
+,{"stream_name":"stdout","time":4.720453607,"data":"  mechanism    74fee417de088b6d...  ok\n"}
+,{"stream_name":"stdout","time":4.720457336,"data":"  regime       b671a58c63f0ba7d...  ok\n"}
+,{"stream_name":"stdout","time":4.7204611960000005,"data":"  regimemap    eb1d704f5cf150a0...  ok\n"}
+,{"stream_name":"stdout","time":4.720464841,"data":"  sigma        414c61c3f8dfa3ab...  ok\n"}
+,{"stream_name":"stdout","time":4.720469122,"data":"  visibility   7971bbcc93b7be82...  ok\n"}
+,{"stream_name":"stdout","time":4.720472891,"data":"  finitej      5b7a81ef54433369...  ok\n"}
+,{"stream_name":"stdout","time":4.720476271,"data":"\n"}
+,{"stream_name":"stdout","time":4.72047978,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4.720483878,"data":"S1  sampler identity (finite-J audit modules)\n"}
+,{"stream_name":"stdout","time":4.720487653,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4.879776047,"data":"  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok\n"}
+,{"stream_name":"stdout","time":4.879805179,"data":"  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok\n"}
+,{"stream_name":"stdout","time":4.8798109400000005,"data":"  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok\n"}
+,{"stream_name":"stdout","time":4.879815417,"data":"\n"}
+,{"stream_name":"stdout","time":4.879818951,"data":"  plan     /tmp/kgrun-ship/rerun-plan-20261023-112643  rerun_plan.csv sha256 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2\n"}
+,{"stream_name":"stdout","time":4.879823002,"data":"  rows     BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET\n"}
+,{"stream_name":"stdout","time":4.879837024,"data":"\n"}
+,{"stream_name":"stdout","time":4.879840645,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4.879844198,"data":"D-SMOKE  16 task(s) on 4 worker(s); stop-after 1000000000000000000 s\n"}
+,{"stream_name":"stdout","time":4.879847998,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":9.335734426,"data":"  [     1/16    ] ADAPT     control    ackley            d=5   none        rep 0  wall     4.2 s RSS    66.0 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":9.344693941,"data":"  [     2/16    ] ADAPT     control    ackley            d=5   none        rep 0  wall     4.2 s RSS    65.9 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":11.754521857,"data":"  [     3/16    ] BETA-ISO  ess_surface ackley            d=2   isotropic   rep 0  wall     2.5 s RSS    55.9 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":11.758665956,"data":"  [     4/16    ] BETA-ISO  ess_surface ackley            d=2   isotropic   rep 0  wall     2.4 s RSS    56.0 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":12.170136775,"data":"  [     5/16    ] CLIFF     cliff      ackley            d=10  anisotropic rep 0  wall     7.2 s RSS    82.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":12.175694585,"data":"  [     6/16    ] CLIFF     cliff      ackley            d=10  anisotropic rep 0  wall     7.2 s RSS    82.8 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":14.986695649,"data":"  [     7/16    ] PROBEARM  mechanism  ackley            d=2   none        rep 0  wall     2.7 s RSS    56.0 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":14.994620042,"data":"  [     8/16    ] PROBEARM  mechanism  ackley            d=2   none        rep 0  wall     2.6 s RSS    56.0 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":15.404706654,"data":"  [     9/16    ] GEOM      law        syn_k1_r20_w1     d=5   none        rep 0  wall     3.7 s RSS    66.5 MB  elapsed      11 s\n"}
+,{"stream_name":"stdout","time":15.411372097,"data":"  [    10/16    ] GEOM      law        syn_k1_r20_w1     d=5   none        rep 0  wall     3.7 s RSS    66.5 MB  elapsed      11 s\n"}
+,{"stream_name":"stdout","time":17.022675316,"data":"  [    11/16    ] REFSIZE   regime     ackley            d=10  none        rep 0  wall     2.0 s RSS    58.5 MB  elapsed      12 s\n"}
+,{"stream_name":"stdout","time":17.028602774,"data":"  [    12/16    ] REFSIZE   regime     ackley            d=10  none        rep 0  wall     2.0 s RSS    58.6 MB  elapsed      12 s\n"}
+,{"stream_name":"stdout","time":19.835977554,"data":"  [    13/16    ] ONSET     regimemap  ackley            d=5   anisotropic rep 0  wall     4.3 s RSS    67.6 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":19.840868022,"data":"  [    14/16    ] ONSET     regimemap  ackley            d=5   anisotropic rep 0  wall     4.3 s RSS    67.7 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":20.046722873,"data":"  [    15/16    ] LAWPANEL  visibility ackley            d=2   none        rep 0  wall     2.9 s RSS    56.6 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":20.05111249,"data":"  [    16/16    ] LAWPANEL  visibility ackley            d=2   none        rep 0  wall     2.9 s RSS    56.7 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":20.055408839,"data":"  finished 16 task(s) in 15.2 s; 0 not started\n"}
+,{"stream_name":"stdout","time":20.055440008,"data":"\n"}
+,{"stream_name":"stdout","time":20.055444569,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":20.055461317,"data":"D-SMOKE  bitwise comparison of the two members\n"}
+,{"stream_name":"stdout","time":20.05546531,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":20.056407732,"data":"  20261016-83-0-0-0-2-0-0-0-0-1000000-50000-1000000-0-0-0|isotropic  identical\n"}
+,{"stream_name":"stdout","time":20.056426858,"data":"  20261016-83-11-6-10-5-0-10000-0-0-0-50000-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":20.056431714,"data":"  20261016-83-15-9-0-10-0-100000-1000000-0-0-50000-1000000-0-0-0|anisotropic  identical\n"}
+,{"stream_name":"stdout","time":20.056435779,"data":"  20261016-83-16-10-0-5-0-100000-1000000-0-0-50000-1000000-0-0-0|anisotropic  identical\n"}
+,{"stream_name":"stdout","time":20.056439643,"data":"  20261016-83-2-1-0-2-0-0-0-0-0-50000-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":20.056443498,"data":"  20261016-83-4-2-0-2-0-10000-0-0-0-50000-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":20.056447287,"data":"  20261016-83-5-3-0-5-0-10000-0-0-0-50000-1000000-1-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":20.05645132,"data":"  20261016-83-7-5-0-10-0-100000-0-0-0-12500-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":20.056455148,"data":"  D-SMOKE PASS\n"}
+,{"stream_name":"stdout","time":20.056458947,"data":"\n"}
+,{"stream_name":"stdout","time":20.056462525,"data":"  files /kaggle/working/rerun-smoke-20261023-161844\n"}
+,{"stream_name":"stdout","time":20.111326087,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":23.129864115,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":23.129901398,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":23.641237284,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":23.641276374,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":25.945997587,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":27.434755801,"data":"[NbConvertApp] Writing 309531 bytes to __results__.html\n"}
+]
