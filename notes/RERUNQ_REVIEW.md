@@ -330,8 +330,17 @@ exists on main, and main still reads RUNNING.
   - python3 reading a heredoc that names the path: refused. The deny rule
     had let this one through, printing the file's size.
   - Control: git status ran normally afterwards.
-- Not tested: that "onFailure": "block" really blocks when the script
-  crashes. That needs a deliberately broken script and was not done.
+- "onFailure": "block" was tested the same day, at Rahul's request:
+  - Broken: with the Edit tool, a line raising RuntimeError was inserted
+    at the top of main(). With the script crashing, git status --short,
+    which does not name the file, was refused: "PreToolUse:Bash hook
+    error: ... failed; blocking because onFailure is "block"", followed
+    by the traceback.
+  - Restored: the line was removed with the Edit tool. git status and
+    git diff then showed no difference from a638ba1.
+  - Rechecked: wc -c on the file was refused by the hook again.
+  - Not tested: a missing script and a timeout. The documentation puts
+    both under the same "failure" that onFailure governs.
 - Still not covered: a file name assembled at run time from pieces that
   do not contain "rerun_queue"; a glob; a program that opens the file
   itself; git commands on the whole notes/ folder. Only the sandbox
