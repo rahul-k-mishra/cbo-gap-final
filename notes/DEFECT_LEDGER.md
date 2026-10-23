@@ -2276,5 +2276,10 @@ ENVIRONMENT.md (G2 closed).
     printed "listing 55 files in the mounted dataset". The a1 upload and
     the previous calprec2 bundles both had 55 files, so the count does not
     say which version was mounted.
-  OPEN until the a2 runner header shows "bundle 2f72505d691cfde7: ... files
-  verified".
+  - Closed by the a2 smoke (runs/rerun-smoke-arch-a2-kaggle-20261023-221109,
+    committed by the queue in 48e5c71). Its kernel log prints "listing 57
+    files in the mounted dataset" and "bundle 2f72505d691cfde7: 56 files
+    verified against kgrun-bundle-2f72505d691cfde7.sha256", then "D-SMOKE
+    PASS" and "kgrun runner: exit code 0". The mounted dataset was the
+    a2 upload, and every uploaded file hashed as listed.
+  CLOSED 2026-10-23.
