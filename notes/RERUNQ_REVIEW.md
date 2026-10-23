@@ -159,7 +159,9 @@ exists on main, and main still reads RUNNING.
 - Any transient failure of a setup step (checkout, pip, credentials)
   fails the run and disables the workflow. The state is untouched; re-enable.
 - GitHub's schedule is best effort; ticks can be late or skipped. That
-  affects timing, not correctness.
+  affects timing, not correctness. On 2026-10-23 no scheduled tick ran at
+  all under "*/15 * * * *"; the cron is now "7,22,37,52 * * * *" as a test
+  (ledger K6).
 - Actions minutes: this is a private repository, and every tick is billed
   at least one minute. I do not know this account's allowance; it is shown
   under Settings, Billing.

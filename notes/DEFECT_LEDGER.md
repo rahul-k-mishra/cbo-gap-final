@@ -1979,6 +1979,45 @@ ENVIRONMENT.md (G2 closed).
     notes/RERUNQ_REVIEW.md updated to match. Not yet confirmed on Actions:
     the next tick must show the denial for rerun-smoke-arch-a1, the
     control's COMPLETE, then "L3: kernel absent on Kaggle, name unused".
+  - Scheduled ticks never fired (2026-10-23; read by Claude through the
+    GitHub API with gh). The workflow was created 12:37Z (02d071c). Its
+    whole run history is three workflow_dispatch runs started by Rahul:
+    13:18Z (failed, disabled itself), 13:21Z (anomaly), 13:51Z (launch).
+    No run has event "schedule". The workflow's state last changed at
+    13:50:59Z (Rahul's re-enable) and read "active" at 14:31Z. So the
+    14:00, 14:15 and 14:30 slots were missed while it was certainly
+    enabled, and 12:45, 13:00 and 13:15 too if it was enabled on creation.
+    Ruled out:
+    - the workflow file: on main, the default branch; the trigger parses
+      as schedule "*/15 * * * *" plus workflow_dispatch; last changed in
+      7ec761f, pushed by Rahul;
+    - the repository: private, not a fork, not archived (the 60-day
+      inactivity rule is for public repositories only);
+    - Actions availability: the manual runs start and finish;
+    - a reported outage: githubstatus.com's history for 22 and 23
+      October lists no incident covering 12:37Z to 14:31Z, and none that
+      names scheduled workflows.
+    Documented factors that might fit, neither established. GitHub's
+    documentation says the schedule event "can be delayed during
+    periods of high loads", "High load times include the start of every
+    hour", and "some queued jobs may be dropped"; every slot of */15
+    falls on a quarter-hour. It also says a deactivated scheduled
+    workflow is reactivated by a commit that changes its cron line,
+    without saying what deactivates one.
+    The cause is not established either way.
+  - Schedule test, Rahul's decision 2026-10-23. In this commit the cron
+    line becomes "7,22,37,52 * * * *". That is still every 15 minutes,
+    off the quarter-hours, and it is a commit changing the cron line.
+    Stated prediction, fixed before the result: if at least one run with
+    event "schedule" appears within 60 minutes of this commit's push,
+    the cause was the quarter-hour load or a dormant schedule. The test
+    cannot tell those two apart, since the one commit changes both. If
+    none appears, the cause is a question for GitHub Support, and the
+    queue runs on manual ticks (gh workflow run rerun-queue.yml) until it
+    is answered. The workflow must be enabled during the hour for the
+    test to mean anything. The scheduled tick's own action is
+    unaffected: it reads the committed state like any tick.
+    Result: not yet observed.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke

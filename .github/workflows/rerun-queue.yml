@@ -1,13 +1,16 @@
-# The rerun queue (scripts/rerunq.py; ledger K6). Every 15 minutes, one tick:
+# The rerun queue (scripts/rerunq.py; ledger K6). Every 15 minutes (at minutes
+# 7, 22, 37 and 52), one tick:
 # read notes/rerun_queue.json, take at most one action, commit, push, exit.
 # Any failed tick disables this workflow, so nothing continues past a halt
 # until Rahul has read it and re-enabled the workflow by hand.
 
 name: rerun-queue
 
+# Minutes 7, 22, 37, 52: off the quarter-hours, which GitHub names as high
+# load (ledger K6, schedule test of 2026-10-23; was "*/15 * * * *").
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch: {}
 
 permissions:
