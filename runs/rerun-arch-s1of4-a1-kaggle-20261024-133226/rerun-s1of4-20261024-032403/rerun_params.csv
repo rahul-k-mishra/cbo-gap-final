@@ -1,0 +1,14 @@
+name,value
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+env,python 3.13.15 numpy 2.1.3
+mode,run
+nshards,4
+plan_sha256,4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2
+rerun_sha256,756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+rerunlib_sha256,5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+rows,"BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
+shard,1
+stop_after,36000.0
+timing_from,costprobe2-s0-kaggle-20261010-103952;costprobe2-s1-kaggle-20261011-101343
+workers,4
+resume_from,

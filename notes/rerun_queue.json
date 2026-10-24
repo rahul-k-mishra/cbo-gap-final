@@ -87,17 +87,13 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "RUNNING",
-  "index": 2,
+  "status": "READY",
+  "index": 3,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-arch-s1of4-a1",
-  "args": "--plan-from runs/rerun-plan-20261023-112643 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --shard 1 --nshards 4 --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261023-112643",
-    "runs/costprobe2-s0-kaggle-20261010-103952",
-    "runs/costprobe2-s1-kaggle-20261011-101343"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -140,6 +136,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261023T203212Z",
         "fetched_at": "2026-10-24T02:02:30+05:30"
+      }
+    ],
+    "arch-s1of4": [
+      {
+        "attempt": 1,
+        "job": "rerun-arch-s1of4-a1",
+        "folder": "runs/rerun-arch-s1of4-a1-kaggle-20261024-133226",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 4767,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261024T080214Z",
+        "fetched_at": "2026-10-24T13:32:34+05:30"
       }
     ]
   },
@@ -287,6 +297,15 @@
       "attempt": 1,
       "job": "rerun-arch-s1of4-a1",
       "note": "logs/kgrun-rerun-arch-s1of4-a1.log"
+    },
+    {
+      "at": "2026-10-24T13:32:34+05:30",
+      "run": "laptop.20261024T080214Z",
+      "event": "fetched",
+      "item": "arch-s2of4",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-arch-s1of4-a1-kaggle-20261024-133226: runner exit 0; now READY"
     }
   ]
 }
