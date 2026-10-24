@@ -87,15 +87,13 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "RUNNING",
-  "index": 5,
+  "status": "READY",
+  "index": 6,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-smoke-cal-a1",
-  "args": "--smoke --plan-from runs/rerun-plan-20261023-112643 --rows CONC,TAU8,SIGMA,ANISO --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -180,6 +178,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261024T143215Z",
         "fetched_at": "2026-10-24T20:02:44+05:30"
+      }
+    ],
+    "smoke-cal": [
+      {
+        "attempt": 1,
+        "job": "rerun-smoke-cal-a1",
+        "folder": "runs/rerun-smoke-cal-a1-kaggle-20261024-203231",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": null,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261024T150215Z",
+        "fetched_at": "2026-10-24T20:32:39+05:30"
       }
     ]
   },
@@ -408,6 +420,15 @@
       "attempt": 1,
       "job": "rerun-smoke-cal-a1",
       "note": "logs/kgrun-rerun-smoke-cal-a1.log"
+    },
+    {
+      "at": "2026-10-24T20:32:39+05:30",
+      "run": "laptop.20261024T150215Z",
+      "event": "fetched",
+      "item": "cal-s0of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-smoke-cal-a1-kaggle-20261024-203231: runner exit 0, D-SMOKE PASS; now READY"
     }
   ]
 }

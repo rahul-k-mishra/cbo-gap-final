@@ -1,0 +1,91 @@
+[{"stream_name":"stdout","time":1.257329948,"data":"kgrun runner: job rerun-smoke-cal-a1\n"}
+,{"stream_name":"stdout","time":1.257451375,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.2574585520000001,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.257462387,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.257466038,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.265407905,"data":"  listing  57 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.265442948,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/rerun.py\n"}
+,{"stream_name":"stdout","time":1.2654494,"data":"  args     --smoke --plan-from runs/rerun-plan-20261023-112643 --rows CONC,TAU8,SIGMA,ANISO --workers 4\n"}
+,{"stream_name":"stdout","time":1.531743576,"data":"  bundle   2f72505d691cfde7: 56 files verified against kgrun-bundle-2f72505d691cfde7.sha256\n"}
+,{"stream_name":"stdout","time":1.5325921550000001,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":1.5536240700000001,"data":"    data  rerun-plan-20261023-112643  -\u003e  /tmp/kgrun-ship/rerun-plan-20261023-112643   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":1.574342808,"data":"        rerun_archive_check.csv: 2322 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":1.5749431569999999,"data":"        rerun_onset_control.csv: 10 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":1.5937308799999998,"data":"        rerun_plan.csv: 1752 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":1.595172568,"data":"        rerun_plan_params.csv: 22 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":1.595204205,"data":"        args: runs/rerun-plan-20261023-112643 -\u003e /tmp/kgrun-ship/rerun-plan-20261023-112643 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":1.595212064,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/rerun.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --smoke --plan-from /tmp/kgrun-ship/rerun-plan-20261023-112643 --rows CONC,TAU8,SIGMA,ANISO --workers 4\n"}
+,{"stream_name":"stdout","time":2.330228925,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":2.330256915,"data":"CBO-GAP rerun -- fixed-beta rerun, trajectories (mode smoke)\n"}
+,{"stream_name":"stdout","time":2.330262085,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":2.3302663949999998,"data":"  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":2.330270139,"data":"  rerun_sha256       756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e\n"}
+,{"stream_name":"stdout","time":2.330273979,"data":"  rerunlib_sha256    5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06\n"}
+,{"stream_name":"stdout","time":2.330277873,"data":"  python   3.13.15   numpy 2.1.3\n"}
+,{"stream_name":"stdout","time":2.330281662,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":2.330285582,"data":"  workers  4\n"}
+,{"stream_name":"stdout","time":2.330289231,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":2.33029334,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":2.330309898,"data":"  outroot  /kaggle/working\n"}
+,{"stream_name":"stdout","time":2.330313652,"data":"  DT 0.01  LAM 1.0  sigma (non-r rows) 0.2  J_inf default 50000\n"}
+,{"stream_name":"stdout","time":2.330317446,"data":"  seeds    SeedSequence(key), key = (ENTROPY 20261016, kind, owner row, module, objective, d, law, tau0e6, re6, sigma_design e6, beta_design e6, J_inf, Te6, arm, sub-arm, rep); kind 81 trajectory, 71 bootstrap, 83 smoke\n"}
+,{"stream_name":"stdout","time":2.330321661,"data":"  budget   3072 MB peak RSS per worker\n"}
+,{"stream_name":"stdout","time":2.330324054,"data":"\n"}
+,{"stream_name":"stdout","time":2.33032648,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.330328889,"data":"P1  archive identity\n"}
+,{"stream_name":"stdout","time":2.330331202,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.339900614,"data":"  boundary     93d2eb0452fc0e42...  ok\n"}
+,{"stream_name":"stdout","time":2.339944267,"data":"  cliff        017082fac66327d6...  ok\n"}
+,{"stream_name":"stdout","time":2.339949647,"data":"  control      4f50bbe5e94cfcf2...  ok\n"}
+,{"stream_name":"stdout","time":2.339953686,"data":"  crossed      21ff6d389ec89147...  ok\n"}
+,{"stream_name":"stdout","time":2.339999087,"data":"  ess_surface  e02f5287834bd100...  ok\n"}
+,{"stream_name":"stdout","time":2.340001852,"data":"  exactcal     b17e1be3c024ec4d...  ok\n"}
+,{"stream_name":"stdout","time":2.34000437,"data":"  law          2003d65b72abb86c...  ok\n"}
+,{"stream_name":"stdout","time":2.340006906,"data":"  mechanism    74fee417de088b6d...  ok\n"}
+,{"stream_name":"stdout","time":2.340009357,"data":"  regime       b671a58c63f0ba7d...  ok\n"}
+,{"stream_name":"stdout","time":2.340012327,"data":"  regimemap    eb1d704f5cf150a0...  ok\n"}
+,{"stream_name":"stdout","time":2.340014707,"data":"  sigma        414c61c3f8dfa3ab...  ok\n"}
+,{"stream_name":"stdout","time":2.340016983,"data":"  visibility   7971bbcc93b7be82...  ok\n"}
+,{"stream_name":"stdout","time":2.340019249,"data":"  finitej      5b7a81ef54433369...  ok\n"}
+,{"stream_name":"stdout","time":2.340021554,"data":"\n"}
+,{"stream_name":"stdout","time":2.340023989,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.340026744,"data":"S1  sampler identity (finite-J audit modules)\n"}
+,{"stream_name":"stdout","time":2.340029154,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.45780272,"data":"  mechanism  'X0 = draw_initial(rng, Jinf, d, objective, init)'  ok\n"}
+,{"stream_name":"stdout","time":2.4578323429999998,"data":"  boundary   'X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]'  ok\n"}
+,{"stream_name":"stdout","time":2.457837823,"data":"  law        'X0 = rng.standard_normal((Jinf, d)) + xs'  ok\n"}
+,{"stream_name":"stdout","time":2.457842266,"data":"\n"}
+,{"stream_name":"stdout","time":2.457845934,"data":"  plan     /tmp/kgrun-ship/rerun-plan-20261023-112643  rerun_plan.csv sha256 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2\n"}
+,{"stream_name":"stdout","time":2.457850074,"data":"  rows     CONC,TAU8,SIGMA,ANISO\n"}
+,{"stream_name":"stdout","time":2.457853521,"data":"\n"}
+,{"stream_name":"stdout","time":2.457855818,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":2.457871712,"data":"D-SMOKE  8 task(s) on 4 worker(s); stop-after 1000000000000000000 s\n"}
+,{"stream_name":"stdout","time":2.457876214,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":6.910587893,"data":"  [     1/8     ] TAU8      boundary   ackley            d=5   none        rep 0  wall     4.1 s RSS    64.3 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":6.9185271539999995,"data":"  [     2/8     ] TAU8      boundary   ackley            d=5   none        rep 0  wall     4.2 s RSS    64.2 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":6.926030872,"data":"  [     3/8     ] ANISO     crossed    ackley            d=5   anisotropic rep 0  wall     4.2 s RSS    62.9 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":6.934695936,"data":"  [     4/8     ] ANISO     crossed    ackley            d=5   anisotropic rep 0  wall     4.1 s RSS    62.9 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":9.542811832,"data":"  [     5/8     ] CONC      mechanism  ackley            d=2   none        rep 0  wall     2.7 s RSS    54.5 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":9.54752103,"data":"  [     6/8     ] CONC      mechanism  ackley            d=2   none        rep 0  wall     2.7 s RSS    54.5 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":10.35381717,"data":"  [     7/8     ] SIGMA     sigma      ackley            d=5   anisotropic rep 0  wall     3.5 s RSS    65.0 MB  elapsed       8 s\n"}
+,{"stream_name":"stdout","time":10.357988717,"data":"  [     8/8     ] SIGMA     sigma      ackley            d=5   anisotropic rep 0  wall     3.5 s RSS    65.1 MB  elapsed       8 s\n"}
+,{"stream_name":"stdout","time":10.362322779,"data":"  finished 8 task(s) in 7.9 s; 0 not started\n"}
+,{"stream_name":"stdout","time":10.362358785,"data":"\n"}
+,{"stream_name":"stdout","time":10.362364107,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.362368501,"data":"D-SMOKE  bitwise comparison of the two members\n"}
+,{"stream_name":"stdout","time":10.362372732,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.363264636,"data":"  20261016-83-12-7-0-5-0-10000-100000-0-0-50000-1000000-0-0-0|anisotropic  identical\n"}
+,{"stream_name":"stdout","time":10.363285171,"data":"  20261016-83-13-8-0-5-0-10000-0-100000-0-50000-1000000-0-1-0|anisotropic  identical\n"}
+,{"stream_name":"stdout","time":10.363290438,"data":"  20261016-83-3-2-0-2-0-10000-0-0-0-50000-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":10.363294267,"data":"  20261016-83-6-4-0-5-0-10000-0-0-0-50000-1000000-0-0-0|none  identical\n"}
+,{"stream_name":"stdout","time":10.363297953,"data":"  D-SMOKE PASS\n"}
+,{"stream_name":"stdout","time":10.363301359,"data":"\n"}
+,{"stream_name":"stdout","time":10.363305113,"data":"  files /kaggle/working/rerun-smoke-20261024-145326\n"}
+,{"stream_name":"stdout","time":10.418046537,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":13.457388311,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":13.457432931,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":13.976814605,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":13.976844465,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":16.474291672,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":17.938750954,"data":"[NbConvertApp] Writing 309390 bytes to __results__.html\n"}
+]
