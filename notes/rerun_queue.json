@@ -87,7 +87,7 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 7,
   "attempt": 1,
   "resume_dirs": [],
@@ -483,6 +483,15 @@
       "attempt": 1,
       "job": "rerun-cal-s1of2-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-25T00:55:30+05:30",
+      "run": "laptop.20261024T191714Z",
+      "event": "launched",
+      "item": "cal-s1of2",
+      "attempt": 1,
+      "job": "rerun-cal-s1of2-a1",
+      "note": "logs/kgrun-rerun-cal-s1of2-a1.log"
     }
   ]
 }
