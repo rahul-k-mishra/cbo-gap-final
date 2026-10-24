@@ -87,7 +87,7 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 4,
   "attempt": 1,
   "resume_dirs": [],
@@ -360,6 +360,15 @@
       "attempt": 1,
       "job": "rerun-arch-s3of4-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-24T16:23:30+05:30",
+      "run": "laptop.20261024T104713Z",
+      "event": "launched",
+      "item": "arch-s3of4",
+      "attempt": 1,
+      "job": "rerun-arch-s3of4-a1",
+      "note": "logs/kgrun-rerun-arch-s3of4-a1.log"
     }
   ]
 }
