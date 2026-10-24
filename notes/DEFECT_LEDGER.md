@@ -2288,8 +2288,51 @@ ENVIRONMENT.md (G2 closed).
       next-attempt, which would rerun shard 0 with the a1 folder as
       resume input; not start, which is refused because a job is
       recorded.
-  OPEN until the first tick has launched the smoke and a later tick has
-  fetched and committed it.
+  The condition first written here ("OPEN until the first tick has
+  launched the smoke and a later tick has fetched and committed it") was
+  met by 48e5c71 (the a2 smoke); the item was kept open to the end of the
+  queue.
+  - Queue completed, 2026-10-25. The tick that fetched
+    rerun-cal-s1of2-a1 printed "runner exit 0; state now DONE"
+    (logs/rerunq-rerun-cal-s1of2-a1-fetched-20261025-050254.log; commit
+    17e0598). Rahul reports state DONE and the laptop timer turned off.
+    All eight items, as committed (counts from each kernel log in the
+    run folder, and for the shards also the F2 line of the queue's
+    fetch log):
+    - smoke-arch: a1 halted (K7, exit 2 before any trajectory,
+      runs/rerun-smoke-arch-a1-kaggle-20261023-213143); a2
+      runs/rerun-smoke-arch-a2-kaggle-20261023-221109, "D-SMOKE  16
+      task(s) on 4 worker(s)", "D-SMOKE PASS", exit code 0.
+    - arch-s0of4 a1, runs/rerun-arch-s0of4-a1-kaggle-20261024-020220:
+      "completed 4767  errors 0  not started 0", "finished 4767 task(s)
+      in 13430.6 s". Halted on the R1 defect above, then
+      logs/rerunq-rerun-arch-s0of4-a1-verify-20261024.log "F2: 4767 rows
+      end ok; runner summary completed 4767", released next-item
+      (cdb8761). No second attempt.
+    - arch-s1of4 a1, runs/rerun-arch-s1of4-a1-kaggle-20261024-133226:
+      "completed 4767  errors 0  not started 0", 16255.0 s; F2 4767.
+    - arch-s2of4 a1, runs/rerun-arch-s2of4-a1-kaggle-20261024-160215:
+      "completed 4767  errors 0  not started 0", 7375.2 s; F2 4767.
+    - arch-s3of4 a1, runs/rerun-arch-s3of4-a1-kaggle-20261024-200233:
+      "completed 4767  errors 0  not started 0", 12285.0 s; F2 4767.
+    - smoke-cal a1, runs/rerun-smoke-cal-a1-kaggle-20261024-203231:
+      "D-SMOKE  8 task(s) on 4 worker(s)", "D-SMOKE PASS", exit code 0.
+    - cal-s0of2 a1, runs/rerun-cal-s0of2-a1-kaggle-20261025-003238:
+      "completed 5616  errors 0  not started 0", 12676.9 s; F2 5616.
+    - cal-s1of2 a1, runs/rerun-cal-s1of2-a1-kaggle-20261025-050238:
+      "completed 5616  errors 0  not started 0", 14107.7 s; F2 5616.
+    Totals as printed by the shard headers: "tasks    19068" for the
+    archived-beta set (four shards of 4767) and "tasks    11232" for the
+    calibrated set (two shards of 5616). Every shard header printed
+    python 3.13.15 and numpy 2.1.3 (fetch logs, R1). No shard was
+    resumed; no exit 4 or 5 occurred.
+  - Not established by this entry: that the six shard folders together
+    hold every task of all seventeen rows with no duplicate. That is
+    rerun_analysis.py's A0 and A1 (exit 2 or 7), run by Rahul on the
+    laptop (notes/RERUN_RUNBOOK.md section 7).
+  CLOSED 2026-10-25 by the commit that adds this paragraph; the
+  artefacts are the run folders and logs named above, the last of them
+  committed in 17e0598.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
   rerun-smoke-arch-a1, launched by the queue (commit ea5e6a1,
   logs/kgrun-rerun-smoke-arch-a1.log), stopped on Kaggle with "kgrun
