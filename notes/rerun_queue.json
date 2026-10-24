@@ -87,7 +87,7 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 5,
   "attempt": 1,
   "resume_dirs": [],
@@ -399,6 +399,15 @@
       "attempt": 1,
       "job": "rerun-smoke-cal-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-24T20:23:16+05:30",
+      "run": "laptop.20261024T144713Z",
+      "event": "launched",
+      "item": "smoke-cal",
+      "attempt": 1,
+      "job": "rerun-smoke-cal-a1",
+      "note": "logs/kgrun-rerun-smoke-cal-a1.log"
     }
   ]
 }
