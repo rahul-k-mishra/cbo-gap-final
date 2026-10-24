@@ -87,13 +87,17 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 3,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-arch-s2of4-a1",
+  "args": "--plan-from runs/rerun-plan-20261023-112643 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET --shard 2 --nshards 4 --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261023-112643",
+    "runs/costprobe2-s0-kaggle-20261010-103952",
+    "runs/costprobe2-s1-kaggle-20261011-101343"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -306,6 +310,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/rerun-arch-s1of4-a1-kaggle-20261024-133226: runner exit 0; now READY"
+    },
+    {
+      "at": "2026-10-24T13:47:20+05:30",
+      "run": "laptop.20261024T081711Z",
+      "event": "intent",
+      "item": "arch-s2of4",
+      "attempt": 1,
+      "job": "rerun-arch-s2of4-a1",
+      "note": "resume none"
     }
   ]
 }
