@@ -87,17 +87,13 @@
       "rows": "CONC,TAU8,SIGMA,ANISO"
     }
   ],
-  "status": "RUNNING",
-  "index": 7,
+  "status": "DONE",
+  "index": 8,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-cal-s1of2-a1",
-  "args": "--plan-from runs/rerun-plan-20261023-112643 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows CONC,TAU8,SIGMA,ANISO --shard 1 --nshards 2 --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261023-112643",
-    "runs/costprobe2-s0-kaggle-20261010-103952",
-    "runs/costprobe2-s1-kaggle-20261011-101343"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -210,6 +206,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261024T190220Z",
         "fetched_at": "2026-10-25T00:32:53+05:30"
+      }
+    ],
+    "cal-s1of2": [
+      {
+        "attempt": 1,
+        "job": "rerun-cal-s1of2-a1",
+        "folder": "runs/rerun-cal-s1of2-a1-kaggle-20261025-050238",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 5616,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261024T233217Z",
+        "fetched_at": "2026-10-25T05:02:54+05:30"
       }
     ]
   },
@@ -492,6 +502,15 @@
       "attempt": 1,
       "job": "rerun-cal-s1of2-a1",
       "note": "logs/kgrun-rerun-cal-s1of2-a1.log"
+    },
+    {
+      "at": "2026-10-25T05:02:54+05:30",
+      "run": "laptop.20261024T233217Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-cal-s1of2-a1-kaggle-20261025-050238: runner exit 0; now DONE"
     }
   ]
 }
