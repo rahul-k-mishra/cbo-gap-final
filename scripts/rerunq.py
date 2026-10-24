@@ -179,11 +179,33 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       ENVIRONMENT.md); rerun_sha256, rerunlib_sha256 and costprobe2_sha256
       equal expect (the runbook's pinned values); rerun_plan.csv sha256
       equals plan_sha256; the mode is smoke for a smoke and run for a
-      shard; a shard's run dir ends in -s<S>of<K>; a resumed attempt
-      prints "resume: read" for each of its resume folders. Any mismatch:
-      HALT, even when the runner exited 0. The folder is committed.
+      shard; a resumed attempt prints "resume: read" for each of its
+      resume folders. For a shard, the output must belong to the shard
+      the queue launched, which three checks establish:
+      (a) the basename of the printed "run dir" is exactly
+          rerun-s<S>of<K>-YYYYMMDD-HHMMSS, the name rerun.py's code gives
+          a shard's output (new_outdir("rerun" + "-s<S>of<K>"): tag, then
+          the stamp; its docstring's "rerun-<stamp>[-s<i>of<k>]" has the
+          order wrong, ledger K6);
+      (b) the fetched folder holds exactly one rerun-* folder, and it has
+          that basename, so the header and the rows F2 counts come from
+          one run;
+      (c) that folder's rerun_params.csv records shard S and nshards K.
+      Any mismatch: HALT, even when the runner exited 0. The folder is
+      committed.
       Worked example: "numpy 2.2.0" printed: HALT "numpy 2.2.0, expected
       2.1.3"; rule 16 then requires detcheck on the new image.
+      Worked example, arch-s0of4: run dir /kaggle/working/rerun-s0of4-
+      20261023-164555, the one folder rerun-s0of4-20261023-164555 with
+      shard 0 and nshards 4: pass. rerun-s1of4-20261024-031500 (another
+      shard), rerun-s0of2-... (another split), rerun-s0of40-... ,
+      rerun-20261023-164555 (unsharded) or rerun-smoke-...: HALT on (a).
+      Header rerun-s0of4-20261023-164555 but the fetched folder holds
+      rerun-s0of4-20261022-090000: HALT on (b). rerun_params.csv with
+      shard 1: HALT on (c).
+      (Until 2026-10-24 (a) read "the run dir ends in -s<S>of<K>", which
+      no name rerun.py writes can satisfy; it halted arch-s0of4 attempt
+      1, whose output passed every other check. Ledger K6.)
 
   R2  RUNNER EXIT, the LAST line "kgrun runner: exit code N" of that log.
       In every case below the fetched folder is committed first.
@@ -266,6 +288,13 @@ SUBCOMMANDS
   tick --run-id ID   one step; run by the workflow or by the laptop timer
                      (run id "laptop.<UTC stamp>") only
   show               print the state (reads only)
+  verify             while HALTED: re-run F1, R1, R2 and F2 on the folder of
+                     the current item's last fetched attempt, exactly as a
+                     fetch tick would (reads only, writes nothing); exit 0
+                     on PASS, 3 on FAIL. Run before "release --mode
+                     next-item" after a halt that came after the fetch, so
+                     that the checks the halt pre-empted are not skipped
+                     (ledger K6, arch-s0of4 a1: R1 halted before F2)
   halt --note TEXT   set HALTED by hand; Rahul commits and pushes
   check --note TEXT  while HALTED: kgrun status for the halted job, the
                      result recorded as the kernel check (K1); run by
@@ -848,7 +877,30 @@ def read_runner(text):
     return f
 
 
-def header_problems(s, item, f):
+def shard_problems(item, rundir, folder):
+    """R1 (a) to (c): the fetched output belongs to shard S of K."""
+    p = []
+    base = os.path.basename((rundir or "").rstrip("/"))
+    want = r"rerun-s{}of{}-\d{{8}}-\d{{6}}".format(item["shard"], item["nshards"])
+    if not re.fullmatch(want, base):
+        p.append("run dir {}, expected a basename rerun-s{}of{}-YYYYMMDD-HHMMSS".format(
+            rundir, item["shard"], item["nshards"]))
+    subs = sorted(os.path.basename(d) for d in glob.glob(os.path.join(folder, "rerun-*")) if os.path.isdir(d))
+    if subs != [base]:
+        p.append("fetched rerun-* folder(s) {}, expected exactly [{}]".format(subs, base))
+        return p
+    pp = os.path.join(folder, base, "rerun_params.csv")
+    got = {}
+    if os.path.isfile(pp):
+        with open(pp, newline="") as fh:
+            got = {r["name"]: r["value"] for r in csv.DictReader(fh)}
+    for k in ("shard", "nshards"):
+        if got.get(k) != str(item[k]):
+            p.append("{}/rerun_params.csv {} {}, expected {}".format(base, k, got.get(k), item[k]))
+    return p
+
+
+def header_problems(s, item, f, folder):
     """R1."""
     e = s["expect"]
     p = []
@@ -865,13 +917,25 @@ def header_problems(s, item, f):
     if f["mode"] != want:
         p.append("mode {}, expected {}".format(f["mode"], want))
     if item["kind"] == "shard":
-        tag = "-s{}of{}".format(item["shard"], item["nshards"])
-        if not (f["rundir"] or "").endswith(tag):
-            p.append("run dir {}, expected a name ending {}".format(f["rundir"], tag))
+        p.extend(shard_problems(item, f["rundir"], folder))
     for d in s["resume_dirs"]:
         if os.path.basename(d.rstrip("/")) not in f["resume_read"]:
             p.append("no 'resume: read' line for " + d)
     return p
+
+
+def f2_problem(folder, rel, f):
+    """F2: None when the rows ending ok equal the runner's completed count, else the halt reason."""
+    csvs = glob.glob(os.path.join(folder, "rerun-*", "rerun_real.csv"))
+    if len(csvs) != 1:
+        return "F2: {} rerun-*/rerun_real.csv file(s) in {}, expected 1".format(len(csvs), rel)
+    with open(csvs[0], newline="") as fh:
+        nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+    say("  F2: {} rows end ok; runner summary completed {}".format(nok, f["completed"]))
+    if f["completed"] is None or nok != f["completed"]:
+        return ("F2: download incomplete or summary missing: {} rows end ok in {}, runner summary "
+                "completed {}".format(nok, rel, f["completed"]))
+    return None
 
 
 def do_fetch(ctx, kstatus):
@@ -913,7 +977,7 @@ def do_fetch(ctx, kstatus):
         "resume_dirs": list(s["resume_dirs"]), "fetched_run": ctx.run, "fetched_at": now()})
     paths = [rel, fetchlog]
     code = f["exit"]
-    probs = header_problems(s, item, f)
+    probs = header_problems(s, item, f, folder)
     if code is None:
         raise Halt("R2: no 'kgrun runner: exit code' line in {} (killed, cap, pre-emption or "
                    "cancelled)".format(rel), paths)
@@ -923,15 +987,9 @@ def do_fetch(ctx, kstatus):
     if probs:
         raise Halt("R1: header of {}: {}".format(rel, "; ".join(probs)), paths)
     if item["kind"] == "shard":
-        csvs = glob.glob(os.path.join(folder, "rerun-*", "rerun_real.csv"))
-        if len(csvs) != 1:
-            raise Halt("F2: {} rerun-*/rerun_real.csv file(s) in {}, expected 1".format(len(csvs), rel), paths)
-        with open(csvs[0], newline="") as fh:
-            nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
-        say("  F2: {} rows end ok; runner summary completed {}".format(nok, f["completed"]))
-        if f["completed"] is None or nok != f["completed"]:
-            raise Halt("F2: download incomplete or summary missing: {} rows end ok in {}, runner summary "
-                       "completed {}".format(nok, rel, f["completed"]), paths)
+        bad = f2_problem(folder, rel, f)
+        if bad:
+            raise Halt(bad, paths)
     if item["kind"] == "smoke":
         if code != 0 or f["smoke"] != "PASS":
             raise Halt("R2: smoke {} exit {}, D-SMOKE {}; no shard of set {} launches".format(
@@ -1063,6 +1121,41 @@ def show(a):
     return 0
 
 
+def verify(a):
+    """Re-run F1 (manifest), R1, R2 and F2 on the folder of the last recorded attempt of the current
+    item, as do_fetch would after a fetch. Reads only; writes nothing, changes no state."""
+    s = load()
+    if s["status"] != "HALTED":
+        raise SystemExit("verify needs status HALTED; it is " + s["status"])
+    item = s["queue"][s["index"]]
+    recs = s["attempts"].get(item["id"], [])
+    if not recs or recs[-1]["attempt"] != s["attempt"]:
+        raise SystemExit("no fetched folder recorded for {} attempt {}".format(item["id"], s["attempt"]))
+    rec = recs[-1]
+    rel = rec["folder"]
+    folder = os.path.join(ROOT, rel)
+    say("VERIFY  {} attempt {}  job {}  folder {}".format(item["id"], s["attempt"], rec["job"], rel))
+    probs = ["F1: " + x for x in verify_manifest(folder)]
+    if not probs:
+        say("  F1: manifest verified, {} files".format(len(list_files(folder)[0])))
+    f = read_runner(runner_text(folder, rec["job"]))
+    say("  runner exit {}  python {}  numpy {}  mode {}  run dir {}  D-SMOKE {}  completed {}".format(
+        f["exit"], f["python"], f["numpy"], f["mode"], f["rundir"], f["smoke"], f["completed"]))
+    probs += ["R1: " + x for x in header_problems(s, item, f, folder)]
+    if f["exit"] != 0:
+        probs.append("R2: runner exit {}, next-item needs 0".format(f["exit"]))
+    if item["kind"] == "shard":
+        bad = f2_problem(folder, rel, f)
+        if bad:
+            probs.append(bad)
+    elif f["smoke"] != "PASS":
+        probs.append("R2: D-SMOKE {}".format(f["smoke"]))
+    for x in probs:
+        say("  FAIL " + x)
+    say("VERIFY {}: {}".format("PASS" if not probs else "FAIL", rel))
+    return 0 if not probs else 3
+
+
 def halted_job(s):
     """K1: the job a halt leaves: the recorded one, else the current item and attempt's name."""
     return s["job"] or job_spec(s)[0]
@@ -1174,6 +1267,7 @@ def main():
     t = sub.add_parser("tick")
     t.add_argument("--run-id", required=True)
     sub.add_parser("show")
+    sub.add_parser("verify")
     h = sub.add_parser("halt")
     h.add_argument("--note", required=True)
     c = sub.add_parser("check")
@@ -1188,6 +1282,8 @@ def main():
         return tick(a)
     if a.cmd == "show":
         return show(a)
+    if a.cmd == "verify":
+        return verify(a)
     if a.cmd in ("halt", "check", "release"):
         return manual(a)
     p.print_help()

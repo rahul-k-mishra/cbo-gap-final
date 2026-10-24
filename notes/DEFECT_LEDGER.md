@@ -2223,6 +2223,71 @@ ENVIRONMENT.md (G2 closed).
         that; the first commit by "Rahul Kumar Mishra (rerunq laptop
         timer)" will. If it failed, that tick would exit 3 and disable
         the timer (OnFailure), not fail unseen.
+    - Upload from the service: verified, 2026-10-24. Commit 6fbebc6,
+      author "Rahul Kumar Mishra (rerunq laptop timer)", made by the
+      laptop tick run laptop.20261023T203212Z, is on origin/main. It
+      carries the fetched folder runs/rerun-arch-s0of4-a1-kaggle-
+      20261024-020220, logs/kgrun-rerun-arch-s0of4-a1-fetch.log,
+      logs/rerunq-rerun-arch-s0of4-a1-halt-20261024-020230.log and the
+      HALTED state. The tick exited 3 (the halt below), the OnFailure
+      unit disabled the timer, as designed (reported by Rahul).
+  - R1 defect: a shard check that no shard could pass (2026-10-24).
+    The tick laptop.20261023T203212Z fetched rerun-arch-s0of4-a1 and
+    halted: "R1: header of runs/rerun-arch-s0of4-a1-kaggle-20261024-
+    020220: run dir /kaggle/working/rerun-s0of4-20261023-164555,
+    expected a name ending -s0of4" (commit 6fbebc6, halt log above).
+    - Source. rerun.py builds a shard's output folder as
+      tag = "-s{}of{}".format(a.shard, a.nshards), then
+      new_outdir("rerun" + tag), and new_outdir returns
+      "{}-{}".format(name, stamp) with stamp %Y%m%d-%H%M%S. A shard's
+      folder is therefore always rerun-s<S>of<K>-<YYYYMMDD>-<HHMMSS>:
+      the tag comes before the stamp. rerunq.py's header_problems
+      required the run dir to END with -s<S>of<K>, which no folder
+      rerun.py writes can do. All six remaining shard jobs would have
+      halted the same way. The cause is rerun.py's own docstring
+      (OUTPUT: "run: <outdir>/rerun-<stamp>[-smoke][-s<i>of<k>]/"),
+      which gives the wrong order; R1 was written from the docstring,
+      not the code. The smoke folder is likewise rerun-smoke-<stamp>,
+      not rerun-<stamp>-smoke. The docstring is not edited now: rerun.py
+      is code-pinned (P1; rerun_sha256 756c4069...) until both shard
+      sets are done, and editing it would halt the next launch. OPEN as
+      a documentation defect of rerun.py, to fix after the last shard.
+    - Not a defect of rerun.py's output. The run dir
+      rerun-s0of4-20261023-164555 is the name the code gives shard 0 of
+      4, and the folder's rerun_params.csv records shard 0, nshards 4,
+      mode run, the pinned rerun, rerunlib and costprobe2 hashes, the
+      plan sha256 4aec4b1e... and env python 3.13.15 numpy 2.1.3. The
+      halt reason lists no other R1 problem, and header_problems
+      collects every problem before halting, so python, numpy, the three
+      code hashes, the plan hash and the mode all passed. F1 passed
+      ("manifest verified, 3 files"). F2 was NOT run: the R1 halt comes
+      before it in do_fetch. The halt log prints "runner exit 0 ...
+      completed 4767", and Rahul reports from the kernel log "completed
+      4767  errors 0  not started 0" and "kgrun runner: exit code 0".
+    - Fix (scripts/rerunq.py; R1 in its docstring rewritten with worked
+      examples). R1 for a shard now checks what it is meant to check,
+      that the output belongs to the shard the queue launched, and no
+      longer by a suffix: (a) the run dir's basename is exactly
+      rerun-s<S>of<K>-YYYYMMDD-HHMMSS (re.fullmatch; another shard,
+      another split such as s0of2, s0of40, an unsharded or a smoke folder
+      all fail); (b) the fetched folder holds exactly one rerun-* folder,
+      with that basename, so the header and the rows F2 counts are from
+      one run (the old check never tied the two); (c) that folder's
+      rerun_params.csv records shard S and nshards K. Each is at least as
+      strict as what the old check meant; none accepts another shard's
+      output. rerunq.py is not among the pinned files (P1), so the fix
+      does not disturb the shard set.
+    - New subcommand "rerunq.py verify" (reads only, writes nothing):
+      while HALTED, re-runs F1, R1, R2 and F2 on the current item's last
+      fetched folder as a fetch tick would. "release --mode next-item"
+      does not re-check anything, so without it shard 0's F2 count would
+      never have been executed by the queue's code.
+    - Release: after "verify" prints PASS for runs/rerun-arch-s0of4-a1-
+      kaggle-20261024-020220 (log to be committed under logs/),
+      "release --mode next-item": READY at arch-s1of4, attempt 1. Not
+      next-attempt, which would rerun shard 0 with the a1 folder as
+      resume input; not start, which is refused because a job is
+      recorded.
   OPEN until the first tick has launched the smoke and a later tick has
   fetched and committed it.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
