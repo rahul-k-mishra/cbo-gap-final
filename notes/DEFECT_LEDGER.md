@@ -1585,6 +1585,10 @@ instruction of 2026-10-15.
     smoke first, every shard with the same --rows list, and RMAP launched
     with ONSET. A shared cell is run by its owner's job.
   OPEN until the four shards have exited 0.
+  CLOSED 2026-10-25: all four exited 0 ("completed 4767  errors 0  not
+  started 0" in each kernel log; K6 lists the folders), and
+  rerun_analysis.py's A0 read 4767 complete realizations from each
+  (N39).
 
 - N38 (decision, 2026-10-23; the calibrated-row shard set). Source:
   logs/rerun-schedule-cal-20261023-1332.log. That is rerun.py --schedule
@@ -1613,6 +1617,93 @@ instruction of 2026-10-15.
     (notes/RERUN_RUNBOOK.md, "The rule that ties RMAP and ONSET
     together"). Job names: rerun-cal-s0of2-a<A>, rerun-cal-s1of2-a<A>.
   OPEN until both shards have exited 0.
+  CLOSED 2026-10-25: both exited 0 ("completed 5616  errors 0  not
+  started 0" in each kernel log; K6 lists the folders), and
+  rerun_analysis.py's A0 read 5616 complete realizations from each
+  (N39).
+
+## Newly found (2026-10-25)
+
+- N39 (result, the fixed-beta rerun analysis). Source: commit 8c9b799,
+  run folder runs/rerun-analysis-20261025-051314 (sha256.txt, 9 files),
+  console log logs/rerun-analysis-20261025-0513.log. Run by Rahul on the
+  laptop. Everything below is copied from the log or the CSVs. No count
+  here was made by Claude.
+  - Header (rule 18): rerun_analysis sha256 21a26205...67a5; rerun.py
+    756c4069...818e, rerunlib.py 5d55050e...9b06, costprobe2.py
+    ea5cb2e1...f64b, the hashes N37 and N38 pin; python 3.12.3, numpy
+    2.5.3, Linux-7.0.0-38-generic, workers 2; B 10000; plan
+    runs/rerun-plan-20261023-112643, rerun_plan.csv sha256
+    4aec4b1e...72f2. P1 printed "ok" for all thirteen archived modules.
+    The trajectories ran on Kaggle (python 3.13.15, numpy 2.1.3, K6),
+    and the analysis ran on the laptop. Both platforms have a recorded
+    detcheck PASS in ENVIRONMENT.md.
+  - A0: the six shard folders read 4767, 4767, 4767, 4767, 5616 and 5616
+    complete realizations. No exit 2.
+  - A1, completeness (analysis_completeness.csv; every row "complete",
+    present equal to realizations): BETA-ISO 840, BETA-ANI 240, LAWPANEL
+    2880, CONC 2160, PROBEARM 2160, ADAPT 1080, TAU8 2160, REFSIZE 144,
+    SYNTH 864, NAMED 432, HORIZON 288, GEOM 4032, SIGMA 3456, ANISO
+    3456, RMAP 2880, CLIFF 1728, ONSET 2160.
+  - Beta source per row (analysis_cells.csv, beta_source): calprec2
+    fixed betas in CONC, TAU8, SIGMA and ANISO only; design values in
+    BETA-ISO and BETA-ANI; archived rules or probes in the other eleven
+    (LAWPANEL visibility B-matching; PROBEARM mechanism probe; ADAPT
+    control probe; REFSIZE, SYNTH, NAMED and HORIZON regime probe; GEOM
+    law probe; RMAP and ONSET regimemap probe; CLIFF cliff probe).
+  - Phase 1: "2451 cell-window instances, 2420 distinct computations, 2
+    workers".
+  - Margin, 5b (analysis_margin.csv): calprec2 group (SIGMA, ANISO) 576
+    cell arms, median SD 0.026582; probe group (RMAP, CLIFF, ONSET) 516
+    cell arms, median SD 0.025384; S = 0.026038 over 1092 cell arms; m
+    = 3 x S = 0.078113; ratio 1.0472, "no revisit".
+  - Finite-J audit, 8.5: "CONC audit: 26 of 30 pooled intervals exclude
+    0", "PROBEARM audit: 24 of 30", "TAU8 audit: 64 of 80", "GEOM audit:
+    63 of 80" (no PASS/FAIL). All four rows were audited; the log has no
+    "F1 FAILED" line. The four CONC intervals that
+    contain 0 are all at tau_0 0.5, J 40, 80, 160 and 320. At tau_0
+    0.01, J 5000 the pooled d40 - d2 ratio difference is +0.4677
+    [+0.3742, +0.5653] (round-1 orientation -0.4677).
+  - Onset against 1, J4: per objective 8 of 15 (isotropic), 14 of 15
+    (anisotropic), 22 of 30 (both); pooled 2 of 5, 4 of 5, 6 of 10.
+  - R^2, L2 (analysis_r2.csv; point values, no interval, no verdict;
+    response the cell S-slope on W-full):
+    - CONC P3.4: target alone 0.0002 (0.00017713...); + dimension
+      0.1005; + objective dummies 0.1316.
+    - PROBEARM P3.4: 0.0361; 0.2243; 0.2714.
+    - P6.3, SYNTH -> NAMED: M1 in 0.6917, out 0.3432, RMSE out 0.0820;
+      M2 in 0.8713, out 0.6741, RMSE 0.0578; M3 in 0.9152, out 0.6157,
+      RMSE 0.0628.
+  - REFSIZE contrast 5, J_inf 100000 - 12500 on J <= 1250, W-full:
+    ackley +0.0530 [-0.0409, +0.1505]; sphere +0.0563 [-0.0540,
+    +0.1685]; rosenbrock +0.0086 [-0.0760, +0.0937]; pooled +0.0393
+    [-0.0176, +0.0970], k 3, sd_units 0.0266, I2 0.0000, "tau2
+    truncated at 0 (s2 0.000707427 < vbar 0.00253616)". Every interval
+    contains 0.
+  - Summary lines: "statistics written: 6282", "no FLAG", "wall 2945.6
+    s   peak RSS (main process) 229.1 MB". Per-worker RSS is not printed.
+    No measurement in this run governs a trajectory design (rule 6).
+  - Not yet counted. These counts are not printed in the log: rate
+    verdicts per row and stratum, equivalence verdicts per paired row,
+    DIFFERENCE counts per quantity, cell-quality flags, adequacy labels
+    and audit floor flags. scripts/rerun_tally.py (written 2026-10-25,
+    read-only, writes nothing) prints them from the CSVs. To be recorded
+    here from its log.
+  - Observation, not decided (Claude, from the archive source).
+    regime.fit_predict (zenodo-v1/regime.py lines 409 to 422) standardizes
+    the features but takes no log of covtr, disp, fvar or dist0, the
+    geometry features M3 adds (lines 451 to 453), and checks no support.
+    Supplementary S3 names that defect for a predictive model ("without
+    log-transforming scale features or checking support"). The rerun
+    imports the function unchanged (ANALYSIS_CRITERIA.md Q1), so M3's
+    R^2 out carries the same property. Whether S3's item is this
+    function, I do not know. Neither zenodo-v1 nor round1-zip has a file
+    containing "P6.3" other than regime.py itself, so no round-1 console
+    log of it is available. The lines quoted are identical in both copies
+    of regime.py. Rahul to decide whether M3 is reported as is, with the
+    property stated, or not at all.
+  OPEN until the tally is recorded and the manuscript text that uses
+  these numbers is written and verified by the rule-8 diff.
 
 ## Checked and found sound
 
