@@ -1,0 +1,579 @@
+====================================================================================================
+CBO-GAP rerun_tally -- verdict counts from one rerun_analysis folder (writes nothing)
+====================================================================================================
+  rerun_tally sha256 0594a212242ebd403dd62786e2bd4e7d06edd5c74e703061990ae8d8b97d5007
+  python 3.12.3   numpy 2.5.3   platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   workers 2
+  analysis folder runs/rerun-analysis-20261025-051314
+  no seeds, no resampling, no trajectories; counts only
+
+----------------------------------------------------------------------------------------------------
+V1  manifest
+----------------------------------------------------------------------------------------------------
+  analysis_adequacy.csv        ok
+  analysis_audit.csv           ok
+  analysis_cells.csv           ok
+  analysis_completeness.csv    ok
+  analysis_margin.csv          ok
+  analysis_onsets.csv          ok
+  analysis_params.csv          ok
+  analysis_r2.csv              ok
+  analysis_stats.csv           ok
+  params  name  value
+  params  rerun_analysis_sha256  21a26205c27076598de559289466fa7cd8c8d3253d770eb8a3f44f8f8c3767a5
+  params  plan  runs/rerun-plan-20261023-112643
+  params  plan_sha256  4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2
+  params  runs  runs/rerun-arch-s0of4-a1-kaggle-20261024-020220;runs/rerun-arch-s1of4-a1-kaggle-20261024-133226;runs/rerun-arch-s2of4-a1-kaggle-20261024-160215;runs/rerun-arch-s3of4-a1-kaggle-20261024-200233;runs/rerun-cal-s0of2-a1-kaggle-20261025-003238;runs/rerun-cal-s1of2-a1-kaggle-20261025-050238
+  params  B  10000
+  params  python  3.12.3
+  params  numpy  2.5.3
+  params  workers  2
+  params  costprobe2_sha256  ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  params  rerun_sha256  756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+  params  rerunlib_sha256  5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
+  read analysis_adequacy.csv      rows 336
+  read analysis_audit.csv         rows 7680
+  read analysis_cells.csv         rows 3225
+  read analysis_stats.csv         rows 6282
+
+----------------------------------------------------------------------------------------------------
+C1  rate verdict 'upper bound <= -1', W-full, per row and diffusion
+----------------------------------------------------------------------------------------------------
+  ('no' is expected about 95% of the time for a cell whose slope is exactly -1)
+  ADAPT  none                    no 66  yes 6   of 72
+  ANISO  anisotropic             no 138  yes 6   of 144
+  ANISO  isotropic               no 133  yes 11   of 144
+  BETA-ANI  anisotropic          no 7  yes 5   of 12
+  BETA-ISO  isotropic            no 31  yes 11   of 42
+  CLIFF  anisotropic             no 72   of 72
+  CLIFF  isotropic               no 53  yes 19   of 72
+  CONC  none                     no 108  yes 36   of 144
+  GEOM  none                     no 293  yes 43   of 336
+  HORIZON  none                  no 14  yes 10   of 24
+  LAWPANEL  none                 no 119  yes 25   of 144
+  NAMED  none                    no 32  yes 4   of 36
+  ONSET  anisotropic             no 89  yes 1   of 90
+  ONSET  isotropic               no 60  yes 30   of 90
+  PROBEARM  none                 no 113  yes 31   of 144
+  REFSIZE  none                  no 11  yes 1   of 12
+  RMAP  anisotropic              no 119  yes 1   of 120
+  RMAP  isotropic                no 101  yes 19   of 120
+  SIGMA  anisotropic             no 142  yes 2   of 144
+  SIGMA  isotropic               no 124  yes 20   of 144
+  SYNTH  none                    no 67  yes 5   of 72
+  TAU8  none                     no 123  yes 21   of 144
+
+----------------------------------------------------------------------------------------------------
+C1  rate verdict, W-full, per row, diffusion and stratum
+----------------------------------------------------------------------------------------------------
+  ADAPT  none  arm=adaptive  tau=0.01                          no 18   of 18
+  ADAPT  none  arm=adaptive  tau=0.1                           no 15  yes 3   of 18
+  ADAPT  none  arm=fixed  tau=0.01                             no 17  yes 1   of 18
+  ADAPT  none  arm=fixed  tau=0.1                              no 16  yes 2   of 18
+  ANISO  anisotropic  arm=armA  d=10  tau=0.01                 no 12   of 12
+  ANISO  anisotropic  arm=armA  d=10  tau=0.1                  no 10  yes 2   of 12
+  ANISO  anisotropic  arm=armA  d=40  tau=0.01                 no 12   of 12
+  ANISO  anisotropic  arm=armA  d=40  tau=0.1                  no 12   of 12
+  ANISO  anisotropic  arm=armA  d=5  tau=0.01                  no 12   of 12
+  ANISO  anisotropic  arm=armA  d=5  tau=0.1                   no 11  yes 1   of 12
+  ANISO  anisotropic  arm=armB  d=10  tau=0.01                 no 12   of 12
+  ANISO  anisotropic  arm=armB  d=10  tau=0.1                  no 11  yes 1   of 12
+  ANISO  anisotropic  arm=armB  d=40  tau=0.01                 no 12   of 12
+  ANISO  anisotropic  arm=armB  d=40  tau=0.1                  no 12   of 12
+  ANISO  anisotropic  arm=armB  d=5  tau=0.01                  no 12   of 12
+  ANISO  anisotropic  arm=armB  d=5  tau=0.1                   no 10  yes 2   of 12
+  ANISO  isotropic  arm=armA  d=10  tau=0.01                   no 12   of 12
+  ANISO  isotropic  arm=armA  d=10  tau=0.1                    no 11  yes 1   of 12
+  ANISO  isotropic  arm=armA  d=40  tau=0.01                   no 11  yes 1   of 12
+  ANISO  isotropic  arm=armA  d=40  tau=0.1                    no 11  yes 1   of 12
+  ANISO  isotropic  arm=armA  d=5  tau=0.01                    no 12   of 12
+  ANISO  isotropic  arm=armA  d=5  tau=0.1                     no 11  yes 1   of 12
+  ANISO  isotropic  arm=armB  d=10  tau=0.01                   no 12   of 12
+  ANISO  isotropic  arm=armB  d=10  tau=0.1                    no 10  yes 2   of 12
+  ANISO  isotropic  arm=armB  d=40  tau=0.01                   no 12   of 12
+  ANISO  isotropic  arm=armB  d=40  tau=0.1                    no 10  yes 2   of 12
+  ANISO  isotropic  arm=armB  d=5  tau=0.01                    no 12   of 12
+  ANISO  isotropic  arm=armB  d=5  tau=0.1                     no 9  yes 3   of 12
+  BETA-ANI  anisotropic  beta_design=3.0                       no 2  yes 2   of 4
+  BETA-ANI  anisotropic  beta_design=30.0                      no 2  yes 2   of 4
+  BETA-ANI  anisotropic  beta_design=300.0                     no 3  yes 1   of 4
+  BETA-ISO  isotropic  beta_design=1.0                         no 4  yes 2   of 6
+  BETA-ISO  isotropic  beta_design=10.0                        no 4  yes 2   of 6
+  BETA-ISO  isotropic  beta_design=100.0                       no 5  yes 1   of 6
+  BETA-ISO  isotropic  beta_design=1000.0                      no 5  yes 1   of 6
+  BETA-ISO  isotropic  beta_design=3.0                         no 4  yes 2   of 6
+  BETA-ISO  isotropic  beta_design=30.0                        no 4  yes 2   of 6
+  BETA-ISO  isotropic  beta_design=300.0                       no 5  yes 1   of 6
+  CLIFF  anisotropic  d=10  r=0.5                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=0.9                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=1.0                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=1.1                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=1.25                             no 4   of 4
+  CLIFF  anisotropic  d=10  r=1.5                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=2.0                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=3.0                              no 4   of 4
+  CLIFF  anisotropic  d=10  r=5.0                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=0.5                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=0.9                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=1.0                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=1.1                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=1.25                             no 4   of 4
+  CLIFF  anisotropic  d=40  r=1.5                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=2.0                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=3.0                              no 4   of 4
+  CLIFF  anisotropic  d=40  r=5.0                              no 4   of 4
+  CLIFF  isotropic  d=10  r=0.5                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=0.9                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=1.0                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=1.1                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=1.25                               no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=1.5                                no 2  yes 2   of 4
+  CLIFF  isotropic  d=10  r=2.0                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=10  r=3.0                                no 4   of 4
+  CLIFF  isotropic  d=10  r=5.0                                no 4   of 4
+  CLIFF  isotropic  d=40  r=0.5                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=40  r=0.9                                no 2  yes 2   of 4
+  CLIFF  isotropic  d=40  r=1.0                                no 2  yes 2   of 4
+  CLIFF  isotropic  d=40  r=1.1                                no 2  yes 2   of 4
+  CLIFF  isotropic  d=40  r=1.25                               no 2  yes 2   of 4
+  CLIFF  isotropic  d=40  r=1.5                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=40  r=2.0                                no 3  yes 1   of 4
+  CLIFF  isotropic  d=40  r=3.0                                no 4   of 4
+  CLIFF  isotropic  d=40  r=5.0                                no 4   of 4
+  CONC  none  tau=0.01                                         no 32  yes 16   of 48
+  CONC  none  tau=0.1                                          no 35  yes 13   of 48
+  CONC  none  tau=0.5                                          no 41  yes 7   of 48
+  GEOM  none  tau=0.01                                         no 41  yes 1   of 42
+  GEOM  none  tau=0.02                                         no 41  yes 1   of 42
+  GEOM  none  tau=0.03                                         no 40  yes 2   of 42
+  GEOM  none  tau=0.05                                         no 36  yes 6   of 42
+  GEOM  none  tau=0.07                                         no 37  yes 5   of 42
+  GEOM  none  tau=0.1                                          no 34  yes 8   of 42
+  GEOM  none  tau=0.2                                          no 31  yes 11   of 42
+  GEOM  none  tau=0.3                                          no 33  yes 9   of 42
+  HORIZON  none  T=0.5                                         no 6  yes 2   of 8
+  HORIZON  none  T=1.0                                         no 4  yes 4   of 8
+  HORIZON  none  T=2.0                                         no 4  yes 4   of 8
+  LAWPANEL  none  law=centred                                  no 30  yes 6   of 36
+  LAWPANEL  none  law=mix-0.01                                 no 31  yes 5   of 36
+  LAWPANEL  none  law=mix-0.1                                  no 23  yes 13   of 36
+  LAWPANEL  none  law=offset                                   no 35  yes 1   of 36
+  NAMED  none  tau=0.01                                        no 17  yes 1   of 18
+  NAMED  none  tau=0.1                                         no 15  yes 3   of 18
+  ONSET  anisotropic  d=10  r=0.75                             no 3   of 3
+  ONSET  anisotropic  d=10  r=1.0                              no 3   of 3
+  ONSET  anisotropic  d=10  r=1.25                             no 3   of 3
+  ONSET  anisotropic  d=10  r=1.5                              no 3   of 3
+  ONSET  anisotropic  d=10  r=2.0                              no 3   of 3
+  ONSET  anisotropic  d=10  r=3.0                              no 3   of 3
+  ONSET  anisotropic  d=20  r=0.75                             no 3   of 3
+  ONSET  anisotropic  d=20  r=1.0                              no 3   of 3
+  ONSET  anisotropic  d=20  r=1.25                             no 3   of 3
+  ONSET  anisotropic  d=20  r=1.5                              no 3   of 3
+  ONSET  anisotropic  d=20  r=2.0                              no 3   of 3
+  ONSET  anisotropic  d=20  r=3.0                              no 3   of 3
+  ONSET  anisotropic  d=40  r=0.75                             no 3   of 3
+  ONSET  anisotropic  d=40  r=1.0                              no 3   of 3
+  ONSET  anisotropic  d=40  r=1.25                             no 3   of 3
+  ONSET  anisotropic  d=40  r=1.5                              no 3   of 3
+  ONSET  anisotropic  d=40  r=2.0                              no 3   of 3
+  ONSET  anisotropic  d=40  r=3.0                              no 3   of 3
+  ONSET  anisotropic  d=5  r=0.75                              no 2  yes 1   of 3
+  ONSET  anisotropic  d=5  r=1.0                               no 3   of 3
+  ONSET  anisotropic  d=5  r=1.25                              no 3   of 3
+  ONSET  anisotropic  d=5  r=1.5                               no 3   of 3
+  ONSET  anisotropic  d=5  r=2.0                               no 3   of 3
+  ONSET  anisotropic  d=5  r=3.0                               no 3   of 3
+  ONSET  anisotropic  d=80  r=0.75                             no 3   of 3
+  ONSET  anisotropic  d=80  r=1.0                              no 3   of 3
+  ONSET  anisotropic  d=80  r=1.25                             no 3   of 3
+  ONSET  anisotropic  d=80  r=1.5                              no 3   of 3
+  ONSET  anisotropic  d=80  r=2.0                              no 3   of 3
+  ONSET  anisotropic  d=80  r=3.0                              no 3   of 3
+  ONSET  isotropic  d=10  r=0.75                               no 3   of 3
+  ONSET  isotropic  d=10  r=1.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=10  r=1.25                               no 2  yes 1   of 3
+  ONSET  isotropic  d=10  r=1.5                                no 2  yes 1   of 3
+  ONSET  isotropic  d=10  r=2.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=10  r=3.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=0.75                               no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=1.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=1.25                               no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=1.5                                no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=2.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=20  r=3.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=0.75                               no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=1.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=1.25                               no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=1.5                                no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=2.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=40  r=3.0                                no 3   of 3
+  ONSET  isotropic  d=5  r=0.75                                yes 3   of 3
+  ONSET  isotropic  d=5  r=1.0                                 no 1  yes 2   of 3
+  ONSET  isotropic  d=5  r=1.25                                no 2  yes 1   of 3
+  ONSET  isotropic  d=5  r=1.5                                 no 1  yes 2   of 3
+  ONSET  isotropic  d=5  r=2.0                                 no 2  yes 1   of 3
+  ONSET  isotropic  d=5  r=3.0                                 no 3   of 3
+  ONSET  isotropic  d=80  r=0.75                               no 2  yes 1   of 3
+  ONSET  isotropic  d=80  r=1.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=80  r=1.25                               no 2  yes 1   of 3
+  ONSET  isotropic  d=80  r=1.5                                no 2  yes 1   of 3
+  ONSET  isotropic  d=80  r=2.0                                no 2  yes 1   of 3
+  ONSET  isotropic  d=80  r=3.0                                no 3   of 3
+  PROBEARM  none  tau=0.01                                     no 37  yes 11   of 48
+  PROBEARM  none  tau=0.1                                      no 37  yes 11   of 48
+  PROBEARM  none  tau=0.5                                      no 39  yes 9   of 48
+  REFSIZE  none  jinf=100000                                   no 3   of 3
+  REFSIZE  none  jinf=12500                                    no 3   of 3
+  REFSIZE  none  jinf=25000                                    no 3   of 3
+  REFSIZE  none  jinf=50000                                    no 2  yes 1   of 3
+  RMAP  anisotropic  d=10  tau=0.01                            no 15   of 15
+  RMAP  anisotropic  d=10  tau=0.03                            no 15   of 15
+  RMAP  anisotropic  d=10  tau=0.1                             no 15   of 15
+  RMAP  anisotropic  d=10  tau=0.5                             no 14  yes 1   of 15
+  RMAP  anisotropic  d=40  tau=0.01                            no 15   of 15
+  RMAP  anisotropic  d=40  tau=0.03                            no 15   of 15
+  RMAP  anisotropic  d=40  tau=0.1                             no 15   of 15
+  RMAP  anisotropic  d=40  tau=0.5                             no 15   of 15
+  RMAP  isotropic  d=10  tau=0.01                              no 15   of 15
+  RMAP  isotropic  d=10  tau=0.03                              no 13  yes 2   of 15
+  RMAP  isotropic  d=10  tau=0.1                               no 10  yes 5   of 15
+  RMAP  isotropic  d=10  tau=0.5                               no 14  yes 1   of 15
+  RMAP  isotropic  d=40  tau=0.01                              no 14  yes 1   of 15
+  RMAP  isotropic  d=40  tau=0.03                              no 12  yes 3   of 15
+  RMAP  isotropic  d=40  tau=0.1                               no 11  yes 4   of 15
+  RMAP  isotropic  d=40  tau=0.5                               no 12  yes 3   of 15
+  SIGMA  anisotropic  d=10  tau=0.01                           no 24   of 24
+  SIGMA  anisotropic  d=10  tau=0.1                            no 24   of 24
+  SIGMA  anisotropic  d=40  tau=0.01                           no 24   of 24
+  SIGMA  anisotropic  d=40  tau=0.1                            no 24   of 24
+  SIGMA  anisotropic  d=5  tau=0.01                            no 24   of 24
+  SIGMA  anisotropic  d=5  tau=0.1                             no 22  yes 2   of 24
+  SIGMA  isotropic  d=10  tau=0.01                             no 24   of 24
+  SIGMA  isotropic  d=10  tau=0.1                              no 18  yes 6   of 24
+  SIGMA  isotropic  d=40  tau=0.01                             no 24   of 24
+  SIGMA  isotropic  d=40  tau=0.1                              no 18  yes 6   of 24
+  SIGMA  isotropic  d=5  tau=0.01                              no 23  yes 1   of 24
+  SIGMA  isotropic  d=5  tau=0.1                               no 17  yes 7   of 24
+  SYNTH  none  tau=0.01                                        no 36   of 36
+  SYNTH  none  tau=0.1                                         no 31  yes 5   of 36
+  TAU8  none  tau=0.01                                         no 16  yes 2   of 18
+  TAU8  none  tau=0.02                                         no 18   of 18
+  TAU8  none  tau=0.03                                         no 17  yes 1   of 18
+  TAU8  none  tau=0.05                                         no 16  yes 2   of 18
+  TAU8  none  tau=0.07                                         no 16  yes 2   of 18
+  TAU8  none  tau=0.1                                          no 12  yes 6   of 18
+  TAU8  none  tau=0.2                                          no 14  yes 4   of 18
+  TAU8  none  tau=0.3                                          no 14  yes 4   of 18
+
+----------------------------------------------------------------------------------------------------
+C2  rate verdict, W-full, per row, diffusion and region (r<1 admissible, r=1 boundary, r>1 outside)
+----------------------------------------------------------------------------------------------------
+  ANISO  anisotropic  admissible           no 69  yes 3   of 72
+  ANISO  anisotropic  no r                 no 69  yes 3   of 72
+  ANISO  isotropic  admissible             no 65  yes 7   of 72
+  ANISO  isotropic  no r                   no 68  yes 4   of 72
+  CLIFF  anisotropic  admissible           no 16   of 16
+  CLIFF  anisotropic  boundary             no 8   of 8
+  CLIFF  anisotropic  outside              no 48   of 48
+  CLIFF  isotropic  admissible             no 11  yes 5   of 16
+  CLIFF  isotropic  boundary               no 5  yes 3   of 8
+  CLIFF  isotropic  outside                no 37  yes 11   of 48
+  ONSET  anisotropic  admissible           no 14  yes 1   of 15
+  ONSET  anisotropic  boundary             no 15   of 15
+  ONSET  anisotropic  outside              no 60   of 60
+  ONSET  isotropic  admissible             no 9  yes 6   of 15
+  ONSET  isotropic  boundary               no 9  yes 6   of 15
+  ONSET  isotropic  outside                no 42  yes 18   of 60
+  RMAP  anisotropic  admissible            no 23  yes 1   of 24
+  RMAP  anisotropic  boundary              no 24   of 24
+  RMAP  anisotropic  outside               no 72   of 72
+  RMAP  isotropic  admissible              no 20  yes 4   of 24
+  RMAP  isotropic  boundary                no 19  yes 5   of 24
+  RMAP  isotropic  outside                 no 62  yes 10   of 72
+  SIGMA  anisotropic  admissible           no 142  yes 2   of 144
+  SIGMA  isotropic  admissible             no 124  yes 20   of 144
+
+----------------------------------------------------------------------------------------------------
+C3  cell quality, every window
+----------------------------------------------------------------------------------------------------
+  ADAPT  W-full                     of 72
+  ADAPT  W-ge                       of 36
+  ANISO  W-full                     of 288
+  ANISO  W-ge                       of 144
+  BETA-ANI  W-full                  of 12
+  BETA-ISO  W-full                  of 42
+  CLIFF  W-full                     of 144
+  CONC  W-full                      of 144
+  CONC  W-ge                        of 48
+  GEOM  W-full                      of 336
+  GEOM  W-ge                        of 210
+  HORIZON  W-full                   of 24
+  LAWPANEL  W-full                  of 144
+  NAMED  W-full                     of 36
+  NAMED  W-ge                       of 18
+  ONSET  W-full                     of 180
+  PROBEARM  W-full                  of 144
+  PROBEARM  W-ge                    of 48
+  REFSIZE  W-full                   of 12
+  REFSIZE  W-grid                   of 9
+  RMAP  W-full                      of 240
+  RMAP  W-ge                        of 120
+  SIGMA  W-full                     of 288
+  SIGMA  W-ge                       of 144
+  SYNTH  W-full                     of 72
+  SYNTH  W-ge                       of 36
+  TAU8  W-full                      of 144
+  TAU8  W-ge                        of 90
+
+----------------------------------------------------------------------------------------------------
+C4  statistic verdicts per (row, quantity, level, window)
+----------------------------------------------------------------------------------------------------
+  ANISO  c2 target 0.01-0.1  pooled  W-full                                DIFFERENCE 36   of 36
+  ANISO  c2 target 0.01-0.1  pooled  W-ge                                  sensitivity, no verdict 36   of 36
+  ANISO  c2 target 0.01-0.1  unit  W-full                                  95% interval contains 0 41  DIFFERENCE 103   of 144
+  ANISO  c2 target 0.01-0.1  unit  W-ge                                    sensitivity, no verdict 144   of 144
+  ANISO  c3 aniso-iso  pooled  W-full                                      95% interval contains 0 18  DIFFERENCE 18   of 36
+  ANISO  c3 aniso-iso  pooled  W-ge                                        sensitivity, no verdict 18   of 18
+  ANISO  c3 aniso-iso  unit  W-full                                        95% interval contains 0 87  DIFFERENCE 57   of 144
+  ANISO  c3 aniso-iso  unit  W-ge                                          sensitivity, no verdict 72   of 72
+  CLIFF  c3 aniso-iso  pooled  W-full                                      95% interval contains 0 3  DIFFERENCE 15   of 18
+  CLIFF  c3 aniso-iso  unit  W-full                                        95% interval contains 0 19  DIFFERENCE 53   of 72
+  CONC  CON(0.01, 0.1)  pooled  W-full                                     DIFFERENCE 1   of 1
+  CONC  CON(0.01, 0.1)  pooled  W-ge                                       sensitivity, no verdict 1   of 1
+  CONC  CON(0.01, 0.1)  unit  W-full                                       95% interval contains 0 5  DIFFERENCE 7   of 12
+  CONC  CON(0.01, 0.1)  unit  W-ge                                         sensitivity, no verdict 12   of 12
+  CONC  CON(0.01, 0.5) = contrast 7  pooled  W-full                        DIFFERENCE 1   of 1
+  CONC  CON(0.01, 0.5) = contrast 7  pooled  W-ge                          sensitivity, no verdict 1   of 1
+  CONC  CON(0.01, 0.5) = contrast 7  unit  W-full                          95% interval contains 0 5  DIFFERENCE 7   of 12
+  CONC  CON(0.01, 0.5) = contrast 7  unit  W-ge                            sensitivity, no verdict 12   of 12
+  CONC  CON(0.1, 0.5)  pooled  W-full                                      95% interval contains 0 1   of 1
+  CONC  CON(0.1, 0.5)  unit  W-full                                        95% interval contains 0 12   of 12
+  CONC  REGF b_d  pooled  W-full                                           DIFFERENCE 1   of 1
+  CONC  REGF b_d  pooled  W-ge                                             sensitivity, no verdict 1   of 1
+  CONC  REGF b_d  unit  W-full                                             95% interval contains 0 10  DIFFERENCE 2   of 12
+  CONC  REGF b_d  unit  W-ge                                               sensitivity, no verdict 12   of 12
+  CONC  REGF b_dtau  pooled  W-full                                        DIFFERENCE 1   of 1
+  CONC  REGF b_dtau  pooled  W-ge                                          sensitivity, no verdict 1   of 1
+  CONC  REGF b_dtau  unit  W-full                                          95% interval contains 0 5  DIFFERENCE 7   of 12
+  CONC  REGF b_dtau  unit  W-ge                                            sensitivity, no verdict 12   of 12
+  CONC  REGF b_tau  pooled  W-full                                         DIFFERENCE 1   of 1
+  CONC  REGF b_tau  pooled  W-ge                                           sensitivity, no verdict 1   of 1
+  CONC  REGF b_tau  unit  W-full                                           95% interval contains 0 6  DIFFERENCE 6   of 12
+  CONC  REGF b_tau  unit  W-ge                                             sensitivity, no verdict 12   of 12
+  CONC  TMM  pooled  W-full                                                DIFFERENCE 1   of 1
+  CONC  TMM  pooled  W-ge                                                  sensitivity, no verdict 1   of 1
+  CONC  TMM  unit  W-full                                                  95% interval contains 0 3  DIFFERENCE 9   of 12
+  CONC  TMM  unit  W-ge                                                    sensitivity, no verdict 12   of 12
+  CONC  audit ratio(J) d40-d2  pooled  audit                               95% interval contains 0 4  DIFFERENCE 26   of 30
+  CONC  audit ratio(J) d40-d2  unit  audit                                 95% interval contains 0 157  DIFFERENCE 203   of 360
+  CONC  c1 dimension d40-d2  pooled  W-full                                95% interval contains 0 2  DIFFERENCE 1   of 3
+  CONC  c1 dimension d40-d2  pooled  W-ge                                  sensitivity, no verdict 1   of 1
+  CONC  c1 dimension d40-d2  unit  W-full                                  95% interval contains 0 23  DIFFERENCE 13   of 36
+  CONC  c1 dimension d40-d2  unit  W-ge                                    sensitivity, no verdict 12   of 12
+  CONC  c2 target 0.01-0.5  pooled  W-full                                 95% interval contains 0 2  DIFFERENCE 2   of 4
+  CONC  c2 target 0.01-0.5  pooled  W-ge                                   sensitivity, no verdict 4   of 4
+  CONC  c2 target 0.01-0.5  unit  W-full                                   95% interval contains 0 23  DIFFERENCE 25   of 48
+  CONC  c2 target 0.01-0.5  unit  W-ge                                     sensitivity, no verdict 48   of 48
+  CONC  c4 law mix-0.1-centred  pooled  W-full                             95% interval contains 0 7  DIFFERENCE 5   of 12
+  CONC  c4 law mix-0.1-centred  pooled  W-ge                               sensitivity, no verdict 4   of 4
+  CONC  c4 law mix-0.1-centred  unit  W-full                               95% interval contains 0 49  DIFFERENCE 23   of 72
+  CONC  c4 law mix-0.1-centred  unit  W-ge                                 sensitivity, no verdict 24   of 24
+  GEOM  CON(0.01, 0.1)  pooled  W-full                                     DIFFERENCE 1   of 1
+  GEOM  CON(0.01, 0.1)  pooled  W-ge                                       sensitivity, no verdict 1   of 1
+  GEOM  CON(0.01, 0.1)  unit  W-full                                       95% interval contains 0 8  DIFFERENCE 6   of 14
+  GEOM  CON(0.01, 0.1)  unit  W-ge                                         sensitivity, no verdict 14   of 14
+  GEOM  CON(0.01, 0.3) = contrast 7  pooled  W-full                        DIFFERENCE 1   of 1
+  GEOM  CON(0.01, 0.3) = contrast 7  pooled  W-ge                          sensitivity, no verdict 1   of 1
+  GEOM  CON(0.01, 0.3) = contrast 7  unit  W-full                          95% interval contains 0 3  DIFFERENCE 11   of 14
+  GEOM  CON(0.01, 0.3) = contrast 7  unit  W-ge                            sensitivity, no verdict 14   of 14
+  GEOM  CON(0.1, 0.3)  pooled  W-full                                      DIFFERENCE 1   of 1
+  GEOM  CON(0.1, 0.3)  unit  W-full                                        95% interval contains 0 9  DIFFERENCE 5   of 14
+  GEOM  REGF b_d  pooled  W-full                                           DIFFERENCE 1   of 1
+  GEOM  REGF b_d  pooled  W-ge                                             sensitivity, no verdict 1   of 1
+  GEOM  REGF b_d  unit  W-full                                             95% interval contains 0 8  DIFFERENCE 6   of 14
+  GEOM  REGF b_d  unit  W-ge                                               sensitivity, no verdict 14   of 14
+  GEOM  REGF b_dtau  pooled  W-full                                        DIFFERENCE 1   of 1
+  GEOM  REGF b_dtau  pooled  W-ge                                          sensitivity, no verdict 1   of 1
+  GEOM  REGF b_dtau  unit  W-full                                          95% interval contains 0 2  DIFFERENCE 12   of 14
+  GEOM  REGF b_dtau  unit  W-ge                                            sensitivity, no verdict 14   of 14
+  GEOM  REGF b_tau  pooled  W-full                                         DIFFERENCE 1   of 1
+  GEOM  REGF b_tau  pooled  W-ge                                           sensitivity, no verdict 1   of 1
+  GEOM  REGF b_tau  unit  W-full                                           95% interval contains 0 10  DIFFERENCE 4   of 14
+  GEOM  REGF b_tau  unit  W-ge                                             sensitivity, no verdict 14   of 14
+  GEOM  TMM  pooled  W-full                                                DIFFERENCE 1   of 1
+  GEOM  TMM  pooled  W-ge                                                  sensitivity, no verdict 1   of 1
+  GEOM  TMM  unit  W-full                                                  95% interval contains 0 3  DIFFERENCE 11   of 14
+  GEOM  TMM  unit  W-ge                                                    sensitivity, no verdict 14   of 14
+  GEOM  audit ratio(J) d40-d5  pooled  audit                               95% interval contains 0 17  DIFFERENCE 63   of 80
+  GEOM  audit ratio(J) d40-d5  unit  audit                                 95% interval contains 0 658  DIFFERENCE 462   of 1120
+  GEOM  c1 dimension d40-d5  pooled  W-full                                95% interval contains 0 2  DIFFERENCE 6   of 8
+  GEOM  c1 dimension d40-d5  pooled  W-ge                                  sensitivity, no verdict 5   of 5
+  GEOM  c1 dimension d40-d5  unit  W-full                                  95% interval contains 0 56  DIFFERENCE 56   of 112
+  GEOM  c1 dimension d40-d5  unit  W-ge                                    sensitivity, no verdict 70   of 70
+  GEOM  c2 target 0.01-0.3  pooled  W-full                                 DIFFERENCE 3   of 3
+  GEOM  c2 target 0.01-0.3  pooled  W-ge                                   sensitivity, no verdict 3   of 3
+  GEOM  c2 target 0.01-0.3  unit  W-full                                   95% interval contains 0 15  DIFFERENCE 27   of 42
+  GEOM  c2 target 0.01-0.3  unit  W-ge                                     sensitivity, no verdict 42   of 42
+  ONSET  c3 aniso-iso  pooled  W-full                                      95% interval contains 0 2  DIFFERENCE 28   of 30
+  ONSET  c3 aniso-iso  unit  W-full                                        95% interval contains 0 26  DIFFERENCE 64   of 90
+  ONSET  c6 onset d80-d5  pooled  W-full                                   95% interval contains 0 1  DIFFERENCE 1   of 2
+  ONSET  c6 onset d80-d5  unit  W-full                                     95% interval contains 0 6   of 6
+  ONSET  severity S(0.75,3) boundary-spanning  pooled  W-full              DIFFERENCE 10   of 10
+  ONSET  severity S(0.75,3) boundary-spanning  unit  W-full                95% interval contains 0 5  DIFFERENCE 25   of 30
+  ONSET  severity S(0.75,3) boundary-spanning trend per doubling of d  pooled  W-full 95% interval contains 0 1  DIFFERENCE 1   of 2
+  ONSET  severity S(0.75,3) boundary-spanning trend per doubling of d  unit  W-full 95% interval contains 0 3  DIFFERENCE 3   of 6
+  ONSET  severity S(1,3)  pooled  W-full                                   DIFFERENCE 10   of 10
+  ONSET  severity S(1,3)  unit  W-full                                     95% interval contains 0 5  DIFFERENCE 25   of 30
+  ONSET  severity S(1,3) trend per doubling of d  pooled  W-full           95% interval contains 0 1  DIFFERENCE 1   of 2
+  ONSET  severity S(1,3) trend per doubling of d  unit  W-full             95% interval contains 0 3  DIFFERENCE 3   of 6
+  PROBEARM  CON(0.01, 0.1)  pooled  W-full                                 DIFFERENCE 1   of 1
+  PROBEARM  CON(0.01, 0.1)  pooled  W-ge                                   sensitivity, no verdict 1   of 1
+  PROBEARM  CON(0.01, 0.1)  unit  W-full                                   95% interval contains 0 3  DIFFERENCE 9   of 12
+  PROBEARM  CON(0.01, 0.1)  unit  W-ge                                     sensitivity, no verdict 12   of 12
+  PROBEARM  CON(0.01, 0.5) = contrast 7  pooled  W-full                    DIFFERENCE 1   of 1
+  PROBEARM  CON(0.01, 0.5) = contrast 7  pooled  W-ge                      sensitivity, no verdict 1   of 1
+  PROBEARM  CON(0.01, 0.5) = contrast 7  unit  W-full                      95% interval contains 0 3  DIFFERENCE 9   of 12
+  PROBEARM  CON(0.01, 0.5) = contrast 7  unit  W-ge                        sensitivity, no verdict 12   of 12
+  PROBEARM  CON(0.1, 0.5)  pooled  W-full                                  95% interval contains 0 1   of 1
+  PROBEARM  CON(0.1, 0.5)  unit  W-full                                    95% interval contains 0 10  DIFFERENCE 2   of 12
+  PROBEARM  REGF b_d  pooled  W-full                                       DIFFERENCE 1   of 1
+  PROBEARM  REGF b_d  pooled  W-ge                                         sensitivity, no verdict 1   of 1
+  PROBEARM  REGF b_d  unit  W-full                                         95% interval contains 0 8  DIFFERENCE 4   of 12
+  PROBEARM  REGF b_d  unit  W-ge                                           sensitivity, no verdict 12   of 12
+  PROBEARM  REGF b_dtau  pooled  W-full                                    DIFFERENCE 1   of 1
+  PROBEARM  REGF b_dtau  pooled  W-ge                                      sensitivity, no verdict 1   of 1
+  PROBEARM  REGF b_dtau  unit  W-full                                      95% interval contains 0 2  DIFFERENCE 10   of 12
+  PROBEARM  REGF b_dtau  unit  W-ge                                        sensitivity, no verdict 12   of 12
+  PROBEARM  REGF b_tau  pooled  W-full                                     DIFFERENCE 1   of 1
+  PROBEARM  REGF b_tau  pooled  W-ge                                       sensitivity, no verdict 1   of 1
+  PROBEARM  REGF b_tau  unit  W-full                                       95% interval contains 0 5  DIFFERENCE 7   of 12
+  PROBEARM  REGF b_tau  unit  W-ge                                         sensitivity, no verdict 12   of 12
+  PROBEARM  TMM  pooled  W-full                                            DIFFERENCE 1   of 1
+  PROBEARM  TMM  pooled  W-ge                                              sensitivity, no verdict 1   of 1
+  PROBEARM  TMM  unit  W-full                                              95% interval contains 0 2  DIFFERENCE 10   of 12
+  PROBEARM  TMM  unit  W-ge                                                sensitivity, no verdict 12   of 12
+  PROBEARM  audit ratio(J) d40-d2  pooled  audit                           95% interval contains 0 6  DIFFERENCE 24   of 30
+  PROBEARM  audit ratio(J) d40-d2  unit  audit                             95% interval contains 0 187  DIFFERENCE 173   of 360
+  PROBEARM  c1 dimension d40-d2  pooled  W-full                            95% interval contains 0 1  DIFFERENCE 2   of 3
+  PROBEARM  c1 dimension d40-d2  pooled  W-ge                              sensitivity, no verdict 1   of 1
+  PROBEARM  c1 dimension d40-d2  unit  W-full                              95% interval contains 0 21  DIFFERENCE 15   of 36
+  PROBEARM  c1 dimension d40-d2  unit  W-ge                                sensitivity, no verdict 12   of 12
+  PROBEARM  c2 target 0.01-0.5  pooled  W-full                             95% interval contains 0 1  DIFFERENCE 3   of 4
+  PROBEARM  c2 target 0.01-0.5  pooled  W-ge                               sensitivity, no verdict 4   of 4
+  PROBEARM  c2 target 0.01-0.5  unit  W-full                               95% interval contains 0 25  DIFFERENCE 23   of 48
+  PROBEARM  c2 target 0.01-0.5  unit  W-ge                                 sensitivity, no verdict 48   of 48
+  PROBEARM  c4 law mix-0.1-centred  pooled  W-full                         95% interval contains 0 7  DIFFERENCE 5   of 12
+  PROBEARM  c4 law mix-0.1-centred  pooled  W-ge                           sensitivity, no verdict 4   of 4
+  PROBEARM  c4 law mix-0.1-centred  unit  W-full                           95% interval contains 0 49  DIFFERENCE 23   of 72
+  PROBEARM  c4 law mix-0.1-centred  unit  W-ge                             sensitivity, no verdict 24   of 24
+  REFSIZE  c5 J_inf 100000-12500  pooled  W-full                           95% interval contains 0 1   of 1
+  REFSIZE  c5 J_inf 100000-12500  unit  W-full                             95% interval contains 0 3   of 3
+  RMAP  c2 target 0.01-0.5  pooled  W-full                                 DIFFERENCE 20   of 20
+  RMAP  c2 target 0.01-0.5  pooled  W-ge                                   sensitivity, no verdict 20   of 20
+  RMAP  c2 target 0.01-0.5  unit  W-full                                   95% interval contains 0 2  DIFFERENCE 58   of 60
+  RMAP  c2 target 0.01-0.5  unit  W-ge                                     sensitivity, no verdict 60   of 60
+  RMAP  c3 aniso-iso  pooled  W-full                                       95% interval contains 0 11  DIFFERENCE 29   of 40
+  RMAP  c3 aniso-iso  pooled  W-ge                                         sensitivity, no verdict 20   of 20
+  RMAP  c3 aniso-iso  unit  W-full                                         95% interval contains 0 41  DIFFERENCE 79   of 120
+  RMAP  c3 aniso-iso  unit  W-ge                                           sensitivity, no verdict 60   of 60
+  RMAP  panel b1  pooled  W-full                                           DIFFERENCE 4   of 4
+  RMAP  panel b1  pooled  W-ge                                             sensitivity, no verdict 4   of 4
+  RMAP  panel b1  unit  W-full                                             95% interval contains 0 1  DIFFERENCE 11   of 12
+  RMAP  panel b1  unit  W-ge                                               sensitivity, no verdict 12   of 12
+  RMAP  panel b2  pooled  W-full                                           95% interval contains 0 1  DIFFERENCE 3   of 4
+  RMAP  panel b2  pooled  W-ge                                             sensitivity, no verdict 4   of 4
+  RMAP  panel b2  unit  W-full                                             95% interval contains 0 4  DIFFERENCE 8   of 12
+  RMAP  panel b2  unit  W-ge                                               sensitivity, no verdict 12   of 12
+  RMAP  panel b3  pooled  W-full                                           95% interval contains 0 3  DIFFERENCE 1   of 4
+  RMAP  panel b3  pooled  W-ge                                             sensitivity, no verdict 4   of 4
+  RMAP  panel b3  unit  W-full                                             95% interval contains 0 9  DIFFERENCE 3   of 12
+  RMAP  panel b3  unit  W-ge                                               sensitivity, no verdict 12   of 12
+  SIGMA  A2 coef of slope on r  pooled  W-full                             95% interval contains 0 3  DIFFERENCE 9   of 12
+  SIGMA  A2 coef of slope on r  pooled  W-ge                               sensitivity, no verdict 6   of 6
+  SIGMA  A2 coef of slope on r  unit  W-full                               95% interval contains 0 29  DIFFERENCE 19   of 48
+  SIGMA  A2 coef of slope on r  unit  W-ge                                 sensitivity, no verdict 24   of 24
+  SIGMA  c2 target 0.01-0.1  pooled  W-full                                DIFFERENCE 36   of 36
+  SIGMA  c2 target 0.01-0.1  pooled  W-ge                                  sensitivity, no verdict 36   of 36
+  SIGMA  c2 target 0.01-0.1  unit  W-full                                  95% interval contains 0 37  DIFFERENCE 107   of 144
+  SIGMA  c2 target 0.01-0.1  unit  W-ge                                    sensitivity, no verdict 144   of 144
+  SIGMA  c3 aniso-iso  pooled  W-full                                      95% interval contains 0 10  DIFFERENCE 26   of 36
+  SIGMA  c3 aniso-iso  pooled  W-ge                                        sensitivity, no verdict 18   of 18
+  SIGMA  c3 aniso-iso  unit  W-full                                        95% interval contains 0 75  DIFFERENCE 69   of 144
+  SIGMA  c3 aniso-iso  unit  W-ge                                          sensitivity, no verdict 72   of 72
+  TAU8  CON(0.01, 0.1)  pooled  W-full                                     95% interval contains 0 1   of 1
+  TAU8  CON(0.01, 0.1)  pooled  W-ge                                       sensitivity, no verdict 1   of 1
+  TAU8  CON(0.01, 0.1)  unit  W-full                                       95% interval contains 0 6   of 6
+  TAU8  CON(0.01, 0.1)  unit  W-ge                                         sensitivity, no verdict 6   of 6
+  TAU8  CON(0.01, 0.3) = contrast 7  pooled  W-full                        DIFFERENCE 1   of 1
+  TAU8  CON(0.01, 0.3) = contrast 7  pooled  W-ge                          sensitivity, no verdict 1   of 1
+  TAU8  CON(0.01, 0.3) = contrast 7  unit  W-full                          95% interval contains 0 1  DIFFERENCE 5   of 6
+  TAU8  CON(0.01, 0.3) = contrast 7  unit  W-ge                            sensitivity, no verdict 6   of 6
+  TAU8  CON(0.1, 0.3)  pooled  W-full                                      DIFFERENCE 1   of 1
+  TAU8  CON(0.1, 0.3)  unit  W-full                                        95% interval contains 0 4  DIFFERENCE 2   of 6
+  TAU8  REGF b_d  pooled  W-full                                           95% interval contains 0 1   of 1
+  TAU8  REGF b_d  pooled  W-ge                                             sensitivity, no verdict 1   of 1
+  TAU8  REGF b_d  unit  W-full                                             95% interval contains 0 5  DIFFERENCE 1   of 6
+  TAU8  REGF b_d  unit  W-ge                                               sensitivity, no verdict 6   of 6
+  TAU8  REGF b_dtau  pooled  W-full                                        DIFFERENCE 1   of 1
+  TAU8  REGF b_dtau  pooled  W-ge                                          sensitivity, no verdict 1   of 1
+  TAU8  REGF b_dtau  unit  W-full                                          95% interval contains 0 1  DIFFERENCE 5   of 6
+  TAU8  REGF b_dtau  unit  W-ge                                            sensitivity, no verdict 6   of 6
+  TAU8  REGF b_tau  pooled  W-full                                         95% interval contains 0 1   of 1
+  TAU8  REGF b_tau  pooled  W-ge                                           sensitivity, no verdict 1   of 1
+  TAU8  REGF b_tau  unit  W-full                                           95% interval contains 0 3  DIFFERENCE 3   of 6
+  TAU8  REGF b_tau  unit  W-ge                                             sensitivity, no verdict 6   of 6
+  TAU8  TMM  pooled  W-full                                                DIFFERENCE 1   of 1
+  TAU8  TMM  pooled  W-ge                                                  sensitivity, no verdict 1   of 1
+  TAU8  TMM  unit  W-full                                                  95% interval contains 0 3  DIFFERENCE 3   of 6
+  TAU8  TMM  unit  W-ge                                                    sensitivity, no verdict 6   of 6
+  TAU8  audit ratio(J) d40-d5  pooled  audit                               95% interval contains 0 16  DIFFERENCE 64   of 80
+  TAU8  audit ratio(J) d40-d5  unit  audit                                 95% interval contains 0 219  DIFFERENCE 261   of 480
+  TAU8  c1 dimension d40-d5  pooled  W-full                                95% interval contains 0 1  DIFFERENCE 7   of 8
+  TAU8  c1 dimension d40-d5  pooled  W-ge                                  sensitivity, no verdict 5   of 5
+  TAU8  c1 dimension d40-d5  unit  W-full                                  95% interval contains 0 18  DIFFERENCE 30   of 48
+  TAU8  c1 dimension d40-d5  unit  W-ge                                    sensitivity, no verdict 30   of 30
+  TAU8  c2 target 0.01-0.3  pooled  W-full                                 DIFFERENCE 3   of 3
+  TAU8  c2 target 0.01-0.3  pooled  W-ge                                   sensitivity, no verdict 3   of 3
+  TAU8  c2 target 0.01-0.3  unit  W-full                                   95% interval contains 0 5  DIFFERENCE 13   of 18
+  TAU8  c2 target 0.01-0.3  unit  W-ge                                     sensitivity, no verdict 18   of 18
+
+----------------------------------------------------------------------------------------------------
+C5  equivalence, c3 per unit, W-full
+----------------------------------------------------------------------------------------------------
+  ANISO  all d             EQUIVALENT (90%, TOST 5% each side) 73  equivalence not attainable at this margin 6  equivalence not established 65   of 144
+  ANISO  d=10              EQUIVALENT (90%, TOST 5% each side) 30  equivalence not attainable at this margin 1  equivalence not established 17   of 48
+  ANISO  d=40              EQUIVALENT (90%, TOST 5% each side) 20  equivalence not attainable at this margin 1  equivalence not established 27   of 48
+  ANISO  d=5               EQUIVALENT (90%, TOST 5% each side) 23  equivalence not attainable at this margin 4  equivalence not established 21   of 48
+  CLIFF  all d             EQUIVALENT (90%, TOST 5% each side) 8  equivalence not attainable at this margin 17  equivalence not established 47   of 72
+  ONSET  all d             EQUIVALENT (90%, TOST 5% each side) 6  equivalence not attainable at this margin 19  equivalence not established 65   of 90
+  RMAP  all d              EQUIVALENT (90%, TOST 5% each side) 13  equivalence not attainable at this margin 28  equivalence not established 79   of 120
+  SIGMA  all d             EQUIVALENT (90%, TOST 5% each side) 48  equivalence not attainable at this margin 9  equivalence not established 87   of 144
+  SIGMA  d=10              EQUIVALENT (90%, TOST 5% each side) 17  equivalence not established 31   of 48
+  SIGMA  d=40              EQUIVALENT (90%, TOST 5% each side) 17  equivalence not attainable at this margin 2  equivalence not established 29   of 48
+  SIGMA  d=5               EQUIVALENT (90%, TOST 5% each side) 14  equivalence not attainable at this margin 7  equivalence not established 27   of 48
+
+----------------------------------------------------------------------------------------------------
+C6  reference adequacy per (module, label)
+----------------------------------------------------------------------------------------------------
+  boundary  beta, not adequate (C5m FAIL) not adequate 8   of 8
+  boundary  beta, not adequate (C5m FAIL, D1 FAIL) not adequate 6   of 6
+  boundary  target               adequate 130   of 130
+  crossed  beta, not adequate (C5m FAIL) not adequate 1   of 1
+  crossed  beta, not adequate (C5m FAIL, D1 FAIL) not adequate 2   of 2
+  crossed  target                adequate 21   of 21
+  mechanism  beta, not adequate (C5m FAIL) not adequate 4   of 4
+  mechanism  beta, not adequate (C5m FAIL, D1 FAIL) not adequate 3   of 3
+  mechanism  target              adequate 137   of 137
+  sigma  beta, not adequate (C5m FAIL) not adequate 1   of 1
+  sigma  beta, not adequate (C5m FAIL, D1 FAIL) not adequate 2   of 2
+  sigma  target                  adequate 21   of 21
+
+----------------------------------------------------------------------------------------------------
+C7  audit floor flags per row
+----------------------------------------------------------------------------------------------------
+  CONC         floor 192  no floor flag 1248   of 1440
+  GEOM         floor 462  no floor flag 2898   of 3360
+  PROBEARM     floor 192  no floor flag 1248   of 1440
+  TAU8         floor 198  no floor flag 1242   of 1440
+
+  done; nothing written
