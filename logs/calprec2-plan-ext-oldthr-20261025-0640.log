@@ -1,0 +1,132 @@
+================================================================================================
+CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, measured at 64M and 256M
+================================================================================================
+  python   3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   machine x86_64   cpus 2   workers 4   start fork
+  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1
+  archive  /home/rahul/Research/cbo-gap-final/zenodo-v1
+  script   sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  mode     plan   rows RMAP,CLIFF,ONSET   shard 0 of 1   shard target 0.5 x 21600 s
+  ceiling  --ceiling 21600 s (default; default 21600 s: a margin choice, not Kaggle's limit; the cap 43200 s is enforced by G-STOP)
+  stop     --stop-after 36000 s from the start of task execution, applied in full mode only (default 36000 s: a margin choice, not a measurement)
+  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   reference sizes 64000000 and 256000000, reps 6   C' reps [6, 7, 8, 9, 10, 11]   chunk 250000
+  C5m <= 0.054682 at 64000000  D1 <= 0.025 between 64000000 and 256000000  C1 <= 0.05  C6 <= 0.05  E1 <= 1e-12 at 64000000 rep 0  RSS <= 3072 MB
+  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 smoke 35
+  throughput  runs/calprec2-smoke-kaggle-20261011-121225
+
+------------------------------------------------------------------------------------------------
+V1 -- ARCHIVE IDENTITY (imported modules' own files)
+------------------------------------------------------------------------------------------------
+  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok
+  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok
+  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok
+  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok
+  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok
+  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok
+  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok
+  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok
+  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok
+  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok
+  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok
+  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok
+  V1 PASS
+
+------------------------------------------------------------------------------------------------
+V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts
+------------------------------------------------------------------------------------------------
+  RMAP      M       regimemap.py 279-279 --realisations  ok
+  RMAP      diffs   regimemap.py 288-288 diffs           ok
+  RMAP      dims    regimemap.py 300-302 dimsM           ok
+  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok
+  RMAP      objs    regimemap.py 289-289 objs            ok
+  RMAP      rs      regimemap.py 300-302 rsM             ok
+  RMAP      taus    regimemap.py 300-302 tausM           ok
+  CLIFF     M       cliff.py 244-244 --realisations  ok
+  CLIFF     diffs   cliff.py 253-253 diffs           ok
+  CLIFF     dims    cliff.py 260-264 dims            ok
+  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok
+  CLIFF     objs    cliff.py 260-264 objs            ok
+  CLIFF     rs      cliff.py 260-264 rs              ok
+  CLIFF     taus    cliff.py 260-264 taus            ok
+  ONSET     M       regimemap.py 279-279 --realisations  ok
+  ONSET     diffs   regimemap.py 288-288 diffs           ok
+  ONSET     dims    regimemap.py 300-302 dimsD           ok
+  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok
+  ONSET     objs    regimemap.py 289-289 objs            ok
+  ONSET     rs      regimemap.py 300-302 rsD             ok
+  ONSET     tau     regimemap.py 304-304 tauD            ok
+  RMAP       24 calibration cells x  10 =  240  (Table 2  240)  ok
+  CLIFF       8 calibration cells x  18 =  144  (Table 2  144)  ok
+  ONSET      15 calibration cells x  12 =  180  (Table 2  180)  ok
+  V0 PASS
+
+------------------------------------------------------------------------------------------------
+V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)
+------------------------------------------------------------------------------------------------
+  cliff      X0 = rng.standard_normal((Jinf, d)) + xs  ok
+  regimemap  X0 = rng.standard_normal((Jinf, d))  ok
+  V2 PASS
+
+------------------------------------------------------------------------------------------------
+CELLS
+------------------------------------------------------------------------------------------------
+  cliff         8 deduplicated calibration cells
+  regimemap    33 deduplicated calibration cells
+  total 41
+  this job: 41 cells
+
+------------------------------------------------------------------------------------------------
+G-CAP -- ESTIMATE for this job (perfect scaling; barrier idle and tails ignored; NOT a bound)
+------------------------------------------------------------------------------------------------
+  best case (no cell adequate) 0 s   worst-case estimate (every cell adequate) 0 s   at 4 workers   ceiling 21600 s (default)
+  largest single task, estimated 0 s
+  41 cells lack throughput: cliff|ackley|10|centred|0.1, cliff|ackley|40|centred|0.1, cliff|rastrigin|10|centred|0.1, cliff|rastrigin|40|centred|0.1, cliff|rosenbrock|10|centred|0.1
+
+------------------------------------------------------------------------------------------------
+ROWS SERVED BY EACH CELL (this job)
+------------------------------------------------------------------------------------------------
+  cliff|ackley|10|centred|0.1   rows CLIFF
+  cliff|ackley|40|centred|0.1   rows CLIFF
+  cliff|rastrigin|10|centred|0.1   rows CLIFF
+  cliff|rastrigin|40|centred|0.1   rows CLIFF
+  cliff|rosenbrock|10|centred|0.1   rows CLIFF
+  cliff|rosenbrock|40|centred|0.1   rows CLIFF
+  cliff|sphere|10|centred|0.1   rows CLIFF
+  cliff|sphere|40|centred|0.1   rows CLIFF
+  regimemap|ackley|10|centred|0.01   rows RMAP
+  regimemap|ackley|10|centred|0.03   rows RMAP
+  regimemap|ackley|10|centred|0.1   rows RMAP,ONSET
+  regimemap|ackley|10|centred|0.5   rows RMAP
+  regimemap|ackley|20|centred|0.1   rows ONSET
+  regimemap|ackley|40|centred|0.01   rows RMAP
+  regimemap|ackley|40|centred|0.03   rows RMAP
+  regimemap|ackley|40|centred|0.1   rows RMAP,ONSET
+  regimemap|ackley|40|centred|0.5   rows RMAP
+  regimemap|ackley|5|centred|0.1   rows ONSET
+  regimemap|ackley|80|centred|0.1   rows ONSET
+  regimemap|rastrigin|10|centred|0.01   rows RMAP
+  regimemap|rastrigin|10|centred|0.03   rows RMAP
+  regimemap|rastrigin|10|centred|0.1   rows RMAP,ONSET
+  regimemap|rastrigin|10|centred|0.5   rows RMAP
+  regimemap|rastrigin|20|centred|0.1   rows ONSET
+  regimemap|rastrigin|40|centred|0.01   rows RMAP
+  regimemap|rastrigin|40|centred|0.03   rows RMAP
+  regimemap|rastrigin|40|centred|0.1   rows RMAP,ONSET
+  regimemap|rastrigin|40|centred|0.5   rows RMAP
+  regimemap|rastrigin|5|centred|0.1   rows ONSET
+  regimemap|rastrigin|80|centred|0.1   rows ONSET
+  regimemap|sphere|10|centred|0.01   rows RMAP
+  regimemap|sphere|10|centred|0.03   rows RMAP
+  regimemap|sphere|10|centred|0.1   rows RMAP,ONSET
+  regimemap|sphere|10|centred|0.5   rows RMAP
+  regimemap|sphere|20|centred|0.1   rows ONSET
+  regimemap|sphere|40|centred|0.01   rows RMAP
+  regimemap|sphere|40|centred|0.03   rows RMAP
+  regimemap|sphere|40|centred|0.1   rows RMAP,ONSET
+  regimemap|sphere|40|centred|0.5   rows RMAP
+  regimemap|sphere|5|centred|0.1   rows ONSET
+  regimemap|sphere|80|centred|0.1   rows ONSET
+
+PLAN MODE: no draws, nothing written.
