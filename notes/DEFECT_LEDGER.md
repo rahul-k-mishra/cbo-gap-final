@@ -85,6 +85,8 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   and CAL collapse into one fixed-beta experiment). The seed-paired probe
   arm (N17) gives a measured probe-versus-fixed difference. OPEN until the
   text is rewritten and verified by a rendered diff.
+  2026-10-25: the seed-paired arm was not implemented (N40). The second
+  half of the disposition does not hold as written.
 - R8 (ref, T). sn-article.tex line 348 writes E_J ~ C J^{-gamma} with
   gamma-hat ~ -1 as the fitted slope. Write E_J ~ C J^{gamma}; recheck every
   sign-bearing definition. OPEN.
@@ -1683,12 +1685,81 @@ instruction of 2026-10-15.
   - Summary lines: "statistics written: 6282", "no FLAG", "wall 2945.6
     s   peak RSS (main process) 229.1 MB". Per-worker RSS is not printed.
     No measurement in this run governs a trajectory design (rule 6).
-  - Not yet counted. These counts are not printed in the log: rate
-    verdicts per row and stratum, equivalence verdicts per paired row,
-    DIFFERENCE counts per quantity, cell-quality flags, adequacy labels
-    and audit floor flags. scripts/rerun_tally.py (written 2026-10-25,
-    read-only, writes nothing) prints them from the CSVs. To be recorded
-    here from its log.
+  - Counts. Source: logs/rerun-tally-20261025-0622.log (commit 415a166).
+    That is scripts/rerun_tally.py (sha256 0594a212...d5007), run by
+    Rahul on the laptop: python 3.12.3, numpy 2.5.3, 2 workers. V1
+    printed "ok" for all nine files, and the tally read 3225 cell rows,
+    6282 statistic rows, 336 adequacy rows and 7680 audit rows. The full
+    table is in the log; what follows is copied from it.
+    - C1, rate verdict "upper bound <= -1", W-full, yes of total. A cell
+      whose slope is exactly -1 reads "no" about 95% of the time.
+      - ADAPT 6 of 72. BETA-ISO 11 of 42. BETA-ANI 5 of 12. LAWPANEL 25
+        of 144. CONC 36 of 144. PROBEARM 31 of 144. TAU8 21 of 144.
+        GEOM 43 of 336. SYNTH 5 of 72. NAMED 4 of 36. HORIZON 10 of 24.
+        REFSIZE 1 of 12.
+      - SIGMA isotropic 20 of 144, anisotropic 2 of 144. ANISO isotropic
+        11 of 144, anisotropic 6 of 144. RMAP isotropic 19 of 120,
+        anisotropic 1 of 120. CLIFF isotropic 19 of 72, anisotropic 0 of
+        72. ONSET isotropic 30 of 90, anisotropic 1 of 90.
+      - TAU8 by tau_0: 0.3 4, 0.2 4, 0.1 6, 0.07 2, 0.05 2, 0.03 1, 0.02
+        0, 0.01 2, each of 18.
+      - CONC by tau_0: 0.5 7, 0.1 13, 0.01 16, each of 48.
+      - PROBEARM by tau_0: 0.5 9, 0.1 11, 0.01 11, each of 48.
+      - ADAPT: fixed 0.1 2, fixed 0.01 1, adaptive 0.1 3, adaptive 0.01
+        0, each of 18.
+      - HORIZON by T: 0.5 2, 1.0 4, 2.0 4, each of 8.
+      - REFSIZE: one "yes", at J_inf 50000; none at 12500, 25000 or
+        100000.
+      - SYNTH: tau_0 0.1 5 of 36, 0.01 0 of 36. NAMED: 0.1 3 of 18, 0.01
+        1 of 18.
+    - C2, by region (r < 1 admissible, r = 1 boundary, r > 1 outside),
+      yes of total:
+      - ONSET isotropic 6 of 15, 6 of 15, 18 of 60; anisotropic 1 of 15,
+        0 of 15, 0 of 60.
+      - RMAP isotropic 4 of 24, 5 of 24, 10 of 72; anisotropic 1 of 24,
+        0 of 24, 0 of 72.
+      - CLIFF isotropic 5 of 16, 3 of 8, 11 of 48; anisotropic 0 of 16,
+        0 of 8, 0 of 48.
+      - SIGMA admissible only: isotropic 20 of 144, anisotropic 2 of 144.
+      - ANISO arm B (admissible): isotropic 7 of 72, anisotropic 3 of 72.
+        Arm A (no r): isotropic 4 of 72, anisotropic 3 of 72.
+    - C3: no cell row in any window has M below full, a nonfinite count
+      above 0 or a flag.
+    - C4, selected (pooled unless stated, W-full):
+      - CONC c1: 1 of 3 pooled DIFFERENCE, 13 of 36 per unit.
+      - CONC REGF b_dtau: pooled DIFFERENCE; 7 of 12 units.
+      - TAU8 c1: 7 of 8 pooled. GEOM c1: 6 of 8 pooled.
+      - ONSET c3: 28 of 30 pooled, 64 of 90 per unit. RMAP c3: 29 of
+        40 pooled. SIGMA c3: 26 of 36. ANISO c3: 18 of 36. CLIFF c3: 15
+        of 18.
+      - RMAP panel b3: 1 of 4 pooled, 3 of 12 units. b1: 4 of 4 pooled,
+        11 of 12 units. b2: 3 of 4 pooled, 8 of 12 units.
+      - SIGMA A2: 9 of 12 pooled, 19 of 48 units.
+      - ONSET severity S(1,3): 10 of 10 pooled; trend 1 of 2 pooled.
+      - ONSET c6: 1 of 2 pooled, 0 of 6 units.
+      - REFSIZE c5: 0 of 1 pooled, 0 of 3 units.
+      - Audit per unit: CONC 203 of 360, PROBEARM 173 of 360, TAU8 261
+        of 480, GEOM 462 of 1120.
+    - C5, equivalence (c3 per unit, W-full), EQUIVALENT / not
+      attainable / not established:
+      - SIGMA 48 / 9 / 87 of 144 (d 5: 14 / 7 / 27; d 10: 17 / 0 / 31;
+        d 40: 17 / 2 / 29).
+      - ANISO 73 / 6 / 65 of 144 (d 5: 23 / 4 / 21; d 10: 30 / 1 / 17;
+        d 40: 20 / 1 / 27).
+      - RMAP 13 / 28 / 79 of 120. CLIFF 8 / 17 / 47 of 72. ONSET 6 / 19
+        / 65 of 90.
+    - C6, reference adequacy, calprec2 cells (label as printed):
+      - mechanism (CONC): target adequate 137 of 137; "beta, not
+        adequate (C5m FAIL)" 4; "beta, not adequate (C5m FAIL, D1 FAIL)"
+        3.
+      - boundary (TAU8): target adequate 130; C5m FAIL 8; C5m and D1
+        FAIL 6.
+      - crossed (ANISO): target adequate 21; C5m FAIL 1; C5m and D1 FAIL
+        2.
+      - sigma (SIGMA): target adequate 21; C5m FAIL 1; C5m and D1 FAIL
+        2.
+    - C7, audit floor flags: CONC 192 of 1440, PROBEARM 192 of 1440,
+      TAU8 198 of 1440, GEOM 462 of 3360.
   - Observation, not decided (Claude, from the archive source).
     regime.fit_predict (zenodo-v1/regime.py lines 409 to 422) standardizes
     the features but takes no log of covtr, disp, fvar or dist0, the
@@ -1702,8 +1773,32 @@ instruction of 2026-10-15.
     log of it is available. The lines quoted are identical in both copies
     of regime.py. Rahul to decide whether M3 is reported as is, with the
     property stated, or not at all.
-  OPEN until the tally is recorded and the manuscript text that uses
-  these numbers is written and verified by the rule-8 diff.
+  OPEN until the manuscript text that uses these numbers is written and
+  verified by the rule-8 diff. The tally is recorded above.
+
+- N40 (defect, design; found 2026-10-25). CONC and PROBEARM are not
+  seed-paired. N17 (Rahul, 2026-10-10) decided that the probe arm "runs
+  with the same seed key as its fixed-beta counterpart", so that the
+  probe-versus-fixed difference becomes a measured, paired one. R7's
+  disposition rests on that. The approved key layout
+  (notes/ANALYSIS_CRITERIA.md, seed-key layout, field 3) puts the owner
+  row's index in the key, and says CONC and PROBEARM "are not the same
+  experiment, and are not shared". The run follows the layout.
+  - Evidence: in the shard CSVs, ackley, d 2, centred, tau_0 0.5, rep 0
+    carries seed_key 20261016-81-3-2-0-2-0-500000-... in CONC and
+    20261016-81-4-2-0-2-0-500000-... in PROBEARM. Field 3 differs (3
+    against 4) and the rest agree. One cell was read; the layout implies
+    every cell.
+  - No CONC-against-PROBEARM contrast was pre-registered in
+    rerun_analysis.py, and none was computed.
+  - Consequence: there is no paired measurement of the probe-versus-fixed
+    difference. Any comparison of CONC with PROBEARM is between
+    independent replications, which is what referee point 7 objects to.
+  - Decision needed (Rahul): either drop the comparison, or report it as
+    unpaired with an interval for the difference of independent arms,
+    pre-registered before it is computed. A paired version would need a
+    new probe arm run with CONC's keys.
+  OPEN.
 
 ## Checked and found sound
 
