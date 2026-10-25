@@ -1,0 +1,4 @@
+cell,shard,rows
+cliff|sphere|10|centred|0.1,6,CLIFF
+regimemap|rastrigin|10|centred|0.1,6,RMAP;ONSET
+regimemap|sphere|40|centred|0.03,6,RMAP
