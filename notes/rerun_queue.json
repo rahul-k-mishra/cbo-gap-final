@@ -164,13 +164,15 @@
       "ledger": "N41"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "calprec2-ext-s0of15-a1",
+  "args": "--workers 4 --rows RMAP,CLIFF,ONSET --throughput runs/calprec2-smoke-ext-kaggle-20261025-065222 --stop-after 30000.0 --shard 0 --nshards 15",
+  "data_dirs": [
+    "runs/calprec2-smoke-ext-kaggle-20261025-065222"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -184,6 +186,15 @@
       "attempt": 1,
       "job": "",
       "note": "notes/queues/calprec2-ext.json; previous state archived to notes/queue-archive/20261025-085100-rerun-queue-done.json; N41/N42: 15 shards at the target, stop-after 30000; 64M peak at d=80 2476.5 MB under the 3072 MB budget; 17-row analysis reproduces byte-identically at 8c9b799"
+    },
+    {
+      "at": "2026-10-25T08:54:03+05:30",
+      "run": "laptop.20261025T032353Z",
+      "event": "intent",
+      "item": "ext-s0of15",
+      "attempt": 1,
+      "job": "calprec2-ext-s0of15-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
