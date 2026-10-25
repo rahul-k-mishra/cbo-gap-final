@@ -164,13 +164,15 @@
       "ledger": "N41"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "calprec2-ext-s1of15-a1",
+  "args": "--workers 4 --rows RMAP,CLIFF,ONSET --throughput runs/calprec2-smoke-ext-kaggle-20261025-065222 --stop-after 30000.0 --shard 1 --nshards 15",
+  "data_dirs": [
+    "runs/calprec2-smoke-ext-kaggle-20261025-065222"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -226,6 +228,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225: runner exit 0; now READY"
+    },
+    {
+      "at": "2026-10-25T10:47:18+05:30",
+      "run": "laptop.20261025T051710Z",
+      "event": "intent",
+      "item": "ext-s1of15",
+      "attempt": 1,
+      "job": "calprec2-ext-s1of15-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
