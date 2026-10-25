@@ -1,0 +1,10 @@
+row,fit,R2,R2_out,RMSE_out,note
+CONC,P3.4 target alone (log tau0),0.00017713301763988554,,,response: cell S-slope on W-full; mechanism.r2_of
+CONC,"P3.4 target + dimension (log tau0, log d)",0.10046017478396407,,,response: cell S-slope on W-full; mechanism.r2_of
+CONC,P3.4 target + dimension + objective dummies,0.1315705999461435,,,response: cell S-slope on W-full; mechanism.r2_of
+PROBEARM,P3.4 target alone (log tau0),0.03611958281276806,,,response: cell S-slope on W-full; mechanism.r2_of
+PROBEARM,"P3.4 target + dimension (log tau0, log d)",0.2242671761333439,,,response: cell S-slope on W-full; mechanism.r2_of
+PROBEARM,P3.4 target + dimension + objective dummies,0.27135478498234555,,,response: cell S-slope on W-full; mechanism.r2_of
+SYNTH->NAMED,P6.3 M1  dimension + target,0.6917205310227286,0.3432447522581903,0.08204259195794683,"regime.fit_predict; response cell S-slope (item 0), where the archive used the mean-curve slope"
+SYNTH->NAMED,P6.3 M2  + ESS trajectory,0.871252151069184,0.6741285695293404,0.057791070625334506,"regime.fit_predict; response cell S-slope (item 0), where the archive used the mean-curve slope"
+SYNTH->NAMED,P6.3 M3  + geometry,0.915169063337317,0.6157125087965047,0.06275751242548828,"regime.fit_predict; response cell S-slope (item 0), where the archive used the mean-curve slope"

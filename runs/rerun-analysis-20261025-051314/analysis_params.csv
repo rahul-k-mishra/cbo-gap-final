@@ -1,0 +1,12 @@
+name,value
+rerun_analysis_sha256,21a26205c27076598de559289466fa7cd8c8d3253d770eb8a3f44f8f8c3767a5
+plan,runs/rerun-plan-20261023-112643
+plan_sha256,4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2
+runs,runs/rerun-arch-s0of4-a1-kaggle-20261024-020220;runs/rerun-arch-s1of4-a1-kaggle-20261024-133226;runs/rerun-arch-s2of4-a1-kaggle-20261024-160215;runs/rerun-arch-s3of4-a1-kaggle-20261024-200233;runs/rerun-cal-s0of2-a1-kaggle-20261025-003238;runs/rerun-cal-s1of2-a1-kaggle-20261025-050238
+B,10000
+python,3.12.3
+numpy,2.5.3
+workers,2
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+rerun_sha256,756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e
+rerunlib_sha256,5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06
