@@ -1,0 +1,14 @@
+  profile calprec2-ext: pinned scripts/calprec2.py 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  profile calprec2-ext: pinned scripts/costprobe2.py ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  archived the DONE state (15118 bytes) to notes/queue-archive/20261025-085100-rerun-queue-done.json
+status   READY
+item     0 ext-s0of15  attempt 1  job -
+resume   -
+anomaly  -
+halt     -
+check    -
+attempts
+history (last 12)
+  2026-10-25T08:51:00+05:30  load      ext-s0of15                 notes/queues/calprec2-ext.json; previous state archived to notes/queue-archive/20261025-085100-rerun-queue-done.json; N41/N42: 15 shards at the target, stop-after 30000; 64M peak at d=80 2476.5 MB under the 3072 MB budget; 17-row analysis reproduces byte-identically at 8c9b799
+
+written: notes/rerun_queue.json and notes/queue-archive/20261025-085100-rerun-queue-done.json. Commit both and push, then enable the drivers.

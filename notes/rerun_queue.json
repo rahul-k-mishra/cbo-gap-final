@@ -1,94 +1,171 @@
 {
-  "schema": 1,
+  "schema": 2,
   "kaggle_user": "ericsom",
-  "plan": "runs/rerun-plan-20261023-112643",
-  "plan_sha256": "4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2",
-  "timing": [
-    "runs/costprobe2-s0-kaggle-20261010-103952",
-    "runs/costprobe2-s1-kaggle-20261011-101343"
-  ],
-  "workers": 4,
-  "expect": {
-    "python": "3.13.15",
-    "numpy": "2.1.3",
-    "rerun_sha256": "756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e",
-    "rerunlib_sha256": "5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06",
-    "costprobe2_sha256": "ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b"
+  "profiles": {
+    "calprec2-ext": {
+      "family": "calprec2",
+      "workers": 4,
+      "rows": "RMAP,CLIFF,ONSET",
+      "throughput": "runs/calprec2-smoke-ext-kaggle-20261025-065222",
+      "stop_after": 30000,
+      "ceiling": null,
+      "cells": 41,
+      "expect": {
+        "python": "3.13.15",
+        "numpy": "2.1.3",
+        "calprec2_sha256": "3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a",
+        "costprobe2_sha256": "ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b"
+      }
+    }
   },
   "max_attempts": 5,
   "max_file_mb": 50,
   "queue": [
     {
-      "id": "smoke-arch",
-      "kind": "smoke",
-      "set": "arch",
-      "ledger": "N37",
-      "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
-    },
-    {
-      "id": "arch-s0of4",
+      "id": "ext-s0of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "arch",
-      "ledger": "N37",
+      "set": "ext",
       "shard": 0,
-      "nshards": 4,
-      "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
+      "nshards": 15,
+      "ledger": "N41"
     },
     {
-      "id": "arch-s1of4",
+      "id": "ext-s1of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "arch",
-      "ledger": "N37",
+      "set": "ext",
       "shard": 1,
-      "nshards": 4,
-      "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
+      "nshards": 15,
+      "ledger": "N41"
     },
     {
-      "id": "arch-s2of4",
+      "id": "ext-s2of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "arch",
-      "ledger": "N37",
+      "set": "ext",
       "shard": 2,
-      "nshards": 4,
-      "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
+      "nshards": 15,
+      "ledger": "N41"
     },
     {
-      "id": "arch-s3of4",
+      "id": "ext-s3of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "arch",
-      "ledger": "N37",
+      "set": "ext",
       "shard": 3,
-      "nshards": 4,
-      "rows": "BETA-ISO,BETA-ANI,LAWPANEL,PROBEARM,ADAPT,REFSIZE,SYNTH,NAMED,HORIZON,GEOM,RMAP,CLIFF,ONSET"
+      "nshards": 15,
+      "ledger": "N41"
     },
     {
-      "id": "smoke-cal",
-      "kind": "smoke",
-      "set": "cal",
-      "ledger": "N38",
-      "rows": "CONC,TAU8,SIGMA,ANISO"
-    },
-    {
-      "id": "cal-s0of2",
+      "id": "ext-s4of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "cal",
-      "ledger": "N38",
-      "shard": 0,
-      "nshards": 2,
-      "rows": "CONC,TAU8,SIGMA,ANISO"
+      "set": "ext",
+      "shard": 4,
+      "nshards": 15,
+      "ledger": "N41"
     },
     {
-      "id": "cal-s1of2",
+      "id": "ext-s5of15",
+      "profile": "calprec2-ext",
       "kind": "shard",
-      "set": "cal",
-      "ledger": "N38",
-      "shard": 1,
-      "nshards": 2,
-      "rows": "CONC,TAU8,SIGMA,ANISO"
+      "set": "ext",
+      "shard": 5,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s6of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 6,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s7of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 7,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s8of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 8,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s9of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 9,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s10of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 10,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s11of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 11,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s12of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 12,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s13of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 13,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-s14of15",
+      "profile": "calprec2-ext",
+      "kind": "shard",
+      "set": "ext",
+      "shard": 14,
+      "nshards": 15,
+      "ledger": "N41"
+    },
+    {
+      "id": "ext-finalize",
+      "profile": "calprec2-ext",
+      "kind": "finalize",
+      "set": "ext",
+      "ledger": "N41"
     }
   ],
-  "status": "DONE",
-  "index": 8,
+  "status": "READY",
+  "index": 0,
   "attempt": 1,
   "resume_dirs": [],
   "job": "",
@@ -97,420 +174,22 @@
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
-  "attempts": {
-    "smoke-arch": [
-      {
-        "attempt": 1,
-        "job": "rerun-smoke-arch-a1",
-        "folder": "runs/rerun-smoke-arch-a1-kaggle-20261023-213143",
-        "kaggle_status": "ERROR",
-        "runner_exit": 2,
-        "completed": null,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "39983265158.1",
-        "fetched_at": "2026-10-23T21:31:44+05:30"
-      },
-      {
-        "attempt": 2,
-        "job": "rerun-smoke-arch-a2",
-        "folder": "runs/rerun-smoke-arch-a2-kaggle-20261023-221109",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": null,
-        "d_smoke": "PASS",
-        "resume_dirs": [],
-        "fetched_run": "39988773802.1",
-        "fetched_at": "2026-10-23T22:11:10+05:30"
-      }
-    ],
-    "arch-s0of4": [
-      {
-        "attempt": 1,
-        "job": "rerun-arch-s0of4-a1",
-        "folder": "runs/rerun-arch-s0of4-a1-kaggle-20261024-020220",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 4767,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261023T203212Z",
-        "fetched_at": "2026-10-24T02:02:30+05:30"
-      }
-    ],
-    "arch-s1of4": [
-      {
-        "attempt": 1,
-        "job": "rerun-arch-s1of4-a1",
-        "folder": "runs/rerun-arch-s1of4-a1-kaggle-20261024-133226",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 4767,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T080214Z",
-        "fetched_at": "2026-10-24T13:32:34+05:30"
-      }
-    ],
-    "arch-s2of4": [
-      {
-        "attempt": 1,
-        "job": "rerun-arch-s2of4-a1",
-        "folder": "runs/rerun-arch-s2of4-a1-kaggle-20261024-160215",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 4767,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T103210Z",
-        "fetched_at": "2026-10-24T16:02:24+05:30"
-      }
-    ],
-    "arch-s3of4": [
-      {
-        "attempt": 1,
-        "job": "rerun-arch-s3of4-a1",
-        "folder": "runs/rerun-arch-s3of4-a1-kaggle-20261024-200233",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 4767,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T143215Z",
-        "fetched_at": "2026-10-24T20:02:44+05:30"
-      }
-    ],
-    "smoke-cal": [
-      {
-        "attempt": 1,
-        "job": "rerun-smoke-cal-a1",
-        "folder": "runs/rerun-smoke-cal-a1-kaggle-20261024-203231",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": null,
-        "d_smoke": "PASS",
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T150215Z",
-        "fetched_at": "2026-10-24T20:32:39+05:30"
-      }
-    ],
-    "cal-s0of2": [
-      {
-        "attempt": 1,
-        "job": "rerun-cal-s0of2-a1",
-        "folder": "runs/rerun-cal-s0of2-a1-kaggle-20261025-003238",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 5616,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T190220Z",
-        "fetched_at": "2026-10-25T00:32:53+05:30"
-      }
-    ],
-    "cal-s1of2": [
-      {
-        "attempt": 1,
-        "job": "rerun-cal-s1of2-a1",
-        "folder": "runs/rerun-cal-s1of2-a1-kaggle-20261025-050238",
-        "kaggle_status": "COMPLETE",
-        "runner_exit": 0,
-        "completed": 5616,
-        "d_smoke": null,
-        "resume_dirs": [],
-        "fetched_run": "laptop.20261024T233217Z",
-        "fetched_at": "2026-10-25T05:02:54+05:30"
-      }
-    ]
-  },
+  "attempts": {},
   "history": [
     {
-      "at": "2026-10-23T18:51:21+05:30",
+      "at": "2026-10-25T08:51:00+05:30",
       "run": "manual",
-      "event": "release-start",
-      "item": "smoke-arch",
+      "event": "load",
+      "item": "ext-s0of15",
       "attempt": 1,
       "job": "",
-      "note": "first start after setup"
-    },
-    {
-      "at": "2026-10-23T18:51:59+05:30",
-      "run": "39960530374.1",
-      "event": "anomaly",
-      "item": "smoke-arch",
-      "attempt": 1,
-      "job": "",
-      "note": "preflight-status: denied, and the control calprec2-long-s25of26-a1 gave no status either (==============================================================================)"
-    },
-    {
-      "at": "2026-10-23T19:21:25+05:30",
-      "run": "39964625544.1",
-      "event": "intent",
-      "item": "smoke-arch",
-      "attempt": 1,
-      "job": "rerun-smoke-arch-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-23T19:22:13+05:30",
-      "run": "39964625544.1",
-      "event": "launched",
-      "item": "smoke-arch",
-      "attempt": 1,
-      "job": "rerun-smoke-arch-a1",
-      "note": "logs/kgrun-rerun-smoke-arch-a1.log"
-    },
-    {
-      "at": "2026-10-23T21:31:44+05:30",
-      "run": "39983265158.1",
-      "event": "halt",
-      "item": "smoke-arch",
-      "attempt": 1,
-      "job": "rerun-smoke-arch-a1",
-      "note": "R2: runner exit code 2 in runs/rerun-smoke-arch-a1-kaggle-20261023-213143; R1: python None, expected 3.13.15; numpy None, expected 2.1.3; rerun_sha256 None, expected 756c4069a197e1c18a098f193e638ddde272682bbbd09191dc063058fb67818e; rerunlib_sha256 None, expected 5d55050ed12b1f44f5170b80748b1c9712a7117dbe746ff11c18455a10a09b06; costprobe2_sha256 None, expected ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b; plan sha256 None, expected 4aec4b1e49d0598d5b8f01ababd434efd73163c3ce976dc1672c7dec1ca072f2; mode None, expected smoke"
-    },
-    {
-      "at": "2026-10-23T21:46:55+05:30",
-      "run": "manual",
-      "event": "kernel-check",
-      "item": "smoke-arch",
-      "attempt": 1,
-      "job": "rerun-smoke-arch-a1",
-      "note": "rerun-smoke-arch-a1 ERROR by hand: a1 exit 2, stale dataset version (K7); kgrun fixed in ab80ed3"
-    },
-    {
-      "at": "2026-10-23T21:46:55+05:30",
-      "run": "manual",
-      "event": "release-next-attempt",
-      "item": "smoke-arch",
-      "attempt": 2,
-      "job": "",
-      "note": "a1 exit 2, stale dataset version (K7); kgrun fixed in ab80ed3"
-    },
-    {
-      "at": "2026-10-23T21:47:27+05:30",
-      "run": "39985493061.1",
-      "event": "intent",
-      "item": "smoke-arch",
-      "attempt": 2,
-      "job": "rerun-smoke-arch-a2",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-23T21:48:36+05:30",
-      "run": "39985493061.1",
-      "event": "launched",
-      "item": "smoke-arch",
-      "attempt": 2,
-      "job": "rerun-smoke-arch-a2",
-      "note": "logs/kgrun-rerun-smoke-arch-a2.log"
-    },
-    {
-      "at": "2026-10-23T22:11:10+05:30",
-      "run": "39988773802.1",
-      "event": "fetched",
-      "item": "arch-s0of4",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-smoke-arch-a2-kaggle-20261023-221109: runner exit 0, D-SMOKE PASS; now READY"
-    },
-    {
-      "at": "2026-10-23T22:14:25+05:30",
-      "run": "39989233522.1",
-      "event": "intent",
-      "item": "arch-s0of4",
-      "attempt": 1,
-      "job": "rerun-arch-s0of4-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-23T22:15:39+05:30",
-      "run": "39989233522.1",
-      "event": "launched",
-      "item": "arch-s0of4",
-      "attempt": 1,
-      "job": "rerun-arch-s0of4-a1",
-      "note": "logs/kgrun-rerun-arch-s0of4-a1.log"
-    },
-    {
-      "at": "2026-10-24T02:02:30+05:30",
-      "run": "laptop.20261023T203212Z",
-      "event": "halt",
-      "item": "arch-s0of4",
-      "attempt": 1,
-      "job": "rerun-arch-s0of4-a1",
-      "note": "R1: header of runs/rerun-arch-s0of4-a1-kaggle-20261024-020220: run dir /kaggle/working/rerun-s0of4-20261023-164555, expected a name ending -s0of4"
-    },
-    {
-      "at": "2026-10-24T08:49:18+05:30",
-      "run": "manual",
-      "event": "release-next-item",
-      "item": "arch-s1of4",
-      "attempt": 1,
-      "job": "",
-      "note": "arch-s0of4 a1 good: R1 defect fixed in a28a4a5, verify PASS (logs/rerunq-rerun-arch-s0of4-a1-verify-20261024.log)"
-    },
-    {
-      "at": "2026-10-24T08:49:49+05:30",
-      "run": "laptop.20261024T031936Z",
-      "event": "intent",
-      "item": "arch-s1of4",
-      "attempt": 1,
-      "job": "rerun-arch-s1of4-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-24T08:53:44+05:30",
-      "run": "laptop.20261024T031936Z",
-      "event": "launched",
-      "item": "arch-s1of4",
-      "attempt": 1,
-      "job": "rerun-arch-s1of4-a1",
-      "note": "logs/kgrun-rerun-arch-s1of4-a1.log"
-    },
-    {
-      "at": "2026-10-24T13:32:34+05:30",
-      "run": "laptop.20261024T080214Z",
-      "event": "fetched",
-      "item": "arch-s2of4",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-arch-s1of4-a1-kaggle-20261024-133226: runner exit 0; now READY"
-    },
-    {
-      "at": "2026-10-24T13:47:20+05:30",
-      "run": "laptop.20261024T081711Z",
-      "event": "intent",
-      "item": "arch-s2of4",
-      "attempt": 1,
-      "job": "rerun-arch-s2of4-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-24T13:50:42+05:30",
-      "run": "laptop.20261024T081711Z",
-      "event": "launched",
-      "item": "arch-s2of4",
-      "attempt": 1,
-      "job": "rerun-arch-s2of4-a1",
-      "note": "logs/kgrun-rerun-arch-s2of4-a1.log"
-    },
-    {
-      "at": "2026-10-24T16:02:24+05:30",
-      "run": "laptop.20261024T103210Z",
-      "event": "fetched",
-      "item": "arch-s3of4",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-arch-s2of4-a1-kaggle-20261024-160215: runner exit 0; now READY"
-    },
-    {
-      "at": "2026-10-24T16:17:38+05:30",
-      "run": "laptop.20261024T104713Z",
-      "event": "intent",
-      "item": "arch-s3of4",
-      "attempt": 1,
-      "job": "rerun-arch-s3of4-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-24T16:23:30+05:30",
-      "run": "laptop.20261024T104713Z",
-      "event": "launched",
-      "item": "arch-s3of4",
-      "attempt": 1,
-      "job": "rerun-arch-s3of4-a1",
-      "note": "logs/kgrun-rerun-arch-s3of4-a1.log"
-    },
-    {
-      "at": "2026-10-24T20:02:44+05:30",
-      "run": "laptop.20261024T143215Z",
-      "event": "fetched",
-      "item": "smoke-cal",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-arch-s3of4-a1-kaggle-20261024-200233: runner exit 0; now READY"
-    },
-    {
-      "at": "2026-10-24T20:17:30+05:30",
-      "run": "laptop.20261024T144713Z",
-      "event": "intent",
-      "item": "smoke-cal",
-      "attempt": 1,
-      "job": "rerun-smoke-cal-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-24T20:23:16+05:30",
-      "run": "laptop.20261024T144713Z",
-      "event": "launched",
-      "item": "smoke-cal",
-      "attempt": 1,
-      "job": "rerun-smoke-cal-a1",
-      "note": "logs/kgrun-rerun-smoke-cal-a1.log"
-    },
-    {
-      "at": "2026-10-24T20:32:39+05:30",
-      "run": "laptop.20261024T150215Z",
-      "event": "fetched",
-      "item": "cal-s0of2",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-smoke-cal-a1-kaggle-20261024-203231: runner exit 0, D-SMOKE PASS; now READY"
-    },
-    {
-      "at": "2026-10-24T20:47:32+05:30",
-      "run": "laptop.20261024T151713Z",
-      "event": "intent",
-      "item": "cal-s0of2",
-      "attempt": 1,
-      "job": "rerun-cal-s0of2-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-24T20:54:30+05:30",
-      "run": "laptop.20261024T151713Z",
-      "event": "launched",
-      "item": "cal-s0of2",
-      "attempt": 1,
-      "job": "rerun-cal-s0of2-a1",
-      "note": "logs/kgrun-rerun-cal-s0of2-a1.log"
-    },
-    {
-      "at": "2026-10-25T00:32:53+05:30",
-      "run": "laptop.20261024T190220Z",
-      "event": "fetched",
-      "item": "cal-s1of2",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-cal-s0of2-a1-kaggle-20261025-003238: runner exit 0; now READY"
-    },
-    {
-      "at": "2026-10-25T00:47:30+05:30",
-      "run": "laptop.20261024T191714Z",
-      "event": "intent",
-      "item": "cal-s1of2",
-      "attempt": 1,
-      "job": "rerun-cal-s1of2-a1",
-      "note": "resume none"
-    },
-    {
-      "at": "2026-10-25T00:55:30+05:30",
-      "run": "laptop.20261024T191714Z",
-      "event": "launched",
-      "item": "cal-s1of2",
-      "attempt": 1,
-      "job": "rerun-cal-s1of2-a1",
-      "note": "logs/kgrun-rerun-cal-s1of2-a1.log"
-    },
-    {
-      "at": "2026-10-25T05:02:54+05:30",
-      "run": "laptop.20261024T233217Z",
-      "event": "fetched",
-      "item": "",
-      "attempt": 1,
-      "job": "",
-      "note": "runs/rerun-cal-s1of2-a1-kaggle-20261025-050238: runner exit 0; now DONE"
+      "note": "notes/queues/calprec2-ext.json; previous state archived to notes/queue-archive/20261025-085100-rerun-queue-done.json; N41/N42: 15 shards at the target, stop-after 30000; 64M peak at d=80 2476.5 MB under the 3072 MB budget; 17-row analysis reproduces byte-identically at 8c9b799"
     }
-  ]
+  ],
+  "definition": {
+    "name": "calprec2-ext",
+    "path": "notes/queues/calprec2-ext.json",
+    "sha256": "1a5b78e9b58b2a09ec3d3122954a0bd1563b182a69bbe253e05d990eeb8a9cc0",
+    "archived_previous": "notes/queue-archive/20261025-085100-rerun-queue-done.json"
+  }
 }
