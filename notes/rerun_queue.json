@@ -164,7 +164,7 @@
       "ledger": "N41"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 2,
   "attempt": 1,
   "resume_dirs": [],
@@ -278,6 +278,15 @@
       "attempt": 1,
       "job": "calprec2-ext-s2of15-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-25T13:21:43+05:30",
+      "run": "laptop.20261025T074710Z",
+      "event": "launched",
+      "item": "ext-s2of15",
+      "attempt": 1,
+      "job": "calprec2-ext-s2of15-a1",
+      "note": "logs/kgrun-calprec2-ext-s2of15-a1.log"
     }
   ],
   "definition": {
