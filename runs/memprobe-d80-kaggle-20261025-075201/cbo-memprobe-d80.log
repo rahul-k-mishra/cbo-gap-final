@@ -1,0 +1,44 @@
+[{"stream_name":"stdout","time":0.857632992,"data":"kgrun runner: job memprobe-d80\n"}
+,{"stream_name":"stdout","time":0.857682102,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.857686152,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.857779212,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.857785672,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.871021665,"data":"  listing  52 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.871052055,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/memprobe.py\n"}
+,{"stream_name":"stdout","time":0.871055435,"data":"  args     --workers 1 --module regimemap --objective rastrigin --d 80 --tau 0.1\n"}
+,{"stream_name":"stdout","time":1.093252255,"data":"  bundle   c17a36871c648ffb: 51 files verified against kgrun-bundle-c17a36871c648ffb.sha256\n"}
+,{"stream_name":"stdout","time":1.093284475,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/memprobe.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 1 --module regimemap --objective rastrigin --d 80 --tau 0.1\n"}
+,{"stream_name":"stdout","time":1.616728505,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":1.616752695,"data":"CBO-GAP memprobe -- peak RSS of a held reference and the archived beta_on_ensemble\n"}
+,{"stream_name":"stdout","time":1.6167570549999999,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":1.6167605250000001,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.616763555,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":1.616778185,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 1 (sizes run one at a time)\n"}
+,{"stream_name":"stdout","time":1.616781675,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.616784945,"data":"  cell     module regimemap  rastrigin d=80 centred tau0 0.1   sizes [4000000, 16000000, 64000000]   chunk 250000\n"}
+,{"stream_name":"stdout","time":1.616788305,"data":"  script   sha256 818ae562e2ea4eddca59f44f6699a52bd5e68f1849c4db8f6f184a8eaa37914c\n"}
+,{"stream_name":"stdout","time":1.616791635,"data":"  seeds    default_rng(SeedSequence((ENTROPY 20261011, kind 61, n, chunk))), full width\n"}
+,{"stream_name":"stdout","time":1.616794815,"data":"  gate     64M only if extrapolated solve peak \u003c= 0.8 x MemAvailable\n"}
+,{"stream_name":"stdout","time":1.616798325,"data":"  budget   3072 MB per worker (reported, M-RSS)\n"}
+,{"stream_name":"stdout","time":1.616801475,"data":"  run dir  /kaggle/working/memprobe-20261025-021116\n"}
+,{"stream_name":"stdout","time":29.261462394,"data":"\n"}
+,{"stream_name":"stdout","time":29.261497695,"data":"  n   4000000   baseline    26.2 MB   held   673.8 MB   solve peak   673.8 MB   draw   12.5 s   solve   15.1 s   MemAvailable before 31168 MB\n"}
+,{"stream_name":"stdout","time":137.796534423,"data":"\n"}
+,{"stream_name":"stdout","time":137.796592443,"data":"  n  16000000   baseline    26.5 MB   held   767.5 MB   solve peak   767.5 MB   draw   50.1 s   solve   58.4 s   MemAvailable before 31056 MB\n"}
+,{"stream_name":"stdout","time":137.797497382,"data":"\n"}
+,{"stream_name":"stdout","time":137.797510952,"data":"  gate: extrapolated 64M solve peak 1142 MB, MemAvailable 30859 MB, limit 24688 MB\n"}
+,{"stream_name":"stdout","time":567.116592757,"data":"\n"}
+,{"stream_name":"stdout","time":567.116688387,"data":"  n  64000000   baseline    26.5 MB   held  1133.8 MB   solve peak  2476.5 MB   draw  199.6 s   solve  229.7 s   MemAvailable before 30859 MB\n"}
+,{"stream_name":"stdout","time":567.117177957,"data":"\n"}
+,{"stream_name":"stdout","time":567.117207217,"data":"  M-RSS  64M solve peak 2476.5 MB: within budget\n"}
+,{"stream_name":"stdout","time":567.117212637,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":567.117217297,"data":"files  /kaggle/working/memprobe-20261025-021116\n"}
+,{"stream_name":"stdout","time":567.117221407,"data":"========================================================================================\n"}
+,{"stream_name":"stdout","time":567.160773048,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":569.813690373,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":569.813733013,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":570.274304997,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":570.274338447,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":571.562956889,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":572.847774635,"data":"[NbConvertApp] Writing 309999 bytes to __results__.html\n"}
+]
