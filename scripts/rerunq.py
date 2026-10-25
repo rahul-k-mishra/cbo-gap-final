@@ -46,6 +46,103 @@ THE QUEUE (notes/rerun_queue.json; ledger N37, N38, K6)
            --rows <rows> --shard S --nshards K --workers 4
            data folders: the plan, T0, T1; resume folders as below
 
+SCHEMA 2 AND THE CALPREC2 FAMILY (2026-10-25, before first execution;
+ledger N42; Rahul's instruction "extend the rerun queue to drive the
+calibration shards and the finalize, the way it drove the eight rerun
+jobs")
+  The eight-job queue above ended DONE. Its state (schema 1) is archived
+  by "load" (below) and stays readable in git. From schema 2 on, the
+  state names one or more PROFILES and each queue item names its
+  profile. A profile is one script family with its fixed arguments and
+  its pins:
+    rerun     rerun.py; plan, plan_sha256, timing, workers; items smoke or
+              shard, exactly as above (job names, arguments, F2, R1, R2).
+    calprec2  calprec2.py; rows, throughput folder, stop_after, ceiling
+              (null for the script's default), workers, cells (the plan's
+              deduplicated count, for F2C); items shard or finalize.
+  Every rule above (L1 to L5, F1, R2's exit handling, P1, K1) applies to
+  both families unchanged, except where this section says otherwise.
+  JOB NAMES (calprec2): calprec2-<set>-s<S>of<K>-a<A> for a shard,
+    calprec2-<set>-finalize-a<A> for the finalize; kernel cbo-<job>.
+  ARGUMENTS (calprec2), built from the profile, never typed by hand:
+    shard:    --workers W --rows R --throughput T --stop-after X
+              [--ceiling C] --shard S --nshards K
+              data folders: T; resume folders as in R2
+    finalize: --rows R --finalize F1,F2,...
+              data folders: F1, F2, ... = every recorded attempt folder of
+              every shard item of the same profile and set that holds a
+              calprec2-full-*/calprec2_tasks.csv (FIN below)
+  P1C  CODE PIN, per profile: before every launch each file the profile
+      pins (calprec2.py and costprobe2.py for calprec2) must hash to the
+      value "load" recorded from the committed file. Otherwise HALT.
+      Worked example: costprobe2.py edited between shard 3 and shard 4:
+      HALT before shard 4.
+  R1C  HEADER (calprec2 shard), from cbo-<job>.log:
+      (a) "python" and "numpy" equal expect (3.13.15 and 2.1.3);
+      (b) "script   sha256" equals calprec2_sha256 and "costprobe2.py
+          sha256" equals costprobe2_sha256;
+      (c) "mode     full   rows R   shard S of K" with R, S and K the
+          item's;
+      (d) the "throughput" line's basename equals the profile's folder;
+      (e) "files  <dir>": the basename is exactly
+          calprec2-full-YYYYMMDD-HHMMSS-s<S>of<K> (calprec2.py line 1524:
+          the stamp, then the tag; no tag when K = 1), the fetched folder
+          holds exactly one calprec2-* folder and it has that basename,
+          and its calprec2_params.csv records mode full, the rows, S, K,
+          workers, stop_after and ceiling as the arguments set them, and
+          the two pinned hashes;
+      (f) for a resumed attempt, a line "  read <folder>: shard S of K, N
+          rows, M complete" for each resume folder (calprec2's own rule-17
+          line, printed by read_folders).
+      Any mismatch: HALT, the folder committed.
+      Worked example: files /kaggle/working/calprec2-full-20261026-
+      101500-s3of15 with params shard 3, nshards 15, stop_after 30000.0:
+      pass. calprec2-full-20261026-101500-s4of15: HALT on (e).
+  F2C  COMPLETE DOWNLOAD (calprec2 shard): the rows of that folder's
+      calprec2_tasks.csv whose end is "ok" number exactly the N of "tasks
+      run by this job: N", and "errored or timed-out tasks: 0" is printed.
+      Exit 0 requires "not stopped: every phase ran"; exit 5 requires
+      "STOPPED by --stop-after". Otherwise HALT, the folder committed.
+      Worked example: "tasks run by this job: 2007", 2007 rows end ok,
+      "not stopped", exit 0: pass. 1990 rows: HALT "download incomplete".
+  R2C  EXIT (calprec2): shard as R2 (0 next item; 5 next attempt resuming
+      from every earlier attempt folder of the shard, with N = 0 a halt
+      and max_attempts the cap; anything else HALT). Finalize: 0 next
+      item; any other value, 5 included, HALT. Exit 4 from finalize means
+      a cell is incomplete or "E1 not run" (calprec2.py EXIT CODES).
+  FIN  FINALIZE INPUTS. A finalize launches only when every shard item of
+      its profile and set has an attempt recorded with runner exit 0. Its
+      folders are every recorded attempt folder of those items that holds
+      calprec2 task rows, attempts that stopped at 5 included, because the
+      merge is a concatenation and an exit-5 folder holds complete rows
+      (rule 17). Otherwise HALT before launch.
+      Worked example: shard s7of15 exited 5 at a1 and 0 at a2: both
+      folders are finalize inputs.
+  R1F  HEADER (finalize): (a) and (b) of R1C; "mode     finalize   rows R";
+      "files  <dir>" with basename calprec2-finalize-YYYYMMDD-HHMMSS; the
+      fetched folder holds exactly one calprec2-* folder, with that
+      basename, holding calprec2_beta.csv; the "read" lines name exactly
+      the finalize's input folders.
+  F2F  COMPLETE TABLE (finalize): calprec2_beta.csv has exactly the
+      profile's "cells" rows, each cell once, and no label starting
+      "incomplete". Otherwise HALT.
+      Worked example: 41 rows, 41 distinct cells, labels "target" or
+      "beta ...": pass. 40 rows: HALT.
+  LD  LOAD (subcommand "load", run by Rahul on the laptop, who commits
+      and pushes). Refused unless the current state is DONE. The current
+      state's bytes are copied to notes/queue-archive/<stamp>-<name>.json
+      (opened "x"); the definition (a committed JSON file under
+      notes/queues/) is checked: every profile and item has the keys its
+      family needs, item kinds belong to their family, item ids are
+      unique, data and throughput folders exist with a verified
+      sha256.txt. For each profile, every pinned file's sha256 is read
+      from scripts/ and recorded as expect. The new state is READY at item
+      0, attempt 1, with the definition's path and sha256 and the archive
+      path in its history. Worked example: "load --definition
+      notes/queues/calprec2-ext.json" with the rerun queue DONE: archive
+      notes/queue-archive/20261025-140000-rerun-queue-done.json written,
+      state READY at calprec2-ext-s0of15.
+
 PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
 ------------------------------------------------------------------------
   L1  THE STATE FILE IS THE LOCK. A tick changes the state only by a
@@ -295,6 +392,10 @@ SUBCOMMANDS
                      next-item" after a halt that came after the fetch, so
                      that the checks the halt pre-empted are not skipped
                      (ledger K6, arch-s0of4 a1: R1 halted before F2)
+  load --definition notes/queues/<name>.json --note TEXT
+                     only when DONE: archive the state and start the queue
+                     the definition describes (LD); Rahul commits and
+                     pushes, then enables the drivers
   halt --note TEXT   set HALTED by hand; Rahul commits and pushes
   check --note TEXT  while HALTED: kgrun status for the halted job, the
                      result recorded as the kernel check (K1); run by
@@ -323,6 +424,7 @@ import argparse
 import csv
 import datetime
 import glob
+import hashlib
 import json
 import os
 import re
@@ -345,6 +447,15 @@ WAIT = ("QUEUED", "RUNNING", "NEW_SCRIPT", "CANCEL_REQUESTED")
 FINISHED = ("COMPLETE", "ERROR", "CANCEL_ACKNOWLEDGED")
 PINNED = (("rerun.py", "rerun_sha256"), ("rerunlib.py", "rerunlib_sha256"),
           ("costprobe2.py", "costprobe2_sha256"))
+FAMILY_SCRIPT = {"rerun": "rerun.py", "calprec2": "calprec2.py"}
+FAMILY_PINS = {"rerun": PINNED,
+               "calprec2": (("calprec2.py", "calprec2_sha256"), ("costprobe2.py", "costprobe2_sha256"))}
+FAMILY_KINDS = {"rerun": ("smoke", "shard"), "calprec2": ("shard", "finalize")}
+PROFILE_KEYS = {"rerun": ("family", "workers", "plan", "plan_sha256", "timing", "expect"),
+                "calprec2": ("family", "workers", "rows", "throughput", "stop_after", "ceiling", "cells",
+                             "expect")}
+ARCHIVE_DIR = "notes/queue-archive"
+CEILING_DEFAULT = 21600.0           # calprec2.py CEILING_DEFAULT, written to its params when --ceiling is absent
 PUSH_TRIES = 3
 CHECK_GAP_MIN = 30
 HAND_STATUSES = FINISHED + ("ABSENT",)
@@ -416,15 +527,63 @@ def write_state(s):
     os.replace(tmp, STATE)
 
 
+def profile_of(s, item):
+    return s["profiles"][item["profile"]]
+
+
+def family_of(s, item):
+    return profile_of(s, item)["family"]
+
+
+def validate_definition(s):
+    """The profiles and the queue (shared by validate and load)."""
+    if not isinstance(s.get("profiles"), dict) or not s["profiles"]:
+        raise ValueError("no profiles")
+    for name, p in s["profiles"].items():
+        fam = p.get("family")
+        if fam not in FAMILY_SCRIPT:
+            raise ValueError("profile {}: family {!r} is not one of {}".format(name, fam, sorted(FAMILY_SCRIPT)))
+        for k in PROFILE_KEYS[fam]:
+            if k not in p:
+                raise ValueError("profile {} ({}) has no key {}".format(name, fam, k))
+        for k in ("python", "numpy"):
+            if not p["expect"].get(k):
+                raise ValueError("profile {}: expect has no {}".format(name, k))
+    if not s.get("queue"):
+        raise ValueError("empty queue")
+    ids = [it.get("id") for it in s["queue"]]
+    if len(set(ids)) != len(ids):
+        raise ValueError("item ids are not unique: {}".format(ids))
+    for it in s["queue"]:
+        for k in ("id", "profile", "kind", "set", "ledger"):
+            if k not in it:
+                raise ValueError("item {} has no key {}".format(it.get("id"), k))
+        if it["profile"] not in s["profiles"]:
+            raise ValueError("item {}: unknown profile {}".format(it["id"], it["profile"]))
+        fam = s["profiles"][it["profile"]]["family"]
+        if it["kind"] not in FAMILY_KINDS[fam]:
+            raise ValueError("item {}: kind {} is not one of {} ({})".format(it["id"], it["kind"],
+                                                                         FAMILY_KINDS[fam], fam))
+        if it["kind"] == "shard":
+            for k in ("shard", "nshards"):
+                if not isinstance(it.get(k), int):
+                    raise ValueError("item {}: {} {!r}".format(it["id"], k, it.get(k)))
+            if not (0 <= it["shard"] < it["nshards"]):
+                raise ValueError("item {}: shard {} of {}".format(it["id"], it["shard"], it["nshards"]))
+        if fam == "rerun" and not it.get("rows"):
+            raise ValueError("item {}: a rerun item needs rows".format(it["id"]))
+
+
 def validate(s):
-    for k in ("schema", "kaggle_user", "plan", "plan_sha256", "timing", "workers", "expect",
-              "max_attempts", "max_file_mb", "queue", "status", "index", "attempt", "resume_dirs",
-              "job", "args", "data_dirs", "anomaly", "halt_reason", "kernel_check", "attempts",
-              "history"):
+    for k in ("schema", "kaggle_user", "profiles", "max_attempts", "max_file_mb", "queue", "status", "index",
+              "attempt", "resume_dirs", "job", "args", "data_dirs", "anomaly", "halt_reason", "kernel_check",
+              "attempts", "history", "definition"):
         if k not in s:
             raise ValueError("state has no key " + k)
-    if s["schema"] != 1:
-        raise ValueError("state schema {} is not 1".format(s["schema"]))
+    if s["schema"] != 2:
+        raise ValueError("state schema {} is not 2 (a schema-1 state is loaded over with 'rerunq.py load', "
+                         "LD)".format(s["schema"]))
+    validate_definition(s)
     if s["status"] not in STATUSES:
         raise ValueError("status {!r} is not one of {}".format(s["status"], STATUSES))
     n = len(s["queue"])
@@ -436,16 +595,17 @@ def validate(s):
     if not isinstance(s["attempt"], int) or s["attempt"] < 1:
         raise ValueError("attempt {!r}".format(s["attempt"]))
     if s["status"] in ("LAUNCHING", "RUNNING"):
-        if s["job"] != job_name(s["queue"][s["index"]], s["attempt"]):
+        if s["job"] != job_name(s, s["queue"][s["index"]], s["attempt"]):
             raise ValueError("job {!r} does not match item {} attempt {}".format(
                 s["job"], s["index"], s["attempt"]))
     if s["status"] == "READY" and s["job"]:
         raise ValueError("READY with a job recorded ({})".format(s["job"]))
     if s["status"] != "HALTED" and s["kernel_check"] is not None:
         raise ValueError("a kernel check is recorded in status {} (K1: only while HALTED)".format(s["status"]))
-    for k in ("python", "numpy") + tuple(k for _, k in PINNED):
-        if not s["expect"].get(k):
-            raise ValueError("expect has no " + k)
+    for name, p in s["profiles"].items():
+        for _, k in FAMILY_PINS[p["family"]]:
+            if not p["expect"].get(k):
+                raise ValueError("profile {}: expect has no {}".format(name, k))
 
 
 def history(s, run, event, note):
@@ -454,27 +614,66 @@ def history(s, run, event, note):
                          "attempt": s["attempt"], "job": s["job"], "note": note})
 
 
-def job_name(item, attempt):
+def job_name(s, item, attempt):
+    if family_of(s, item) == "calprec2":
+        if item["kind"] == "finalize":
+            return "calprec2-{}-finalize-a{}".format(item["set"], attempt)
+        return "calprec2-{}-s{}of{}-a{}".format(item["set"], item["shard"], item["nshards"], attempt)
     if item["kind"] == "smoke":
         return "rerun-smoke-{}-a{}".format(item["set"], attempt)
     return "rerun-{}-s{}of{}-a{}".format(item["set"], item["shard"], item["nshards"], attempt)
 
 
+def ceiling_of(p):
+    return CEILING_DEFAULT if p["ceiling"] is None else float(p["ceiling"])
+
+
+def finalize_inputs(s, item):
+    """FIN: (folders, problems) for a calprec2 finalize item."""
+    folders, probs = [], []
+    for it in s["queue"]:
+        if it["profile"] != item["profile"] or it["set"] != item["set"] or it["kind"] != "shard":
+            continue
+        recs = s["attempts"].get(it["id"], [])
+        if not any(r["runner_exit"] == 0 for r in recs):
+            probs.append("{} has no attempt with runner exit 0".format(it["id"]))
+        for r in recs:
+            if holds_rows(r["folder"], "calprec2"):
+                folders.append(r["folder"])
+    if not folders:
+        probs.append("no shard folder with calprec2 task rows")
+    return folders, probs
+
+
 def job_spec(s):
     """(job, args, data folders) for the current item and attempt."""
     item = s["queue"][s["index"]]
-    if item["kind"] == "smoke":
-        args = "--smoke --plan-from {} --rows {} --workers {}".format(s["plan"], item["rows"], s["workers"])
-        data = [s["plan"]]
+    p = profile_of(s, item)
+    if p["family"] == "calprec2":
+        if item["kind"] == "finalize":
+            data, _ = finalize_inputs(s, item)
+            args = "--rows {} --finalize {}".format(p["rows"], ",".join(data))
+        else:
+            args = "--workers {} --rows {} --throughput {} --stop-after {!r}".format(
+                p["workers"], p["rows"], p["throughput"], float(p["stop_after"]))
+            if p["ceiling"] is not None:
+                args += " --ceiling {!r}".format(float(p["ceiling"]))
+            args += " --shard {} --nshards {}".format(item["shard"], item["nshards"])
+            data = [p["throughput"]]
+    elif item["kind"] == "smoke":
+        args = "--smoke --plan-from {} --rows {} --workers {}".format(p["plan"], item["rows"], p["workers"])
+        data = [p["plan"]]
     else:
-        tf = " ".join("--timing-from {}".format(t) for t in s["timing"])
+        tf = " ".join("--timing-from {}".format(t) for t in p["timing"])
         args = "--plan-from {} {} --rows {} --shard {} --nshards {} --workers {}".format(
-            s["plan"], tf, item["rows"], item["shard"], item["nshards"], s["workers"])
-        data = [s["plan"]] + list(s["timing"])
-    return job_name(item, s["attempt"]), args, data
+            p["plan"], tf, item["rows"], item["shard"], item["nshards"], p["workers"])
+        data = [p["plan"]] + list(p["timing"])
+    return job_name(s, item, s["attempt"]), args, data
 
 
-def holds_rows(folder):
+def holds_rows(folder, family="rerun"):
+    if family == "calprec2":
+        return bool(glob.glob(os.path.join(ROOT, folder, "calprec2-full-*", "calprec2_tasks.csv")))
     return bool(glob.glob(os.path.join(ROOT, folder, "rerun-*", "rerun_real.csv")))
 
 
@@ -702,21 +901,29 @@ def do_anomaly(ctx, kind, detail):
 def do_launch(ctx):
     s = ctx.s
     item = s["queue"][s["index"]]
+    p = profile_of(s, item)
+    fam = p["family"]
     job, args, data = job_spec(s)
-    say("LAUNCH  item {} ({}), attempt {}, job {}".format(s["index"], item["id"], s["attempt"], job))
-    for name, key in PINNED:
+    say("LAUNCH  item {} ({}), attempt {}, job {}  [{} profile {}]".format(
+        s["index"], item["id"], s["attempt"], job, fam, item["profile"]))
+    for name, key in FAMILY_PINS[fam]:
         h = sha256_of(os.path.join(SCRIPTS, name))
-        if h != s["expect"][key]:
-            raise Halt("P1: scripts/{} sha256 {} differs from the pinned {}".format(name, h, s["expect"][key]))
-    say("  P1 code pin: rerun.py, rerunlib.py, costprobe2.py as pinned")
+        if h != p["expect"][key]:
+            raise Halt("P1: scripts/{} sha256 {} differs from the pinned {}".format(name, h, p["expect"][key]))
+    say("  P1 code pin: {} as pinned".format(", ".join(n for n, _ in FAMILY_PINS[fam])))
+    if fam == "calprec2" and item["kind"] == "finalize":
+        _f, probs = finalize_inputs(s, item)
+        if probs:
+            raise Halt("FIN: {}".format("; ".join(probs)))
+        say("  FIN: {} input folder(s): {}".format(len(data), ", ".join(data)))
     old = glob.glob(os.path.join(ROOT, "runs", job + "-kaggle-*"))
     if old:
         raise Halt("L3: {} already has a folder in runs/: {}".format(job, ", ".join(sorted(old))))
     if os.path.exists(os.path.join(ROOT, "logs", "kgrun-{}.log".format(job))):
         raise Halt("L3: logs/kgrun-{}.log already exists; was {} launched by hand?".format(job, job))
     for d in s["resume_dirs"]:
-        if not holds_rows(d):
-            raise Halt("resume folder {} holds no rerun-*/rerun_real.csv".format(d))
+        if not holds_rows(d, fam):
+            raise Halt("resume folder {} holds no {} rows".format(d, fam))
     cls, detail = kernel_status(s, job)
     if cls == "UNKNOWN":
         raise Anomaly("preflight-status", detail)
@@ -738,7 +945,7 @@ def do_launch(ctx):
         return 3
 
     logrel = "logs/kgrun-{}.log".format(job)
-    argv = ["launch", "--job", job, "--user", s["kaggle_user"], "--script", "rerun.py",
+    argv = ["launch", "--job", job, "--user", s["kaggle_user"], "--script", FAMILY_SCRIPT[fam],
             "--data-dirs", ",".join(data), "--args=" + args]
     if s["resume_dirs"]:
         argv += ["--resume-dirs", ",".join(s["resume_dirs"])]
@@ -843,7 +1050,155 @@ def runner_text(folder, job):
         return raw
 
 
-def read_runner(text):
+def read_runner(text, family="rerun"):
+    return read_runner_calprec2(text) if family == "calprec2" else read_runner_rerun(text)
+
+
+def read_runner_calprec2(text):
+    """R1C, R1F, F2C: the lines calprec2.py prints (header after its banner, summary at the end)."""
+    f = {"exit": None, "python": None, "numpy": None, "hashes": {}, "mode": None, "rows": None,
+         "shard": None, "nshards": None, "throughput": None, "rundir": None, "resume_read": set(),
+         "ran": None, "errors": None, "stopped": False, "notstopped": False, "completed": None, "smoke": None}
+    if text is None:
+        return f
+    ex = re.findall(r"kgrun runner: exit code (-?\d+)", text)
+    if ex:
+        f["exit"] = int(ex[-1])
+    i = text.find("CBO-GAP calprec2")
+    body = text[i:] if i >= 0 else ""
+    m = re.search(r"^  python   (\S+)", body, re.M)
+    if m:
+        f["python"] = m.group(1)
+    m = re.search(r"^  numpy    (\S+)\s*$", body, re.M)
+    if m:
+        f["numpy"] = m.group(1)
+    m = re.search(r"^  script   sha256 ([0-9a-f]{64})\s*$", body, re.M)
+    if m:
+        f["hashes"]["calprec2_sha256"] = m.group(1)
+    m = re.search(r"^  costprobe2\.py sha256 ([0-9a-f]{64})\s*$", body, re.M)
+    if m:
+        f["hashes"]["costprobe2_sha256"] = m.group(1)
+    m = re.search(r"^  mode     (\w+)   rows (\S+)   shard (\d+) of (\d+)", body, re.M)
+    if m:
+        f["mode"], f["rows"], f["shard"], f["nshards"] = m.group(1), m.group(2), int(m.group(3)), int(m.group(4))
+    m = re.search(r"^  throughput  (\S+)\s*$", body, re.M)
+    if m:
+        f["throughput"] = m.group(1)
+    m = re.findall(r"^files  (\S+)\s*$", body, re.M)
+    if m:
+        f["rundir"] = m[-1]
+    for path in re.findall(r"^  read (\S+): shard \S+ of \S+, \d+ rows, \d+ complete\s*$", body, re.M):
+        f["resume_read"].add(os.path.basename(path.rstrip("/")))
+    m = re.findall(r"^tasks run by this job: (\d+)   task execution", body, re.M)
+    if m:
+        f["ran"] = int(m[-1])
+        f["completed"] = f["ran"]
+    m = re.findall(r"^errored or timed-out tasks: (\d+)\s*$", body, re.M)
+    if m:
+        f["errors"] = int(m[-1])
+    f["stopped"] = bool(re.search(r"^STOPPED by --stop-after", body, re.M))
+    f["notstopped"] = bool(re.search(r"^not stopped: every phase ran\s*$", body, re.M))
+    return f
+
+
+def calprec2_dirs(folder):
+    return sorted(os.path.basename(d) for d in glob.glob(os.path.join(folder, "calprec2-*")) if os.path.isdir(d))
+
+
+def header_problems_calprec2(s, item, f, folder):
+    """R1C (shard) and R1F (finalize)."""
+    p = profile_of(s, item)
+    e = p["expect"]
+    out = []
+    if f["python"] != e["python"]:
+        out.append("python {}, expected {}".format(f["python"], e["python"]))
+    if f["numpy"] != e["numpy"]:
+        out.append("numpy {}, expected {}".format(f["numpy"], e["numpy"]))
+    for _, k in FAMILY_PINS["calprec2"]:
+        if f["hashes"].get(k) != e[k]:
+            out.append("{} {}, expected {}".format(k, f["hashes"].get(k), e[k]))
+    base = os.path.basename((f["rundir"] or "").rstrip("/"))
+    subs = calprec2_dirs(folder)
+    if item["kind"] == "finalize":
+        if f["mode"] != "finalize" or f["rows"] != p["rows"]:
+            out.append("mode {} rows {}, expected finalize rows {}".format(f["mode"], f["rows"], p["rows"]))
+        if not re.fullmatch(r"calprec2-finalize-\d{8}-\d{6}", base):
+            out.append("files {}, expected a basename calprec2-finalize-YYYYMMDD-HHMMSS".format(f["rundir"]))
+        if subs != [base]:
+            out.append("fetched calprec2-* folder(s) {}, expected exactly [{}]".format(subs, base))
+        elif not os.path.isfile(os.path.join(folder, base, "calprec2_beta.csv")):
+            out.append("{} has no calprec2_beta.csv".format(base))
+        want = set(os.path.basename(d.rstrip("/")) for d in s["data_dirs"])
+        if f["resume_read"] != want:
+            out.append("folders read {}, expected the finalize inputs {}".format(sorted(f["resume_read"]),
+                                                                              sorted(want)))
+        return out
+    S, K = item["shard"], item["nshards"]
+    if (f["mode"], f["rows"], f["shard"], f["nshards"]) != ("full", p["rows"], S, K):
+        out.append("mode {} rows {} shard {} of {}, expected full rows {} shard {} of {}".format(
+            f["mode"], f["rows"], f["shard"], f["nshards"], p["rows"], S, K))
+    want_thr = os.path.basename(p["throughput"].rstrip("/"))
+    if os.path.basename((f["throughput"] or "").rstrip("/")) != want_thr:
+        out.append("throughput {}, expected {}".format(f["throughput"], want_thr))
+    tag = "" if K == 1 else "-s{}of{}".format(S, K)
+    if not re.fullmatch(r"calprec2-full-\d{8}-\d{6}" + re.escape(tag), base):
+        out.append("files {}, expected a basename calprec2-full-YYYYMMDD-HHMMSS{}".format(f["rundir"], tag))
+    if subs != [base]:
+        out.append("fetched calprec2-* folder(s) {}, expected exactly [{}]".format(subs, base))
+    else:
+        pp = os.path.join(folder, base, "calprec2_params.csv")
+        got = {}
+        if os.path.isfile(pp):
+            with open(pp, newline="") as fh:
+                got = dict((r[0], r[1]) for r in csv.reader(fh) if r)
+        want = {"mode": "full", "rows": p["rows"], "shard": str(S), "nshards": str(K),
+                "workers": str(p["workers"]), "stop_after": repr(float(p["stop_after"])),
+                "ceiling": repr(ceiling_of(p)), "script_sha256": e["calprec2_sha256"],
+                "costprobe2_sha256": e["costprobe2_sha256"]}
+        for k, v in sorted(want.items()):
+            if got.get(k) != v:
+                out.append("{}/calprec2_params.csv {} {!r}, expected {!r}".format(base, k, got.get(k), v))
+    for d in s["resume_dirs"]:
+        if os.path.basename(d.rstrip("/")) not in f["resume_read"]:
+            out.append("no 'read' line for resume folder " + d)
+    return out
+
+
+def f2_problem_calprec2(s, item, folder, rel, f):
+    """F2C (shard) and F2F (finalize): None, or the halt reason."""
+    p = profile_of(s, item)
+    if item["kind"] == "finalize":
+        hits = glob.glob(os.path.join(folder, "calprec2-finalize-*", "calprec2_beta.csv"))
+        if len(hits) != 1:
+            return "F2F: {} calprec2_beta.csv file(s) in {}, expected 1".format(len(hits), rel)
+        with open(hits[0], newline="") as fh:
+            rows = list(csv.DictReader(fh))
+        cells = [(r.get("module"), r.get("objective"), r.get("d"), r.get("law"), r.get("tau0")) for r in rows]
+        inc = [r for r in rows if (r.get("label") or "").startswith("incomplete")]
+        say("  F2F: {} rows, {} distinct cells, {} incomplete; expected {} cells".format(
+            len(rows), len(set(cells)), len(inc), p["cells"]))
+        if len(rows) != p["cells"] or len(set(cells)) != len(rows) or inc:
+            return "F2F: calprec2_beta.csv in {} has {} rows, {} distinct cells, {} incomplete; expected {}".format(
+                rel, len(rows), len(set(cells)), len(inc), p["cells"])
+        return None
+    csvs = glob.glob(os.path.join(folder, "calprec2-full-*", "calprec2_tasks.csv"))
+    if len(csvs) != 1:
+        return "F2C: {} calprec2-full-*/calprec2_tasks.csv file(s) in {}, expected 1".format(len(csvs), rel)
+    with open(csvs[0], newline="") as fh:
+        nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+    say("  F2C: {} rows end ok; runner summary 'tasks run by this job' {}, errored {}".format(
+        nok, f["ran"], f["errors"]))
+    if f["ran"] is None or nok != f["ran"] or f["errors"] != 0:
+        return ("F2C: download incomplete or summary missing: {} rows end ok in {}, tasks run {}, errored "
+                "{}".format(nok, rel, f["ran"], f["errors"]))
+    if f["exit"] == 0 and not f["notstopped"]:
+        return "F2C: exit 0 without 'not stopped: every phase ran' in {}".format(rel)
+    if f["exit"] == 5 and not f["stopped"]:
+        return "F2C: exit 5 without 'STOPPED by --stop-after' in {}".format(rel)
+    return None
+
+
+def read_runner_rerun(text):
     f = {"exit": None, "python": None, "numpy": None, "hashes": {}, "plan_sha": None, "mode": None,
          "rundir": None, "smoke": None, "resume_read": set(), "completed": None}
     if text is None:
@@ -901,8 +1256,11 @@ def shard_problems(item, rundir, folder):
 
 
 def header_problems(s, item, f, folder):
-    """R1."""
-    e = s["expect"]
+    """R1 (rerun) or R1C/R1F (calprec2)."""
+    if family_of(s, item) == "calprec2":
+        return header_problems_calprec2(s, item, f, folder)
+    prof = profile_of(s, item)
+    e = prof["expect"]
     p = []
     if f["python"] != e["python"]:
         p.append("python {}, expected {}".format(f["python"], e["python"]))
@@ -911,8 +1269,8 @@ def header_problems(s, item, f, folder):
     for _, k in PINNED:
         if f["hashes"].get(k) != e[k]:
             p.append("{} {}, expected {}".format(k, f["hashes"].get(k), e[k]))
-    if f["plan_sha"] != s["plan_sha256"]:
-        p.append("plan sha256 {}, expected {}".format(f["plan_sha"], s["plan_sha256"]))
+    if f["plan_sha"] != prof["plan_sha256"]:
+        p.append("plan sha256 {}, expected {}".format(f["plan_sha"], prof["plan_sha256"]))
     want = "smoke" if item["kind"] == "smoke" else "run"
     if f["mode"] != want:
         p.append("mode {}, expected {}".format(f["mode"], want))
@@ -924,8 +1282,10 @@ def header_problems(s, item, f, folder):
     return p
 
 
-def f2_problem(folder, rel, f):
-    """F2: None when the rows ending ok equal the runner's completed count, else the halt reason."""
+def f2_problem(s, item, folder, rel, f):
+    """F2 (rerun shard) or F2C/F2F (calprec2): None, else the halt reason."""
+    if family_of(s, item) == "calprec2":
+        return f2_problem_calprec2(s, item, folder, rel, f)
     csvs = glob.glob(os.path.join(folder, "rerun-*", "rerun_real.csv"))
     if len(csvs) != 1:
         return "F2: {} rerun-*/rerun_real.csv file(s) in {}, expected 1".format(len(csvs), rel)
@@ -968,7 +1328,8 @@ def do_fetch(ctx, kstatus):
         raise Halt("F1: file(s) above {} MB in {}: {}".format(s["max_file_mb"], rel, big), [fetchlog])
     say("  {}: manifest verified, {} files".format(rel, len(files)))
 
-    f = read_runner(runner_text(folder, job))
+    fam = family_of(s, item)
+    f = read_runner(runner_text(folder, job), fam)
     say("  runner exit {}  python {}  numpy {}  mode {}  run dir {}  D-SMOKE {}  completed {}".format(
         f["exit"], f["python"], f["numpy"], f["mode"], f["rundir"], f["smoke"], f["completed"]))
     s["attempts"].setdefault(item["id"], []).append({
@@ -986,8 +1347,10 @@ def do_fetch(ctx, kstatus):
             code, rel, "; R1: " + "; ".join(probs) if probs else ""), paths)
     if probs:
         raise Halt("R1: header of {}: {}".format(rel, "; ".join(probs)), paths)
-    if item["kind"] == "shard":
-        bad = f2_problem(folder, rel, f)
+    if item["kind"] == "finalize" and code != 0:
+        raise Halt("R2C: finalize {} exit {}; only 0 is accepted".format(rel, code), paths)
+    if item["kind"] in ("shard", "finalize"):
+        bad = f2_problem(s, item, folder, rel, f)
         if bad:
             raise Halt(bad, paths)
     if item["kind"] == "smoke":
@@ -1011,7 +1374,7 @@ def do_fetch(ctx, kstatus):
     else:
         note = "runner exit 5 (G-STOP), completed {}; next attempt resumes".format(f["completed"])
         s["attempt"] += 1
-        s["resume_dirs"] = [r["folder"] for r in s["attempts"][item["id"]] if holds_rows(r["folder"])]
+        s["resume_dirs"] = [r["folder"] for r in s["attempts"][item["id"]] if holds_rows(r["folder"], fam)]
         s["status"] = "READY"
     s["job"], s["args"], s["data_dirs"] = "", "", []
     s["anomaly"] = None
@@ -1060,12 +1423,20 @@ def tick(a):
         say("  state unreadable: {}".format(e))
         return 1
     say("  state {}  item {}  attempt {}  job {}".format(s["status"], s["index"], s["attempt"], s["job"] or "-"))
-    say("  plan {} (rerun_plan.csv {})".format(s["plan"], s["plan_sha256"]))
-    say("  timing {}".format(", ".join(s["timing"])))
-    say("  expect python {} numpy {}; {}".format(s["expect"]["python"], s["expect"]["numpy"], "; ".join(
-        "{} {}".format(k, s["expect"][k][:8]) for _, k in PINNED)))
-    say("  kaggle user {}  workers {}  max attempts {}  max file {} MB".format(
-        s["kaggle_user"], s["workers"], s["max_attempts"], s["max_file_mb"]))
+    say("  definition {} (sha256 {})".format(s["definition"].get("path"), s["definition"].get("sha256")))
+    for name, p in sorted(s["profiles"].items()):
+        fam = p["family"]
+        if fam == "rerun":
+            say("  profile {} [rerun]  plan {} (rerun_plan.csv {})  timing {}  workers {}".format(
+                name, p["plan"], p["plan_sha256"], ", ".join(p["timing"]), p["workers"]))
+        else:
+            say("  profile {} [calprec2]  rows {}  throughput {}  stop-after {}  ceiling {}  workers {}  "
+                "cells {}".format(name, p["rows"], p["throughput"], p["stop_after"], ceiling_of(p),
+                                  p["workers"], p["cells"]))
+        say("    expect python {} numpy {}; {}".format(p["expect"]["python"], p["expect"]["numpy"], "; ".join(
+            "{} {}".format(k, p["expect"][k][:8]) for _, k in FAMILY_PINS[fam])))
+    say("  kaggle user {}  max attempts {}  max file {} MB".format(
+        s["kaggle_user"], s["max_attempts"], s["max_file_mb"]))
     say("  L4 control kernel {}/cbo-{}  K1 ABSENT gap {} min".format(s["kaggle_user"], CONTROL_JOB, CHECK_GAP_MIN))
     say("=" * 78)
     ctx = Ctx(s, base, a.run_id)
@@ -1096,6 +1467,72 @@ def load():
         s = json.loads(fh.read().decode("utf-8"))
     validate(s)
     return s
+
+
+def folder_ok(rel):
+    """LD: a committed run folder whose sha256.txt verifies."""
+    path = os.path.join(ROOT, rel)
+    if not os.path.isdir(path):
+        return "{} does not exist".format(rel)
+    bad = verify_manifest(path)
+    return "{} fails its manifest: {}".format(rel, "; ".join(bad)) if bad else None
+
+
+def load_definition(a):
+    """LD: archive a DONE state and start the queue a committed definition describes."""
+    with open(STATE, "rb") as fh:
+        old = fh.read()
+    cur = json.loads(old.decode("utf-8"))
+    n = len(cur.get("queue", []))
+    if cur.get("status") != "DONE" or cur.get("index") != n:
+        raise SystemExit("load needs a DONE state; it is {} at item {} of {}".format(
+            cur.get("status"), cur.get("index"), n))
+    rc, out = git(["status", "--porcelain", "--", a.definition], check=False)
+    if rc != 0 or out:
+        raise SystemExit("the definition {} must be committed and unmodified".format(a.definition))
+    with open(os.path.join(ROOT, a.definition), "rb") as fh:
+        raw = fh.read()
+    d = json.loads(raw.decode("utf-8"))
+    for k in ("name", "kaggle_user", "max_attempts", "max_file_mb", "profiles", "queue"):
+        if k not in d:
+            raise SystemExit("definition has no key " + k)
+    probe = {"profiles": d["profiles"], "queue": d["queue"]}
+    try:
+        validate_definition(probe)
+    except ValueError as e:
+        raise SystemExit("definition refused: {}".format(e))
+    for name, p in sorted(d["profiles"].items()):
+        fam = p["family"]
+        dirs = [p["plan"]] + list(p["timing"]) if fam == "rerun" else [p["throughput"]]
+        for rel in dirs:
+            why = folder_ok(rel)
+            if why:
+                raise SystemExit("profile {}: {}".format(name, why))
+        for fname, key in FAMILY_PINS[fam]:
+            p["expect"][key] = sha256_of(os.path.join(SCRIPTS, fname))
+            print("  profile {}: pinned scripts/{} {}".format(name, fname, p["expect"][key]))
+    old_name = (cur.get("definition") or {}).get("name") or "rerun-queue"
+    if not os.path.isdir(os.path.join(ROOT, ARCHIVE_DIR)):
+        os.makedirs(os.path.join(ROOT, ARCHIVE_DIR))
+    arel = "{}/{}-{}-done.json".format(ARCHIVE_DIR, stamp(), old_name)
+    with open(os.path.join(ROOT, arel), "xb") as fh:
+        fh.write(old)
+        fh.flush()
+        os.fsync(fh.fileno())
+    print("  archived the DONE state ({} bytes) to {}".format(len(old), arel))
+    s = {"schema": 2, "kaggle_user": d["kaggle_user"], "profiles": d["profiles"],
+         "max_attempts": d["max_attempts"], "max_file_mb": d["max_file_mb"], "queue": d["queue"],
+         "status": "READY", "index": 0, "attempt": 1, "resume_dirs": [], "job": "", "args": "",
+         "data_dirs": [], "anomaly": None, "halt_reason": "", "kernel_check": None, "attempts": {},
+         "history": [],
+         "definition": {"name": d["name"], "path": a.definition,
+                        "sha256": hashlib.sha256(raw).hexdigest(), "archived_previous": arel}}
+    history(s, "manual", "load", "{}; previous state archived to {}; {}".format(a.definition, arel, a.note))
+    validate(s)
+    write_state(s)
+    show(a)
+    print("\nwritten: {} and {}. Commit both and push, then enable the drivers.".format(STATE_REL, arel))
+    return 0
 
 
 def show(a):
@@ -1138,14 +1575,14 @@ def verify(a):
     probs = ["F1: " + x for x in verify_manifest(folder)]
     if not probs:
         say("  F1: manifest verified, {} files".format(len(list_files(folder)[0])))
-    f = read_runner(runner_text(folder, rec["job"]))
+    f = read_runner(runner_text(folder, rec["job"]), family_of(s, item))
     say("  runner exit {}  python {}  numpy {}  mode {}  run dir {}  D-SMOKE {}  completed {}".format(
         f["exit"], f["python"], f["numpy"], f["mode"], f["rundir"], f["smoke"], f["completed"]))
     probs += ["R1: " + x for x in header_problems(s, item, f, folder)]
     if f["exit"] != 0:
         probs.append("R2: runner exit {}, next-item needs 0".format(f["exit"]))
-    if item["kind"] == "shard":
-        bad = f2_problem(folder, rel, f)
+    if item["kind"] in ("shard", "finalize"):
+        bad = f2_problem(s, item, folder, rel, f)
         if bad:
             probs.append(bad)
     elif f["smoke"] != "PASS":
@@ -1237,7 +1674,9 @@ def manual(a):
             if s["attempt"] + 1 > s["max_attempts"]:
                 raise SystemExit("attempt {} would exceed max_attempts {}".format(s["attempt"] + 1, s["max_attempts"]))
             s["attempt"] += 1
-            s["resume_dirs"] = ([r["folder"] for r in s["attempts"].get(item["id"], []) if holds_rows(r["folder"])]
+            fam = family_of(s, item)
+            s["resume_dirs"] = ([r["folder"] for r in s["attempts"].get(item["id"], [])
+                                 if holds_rows(r["folder"], fam)]
                                 if item["kind"] == "shard" else [])
             s["job"], s["args"], s["data_dirs"] = "", "", []
             s["status"] = "READY"
@@ -1268,6 +1707,9 @@ def main():
     t.add_argument("--run-id", required=True)
     sub.add_parser("show")
     sub.add_parser("verify")
+    ld = sub.add_parser("load")
+    ld.add_argument("--definition", required=True)
+    ld.add_argument("--note", required=True)
     h = sub.add_parser("halt")
     h.add_argument("--note", required=True)
     c = sub.add_parser("check")
@@ -1284,6 +1726,8 @@ def main():
         return show(a)
     if a.cmd == "verify":
         return verify(a)
+    if a.cmd == "load":
+        return load_definition(a)
     if a.cmd in ("halt", "check", "release"):
         return manual(a)
     p.print_help()

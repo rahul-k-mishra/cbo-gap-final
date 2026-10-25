@@ -22,6 +22,25 @@ Peak RSS is resource.getrusage(RUSAGE_SELF).ru_maxrss / 1024 (Linux
 kilobytes to MB). The objective and law affect only the values, not the
 array sizes, so one cell is enough.
 
+EXTENSION 2026-10-25 (ledger N42). --module, --objective, --d and --tau
+select another cell. Without them the script does exactly what it did for
+N25: exactcal, ackley, d = 40, centred, tau0 0.01. With --module set to a
+costprobe2 module, step 2 draws through that module's own sampler and
+objective (costprobe2.probe_sample and costprobe2.objective_of, the
+functions calprec2 draws with), in the same chunks of 250000. Step 3 is
+unchanged: exactcal.beta_on_ensemble, which calls exactcal.log_ess_of, the
+function calprec2's E1 evaluates on its held 64M replicate.
+  Why: the calprec2 smoke over RMAP, CLIFF and ONSET
+  (runs/calprec2-smoke-ext-kaggle-20261025-065222) measured a 4M peak of
+  679.4 MB for regimemap rastrigin d = 80 against 374.2 MB at d = 40, so
+  d enters the peak beyond the chunk. N25's 64M peak (2472.8 MB) is a
+  d = 40 measurement, and no 64M peak at d = 80 exists.
+  Worked example: --module regimemap --objective rastrigin --d 80 --tau 0.1
+  draws rng.standard_normal((m, 80)) chunks, evaluates regimemap.OBJ
+  ["rastrigin"] on them, and solves at tau0 0.1.
+The seed key gains no field: SeedSequence((ENTROPY, kind, n, chunk)) as
+before. The values are used for nothing but this measurement.
+
 SAFETY GATE (pre-specified; the laptop's free memory can be as low as
 1.5 GB, CLAUDE.md rule 6)
   The sizes run one at a time, in order, never in parallel, whatever
@@ -52,6 +71,8 @@ OUTPUT (new folder <outdir>/memprobe-<timestamp>/, file opened "x")
 
 HOW TO RUN (from the repository root, venv active)
     python scripts/memprobe.py --workers 1
+    python scripts/memprobe.py --workers 1 --module regimemap --objective rastrigin --d 80 --tau 0.1
+  The second form needs about 3 GB free and belongs on Kaggle (kgrun).
   --archive and --outdir are resolved by scripts/cbopaths.py. Exit code 0
   on completion, including when the gate stops before 64M; 2 on a setup
   error.
@@ -105,6 +126,15 @@ def rss_mb():
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024.0
 
 
+def file_sha(path):
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for blk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(blk)
+    return h.hexdigest()
+
+
 def mem_available_mb():
     with open("/proc/meminfo") as fh:
         for ln in fh:
@@ -113,16 +143,29 @@ def mem_available_mb():
     return float("nan")
 
 
-def probe(n):
+def sampler(cell):
+    """(draw(rng, m), f) for the cell: exactcal's as for N25, or a costprobe2
+    module's own sampler and objective (calprec2's f_chunk)."""
+    module, obj, d, law = cell["module"], cell["obj"], cell["d"], cell["law"]
+    if module == "exactcal":
+        return (lambda rng, m: ec.draw_initial(rng, m, d, obj, law)), ec.OBJECTIVES[obj]
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import costprobe2 as cp
+    mod = cp.MODS[module]
+    return ((lambda rng, m: cp.probe_sample(module, mod, obj, d, law, rng, m)),
+            cp.objective_of(module, mod, obj))
+
+
+def probe(n, cell):
     base = rss_mb()
-    f = ec.OBJECTIVES[OBJ]
+    draw, f = sampler(cell)
     t0 = time.time()
     vals = np.empty(n, dtype=np.float64)
     pos, ci = 0, 0
     while pos < n:
         m = min(CHUNK, n - pos)
         rng = np.random.default_rng(np.random.SeedSequence([ENTROPY, KIND, n, ci]))
-        X = ec.draw_initial(rng, m, D, OBJ, LAW)
+        X = draw(rng, m)
         vals[pos:pos + m] = f(X)
         del X
         pos += m
@@ -130,7 +173,7 @@ def probe(n):
     t_draw = time.time() - t0
     held = rss_mb()
     t0 = time.time()
-    beta, ach = ec.beta_on_ensemble(vals, TAU, n)
+    beta, ach = ec.beta_on_ensemble(vals, cell["tau"], n)
     t_solve = time.time() - t0
     solve = rss_mb()
     return {"n": n, "baseline_mb": base, "held_mb": held, "solve_mb": solve,
@@ -143,9 +186,19 @@ def main():
     p.add_argument("--workers", type=int, default=1)
     p.add_argument("--archive", default=None)
     p.add_argument("--outdir", default=None)
+    p.add_argument("--module", default="exactcal")
+    p.add_argument("--objective", default=OBJ)
+    p.add_argument("--d", type=int, default=D)
+    p.add_argument("--tau", type=float, default=TAU)
     a = p.parse_args()
     if a.workers < 1:
         sys.stderr.write("setup error: --workers must be at least 1\n")
+        return 2
+    cell = {"module": a.module, "obj": a.objective, "d": a.d, "law": LAW, "tau": a.tau}
+    try:
+        sampler(cell)
+    except Exception as exc:
+        sys.stderr.write("setup error: cell {}: {}: {}\n".format(cell, type(exc).__name__, exc))
         return 2
     stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     outdir = os.path.join(OUTROOT, "memprobe-" + stamp)
@@ -159,7 +212,9 @@ def main():
     print("  platform {}   machine {}   cpus {}   workers {} (sizes run one at a time)".format(
         platform.platform(), platform.machine(), os.cpu_count(), a.workers))
     print("  archive  {}".format(ARCH))
-    print("  cell     {} d={} {} tau0 {}   sizes {}   chunk {}".format(OBJ, D, LAW, TAU, SIZES, CHUNK))
+    print("  cell     module {}  {} d={} {} tau0 {}   sizes {}   chunk {}".format(
+        cell["module"], cell["obj"], cell["d"], cell["law"], cell["tau"], SIZES, CHUNK))
+    print("  script   sha256 {}".format(file_sha(os.path.abspath(__file__))))
     print("  seeds    default_rng(SeedSequence((ENTROPY {}, kind {}, n, chunk))), full width".format(ENTROPY, KIND))
     print("  gate     64M only if extrapolated solve peak <= {} x MemAvailable".format(GATE_FRACTION))
     print("  budget   {:.0f} MB per worker (reported, M-RSS)".format(BUDGET_MB))
@@ -189,7 +244,7 @@ def main():
                     print("  64M NOT RUN: {}".format(gate))
                     break
             with Pool(processes=a.workers, maxtasksperchild=1) as pool:
-                r = pool.apply(probe, (n,))
+                r = pool.apply(probe, (n, cell))
             r["mem_available_mb"] = avail
             r["gate"] = gate
             rows.append(r)

@@ -51,6 +51,10 @@ experiment. Everything in this file is non-negotiable.
                                    (rule 22)
     notes/rerun_queue.json         the rerun queue's state; written only by
                                    scripts/rerunq.py (rule 22)
+    notes/queues/                  queue definitions, committed before
+                                   "rerunq.py load" starts them (rule 22)
+    notes/queue-archive/           each finished state, copied there by
+                                   "rerunq.py load"; never edited
     scripts/                       round-2 scripts only; they IMPORT dynamics from
                                    zenodo-v1 and never retype them
     runs/<run-id>/                 one folder per executed run: the output files the
@@ -327,8 +331,8 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     or as "Rahul Kumar Mishra (rerunq laptop timer)" (laptop).
     - While any driver is enabled, nobody launches or fetches a Kaggle job
       by hand. Nobody edits notes/rerun_queue.json except through rerunq.py
-      halt, check and release; a Claude session never edits it (denied in
-      .claude/settings.json).
+      halt, check, release and load; a Claude session never edits it
+      (denied in .claude/settings.json).
     - A new attempt after a halt ("release --mode next-attempt") is refused
       unless the halted job's kernel status was checked since the halt,
       by "rerunq.py check" or by Rahul with --checked-by-hand (rule K1 in
@@ -338,8 +342,14 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       state HALTED, exits 3 and disables itself. Nothing continues until
       Rahul has read the halt reason, released the state, checked the
       laptop clone for unpushed commits, and re-enabled both drivers.
-    - The queue covers the eight jobs listed in notes/rerun_queue.json.
-      Anything else goes through the runbooks by hand.
+    - The queue covers the items of the definition loaded into
+      notes/rerun_queue.json: a committed file under notes/queues/, started
+      by "rerunq.py load", which is refused unless the current state is DONE
+      and archives that state under notes/queue-archive/ (amended
+      2026-10-25, Rahul's decision; ledger N42). The first queue, the eight
+      rerun jobs, is the archived one. A definition's items are rerun.py
+      or calprec2.py jobs (rerunq.py docstring, schema 2). Anything else
+      goes through the runbooks by hand.
     - The dispatch token is a fine-grained personal access token of
       Rahul's, limited to this repository, with Actions read and write
       only, and an expiry date. It exists only in cron-job.org's job

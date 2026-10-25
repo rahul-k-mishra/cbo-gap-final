@@ -1831,6 +1831,108 @@ instruction of 2026-10-15.
     The design of that change is for Rahul to approve after the
     projections.
   OPEN until the projections are read and Rahul decides.
+  - Projections, read 2026-10-25 (commit b50af47):
+    logs/calprec2-plan-ext-thr-20261025-0715.log and
+    logs/calprec2-plan-ext-s30000-20261025-0715.log.
+    - Header: script sha256 3947d7ba...e511a; throughput
+      runs/calprec2-smoke-ext-kaggle-20261025-065222, whose kernel log
+      printed python 3.13.15, numpy 2.1.3, bundle d65d7355adcc0649 "51
+      files verified" and the same script sha256.
+    - V0, V1 and V2 PASS. Cells: cliff 8, regimemap 33, total 41.
+    - "best case (no cell adequate) 53920 s   worst-case estimate (every
+      cell adequate) 93365 s   at 4 workers"; "largest single task,
+      estimated 1779 s" (regimemap rastrigin d 80).
+    - Shard counts: "at the target (10800 s): smallest --nshards 15
+      largest shard 10272 s = 47.6% of 21600 s"; "at the full ceiling
+      (21600 s): smallest --nshards 5   largest shard 20612 s = 95.4%".
+    - G-STOP: TIMEOUT_S 8897 s. At --stop-after 36000 the sum is 44897 s,
+      "REFUSE". At --stop-after 30000 it is 38897 s, "PASS", margin 4303 s.
+    - Smoke peak RSS at 4M (calprec2_throughput.csv): regimemap rastrigin
+      374.2 MB at d 40 and 679.4 MB at d 80; ackley 299.7 and 528.7;
+      sphere 220.9 and 373.5. d enters the peak beyond the chunk, so N25's
+      64M figure (d 40) does not cover d 80 (N42).
+
+- N42 (design, 2026-10-25; Rahul's instructions of 2026-10-25: choose the
+  shard count, extend the queue to calprec2, write the calibrated-row
+  changes). Nothing below has run.
+  - Shard count: 15 at the 10800 s target, --stop-after 30000 for every
+    shard (Claude's recommendation; Rahul to approve). Reason: the
+    estimate assumes perfect scaling and ignores barrier idle and phase
+    tails. The project's measured overruns of comparable estimates reach
+    16255.0 s against 12596 s (arch-s1of4, K6), and calprec2's long shards
+    ran over theirs (N37). At 5 shards the estimate already takes 95.4% of
+    the ceiling, so the margin the ceiling exists to provide is gone
+    before any of that. At 15 a shard can run at more than twice its
+    estimate before reaching 21600 s. What 15 costs is ten more launches,
+    and runtime is not a constraint (rule 6).
+  - Before the queue: scripts/memprobe.py extended (--module, --objective,
+    --d, --tau; the defaults are N25's cell). It measures the 64M peak for
+    regimemap rastrigin d 80, the largest 4M peak of the smoke, on Kaggle.
+    The queue is not loaded until that peak is read against the 3072 MB
+    budget.
+  - rerunq.py, schema 2 (docstring "SCHEMA 2 AND THE CALPREC2 FAMILY").
+    Profiles; a calprec2 family with shard and finalize items; P1C, R1C,
+    F2C, R2C, FIN, R1F and F2F; and "load", which archives a DONE state and
+    starts a committed definition. L1 to L5, F1, R2's exit handling and K1
+    are unchanged. R1 itself does not apply to calprec2 jobs: its regexes,
+    hashes, plan sha256, modes and run-dir names are rerun.py's. R1C and
+    R1F are its calprec2 equivalents, read from what calprec2.py prints:
+    - the header after its banner;
+    - "files  <dir>" with calprec2-full-<stamp>-s<S>of<K>;
+    - calprec2_params.csv;
+    - the rule-17 line "read <folder>: shard S of K, N rows, M complete",
+      which calprec2's read_folders already prints, so calprec2.py is not
+      changed.
+    Definition: notes/queues/calprec2-ext.json, with 15 shards and the
+    finalize. CLAUDE.md rule 22 amended with it.
+  - kgrun.py: the runner now rewrites "runs/<name>" inside comma-joined
+    --args tokens too. calprec2's --finalize takes "runs/A,runs/B", which
+    the whole-token rule could not ship. A token without a comma is
+    handled exactly as before.
+  - Calibrated r rows: rerunlib.py and rerun.py (docstrings "CALIBRATED r
+    ROWS" and "N42 AMENDMENTS"):
+    - RMAP-CAL, CLIFF-CAL and ONSET-CAL are appended after the seventeen
+      rows, so every existing key is unchanged;
+    - their betas come from calprec2, and their sigma is checked against
+      the base row's archive file;
+    - K4's expected sharing is a list per share key;
+    - --calprec2 accepts several tables;
+    - the new K5 (--same-as PLAN) requires the old plan's rows to reappear
+      unchanged.
+  - costprobe2.py is NOT changed, although the instruction named it. It is
+    pinned inside calprec2: its sha256 is in every calprec2 header and in
+    calprec2_params.csv, which resume and finalize compare. The 17-row plan
+    pins it too. Editing it would break the calibration this queue runs and
+    the 17-row plan at once. The three rows live in rerunlib instead.
+  - rerun_analysis.py: a guard only. It exits 2 while rerunlib defines rows
+    it has no criteria for. The criteria for the new rows are an amendment
+    to notes/ANALYSIS_CRITERIA.md, for Rahul to decide:
+    - the margin: keep m = 0.078113 or recompute;
+    - which contrasts the -CAL rows get;
+    - no probe-against-calibrated comparison (N40);
+    - the sensitivity analysis without the not-adequate cells;
+    - A1 over twenty rows.
+  - Pins this breaks, and what keeps the 17-row result verifiable:
+    - rerunlib.py (5d55050e...9b06), rerun.py (756c4069...818e) and
+      rerun_analysis.py (21a26205...67a5) change. At HEAD, rerun.py and
+      rerun_analysis.py refuse runs/rerun-plan-20261023-112643, because
+      its recorded rerunlib hash differs; the analysis also refuses
+      through the guard.
+    - calprec2.py (3947d7ba..., unchanged since 5864729) and costprobe2.py
+      (ea5cb2e1...f64b) do not change.
+    - The 17-row result is reproduced at commit 8c9b799 in a git worktree,
+      with the same .venv (Python 3.12.3, NumPy 2.5.3). The check is
+      "sha256sum -c" of the new folder against the committed
+      runs/rerun-analysis-20261025-051314/sha256.txt. Byte-identical is
+      the criterion; any difference is a finding.
+    - The run folders and the plan never change, and the trajectories are
+      not rerun: the 26 calprec2 shards are pinned to their launch commits
+      (K7) and the rerun shards to their recorded hashes (K6).
+    - The new 20-row plan must pass K5 against the old one. That makes the
+      old shard folders valid task by task under it, which a combined
+      analysis needs.
+  OPEN until the memprobe peak is read, the reproduction passes, Rahul
+  approves the shard count, and the queue runs.
 
 ## Checked and found sound
 

@@ -70,6 +70,33 @@ imported. They are not trusted: rerun.py's A-BETA compares every
 recomputed beta with the archived CSV's beta column and stops on any
 mismatch.
 
+CALIBRATED r ROWS (2026-10-25; ledger N41, N42). Three rows are appended
+after costprobe2's seventeen:
+    RMAP-CAL   the cells of RMAP;
+    CLIFF-CAL  the cells of CLIFF;
+    ONSET-CAL  the cells of ONSET;
+each with the base row's GRID entry, module, diffusions, M and J grid, and
+with its beta from calprec2_beta.csv (the N41 calibration of the regimemap
+and cliff cells) instead of the archived probe.
+  - ROWS = costprobe2.ROW_ORDER + the three, so the seventeen rows keep
+    their indices and every key of the run of 2026-10-24 and 25 is
+    unchanged; the new rows' owner field is 17, 18 or 19.
+  - costprobe2.py is NOT edited: it is pinned by calprec2 (header, params,
+    resume and finalize compare it) and by the plan. GRID here is
+    costprobe2.GRID plus the three aliases; V0 checks the base rows'
+    factors against the source and counts the new rows against their base
+    row's Table 2 entry (rerun.py).
+  - The calibrated rows are paired (5a) and calprec2-calibrated (C2). The
+    archived betas are not recomputed for them (recompute_beta raises);
+    A-SIGMA still checks their sigma against the base row's archived file.
+  - Sharing: RMAP-CAL and ONSET-CAL share, cell for cell, what RMAP and
+    ONSET share (d 10 and 40, r 1.0 to 3.0, tau0 0.1), owner RMAP-CAL.
+    The probe cells and the calibrated cells have the same share key and
+    different betas, so they are different groups. expected_shared
+    therefore maps a share key to a LIST of row lists, one per group.
+    Worked example: (regimemap, ackley, 10, centred, 0.1, 1.5, 50000, 1.0)
+    -> [[RMAP, ONSET], [RMAP-CAL, ONSET-CAL]].
+
 ONSET ESTIMATOR (item 7, H3). regimemap.py lines 496 to 505, retyped
 because bp is nested inside main and cannot be imported (rule 4 does not
 cover it). onset_bp(rs, y): x = log r; for each candidate c in x without
@@ -117,11 +144,16 @@ FINITEJ_SHA256 = "5b7a81ef54433369cae6e9d9e416a51078f207a34c329d7ca7023ce448f9c4
 ENTROPY = 20261016
 KIND_TRAJ, KIND_BOOT, KIND_SMOKE = 81, 71, 83
 
-ROWS = list(cp.ROW_ORDER)
+EXT_ROWS = ["RMAP-CAL", "CLIFF-CAL", "ONSET-CAL"]
+EXT_BASE = {"RMAP-CAL": "RMAP", "CLIFF-CAL": "CLIFF", "ONSET-CAL": "ONSET"}
+ROWS = list(cp.ROW_ORDER) + EXT_ROWS
 MODULES, OBJ_NAMES, LAWS, ARMS = cp.MODULES, cp.OBJ_NAMES, cp.LAWS, cp.ARMS
-GRID, JGRIDS, JCOLS = cp.GRID, cp.JGRIDS, cp.JCOLS
-PAIRED = ["SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
-CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"]
+GRID = dict(cp.GRID)
+for _r in EXT_ROWS:
+    GRID[_r] = cp.GRID[EXT_BASE[_r]]
+JGRIDS, JCOLS = cp.JGRIDS, cp.JCOLS
+PAIRED = ["SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"] + EXT_ROWS
+CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"] + EXT_ROWS
 AUDIT_ROWS = ["CONC", "PROBEARM", "TAU8", "GEOM"]
 DT, LAM, SIGMA_ISO, JINF = 0.01, 1.0, 0.2, 50000
 B_VIS = 30.0
@@ -144,6 +176,9 @@ BETA_SOURCE = {
     "RMAP": "regimemap probe (regimemap.py 337-344)",
     "CLIFF": "cliff probe (cliff.py 304-312)",
     "ONSET": "regimemap probe (regimemap.py 337-344)",
+    "RMAP-CAL": "calprec2_beta.csv",
+    "CLIFF-CAL": "calprec2_beta.csv",
+    "ONSET-CAL": "calprec2_beta.csv",
 }
 
 
@@ -167,6 +202,11 @@ def _cell(row, module, obj, d, law="centred", tau=None, r=None, sigma_design=Non
 
 def cells_of(row):
     """Every cell of a row, in a fixed order, from GRID (checked by P0)."""
+    if row in EXT_BASE:
+        out = cells_of(EXT_BASE[row])
+        for c in out:
+            c["row"] = row
+        return out
     g = GRID[row]
     out = []
     if row in ("BETA-ISO", "BETA-ANI"):
@@ -293,16 +333,19 @@ def share_key(c):
 
 
 # The sharing derived from the code in the criteria file (layout section,
-# "Shared cells"). Each entry: share_key -> rows, in ROW_ORDER.
+# "Shared cells"). Each entry: share_key -> a list of row lists, one per
+# multi-row group with that key, each in ROWS order (N42: the probe and the
+# calibrated r rows have the same share keys and different betas).
 def expected_shared():
     exp = {}
     for o in ["ackley", "sphere", "rosenbrock"]:
-        exp[("regime", o, 10, "centred", 0.1, None, 50000, 1.0)] = ["REFSIZE", "NAMED", "HORIZON"]
-    exp[("regime", "rastrigin", 10, "centred", 0.1, None, 50000, 1.0)] = ["NAMED", "HORIZON"]
+        exp[("regime", o, 10, "centred", 0.1, None, 50000, 1.0)] = [["REFSIZE", "NAMED", "HORIZON"]]
+    exp[("regime", "rastrigin", 10, "centred", 0.1, None, 50000, 1.0)] = [["NAMED", "HORIZON"]]
     for o in ["ackley", "rastrigin", "sphere"]:
         for d in [10, 40]:
             for r in [1.0, 1.5, 2.0, 3.0]:
-                exp[("regimemap", o, d, "centred", 0.1, r, 50000, 1.0)] = ["RMAP", "ONSET"]
+                exp[("regimemap", o, d, "centred", 0.1, r, 50000, 1.0)] = [["RMAP", "ONSET"],
+                                                                         ["RMAP-CAL", "ONSET-CAL"]]
     return exp
 
 
@@ -426,6 +469,14 @@ ARCH_CHECK = {
                                       ("d", "d"), ("level", "level"), ("tau", "tau")], None, "sigma",
               "g6"),
 }
+
+
+# N42: the calibrated r rows check sigma against the base row's archived file
+# (sigma depends on the diffusion, d and r only); their beta is calprec2's, so
+# no archived beta column applies.
+for _r in EXT_ROWS:
+    _f, _m, _bcol, _scol, _fmt = ARCH_CHECK[EXT_BASE[_r]]
+    ARCH_CHECK[_r] = (_f, _m, None, _scol, _fmt)
 
 
 def printed_tol(s, fmt):

@@ -279,6 +279,20 @@ SECTION 8  (tenth to twelfth messages).
   No round-1 interval is reused or compared: the approved key shares no
   realization across d, tau_0 or r.
 
+GUARD (2026-10-25; ledger N42). rerunlib now defines twenty rows: the
+  seventeen above and RMAP-CAL, CLIFF-CAL and ONSET-CAL. This script's
+  criteria cover the seventeen only. Rows it has no pre-registered
+  criteria for would still be read and some of their statistics computed;
+  the margin (5b) would mix them in through rerunlib.PAIRED. So it refuses:
+  if rerunlib.ROWS differs from ANALYSIS_ROWS it prints both, computes
+  nothing and exits 2. It runs again only after an amendment fixes the new
+  rows' criteria (notes/ANALYSIS_CRITERIA.md) and this script implements
+  it. The seventeen-row result (runs/rerun-analysis-20261025-051314) is
+  reproduced at commit 8c9b799, whose rerunlib.py, rerun.py and this file
+  are the ones it ran with (ledger N42, reproduction procedure).
+  Worked example: rerunlib.ROWS with "RMAP-CAL" appended: "GUARD: ...",
+  exit 2, no folder.
+
 OUTPUT (new folder <outdir>/rerun-analysis-<stamp>/, every file "x")
   analysis_params.csv, analysis_completeness.csv, analysis_cells.csv,
   analysis_margin.csv, analysis_stats.csv (every contrast, coefficient,
@@ -335,6 +349,8 @@ K_TOL = 3.0
 REVISIT_RATIO = 1.5
 FLAG_FRAC = 0.01
 REFSIZE_CAP = 1250
+ANALYSIS_ROWS = ["BETA-ISO", "BETA-ANI", "LAWPANEL", "CONC", "PROBEARM", "ADAPT", "TAU8", "REFSIZE",
+                 "SYNTH", "NAMED", "HORIZON", "GEOM", "SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
 CALGROUP = ["SIGMA", "ANISO"]
 PROBEGROUP = ["RMAP", "CLIFF", "ONSET"]
 
@@ -1178,6 +1194,11 @@ def main():
     for f in a.runs:
         say("  run  {}".format(f))
 
+    if list(rl.ROWS) != ANALYSIS_ROWS:
+        say("\n  GUARD: rerunlib.ROWS is {}".format(",".join(rl.ROWS)))
+        say("  this analysis has criteria for {} only (ledger N42).".format(",".join(ANALYSIS_ROWS)))
+        say("  Nothing computed, no folder written. The seventeen-row result is reproduced at commit 8c9b799.")
+        sys.exit(2)
     if not rerun.check_p1():
         sys.stderr.write("P1 failed\n")
         sys.exit(2)

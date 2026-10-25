@@ -42,7 +42,17 @@ RESUMPTION ON KAGGLE (ledger K5, closed 2026-10-11)
   --data-dirs runs/C[,runs/D]     earlier run folders the script reads as
                                   input, for example calprec2's --throughput.
                                   Every token of --args equal to "runs/<name>"
-                                  is replaced on Kaggle by the folder's path
+                                  is replaced on Kaggle by the folder's path.
+                                  Since 2026-10-25 (ledger N42) so is every
+                                  member of a comma-joined token, for
+                                  calprec2's --finalize runs/A,runs/B: each
+                                  member equal to "runs/<name>" is replaced
+                                  and the token is rejoined. A token without
+                                  a comma is handled exactly as before.
+                                  Worked example: "--finalize
+                                  runs/A,runs/B" with A and B shipped gives
+                                  "--finalize /tmp/kgrun-ship/A,/tmp/kgrun-
+                                  ship/B", one occurrence each.
   Before the bundle is built, every such folder must:
     - be a direct subfolder of runs/;
     - hold a sha256.txt listing exactly the files present, each with a
@@ -328,10 +338,15 @@ if SHIP:
             resume.append(dst)
         else:
             token = "runs/" + name
-            hits = sum(1 for x in ARGS if x == token)
+            hits = 0
+            NEWARGS = []
+            for x in ARGS:
+                parts = x.split(",")
+                hits += sum(1 for q in parts if q == token)
+                NEWARGS.append(",".join(dst if q == token else q for q in parts))
             if hits == 0:
                 fail("data folder " + name + " is not named in the args as " + token)
-            ARGS = [dst if x == token else x for x in ARGS]
+            ARGS = NEWARGS
             print("        args: " + token + " -> " + dst + " (" + str(hits) + " occurrence(s))")
     if resume:
         ARGS = ARGS + ["--resume-from", ",".join(resume)]

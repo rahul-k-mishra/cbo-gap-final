@@ -130,6 +130,33 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
       have the same coordinates but different betas: two groups, as
       expected. Had their betas been equal, K4 would find a sharing not in
       the list and exit 2.
+  N42 AMENDMENTS (2026-10-25, before any execution of this version; the
+      calibrated r rows of rerunlib, RMAP-CAL, CLIFF-CAL and ONSET-CAL):
+    - V0: (a) runs over the seventeen costprobe2 rows only, since the new
+      rows' GRID entries are their base rows'; (b) counts each new row
+      against its base row's Table 2 entry.
+      Worked example: ONSET-CAL 90 cells x 2 diffusions = 180, x 12 =
+      2160, against ONSET's Table 2 entry: pass.
+    - C2: every cell of every row in rerunlib.CALROWS (now seven) needs a
+      calprec2 row. --calprec2 takes DIR[,DIR]: the tables are merged, and
+      a cell present in two tables exits 2. The plan records every folder
+      and every table's sha256, ";"-joined, in that order.
+      Worked example: runs/calprec2-finalize-20261023-112503 (336 cells)
+      and the N41 finalize (41 cells): 377 cells, no cell twice: pass.
+    - K4: expected_shared maps a share key to a list of row lists, one per
+      group. A key seen in exactly as many multi-row groups as listed,
+      with those rows: pass.
+    - K5  SAME PLAN FOR THE OLD ROWS (new). With --same-as PLAN, every
+      row of that plan's rerun_plan.csv must appear in the new plan with
+      every column equal as a string, and the new plan's rows of the rows
+      that plan covers must be exactly those. Recorded as K5 PASS, FAIL or
+      "not run" in the plan's params; FAIL exits 2 after the plan is
+      written. This shows that adding rows changed nothing for the run of
+      2026-10-24 and 25: same keys, owners, betas, sigmas and calprec2
+      columns, so its folders are valid task by task against the new plan.
+      Worked example: --same-as runs/rerun-plan-20261023-112643 with every
+      old row byte-equal: K5 PASS. One archived beta reprinted differently:
+      K5 FAIL, exit 2.
   F1  FINITE-J AUDIT IDENTITY (section 8.5). For every realization of CONC,
       PROBEARM, TAU8 and GEOM, the initial ensemble is redrawn from the
       realization's seed and the log-ESS of the full redrawn reference must
@@ -325,12 +352,12 @@ def script_hashes():
 
 def check_v0():
     hdr("V0  plan identity (costprobe2 P0(a); Table 2 counts)")
-    ok = cp.p0_values(rl.ROWS)
+    ok = cp.p0_values([r for r in rl.ROWS if r not in rl.EXT_BASE])
     for row in rl.ROWS:
         cells = rl.cells_of(row)
         n = sum(len(c["diffs"]) for c in cells)
         m = sum(len(c["diffs"]) * c["M"] for c in cells)
-        want = cp.TABLE2[row]
+        want = cp.TABLE2[rl.EXT_BASE.get(row, row)]
         good = (n, m) == tuple(want)
         ok = ok and good
         print("  V0(b) {:<9} cells {:>4} realizations {:>5}  Table 2 {}  {}".format(
@@ -441,14 +468,15 @@ def build_plan(cal):
             seen.append((rl.share_key(cs[0]), sorted(rows, key=rl.ROWS.index)))
     seen_keys = [ek for ek, _ in seen]
     for ek, rows in sorted(seen, key=lambda z: str(z[0])):
-        good = ek in exp and exp[ek] == rows and seen_keys.count(ek) == 1
+        good = ek in exp and rows in exp[ek] and seen_keys.count(ek) == len(exp[ek])
         k4_ok = k4_ok and good
         print("  shared {} rows {} owner {}  {}".format(ek, rows, rows[0],
                                                        "ok" if good else "NOT EXPECTED"))
-    for ek, rows in sorted(exp.items(), key=lambda z: str(z[0])):
-        if ek not in seen_keys:
-            k4_ok = False
-            print("  K4 FAIL: expected sharing {} rows {} not found".format(ek, rows))
+    for ek, rowlists in sorted(exp.items(), key=lambda z: str(z[0])):
+        for rows in rowlists:
+            if (ek, rows) not in seen:
+                k4_ok = False
+                print("  K4 FAIL: expected sharing {} rows {} not found".format(ek, rows))
     print("  K4 {}  ({} groups with more than one row)".format("PASS" if k4_ok else "FAIL", len(seen)))
 
     # K1, K2 over tasks (one per group, diffusion, rep)
@@ -490,6 +518,33 @@ def plan_row(c):
             cal.get("med_256M", ""), cal.get("provenance", ""), cal.get("flags", "")]
 
 
+def same_as(folder, new_rows):
+    """K5: every row of the old plan is in the new plan unchanged, and the new
+    plan's rows of the old plan's rows are exactly those."""
+    rels = rl.verify_folder(folder)
+    path = rl.find_file(folder, rels, "rerun_plan.csv")
+    with open(path, newline="") as fh:
+        rd = csv.reader(fh)
+        head = next(rd)
+        old = [list(r) for r in rd]
+    if head != PLAN_COLS:
+        print("  K5 FAIL: {} has columns {} (expected the current PLAN_COLS)".format(path, head))
+        return False
+    old_rows = set(r[0] for r in old)
+    new_s = [[str(x) for x in r] for r in new_rows if r[0] in old_rows]
+    old_set = set(tuple(r) for r in old)
+    new_set = set(tuple(r) for r in new_s)
+    missing = sorted(old_set - new_set)
+    extra = sorted(new_set - old_set)
+    print("  old plan {}: {} rows over {} row names; new plan has {} rows of those names".format(
+        path, len(old), len(old_rows), len(new_s)))
+    for r in missing[:10]:
+        print("  K5 FAIL: old row not in the new plan unchanged: {} {}".format(r[0], r[3]))
+    for r in extra[:10]:
+        print("  K5 FAIL: new row not in the old plan: {} {}".format(r[0], r[3]))
+    return not missing and not extra and len(old) == len(new_s)
+
+
 def precheck(a):
     ok = check_v0()
     ok = check_p1() and ok
@@ -499,13 +554,23 @@ def precheck(a):
         sys.exit(2)
     cal, cal_dir, cal_sha = None, "none", ""
     if a.calprec2:
-        rels = rl.verify_folder(a.calprec2)
-        path = rl.find_file(a.calprec2, rels, "calprec2_beta.csv")
-        cal = rl.read_calprec2(path)
-        cal_dir, cal_sha = os.path.abspath(a.calprec2), rl.file_sha(path)
-        print("\n  calprec2 table {}  sha256 {}  {} cells".format(path, cal_sha, len(cal)))
+        cal, dirs, shas = {}, [], []
+        for folder in [x for x in a.calprec2.split(",") if x]:
+            rels = rl.verify_folder(folder)
+            path = rl.find_file(folder, rels, "calprec2_beta.csv")
+            part = rl.read_calprec2(path)
+            twice = sorted(set(part) & set(cal), key=str)
+            if twice:
+                sys.stderr.write("C2: cell(s) in two calprec2 tables: {}\n".format(twice[:5]))
+                sys.exit(2)
+            cal.update(part)
+            dirs.append(os.path.abspath(folder))
+            shas.append(rl.file_sha(path))
+            print("\n  calprec2 table {}  sha256 {}  {} cells".format(path, shas[-1], len(part)))
+        cal_dir, cal_sha = ";".join(dirs), ";".join(shas)
+        print("  merged calprec2 cells {}".format(len(cal)))
     else:
-        print("\n  no --calprec2: CONC, TAU8, SIGMA and ANISO are written as 'beta pending'")
+        print("\n  no --calprec2: {} are written as 'beta pending'".format(", ".join(rl.CALROWS)))
 
     hdr("O1  onset control (before any use of the onset estimator, before any trajectory)")
     o1_ok, o1_rep, o1_rec = rl.onset_control(rl.ARCH, os.path.join(rl.ARCH, "sn-article.tex"))
@@ -517,6 +582,12 @@ def precheck(a):
         sys.exit(2)
 
     entries, chk_rows, flags = build_plan(cal)
+    k5 = "not run"
+    if a.same_as:
+        hdr("K5  same plan for the rows of {}".format(a.same_as))
+        k5 = "PASS" if same_as(a.same_as, [plan_row(c) for c in entries]) else "FAIL"
+        print("  K5 {}".format(k5))
+        flags["K5"] = (k5 == "PASS")
     good = all(flags.values())
     outdir = new_outdir("rerun-plan")
     hs = script_hashes()
@@ -529,6 +600,7 @@ def precheck(a):
                ["C2", "PASS" if flags["C2"] else "FAIL"],
                ["K1", "PASS" if flags["K1"] else "FAIL"], ["K2", "PASS" if flags["K2"] else "FAIL"],
                ["K4", "PASS" if flags["K4"] else "FAIL"],
+               ["K5", k5], ["same_as", a.same_as or ""],
                ["calprec2_rows", "present" if cal is not None else "pending"]]
     write_rows(os.path.join(outdir, "rerun_plan_params.csv"), ["name", "value"], params)
     write_rows(os.path.join(outdir, "rerun_archive_check.csv"),
@@ -544,6 +616,7 @@ def precheck(a):
     print("  {}".format(outdir))
     for k in ("A", "C2", "K1", "K2", "K4"):
         print("  {:<6} {}".format(k, "PASS" if flags[k] else "FAIL"))
+    print("  {:<6} {}".format("K5", k5))
     if not good:
         print("\n  A precheck criterion failed: this plan is recorded but no run accepts it.")
         sys.exit(2)
@@ -833,6 +906,7 @@ def main():
     ap.add_argument("--schedule", action="store_true")
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--calprec2", default="")
+    ap.add_argument("--same-as", default="")
     ap.add_argument("--plan-from", default="")
     ap.add_argument("--timing-from", action="append", default=[])
     ap.add_argument("--rows", default=",".join(rl.ROWS))
