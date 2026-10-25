@@ -1,0 +1,4 @@
+cell,shard,rows
+cliff|ackley|40|centred|0.1,1,CLIFF
+regimemap|ackley|40|centred|0.5,1,RMAP
+regimemap|sphere|10|centred|0.03,1,RMAP
