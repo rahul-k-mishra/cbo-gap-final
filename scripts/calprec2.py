@@ -74,6 +74,41 @@ CELLS (spec 2, ledger N27)
   deduplicated count. No other row is calibrated by calprec v2; those rows
   keep their archived betas (RERUN_PLAN, scope section).
 
+SCOPE EXTENSION 2026-10-25 (ledger N41; Rahul's instruction of 2026-10-25,
+"a diffusion comparison on probe beta hands the referee back point 5").
+Written so that the plan and the smoke can price it. No full run of the
+extension until Rahul approves the projection.
+  - Three more rows may be selected with --rows:
+      RMAP   regimemap;
+      ONSET  regimemap;
+      CLIFF  cliff.
+    The default row set (no --rows) is still the four rows above, so every
+    earlier invocation does exactly what it did.
+  - A calibration cell is (module, objective, d, law, tau0). beta does not
+    depend on r, sigma or the diffusion, so RMAP's cells are OBJ3 x d {10,
+    40} x tau0 {0.5, 0.1, 0.03, 0.01}; ONSET's are OBJ3 x d {5, 10, 20, 40,
+    80} x tau0 0.1; CLIFF's are OBJ4 x d {10, 40} x tau0 0.1; law centred
+    throughout (costprobe2 GRID). V0(b) checks each row against Table 2:
+    RMAP x (2 diffusions x 5 r), ONSET x (2 x 6), CLIFF x (2 x 9).
+    Worked example: CLIFF has 4 x 2 x 1 = 8 calibration cells, and 8 x 18
+    = 144 is Table 2's count: pass.
+  - RMAP and ONSET use the same module, so a cell in both (an objective of
+    OBJ3, d 10 or 40, tau0 0.1) has one key and is calibrated once
+    (all_cells deduplicates). The plan prints the deduplicated count.
+  - Keys carry the module code, not the row (SEEDS below), so no key of
+    the four calibrated rows changes, and no earlier output is touched.
+  - V2 sampler lines, read from the archive (zenodo-v1/regimemap.py line
+    202, zenodo-v1/cliff.py line 178): regimemap "X0 =
+    rng.standard_normal((Jinf, d))"; cliff "X0 = rng.standard_normal((Jinf,
+    d)) + xs". costprobe2.probe_sample draws the same way for both.
+  - Not measured, and stated, not assumed: unit costs for regimemap and
+    cliff at any d, and for any module at d = 20 and d = 80. They do not
+    exist until a smoke over these rows has run (--smoke --rows ...). The
+    64M held peak (N25, 2472.8 MB) was measured at d = 40 only. Values are
+    drawn in chunks of 250000 points, so d enters the held arrays only
+    through the chunk; that is a reading of the code, not a measurement,
+    and G-RSS checks every task in the run.
+
 PROCEDURE PER CELL (barriers between phases; parallel over cells,
 replicates and draws)
   A   CALIBRATION.
@@ -483,14 +518,18 @@ REFSCALE_ACKLEY_RATE = 3.16e5     # points/s/worker, runs/refscale-kaggle-202610
 N_SMOKE_DRAW, N_SMOKE_REF, SMOKE_NBETA = 4000000, 1000000, 145
 NLEV = len(L_CAL) * R_CAL + 1
 
-ROWMOD = {"CONC": "mechanism", "TAU8": "boundary", "SIGMA": "sigma", "ANISO": "crossed"}
-CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"]
+ROWMOD = {"CONC": "mechanism", "TAU8": "boundary", "SIGMA": "sigma", "ANISO": "crossed",
+          "RMAP": "regimemap", "ONSET": "regimemap", "CLIFF": "cliff"}
+CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"]          # the default selection (N27)
+EXTROWS = ["RMAP", "ONSET", "CLIFF"]                  # selectable with --rows (N41)
 
 SAMPLER_LINE = {
     "mechanism": "X0 = draw_initial(rng, Jinf, d, objective, init)",
     "boundary": "X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]",
     "sigma": "X0 = rng.standard_normal((Jinf, d)) + xs",
     "crossed": "X0 = rng.standard_normal((Jinf, d)) + xs",
+    "regimemap": "X0 = rng.standard_normal((Jinf, d))",
+    "cliff": "X0 = rng.standard_normal((Jinf, d)) + xs",
 }
 
 
@@ -514,6 +553,12 @@ def cal_cells(row):
     if row == "ANISO":
         return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
                 for t in g["taus"]], len(g["diffs"]) * (len(g["sigmas"]) + len(g["rs"]))
+    if row in ("RMAP", "CLIFF"):
+        return [(m, o, d, "centred", t) for o in g["objs"] for d in g["dims"]
+                for t in g["taus"]], len(g["diffs"]) * len(g["rs"])
+    if row == "ONSET":
+        return [(m, o, d, "centred", g["tau"]) for o in g["objs"] for d in g["dims"]], \
+            len(g["diffs"]) * len(g["rs"])
     raise ValueError(row)
 
 

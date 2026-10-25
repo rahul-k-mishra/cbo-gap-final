@@ -1800,6 +1800,38 @@ instruction of 2026-10-15.
     new probe arm run with CONC's keys.
   OPEN.
 
+- N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
+  diffusion rows, "a diffusion comparison on probe beta hands the
+  referee back point 5"). Calibrate RMAP, ONSET and CLIFF with calprec2
+  and rerun their trajectories on those fixed betas. This reverses N27's
+  exclusion of the three rows. Nothing has run.
+  - scripts/calprec2.py extended (docstring "SCOPE EXTENSION
+    2026-10-25"). --rows accepts RMAP, ONSET and CLIFF; the default
+    selection is still the four N27 rows. Keys carry the module code, so
+    no key of the four calibrated rows changes. V0(b) checks the new rows
+    against Table 2, and V2 has the regimemap and cliff sampler lines
+    (regimemap.py 202, cliff.py 178). The file's hash changes;
+    calprec2_hashaudit pins records to their launch commits, so the
+    audited shards are unaffected.
+  - Measured, usable for the projection: costprobe2's trajectory walls
+    and peak RSS for every unit of RMAP, ONSET and CLIFF (N22). Peak RSS
+    of every rerun unit is at most 354.2 MB (rerun.py docstring, from
+    runs/costprobe2-finalize-20261011-101659).
+  - Not measured: calprec2 unit costs (t_draw, t_solve, t_beta) for the
+    regimemap and cliff modules at any d, and for d = 20 and d = 80 in
+    any module. Without them the plan has no estimate for those cells. A
+    smoke over the three rows measures them, with per-unit peak RSS. The
+    64M held peak (N25, 2472.8 MB) is a d = 40 measurement. Values are
+    chunked by 250000 points, so d should enter only through the chunk;
+    that is a reading of the code, not a measurement.
+  - The trajectory rerun on calibrated betas needs new row definitions
+    in costprobe2, rerunlib, rerun.py and rerun_analysis.py. They are not
+    written. That changes pinned files, so the analysis of the existing
+    seventeen rows stays reproducible only at its own commit (8c9b799).
+    The design of that change is for Rahul to approve after the
+    projections.
+  OPEN until the projections are read and Rahul decides.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
