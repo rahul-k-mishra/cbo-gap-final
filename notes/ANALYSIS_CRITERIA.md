@@ -2406,8 +2406,45 @@ CAL2. Contrasts. DECIDED: mirror.
       cells (section 2: tau_0 0.03 and 0.01 occur in RMAP only).
       ONSET-CAL (tau_0 0.1 only) contains none of them. The seventh,
       cliff ackley d 10 tau_0 0.1, is CLIFF-CAL's.
-CAL3. Sensitivity analysis excluding the not-adequate cells. NOT
-    DECIDED.
+CAL3. Sensitivity analysis excluding the not-adequate cells. DECIDED:
+    flag, do not exclude.
+    - All cells enter every statistic. Every statistic that uses a cell
+      whose calprec2 adequacy is "not adequate" carries a flag naming
+      those cells. Per-cell adequacy is reported as before
+      (analysis_adequacy.csv). No statistic is recomputed without them.
+    - A calibration cell has no r or diffusion coordinate, so one
+      not-adequate cell reaches every r and both arms at its (objective,
+      d, tau_0). In RMAP-CAL that is 5 r values per arm for each of its
+      six cells; in CLIFF-CAL, 9 r values per arm for cliff ackley d 10
+      (cliff.py line 263).
+    - The flag extends to the seventeen rows: CONC, TAU8, SIGMA and ANISO
+      have not-adequate cells (N39, C6). It was added after the
+      seventeen-row results were seen, and it changes no value. It names,
+      at the point of use, what analysis_adequacy.csv already records.
+    - Worked example (illustrative): RMAP-CAL, isotropic, ackley, d 10,
+      contrast tau_0 0.01 - 0.5 at r 1.0. It uses the calibration cell
+      regimemap ackley d 10 tau_0 0.01, "beta, not adequate (C5m FAIL,
+      D1 FAIL)". The statistic is printed with its value, interval and
+      verdict as usual, and with the flag "not adequate: regimemap|
+      ackley|10|centred|0.01". A pooled figure that includes that cell
+      carries the same flag.
+    - Rahul's reasons:
+      - Exclusion changes the estimand. It alters the pooled target
+        contrast's composition and fits the J3 panels on half their
+        design, so the excluded number would not be a sensitivity of the
+        same quantity.
+      - The seventeen rows included their not-adequate cells, so one
+        standard requires the same here. One set flagged and the other
+        not would be the two-standards error.
+      - The flag reports precisely what is uncertain: the tau_0
+        coordinate of named cells, not their slopes. Their trajectories
+        are valid fixed-beta runs at the beta used. The failed checks
+        are on the reference (C5m, and D1 in three cells).
+    - What this costs, recorded as Rahul instructed: no single number
+      shows how much the six cells move RMAP-CAL's target contrast or
+      panel coefficients; only the per-objective values show it. The
+      manuscript must state that the tau_0 0.01 and 0.03 end of RMAP-CAL
+      rests partly on cells whose tau is not established.
 CAL4. A1 over twenty rows. NOT DECIDED.
 CAL5. OPEN, Rahul's addition: seven target-labelled, adequate cells of
     the N41 table have provenance "beta_adq; C1 found no sufficient
