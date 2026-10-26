@@ -1,0 +1,196 @@
+[{"stream_name":"stdout","time":0.77294897,"data":"kgrun runner: job calprec2-ext-finalize-a2\n"}
+,{"stream_name":"stdout","time":0.773018802,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.773025838,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.773030632,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.773035428,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":0.970530507,"data":"  listing  128 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":0.970596795,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py\n"}
+,{"stream_name":"stdout","time":0.970610474,"data":"  args     --rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713\n"}
+,{"stream_name":"stdout","time":11.350025152,"data":"  bundle   a2acdd5234024989: 127 files verified against kgrun-bundle-a2acdd5234024989.sha256\n"}
+,{"stream_name":"stdout","time":11.351075465,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":11.364395334,"data":"    data  calprec2-ext-s0of15-a1-kaggle-20261025-103225  -\u003e  /tmp/kgrun-ship/calprec2-ext-s0of15-a1-kaggle-20261025-103225   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.364634711,"data":"        calprec2-full-20261025-033016-s0of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.364649243,"data":"        calprec2-full-20261025-033016-s0of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.370435602,"data":"        calprec2-full-20261025-033016-s0of15/calprec2_tasks.csv: 494 rows, 494 with end ok\n"}
+,{"stream_name":"stdout","time":11.370459898,"data":"        args: runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225 -\u003e /tmp/kgrun-ship/calprec2-ext-s0of15-a1-kaggle-20261025-103225 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.377964697,"data":"    data  calprec2-ext-s1of15-a1-kaggle-20261025-130230  -\u003e  /tmp/kgrun-ship/calprec2-ext-s1of15-a1-kaggle-20261025-130230   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.378215054,"data":"        calprec2-full-20261025-052155-s1of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.378329517,"data":"        calprec2-full-20261025-052155-s1of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.384598076,"data":"        calprec2-full-20261025-052155-s1of15/calprec2_tasks.csv: 500 rows, 500 with end ok\n"}
+,{"stream_name":"stdout","time":11.384619202,"data":"        args: runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230 -\u003e /tmp/kgrun-ship/calprec2-ext-s1of15-a1-kaggle-20261025-130230 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.391645038,"data":"    data  calprec2-ext-s2of15-a1-kaggle-20261025-144716  -\u003e  /tmp/kgrun-ship/calprec2-ext-s2of15-a1-kaggle-20261025-144716   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.391950865,"data":"        calprec2-full-20261025-075159-s2of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.3920279,"data":"        calprec2-full-20261025-075159-s2of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.398403765,"data":"        calprec2-full-20261025-075159-s2of15/calprec2_tasks.csv: 507 rows, 507 with end ok\n"}
+,{"stream_name":"stdout","time":11.398436179,"data":"        args: runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716 -\u003e /tmp/kgrun-ship/calprec2-ext-s2of15-a1-kaggle-20261025-144716 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.405412192,"data":"    data  calprec2-ext-s3of15-a1-kaggle-20261025-180231  -\u003e  /tmp/kgrun-ship/calprec2-ext-s3of15-a1-kaggle-20261025-180231   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.405724941999999,"data":"        calprec2-full-20261025-093708-s3of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.405803296,"data":"        calprec2-full-20261025-093708-s3of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.412351577999999,"data":"        calprec2-full-20261025-093708-s3of15/calprec2_tasks.csv: 500 rows, 500 with end ok\n"}
+,{"stream_name":"stdout","time":11.412377572,"data":"        args: runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231 -\u003e /tmp/kgrun-ship/calprec2-ext-s3of15-a1-kaggle-20261025-180231 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.419429428,"data":"    data  calprec2-ext-s4of15-a1-kaggle-20261025-200238  -\u003e  /tmp/kgrun-ship/calprec2-ext-s4of15-a1-kaggle-20261025-200238   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.41977658,"data":"        calprec2-full-20261025-125141-s4of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.419874148,"data":"        calprec2-full-20261025-125141-s4of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.426326982,"data":"        calprec2-full-20261025-125141-s4of15/calprec2_tasks.csv: 500 rows, 500 with end ok\n"}
+,{"stream_name":"stdout","time":11.426352143999999,"data":"        args: runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238 -\u003e /tmp/kgrun-ship/calprec2-ext-s4of15-a1-kaggle-20261025-200238 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.433774491,"data":"    data  calprec2-ext-s5of15-a1-kaggle-20261025-223216  -\u003e  /tmp/kgrun-ship/calprec2-ext-s5of15-a1-kaggle-20261025-223216   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.434067695,"data":"        calprec2-full-20261025-145034-s5of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.434172808,"data":"        calprec2-full-20261025-145034-s5of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.440609185,"data":"        calprec2-full-20261025-145034-s5of15/calprec2_tasks.csv: 500 rows, 500 with end ok\n"}
+,{"stream_name":"stdout","time":11.440633548,"data":"        args: runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216 -\u003e /tmp/kgrun-ship/calprec2-ext-s5of15-a1-kaggle-20261025-223216 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.447941569,"data":"    data  calprec2-ext-s6of15-a1-kaggle-20261026-001717  -\u003e  /tmp/kgrun-ship/calprec2-ext-s6of15-a1-kaggle-20261026-001717   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.448254572,"data":"        calprec2-full-20261025-171330-s6of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.448307127,"data":"        calprec2-full-20261025-171330-s6of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.454847106,"data":"        calprec2-full-20261025-171330-s6of15/calprec2_tasks.csv: 507 rows, 507 with end ok\n"}
+,{"stream_name":"stdout","time":11.454889489,"data":"        args: runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717 -\u003e /tmp/kgrun-ship/calprec2-ext-s6of15-a1-kaggle-20261026-001717 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.461193722,"data":"    data  calprec2-ext-s7of15-a1-kaggle-20261026-023229  -\u003e  /tmp/kgrun-ship/calprec2-ext-s7of15-a1-kaggle-20261026-023229   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.461579918,"data":"        calprec2-full-20261025-190532-s7of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.461603314,"data":"        calprec2-full-20261025-190532-s7of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.467880921,"data":"        calprec2-full-20261025-190532-s7of15/calprec2_tasks.csv: 507 rows, 507 with end ok\n"}
+,{"stream_name":"stdout","time":11.467908721,"data":"        args: runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229 -\u003e /tmp/kgrun-ship/calprec2-ext-s7of15-a1-kaggle-20261026-023229 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.474698167,"data":"    data  calprec2-ext-s8of15-a1-kaggle-20261026-044717  -\u003e  /tmp/kgrun-ship/calprec2-ext-s8of15-a1-kaggle-20261026-044717   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.475005203,"data":"        calprec2-full-20261025-212240-s8of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.475073637,"data":"        calprec2-full-20261025-212240-s8of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.480415925,"data":"        calprec2-full-20261025-212240-s8of15/calprec2_tasks.csv: 494 rows, 494 with end ok\n"}
+,{"stream_name":"stdout","time":11.480440841,"data":"        args: runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717 -\u003e /tmp/kgrun-ship/calprec2-ext-s8of15-a1-kaggle-20261026-044717 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.48668282,"data":"    data  calprec2-ext-s9of15-a1-kaggle-20261026-063217  -\u003e  /tmp/kgrun-ship/calprec2-ext-s9of15-a1-kaggle-20261026-063217   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.487033743,"data":"        calprec2-full-20261025-233913-s9of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.487134601,"data":"        calprec2-full-20261025-233913-s9of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.492290728,"data":"        calprec2-full-20261025-233913-s9of15/calprec2_tasks.csv: 481 rows, 481 with end ok\n"}
+,{"stream_name":"stdout","time":11.492312702,"data":"        args: runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217 -\u003e /tmp/kgrun-ship/calprec2-ext-s9of15-a1-kaggle-20261026-063217 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.498707043,"data":"    data  calprec2-ext-s10of15-a1-kaggle-20261026-091720  -\u003e  /tmp/kgrun-ship/calprec2-ext-s10of15-a1-kaggle-20261026-091720   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.499000513,"data":"        calprec2-full-20261026-013938-s10of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.499076236,"data":"        calprec2-full-20261026-013938-s10of15/calprec2_plan.csv: 3 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.504358076,"data":"        calprec2-full-20261026-013938-s10of15/calprec2_tasks.csv: 487 rows, 487 with end ok\n"}
+,{"stream_name":"stdout","time":11.504383493,"data":"        args: runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720 -\u003e /tmp/kgrun-ship/calprec2-ext-s10of15-a1-kaggle-20261026-091720 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.511043588,"data":"    data  calprec2-ext-s11of15-a1-kaggle-20261026-113216  -\u003e  /tmp/kgrun-ship/calprec2-ext-s11of15-a1-kaggle-20261026-113216   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.511399702,"data":"        calprec2-full-20261026-040936-s11of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.511411799,"data":"        calprec2-full-20261026-040936-s11of15/calprec2_plan.csv: 2 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.515952065,"data":"        calprec2-full-20261026-040936-s11of15/calprec2_tasks.csv: 338 rows, 338 with end ok\n"}
+,{"stream_name":"stdout","time":11.515976678,"data":"        args: runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216 -\u003e /tmp/kgrun-ship/calprec2-ext-s11of15-a1-kaggle-20261026-113216 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.521979634000001,"data":"    data  calprec2-ext-s12of15-a1-kaggle-20261026-130229  -\u003e  /tmp/kgrun-ship/calprec2-ext-s12of15-a1-kaggle-20261026-130229   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.522220397,"data":"        calprec2-full-20261026-062127-s12of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.522320645,"data":"        calprec2-full-20261026-062127-s12of15/calprec2_plan.csv: 2 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.526600854,"data":"        calprec2-full-20261026-062127-s12of15/calprec2_tasks.csv: 331 rows, 331 with end ok\n"}
+,{"stream_name":"stdout","time":11.526624162,"data":"        args: runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229 -\u003e /tmp/kgrun-ship/calprec2-ext-s12of15-a1-kaggle-20261026-130229 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.532728426,"data":"    data  calprec2-ext-s13of15-a1-kaggle-20261026-150225  -\u003e  /tmp/kgrun-ship/calprec2-ext-s13of15-a1-kaggle-20261026-150225   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.53296546,"data":"        calprec2-full-20261026-081523-s13of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.533067583,"data":"        calprec2-full-20261026-081523-s13of15/calprec2_plan.csv: 2 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.537423131,"data":"        calprec2-full-20261026-081523-s13of15/calprec2_tasks.csv: 325 rows, 325 with end ok\n"}
+,{"stream_name":"stdout","time":11.537449962,"data":"        args: runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225 -\u003e /tmp/kgrun-ship/calprec2-ext-s13of15-a1-kaggle-20261026-150225 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.544743007,"data":"    data  calprec2-ext-s14of15-a1-kaggle-20261026-164713  -\u003e  /tmp/kgrun-ship/calprec2-ext-s14of15-a1-kaggle-20261026-164713   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":11.54496357,"data":"        calprec2-full-20261026-095043-s14of15/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.545072769,"data":"        calprec2-full-20261026-095043-s14of15/calprec2_plan.csv: 2 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":11.548532153,"data":"        calprec2-full-20261026-095043-s14of15/calprec2_tasks.csv: 318 rows, 318 with end ok\n"}
+,{"stream_name":"stdout","time":11.548580165,"data":"        args: runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713 -\u003e /tmp/kgrun-ship/calprec2-ext-s14of15-a1-kaggle-20261026-164713 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":11.548586399,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --rows RMAP,CLIFF,ONSET --finalize /tmp/kgrun-ship/calprec2-ext-s0of15-a1-kaggle-20261025-103225,/tmp/kgrun-ship/calprec2-ext-s1of15-a1-kaggle-20261025-130230,/tmp/kgrun-ship/calprec2-ext-s2of15-a1-kaggle-20261025-144716,/tmp/kgrun-ship/calprec2-ext-s3of15-a1-kaggle-20261025-180231,/tmp/kgrun-ship/calprec2-ext-s4of15-a1-kaggle-20261025-200238,/tmp/kgrun-ship/calprec2-ext-s5of15-a1-kaggle-20261025-223216,/tmp/kgrun-ship/calprec2-ext-s6of15-a1-kaggle-20261026-001717,/tmp/kgrun-ship/calprec2-ext-s7of15-a1-kaggle-20261026-023229,/tmp/kgrun-ship/calprec2-ext-s8of15-a1-kaggle-20261026-044717,/tmp/kgrun-ship/calprec2-ext-s9of15-a1-kaggle-20261026-063217,/tmp/kgrun-ship/calprec2-ext-s10of15-a1-kaggle-20261026-091720,/tmp/kgrun-ship/calprec2-ext-s11of15-a1-kaggle-20261026-113216,/tmp/kgrun-ship/calprec2-ext-s12of15-a1-kaggle-20261026-130229,/tmp/kgrun-ship/calprec2-ext-s13of15-a1-kaggle-20261026-150225,/tmp/kgrun-ship/calprec2-ext-s14of15-a1-kaggle-20261026-164713\n"}
+,{"stream_name":"stdout","time":12.683670778,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":12.683706385,"data":"CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, measured at 64M and 256M\n"}
+,{"stream_name":"stdout","time":12.683712523,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":12.683717715,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":12.683722538,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":12.683727044,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 2   start fork\n"}
+,{"stream_name":"stdout","time":12.683732037,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":12.683736783,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":12.683741334,"data":"  script   sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a\n"}
+,{"stream_name":"stdout","time":12.683746484,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":12.68374975,"data":"  mode     finalize   rows RMAP,CLIFF,ONSET   shard 0 of 1   shard target 0.5 x 21600 s\n"}
+,{"stream_name":"stdout","time":12.683752836,"data":"  ceiling  --ceiling 21600 s (default; default 21600 s: a margin choice, not Kaggle's limit; the cap 43200 s is enforced by G-STOP)\n"}
+,{"stream_name":"stdout","time":12.683755939,"data":"  stop     --stop-after 36000 s from the start of task execution, applied in full mode only (default 36000 s: a margin choice, not a measurement)\n"}
+,{"stream_name":"stdout","time":12.683759133,"data":"  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   reference sizes 64000000 and 256000000, reps 6   C' reps [6, 7, 8, 9, 10, 11]   chunk 250000\n"}
+,{"stream_name":"stdout","time":12.683762324,"data":"  C5m \u003c= 0.054682 at 64000000  D1 \u003c= 0.025 between 64000000 and 256000000  C1 \u003c= 0.05  C6 \u003c= 0.05  E1 \u003c= 1e-12 at 64000000 rep 0  RSS \u003c= 3072 MB\n"}
+,{"stream_name":"stdout","time":12.683766403,"data":"  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 smoke 35\n"}
+,{"stream_name":"stdout","time":12.683769916,"data":"\n"}
+,{"stream_name":"stdout","time":12.6837728,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683777025,"data":"V1 -- ARCHIVE IDENTITY (imported modules' own files)\n"}
+,{"stream_name":"stdout","time":12.683781886,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683798884,"data":"  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok\n"}
+,{"stream_name":"stdout","time":12.683803429,"data":"  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok\n"}
+,{"stream_name":"stdout","time":12.683806576,"data":"  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok\n"}
+,{"stream_name":"stdout","time":12.683809602,"data":"  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok\n"}
+,{"stream_name":"stdout","time":12.683812635,"data":"  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok\n"}
+,{"stream_name":"stdout","time":12.683815811,"data":"  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok\n"}
+,{"stream_name":"stdout","time":12.683818913,"data":"  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok\n"}
+,{"stream_name":"stdout","time":12.683821877,"data":"  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok\n"}
+,{"stream_name":"stdout","time":12.68382483,"data":"  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok\n"}
+,{"stream_name":"stdout","time":12.683827848,"data":"  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok\n"}
+,{"stream_name":"stdout","time":12.683830869,"data":"  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok\n"}
+,{"stream_name":"stdout","time":12.683833848,"data":"  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok\n"}
+,{"stream_name":"stdout","time":12.683836856,"data":"  V1 PASS\n"}
+,{"stream_name":"stdout","time":12.683839782,"data":"\n"}
+,{"stream_name":"stdout","time":12.683842592,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683845594,"data":"V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts\n"}
+,{"stream_name":"stdout","time":12.683848624,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683851744,"data":"  RMAP      M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":12.683854727,"data":"  RMAP      diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":12.683857659,"data":"  RMAP      dims    regimemap.py 300-302 dimsM           ok\n"}
+,{"stream_name":"stdout","time":12.683860569,"data":"  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":12.683863482,"data":"  RMAP      objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":12.683866375000001,"data":"  RMAP      rs      regimemap.py 300-302 rsM             ok\n"}
+,{"stream_name":"stdout","time":12.683869384,"data":"  RMAP      taus    regimemap.py 300-302 tausM           ok\n"}
+,{"stream_name":"stdout","time":12.683872304,"data":"  CLIFF     M       cliff.py 244-244 --realisations  ok\n"}
+,{"stream_name":"stdout","time":12.683875281,"data":"  CLIFF     diffs   cliff.py 253-253 diffs           ok\n"}
+,{"stream_name":"stdout","time":12.683878197,"data":"  CLIFF     dims    cliff.py 260-264 dims            ok\n"}
+,{"stream_name":"stdout","time":12.683881073,"data":"  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":12.683883943,"data":"  CLIFF     objs    cliff.py 260-264 objs            ok\n"}
+,{"stream_name":"stdout","time":12.683886815,"data":"  CLIFF     rs      cliff.py 260-264 rs              ok\n"}
+,{"stream_name":"stdout","time":12.683891939,"data":"  CLIFF     taus    cliff.py 260-264 taus            ok\n"}
+,{"stream_name":"stdout","time":12.683894985,"data":"  ONSET     M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":12.683898309,"data":"  ONSET     diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":12.68390135,"data":"  ONSET     dims    regimemap.py 300-302 dimsD           ok\n"}
+,{"stream_name":"stdout","time":12.683904317,"data":"  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":12.68390724,"data":"  ONSET     objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":12.683910134,"data":"  ONSET     rs      regimemap.py 300-302 rsD             ok\n"}
+,{"stream_name":"stdout","time":12.683913211,"data":"  ONSET     tau     regimemap.py 304-304 tauD            ok\n"}
+,{"stream_name":"stdout","time":12.683916524,"data":"  RMAP       24 calibration cells x  10 =  240  (Table 2  240)  ok\n"}
+,{"stream_name":"stdout","time":12.683919713,"data":"  CLIFF       8 calibration cells x  18 =  144  (Table 2  144)  ok\n"}
+,{"stream_name":"stdout","time":12.68392268,"data":"  ONSET      15 calibration cells x  12 =  180  (Table 2  180)  ok\n"}
+,{"stream_name":"stdout","time":12.683925607,"data":"  V0 PASS\n"}
+,{"stream_name":"stdout","time":12.683928444,"data":"\n"}
+,{"stream_name":"stdout","time":12.683931383000001,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683950535,"data":"V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)\n"}
+,{"stream_name":"stdout","time":12.68395433,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683957403,"data":"  cliff      X0 = rng.standard_normal((Jinf, d)) + xs  ok\n"}
+,{"stream_name":"stdout","time":12.68396036,"data":"  regimemap  X0 = rng.standard_normal((Jinf, d))  ok\n"}
+,{"stream_name":"stdout","time":12.683963337,"data":"  V2 PASS\n"}
+,{"stream_name":"stdout","time":12.68396626,"data":"\n"}
+,{"stream_name":"stdout","time":12.683968983,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683972104,"data":"CELLS\n"}
+,{"stream_name":"stdout","time":12.683975012,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.683978253,"data":"  cliff         8 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":12.68398123,"data":"  regimemap    33 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":12.683984136,"data":"  total 41\n"}
+,{"stream_name":"stdout","time":12.683986892,"data":"  read /tmp/kgrun-ship/calprec2-ext-s0of15-a1-kaggle-20261025-103225: shard 0 of 15, 494 rows, 494 complete\n"}
+,{"stream_name":"stdout","time":12.683989945,"data":"  read /tmp/kgrun-ship/calprec2-ext-s1of15-a1-kaggle-20261025-130230: shard 1 of 15, 500 rows, 500 complete\n"}
+,{"stream_name":"stdout","time":12.683992978,"data":"  read /tmp/kgrun-ship/calprec2-ext-s2of15-a1-kaggle-20261025-144716: shard 2 of 15, 507 rows, 507 complete\n"}
+,{"stream_name":"stdout","time":12.683996013,"data":"  read /tmp/kgrun-ship/calprec2-ext-s3of15-a1-kaggle-20261025-180231: shard 3 of 15, 500 rows, 500 complete\n"}
+,{"stream_name":"stdout","time":12.68399897,"data":"  read /tmp/kgrun-ship/calprec2-ext-s4of15-a1-kaggle-20261025-200238: shard 4 of 15, 500 rows, 500 complete\n"}
+,{"stream_name":"stdout","time":12.684004419,"data":"  read /tmp/kgrun-ship/calprec2-ext-s5of15-a1-kaggle-20261025-223216: shard 5 of 15, 500 rows, 500 complete\n"}
+,{"stream_name":"stdout","time":12.684007623,"data":"  read /tmp/kgrun-ship/calprec2-ext-s6of15-a1-kaggle-20261026-001717: shard 6 of 15, 507 rows, 507 complete\n"}
+,{"stream_name":"stdout","time":12.684011325,"data":"  read /tmp/kgrun-ship/calprec2-ext-s7of15-a1-kaggle-20261026-023229: shard 7 of 15, 507 rows, 507 complete\n"}
+,{"stream_name":"stdout","time":12.68401474,"data":"  read /tmp/kgrun-ship/calprec2-ext-s8of15-a1-kaggle-20261026-044717: shard 8 of 15, 494 rows, 494 complete\n"}
+,{"stream_name":"stdout","time":12.68401806,"data":"  read /tmp/kgrun-ship/calprec2-ext-s9of15-a1-kaggle-20261026-063217: shard 9 of 15, 481 rows, 481 complete\n"}
+,{"stream_name":"stdout","time":12.684022923,"data":"  read /tmp/kgrun-ship/calprec2-ext-s10of15-a1-kaggle-20261026-091720: shard 10 of 15, 487 rows, 487 complete\n"}
+,{"stream_name":"stdout","time":12.6840273,"data":"  read /tmp/kgrun-ship/calprec2-ext-s11of15-a1-kaggle-20261026-113216: shard 11 of 15, 338 rows, 338 complete\n"}
+,{"stream_name":"stdout","time":12.68403165,"data":"  read /tmp/kgrun-ship/calprec2-ext-s12of15-a1-kaggle-20261026-130229: shard 12 of 15, 331 rows, 331 complete\n"}
+,{"stream_name":"stdout","time":12.68403588,"data":"  read /tmp/kgrun-ship/calprec2-ext-s13of15-a1-kaggle-20261026-150225: shard 13 of 15, 325 rows, 325 complete\n"}
+,{"stream_name":"stdout","time":12.684040272,"data":"  read /tmp/kgrun-ship/calprec2-ext-s14of15-a1-kaggle-20261026-164713: shard 14 of 15, 318 rows, 318 complete\n"}
+,{"stream_name":"stdout","time":12.684044623,"data":"\n"}
+,{"stream_name":"stdout","time":12.684048528,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.68405282,"data":"FINALIZE  6789 rows, 41 cells expected\n"}
+,{"stream_name":"stdout","time":12.684057066,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":12.684061359,"data":"  beta         7\n"}
+,{"stream_name":"stdout","time":12.684065347,"data":"  target       34\n"}
+,{"stream_name":"stdout","time":12.684069167,"data":"  adequate                                 34\n"}
+,{"stream_name":"stdout","time":12.68407337,"data":"  not adequate (C5m FAIL)                  4\n"}
+,{"stream_name":"stdout","time":12.684077505,"data":"  not adequate (C5m FAIL, D1 FAIL)         3\n"}
+,{"stream_name":"stdout","time":12.684082317,"data":"\n"}
+,{"stream_name":"stdout","time":12.684085667,"data":"files  /kaggle/working/calprec2-finalize-20261026-150305\n"}
+,{"stream_name":"stdout","time":12.725641387,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":15.5822975,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":15.582334133,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":15.966856257,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":15.966884135,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":17.694458877,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":19.00845575,"data":"[NbConvertApp] Writing 314101 bytes to __results__.html\n"}
+]

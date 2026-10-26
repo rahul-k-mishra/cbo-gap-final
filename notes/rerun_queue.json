@@ -164,29 +164,13 @@
       "ledger": "N41"
     }
   ],
-  "status": "RUNNING",
-  "index": 15,
-  "attempt": 2,
+  "status": "DONE",
+  "index": 16,
+  "attempt": 1,
   "resume_dirs": [],
-  "job": "calprec2-ext-finalize-a2",
-  "args": "--rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713",
-  "data_dirs": [
-    "runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225",
-    "runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230",
-    "runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716",
-    "runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231",
-    "runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238",
-    "runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216",
-    "runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717",
-    "runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229",
-    "runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717",
-    "runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217",
-    "runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720",
-    "runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216",
-    "runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229",
-    "runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225",
-    "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -399,6 +383,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261026T111710Z",
         "fetched_at": "2026-10-26T16:47:18+05:30"
+      }
+    ],
+    "ext-finalize": [
+      {
+        "attempt": 2,
+        "job": "calprec2-ext-finalize-a2",
+        "folder": "runs/calprec2-ext-finalize-a2-kaggle-20261026-204714",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": null,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T151710Z",
+        "fetched_at": "2026-10-26T20:47:18+05:30"
       }
     ]
   },
@@ -870,6 +868,15 @@
       "attempt": 2,
       "job": "calprec2-ext-finalize-a2",
       "note": "logs/kgrun-calprec2-ext-finalize-a2.log"
+    },
+    {
+      "at": "2026-10-26T20:47:18+05:30",
+      "run": "laptop.20261026T151710Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/calprec2-ext-finalize-a2-kaggle-20261026-204714: runner exit 0; now DONE"
     }
   ],
   "definition": {
