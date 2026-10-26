@@ -52,7 +52,7 @@
       "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
@@ -83,6 +83,15 @@
       "attempt": 1,
       "job": "rerun-smoke-cal3-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-26T21:39:04+05:30",
+      "run": "laptop.20261026T160550Z",
+      "event": "launched",
+      "item": "smoke-cal3",
+      "attempt": 1,
+      "job": "rerun-smoke-cal3-a1",
+      "note": "logs/kgrun-rerun-smoke-cal3-a1.log"
     }
   ],
   "definition": {

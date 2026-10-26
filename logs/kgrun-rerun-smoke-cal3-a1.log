@@ -1,0 +1,272 @@
+==============================================================================
+kgrun  action launch  job rerun-smoke-cal3-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/cbo-gap-queue
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/rahul/cbo-gap-queue/.kaggle-bundle
+  ship data   rerun-plan-20261026-210435   5 files, manifest verified, tracked and clean in git
+  bundle id 12137fec4d20f7cd  (kgrun-bundle-12137fec4d20f7cd.sha256, 57 files listed)
+  26 archive files + 25 round-2 scripts + 1 shipped folder(s); bundle 59 files, 3.0 MB
+  dataset id ericsom/cbo-gap-archive
+VERSION DATASET
+  $ kaggle datasets version -p /home/rahul/cbo-gap-queue/.kaggle-bundle -m kgrun rerun-smoke-cal3-a1 2026-10-26T21:36:38 -r skip
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Starting upload for file kgrun-ship-000-0003-rerun_plan.csv
+  0%|          | 0.00/780k [00:00<?, ?B/s]  2%|▏         | 16.0k/780k [00:00<00:09, 83.8kB/s]100%|██████████| 780k/780k [00:02<00:00, 303kB/s]  
+Upload successful: kgrun-ship-000-0003-rerun_plan.csv (780KB)
+Starting upload for file kgrun-ship-000-0001-rerun_archive_check.csv
+  0%|          | 0.00/447k [00:00<?, ?B/s]  4%|▎         | 16.0k/447k [00:00<00:04, 94.3kB/s]100%|██████████| 447k/447k [00:02<00:00, 199kB/s]  
+Upload successful: kgrun-ship-000-0001-rerun_archive_check.csv (447KB)
+Starting upload for file visibility.py
+  0%|          | 0.00/20.5k [00:00<?, ?B/s] 78%|███████▊  | 16.0k/20.5k [00:00<00:00, 74.2kB/s]100%|██████████| 20.5k/20.5k [00:01<00:00, 18.7kB/s]
+Upload successful: visibility.py (20KB)
+Starting upload for file control.py
+  0%|          | 0.00/22.1k [00:00<?, ?B/s] 72%|███████▏  | 16.0k/22.1k [00:00<00:00, 136kB/s]100%|██████████| 22.1k/22.1k [00:01<00:00, 20.3kB/s]
+Upload successful: control.py (22KB)
+Starting upload for file reboot.py
+  0%|          | 0.00/12.8k [00:00<?, ?B/s]100%|██████████| 12.8k/12.8k [00:00<00:00, 111kB/s]100%|██████████| 12.8k/12.8k [00:01<00:00, 12.0kB/s]
+Upload successful: reboot.py (13KB)
+Starting upload for file audit.py
+  0%|          | 0.00/18.4k [00:00<?, ?B/s] 87%|████████▋ | 16.0k/18.4k [00:00<00:00, 89.7kB/s]100%|██████████| 18.4k/18.4k [00:01<00:00, 16.7kB/s]
+Upload successful: audit.py (18KB)
+Starting upload for file cliff.py
+  0%|          | 0.00/20.7k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.7k [00:00<00:00, 71.5kB/s]100%|██████████| 20.7k/20.7k [00:01<00:00, 18.9kB/s]
+Upload successful: cliff.py (21KB)
+Starting upload for file rerun.py
+  0%|          | 0.00/52.3k [00:00<?, ?B/s] 31%|███       | 16.0k/52.3k [00:00<00:00, 83.1kB/s]100%|██████████| 52.3k/52.3k [00:01<00:00, 40.0kB/s]
+Upload successful: rerun.py (52KB)
+Starting upload for file mkfig2.py
+  0%|          | 0.00/1.78k [00:00<?, ?B/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 14.0kB/s]100%|██████████| 1.78k/1.78k [00:01<00:00, 1.82kB/s]
+Upload successful: mkfig2.py (2KB)
+Starting upload for file m4_slopese.py
+  0%|          | 0.00/11.5k [00:00<?, ?B/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 93.2kB/s]100%|██████████| 11.5k/11.5k [00:01<00:00, 11.5kB/s]
+Upload successful: m4_slopese.py (11KB)
+Starting upload for file partm.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 80.1kB/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 15.6kB/s]
+Upload successful: partm.py (17KB)
+Starting upload for file mkfig5.py
+  0%|          | 0.00/2.33k [00:00<?, ?B/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 15.3kB/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 2.39kB/s]
+Upload successful: mkfig5.py (2KB)
+Starting upload for file mechanism.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████▏ | 16.0k/19.7k [00:00<00:00, 38.5kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 15.4kB/s]
+Upload successful: mechanism.py (20KB)
+Starting upload for file finitej.py
+  0%|          | 0.00/9.66k [00:00<?, ?B/s]100%|██████████| 9.66k/9.66k [00:00<00:00, 36.9kB/s]100%|██████████| 9.66k/9.66k [00:01<00:00, 8.80kB/s]
+Upload successful: finitej.py (10KB)
+Starting upload for file m3_bootmc.py
+  0%|          | 0.00/9.99k [00:00<?, ?B/s]100%|██████████| 9.99k/9.99k [00:00<00:00, 29.5kB/s]100%|██████████| 9.99k/9.99k [00:01<00:00, 7.14kB/s]
+Upload successful: m3_bootmc.py (10KB)
+Starting upload for file regimemap.py
+  0%|          | 0.00/27.2k [00:00<?, ?B/s] 59%|█████▉    | 16.0k/27.2k [00:00<00:00, 80.7kB/s]100%|██████████| 27.2k/27.2k [00:01<00:00, 20.4kB/s]
+Upload successful: regimemap.py (27KB)
+Starting upload for file m6_hetero.py
+  0%|          | 0.00/14.2k [00:00<?, ?B/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 97.3kB/s]100%|██████████| 14.2k/14.2k [00:01<00:00, 13.9kB/s]
+Upload successful: m6_hetero.py (14KB)
+Starting upload for file mkfig4.py
+  0%|          | 0.00/2.17k [00:00<?, ?B/s]100%|██████████| 2.17k/2.17k [00:00<00:00, 7.23kB/s]100%|██████████| 2.17k/2.17k [00:01<00:00, 1.83kB/s]
+Upload successful: mkfig4.py (2KB)
+Starting upload for file kgrun-ship-000-0002-rerun_onset_control.csv
+  0%|          | 0.00/1.91k [00:00<?, ?B/s]100%|██████████| 1.91k/1.91k [00:00<00:00, 7.31kB/s]100%|██████████| 1.91k/1.91k [00:01<00:00, 1.61kB/s]
+Upload successful: kgrun-ship-000-0002-rerun_onset_control.csv (2KB)
+Starting upload for file c6.py
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 45.2kB/s]100%|██████████| 11.2k/11.2k [00:01<00:00, 9.53kB/s]
+Upload successful: c6.py (11KB)
+Starting upload for file m5_gapwidth.py
+  0%|          | 0.00/12.3k [00:00<?, ?B/s]100%|██████████| 12.3k/12.3k [00:00<00:00, 65.0kB/s]100%|██████████| 12.3k/12.3k [00:01<00:00, 11.2kB/s]
+Upload successful: m5_gapwidth.py (12KB)
+Starting upload for file calprec2_hashaudit.py
+  0%|          | 0.00/20.8k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.8k [00:00<00:00, 75.6kB/s]100%|██████████| 20.8k/20.8k [00:01<00:00, 15.1kB/s]
+Upload successful: calprec2_hashaudit.py (21KB)
+Starting upload for file kgrun-bundle-12137fec4d20f7cd.sha256
+  0%|          | 0.00/4.50k [00:00<?, ?B/s]100%|██████████| 4.50k/4.50k [00:00<00:00, 18.3kB/s]100%|██████████| 4.50k/4.50k [00:01<00:00, 3.45kB/s]
+Upload successful: kgrun-bundle-12137fec4d20f7cd.sha256 (5KB)
+Starting upload for file kgrun-ship-000-0000-sha256.txt
+  0%|          | 0.00/349 [00:00<?, ?B/s]100%|██████████| 349/349 [00:00<00:00, 1.95kB/s]100%|██████████| 349/349 [00:01<00:00, 347B/s]  
+Upload successful: kgrun-ship-000-0000-sha256.txt (349B)
+Starting upload for file detcheck.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 67.3kB/s]100%|██████████| 15.2k/15.2k [00:01<00:00, 14.2kB/s]
+Upload successful: detcheck.py (15KB)
+Starting upload for file rerun_analysis.py
+  0%|          | 0.00/90.1k [00:00<?, ?B/s] 18%|█▊        | 16.0k/90.1k [00:00<00:00, 132kB/s]100%|██████████| 90.1k/90.1k [00:01<00:00, 71.1kB/s]
+Upload successful: rerun_analysis.py (90KB)
+Starting upload for file perjcal.py
+  0%|          | 0.00/12.6k [00:00<?, ?B/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 101kB/s]100%|██████████| 12.6k/12.6k [00:01<00:00, 12.7kB/s]
+Upload successful: perjcal.py (13KB)
+Starting upload for file verify.py
+  0%|          | 0.00/15.3k [00:00<?, ?B/s]100%|██████████| 15.3k/15.3k [00:00<00:00, 142kB/s]100%|██████████| 15.3k/15.3k [00:01<00:00, 15.4kB/s]
+Upload successful: verify.py (15KB)
+Starting upload for file rmapj.py
+  0%|          | 0.00/11.4k [00:00<?, ?B/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 78.8kB/s]100%|██████████| 11.4k/11.4k [00:01<00:00, 8.82kB/s]
+Upload successful: rmapj.py (11KB)
+Starting upload for file kgrun-ship-index.json
+  0%|          | 0.00/646 [00:00<?, ?B/s]100%|██████████| 646/646 [00:00<00:00, 5.50kB/s]100%|██████████| 646/646 [00:01<00:00, 611B/s]  
+Upload successful: kgrun-ship-index.json (646B)
+Starting upload for file exactcal.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▊| 16.0k/16.2k [00:00<00:00, 158kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 16.3kB/s]
+Upload successful: exactcal.py (16KB)
+Starting upload for file memprobe.py
+  0%|          | 0.00/12.2k [00:00<?, ?B/s]100%|██████████| 12.2k/12.2k [00:00<00:00, 111kB/s]100%|██████████| 12.2k/12.2k [00:01<00:00, 12.3kB/s]
+Upload successful: memprobe.py (12KB)
+Starting upload for file ess_surface.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▉| 16.0k/16.2k [00:00<00:00, 150kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 15.2kB/s]
+Upload successful: ess_surface.py (16KB)
+Starting upload for file crossed.py
+  0%|          | 0.00/22.8k [00:00<?, ?B/s] 70%|███████   | 16.0k/22.8k [00:00<00:00, 102kB/s]100%|██████████| 22.8k/22.8k [00:01<00:00, 22.4kB/s]
+Upload successful: crossed.py (23KB)
+Starting upload for file rerun_tally.py
+  0%|          | 0.00/12.1k [00:00<?, ?B/s]100%|██████████| 12.1k/12.1k [00:00<00:00, 87.8kB/s]100%|██████████| 12.1k/12.1k [00:01<00:00, 12.2kB/s]
+Upload successful: rerun_tally.py (12KB)
+Starting upload for file m7_pairing.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 148kB/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 20.6kB/s]
+Upload successful: m7_pairing.py (20KB)
+Starting upload for file calprec2.py
+  0%|          | 0.00/72.9k [00:00<?, ?B/s] 22%|██▏       | 16.0k/72.9k [00:00<00:00, 128kB/s]100%|██████████| 72.9k/72.9k [00:01<00:00, 52.3kB/s]
+Upload successful: calprec2.py (73KB)
+Starting upload for file m1_estimands.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 91.5kB/s]100%|██████████| 10.8k/10.8k [00:01<00:00, 10.8kB/s]
+Upload successful: m1_estimands.py (11KB)
+Starting upload for file kgrun-ship-000-0004-rerun_plan_params.csv
+  0%|          | 0.00/947 [00:00<?, ?B/s]100%|██████████| 947/947 [00:00<00:00, 8.50kB/s]100%|██████████| 947/947 [00:01<00:00, 845B/s]  
+Upload successful: kgrun-ship-000-0004-rerun_plan_params.csv (947B)
+Starting upload for file refscale.py
+  0%|          | 0.00/35.1k [00:00<?, ?B/s] 46%|████▌     | 16.0k/35.1k [00:00<00:00, 127kB/s]100%|██████████| 35.1k/35.1k [00:01<00:00, 29.6kB/s]
+Upload successful: refscale.py (35KB)
+Starting upload for file boundary.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 152kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 16.6kB/s]
+Upload successful: boundary.py (20KB)
+Starting upload for file rmapj_real.csv
+  0%|          | 0.00/371k [00:00<?, ?B/s]  4%|▍         | 16.0k/371k [00:00<00:02, 151kB/s]100%|██████████| 371k/371k [00:02<00:00, 149kB/s] 
+Upload successful: rmapj_real.csv (371KB)
+Starting upload for file rerunlib.py
+  0%|          | 0.00/33.7k [00:00<?, ?B/s] 47%|████▋     | 16.0k/33.7k [00:00<00:00, 140kB/s]100%|██████████| 33.7k/33.7k [00:01<00:00, 30.9kB/s]
+Upload successful: rerunlib.py (34KB)
+Starting upload for file cbopaths.py
+  0%|          | 0.00/3.36k [00:00<?, ?B/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 23.1kB/s]100%|██████████| 3.36k/3.36k [00:01<00:00, 3.32kB/s]
+Upload successful: cbopaths.py (3KB)
+Starting upload for file measlib.py
+  0%|          | 0.00/12.0k [00:00<?, ?B/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 82.3kB/s]100%|██████████| 12.0k/12.0k [00:01<00:00, 10.9kB/s]
+Upload successful: measlib.py (12KB)
+Starting upload for file exactcal_real.csv
+  0%|          | 0.00/413k [00:00<?, ?B/s]  4%|▍         | 16.0k/413k [00:00<00:05, 77.5kB/s]100%|██████████| 413k/413k [00:02<00:00, 199kB/s]  
+Upload successful: exactcal_real.csv (413KB)
+Starting upload for file costprobe2.py
+  0%|          | 0.00/75.2k [00:00<?, ?B/s] 21%|██▏       | 16.0k/75.2k [00:00<00:00, 112kB/s]100%|██████████| 75.2k/75.2k [00:01<00:00, 58.2kB/s]
+Upload successful: costprobe2.py (75KB)
+Starting upload for file regime.py
+  0%|          | 0.00/25.8k [00:00<?, ?B/s] 62%|██████▏   | 16.0k/25.8k [00:00<00:00, 141kB/s]100%|██████████| 25.8k/25.8k [00:01<00:00, 23.6kB/s]
+Upload successful: regime.py (26KB)
+Starting upload for file law.py
+  0%|          | 0.00/34.3k [00:00<?, ?B/s] 47%|████▋     | 16.0k/34.3k [00:00<00:00, 92.0kB/s]100%|██████████| 34.3k/34.3k [00:01<00:00, 31.9kB/s]
+Upload successful: law.py (34KB)
+Starting upload for file ess_extend.py
+  0%|          | 0.00/13.6k [00:00<?, ?B/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 60.3kB/s]100%|██████████| 13.6k/13.6k [00:01<00:00, 12.6kB/s]
+Upload successful: ess_extend.py (14KB)
+Starting upload for file manifest.py
+  0%|          | 0.00/8.29k [00:00<?, ?B/s]100%|██████████| 8.29k/8.29k [00:00<00:00, 47.0kB/s]100%|██████████| 8.29k/8.29k [00:01<00:00, 6.95kB/s]
+Upload successful: manifest.py (8KB)
+Starting upload for file ess_panel.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 124kB/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 15.7kB/s]
+Upload successful: ess_panel.py (17KB)
+Starting upload for file m2_window.py
+  0%|          | 0.00/14.6k [00:00<?, ?B/s]100%|██████████| 14.6k/14.6k [00:00<00:00, 123kB/s]100%|██████████| 14.6k/14.6k [00:01<00:00, 14.6kB/s]
+Upload successful: m2_window.py (15KB)
+Starting upload for file costprobe.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 76.5kB/s]100%|██████████| 10.8k/10.8k [00:01<00:00, 10.9kB/s]
+Upload successful: costprobe.py (11KB)
+Starting upload for file perjcalprobe.py
+  0%|          | 0.00/29.2k [00:00<?, ?B/s] 55%|█████▍    | 16.0k/29.2k [00:00<00:00, 129kB/s]100%|██████████| 29.2k/29.2k [00:00<00:00, 31.0kB/s]
+Upload successful: perjcalprobe.py (29KB)
+Starting upload for file sigma.py
+  0%|          | 0.00/20.2k [00:00<?, ?B/s] 79%|███████▉  | 16.0k/20.2k [00:00<00:00, 128kB/s]100%|██████████| 20.2k/20.2k [00:01<00:00, 18.9kB/s]
+Upload successful: sigma.py (20KB)
+Starting upload for file calprec.py
+  0%|          | 0.00/19.8k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.8k [00:00<00:00, 36.0kB/s]100%|██████████| 19.8k/19.8k [00:01<00:00, 15.1kB/s]
+Upload successful: calprec.py (20KB)
+Starting upload for file n30_reconstruct.py
+  0%|          | 0.00/36.5k [00:00<?, ?B/s] 44%|████▍     | 16.0k/36.5k [00:00<00:00, 122kB/s]100%|██████████| 36.5k/36.5k [00:01<00:00, 30.4kB/s]
+Upload successful: n30_reconstruct.py (36KB)
+Dataset version is being created. Please check progress at https://www.kaggle.com/datasets/ericsom/cbo-gap-archive
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ready
+  3 s: status 'ready'
+WAIT FOR THIS BUNDLE  ericsom/cbo-gap-archive lists kgrun-bundle-12137fec4d20f7cd.sha256  (every 30 s, timeout 1800 s)
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                           size  creationDate                
+-------------------------------------------  ------  --------------------------  
+audit.py                                      18819  2026-10-26 16:08:54.966000  
+boundary.py                                   20168  2026-10-26 16:08:55.029000  
+c6.py                                         11509  2026-10-26 16:08:54.994000  
+calprec.py                                    20285  2026-10-26 16:08:55.020000  
+calprec2.py                                   74692  2026-10-26 16:08:55.003000  
+calprec2_hashaudit.py                         21288  2026-10-26 16:08:54.991000  
+cbopaths.py                                    3445  2026-10-26 16:08:55.166000  
+cliff.py                                      21241  2026-10-26 16:08:55.303000  
+control.py                                    22663  2026-10-26 16:08:55.077000  
+costprobe.py                                  11037  2026-10-26 16:08:55.161000  
+costprobe2.py                                 77006  2026-10-26 16:08:55.116000  
+crossed.py                                    23357  2026-10-26 16:08:55.014000  
+detcheck.py                                   15562  2026-10-26 16:08:55.210000  
+ess_extend.py                                 13945  2026-10-26 16:08:55.065000  
+ess_panel.py                                  17625  2026-10-26 16:08:55.245000  
+ess_surface.py                                16586  2026-10-26 16:08:55.170000  
+exactcal.py                                   16596  2026-10-26 16:08:55.167000  
+exactcal_real.csv                            423255  2026-10-26 16:08:55.577000  
+finitej.py                                     9895  2026-10-26 16:08:55.239000  
+kgrun-bundle-12137fec4d20f7cd.sha256           4611  2026-10-26 16:08:55.239000  
+kgrun-ship-000-0000-sha256.txt                  349  2026-10-26 16:08:55.214000  
+kgrun-ship-000-0001-rerun_archive_check.csv  457916  2026-10-26 16:08:55.664000  
+kgrun-ship-000-0002-rerun_onset_control.csv    1953  2026-10-26 16:08:55.584000  
+kgrun-ship-000-0003-rerun_plan.csv           798797  2026-10-26 16:08:55.663000  
+kgrun-ship-000-0004-rerun_plan_params.csv       947  2026-10-26 16:08:55.576000  
+kgrun-ship-index.json                           646  2026-10-26 16:08:55.188000  
+law.py                                        35107  2026-10-26 16:08:55.267000  
+m1_estimands.py                               11063  2026-10-26 16:08:55.290000  
+m2_window.py                                  14916  2026-10-26 16:08:55.292000  
+m3_bootmc.py                                  10228  2026-10-26 16:08:55.242000  
+m4_slopese.py                                 11750  2026-10-26 16:08:55.367000  
+m5_gapwidth.py                                12581  2026-10-26 16:08:55.239000  
+m6_hetero.py                                  14514  2026-10-26 16:08:55.237000  
+m7_pairing.py                                 20201  2026-10-26 16:08:55.382000  
+manifest.py                                    8492  2026-10-26 16:08:55.362000  
+measlib.py                                    12338  2026-10-26 16:08:55.350000  
+mechanism.py                                  20139  2026-10-26 16:08:55.290000  
+memprobe.py                                   12538  2026-10-26 16:08:55.356000  
+mkfig2.py                                      1825  2026-10-26 16:08:55.389000  
+mkfig4.py                                      2223  2026-10-26 16:08:55.373000  
+mkfig5.py                                      2391  2026-10-26 16:08:55.429000  
+n30_reconstruct.py                            37371  2026-10-26 16:08:55.398000  
+partm.py                                      17573  2026-10-26 16:08:55.436000  
+perjcal.py                                    12877  2026-10-26 16:08:55.417000  
+perjcalprobe.py                               29928  2026-10-26 16:08:55.358000  
+reboot.py                                     13085  2026-10-26 16:08:55.467000  
+refscale.py                                   35973  2026-10-26 16:08:55.482000  
+regime.py                                     26398  2026-10-26 16:08:55.467000  
+regimemap.py                                  27824  2026-10-26 16:08:55.406000  
+rerun.py                                      53599  2026-10-26 16:08:55.465000  
+rerun_analysis.py                             92249  2026-10-26 16:08:55.484000  
+rerun_tally.py                                12415  2026-10-26 16:08:55.531000  
+rerunlib.py                                   34548  2026-10-26 16:08:55.423000  
+rmapj.py                                      11680  2026-10-26 16:08:55.469000  
+rmapj_real.csv                               379782  2026-10-26 16:08:55.690000  
+sigma.py                                      20661  2026-10-26 16:08:55.488000  
+verify.py                                     15711  2026-10-26 16:08:55.417000  
+visibility.py                                 20942  2026-10-26 16:08:55.690000
+  2 s: kgrun-bundle-12137fec4d20f7cd.sha256 listed
+GENERATE KERNEL  ericsom/cbo-rerun-smoke-cal3-a1
+  wrote /home/rahul/cbo-gap-queue/.kaggle-push/run.py and kernel-metadata.json
+  runner requires bundle 12137fec4d20f7cd in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: rerun.py --archive <found path> --outdir /kaggle/working --smoke --plan-from runs/rerun-plan-20261026-210435 --rows RMAP-CAL,CLIFF-CAL,ONSET-CAL --workers 4
+  runner will rebuild rerun-plan-20261026-210435 under /tmp/kgrun-ship and replace runs/rerun-plan-20261026-210435 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/rahul/cbo-gap-queue/.kaggle-push
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-rerun-smoke-cal3-a1
+LAUNCHED ericsom/cbo-rerun-smoke-cal3-a1; not polled, not fetched. Check it with:
+  python scripts/kgrun.py status --job rerun-smoke-cal3-a1
+==============================================================================
