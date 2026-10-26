@@ -2375,7 +2375,37 @@ CAL1. Margin. DECIDED: keep m = 0.078113, with a ratio guard.
       - The calibrated rows borrow a margin fixed before their gaps
         existed.
       - The manuscript must say both.
-CAL2. Contrasts. NOT DECIDED (asked 2026-10-26).
+CAL2. Contrasts. DECIDED: mirror.
+    - Each calibrated row gets exactly its base row's contrasts and
+      section-8 quantities, with the same signs, windows and DIFFERENCE
+      rule:
+      - RMAP-CAL: anisotropic - isotropic per cell (contrast 3); tau_0
+        0.01 - 0.5 per arm (contrast 2); J3, b1, b2 and b3 per
+        (diffusion, d).
+      - CLIFF-CAL: anisotropic - isotropic per cell.
+      - ONSET-CAL: anisotropic - isotropic per cell; onset d 80 - d 5
+        (contrast 6); J2, severity and its trend; J4, the onset against
+        r = 1.
+      Each also gets the per-cell rate verdicts of its base row. Nothing
+      new is defined.
+    - Nothing is computed between a probe row and its calibrated row. The
+      two designs are reported side by side, with no contrast and no
+      verdict between them. The manuscript must say so.
+    - Rahul's reason: the rows exist because probe-beta results reopen
+      referee point 5. The onset, the severity trend and the RMAP panel
+      are probe-beta results in the same way the diffusion gap is.
+      Diffusion only would calibrate the gap and leave those exposed. A
+      probe-against-calibrated contrast is not a paired comparison: the
+      owner row is in the seed key (owners 17 to 19 against 0 to 16), so
+      a probe cell and its calibrated twin are independent replications.
+      That is N40 and referee point 7.
+    - Input to CAL3, recorded as Rahul instructed: RMAP-CAL's target
+      contrast and its panel model rest partly on cells whose reference
+      failed C5m. Six of the seven not-adequate cells, regimemap ackley d
+      10 and 40 and rastrigin d 40, each at tau_0 0.01 and 0.03, are RMAP
+      cells (section 2: tau_0 0.03 and 0.01 occur in RMAP only).
+      ONSET-CAL (tau_0 0.1 only) contains none of them. The seventh,
+      cliff ackley d 10 tau_0 0.1, is CLIFF-CAL's.
 CAL3. Sensitivity analysis excluding the not-adequate cells. NOT
     DECIDED.
 CAL4. A1 over twenty rows. NOT DECIDED.
