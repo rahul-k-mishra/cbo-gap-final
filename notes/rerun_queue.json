@@ -164,31 +164,15 @@
       "ledger": "N41"
     }
   ],
-  "status": "HALTED",
+  "status": "READY",
   "index": 15,
-  "attempt": 1,
+  "attempt": 2,
   "resume_dirs": [],
-  "job": "calprec2-ext-finalize-a1",
-  "args": "--rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713",
-  "data_dirs": [
-    "runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225",
-    "runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230",
-    "runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716",
-    "runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231",
-    "runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238",
-    "runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216",
-    "runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717",
-    "runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229",
-    "runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717",
-    "runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217",
-    "runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720",
-    "runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216",
-    "runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229",
-    "runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225",
-    "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
-  "halt_reason": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release",
+  "halt_reason": "",
   "kernel_check": null,
   "attempts": {
     "ext-s0of15": [
@@ -834,6 +818,24 @@
       "attempt": 1,
       "job": "calprec2-ext-finalize-a1",
       "note": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release"
+    },
+    {
+      "at": "2026-10-26T20:25:20+05:30",
+      "run": "manual",
+      "event": "kernel-check",
+      "item": "ext-finalize",
+      "attempt": 1,
+      "job": "calprec2-ext-finalize-a1",
+      "note": "calprec2-ext-finalize-a1 denied; control calprec2-long-s25of26-a1 COMPLETE (ABSENT): K8: finalize-a1 refused by kgrun before any kaggle command; checking before next-attempt"
+    },
+    {
+      "at": "2026-10-26T20:25:20+05:30",
+      "run": "manual",
+      "event": "release-next-attempt",
+      "item": "ext-finalize",
+      "attempt": 2,
+      "job": "",
+      "note": "K8 fixed in 4226863; a1 never pushed (logs/kgrun-calprec2-ext-finalize-a1.log)"
     }
   ],
   "definition": {

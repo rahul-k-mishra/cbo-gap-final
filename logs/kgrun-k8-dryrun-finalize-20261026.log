@@ -1,0 +1,57 @@
+==============================================================================
+kgrun  action launch  job k8-dryrun  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+  DRY RUN: commands are printed, nothing is executed
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/rahul/Research/cbo-gap-final/.kaggle-bundle
+  ship data   calprec2-ext-s0of15-a1-kaggle-20261025-103225   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s1of15-a1-kaggle-20261025-130230   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s2of15-a1-kaggle-20261025-144716   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s3of15-a1-kaggle-20261025-180231   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s4of15-a1-kaggle-20261025-200238   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s5of15-a1-kaggle-20261025-223216   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s6of15-a1-kaggle-20261026-001717   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s7of15-a1-kaggle-20261026-023229   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s8of15-a1-kaggle-20261026-044717   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s9of15-a1-kaggle-20261026-063217   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s10of15-a1-kaggle-20261026-091720   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s11of15-a1-kaggle-20261026-113216   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s12of15-a1-kaggle-20261026-130229   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s13of15-a1-kaggle-20261026-150225   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s14of15-a1-kaggle-20261026-164713   5 files, manifest verified, tracked and clean in git
+  would copy 26 archive files, 25 round-2 scripts and 15 shipped folder(s)
+VERSION DATASET
+  $ kaggle datasets version -p /home/rahul/Research/cbo-gap-final/.kaggle-bundle -m kgrun k8-dryrun 2026-10-26T20:24:11 -r skip
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+  (dry run: would poll until it reports ready; not polling)
+WAIT FOR THIS BUNDLE  ericsom/cbo-gap-archive lists kgrun-bundle-dry-run.sha256  (every 30 s, timeout 1800 s)
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+  (dry run: would poll until the name is listed; not polling)
+GENERATE KERNEL  ericsom/cbo-k8-dryrun
+  runner requires bundle dry-run in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: calprec2.py --archive <found path> --outdir /kaggle/working --rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713
+  runner will rebuild calprec2-ext-s0of15-a1-kaggle-20261025-103225 under /tmp/kgrun-ship and replace runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225 in the args
+  runner will rebuild calprec2-ext-s1of15-a1-kaggle-20261025-130230 under /tmp/kgrun-ship and replace runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230 in the args
+  runner will rebuild calprec2-ext-s2of15-a1-kaggle-20261025-144716 under /tmp/kgrun-ship and replace runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716 in the args
+  runner will rebuild calprec2-ext-s3of15-a1-kaggle-20261025-180231 under /tmp/kgrun-ship and replace runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231 in the args
+  runner will rebuild calprec2-ext-s4of15-a1-kaggle-20261025-200238 under /tmp/kgrun-ship and replace runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238 in the args
+  runner will rebuild calprec2-ext-s5of15-a1-kaggle-20261025-223216 under /tmp/kgrun-ship and replace runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216 in the args
+  runner will rebuild calprec2-ext-s6of15-a1-kaggle-20261026-001717 under /tmp/kgrun-ship and replace runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717 in the args
+  runner will rebuild calprec2-ext-s7of15-a1-kaggle-20261026-023229 under /tmp/kgrun-ship and replace runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229 in the args
+  runner will rebuild calprec2-ext-s8of15-a1-kaggle-20261026-044717 under /tmp/kgrun-ship and replace runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717 in the args
+  runner will rebuild calprec2-ext-s9of15-a1-kaggle-20261026-063217 under /tmp/kgrun-ship and replace runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217 in the args
+  runner will rebuild calprec2-ext-s10of15-a1-kaggle-20261026-091720 under /tmp/kgrun-ship and replace runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720 in the args
+  runner will rebuild calprec2-ext-s11of15-a1-kaggle-20261026-113216 under /tmp/kgrun-ship and replace runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216 in the args
+  runner will rebuild calprec2-ext-s12of15-a1-kaggle-20261026-130229 under /tmp/kgrun-ship and replace runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229 in the args
+  runner will rebuild calprec2-ext-s13of15-a1-kaggle-20261026-150225 under /tmp/kgrun-ship and replace runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225 in the args
+  runner will rebuild calprec2-ext-s14of15-a1-kaggle-20261026-164713 under /tmp/kgrun-ship and replace runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/rahul/Research/cbo-gap-final/.kaggle-push
+LAUNCHED ericsom/cbo-k8-dryrun; not polled, not fetched. Check it with:
+  python scripts/kgrun.py status --job k8-dryrun
+==============================================================================
