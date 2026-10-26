@@ -1984,6 +1984,48 @@ instruction of 2026-10-15.
       analysis needs.
   OPEN until the memprobe peak is read, the reproduction passes, Rahul
   approves the shard count, and the queue runs.
+  - The calprec2 queue ran to DONE on 2026-10-26 (N41, result).
+  - Twenty-row precheck, 2026-10-26. Source:
+    logs/rerun-precheck3-20261026.log; plan runs/rerun-plan-20261026-210435
+    (commit e6d891f), whose manifest Claude verified with sha256sum -c
+    (four files OK).
+    - Header: rerun.py de28b69a...aca1, rerunlib.py 6a7ddf42...5b07,
+      costprobe2.py ea5cb2e1...f64b; python 3.12.3, numpy 2.5.3, Linux
+      laptop, workers 2.
+    - Tables read: runs/calprec2-finalize-20261023-112503, sha256
+      0fc98d23...2668, 336 cells; the N41 table, sha256 2783222b...e6adb3,
+      41 cells; "merged calprec2 cells 377".
+    - O1 PASS; "archive check: 2598 ok, 0 FAIL, 288 not applicable";
+      "K4 PASS (52 groups with more than one row)"; "K1 PASS (26844
+      distinct (group, rep) keys)"; K2 PASS.
+    - K5: "old plan runs/rerun-plan-20261023-112643/rerun_plan.csv: 1752
+      rows over 17 row names; new plan has 1752 rows of those names",
+      "K5 PASS". The completed seventeen-row shard folders are therefore
+      valid task by task under the new plan.
+    - PLAN WRITTEN: A, C2, K1, K2, K4 and K5 PASS.
+  - Shard count for RMAP-CAL, CLIFF-CAL and ONSET-CAL (decision, Rahul,
+    2026-10-26). Source: logs/rerun-schedule-cal3-20261026-2107.log
+    (commit 1833708). That is rerun.py --schedule on the laptop for those
+    rows, --nshards 1 to 8, --workers 4, against plan
+    runs/rerun-plan-20261026-210435 (rerun_plan.csv sha256
+    1d9b4031...9c64), with the same script hashes as the precheck;
+    nothing was run or written.
+    - "tasks 6192"; one shard: summed wall 84845 s, "estimate 21211 s at
+      4 workers"; two shards: 3096 tasks each, summed wall 42422 s,
+      estimate 10606 s each. All estimates are labelled lower bounds
+      (perfect scaling; walls from costprobe2's timing beta).
+    - Decision: 2 shards. Rahul's reason: one shard's estimate, 21211 s,
+      is 98% of the 21600 s per-shard ceiling (Rahul's figure). The
+      estimates assume perfect scaling, and the archived shards overran
+      theirs by up to 30% (Rahul's figure; the ledger's largest recorded
+      overrun is arch-s1of4, 16255.0 s against its 12596 s estimate, K6).
+      Same reasoning as N37 and N38.
+    - Both shards use the identical --rows list and --nshards 2, RMAP-CAL
+      launched with ONSET-CAL (notes/RERUN_RUNBOOK.md, the rule that ties
+      RMAP and ONSET together; the shared cells are owned by RMAP-CAL).
+    - Not decided here: whether the shards go through the rerun queue (a
+      new definition under notes/queues/ and "rerunq.py load") or by
+      hand under the runbook, and the smoke before them.
 
 ## Checked and found sound
 

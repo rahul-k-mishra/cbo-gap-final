@@ -2445,7 +2445,43 @@ CAL3. Sensitivity analysis excluding the not-adequate cells. DECIDED:
       panel coefficients; only the per-objective values show it. The
       manuscript must state that the tau_0 0.01 and 0.03 end of RMAP-CAL
       rests partly on cells whose tau is not established.
-CAL4. A1 over twenty rows. NOT DECIDED.
+CAL4. A1 over twenty rows. DECIDED: one analysis over all twenty rows,
+    with a reproduction check.
+    - A1 becomes "all twenty rows complete". Its definition and exit 7
+      are unchanged: if any row is incomplete, every row's count is
+      printed with "INCOMPLETE: analysis refused (D3)", no output folder
+      is created and nothing is computed.
+    - The run recomputes the seventeen rows. Before any statistic of a
+      calibrated row is printed, it checks that this part reproduces N39
+      (runs/rerun-analysis-20261025-051314):
+      - margin: S, the calprec2-group median, the probe-group median and
+        m print as 0.026038, 0.026582, 0.025384 and 0.078113, as in that
+        folder's analysis_margin.csv;
+      - statistics: every seventeen-row value equals that folder's value
+        as a string. The CAL3 flag column is the only permitted
+        difference.
+      On any mismatch the script prints "17-ROW REPRODUCTION FAILED" and
+      the first differences. It computes nothing for the calibrated rows
+      and exits with its own code. A mismatch is a finding, not
+      something to patch.
+    - Worked example: m prints 0.078113 and every seventeen-row statistic
+      matches, so the calibrated rows proceed to the CAL1 ratio guard. If
+      one SIGMA c3 interval endpoint prints -0.0412 where N39 has
+      -0.0413, the check fails at that row and no calibrated-row number
+      is printed.
+    - Constraint on where it runs, recorded as Rahul instructed: the
+      twenty-row analysis runs on the laptop with Python 3.12.3 and NumPy
+      2.5.3. The string-equality check holds only in the environment that
+      produced N39. This constraint is not to be relaxed.
+    - Rahul's reasons:
+      - D3 applies to the new rows as it did to the old, so nothing about
+        RMAP-CAL is printed while ONSET-CAL is incomplete.
+      - One run gives one output folder, so the CAL3 flags sit in both
+        sets of rows under the same code.
+      - The check turns "nothing changed for the seventeen rows" from a
+        claim into a tested fact. The analysis code changes for the new
+        rows, the flags and the guard; without the check, that those
+        changes left the old path untouched would be an assertion.
 CAL5. OPEN, Rahul's addition: seven target-labelled, adequate cells of
     the N41 table have provenance "beta_adq; C1 found no sufficient
     level". Their beta is the adequacy beta, not a production-level beta
