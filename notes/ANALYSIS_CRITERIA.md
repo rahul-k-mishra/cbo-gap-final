@@ -2336,6 +2336,62 @@ D3. The analysis runs only when all seventeen rows are complete. Rahul's
 The review's noted items N1 to N5 are accepted as recorded. The ONSET
 ownership point (N2) goes into the rerun runbook when it is written.
 
+### Fourteenth message (2026-10-26): the calibrated r rows (ledger N41, N42)
+
+Rows RMAP-CAL, CLIFF-CAL and ONSET-CAL (rerunlib.py, CALIBRATED r ROWS):
+the cells of RMAP, CLIFF and ONSET, run on the N41 calprec2 betas
+(runs/calprec2-ext-finalize-a2-kaggle-20261026-204714). The questions are
+put one at a time, and each is decided before any code is written. Until
+all are decided, rerun_analysis.py keeps its guard (exit 2).
+
+CAL1. Margin. DECIDED: keep m = 0.078113, with a ratio guard.
+    - m = 3 x S, S = 0.026038, as fixed by the seventeen-row analysis
+      (logs/rerun-analysis-20261025-0513.log, analysis_margin.csv;
+      ledger N39). It is not recomputed. Every equivalence verdict of the
+      calibrated rows uses it, and the seventeen rows' verdicts are not
+      reissued.
+    - Ratio guard (docstring text). Before any gap of a calibrated row is
+      computed, the analysis prints the median per-cell S-slope bootstrap
+      SD over the cell arms of RMAP-CAL, CLIFF-CAL and ONSET-CAL. A cell
+      shared by RMAP-CAL and ONSET-CAL counts once, as in 5b. It then
+      prints the ratio of that median to each existing group's median:
+      calprec2 (SIGMA, ANISO) 0.026582 and probe (RMAP, CLIFF, ONSET)
+      0.025384 (N39). Each ratio is larger median / smaller median.
+      REVISIT iff either ratio > 1.5, the 5b threshold. On REVISIT the
+      script prints "MARGIN REVISIT REQUIRED" for the calibrated rows and
+      computes no gap, DIFFERENCE verdict or equivalence verdict for them.
+      Worked example (illustrative numbers): median 0.030 gives ratios
+      0.030 / 0.026582 = 1.13 and 0.030 / 0.025384 = 1.18, no revisit.
+      Median 0.040 gives 1.50 and 1.58: 1.58 > 1.5, so REVISIT.
+    - Rahul's reason: 5b fixes S before any gap is seen. Recomputing now
+      would change the margin of verdicts whose gaps are already in the
+      seventeen-row result, which is the thing 5b exists to prevent. A8's
+      concern, that one beta design's scale should not set another's
+      margin, is met by the ratio guard rather than by recomputation.
+    - Recorded as Rahul instructed:
+      - This is an exception to A8 as worded. A8 says a row that makes an
+        equivalence claim joins the pool that defines S and does not
+        borrow the margin. The calibrated rows borrow it.
+      - The calibrated rows borrow a margin fixed before their gaps
+        existed.
+      - The manuscript must say both.
+CAL2. Contrasts. NOT DECIDED (asked 2026-10-26).
+CAL3. Sensitivity analysis excluding the not-adequate cells. NOT
+    DECIDED.
+CAL4. A1 over twenty rows. NOT DECIDED.
+CAL5. OPEN, Rahul's addition: seven target-labelled, adequate cells of
+    the N41 table have provenance "beta_adq; C1 found no sufficient
+    level". Their beta is the adequacy beta, not a production-level beta
+    (ledger N41, result). They are:
+    - cliff ackley d 40 tau0 0.1;
+    - regimemap ackley d 10, 20 and 80, tau0 0.1;
+    - regimemap rastrigin d 10 tau0 0.01;
+    - regimemap rastrigin d 80 tau0 0.1;
+    - regimemap sphere d 40 tau0 0.01.
+    The finalize's summary counts ("target 34", "adequate 34") do not
+    show them. How the analysis treats and reports them is not decided;
+    it is put to Rahul as a question in its turn.
+
 ---
 
 ## Corrections to the first decision message, from the logs
