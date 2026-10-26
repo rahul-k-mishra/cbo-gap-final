@@ -52,19 +52,32 @@
       "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
     }
   ],
-  "status": "RUNNING",
-  "index": 0,
+  "status": "READY",
+  "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-smoke-cal3-a1",
-  "args": "--smoke --plan-from runs/rerun-plan-20261026-210435 --rows RMAP-CAL,CLIFF-CAL,ONSET-CAL --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261026-210435"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
-  "attempts": {},
+  "attempts": {
+    "smoke-cal3": [
+      {
+        "attempt": 1,
+        "job": "rerun-smoke-cal3-a1",
+        "folder": "runs/rerun-smoke-cal3-a1-kaggle-20261026-214714",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": null,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T161710Z",
+        "fetched_at": "2026-10-26T21:47:18+05:30"
+      }
+    ]
+  },
   "history": [
     {
       "at": "2026-10-26T21:35:19+05:30",
@@ -92,6 +105,15 @@
       "attempt": 1,
       "job": "rerun-smoke-cal3-a1",
       "note": "logs/kgrun-rerun-smoke-cal3-a1.log"
+    },
+    {
+      "at": "2026-10-26T21:47:18+05:30",
+      "run": "laptop.20261026T161710Z",
+      "event": "fetched",
+      "item": "cal3-s0of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-smoke-cal3-a1-kaggle-20261026-214714: runner exit 0, D-SMOKE PASS; now READY"
     }
   ],
   "definition": {
