@@ -53,6 +53,13 @@ RESUMPTION ON KAGGLE (ledger K5, closed 2026-10-11)
                                   runs/A,runs/B" with A and B shipped gives
                                   "--finalize /tmp/kgrun-ship/A,/tmp/kgrun-
                                   ship/B", one occurrence each.
+                                  Since 2026-10-26 (ledger K8) the check
+                                  made before anything else, that every
+                                  --data-dirs folder is named in --args,
+                                  uses the same rule (arg_members). Until
+                                  then it matched whole tokens only and
+                                  refused the finalize above before any
+                                  Kaggle command.
   Before the bundle is built, every such folder must:
     - be a direct subfolder of runs/;
     - hold a sha256.txt listing exactly the files present, each with a
@@ -438,6 +445,18 @@ def verify_run_dir(path):
     return name, ["sha256.txt"] + files
 
 
+def arg_members(args):
+    """The strings a --data-dirs folder may be named by in --args: every
+    whitespace token, split on commas. This is the rule the runner applies
+    when it rewrites runs/<name> (RUNNER_TEMPLATE, "x.split(',')"); the
+    pre-launch check must use the same rule, or it refuses what the runner
+    would ship (ledger K8).
+    Worked example: "--rows RMAP,CLIFF --finalize runs/A,runs/B" gives
+    ["--rows", "RMAP", "CLIFF", "--finalize", "runs/A", "runs/B"], so
+    runs/A and runs/B are both named; "runs/AB" names neither."""
+    return [q for x in args.split() for q in x.split(",")]
+
+
 def ship_list(resume_dirs, data_dirs):
     """[(path, role)] from the two flags; a folder may appear once."""
     out, seen = [], set()
@@ -722,8 +741,9 @@ def main():
     if "--resume-from" in a.args.split():
         raise SystemExit("--args must not contain --resume-from; name the folders with --resume-dirs")
     ship = ship_list(a.resume_dirs, a.data_dirs)
+    members = arg_members(a.args)
     for path, role in ship:
-        if role == "data" and "runs/" + os.path.basename(os.path.normpath(path)) not in a.args.split():
+        if role == "data" and "runs/" + os.path.basename(os.path.normpath(path)) not in members:
             raise SystemExit("data folder {} is not named in --args as runs/{}".format(
                 path, os.path.basename(os.path.normpath(path))))
 

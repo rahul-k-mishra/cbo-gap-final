@@ -2755,3 +2755,35 @@ ENVIRONMENT.md (G2 closed).
     PASS" and "kgrun runner: exit code 0". The mounted dataset was the
     a2 upload, and every uploaded file hashed as listed.
   CLOSED 2026-10-23.
+
+- K8 (Kaggle, kgrun pre-launch check; defect in the N42 change; found
+  2026-10-26). The queue halted at calprec2-ext-finalize-a1 (commit
+  1151836, "kgrun launch exit 1"). logs/kgrun-calprec2-ext-finalize-a1.log
+  holds one line: "data folder
+  runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225 is not named in
+  --args as runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225". Rahul's
+  kgrun status for the kernel: "Cannot access kernel
+  'ericsom/cbo-calprec2-ext-finalize-a1'", the ABSENT reply.
+  - Cause, read from the source at 1151836: N42 taught the runner
+    (RUNNER_TEMPLATE) to rewrite runs/<name> inside comma-joined --args
+    tokens, but main() still checked each --data-dirs folder against
+    a.args.split(), whole tokens only. The finalize passes its folders as
+    one token, "--finalize runs/A,runs/B,...", so the check refused the
+    first folder.
+  - Nothing was pushed. That check runs in main() before the banner and
+    before build_bundle; the log holds no banner and no "$ kaggle" line.
+    So no dataset version and no kernel were created, consistent with the
+    ABSENT status.
+  - Fix (scripts/kgrun.py, arg_members): the check splits every
+    whitespace token on commas, the same rule the runner applies. A token
+    without a comma is handled exactly as before. kgrun.py is not a P1
+    code pin of the calprec2 profile, so the queue's pins are unchanged.
+  - Rest of the N42 change, read for the same whole-token assumption:
+    the runner's rewrite counts and replaces comma members; ship_list
+    splits --data-dirs on commas; rerunq.py builds the finalize args and
+    data_dirs from one list (job_spec) and compares R1F's "read" lines by
+    basename, which the runner's /tmp/kgrun-ship/<name> paths keep;
+    calprec2.py splits --finalize on commas. None has it. The one other
+    whole-token test in kgrun.py, "--resume-from" in a.args.split(),
+    predates N42 and concerns a flag, not a folder.
+  OPEN until the finalize launches and passes R1F and F2F.
