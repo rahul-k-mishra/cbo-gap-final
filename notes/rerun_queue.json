@@ -164,13 +164,29 @@
       "ledger": "N41"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 15,
   "attempt": 2,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "calprec2-ext-finalize-a2",
+  "args": "--rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713",
+  "data_dirs": [
+    "runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225",
+    "runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230",
+    "runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716",
+    "runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231",
+    "runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238",
+    "runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216",
+    "runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717",
+    "runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229",
+    "runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717",
+    "runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217",
+    "runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720",
+    "runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216",
+    "runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229",
+    "runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225",
+    "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -836,6 +852,15 @@
       "attempt": 2,
       "job": "",
       "note": "K8 fixed in 4226863; a1 never pushed (logs/kgrun-calprec2-ext-finalize-a1.log)"
+    },
+    {
+      "at": "2026-10-26T20:26:52+05:30",
+      "run": "laptop.20261026T145642Z",
+      "event": "intent",
+      "item": "ext-finalize",
+      "attempt": 2,
+      "job": "calprec2-ext-finalize-a2",
+      "note": "resume none"
     }
   ],
   "definition": {
