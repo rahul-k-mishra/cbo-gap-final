@@ -52,13 +52,17 @@
       "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-cal3-s0of2-a1",
+  "args": "--plan-from runs/rerun-plan-20261026-210435 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows RMAP-CAL,CLIFF-CAL,ONSET-CAL --shard 0 --nshards 2 --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261026-210435",
+    "runs/costprobe2-s0-kaggle-20261010-103952",
+    "runs/costprobe2-s1-kaggle-20261011-101343"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -114,6 +118,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/rerun-smoke-cal3-a1-kaggle-20261026-214714: runner exit 0, D-SMOKE PASS; now READY"
+    },
+    {
+      "at": "2026-10-26T22:02:19+05:30",
+      "run": "laptop.20261026T163210Z",
+      "event": "intent",
+      "item": "cal3-s0of2",
+      "attempt": 1,
+      "job": "rerun-cal3-s0of2-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
