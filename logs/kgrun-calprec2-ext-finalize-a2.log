@@ -1,0 +1,643 @@
+==============================================================================
+kgrun  action launch  job calprec2-ext-finalize-a2  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/cbo-gap-queue
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/rahul/cbo-gap-queue/.kaggle-bundle
+  ship data   calprec2-ext-s0of15-a1-kaggle-20261025-103225   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s1of15-a1-kaggle-20261025-130230   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s2of15-a1-kaggle-20261025-144716   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s3of15-a1-kaggle-20261025-180231   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s4of15-a1-kaggle-20261025-200238   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s5of15-a1-kaggle-20261025-223216   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s6of15-a1-kaggle-20261026-001717   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s7of15-a1-kaggle-20261026-023229   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s8of15-a1-kaggle-20261026-044717   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s9of15-a1-kaggle-20261026-063217   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s10of15-a1-kaggle-20261026-091720   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s11of15-a1-kaggle-20261026-113216   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s12of15-a1-kaggle-20261026-130229   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s13of15-a1-kaggle-20261026-150225   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-ext-s14of15-a1-kaggle-20261026-164713   5 files, manifest verified, tracked and clean in git
+  bundle id a2acdd5234024989  (kgrun-bundle-a2acdd5234024989.sha256, 127 files listed)
+  26 archive files + 25 round-2 scripts + 15 shipped folder(s); bundle 129 files, 7.0 MB
+  dataset id ericsom/cbo-gap-archive
+VERSION DATASET
+  $ kaggle datasets version -p /home/rahul/cbo-gap-queue/.kaggle-bundle -m kgrun calprec2-ext-finalize-a2 2026-10-26T20:26:56 -r skip
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Starting upload for file kgrun-ship-013-0003-calprec2_tasks.csv
+  0%|          | 0.00/139k [00:00<?, ?B/s] 11%|█▏        | 16.0k/139k [00:00<00:01, 92.0kB/s]100%|██████████| 139k/139k [00:01<00:00, 76.7kB/s] 
+Upload successful: kgrun-ship-013-0003-calprec2_tasks.csv (139KB)
+Starting upload for file kgrun-ship-012-0004-cbo-calprec2-ext-s12of15-a1.log
+  0%|          | 0.00/81.2k [00:00<?, ?B/s] 20%|█▉        | 16.0k/81.2k [00:00<00:00, 76.3kB/s]100%|██████████| 81.2k/81.2k [00:01<00:00, 60.0kB/s]
+Upload successful: kgrun-ship-012-0004-cbo-calprec2-ext-s12of15-a1.log (81KB)
+Starting upload for file kgrun-ship-011-0002-calprec2_plan.csv
+  0%|          | 0.00/108 [00:00<?, ?B/s]100%|██████████| 108/108 [00:00<00:00, 714B/s]100%|██████████| 108/108 [00:00<00:00, 109B/s]
+Upload successful: kgrun-ship-011-0002-calprec2_plan.csv (108B)
+Starting upload for file kgrun-ship-001-0002-calprec2_plan.csv
+  0%|          | 0.00/135 [00:00<?, ?B/s]100%|██████████| 135/135 [00:00<00:00, 646B/s]100%|██████████| 135/135 [00:01<00:00, 104B/s]
+Upload successful: kgrun-ship-001-0002-calprec2_plan.csv (135B)
+Starting upload for file kgrun-ship-000-0003-calprec2_tasks.csv
+  0%|          | 0.00/239k [00:00<?, ?B/s]  7%|▋         | 16.0k/239k [00:00<00:03, 61.0kB/s]100%|██████████| 239k/239k [00:01<00:00, 124kB/s]  
+Upload successful: kgrun-ship-000-0003-calprec2_tasks.csv (239KB)
+Starting upload for file kgrun-ship-002-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.00kB/s]100%|██████████| 463/463 [00:01<00:00, 415B/s]  
+Upload successful: kgrun-ship-002-0000-sha256.txt (463B)
+Starting upload for file kgrun-ship-014-0001-calprec2_params.csv
+  0%|          | 0.00/337 [00:00<?, ?B/s]100%|██████████| 337/337 [00:00<00:00, 2.12kB/s]100%|██████████| 337/337 [00:01<00:00, 337B/s]  
+Upload successful: kgrun-ship-014-0001-calprec2_params.csv (337B)
+Starting upload for file kgrun-ship-012-0002-calprec2_plan.csv
+  0%|          | 0.00/103 [00:00<?, ?B/s]100%|██████████| 103/103 [00:00<00:00, 829B/s]100%|██████████| 103/103 [00:01<00:00, 98.5B/s]
+Upload successful: kgrun-ship-012-0002-calprec2_plan.csv (103B)
+Starting upload for file kgrun-bundle-a2acdd5234024989.sha256
+  0%|          | 0.00/11.7k [00:00<?, ?B/s]100%|██████████| 11.7k/11.7k [00:00<00:00, 64.5kB/s]100%|██████████| 11.7k/11.7k [00:01<00:00, 9.17kB/s]
+Upload successful: kgrun-bundle-a2acdd5234024989.sha256 (12KB)
+Starting upload for file kgrun-ship-001-0003-calprec2_tasks.csv
+  0%|          | 0.00/306k [00:00<?, ?B/s]  5%|▌         | 16.0k/306k [00:00<00:02, 99.0kB/s]100%|██████████| 306k/306k [00:02<00:00, 153kB/s]  
+Upload successful: kgrun-ship-001-0003-calprec2_tasks.csv (306KB)
+Starting upload for file kgrun-ship-006-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 1.01kB/s]100%|██████████| 336/336 [00:01<00:00, 241B/s]  
+Upload successful: kgrun-ship-006-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-014-0003-calprec2_tasks.csv
+  0%|          | 0.00/138k [00:00<?, ?B/s] 12%|█▏        | 16.0k/138k [00:00<00:01, 107kB/s]100%|██████████| 138k/138k [00:01<00:00, 86.4kB/s]
+Upload successful: kgrun-ship-014-0003-calprec2_tasks.csv (138KB)
+Starting upload for file visibility.py
+  0%|          | 0.00/20.5k [00:00<?, ?B/s] 78%|███████▊  | 16.0k/20.5k [00:00<00:00, 58.4kB/s]100%|██████████| 20.5k/20.5k [00:01<00:00, 17.4kB/s]
+Upload successful: visibility.py (20KB)
+Starting upload for file kgrun-ship-014-0002-calprec2_plan.csv
+  0%|          | 0.00/104 [00:00<?, ?B/s]100%|██████████| 104/104 [00:00<00:00, 340B/s]100%|██████████| 104/104 [00:01<00:00, 92.0B/s]
+Upload successful: kgrun-ship-014-0002-calprec2_plan.csv (104B)
+Starting upload for file kgrun-ship-012-0001-calprec2_params.csv
+  0%|          | 0.00/337 [00:00<?, ?B/s]100%|██████████| 337/337 [00:00<00:00, 709B/s]100%|██████████| 337/337 [00:01<00:00, 261B/s]
+Upload successful: kgrun-ship-012-0001-calprec2_params.csv (337B)
+Starting upload for file kgrun-ship-004-0003-calprec2_tasks.csv
+  0%|          | 0.00/316k [00:00<?, ?B/s]  5%|▌         | 16.0k/316k [00:00<00:03, 95.9kB/s]100%|██████████| 316k/316k [00:02<00:00, 159kB/s]  
+Upload successful: kgrun-ship-004-0003-calprec2_tasks.csv (316KB)
+Starting upload for file control.py
+  0%|          | 0.00/22.1k [00:00<?, ?B/s] 72%|███████▏  | 16.0k/22.1k [00:00<00:00, 95.0kB/s]100%|██████████| 22.1k/22.1k [00:01<00:00, 21.8kB/s]
+Upload successful: control.py (22KB)
+Starting upload for file kgrun-ship-007-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.19kB/s]100%|██████████| 336/336 [00:01<00:00, 300B/s]  
+Upload successful: kgrun-ship-007-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-000-0004-cbo-calprec2-ext-s0of15-a1.log
+  0%|          | 0.00/111k [00:00<?, ?B/s] 14%|█▍        | 16.0k/111k [00:00<00:00, 113kB/s]100%|██████████| 111k/111k [00:01<00:00, 66.1kB/s]
+Upload successful: kgrun-ship-000-0004-cbo-calprec2-ext-s0of15-a1.log (111KB)
+Starting upload for file reboot.py
+  0%|          | 0.00/12.8k [00:00<?, ?B/s]100%|██████████| 12.8k/12.8k [00:00<00:00, 59.1kB/s]100%|██████████| 12.8k/12.8k [00:01<00:00, 10.7kB/s]
+Upload successful: reboot.py (13KB)
+Starting upload for file audit.py
+  0%|          | 0.00/18.4k [00:00<?, ?B/s] 87%|████████▋ | 16.0k/18.4k [00:00<00:00, 99.4kB/s]100%|██████████| 18.4k/18.4k [00:01<00:00, 16.7kB/s]
+Upload successful: audit.py (18KB)
+Starting upload for file kgrun-ship-012-0003-calprec2_tasks.csv
+  0%|          | 0.00/207k [00:00<?, ?B/s]  8%|▊         | 16.0k/207k [00:00<00:02, 87.1kB/s]100%|██████████| 207k/207k [00:01<00:00, 115kB/s]  
+Upload successful: kgrun-ship-012-0003-calprec2_tasks.csv (207KB)
+Starting upload for file kgrun-ship-009-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 3.03kB/s]100%|██████████| 336/336 [00:01<00:00, 255B/s]  
+Upload successful: kgrun-ship-009-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-006-0003-calprec2_tasks.csv
+  0%|          | 0.00/314k [00:00<?, ?B/s]  5%|▌         | 16.0k/314k [00:00<00:02, 109kB/s] 66%|██████▋   | 208k/314k [00:00<00:00, 984kB/s] 100%|██████████| 314k/314k [00:02<00:00, 150kB/s]
+Upload successful: kgrun-ship-006-0003-calprec2_tasks.csv (314KB)
+Starting upload for file cliff.py
+  0%|          | 0.00/20.7k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.7k [00:00<00:00, 82.0kB/s]100%|██████████| 20.7k/20.7k [00:01<00:00, 16.1kB/s]
+Upload successful: cliff.py (21KB)
+Starting upload for file kgrun-ship-006-0002-calprec2_plan.csv
+  0%|          | 0.00/144 [00:00<?, ?B/s]100%|██████████| 144/144 [00:00<00:00, 1.03kB/s]100%|██████████| 144/144 [00:00<00:00, 148B/s]  
+Upload successful: kgrun-ship-006-0002-calprec2_plan.csv (144B)
+Starting upload for file rerun.py
+  0%|          | 0.00/52.3k [00:00<?, ?B/s] 31%|███       | 16.0k/52.3k [00:00<00:00, 99.6kB/s]100%|██████████| 52.3k/52.3k [00:01<00:00, 46.7kB/s]
+Upload successful: rerun.py (52KB)
+Starting upload for file kgrun-ship-002-0003-calprec2_tasks.csv
+  0%|          | 0.00/312k [00:00<?, ?B/s]  5%|▌         | 16.0k/312k [00:00<00:03, 78.4kB/s]100%|██████████| 312k/312k [00:02<00:00, 156kB/s]  
+Upload successful: kgrun-ship-002-0003-calprec2_tasks.csv (312KB)
+Starting upload for file mkfig2.py
+  0%|          | 0.00/1.78k [00:00<?, ?B/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 10.3kB/s]100%|██████████| 1.78k/1.78k [00:01<00:00, 1.80kB/s]
+Upload successful: mkfig2.py (2KB)
+Starting upload for file m4_slopese.py
+  0%|          | 0.00/11.5k [00:00<?, ?B/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 45.6kB/s]100%|██████████| 11.5k/11.5k [00:01<00:00, 10.5kB/s]
+Upload successful: m4_slopese.py (11KB)
+Starting upload for file partm.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 109kB/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 15.7kB/s]
+Upload successful: partm.py (17KB)
+Starting upload for file mkfig5.py
+  0%|          | 0.00/2.33k [00:00<?, ?B/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 22.3kB/s]100%|██████████| 2.33k/2.33k [00:01<00:00, 2.35kB/s]
+Upload successful: mkfig5.py (2KB)
+Starting upload for file kgrun-ship-010-0003-calprec2_tasks.csv
+  0%|          | 0.00/240k [00:00<?, ?B/s]  7%|▋         | 16.0k/240k [00:00<00:01, 154kB/s]100%|██████████| 240k/240k [00:01<00:00, 125kB/s] 
+Upload successful: kgrun-ship-010-0003-calprec2_tasks.csv (240KB)
+Starting upload for file mechanism.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████▏ | 16.0k/19.7k [00:00<00:00, 92.9kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 15.2kB/s]
+Upload successful: mechanism.py (20KB)
+Starting upload for file finitej.py
+  0%|          | 0.00/9.66k [00:00<?, ?B/s]100%|██████████| 9.66k/9.66k [00:00<00:00, 35.4kB/s]100%|██████████| 9.66k/9.66k [00:01<00:00, 8.74kB/s]
+Upload successful: finitej.py (10KB)
+Starting upload for file m3_bootmc.py
+  0%|          | 0.00/9.99k [00:00<?, ?B/s]100%|██████████| 9.99k/9.99k [00:00<00:00, 52.3kB/s]100%|██████████| 9.99k/9.99k [00:01<00:00, 10.1kB/s]
+Upload successful: m3_bootmc.py (10KB)
+Starting upload for file kgrun-ship-008-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 1.08kB/s]100%|██████████| 336/336 [00:01<00:00, 286B/s]  
+Upload successful: kgrun-ship-008-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-003-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.53kB/s]100%|██████████| 336/336 [00:01<00:00, 271B/s]  
+Upload successful: kgrun-ship-003-0001-calprec2_params.csv (336B)
+Starting upload for file regimemap.py
+  0%|          | 0.00/27.2k [00:00<?, ?B/s] 59%|█████▉    | 16.0k/27.2k [00:00<00:00, 118kB/s]100%|██████████| 27.2k/27.2k [00:01<00:00, 22.6kB/s]
+Upload successful: regimemap.py (27KB)
+Starting upload for file m6_hetero.py
+  0%|          | 0.00/14.2k [00:00<?, ?B/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 45.9kB/s]100%|██████████| 14.2k/14.2k [00:01<00:00, 10.2kB/s]
+Upload successful: m6_hetero.py (14KB)
+Starting upload for file kgrun-ship-003-0003-calprec2_tasks.csv
+  0%|          | 0.00/308k [00:00<?, ?B/s]  5%|▌         | 16.0k/308k [00:00<00:03, 82.7kB/s]100%|██████████| 308k/308k [00:02<00:00, 154kB/s]  
+Upload successful: kgrun-ship-003-0003-calprec2_tasks.csv (308KB)
+Starting upload for file kgrun-ship-010-0001-calprec2_params.csv
+  0%|          | 0.00/337 [00:00<?, ?B/s]100%|██████████| 337/337 [00:00<00:00, 2.76kB/s]100%|██████████| 337/337 [00:00<00:00, 350B/s]  
+Upload successful: kgrun-ship-010-0001-calprec2_params.csv (337B)
+Starting upload for file mkfig4.py
+  0%|          | 0.00/2.17k [00:00<?, ?B/s]100%|██████████| 2.17k/2.17k [00:00<00:00, 18.2kB/s]100%|██████████| 2.17k/2.17k [00:01<00:00, 1.98kB/s]
+Upload successful: mkfig4.py (2KB)
+Starting upload for file kgrun-ship-000-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 3.08kB/s]100%|██████████| 336/336 [00:01<00:00, 298B/s]  
+Upload successful: kgrun-ship-000-0001-calprec2_params.csv (336B)
+Starting upload for file c6.py
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 77.7kB/s]100%|██████████| 11.2k/11.2k [00:01<00:00, 10.2kB/s]
+Upload successful: c6.py (11KB)
+Starting upload for file m5_gapwidth.py
+  0%|          | 0.00/12.3k [00:00<?, ?B/s]100%|██████████| 12.3k/12.3k [00:00<00:00, 104kB/s]100%|██████████| 12.3k/12.3k [00:01<00:00, 11.2kB/s]
+Upload successful: m5_gapwidth.py (12KB)
+Starting upload for file calprec2_hashaudit.py
+  0%|          | 0.00/20.8k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.8k [00:00<00:00, 148kB/s]100%|██████████| 20.8k/20.8k [00:01<00:00, 19.0kB/s]
+Upload successful: calprec2_hashaudit.py (21KB)
+Starting upload for file kgrun-ship-000-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 4.12kB/s]100%|██████████| 463/463 [00:01<00:00, 324B/s]  
+Upload successful: kgrun-ship-000-0000-sha256.txt (463B)
+Starting upload for file kgrun-ship-002-0004-cbo-calprec2-ext-s2of15-a1.log
+  0%|          | 0.00/114k [00:00<?, ?B/s] 14%|█▍        | 16.0k/114k [00:00<00:00, 114kB/s]100%|██████████| 114k/114k [00:01<00:00, 80.9kB/s]
+Upload successful: kgrun-ship-002-0004-cbo-calprec2-ext-s2of15-a1.log (114KB)
+Starting upload for file detcheck.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 137kB/s]100%|██████████| 15.2k/15.2k [00:01<00:00, 13.9kB/s]
+Upload successful: detcheck.py (15KB)
+Starting upload for file rerun_analysis.py
+  0%|          | 0.00/70.1k [00:00<?, ?B/s] 23%|██▎       | 16.0k/70.1k [00:00<00:00, 127kB/s]100%|██████████| 70.1k/70.1k [00:01<00:00, 46.6kB/s]
+Upload successful: rerun_analysis.py (70KB)
+Starting upload for file perjcal.py
+  0%|          | 0.00/12.6k [00:00<?, ?B/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 114kB/s]100%|██████████| 12.6k/12.6k [00:01<00:00, 12.8kB/s]
+Upload successful: perjcal.py (13KB)
+Starting upload for file kgrun-ship-001-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.14kB/s]100%|██████████| 336/336 [00:01<00:00, 299B/s]  
+Upload successful: kgrun-ship-001-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-004-0002-calprec2_plan.csv
+  0%|          | 0.00/143 [00:00<?, ?B/s]100%|██████████| 143/143 [00:00<00:00, 802B/s]100%|██████████| 143/143 [00:01<00:00, 100B/s]
+Upload successful: kgrun-ship-004-0002-calprec2_plan.csv (143B)
+Starting upload for file kgrun-ship-009-0003-calprec2_tasks.csv
+  0%|          | 0.00/171k [00:00<?, ?B/s]  9%|▉         | 16.0k/171k [00:00<00:01, 139kB/s]100%|██████████| 171k/171k [00:01<00:00, 101kB/s] 
+Upload successful: kgrun-ship-009-0003-calprec2_tasks.csv (171KB)
+Starting upload for file verify.py
+  0%|          | 0.00/15.3k [00:00<?, ?B/s]100%|██████████| 15.3k/15.3k [00:00<00:00, 102kB/s]100%|██████████| 15.3k/15.3k [00:01<00:00, 14.7kB/s]
+Upload successful: verify.py (15KB)
+Starting upload for file kgrun-ship-008-0003-calprec2_tasks.csv
+  0%|          | 0.00/243k [00:00<?, ?B/s]  7%|▋         | 16.0k/243k [00:00<00:01, 139kB/s]100%|██████████| 243k/243k [00:02<00:00, 122kB/s] 
+Upload successful: kgrun-ship-008-0003-calprec2_tasks.csv (243KB)
+Starting upload for file kgrun-ship-010-0004-cbo-calprec2-ext-s10of15-a1.log
+  0%|          | 0.00/110k [00:00<?, ?B/s] 15%|█▍        | 16.0k/110k [00:00<00:00, 99.1kB/s]100%|██████████| 110k/110k [00:01<00:00, 69.2kB/s] 
+Upload successful: kgrun-ship-010-0004-cbo-calprec2-ext-s10of15-a1.log (110KB)
+Starting upload for file kgrun-ship-008-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 4.06kB/s]100%|██████████| 463/463 [00:01<00:00, 413B/s]  
+Upload successful: kgrun-ship-008-0000-sha256.txt (463B)
+Starting upload for file rmapj.py
+  0%|          | 0.00/11.4k [00:00<?, ?B/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 74.0kB/s]100%|██████████| 11.4k/11.4k [00:01<00:00, 10.7kB/s]
+Upload successful: rmapj.py (11KB)
+Starting upload for file kgrun-ship-005-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.90kB/s]100%|██████████| 463/463 [00:01<00:00, 413B/s]  
+Upload successful: kgrun-ship-005-0000-sha256.txt (463B)
+Starting upload for file kgrun-ship-index.json
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 79.1kB/s]100%|██████████| 11.2k/11.2k [00:01<00:00, 10.3kB/s]
+Upload successful: kgrun-ship-index.json (11KB)
+Starting upload for file kgrun-ship-014-0004-cbo-calprec2-ext-s14of15-a1.log
+  0%|          | 0.00/78.8k [00:00<?, ?B/s] 20%|██        | 16.0k/78.8k [00:00<00:00, 139kB/s]100%|██████████| 78.8k/78.8k [00:01<00:00, 56.4kB/s]
+Upload successful: kgrun-ship-014-0004-cbo-calprec2-ext-s14of15-a1.log (79KB)
+Starting upload for file kgrun-ship-005-0002-calprec2_plan.csv
+  0%|          | 0.00/143 [00:00<?, ?B/s]100%|██████████| 143/143 [00:00<00:00, 1.16kB/s]100%|██████████| 143/143 [00:01<00:00, 127B/s]  
+Upload successful: kgrun-ship-005-0002-calprec2_plan.csv (143B)
+Starting upload for file kgrun-ship-003-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.81kB/s]100%|██████████| 463/463 [00:01<00:00, 412B/s]  
+Upload successful: kgrun-ship-003-0000-sha256.txt (463B)
+Starting upload for file kgrun-ship-004-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 4.15kB/s]100%|██████████| 463/463 [00:01<00:00, 452B/s]  
+Upload successful: kgrun-ship-004-0000-sha256.txt (463B)
+Starting upload for file exactcal.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▊| 16.0k/16.2k [00:00<00:00, 132kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 14.9kB/s]
+Upload successful: exactcal.py (16KB)
+Starting upload for file memprobe.py
+  0%|          | 0.00/12.2k [00:00<?, ?B/s]100%|██████████| 12.2k/12.2k [00:00<00:00, 67.8kB/s]100%|██████████| 12.2k/12.2k [00:01<00:00, 11.2kB/s]
+Upload successful: memprobe.py (12KB)
+Starting upload for file ess_surface.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▉| 16.0k/16.2k [00:00<00:00, 111kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 14.9kB/s]
+Upload successful: ess_surface.py (16KB)
+Starting upload for file crossed.py
+  0%|          | 0.00/22.8k [00:00<?, ?B/s] 70%|███████   | 16.0k/22.8k [00:00<00:00, 76.4kB/s]100%|██████████| 22.8k/22.8k [00:01<00:00, 21.6kB/s]
+Upload successful: crossed.py (23KB)
+Starting upload for file kgrun-ship-007-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 4.12kB/s]100%|██████████| 463/463 [00:01<00:00, 299B/s]  
+Upload successful: kgrun-ship-007-0000-sha256.txt (463B)
+Starting upload for file rerun_tally.py
+  0%|          | 0.00/12.1k [00:00<?, ?B/s]100%|██████████| 12.1k/12.1k [00:00<00:00, 98.0kB/s]100%|██████████| 12.1k/12.1k [00:01<00:00, 10.6kB/s]
+Upload successful: rerun_tally.py (12KB)
+Starting upload for file m7_pairing.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 113kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 18.0kB/s]
+Upload successful: m7_pairing.py (20KB)
+Starting upload for file kgrun-ship-012-0000-sha256.txt
+  0%|          | 0.00/467 [00:00<?, ?B/s]100%|██████████| 467/467 [00:00<00:00, 4.25kB/s]100%|██████████| 467/467 [00:01<00:00, 416B/s]  
+Upload successful: kgrun-ship-012-0000-sha256.txt (467B)
+Starting upload for file kgrun-ship-007-0004-cbo-calprec2-ext-s7of15-a1.log
+  0%|          | 0.00/114k [00:00<?, ?B/s] 14%|█▍        | 16.0k/114k [00:00<00:00, 100kB/s]100%|██████████| 114k/114k [00:01<00:00, 71.3kB/s]
+Upload successful: kgrun-ship-007-0004-cbo-calprec2-ext-s7of15-a1.log (114KB)
+Starting upload for file calprec2.py
+  0%|          | 0.00/72.9k [00:00<?, ?B/s] 22%|██▏       | 16.0k/72.9k [00:00<00:00, 139kB/s]100%|██████████| 72.9k/72.9k [00:01<00:00, 62.7kB/s]
+Upload successful: calprec2.py (73KB)
+Starting upload for file kgrun-ship-004-0004-cbo-calprec2-ext-s4of15-a1.log
+  0%|          | 0.00/113k [00:00<?, ?B/s] 14%|█▍        | 16.0k/113k [00:00<00:00, 137kB/s]100%|██████████| 113k/113k [00:02<00:00, 54.3kB/s]
+Upload successful: kgrun-ship-004-0004-cbo-calprec2-ext-s4of15-a1.log (113KB)
+Starting upload for file m1_estimands.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 94.6kB/s]100%|██████████| 10.8k/10.8k [00:01<00:00, 9.86kB/s]
+Upload successful: m1_estimands.py (11KB)
+Starting upload for file kgrun-ship-006-0004-cbo-calprec2-ext-s6of15-a1.log
+  0%|          | 0.00/114k [00:00<?, ?B/s] 14%|█▍        | 16.0k/114k [00:00<00:00, 102kB/s]100%|██████████| 114k/114k [00:01<00:00, 81.6kB/s]
+Upload successful: kgrun-ship-006-0004-cbo-calprec2-ext-s6of15-a1.log (114KB)
+Starting upload for file kgrun-ship-009-0002-calprec2_plan.csv
+  0%|          | 0.00/142 [00:00<?, ?B/s]100%|██████████| 142/142 [00:00<00:00, 1.13kB/s]100%|██████████| 142/142 [00:01<00:00, 127B/s]  
+Upload successful: kgrun-ship-009-0002-calprec2_plan.csv (142B)
+Starting upload for file kgrun-ship-008-0002-calprec2_plan.csv
+  0%|          | 0.00/142 [00:00<?, ?B/s]100%|██████████| 142/142 [00:00<00:00, 755B/s]100%|██████████| 142/142 [00:01<00:00, 127B/s]
+Upload successful: kgrun-ship-008-0002-calprec2_plan.csv (142B)
+Starting upload for file kgrun-ship-014-0000-sha256.txt
+  0%|          | 0.00/467 [00:00<?, ?B/s]100%|██████████| 467/467 [00:00<00:00, 2.43kB/s]100%|██████████| 467/467 [00:01<00:00, 418B/s]  
+Upload successful: kgrun-ship-014-0000-sha256.txt (467B)
+Starting upload for file refscale.py
+  0%|          | 0.00/35.1k [00:00<?, ?B/s] 46%|████▌     | 16.0k/35.1k [00:00<00:00, 125kB/s]100%|██████████| 35.1k/35.1k [00:01<00:00, 32.1kB/s]
+Upload successful: refscale.py (35KB)
+Starting upload for file kgrun-ship-003-0004-cbo-calprec2-ext-s3of15-a1.log
+  0%|          | 0.00/113k [00:00<?, ?B/s] 14%|█▍        | 16.0k/113k [00:00<00:00, 137kB/s]100%|██████████| 113k/113k [00:01<00:00, 68.5kB/s]
+Upload successful: kgrun-ship-003-0004-cbo-calprec2-ext-s3of15-a1.log (113KB)
+Starting upload for file kgrun-ship-010-0002-calprec2_plan.csv
+  0%|          | 0.00/151 [00:00<?, ?B/s]100%|██████████| 151/151 [00:00<00:00, 880B/s]100%|██████████| 151/151 [00:01<00:00, 150B/s]
+Upload successful: kgrun-ship-010-0002-calprec2_plan.csv (151B)
+Starting upload for file kgrun-ship-007-0003-calprec2_tasks.csv
+  0%|          | 0.00/313k [00:00<?, ?B/s]  5%|▌         | 16.0k/313k [00:00<00:02, 137kB/s]100%|██████████| 313k/313k [00:02<00:00, 157kB/s] 
+Upload successful: kgrun-ship-007-0003-calprec2_tasks.csv (313KB)
+Starting upload for file boundary.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 140kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 18.0kB/s]
+Upload successful: boundary.py (20KB)
+Starting upload for file rmapj_real.csv
+  0%|          | 0.00/371k [00:00<?, ?B/s]  4%|▍         | 16.0k/371k [00:00<00:02, 143kB/s]100%|██████████| 371k/371k [00:02<00:00, 169kB/s] 
+Upload successful: rmapj_real.csv (371KB)
+Starting upload for file kgrun-ship-006-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.93kB/s]100%|██████████| 463/463 [00:00<00:00, 494B/s]  
+Upload successful: kgrun-ship-006-0000-sha256.txt (463B)
+Starting upload for file kgrun-ship-000-0002-calprec2_plan.csv
+  0%|          | 0.00/141 [00:00<?, ?B/s]100%|██████████| 141/141 [00:00<00:00, 1.08kB/s]100%|██████████| 141/141 [00:01<00:00, 126B/s]  
+Upload successful: kgrun-ship-000-0002-calprec2_plan.csv (141B)
+Starting upload for file rerunlib.py
+  0%|          | 0.00/33.7k [00:00<?, ?B/s] 47%|████▋     | 16.0k/33.7k [00:00<00:00, 99.9kB/s]100%|██████████| 33.7k/33.7k [00:01<00:00, 28.4kB/s]
+Upload successful: rerunlib.py (34KB)
+Starting upload for file kgrun-ship-013-0000-sha256.txt
+  0%|          | 0.00/467 [00:00<?, ?B/s]100%|██████████| 467/467 [00:00<00:00, 4.11kB/s]100%|██████████| 467/467 [00:00<00:00, 505B/s]  
+Upload successful: kgrun-ship-013-0000-sha256.txt (467B)
+Starting upload for file kgrun-ship-011-0003-calprec2_tasks.csv
+  0%|          | 0.00/209k [00:00<?, ?B/s]  8%|▊         | 16.0k/209k [00:00<00:01, 102kB/s]100%|█████████▉| 208k/209k [00:00<00:00, 956kB/s] 100%|██████████| 209k/209k [00:01<00:00, 110kB/s]
+Upload successful: kgrun-ship-011-0003-calprec2_tasks.csv (209KB)
+Starting upload for file kgrun-ship-001-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.24kB/s]100%|██████████| 463/463 [00:01<00:00, 413B/s]  
+Upload successful: kgrun-ship-001-0000-sha256.txt (463B)
+Starting upload for file cbopaths.py
+  0%|          | 0.00/3.36k [00:00<?, ?B/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 25.5kB/s]100%|██████████| 3.36k/3.36k [00:01<00:00, 2.82kB/s]
+Upload successful: cbopaths.py (3KB)
+Starting upload for file kgrun-ship-008-0004-cbo-calprec2-ext-s8of15-a1.log
+  0%|          | 0.00/112k [00:00<?, ?B/s] 14%|█▍        | 16.0k/112k [00:00<00:00, 117kB/s]100%|██████████| 112k/112k [00:01<00:00, 62.1kB/s]
+Upload successful: kgrun-ship-008-0004-cbo-calprec2-ext-s8of15-a1.log (112KB)
+Starting upload for file measlib.py
+  0%|          | 0.00/12.0k [00:00<?, ?B/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 108kB/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 12.4kB/s]
+Upload successful: measlib.py (12KB)
+Starting upload for file exactcal_real.csv
+  0%|          | 0.00/413k [00:00<?, ?B/s]  4%|▍         | 16.0k/413k [00:00<00:03, 135kB/s]100%|██████████| 413k/413k [00:02<00:00, 188kB/s] 
+Upload successful: exactcal_real.csv (413KB)
+Starting upload for file costprobe2.py
+  0%|          | 0.00/75.2k [00:00<?, ?B/s] 21%|██▏       | 16.0k/75.2k [00:00<00:00, 151kB/s]100%|██████████| 75.2k/75.2k [00:01<00:00, 53.8kB/s]
+Upload successful: costprobe2.py (75KB)
+Starting upload for file kgrun-ship-013-0001-calprec2_params.csv
+  0%|          | 0.00/337 [00:00<?, ?B/s]100%|██████████| 337/337 [00:00<00:00, 2.53kB/s]100%|██████████| 337/337 [00:01<00:00, 300B/s]  
+Upload successful: kgrun-ship-013-0001-calprec2_params.csv (337B)
+Starting upload for file regime.py
+  0%|          | 0.00/25.8k [00:00<?, ?B/s] 62%|██████▏   | 16.0k/25.8k [00:00<00:00, 115kB/s]100%|██████████| 25.8k/25.8k [00:01<00:00, 23.5kB/s]
+Upload successful: regime.py (26KB)
+Starting upload for file law.py
+  0%|          | 0.00/34.3k [00:00<?, ?B/s] 47%|████▋     | 16.0k/34.3k [00:00<00:00, 127kB/s]100%|██████████| 34.3k/34.3k [00:01<00:00, 24.6kB/s]
+Upload successful: law.py (34KB)
+Starting upload for file kgrun-ship-005-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.93kB/s]100%|██████████| 336/336 [00:01<00:00, 282B/s]  
+Upload successful: kgrun-ship-005-0001-calprec2_params.csv (336B)
+Starting upload for file ess_extend.py
+  0%|          | 0.00/13.6k [00:00<?, ?B/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 109kB/s]100%|██████████| 13.6k/13.6k [00:01<00:00, 12.4kB/s]
+Upload successful: ess_extend.py (14KB)
+Starting upload for file kgrun-ship-002-0002-calprec2_plan.csv
+  0%|          | 0.00/143 [00:00<?, ?B/s]100%|██████████| 143/143 [00:00<00:00, 1.21kB/s]100%|██████████| 143/143 [00:01<00:00, 140B/s]  
+Upload successful: kgrun-ship-002-0002-calprec2_plan.csv (143B)
+Starting upload for file manifest.py
+  0%|          | 0.00/8.29k [00:00<?, ?B/s]100%|██████████| 8.29k/8.29k [00:00<00:00, 70.4kB/s]100%|██████████| 8.29k/8.29k [00:02<00:00, 4.16kB/s]
+Upload successful: manifest.py (8KB)
+Starting upload for file ess_panel.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 154kB/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 15.7kB/s]
+Upload successful: ess_panel.py (17KB)
+Starting upload for file kgrun-ship-002-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.82kB/s]100%|██████████| 336/336 [00:01<00:00, 299B/s]  
+Upload successful: kgrun-ship-002-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-005-0004-cbo-calprec2-ext-s5of15-a1.log
+  0%|          | 0.00/113k [00:00<?, ?B/s] 14%|█▍        | 16.0k/113k [00:00<00:00, 135kB/s]100%|██████████| 113k/113k [00:01<00:00, 80.6kB/s]
+Upload successful: kgrun-ship-005-0004-cbo-calprec2-ext-s5of15-a1.log (113KB)
+Starting upload for file kgrun-ship-009-0000-sha256.txt
+  0%|          | 0.00/463 [00:00<?, ?B/s]100%|██████████| 463/463 [00:00<00:00, 3.13kB/s]100%|██████████| 463/463 [00:01<00:00, 414B/s]  
+Upload successful: kgrun-ship-009-0000-sha256.txt (463B)
+Starting upload for file m2_window.py
+  0%|          | 0.00/14.6k [00:00<?, ?B/s]100%|██████████| 14.6k/14.6k [00:00<00:00, 122kB/s]100%|██████████| 14.6k/14.6k [00:01<00:00, 13.3kB/s]
+Upload successful: m2_window.py (15KB)
+Starting upload for file kgrun-ship-003-0002-calprec2_plan.csv
+  0%|          | 0.00/138 [00:00<?, ?B/s]100%|██████████| 138/138 [00:00<00:00, 1.24kB/s]100%|██████████| 138/138 [00:02<00:00, 67.5B/s] 
+Upload successful: kgrun-ship-003-0002-calprec2_plan.csv (138B)
+Starting upload for file kgrun-ship-007-0002-calprec2_plan.csv
+  0%|          | 0.00/143 [00:00<?, ?B/s]100%|██████████| 143/143 [00:00<00:00, 1.21kB/s]100%|██████████| 143/143 [00:01<00:00, 139B/s]  
+Upload successful: kgrun-ship-007-0002-calprec2_plan.csv (143B)
+Starting upload for file kgrun-ship-011-0000-sha256.txt
+  0%|          | 0.00/467 [00:00<?, ?B/s]100%|██████████| 467/467 [00:00<00:00, 4.05kB/s]100%|██████████| 467/467 [00:01<00:00, 416B/s]  
+Upload successful: kgrun-ship-011-0000-sha256.txt (467B)
+Starting upload for file kgrun-ship-011-0001-calprec2_params.csv
+  0%|          | 0.00/337 [00:00<?, ?B/s]100%|██████████| 337/337 [00:00<00:00, 2.64kB/s]100%|██████████| 337/337 [00:02<00:00, 165B/s]  
+Upload successful: kgrun-ship-011-0001-calprec2_params.csv (337B)
+Starting upload for file kgrun-ship-013-0004-cbo-calprec2-ext-s13of15-a1.log
+  0%|          | 0.00/80.1k [00:00<?, ?B/s] 20%|█▉        | 16.0k/80.1k [00:00<00:00, 141kB/s]100%|██████████| 80.1k/80.1k [00:01<00:00, 57.3kB/s]
+Upload successful: kgrun-ship-013-0004-cbo-calprec2-ext-s13of15-a1.log (80KB)
+Starting upload for file costprobe.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 92.4kB/s]100%|██████████| 10.8k/10.8k [00:01<00:00, 5.67kB/s]
+Upload successful: costprobe.py (11KB)
+Starting upload for file kgrun-ship-004-0001-calprec2_params.csv
+  0%|          | 0.00/336 [00:00<?, ?B/s]100%|██████████| 336/336 [00:00<00:00, 2.77kB/s]100%|██████████| 336/336 [00:00<00:00, 353B/s]  
+Upload successful: kgrun-ship-004-0001-calprec2_params.csv (336B)
+Starting upload for file kgrun-ship-001-0004-cbo-calprec2-ext-s1of15-a1.log
+  0%|          | 0.00/113k [00:00<?, ?B/s] 14%|█▍        | 16.0k/113k [00:00<00:00, 132kB/s]100%|██████████| 113k/113k [00:01<00:00, 66.3kB/s]
+Upload successful: kgrun-ship-001-0004-cbo-calprec2-ext-s1of15-a1.log (113KB)
+Starting upload for file kgrun-ship-013-0002-calprec2_plan.csv
+  0%|          | 0.00/103 [00:00<?, ?B/s]100%|██████████| 103/103 [00:00<00:00, 844B/s]100%|██████████| 103/103 [00:01<00:00, 91.9B/s]
+Upload successful: kgrun-ship-013-0002-calprec2_plan.csv (103B)
+Starting upload for file perjcalprobe.py
+  0%|          | 0.00/29.2k [00:00<?, ?B/s] 55%|█████▍    | 16.0k/29.2k [00:00<00:00, 151kB/s]100%|██████████| 29.2k/29.2k [00:02<00:00, 14.6kB/s]
+Upload successful: perjcalprobe.py (29KB)
+Starting upload for file sigma.py
+  0%|          | 0.00/20.2k [00:00<?, ?B/s] 79%|███████▉  | 16.0k/20.2k [00:00<00:00, 144kB/s]100%|██████████| 20.2k/20.2k [00:01<00:00, 18.4kB/s]
+Upload successful: sigma.py (20KB)
+Starting upload for file kgrun-ship-009-0004-cbo-calprec2-ext-s9of15-a1.log
+  0%|          | 0.00/109k [00:00<?, ?B/s] 15%|█▍        | 16.0k/109k [00:00<00:00, 126kB/s]100%|██████████| 109k/109k [00:01<00:00, 77.8kB/s]
+Upload successful: kgrun-ship-009-0004-cbo-calprec2-ext-s9of15-a1.log (109KB)
+Starting upload for file calprec.py
+  0%|          | 0.00/19.8k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.8k [00:00<00:00, 123kB/s]100%|██████████| 19.8k/19.8k [00:01<00:00, 18.0kB/s]
+Upload successful: calprec.py (20KB)
+Starting upload for file kgrun-ship-010-0000-sha256.txt
+  0%|          | 0.00/467 [00:00<?, ?B/s]100%|██████████| 467/467 [00:00<00:00, 2.59kB/s]100%|██████████| 467/467 [00:01<00:00, 412B/s]  
+Upload successful: kgrun-ship-010-0000-sha256.txt (467B)
+Starting upload for file kgrun-ship-005-0003-calprec2_tasks.csv
+  0%|          | 0.00/316k [00:00<?, ?B/s]  5%|▌         | 16.0k/316k [00:00<00:02, 109kB/s]100%|██████████| 316k/316k [00:02<00:00, 159kB/s] 
+Upload successful: kgrun-ship-005-0003-calprec2_tasks.csv (316KB)
+Starting upload for file n30_reconstruct.py
+  0%|          | 0.00/36.5k [00:00<?, ?B/s] 44%|████▍     | 16.0k/36.5k [00:00<00:00, 142kB/s]100%|██████████| 36.5k/36.5k [00:01<00:00, 33.3kB/s]
+Upload successful: n30_reconstruct.py (36KB)
+Starting upload for file kgrun-ship-011-0004-cbo-calprec2-ext-s11of15-a1.log
+  0%|          | 0.00/82.5k [00:00<?, ?B/s] 19%|█▉        | 16.0k/82.5k [00:00<00:00, 125kB/s]100%|██████████| 82.5k/82.5k [00:01<00:00, 59.2kB/s]
+Upload successful: kgrun-ship-011-0004-cbo-calprec2-ext-s11of15-a1.log (83KB)
+Dataset version is being created. Please check progress at https://www.kaggle.com/datasets/ericsom/cbo-gap-archive
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ready
+  2 s: status 'ready'
+WAIT FOR THIS BUNDLE  ericsom/cbo-gap-archive lists kgrun-bundle-a2acdd5234024989.sha256  (every 30 s, timeout 1800 s)
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                              size  creationDate                
+----------------------------------------------  ------  --------------------------  
+audit.py                                         18819  2026-10-26 09:50:14.414000  
+boundary.py                                      20168  2026-10-26 09:50:14.332000  
+c6.py                                            11509  2026-10-26 09:50:14.370000  
+calprec.py                                       20285  2026-10-26 09:50:14.389000  
+calprec2.py                                      74692  2026-10-26 09:50:14.392000  
+calprec2_hashaudit.py                            21288  2026-10-26 09:50:14.419000  
+cbopaths.py                                       3445  2026-10-26 09:50:14.529000  
+cliff.py                                         21241  2026-10-26 09:50:14.371000  
+control.py                                       22663  2026-10-26 09:50:14.351000  
+costprobe.py                                     11037  2026-10-26 09:50:14.431000  
+costprobe2.py                                    77006  2026-10-26 09:50:14.570000  
+crossed.py                                       23357  2026-10-26 09:50:14.648000  
+detcheck.py                                      15562  2026-10-26 09:50:14.520000  
+ess_extend.py                                    13945  2026-10-26 09:50:14.604000  
+ess_panel.py                                     17625  2026-10-26 09:50:14.579000  
+ess_surface.py                                   16586  2026-10-26 09:50:14.581000  
+exactcal.py                                      16596  2026-10-26 09:50:14.494000  
+exactcal_real.csv                               423255  2026-10-26 09:50:15.470000  
+finitej.py                                        9895  2026-10-26 09:50:14.570000  
+kgrun-bundle-dde543eb65ea6674.sha256              4615  2026-10-26 09:50:14.619000  
+kgrun-ship-000-0000-sha256.txt                     446  2026-10-26 09:50:14.640000  
+kgrun-ship-000-0001-calprec2_params.csv            336  2026-10-26 09:50:15.447000  
+kgrun-ship-000-0002-calprec2_plan.csv             1734  2026-10-26 09:50:15.472000  
+kgrun-ship-000-0003-calprec2_throughput.csv       4678  2026-10-26 09:50:15.335000  
+kgrun-ship-000-0004-cbo-calprec2-smoke-ext.log   17393  2026-10-26 09:50:14.670000  
+kgrun-ship-index.json                              762  2026-10-26 09:50:14.655000  
+law.py                                           35107  2026-10-26 09:50:14.641000  
+m1_estimands.py                                  11063  2026-10-26 09:50:14.715000  
+m2_window.py                                     14916  2026-10-26 09:50:14.826000  
+m3_bootmc.py                                     10228  2026-10-26 09:50:14.718000  
+m4_slopese.py                                    11750  2026-10-26 09:50:14.785000  
+m5_gapwidth.py                                   12581  2026-10-26 09:50:14.657000  
+m6_hetero.py                                     14514  2026-10-26 09:50:14.729000  
+m7_pairing.py                                    20201  2026-10-26 09:50:14.739000  
+manifest.py                                       8492  2026-10-26 09:50:14.619000  
+measlib.py                                       12338  2026-10-26 09:50:14.699000  
+mechanism.py                                     20139  2026-10-26 09:50:14.654000  
+memprobe.py                                      12538  2026-10-26 09:50:14.692000  
+mkfig2.py                                         1825  2026-10-26 09:50:14.814000  
+mkfig4.py                                         2223  2026-10-26 09:50:14.749000  
+mkfig5.py                                         2391  2026-10-26 09:50:14.755000  
+n30_reconstruct.py                               37371  2026-10-26 09:50:14.606000  
+partm.py                                         17573  2026-10-26 09:50:14.505000  
+perjcal.py                                       12877  2026-10-26 09:50:14.800000  
+perjcalprobe.py                                  29928  2026-10-26 09:50:14.665000  
+reboot.py                                        13085  2026-10-26 09:50:14.781000  
+refscale.py                                      35973  2026-10-26 09:50:14.570000  
+regime.py                                        26398  2026-10-26 09:50:14.746000  
+regimemap.py                                     27824  2026-10-26 09:50:14.468000  
+rerun.py                                         53599  2026-10-26 09:50:14.570000  
+rerun_analysis.py                                71826  2026-10-26 09:50:14.535000  
+rerun_tally.py                                   12415  2026-10-26 09:50:14.729000  
+rerunlib.py                                      34548  2026-10-26 09:50:14.729000  
+rmapj.py                                         11680  2026-10-26 09:50:14.526000  
+rmapj_real.csv                                  379782  2026-10-26 09:50:15.512000  
+sigma.py                                         20661  2026-10-26 09:50:14.439000  
+verify.py                                        15711  2026-10-26 09:50:14.812000  
+visibility.py                                    20942  2026-10-26 09:50:14.748000
+  3 s: not listed; kgrun-bundle files listed: kgrun-bundle-dde543eb65ea6674.sha256
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                                   size  creationDate                
+---------------------------------------------------  ------  --------------------------  
+audit.py                                              18819  2026-10-26 15:02:08.006000  
+boundary.py                                           20168  2026-10-26 15:02:07.935000  
+c6.py                                                 11509  2026-10-26 15:02:08.045000  
+calprec.py                                            20285  2026-10-26 15:02:08.002000  
+calprec2.py                                           74692  2026-10-26 15:02:07.954000  
+calprec2_hashaudit.py                                 21288  2026-10-26 15:02:08.001000  
+cbopaths.py                                            3445  2026-10-26 15:02:07.996000  
+cliff.py                                              21241  2026-10-26 15:02:07.994000  
+control.py                                            22663  2026-10-26 15:02:08.225000  
+costprobe.py                                          11037  2026-10-26 15:02:07.993000  
+costprobe2.py                                         77006  2026-10-26 15:02:08.043000  
+crossed.py                                            23357  2026-10-26 15:02:07.985000  
+detcheck.py                                           15562  2026-10-26 15:02:07.949000  
+ess_extend.py                                         13945  2026-10-26 15:02:07.994000  
+ess_panel.py                                          17625  2026-10-26 15:02:07.932000  
+ess_surface.py                                        16586  2026-10-26 15:02:07.970000  
+exactcal.py                                           16596  2026-10-26 15:02:08.051000  
+exactcal_real.csv                                    423255  2026-10-26 15:02:08.231000  
+finitej.py                                             9895  2026-10-26 15:02:07.933000  
+kgrun-bundle-a2acdd5234024989.sha256                  12025  2026-10-26 15:02:07.936000  
+kgrun-ship-000-0000-sha256.txt                          463  2026-10-26 15:02:08.009000  
+kgrun-ship-000-0001-calprec2_params.csv                 336  2026-10-26 15:02:08.274000  
+kgrun-ship-000-0002-calprec2_plan.csv                   141  2026-10-26 15:02:08.412000  
+kgrun-ship-000-0003-calprec2_tasks.csv               245101  2026-10-26 15:02:08.688000  
+kgrun-ship-000-0004-cbo-calprec2-ext-s0of15-a1.log   114030  2026-10-26 15:02:07.945000  
+kgrun-ship-001-0000-sha256.txt                          463  2026-10-26 15:02:07.969000  
+kgrun-ship-001-0001-calprec2_params.csv                 336  2026-10-26 15:02:08.521000  
+kgrun-ship-001-0002-calprec2_plan.csv                   135  2026-10-26 15:02:08.700000  
+kgrun-ship-001-0003-calprec2_tasks.csv               313347  2026-10-26 15:02:08.681000  
+kgrun-ship-001-0004-cbo-calprec2-ext-s1of15-a1.log   115229  2026-10-26 15:02:08.034000  
+kgrun-ship-002-0000-sha256.txt                          463  2026-10-26 15:02:07.950000  
+kgrun-ship-002-0001-calprec2_params.csv                 336  2026-10-26 15:02:08.676000  
+kgrun-ship-002-0002-calprec2_plan.csv                   143  2026-10-26 15:02:08.691000  
+kgrun-ship-002-0003-calprec2_tasks.csv               319693  2026-10-26 15:02:08.770000  
+kgrun-ship-002-0004-cbo-calprec2-ext-s2of15-a1.log   116644  2026-10-26 15:02:07.969000  
+kgrun-ship-003-0000-sha256.txt                          463  2026-10-26 15:02:07.969000  
+kgrun-ship-003-0001-calprec2_params.csv                 336  2026-10-26 15:02:08.904000  
+kgrun-ship-003-0002-calprec2_plan.csv                   138  2026-10-26 15:02:08.993000  
+kgrun-ship-003-0003-calprec2_tasks.csv               315225  2026-10-26 15:02:09.054000  
+kgrun-ship-003-0004-cbo-calprec2-ext-s3of15-a1.log   115372  2026-10-26 15:02:08         
+kgrun-ship-004-0000-sha256.txt                          463  2026-10-26 15:02:08.020000  
+kgrun-ship-004-0001-calprec2_params.csv                 336  2026-10-26 15:02:09.446000  
+kgrun-ship-004-0002-calprec2_plan.csv                   143  2026-10-26 15:02:09.437000  
+kgrun-ship-004-0003-calprec2_tasks.csv               323081  2026-10-26 15:02:09.696000  
+kgrun-ship-004-0004-cbo-calprec2-ext-s4of15-a1.log   115303  2026-10-26 15:02:08.012000  
+kgrun-ship-005-0000-sha256.txt                          463  2026-10-26 15:02:07.954000  
+kgrun-ship-005-0001-calprec2_params.csv                 336  2026-10-26 15:02:09.843000  
+kgrun-ship-005-0002-calprec2_plan.csv                   143  2026-10-26 15:02:09.813000  
+kgrun-ship-005-0003-calprec2_tasks.csv               324083  2026-10-26 15:02:09.850000  
+kgrun-ship-005-0004-cbo-calprec2-ext-s5of15-a1.log   115216  2026-10-26 15:02:07.988000  
+kgrun-ship-006-0000-sha256.txt                          463  2026-10-26 15:02:08.025000  
+kgrun-ship-006-0001-calprec2_params.csv                 336  2026-10-26 15:02:09.759000  
+kgrun-ship-006-0002-calprec2_plan.csv                   144  2026-10-26 15:02:09.706000  
+kgrun-ship-006-0003-calprec2_tasks.csv               321153  2026-10-26 15:02:10.066000  
+kgrun-ship-006-0004-cbo-calprec2-ext-s6of15-a1.log   116702  2026-10-26 15:02:08.020000  
+kgrun-ship-007-0000-sha256.txt                          463  2026-10-26 15:02:07.995000  
+kgrun-ship-007-0001-calprec2_params.csv                 336  2026-10-26 15:02:10.056000  
+kgrun-ship-007-0002-calprec2_plan.csv                   143  2026-10-26 15:02:09.988000  
+kgrun-ship-007-0003-calprec2_tasks.csv               320840  2026-10-26 15:02:10.043000  
+kgrun-ship-007-0004-cbo-calprec2-ext-s7of15-a1.log   116515  2026-10-26 15:02:08.028000  
+kgrun-ship-008-0000-sha256.txt                          463  2026-10-26 15:02:08.065000  
+kgrun-ship-008-0001-calprec2_params.csv                 336  2026-10-26 15:02:09.939000  
+kgrun-ship-008-0002-calprec2_plan.csv                   142  2026-10-26 15:02:10.091000  
+kgrun-ship-008-0003-calprec2_tasks.csv               248959  2026-10-26 15:02:10.032000  
+kgrun-ship-008-0004-cbo-calprec2-ext-s8of15-a1.log   114181  2026-10-26 15:02:08.045000  
+kgrun-ship-009-0000-sha256.txt                          463  2026-10-26 15:02:07.976000  
+kgrun-ship-009-0001-calprec2_params.csv                 336  2026-10-26 15:02:10.003000  
+kgrun-ship-009-0002-calprec2_plan.csv                   142  2026-10-26 15:02:09.971000  
+kgrun-ship-009-0003-calprec2_tasks.csv               175449  2026-10-26 15:02:10.067000  
+kgrun-ship-009-0004-cbo-calprec2-ext-s9of15-a1.log   111737  2026-10-26 15:02:08.020000  
+kgrun-ship-010-0000-sha256.txt                          467  2026-10-26 15:02:08.186000  
+kgrun-ship-010-0001-calprec2_params.csv                 337  2026-10-26 15:02:10.060000  
+kgrun-ship-010-0002-calprec2_plan.csv                   151  2026-10-26 15:02:10.138000  
+kgrun-ship-010-0003-calprec2_tasks.csv               245913  2026-10-26 15:02:10.075000  
+kgrun-ship-010-0004-cbo-calprec2-ext-s10of15-a1.log  112680  2026-10-26 15:02:08.018000  
+kgrun-ship-011-0000-sha256.txt                          467  2026-10-26 15:02:08.133000  
+kgrun-ship-011-0001-calprec2_params.csv                 337  2026-10-26 15:02:10.191000  
+kgrun-ship-011-0002-calprec2_plan.csv                   108  2026-10-26 15:02:10.160000  
+kgrun-ship-011-0003-calprec2_tasks.csv               213573  2026-10-26 15:02:10.102000  
+kgrun-ship-011-0004-cbo-calprec2-ext-s11of15-a1.log   84523  2026-10-26 15:02:08.091000  
+kgrun-ship-012-0000-sha256.txt                          467  2026-10-26 15:02:08.046000  
+kgrun-ship-012-0001-calprec2_params.csv                 337  2026-10-26 15:02:10.196000  
+kgrun-ship-012-0002-calprec2_plan.csv                   103  2026-10-26 15:02:10.192000  
+kgrun-ship-012-0003-calprec2_tasks.csv               211690  2026-10-26 15:02:10.120000  
+kgrun-ship-012-0004-cbo-calprec2-ext-s12of15-a1.log   83183  2026-10-26 15:02:08.061000  
+kgrun-ship-013-0000-sha256.txt                          467  2026-10-26 15:02:07.995000  
+kgrun-ship-013-0001-calprec2_params.csv                 337  2026-10-26 15:02:10.143000  
+kgrun-ship-013-0002-calprec2_plan.csv                   103  2026-10-26 15:02:10.200000  
+kgrun-ship-013-0003-calprec2_tasks.csv               142571  2026-10-26 15:02:10.194000  
+kgrun-ship-013-0004-cbo-calprec2-ext-s13of15-a1.log   81982  2026-10-26 15:02:08.072000  
+kgrun-ship-014-0000-sha256.txt                          467  2026-10-26 15:02:08.101000  
+kgrun-ship-014-0001-calprec2_params.csv                 337  2026-10-26 15:02:10.178000  
+kgrun-ship-014-0002-calprec2_plan.csv                   104  2026-10-26 15:02:10.457000  
+kgrun-ship-014-0003-calprec2_tasks.csv               140858  2026-10-26 15:02:10.338000  
+kgrun-ship-014-0004-cbo-calprec2-ext-s14of15-a1.log   80687  2026-10-26 15:02:08.012000  
+kgrun-ship-index.json                                 11466  2026-10-26 15:02:08.051000  
+law.py                                                35107  2026-10-26 15:02:08.005000  
+m1_estimands.py                                       11063  2026-10-26 15:02:08.073000  
+m2_window.py                                          14916  2026-10-26 15:02:08.178000  
+m3_bootmc.py                                          10228  2026-10-26 15:02:08.210000  
+m4_slopese.py                                         11750  2026-10-26 15:02:08.073000  
+m5_gapwidth.py                                        12581  2026-10-26 15:02:08.146000  
+m6_hetero.py                                          14514  2026-10-26 15:02:08.009000  
+m7_pairing.py                                         20201  2026-10-26 15:02:08.015000  
+manifest.py                                            8492  2026-10-26 15:02:08.159000  
+measlib.py                                            12338  2026-10-26 15:02:08.108000  
+mechanism.py                                          20139  2026-10-26 15:02:08.100000  
+memprobe.py                                           12538  2026-10-26 15:02:08.333000  
+mkfig2.py                                              1825  2026-10-26 15:02:08.185000  
+mkfig4.py                                              2223  2026-10-26 15:02:08.170000  
+mkfig5.py                                              2391  2026-10-26 15:02:08.220000  
+n30_reconstruct.py                                    37371  2026-10-26 15:02:08.235000  
+partm.py                                              17573  2026-10-26 15:02:08.203000  
+perjcal.py                                            12877  2026-10-26 15:02:08.240000  
+perjcalprobe.py                                       29928  2026-10-26 15:02:08.189000  
+reboot.py                                             13085  2026-10-26 15:02:08.254000  
+refscale.py                                           35973  2026-10-26 15:02:08.292000  
+regime.py                                             26398  2026-10-26 15:02:08.233000  
+regimemap.py                                          27824  2026-10-26 15:02:08.223000  
+rerun.py                                              53599  2026-10-26 15:02:08.323000  
+rerun_analysis.py                                     71826  2026-10-26 15:02:08.219000  
+rerun_tally.py                                        12415  2026-10-26 15:02:08.215000  
+rerunlib.py                                           34548  2026-10-26 15:02:08.298000  
+rmapj.py                                              11680  2026-10-26 15:02:08.220000  
+rmapj_real.csv                                       379782  2026-10-26 15:02:10.362000  
+sigma.py                                              20661  2026-10-26 15:02:08.293000  
+verify.py                                             15711  2026-10-26 15:02:08.225000  
+visibility.py                                         20942  2026-10-26 15:02:08.221000
+  35 s: kgrun-bundle-a2acdd5234024989.sha256 listed
+GENERATE KERNEL  ericsom/cbo-calprec2-ext-finalize-a2
+  wrote /home/rahul/cbo-gap-queue/.kaggle-push/run.py and kernel-metadata.json
+  runner requires bundle a2acdd5234024989 in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: calprec2.py --archive <found path> --outdir /kaggle/working --rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713
+  runner will rebuild calprec2-ext-s0of15-a1-kaggle-20261025-103225 under /tmp/kgrun-ship and replace runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225 in the args
+  runner will rebuild calprec2-ext-s1of15-a1-kaggle-20261025-130230 under /tmp/kgrun-ship and replace runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230 in the args
+  runner will rebuild calprec2-ext-s2of15-a1-kaggle-20261025-144716 under /tmp/kgrun-ship and replace runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716 in the args
+  runner will rebuild calprec2-ext-s3of15-a1-kaggle-20261025-180231 under /tmp/kgrun-ship and replace runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231 in the args
+  runner will rebuild calprec2-ext-s4of15-a1-kaggle-20261025-200238 under /tmp/kgrun-ship and replace runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238 in the args
+  runner will rebuild calprec2-ext-s5of15-a1-kaggle-20261025-223216 under /tmp/kgrun-ship and replace runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216 in the args
+  runner will rebuild calprec2-ext-s6of15-a1-kaggle-20261026-001717 under /tmp/kgrun-ship and replace runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717 in the args
+  runner will rebuild calprec2-ext-s7of15-a1-kaggle-20261026-023229 under /tmp/kgrun-ship and replace runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229 in the args
+  runner will rebuild calprec2-ext-s8of15-a1-kaggle-20261026-044717 under /tmp/kgrun-ship and replace runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717 in the args
+  runner will rebuild calprec2-ext-s9of15-a1-kaggle-20261026-063217 under /tmp/kgrun-ship and replace runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217 in the args
+  runner will rebuild calprec2-ext-s10of15-a1-kaggle-20261026-091720 under /tmp/kgrun-ship and replace runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720 in the args
+  runner will rebuild calprec2-ext-s11of15-a1-kaggle-20261026-113216 under /tmp/kgrun-ship and replace runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216 in the args
+  runner will rebuild calprec2-ext-s12of15-a1-kaggle-20261026-130229 under /tmp/kgrun-ship and replace runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229 in the args
+  runner will rebuild calprec2-ext-s13of15-a1-kaggle-20261026-150225 under /tmp/kgrun-ship and replace runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225 in the args
+  runner will rebuild calprec2-ext-s14of15-a1-kaggle-20261026-164713 under /tmp/kgrun-ship and replace runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/rahul/cbo-gap-queue/.kaggle-push
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-calprec2-ext-finalize-a2
+LAUNCHED ericsom/cbo-calprec2-ext-finalize-a2; not polled, not fetched. Check it with:
+  python scripts/kgrun.py status --job calprec2-ext-finalize-a2
+==============================================================================
