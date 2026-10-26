@@ -1,0 +1,45 @@
+==============================================================================
+rerunq tick  run laptop.20261026T230210Z  2026-10-27T04:32:10+05:30
+  python 3.12.3
+  state file notes/rerun_queue.json
+  state RUNNING  item 2  attempt 1  job rerun-cal3-s1of2-a1
+  definition notes/queues/rerun-cal3.json (sha256 9a8cf47a18bd4c8f71102f52f6529dc127f4f75e867fdfe2038bbb0162d757b7)
+  profile rerun-cal3 [rerun]  plan runs/rerun-plan-20261026-210435 (rerun_plan.csv 1d9b4031938755f285922c30ffce2210cebd7e1d403898967c04b79cf2a39c64)  timing runs/costprobe2-s0-kaggle-20261010-103952, runs/costprobe2-s1-kaggle-20261011-101343  workers 4
+    expect python 3.13.15 numpy 2.1.3; rerun_sha256 de28b69a; rerunlib_sha256 6a7ddf42; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  rerun-cal3-s1of2-a1
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job rerun-cal3-s1of2-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job rerun-cal3-s1of2-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-rerun-cal3-s1of2-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-rerun-cal3-s1of2-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-rerun-cal3-s1of2-a1: COMPLETE  (judged: ericsom/cbo-rerun-cal3-s1of2-a1 has status "KernelWorkerStatus.COMPLETE")
+FETCH  rerun-cal3-s1of2-a1 (kaggle status COMPLETE)
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py fetch --job rerun-cal3-s1of2-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-rerun-cal3-s1of2-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job rerun-cal3-s1of2-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    | FETCH OUTPUT into /home/rahul/cbo-gap-queue/runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215
+    |   $ kaggle kernels output ericsom/cbo-rerun-cal3-s1of2-a1 -p /home/rahul/cbo-gap-queue/runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215/rerun-s1of2-20261026-200528/rerun_params.csv
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215/rerun-s1of2-20261026-200528/rerun_real.csv
+    | Kernel log downloaded to /home/rahul/cbo-gap-queue/runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215/cbo-rerun-cal3-s1of2-a1.log 
+    |   3 files, manifest written to sha256.txt
+    |     5a947c3cde6d5fa776397dbd1ef4c6c7755fc9edad82b0cad700f98df2ccca7f  cbo-rerun-cal3-s1of2-a1.log
+    |     7b635c6f969b6bd54336d99ad34e69d7f9e0bcef3604986cc3c94045f6061029  rerun-s1of2-20261026-200528/rerun_params.csv
+    |     0d27ce70dbf7eb3b6a929aa522daf89f7da2ab1b4de8b92e6600a6c6277d035c  rerun-s1of2-20261026-200528/rerun_real.csv
+    | ==============================================================================
+  runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215: manifest verified, 3 files
+  runner exit 0  python 3.13.15  numpy 2.1.3  mode run  run dir /kaggle/working/rerun-s1of2-20261026-200528  D-SMOKE None  completed 3096
+  F2: 3096 rows end ok; runner summary completed 3096
+  runner exit 0; state now DONE

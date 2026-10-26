@@ -1,0 +1,14 @@
+name,value
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+env,python 3.13.15 numpy 2.1.3
+mode,run
+nshards,2
+plan_sha256,1d9b4031938755f285922c30ffce2210cebd7e1d403898967c04b79cf2a39c64
+rerun_sha256,de28b69a550c953887c19c1058968363cfb4e14050e14a2f6c7088e43194aca1
+rerunlib_sha256,6a7ddf42242d5101086741e3a341db9711b2d47fdbfd60710be9229de8895b07
+rows,"RMAP-CAL,CLIFF-CAL,ONSET-CAL"
+shard,1
+stop_after,36000.0
+timing_from,costprobe2-s0-kaggle-20261010-103952;costprobe2-s1-kaggle-20261011-101343
+workers,4
+resume_from,

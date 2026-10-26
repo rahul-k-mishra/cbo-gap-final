@@ -52,17 +52,13 @@
       "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
     }
   ],
-  "status": "RUNNING",
-  "index": 2,
+  "status": "DONE",
+  "index": 3,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-cal3-s1of2-a1",
-  "args": "--plan-from runs/rerun-plan-20261026-210435 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows RMAP-CAL,CLIFF-CAL,ONSET-CAL --shard 1 --nshards 2 --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261026-210435",
-    "runs/costprobe2-s0-kaggle-20261010-103952",
-    "runs/costprobe2-s1-kaggle-20261011-101343"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -93,6 +89,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261026T194710Z",
         "fetched_at": "2026-10-27T01:17:20+05:30"
+      }
+    ],
+    "cal3-s1of2": [
+      {
+        "attempt": 1,
+        "job": "rerun-cal3-s1of2-a1",
+        "folder": "runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 3096,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T230210Z",
+        "fetched_at": "2026-10-27T04:32:21+05:30"
       }
     ]
   },
@@ -177,6 +187,15 @@
       "attempt": 1,
       "job": "rerun-cal3-s1of2-a1",
       "note": "logs/kgrun-rerun-cal3-s1of2-a1.log"
+    },
+    {
+      "at": "2026-10-27T04:32:21+05:30",
+      "run": "laptop.20261026T230210Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215: runner exit 0; now DONE"
     }
   ],
   "definition": {
