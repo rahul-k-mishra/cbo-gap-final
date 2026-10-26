@@ -1851,6 +1851,57 @@ instruction of 2026-10-15.
       374.2 MB at d 40 and 679.4 MB at d 80; ackley 299.7 and 528.7;
       sphere 220.9 and 373.5. d enters the peak beyond the chunk, so N25's
       64M figure (d 40) does not cover d 80 (N42).
+  - Result, 2026-10-26: the calprec2-ext queue (N42) ran to DONE.
+    Sources: the fifteen shard folders runs/calprec2-ext-s<S>of15-a1-
+    kaggle-*, the finalize folder
+    runs/calprec2-ext-finalize-a2-kaggle-20261026-204714 (sha256.txt
+    verified by Claude with sha256sum -c, two files OK), its kernel log
+    and its calprec2_beta.csv (sha256 2783222b...e6adb3).
+    - Every shard: attempt a1, runner exit 0, no resume. Rows read by the
+      finalize ("read" lines, every row complete): s0 494, s1 500, s2
+      507, s3 500, s4 500, s5 500, s6 507, s7 507, s8 494, s9 481, s10
+      487, s11 338, s12 331, s13 325, s14 318. The finalize header:
+      "FINALIZE  6789 rows, 41 cells expected".
+    - Finalize header: python 3.13.15, numpy 2.1.3, script sha256
+      3947d7ba...e511a, costprobe2.py sha256 ea5cb2e1...f64b, mode
+      finalize rows RMAP,CLIFF,ONSET, bundle a2acdd5234024989 "127 files
+      verified"; V1, V0 and V2 PASS; cells "cliff 8", "regimemap 33",
+      "total 41". The header's "workers 2" and "--stop-after 36000" are
+      the script's defaults; finalize evolves nothing and applies
+      --stop-after in full mode only (the header says so).
+    - Finalize counts, as printed: "beta 7", "target 34", "adequate 34",
+      "not adequate (C5m FAIL) 4", "not adequate (C5m FAIL, D1 FAIL) 3".
+      The table has 41 rows, 41 distinct cells, law centred throughout,
+      flags empty throughout.
+    - The seven beta-labelled cells. Each reference is at 256M, and
+      provenance is "beta_adq; reference not adequate". Values are copied
+      from calprec2_beta.csv; the thresholds printed in the header are C5m
+      <= 0.054682 and D1 <= 0.025.
+      - cliff ackley d 10 tau0 0.1: C5m FAIL; beta 2.156446757379671,
+        C5m 0.072804, D1 0.004777.
+      - regimemap ackley d 10 tau0 0.01: C5m FAIL, D1 FAIL; beta
+        2.97022812927044, C5m 0.232261, D1 0.071867.
+      - regimemap ackley d 10 tau0 0.03: C5m FAIL, D1 FAIL; beta
+        2.642023441647725, C5m 0.104912, D1 0.047283.
+      - regimemap ackley d 40 tau0 0.01: C5m FAIL, D1 FAIL; beta
+        6.072471132304663, C5m 0.178233, D1 0.027953.
+      - regimemap ackley d 40 tau0 0.03: C5m FAIL; beta 5.17711087320572,
+        C5m 0.065455, D1 0.013074.
+      - regimemap rastrigin d 40 tau0 0.01: C5m FAIL; beta
+        0.049901042257534715, C5m 0.214455, D1 0.010541.
+      - regimemap rastrigin d 40 tau0 0.03: C5m FAIL; beta
+        0.042876230428251914, C5m 0.081208, D1 0.004416.
+    - Seven target-labelled, adequate cells have provenance "beta_adq; C1
+      found no sufficient level": their beta is the adequacy beta, not a
+      production-level beta. They are cliff ackley d 40 tau0 0.1;
+      regimemap ackley d 10, 20 and 80 at tau0 0.1; regimemap rastrigin
+      d 10 tau0 0.01 and d 80 tau0 0.1; regimemap sphere d 40 tau0 0.01.
+      Every other target cell has provenance "beta_prod, calibration
+      N_cell <n>". This is a record, not a finding; how the
+      analysis treats these cells belongs to the criteria amendment
+      (N42).
+  CLOSED 2026-10-26 as to the calibration. The trajectory rerun on these
+  betas is N42's.
 
 - N42 (design, 2026-10-25; Rahul's instructions of 2026-10-25: choose the
   shard count, extend the queue to calprec2, write the calibrated-row
@@ -2786,4 +2837,17 @@ ENVIRONMENT.md (G2 closed).
     calprec2.py splits --finalize on commas. None has it. The one other
     whole-token test in kgrun.py, "--resume-from" in a.args.split(),
     predates N42 and concerns a flag, not a folder.
-  OPEN until the finalize launches and passes R1F and F2F.
+  - Closed by calprec2-ext-finalize-a2 (released next-attempt in
+    1ea189d after "rerunq.py check"; launched cd941b0; fetched 8b44675).
+    logs/kgrun-calprec2-ext-finalize-a2.log has 15 "ship data" lines.
+    The kernel log
+    (runs/calprec2-ext-finalize-a2-kaggle-20261026-204714/cbo-calprec2-ext-finalize-a2.log)
+    prints, for each of the 15 folders, "args: runs/<name> ->
+    /tmp/kgrun-ship/<name> (1 occurrence(s))". The command it ran passes
+    all 15 rebuilt paths in one --finalize token, and calprec2 printed a
+    "read" line for each. The fetch tick
+    (logs/rerunq-calprec2-ext-finalize-a2-fetched-20261026-204718.log)
+    prints no R1F problem, "F2F: 41 rows, 41 distinct cells, 0
+    incomplete; expected 41 cells" and "runner exit 0; state now DONE".
+    The tick halts on any R1F problem, so none was found.
+  CLOSED 2026-10-26.
