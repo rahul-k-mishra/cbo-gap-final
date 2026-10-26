@@ -1,0 +1,4 @@
+cell,shard,rows
+regimemap|ackley|10|centred|0.03,9,RMAP
+regimemap|rastrigin|40|centred|0.01,9,RMAP
+regimemap|sphere|5|centred|0.1,9,ONSET

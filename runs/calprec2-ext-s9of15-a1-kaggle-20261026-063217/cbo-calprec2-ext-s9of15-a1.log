@@ -1,0 +1,645 @@
+[{"stream_name":"stdout","time":1.294941094,"data":"kgrun runner: job calprec2-ext-s9of15-a1\n"}
+,{"stream_name":"stdout","time":1.2950046020000001,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.2950112599999999,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.2950161,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.295020291,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.4615927420000001,"data":"  listing  58 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.4616291719999999,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py\n"}
+,{"stream_name":"stdout","time":1.461634486,"data":"  args     --workers 4 --rows RMAP,CLIFF,ONSET --throughput runs/calprec2-smoke-ext-kaggle-20261025-065222 --stop-after 30000.0 --shard 9 --nshards 15\n"}
+,{"stream_name":"stdout","time":9.046590687,"data":"  bundle   dde543eb65ea6674: 57 files verified against kgrun-bundle-dde543eb65ea6674.sha256\n"}
+,{"stream_name":"stdout","time":9.048142631,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":9.067788116,"data":"    data  calprec2-smoke-ext-kaggle-20261025-065222  -\u003e  /tmp/kgrun-ship/calprec2-smoke-ext-kaggle-20261025-065222   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":9.071729948,"data":"        calprec2-smoke-20261025-011503/calprec2_params.csv: 12 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":9.071952509,"data":"        calprec2-smoke-20261025-011503/calprec2_plan.csv: 41 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":9.072347609,"data":"        calprec2-smoke-20261025-011503/calprec2_throughput.csv: 23 rows, 23 with end ok\n"}
+,{"stream_name":"stdout","time":9.072359963,"data":"        args: runs/calprec2-smoke-ext-kaggle-20261025-065222 -\u003e /tmp/kgrun-ship/calprec2-smoke-ext-kaggle-20261025-065222 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":9.072394648,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/calprec2.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --workers 4 --rows RMAP,CLIFF,ONSET --throughput /tmp/kgrun-ship/calprec2-smoke-ext-kaggle-20261025-065222 --stop-after 30000.0 --shard 9 --nshards 15\n"}
+,{"stream_name":"stdout","time":10.220602054,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":10.220633683,"data":"CBO-GAP calprec2 -- calprec v2: one fixed beta per calibration cell, measured at 64M and 256M\n"}
+,{"stream_name":"stdout","time":10.220638902,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":10.220642538,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":10.220646529,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":10.220650197,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39   machine x86_64   cpus 4   workers 4   start fork\n"}
+,{"stream_name":"stdout","time":10.220653759,"data":"  threads  OMP_NUM_THREADS=1  OPENBLAS_NUM_THREADS=1  MKL_NUM_THREADS=1  NUMEXPR_NUM_THREADS=1  VECLIB_MAXIMUM_THREADS=1\n"}
+,{"stream_name":"stdout","time":10.220657593,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":10.220661333,"data":"  script   sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a\n"}
+,{"stream_name":"stdout","time":10.220664908,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":10.220707307,"data":"  mode     full   rows RMAP,CLIFF,ONSET   shard 9 of 15   shard target 0.5 x 21600 s\n"}
+,{"stream_name":"stdout","time":10.220712887,"data":"  ceiling  --ceiling 21600 s (default; default 21600 s: a margin choice, not Kaggle's limit; the cap 43200 s is enforced by G-STOP)\n"}
+,{"stream_name":"stdout","time":10.220717142,"data":"  stop     --stop-after 30000 s from the start of task execution (default 36000 s: a margin choice, not a measurement)\n"}
+,{"stream_name":"stdout","time":10.220720988,"data":"  L_CAL [4000, 16000, 64000, 256000, 1000000, 4000000]  R 24   reference sizes 64000000 and 256000000, reps 6   C' reps [6, 7, 8, 9, 10, 11]   chunk 250000\n"}
+,{"stream_name":"stdout","time":10.220724749,"data":"  C5m \u003c= 0.054682 at 64000000  D1 \u003c= 0.025 between 64000000 and 256000000  C1 \u003c= 0.05  C6 \u003c= 0.05  E1 \u003c= 1e-12 at 64000000 rep 0  RSS \u003c= 3072 MB\n"}
+,{"stream_name":"stdout","time":10.220729997,"data":"  seeds    default_rng(SeedSequence(key + (chunk,))), full width; key = (ENTROPY 20261010, kind, module, objective, d, law, tau0e6 (0 for kind 32), n, rep); kinds A 31 C 32 B 33 smoke 35\n"}
+,{"stream_name":"stdout","time":10.220734142,"data":"  throughput  /tmp/kgrun-ship/calprec2-smoke-ext-kaggle-20261025-065222\n"}
+,{"stream_name":"stdout","time":10.220738142,"data":"\n"}
+,{"stream_name":"stdout","time":10.220742294,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220746125,"data":"V1 -- ARCHIVE IDENTITY (imported modules' own files)\n"}
+,{"stream_name":"stdout","time":10.220749896,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220753984,"data":"  ess_surface  e02f5287834bd100ac0f688a15ce0f5646ecf2a8e02347f347c57cebd427d436  ok\n"}
+,{"stream_name":"stdout","time":10.220759785,"data":"  visibility   7971bbcc93b7be82d6580b7dc833edda4afe126a1ec964fc39274439638db7aa  ok\n"}
+,{"stream_name":"stdout","time":10.220763366,"data":"  mechanism    74fee417de088b6d206535348d05450910ca3b9ffdd1d2eb7ad002a008e20c71  ok\n"}
+,{"stream_name":"stdout","time":10.220766852,"data":"  control      4f50bbe5e94cfcf210d6aba5e6a6cf24ac5e3c95ea7a88a32f795a8995a46268  ok\n"}
+,{"stream_name":"stdout","time":10.22077047,"data":"  boundary     93d2eb0452fc0e422dc8db15e83f770fa6d1f1595010842d1d7f1c14c18eb3e4  ok\n"}
+,{"stream_name":"stdout","time":10.220773994,"data":"  regime       b671a58c63f0ba7d2b583c338b76072e8e48d588baed0ab72ca8b7fb26cc56b2  ok\n"}
+,{"stream_name":"stdout","time":10.220778172,"data":"  law          2003d65b72abb86c587a644b410559f587e3838bcc6e7bab8aa8d9888fdd1513  ok\n"}
+,{"stream_name":"stdout","time":10.220781929,"data":"  sigma        414c61c3f8dfa3abc4bf52115b788241fd12bb294493bfba797452d30004e779  ok\n"}
+,{"stream_name":"stdout","time":10.22078632,"data":"  crossed      21ff6d389ec89147ff9ab0ab34370dd4eb492350ac9fa34cc2d44972bd53c840  ok\n"}
+,{"stream_name":"stdout","time":10.220789877,"data":"  cliff        017082fac66327d6276c3b23402c9b05cb701047ac0e88a41ff2e7d1719d1c51  ok\n"}
+,{"stream_name":"stdout","time":10.220793773,"data":"  regimemap    eb1d704f5cf150a06b82d8eefc672fd62fb3f05aacdc3704a092118da92f14c8  ok\n"}
+,{"stream_name":"stdout","time":10.220797574,"data":"  exactcal     b17e1be3c024ec4de0d88a6a50dfde557ea6552d50bd0cb5ed9521ab4012a813  ok\n"}
+,{"stream_name":"stdout","time":10.220801235,"data":"  V1 PASS\n"}
+,{"stream_name":"stdout","time":10.220804525,"data":"\n"}
+,{"stream_name":"stdout","time":10.220808288,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.22082372,"data":"V0 -- PLAN IDENTITY: (a) grid values against the archived source, (b) counts\n"}
+,{"stream_name":"stdout","time":10.220827943,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220831816,"data":"  RMAP      M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":10.220835887,"data":"  RMAP      diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":10.220839696,"data":"  RMAP      dims    regimemap.py 300-302 dimsM           ok\n"}
+,{"stream_name":"stdout","time":10.220843651,"data":"  RMAP      jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":10.220847445,"data":"  RMAP      objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":10.220851616,"data":"  RMAP      rs      regimemap.py 300-302 rsM             ok\n"}
+,{"stream_name":"stdout","time":10.220855422,"data":"  RMAP      taus    regimemap.py 300-302 tausM           ok\n"}
+,{"stream_name":"stdout","time":10.220859361,"data":"  CLIFF     M       cliff.py 244-244 --realisations  ok\n"}
+,{"stream_name":"stdout","time":10.220862857,"data":"  CLIFF     diffs   cliff.py 253-253 diffs           ok\n"}
+,{"stream_name":"stdout","time":10.220866436,"data":"  CLIFF     dims    cliff.py 260-264 dims            ok\n"}
+,{"stream_name":"stdout","time":10.220869934,"data":"  CLIFF     jgrid   cliff.py 260-264 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":10.220874002,"data":"  CLIFF     objs    cliff.py 260-264 objs            ok\n"}
+,{"stream_name":"stdout","time":10.220876629,"data":"  CLIFF     rs      cliff.py 260-264 rs              ok\n"}
+,{"stream_name":"stdout","time":10.220879337,"data":"  CLIFF     taus    cliff.py 260-264 taus            ok\n"}
+,{"stream_name":"stdout","time":10.220882159,"data":"  ONSET     M       regimemap.py 279-279 --realisations  ok\n"}
+,{"stream_name":"stdout","time":10.220884669,"data":"  ONSET     diffs   regimemap.py 288-288 diffs           ok\n"}
+,{"stream_name":"stdout","time":10.220887134,"data":"  ONSET     dims    regimemap.py 300-302 dimsD           ok\n"}
+,{"stream_name":"stdout","time":10.220889846,"data":"  ONSET     jgrid   regimemap.py 300-302 Jgrid           ok\n"}
+,{"stream_name":"stdout","time":10.220892265,"data":"  ONSET     objs    regimemap.py 289-289 objs            ok\n"}
+,{"stream_name":"stdout","time":10.220894701,"data":"  ONSET     rs      regimemap.py 300-302 rsD             ok\n"}
+,{"stream_name":"stdout","time":10.220897148,"data":"  ONSET     tau     regimemap.py 304-304 tauD            ok\n"}
+,{"stream_name":"stdout","time":10.220899836,"data":"  RMAP       24 calibration cells x  10 =  240  (Table 2  240)  ok\n"}
+,{"stream_name":"stdout","time":10.220902364,"data":"  CLIFF       8 calibration cells x  18 =  144  (Table 2  144)  ok\n"}
+,{"stream_name":"stdout","time":10.220904854,"data":"  ONSET      15 calibration cells x  12 =  180  (Table 2  180)  ok\n"}
+,{"stream_name":"stdout","time":10.22090735,"data":"  V0 PASS\n"}
+,{"stream_name":"stdout","time":10.220909792,"data":"\n"}
+,{"stream_name":"stdout","time":10.2209121,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.22091464,"data":"V2 -- SAMPLER IDENTITY (first rng line of each module's one_realisation)\n"}
+,{"stream_name":"stdout","time":10.220917158,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220926772,"data":"  cliff      X0 = rng.standard_normal((Jinf, d)) + xs  ok\n"}
+,{"stream_name":"stdout","time":10.220929419,"data":"  regimemap  X0 = rng.standard_normal((Jinf, d))  ok\n"}
+,{"stream_name":"stdout","time":10.220931894,"data":"  V2 PASS\n"}
+,{"stream_name":"stdout","time":10.220934279,"data":"\n"}
+,{"stream_name":"stdout","time":10.220936595,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220939145,"data":"CELLS\n"}
+,{"stream_name":"stdout","time":10.220941611,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220944161,"data":"  cliff         8 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":10.220946789,"data":"  regimemap    33 deduplicated calibration cells\n"}
+,{"stream_name":"stdout","time":10.220949249,"data":"  total 41\n"}
+,{"stream_name":"stdout","time":10.220951655,"data":"  this job: 3 cells\n"}
+,{"stream_name":"stdout","time":10.220954091,"data":"\n"}
+,{"stream_name":"stdout","time":10.220956389,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220959045,"data":"G-CAP -- ESTIMATE for this job (perfect scaling; barrier idle and tails ignored; NOT a bound)\n"}
+,{"stream_name":"stdout","time":10.220961572,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220964129,"data":"  best case (no cell adequate) 3485 s   worst-case estimate (every cell adequate) 5994 s   at 4 workers   ceiling 21600 s (default)\n"}
+,{"stream_name":"stdout","time":10.220966967,"data":"  largest single task, estimated 900 s\n"}
+,{"stream_name":"stdout","time":10.220969459,"data":"  shard counts from --shard-target 0.5 x --ceiling 21600 s (default ceiling) = 10800 s\n"}
+,{"stream_name":"stdout","time":10.220972732,"data":"  at the target (10800 s): smallest --nshards 15   largest shard 10272 s = 47.6% of 21600 s, at 4 workers, over the 41 selected cells\n"}
+,{"stream_name":"stdout","time":10.220976957,"data":"  at the full ceiling (21600 s): smallest --nshards 5   largest shard 20612 s = 95.4% of 21600 s, at 4 workers, over the 41 selected cells\n"}
+,{"stream_name":"stdout","time":10.220980687,"data":"  RECOMMENDED: --nshards 15, the count at the target. The estimate assumes perfect scaling, ignores barrier idle and phase tails, and is not a bound. G-CAP refuses only above --ceiling 21600 s.\n"}
+,{"stream_name":"stdout","time":10.220984737,"data":"\n"}
+,{"stream_name":"stdout","time":10.220987042,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220989594,"data":"T1 -- PER-TASK TIMEOUT\n"}
+,{"stream_name":"stdout","time":10.220992207,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.220994806,"data":"  TIMEOUT_S = 4499 s   (5 x the largest single task estimated from --throughput)\n"}
+,{"stream_name":"stdout","time":10.220997368999999,"data":"\n"}
+,{"stream_name":"stdout","time":10.220999663,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.221002202,"data":"G-STOP -- STOP BEFORE THE CAP\n"}
+,{"stream_name":"stdout","time":10.221004596,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.221013746,"data":"  --stop-after 30000 s + TIMEOUT_S 4499 s = 34499 s   cap 43200 s\n"}
+,{"stream_name":"stdout","time":10.221017387,"data":"  G-STOP PASS\n"}
+,{"stream_name":"stdout","time":10.221020024,"data":"\n"}
+,{"stream_name":"stdout","time":10.221022343,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.221024989,"data":"G-MEM -- MEMORY GUARD\n"}
+,{"stream_name":"stdout","time":10.2210274,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.22102994,"data":"  MemAvailable 31141 MB   required 9891.2 MB (4 workers x N25's held-64M peak 2472.8 MB)\n"}
+,{"stream_name":"stdout","time":10.221032452,"data":"  G-MEM PASS\n"}
+,{"stream_name":"stdout","time":10.221034867,"data":"\n"}
+,{"stream_name":"stdout","time":10.221037142,"data":"  run dir  /kaggle/working/calprec2-full-20261025-233913-s9of15\n"}
+,{"stream_name":"stdout","time":10.221039796,"data":"\n"}
+,{"stream_name":"stdout","time":10.221042112,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.221044655,"data":"PHASE A  calibration samples\n"}
+,{"stream_name":"stdout","time":10.221047076,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":10.221049632,"data":"  [A] 432 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":10.457441287,"data":"  [A     1/432  ] A|regimemap|ackley|10|centred|0.03|4000|0                    wall     0.128 s  RSS    37.6 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.461742543,"data":"  [A     2/432  ] A|regimemap|ackley|10|centred|0.03|4000|1                    wall     0.127 s  RSS    37.7 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.465958528,"data":"  [A     3/432  ] A|regimemap|ackley|10|centred|0.03|4000|2                    wall     0.124 s  RSS    37.8 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.471271607,"data":"  [A     4/432  ] A|regimemap|ackley|10|centred|0.03|4000|3                    wall     0.122 s  RSS    37.7 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.688137146999999,"data":"  [A     5/432  ] A|regimemap|ackley|10|centred|0.03|4000|4                    wall     0.064 s  RSS    38.0 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.693149077,"data":"  [A     6/432  ] A|regimemap|ackley|10|centred|0.03|4000|5                    wall     0.065 s  RSS    38.0 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.697701081,"data":"  [A     7/432  ] A|regimemap|ackley|10|centred|0.03|4000|6                    wall     0.063 s  RSS    38.0 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.702465111,"data":"  [A     8/432  ] A|regimemap|ackley|10|centred|0.03|4000|7                    wall     0.063 s  RSS    38.1 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":10.91916911,"data":"  [A     9/432  ] A|regimemap|ackley|10|centred|0.03|4000|8                    wall     0.087 s  RSS    37.9 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":10.924096734,"data":"  [A    10/432  ] A|regimemap|ackley|10|centred|0.03|4000|9                    wall     0.081 s  RSS    38.0 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":10.92896831,"data":"  [A    11/432  ] A|regimemap|ackley|10|centred|0.03|4000|10                   wall     0.072 s  RSS    37.9 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":10.933336872,"data":"  [A    12/432  ] A|regimemap|ackley|10|centred|0.03|4000|11                   wall     0.072 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.147665654,"data":"  [A    13/432  ] A|regimemap|ackley|10|centred|0.03|4000|12                   wall     0.086 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.151919743,"data":"  [A    14/432  ] A|regimemap|ackley|10|centred|0.03|4000|13                   wall     0.082 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.156790709,"data":"  [A    15/432  ] A|regimemap|ackley|10|centred|0.03|4000|14                   wall     0.091 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.163805516,"data":"  [A    16/432  ] A|regimemap|ackley|10|centred|0.03|4000|15                   wall     0.078 s  RSS    38.2 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.383893638,"data":"  [A    17/432  ] A|regimemap|ackley|10|centred|0.03|4000|16                   wall     0.077 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.388771412,"data":"  [A    18/432  ] A|regimemap|ackley|10|centred|0.03|4000|17                   wall     0.086 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.393433723,"data":"  [A    19/432  ] A|regimemap|ackley|10|centred|0.03|4000|18                   wall     0.078 s  RSS    37.8 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.397520373,"data":"  [A    20/432  ] A|regimemap|ackley|10|centred|0.03|4000|19                   wall     0.089 s  RSS    37.9 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.613482104,"data":"  [A    21/432  ] A|regimemap|ackley|10|centred|0.03|4000|20                   wall     0.068 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.618216929999999,"data":"  [A    22/432  ] A|regimemap|ackley|10|centred|0.03|4000|21                   wall     0.063 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.622258423,"data":"  [A    23/432  ] A|regimemap|ackley|10|centred|0.03|4000|22                   wall     0.067 s  RSS    38.1 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.626902242,"data":"  [A    24/432  ] A|regimemap|ackley|10|centred|0.03|4000|23                   wall     0.062 s  RSS    38.2 MB  elapsed       1 s\n"}
+,{"stream_name":"stdout","time":11.841991336,"data":"  [A    25/432  ] A|regimemap|ackley|10|centred|0.03|16000|0                   wall     0.165 s  RSS    41.3 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":11.846585485,"data":"  [A    26/432  ] A|regimemap|ackley|10|centred|0.03|16000|1                   wall     0.168 s  RSS    41.3 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":11.851592763,"data":"  [A    27/432  ] A|regimemap|ackley|10|centred|0.03|16000|2                   wall     0.166 s  RSS    41.3 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":11.856357838,"data":"  [A    28/432  ] A|regimemap|ackley|10|centred|0.03|16000|3                   wall     0.166 s  RSS    41.5 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.071278011,"data":"  [A    29/432  ] A|regimemap|ackley|10|centred|0.03|16000|4                   wall     0.168 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.075660052,"data":"  [A    30/432  ] A|regimemap|ackley|10|centred|0.03|16000|5                   wall     0.167 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.079956033,"data":"  [A    31/432  ] A|regimemap|ackley|10|centred|0.03|16000|6                   wall     0.167 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.084505011,"data":"  [A    32/432  ] A|regimemap|ackley|10|centred|0.03|16000|7                   wall     0.165 s  RSS    41.5 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.300504613,"data":"  [A    33/432  ] A|regimemap|ackley|10|centred|0.03|16000|8                   wall     0.170 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.306893336,"data":"  [A    34/432  ] A|regimemap|ackley|10|centred|0.03|16000|9                   wall     0.167 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.311843817,"data":"  [A    35/432  ] A|regimemap|ackley|10|centred|0.03|16000|10                  wall     0.170 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.317928377,"data":"  [A    36/432  ] A|regimemap|ackley|10|centred|0.03|16000|11                  wall     0.165 s  RSS    41.5 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.534642434,"data":"  [A    37/432  ] A|regimemap|ackley|10|centred|0.03|16000|12                  wall     0.172 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.540271687,"data":"  [A    38/432  ] A|regimemap|ackley|10|centred|0.03|16000|13                  wall     0.172 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.545034729,"data":"  [A    39/432  ] A|regimemap|ackley|10|centred|0.03|16000|14                  wall     0.169 s  RSS    41.4 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.549662728,"data":"  [A    40/432  ] A|regimemap|ackley|10|centred|0.03|16000|15                  wall     0.170 s  RSS    41.5 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":12.765316172,"data":"  [A    41/432  ] A|regimemap|ackley|10|centred|0.03|16000|16                  wall     0.169 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":12.770036684,"data":"  [A    42/432  ] A|regimemap|ackley|10|centred|0.03|16000|17                  wall     0.171 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":12.774883788,"data":"  [A    43/432  ] A|regimemap|ackley|10|centred|0.03|16000|18                  wall     0.169 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":12.7797107,"data":"  [A    44/432  ] A|regimemap|ackley|10|centred|0.03|16000|19                  wall     0.168 s  RSS    41.5 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":12.996040431,"data":"  [A    45/432  ] A|regimemap|ackley|10|centred|0.03|16000|20                  wall     0.169 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":13.00049722,"data":"  [A    46/432  ] A|regimemap|ackley|10|centred|0.03|16000|21                  wall     0.169 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":13.004848713,"data":"  [A    47/432  ] A|regimemap|ackley|10|centred|0.03|16000|22                  wall     0.166 s  RSS    41.4 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":13.009256775,"data":"  [A    48/432  ] A|regimemap|ackley|10|centred|0.03|16000|23                  wall     0.165 s  RSS    41.5 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":13.825590478,"data":"  [A    49/432  ] A|regimemap|ackley|10|centred|0.03|64000|0                   wall     0.638 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":13.829594774,"data":"  [A    50/432  ] A|regimemap|ackley|10|centred|0.03|64000|1                   wall     0.623 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":13.834510061,"data":"  [A    51/432  ] A|regimemap|ackley|10|centred|0.03|64000|2                   wall     0.619 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":13.838739293,"data":"  [A    52/432  ] A|regimemap|ackley|10|centred|0.03|64000|3                   wall     0.613 s  RSS    53.8 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":14.654274599,"data":"  [A    53/432  ] A|regimemap|ackley|10|centred|0.03|64000|4                   wall     0.610 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":14.658375876000001,"data":"  [A    54/432  ] A|regimemap|ackley|10|centred|0.03|64000|5                   wall     0.611 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":14.661725251,"data":"  [A    55/432  ] A|regimemap|ackley|10|centred|0.03|64000|6                   wall     0.609 s  RSS    53.7 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":14.664972875,"data":"  [A    56/432  ] A|regimemap|ackley|10|centred|0.03|64000|7                   wall     0.607 s  RSS    53.8 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":15.480124928,"data":"  [A    57/432  ] A|regimemap|ackley|10|centred|0.03|64000|8                   wall     0.624 s  RSS    53.7 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":15.484918503,"data":"  [A    58/432  ] A|regimemap|ackley|10|centred|0.03|64000|9                   wall     0.618 s  RSS    53.7 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":15.488941242,"data":"  [A    59/432  ] A|regimemap|ackley|10|centred|0.03|64000|10                  wall     0.620 s  RSS    53.7 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":15.493115215,"data":"  [A    60/432  ] A|regimemap|ackley|10|centred|0.03|64000|11                  wall     0.616 s  RSS    53.8 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":16.108107825,"data":"  [A    61/432  ] A|regimemap|ackley|10|centred|0.03|64000|13                  wall     0.590 s  RSS    53.7 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":16.11414978,"data":"  [A    62/432  ] A|regimemap|ackley|10|centred|0.03|64000|15                  wall     0.591 s  RSS    53.8 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":16.123829477,"data":"  [A    63/432  ] A|regimemap|ackley|10|centred|0.03|64000|12                  wall     0.613 s  RSS    53.7 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":16.127927214,"data":"  [A    64/432  ] A|regimemap|ackley|10|centred|0.03|64000|14                  wall     0.614 s  RSS    53.7 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":16.739962214,"data":"  [A    65/432  ] A|regimemap|ackley|10|centred|0.03|64000|16                  wall     0.609 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":16.744305284,"data":"  [A    66/432  ] A|regimemap|ackley|10|centred|0.03|64000|17                  wall     0.615 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":16.748653854,"data":"  [A    67/432  ] A|regimemap|ackley|10|centred|0.03|64000|19                  wall     0.604 s  RSS    53.8 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":16.760889997,"data":"  [A    68/432  ] A|regimemap|ackley|10|centred|0.03|64000|18                  wall     0.614 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":17.368997543,"data":"  [A    69/432  ] A|regimemap|ackley|10|centred|0.03|64000|20                  wall     0.599 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":17.373442972,"data":"  [A    70/432  ] A|regimemap|ackley|10|centred|0.03|64000|21                  wall     0.608 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":17.378086303,"data":"  [A    71/432  ] A|regimemap|ackley|10|centred|0.03|64000|22                  wall     0.595 s  RSS    53.7 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":17.382446062,"data":"  [A    72/432  ] A|regimemap|ackley|10|centred|0.03|64000|23                  wall     0.598 s  RSS    53.8 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":20.0041093,"data":"  [A    73/432  ] A|regimemap|ackley|10|centred|0.03|256000|0                  wall     2.557 s  RSS    99.6 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":20.009188504,"data":"  [A    74/432  ] A|regimemap|ackley|10|centred|0.03|256000|1                  wall     2.601 s  RSS    99.6 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":20.014307282,"data":"  [A    75/432  ] A|regimemap|ackley|10|centred|0.03|256000|2                  wall     2.559 s  RSS    99.6 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":20.019165926,"data":"  [A    76/432  ] A|regimemap|ackley|10|centred|0.03|256000|3                  wall     2.612 s  RSS    99.7 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":22.839757122,"data":"  [A    77/432  ] A|regimemap|ackley|10|centred|0.03|256000|4                  wall     2.750 s  RSS    99.6 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":22.844504854,"data":"  [A    78/432  ] A|regimemap|ackley|10|centred|0.03|256000|5                  wall     2.778 s  RSS    99.6 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":22.849323225,"data":"  [A    79/432  ] A|regimemap|ackley|10|centred|0.03|256000|6                  wall     2.704 s  RSS    99.6 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":22.854247535,"data":"  [A    80/432  ] A|regimemap|ackley|10|centred|0.03|256000|7                  wall     2.690 s  RSS    99.7 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":25.474720133,"data":"  [A    81/432  ] A|regimemap|ackley|10|centred|0.03|256000|8                  wall     2.562 s  RSS    99.6 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":25.479061307,"data":"  [A    82/432  ] A|regimemap|ackley|10|centred|0.03|256000|9                  wall     2.574 s  RSS    99.6 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":25.483948586,"data":"  [A    83/432  ] A|regimemap|ackley|10|centred|0.03|256000|10                 wall     2.562 s  RSS    99.6 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":25.48855414,"data":"  [A    84/432  ] A|regimemap|ackley|10|centred|0.03|256000|11                 wall     2.572 s  RSS    99.7 MB  elapsed      15 s\n"}
+,{"stream_name":"stdout","time":28.108321405,"data":"  [A    85/432  ] A|regimemap|ackley|10|centred|0.03|256000|12                 wall     2.592 s  RSS    99.6 MB  elapsed      18 s\n"}
+,{"stream_name":"stdout","time":28.112640971,"data":"  [A    86/432  ] A|regimemap|ackley|10|centred|0.03|256000|13                 wall     2.575 s  RSS    99.6 MB  elapsed      18 s\n"}
+,{"stream_name":"stdout","time":28.117078229,"data":"  [A    87/432  ] A|regimemap|ackley|10|centred|0.03|256000|14                 wall     2.582 s  RSS    99.6 MB  elapsed      18 s\n"}
+,{"stream_name":"stdout","time":28.120803463,"data":"  [A    88/432  ] A|regimemap|ackley|10|centred|0.03|256000|15                 wall     2.574 s  RSS    99.7 MB  elapsed      18 s\n"}
+,{"stream_name":"stdout","time":30.740534732,"data":"  [A    89/432  ] A|regimemap|ackley|10|centred|0.03|256000|16                 wall     2.554 s  RSS    99.6 MB  elapsed      21 s\n"}
+,{"stream_name":"stdout","time":30.744728902,"data":"  [A    90/432  ] A|regimemap|ackley|10|centred|0.03|256000|17                 wall     2.583 s  RSS    99.6 MB  elapsed      21 s\n"}
+,{"stream_name":"stdout","time":30.7496341,"data":"  [A    91/432  ] A|regimemap|ackley|10|centred|0.03|256000|18                 wall     2.550 s  RSS    99.6 MB  elapsed      21 s\n"}
+,{"stream_name":"stdout","time":30.755299455,"data":"  [A    92/432  ] A|regimemap|ackley|10|centred|0.03|256000|19                 wall     2.574 s  RSS    99.7 MB  elapsed      21 s\n"}
+,{"stream_name":"stdout","time":33.576975633,"data":"  [A    93/432  ] A|regimemap|ackley|10|centred|0.03|256000|20                 wall     2.677 s  RSS    99.6 MB  elapsed      23 s\n"}
+,{"stream_name":"stdout","time":33.582158805,"data":"  [A    94/432  ] A|regimemap|ackley|10|centred|0.03|256000|21                 wall     2.641 s  RSS    99.6 MB  elapsed      23 s\n"}
+,{"stream_name":"stdout","time":33.587412195,"data":"  [A    95/432  ] A|regimemap|ackley|10|centred|0.03|256000|22                 wall     2.682 s  RSS    99.6 MB  elapsed      23 s\n"}
+,{"stream_name":"stdout","time":33.596994646,"data":"  [A    96/432  ] A|regimemap|ackley|10|centred|0.03|256000|23                 wall     2.649 s  RSS    99.7 MB  elapsed      23 s\n"}
+,{"stream_name":"stdout","time":43.433096303,"data":"  [A    97/432  ] A|regimemap|ackley|10|centred|0.03|1000000|0                 wall     9.724 s  RSS   105.3 MB  elapsed      33 s\n"}
+,{"stream_name":"stdout","time":43.438454141,"data":"  [A    98/432  ] A|regimemap|ackley|10|centred|0.03|1000000|2                 wall     9.688 s  RSS   105.3 MB  elapsed      33 s\n"}
+,{"stream_name":"stdout","time":43.650428229,"data":"  [A    99/432  ] A|regimemap|ackley|10|centred|0.03|1000000|1                 wall     9.868 s  RSS   105.3 MB  elapsed      33 s\n"}
+,{"stream_name":"stdout","time":43.654433764,"data":"  [A   100/432  ] A|regimemap|ackley|10|centred|0.03|1000000|3                 wall     9.842 s  RSS   105.4 MB  elapsed      33 s\n"}
+,{"stream_name":"stdout","time":53.085404408,"data":"  [A   101/432  ] A|regimemap|ackley|10|centred|0.03|1000000|5                 wall     9.562 s  RSS   105.4 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":53.296468497,"data":"  [A   102/432  ] A|regimemap|ackley|10|centred|0.03|1000000|4                 wall     9.733 s  RSS   105.3 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":53.3020378,"data":"  [A   103/432  ] A|regimemap|ackley|10|centred|0.03|1000000|7                 wall     9.578 s  RSS   105.4 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":53.517227968,"data":"  [A   104/432  ] A|regimemap|ackley|10|centred|0.03|1000000|6                 wall     9.729 s  RSS   105.3 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":63.352530901,"data":"  [A   105/432  ] A|regimemap|ackley|10|centred|0.03|1000000|8                 wall    10.076 s  RSS   105.4 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":63.356997975,"data":"  [A   106/432  ] A|regimemap|ackley|10|centred|0.03|1000000|10                wall    10.005 s  RSS   105.4 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":63.568420304,"data":"  [A   107/432  ] A|regimemap|ackley|10|centred|0.03|1000000|9                 wall    10.058 s  RSS   105.3 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":63.575896911,"data":"  [A   108/432  ] A|regimemap|ackley|10|centred|0.03|1000000|11                wall    10.027 s  RSS   105.4 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":73.005896713,"data":"  [A   109/432  ] A|regimemap|ackley|10|centred|0.03|1000000|12                wall     9.626 s  RSS   105.3 MB  elapsed      63 s\n"}
+,{"stream_name":"stdout","time":73.416752768,"data":"  [A   110/432  ] A|regimemap|ackley|10|centred|0.03|1000000|13                wall     9.936 s  RSS   105.5 MB  elapsed      63 s\n"}
+,{"stream_name":"stdout","time":73.421807349,"data":"  [A   111/432  ] A|regimemap|ackley|10|centred|0.03|1000000|14                wall     9.833 s  RSS   105.3 MB  elapsed      63 s\n"}
+,{"stream_name":"stdout","time":73.426257324,"data":"  [A   112/432  ] A|regimemap|ackley|10|centred|0.03|1000000|15                wall     9.665 s  RSS   105.4 MB  elapsed      63 s\n"}
+,{"stream_name":"stdout","time":83.0585743,"data":"  [A   113/432  ] A|regimemap|ackley|10|centred|0.03|1000000|16                wall     9.940 s  RSS   105.5 MB  elapsed      73 s\n"}
+,{"stream_name":"stdout","time":83.274650131,"data":"  [A   114/432  ] A|regimemap|ackley|10|centred|0.03|1000000|17                wall     9.824 s  RSS   105.3 MB  elapsed      73 s\n"}
+,{"stream_name":"stdout","time":83.485234698,"data":"  [A   115/432  ] A|regimemap|ackley|10|centred|0.03|1000000|18                wall     9.860 s  RSS   105.3 MB  elapsed      73 s\n"}
+,{"stream_name":"stdout","time":83.490368056,"data":"  [A   116/432  ] A|regimemap|ackley|10|centred|0.03|1000000|19                wall     9.933 s  RSS   105.5 MB  elapsed      73 s\n"}
+,{"stream_name":"stdout","time":93.12139479,"data":"  [A   117/432  ] A|regimemap|ackley|10|centred|0.03|1000000|20                wall     9.962 s  RSS   105.5 MB  elapsed      83 s\n"}
+,{"stream_name":"stdout","time":93.125636938,"data":"  [A   118/432  ] A|regimemap|ackley|10|centred|0.03|1000000|21                wall     9.747 s  RSS   105.4 MB  elapsed      83 s\n"}
+,{"stream_name":"stdout","time":93.337869854,"data":"  [A   119/432  ] A|regimemap|ackley|10|centred|0.03|1000000|22                wall     9.831 s  RSS   105.4 MB  elapsed      83 s\n"}
+,{"stream_name":"stdout","time":93.548567054,"data":"  [A   120/432  ] A|regimemap|ackley|10|centred|0.03|1000000|23                wall     9.913 s  RSS   105.5 MB  elapsed      83 s\n"}
+,{"stream_name":"stdout","time":140.66760666,"data":"  [A   121/432  ] A|regimemap|ackley|10|centred|0.03|4000000|1                 wall    47.445 s  RSS   191.3 MB  elapsed     130 s\n"}
+,{"stream_name":"stdout","time":141.084220959,"data":"  [A   122/432  ] A|regimemap|ackley|10|centred|0.03|4000000|3                 wall    47.451 s  RSS   191.3 MB  elapsed     131 s\n"}
+,{"stream_name":"stdout","time":141.289099802,"data":"  [A   123/432  ] A|regimemap|ackley|10|centred|0.03|4000000|0                 wall    48.119 s  RSS   191.2 MB  elapsed     131 s\n"}
+,{"stream_name":"stdout","time":141.502744094,"data":"  [A   124/432  ] A|regimemap|ackley|10|centred|0.03|4000000|2                 wall    48.108 s  RSS   191.3 MB  elapsed     131 s\n"}
+,{"stream_name":"stdout","time":189.019271633,"data":"  [A   125/432  ] A|regimemap|ackley|10|centred|0.03|4000000|4                 wall    48.179 s  RSS   191.3 MB  elapsed     179 s\n"}
+,{"stream_name":"stdout","time":189.230469357,"data":"  [A   126/432  ] A|regimemap|ackley|10|centred|0.03|4000000|5                 wall    48.097 s  RSS   191.2 MB  elapsed     179 s\n"}
+,{"stream_name":"stdout","time":189.442917963,"data":"  [A   127/432  ] A|regimemap|ackley|10|centred|0.03|4000000|6                 wall    48.032 s  RSS   191.3 MB  elapsed     179 s\n"}
+,{"stream_name":"stdout","time":189.653008136,"data":"  [A   128/432  ] A|regimemap|ackley|10|centred|0.03|4000000|7                 wall    48.053 s  RSS   191.3 MB  elapsed     179 s\n"}
+,{"stream_name":"stdout","time":237.170480751,"data":"  [A   129/432  ] A|regimemap|ackley|10|centred|0.03|4000000|9                 wall    47.771 s  RSS   191.3 MB  elapsed     227 s\n"}
+,{"stream_name":"stdout","time":237.780528068,"data":"  [A   130/432  ] A|regimemap|ackley|10|centred|0.03|4000000|8                 wall    48.574 s  RSS   191.3 MB  elapsed     228 s\n"}
+,{"stream_name":"stdout","time":237.785627263,"data":"  [A   131/432  ] A|regimemap|ackley|10|centred|0.03|4000000|11                wall    47.930 s  RSS   191.2 MB  elapsed     228 s\n"}
+,{"stream_name":"stdout","time":238.200601796,"data":"  [A   132/432  ] A|regimemap|ackley|10|centred|0.03|4000000|10                wall    48.577 s  RSS   191.4 MB  elapsed     228 s\n"}
+,{"stream_name":"stdout","time":285.710242797,"data":"  [A   133/432  ] A|regimemap|ackley|10|centred|0.03|4000000|13                wall    47.714 s  RSS   191.2 MB  elapsed     275 s\n"}
+,{"stream_name":"stdout","time":286.121433455,"data":"  [A   134/432  ] A|regimemap|ackley|10|centred|0.03|4000000|12                wall    48.748 s  RSS   191.4 MB  elapsed     276 s\n"}
+,{"stream_name":"stdout","time":286.125629895,"data":"  [A   135/432  ] A|regimemap|ackley|10|centred|0.03|4000000|15                wall    47.771 s  RSS   191.4 MB  elapsed     276 s\n"}
+,{"stream_name":"stdout","time":286.537811533,"data":"  [A   136/432  ] A|regimemap|ackley|10|centred|0.03|4000000|14                wall    48.711 s  RSS   191.4 MB  elapsed     276 s\n"}
+,{"stream_name":"stdout","time":333.657438413,"data":"  [A   137/432  ] A|regimemap|ackley|10|centred|0.03|4000000|16                wall    47.839 s  RSS   191.4 MB  elapsed     323 s\n"}
+,{"stream_name":"stdout","time":334.471786772,"data":"  [A   138/432  ] A|regimemap|ackley|10|centred|0.03|4000000|17                wall    48.167 s  RSS   191.3 MB  elapsed     324 s\n"}
+,{"stream_name":"stdout","time":334.476125054,"data":"  [A   139/432  ] A|regimemap|ackley|10|centred|0.03|4000000|18                wall    48.211 s  RSS   191.4 MB  elapsed     324 s\n"}
+,{"stream_name":"stdout","time":335.291889088,"data":"  [A   140/432  ] A|regimemap|ackley|10|centred|0.03|4000000|19                wall    48.608 s  RSS   191.4 MB  elapsed     325 s\n"}
+,{"stream_name":"stdout","time":382.605978434,"data":"  [A   141/432  ] A|regimemap|ackley|10|centred|0.03|4000000|21                wall    48.069 s  RSS   191.3 MB  elapsed     372 s\n"}
+,{"stream_name":"stdout","time":382.816437673,"data":"  [A   142/432  ] A|regimemap|ackley|10|centred|0.03|4000000|23                wall    47.440 s  RSS   191.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":382.821142097,"data":"  [A   143/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|0                 wall     0.077 s  RSS    43.5 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.033216599,"data":"  [A   144/432  ] A|regimemap|ackley|10|centred|0.03|4000000|20                wall    49.250 s  RSS   191.3 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.037958683,"data":"  [A   145/432  ] A|regimemap|ackley|10|centred|0.03|4000000|22                wall    48.526 s  RSS   191.3 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.04200055,"data":"  [A   146/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|1                 wall     0.078 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.04583488,"data":"  [A   147/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|2                 wall     0.078 s  RSS    43.5 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.261696218,"data":"  [A   148/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|3                 wall     0.078 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.265888733,"data":"  [A   149/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|4                 wall     0.077 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.269837734,"data":"  [A   150/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|5                 wall     0.077 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.274676387,"data":"  [A   151/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|6                 wall     0.076 s  RSS    43.5 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.488948605,"data":"  [A   152/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|7                 wall     0.079 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.493383286,"data":"  [A   153/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|8                 wall     0.080 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.497306951,"data":"  [A   154/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|9                 wall     0.079 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.502064335,"data":"  [A   155/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|10                wall     0.077 s  RSS    43.5 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.717365431,"data":"  [A   156/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|11                wall     0.078 s  RSS    43.4 MB  elapsed     373 s\n"}
+,{"stream_name":"stdout","time":383.722675049,"data":"  [A   157/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|12                wall     0.078 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.727419494,"data":"  [A   158/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|13                wall     0.077 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.733023413,"data":"  [A   159/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|14                wall     0.076 s  RSS    43.5 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.947470404,"data":"  [A   160/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|15                wall     0.079 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.951737131,"data":"  [A   161/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|16                wall     0.079 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.955553092,"data":"  [A   162/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|17                wall     0.078 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":383.959163569,"data":"  [A   163/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|18                wall     0.077 s  RSS    43.5 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.173757899,"data":"  [A   164/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|19                wall     0.077 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.177608803,"data":"  [A   165/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|20                wall     0.077 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.181772636,"data":"  [A   166/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|21                wall     0.077 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.185645058,"data":"  [A   167/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|22                wall     0.076 s  RSS    43.5 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.401368923,"data":"  [A   168/432  ] A|regimemap|rastrigin|40|centred|0.01|4000|23                wall     0.072 s  RSS    43.4 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.407280675,"data":"  [A   169/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|0                wall     0.185 s  RSS    58.1 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.412352895,"data":"  [A   170/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|1                wall     0.142 s  RSS    58.1 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.417274836,"data":"  [A   171/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|2                wall     0.182 s  RSS    58.2 MB  elapsed     374 s\n"}
+,{"stream_name":"stdout","time":384.833511791,"data":"  [A   172/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|3                wall     0.215 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":384.838058538,"data":"  [A   173/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|4                wall     0.216 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":384.842376275,"data":"  [A   174/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|5                wall     0.213 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":384.846640951,"data":"  [A   175/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|6                wall     0.213 s  RSS    58.2 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.262015921,"data":"  [A   176/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|7                wall     0.214 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.266505829,"data":"  [A   177/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|8                wall     0.215 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.27005153,"data":"  [A   178/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|9                wall     0.212 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.274167813,"data":"  [A   179/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|10               wall     0.213 s  RSS    58.2 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.688889004,"data":"  [A   180/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|11               wall     0.221 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.692804128,"data":"  [A   181/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|12               wall     0.219 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.696825505,"data":"  [A   182/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|13               wall     0.218 s  RSS    58.1 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":385.701131646,"data":"  [A   183/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|14               wall     0.214 s  RSS    58.2 MB  elapsed     375 s\n"}
+,{"stream_name":"stdout","time":386.117037172,"data":"  [A   184/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|15               wall     0.216 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.121871733,"data":"  [A   185/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|16               wall     0.213 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.126500468,"data":"  [A   186/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|17               wall     0.214 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.131475422,"data":"  [A   187/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|18               wall     0.211 s  RSS    58.2 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.547445376,"data":"  [A   188/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|19               wall     0.216 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.5518045,"data":"  [A   189/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|20               wall     0.214 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.556520749,"data":"  [A   190/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|21               wall     0.215 s  RSS    58.1 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.561213064,"data":"  [A   191/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|22               wall     0.211 s  RSS    58.2 MB  elapsed     376 s\n"}
+,{"stream_name":"stdout","time":386.778277919,"data":"  [A   192/432  ] A|regimemap|rastrigin|40|centred|0.01|16000|23               wall     0.202 s  RSS    58.1 MB  elapsed     377 s\n"}
+,{"stream_name":"stdout","time":387.389547092,"data":"  [A   193/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|0                wall     0.757 s  RSS   116.8 MB  elapsed     377 s\n"}
+,{"stream_name":"stdout","time":387.394047151,"data":"  [A   194/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|1                wall     0.747 s  RSS   116.8 MB  elapsed     377 s\n"}
+,{"stream_name":"stdout","time":387.398395412,"data":"  [A   195/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|2                wall     0.757 s  RSS   116.9 MB  elapsed     377 s\n"}
+,{"stream_name":"stdout","time":387.610881596,"data":"  [A   196/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|3                wall     0.675 s  RSS   116.9 MB  elapsed     377 s\n"}
+,{"stream_name":"stdout","time":388.221481327,"data":"  [A   197/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|4                wall     0.757 s  RSS   116.8 MB  elapsed     378 s\n"}
+,{"stream_name":"stdout","time":388.225352984,"data":"  [A   198/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|5                wall     0.677 s  RSS   116.8 MB  elapsed     378 s\n"}
+,{"stream_name":"stdout","time":388.229008907,"data":"  [A   199/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|6                wall     0.753 s  RSS   116.9 MB  elapsed     378 s\n"}
+,{"stream_name":"stdout","time":388.243038235,"data":"  [A   200/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|7                wall     0.612 s  RSS   116.9 MB  elapsed     378 s\n"}
+,{"stream_name":"stdout","time":389.054407184,"data":"  [A   201/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|8                wall     0.745 s  RSS   116.8 MB  elapsed     379 s\n"}
+,{"stream_name":"stdout","time":389.058810113,"data":"  [A   202/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|9                wall     0.771 s  RSS   116.8 MB  elapsed     379 s\n"}
+,{"stream_name":"stdout","time":389.064117249,"data":"  [A   203/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|10               wall     0.762 s  RSS   116.8 MB  elapsed     379 s\n"}
+,{"stream_name":"stdout","time":389.069319393,"data":"  [A   204/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|11               wall     0.743 s  RSS   116.9 MB  elapsed     379 s\n"}
+,{"stream_name":"stdout","time":389.885071607,"data":"  [A   205/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|12               wall     0.766 s  RSS   116.8 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":389.889469461,"data":"  [A   206/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|13               wall     0.773 s  RSS   116.8 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":389.893889962,"data":"  [A   207/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|14               wall     0.765 s  RSS   116.8 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":389.898439744,"data":"  [A   208/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|15               wall     0.770 s  RSS   116.9 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":390.714543241,"data":"  [A   209/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|16               wall     0.784 s  RSS   116.8 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":390.718885715,"data":"  [A   210/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|17               wall     0.767 s  RSS   116.8 MB  elapsed     380 s\n"}
+,{"stream_name":"stdout","time":390.723003603,"data":"  [A   211/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|18               wall     0.783 s  RSS   116.8 MB  elapsed     381 s\n"}
+,{"stream_name":"stdout","time":390.727346291,"data":"  [A   212/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|19               wall     0.767 s  RSS   116.9 MB  elapsed     381 s\n"}
+,{"stream_name":"stdout","time":391.750131835,"data":"  [A   213/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|20               wall     0.871 s  RSS   116.8 MB  elapsed     382 s\n"}
+,{"stream_name":"stdout","time":391.755174952,"data":"  [A   214/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|21               wall     0.902 s  RSS   116.8 MB  elapsed     382 s\n"}
+,{"stream_name":"stdout","time":391.764805377,"data":"  [A   215/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|22               wall     0.902 s  RSS   116.8 MB  elapsed     382 s\n"}
+,{"stream_name":"stdout","time":391.769376015,"data":"  [A   216/432  ] A|regimemap|rastrigin|40|centred|0.01|64000|23               wall     0.867 s  RSS   116.9 MB  elapsed     382 s\n"}
+,{"stream_name":"stdout","time":397.39498483,"data":"  [A   217/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|0               wall     5.585 s  RSS   344.0 MB  elapsed     387 s\n"}
+,{"stream_name":"stdout","time":397.399804235,"data":"  [A   218/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|1               wall     5.550 s  RSS   344.0 MB  elapsed     387 s\n"}
+,{"stream_name":"stdout","time":397.404875052,"data":"  [A   219/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|2               wall     5.557 s  RSS   344.0 MB  elapsed     387 s\n"}
+,{"stream_name":"stdout","time":397.410374246,"data":"  [A   220/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|3               wall     5.573 s  RSS   344.1 MB  elapsed     387 s\n"}
+,{"stream_name":"stdout","time":403.238466763,"data":"  [A   221/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|4               wall     5.682 s  RSS   344.0 MB  elapsed     393 s\n"}
+,{"stream_name":"stdout","time":403.243003955,"data":"  [A   222/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|5               wall     5.702 s  RSS   344.0 MB  elapsed     393 s\n"}
+,{"stream_name":"stdout","time":403.247146862,"data":"  [A   223/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|6               wall     5.700 s  RSS   344.0 MB  elapsed     393 s\n"}
+,{"stream_name":"stdout","time":403.252036314,"data":"  [A   224/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|7               wall     5.653 s  RSS   344.1 MB  elapsed     393 s\n"}
+,{"stream_name":"stdout","time":408.877575349,"data":"  [A   225/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|8               wall     5.530 s  RSS   344.0 MB  elapsed     399 s\n"}
+,{"stream_name":"stdout","time":408.88194006,"data":"  [A   226/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|9               wall     5.507 s  RSS   344.0 MB  elapsed     399 s\n"}
+,{"stream_name":"stdout","time":408.886007264,"data":"  [A   227/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|10              wall     5.506 s  RSS   344.0 MB  elapsed     399 s\n"}
+,{"stream_name":"stdout","time":408.889998955,"data":"  [A   228/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|11              wall     5.499 s  RSS   344.1 MB  elapsed     399 s\n"}
+,{"stream_name":"stdout","time":414.717250116,"data":"  [A   229/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|12              wall     5.669 s  RSS   344.0 MB  elapsed     404 s\n"}
+,{"stream_name":"stdout","time":414.72250045,"data":"  [A   230/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|13              wall     5.704 s  RSS   344.0 MB  elapsed     405 s\n"}
+,{"stream_name":"stdout","time":414.726757303,"data":"  [A   231/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|14              wall     5.626 s  RSS   344.0 MB  elapsed     405 s\n"}
+,{"stream_name":"stdout","time":414.731298976,"data":"  [A   232/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|15              wall     5.708 s  RSS   344.1 MB  elapsed     405 s\n"}
+,{"stream_name":"stdout","time":420.357401814,"data":"  [A   233/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|16              wall     5.530 s  RSS   344.0 MB  elapsed     410 s\n"}
+,{"stream_name":"stdout","time":420.361291439,"data":"  [A   234/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|17              wall     5.559 s  RSS   344.0 MB  elapsed     410 s\n"}
+,{"stream_name":"stdout","time":420.365316187,"data":"  [A   235/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|18              wall     5.541 s  RSS   344.0 MB  elapsed     410 s\n"}
+,{"stream_name":"stdout","time":420.369709481,"data":"  [A   236/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|19              wall     5.560 s  RSS   344.1 MB  elapsed     410 s\n"}
+,{"stream_name":"stdout","time":426.199428064,"data":"  [A   237/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|20              wall     5.706 s  RSS   344.0 MB  elapsed     416 s\n"}
+,{"stream_name":"stdout","time":426.203345676,"data":"  [A   238/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|21              wall     5.779 s  RSS   344.0 MB  elapsed     416 s\n"}
+,{"stream_name":"stdout","time":426.207748588,"data":"  [A   239/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|22              wall     5.726 s  RSS   344.0 MB  elapsed     416 s\n"}
+,{"stream_name":"stdout","time":426.21219345,"data":"  [A   240/432  ] A|regimemap|rastrigin|40|centred|0.01|256000|23              wall     5.731 s  RSS   344.1 MB  elapsed     416 s\n"}
+,{"stream_name":"stdout","time":442.667242161,"data":"  [A   241/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|1              wall    16.408 s  RSS   351.7 MB  elapsed     432 s\n"}
+,{"stream_name":"stdout","time":442.672959818,"data":"  [A   242/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|3              wall    16.422 s  RSS   351.8 MB  elapsed     432 s\n"}
+,{"stream_name":"stdout","time":442.885858898,"data":"  [A   243/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|0              wall    16.497 s  RSS   351.5 MB  elapsed     433 s\n"}
+,{"stream_name":"stdout","time":442.893054997,"data":"  [A   244/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|2              wall    16.516 s  RSS   351.6 MB  elapsed     433 s\n"}
+,{"stream_name":"stdout","time":458.737652356,"data":"  [A   245/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|5              wall    16.047 s  RSS   351.8 MB  elapsed     449 s\n"}
+,{"stream_name":"stdout","time":459.149338745,"data":"  [A   246/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|4              wall    16.420 s  RSS   351.7 MB  elapsed     449 s\n"}
+,{"stream_name":"stdout","time":459.154301512,"data":"  [A   247/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|7              wall    16.168 s  RSS   351.8 MB  elapsed     449 s\n"}
+,{"stream_name":"stdout","time":459.365531091,"data":"  [A   248/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|6              wall    16.400 s  RSS   351.7 MB  elapsed     449 s\n"}
+,{"stream_name":"stdout","time":474.813417124,"data":"  [A   249/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|8              wall    16.054 s  RSS   351.8 MB  elapsed     465 s\n"}
+,{"stream_name":"stdout","time":475.428249517,"data":"  [A   250/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|9              wall    16.209 s  RSS   351.7 MB  elapsed     465 s\n"}
+,{"stream_name":"stdout","time":475.639490663,"data":"  [A   251/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|10             wall    16.323 s  RSS   351.8 MB  elapsed     465 s\n"}
+,{"stream_name":"stdout","time":475.647949295,"data":"  [A   252/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|11             wall    16.110 s  RSS   351.8 MB  elapsed     465 s\n"}
+,{"stream_name":"stdout","time":491.100317094,"data":"  [A   253/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|12             wall    16.206 s  RSS   351.8 MB  elapsed     481 s\n"}
+,{"stream_name":"stdout","time":491.515630965,"data":"  [A   254/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|13             wall    16.013 s  RSS   351.8 MB  elapsed     481 s\n"}
+,{"stream_name":"stdout","time":491.92519537,"data":"  [A   255/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|14             wall    16.219 s  RSS   351.7 MB  elapsed     482 s\n"}
+,{"stream_name":"stdout","time":491.930408736,"data":"  [A   256/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|15             wall    16.124 s  RSS   351.8 MB  elapsed     482 s\n"}
+,{"stream_name":"stdout","time":507.577598612,"data":"  [A   257/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|16             wall    16.403 s  RSS   351.7 MB  elapsed     497 s\n"}
+,{"stream_name":"stdout","time":507.582267868,"data":"  [A   258/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|17             wall    16.020 s  RSS   351.8 MB  elapsed     497 s\n"}
+,{"stream_name":"stdout","time":508.196860391,"data":"  [A   259/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|18             wall    16.078 s  RSS   351.7 MB  elapsed     498 s\n"}
+,{"stream_name":"stdout","time":508.407536035,"data":"  [A   260/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|19             wall    16.303 s  RSS   351.8 MB  elapsed     498 s\n"}
+,{"stream_name":"stdout","time":523.447575509,"data":"  [A   261/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|21             wall    15.774 s  RSS   351.8 MB  elapsed     513 s\n"}
+,{"stream_name":"stdout","time":523.659057221,"data":"  [A   262/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|20             wall    16.063 s  RSS   351.7 MB  elapsed     513 s\n"}
+,{"stream_name":"stdout","time":524.277875218,"data":"  [A   263/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|22             wall    15.877 s  RSS   351.8 MB  elapsed     514 s\n"}
+,{"stream_name":"stdout","time":524.48593795,"data":"  [A   264/432  ] A|regimemap|rastrigin|40|centred|0.01|1000000|23             wall    16.012 s  RSS   351.8 MB  elapsed     514 s\n"}
+,{"stream_name":"stdout","time":580.820899964,"data":"  [A   265/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|0              wall    57.334 s  RSS   374.6 MB  elapsed     571 s\n"}
+,{"stream_name":"stdout","time":581.835183327,"data":"  [A   266/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|2              wall    57.541 s  RSS   374.6 MB  elapsed     572 s\n"}
+,{"stream_name":"stdout","time":582.24503791,"data":"  [A   267/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|1              wall    58.412 s  RSS   374.5 MB  elapsed     572 s\n"}
+,{"stream_name":"stdout","time":582.656852164,"data":"  [A   268/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|3              wall    58.150 s  RSS   374.6 MB  elapsed     572 s\n"}
+,{"stream_name":"stdout","time":638.591975467,"data":"  [A   269/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|4              wall    57.618 s  RSS   374.5 MB  elapsed     628 s\n"}
+,{"stream_name":"stdout","time":640.005304663,"data":"  [A   270/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|5              wall    58.141 s  RSS   374.6 MB  elapsed     630 s\n"}
+,{"stream_name":"stdout","time":640.419775612,"data":"  [A   271/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|7              wall    57.671 s  RSS   374.5 MB  elapsed     630 s\n"}
+,{"stream_name":"stdout","time":640.62803728,"data":"  [A   272/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|6              wall    58.305 s  RSS   374.7 MB  elapsed     630 s\n"}
+,{"stream_name":"stdout","time":696.164969483,"data":"  [A   273/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|8              wall    57.463 s  RSS   374.7 MB  elapsed     686 s\n"}
+,{"stream_name":"stdout","time":697.577507885,"data":"  [A   274/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|9              wall    57.431 s  RSS   374.7 MB  elapsed     687 s\n"}
+,{"stream_name":"stdout","time":697.581786097,"data":"  [A   275/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|10             wall    57.142 s  RSS   374.7 MB  elapsed     687 s\n"}
+,{"stream_name":"stdout","time":697.796858653,"data":"  [A   276/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|11             wall    57.092 s  RSS   374.5 MB  elapsed     688 s\n"}
+,{"stream_name":"stdout","time":753.939414308,"data":"  [A   277/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|12             wall    57.727 s  RSS   374.7 MB  elapsed     744 s\n"}
+,{"stream_name":"stdout","time":755.753753965,"data":"  [A   278/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|15             wall    57.882 s  RSS   374.7 MB  elapsed     746 s\n"}
+,{"stream_name":"stdout","time":756.165001592,"data":"  [A   279/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|14             wall    58.548 s  RSS   374.7 MB  elapsed     746 s\n"}
+,{"stream_name":"stdout","time":756.375876164,"data":"  [A   280/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|13             wall    58.583 s  RSS   374.5 MB  elapsed     746 s\n"}
+,{"stream_name":"stdout","time":812.914932034,"data":"  [A   281/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|16             wall    58.794 s  RSS   374.7 MB  elapsed     803 s\n"}
+,{"stream_name":"stdout","time":814.531293067,"data":"  [A   282/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|17             wall    58.715 s  RSS   374.7 MB  elapsed     804 s\n"}
+,{"stream_name":"stdout","time":814.742057879,"data":"  [A   283/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|18             wall    58.540 s  RSS   374.7 MB  elapsed     805 s\n"}
+,{"stream_name":"stdout","time":815.35662764,"data":"  [A   284/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|19             wall    58.776 s  RSS   374.7 MB  elapsed     805 s\n"}
+,{"stream_name":"stdout","time":870.493926393,"data":"  [A   285/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|20             wall    57.436 s  RSS   374.7 MB  elapsed     860 s\n"}
+,{"stream_name":"stdout","time":870.705959178,"data":"  [A   286/432  ] A|regimemap|sphere|5|centred|0.1|4000|0                      wall     0.060 s  RSS    38.5 MB  elapsed     860 s\n"}
+,{"stream_name":"stdout","time":870.916863859,"data":"  [A   287/432  ] A|regimemap|sphere|5|centred|0.1|4000|1                      wall     0.071 s  RSS    38.5 MB  elapsed     861 s\n"}
+,{"stream_name":"stdout","time":871.124622488,"data":"  [A   288/432  ] A|regimemap|sphere|5|centred|0.1|4000|2                      wall     0.081 s  RSS    38.5 MB  elapsed     861 s\n"}
+,{"stream_name":"stdout","time":871.336899506,"data":"  [A   289/432  ] A|regimemap|sphere|5|centred|0.1|4000|3                      wall     0.057 s  RSS    38.5 MB  elapsed     861 s\n"}
+,{"stream_name":"stdout","time":871.545366807,"data":"  [A   290/432  ] A|regimemap|sphere|5|centred|0.1|4000|4                      wall     0.059 s  RSS    38.5 MB  elapsed     861 s\n"}
+,{"stream_name":"stdout","time":871.756913608,"data":"  [A   291/432  ] A|regimemap|sphere|5|centred|0.1|4000|5                      wall     0.062 s  RSS    38.5 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":871.966903643,"data":"  [A   292/432  ] A|regimemap|sphere|5|centred|0.1|4000|6                      wall     0.058 s  RSS    38.5 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.173949347,"data":"  [A   293/432  ] A|regimemap|sphere|5|centred|0.1|4000|7                      wall     0.057 s  RSS    38.5 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.383917805,"data":"  [A   294/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|21             wall    57.777 s  RSS   374.7 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.387944534,"data":"  [A   295/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|22             wall    57.442 s  RSS   374.6 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.392401632,"data":"  [A   296/432  ] A|regimemap|sphere|5|centred|0.1|4000|8                      wall     0.057 s  RSS    38.5 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.606994218,"data":"  [A   297/432  ] A|regimemap|sphere|5|centred|0.1|4000|9                      wall     0.060 s  RSS    38.4 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.611658332,"data":"  [A   298/432  ] A|regimemap|sphere|5|centred|0.1|4000|10                     wall     0.063 s  RSS    38.4 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.616013244,"data":"  [A   299/432  ] A|regimemap|sphere|5|centred|0.1|4000|11                     wall     0.058 s  RSS    38.5 MB  elapsed     862 s\n"}
+,{"stream_name":"stdout","time":872.833703896,"data":"  [A   300/432  ] A|regimemap|sphere|5|centred|0.1|4000|12                     wall     0.060 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":872.838992785,"data":"  [A   301/432  ] A|regimemap|sphere|5|centred|0.1|4000|13                     wall     0.059 s  RSS    38.5 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":872.843448327,"data":"  [A   302/432  ] A|regimemap|sphere|5|centred|0.1|4000|14                     wall     0.064 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.056238298,"data":"  [A   303/432  ] A|regimemap|sphere|5|centred|0.1|4000|15                     wall     0.060 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.061514786,"data":"  [A   304/432  ] A|regimemap|sphere|5|centred|0.1|4000|16                     wall     0.065 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.067152798,"data":"  [A   305/432  ] A|regimemap|sphere|5|centred|0.1|4000|17                     wall     0.058 s  RSS    38.5 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.280650521,"data":"  [A   306/432  ] A|regimemap|rastrigin|40|centred|0.01|4000000|23             wall    57.864 s  RSS   374.7 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.285033846,"data":"  [A   307/432  ] A|regimemap|sphere|5|centred|0.1|4000|18                     wall     0.060 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.289262299,"data":"  [A   308/432  ] A|regimemap|sphere|5|centred|0.1|4000|19                     wall     0.064 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.293655905,"data":"  [A   309/432  ] A|regimemap|sphere|5|centred|0.1|4000|20                     wall     0.058 s  RSS    38.5 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.509239019,"data":"  [A   310/432  ] A|regimemap|sphere|5|centred|0.1|4000|21                     wall     0.058 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.513978603,"data":"  [A   311/432  ] A|regimemap|sphere|5|centred|0.1|4000|22                     wall     0.057 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.518579415,"data":"  [A   312/432  ] A|regimemap|sphere|5|centred|0.1|4000|23                     wall     0.057 s  RSS    38.4 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.522786451,"data":"  [A   313/432  ] A|regimemap|sphere|5|centred|0.1|16000|0                     wall     0.098 s  RSS    39.0 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":873.73804904,"data":"  [A   314/432  ] A|regimemap|sphere|5|centred|0.1|16000|1                     wall     0.154 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.742532612,"data":"  [A   315/432  ] A|regimemap|sphere|5|centred|0.1|16000|2                     wall     0.155 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.747045004,"data":"  [A   316/432  ] A|regimemap|sphere|5|centred|0.1|16000|3                     wall     0.153 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.751565167,"data":"  [A   317/432  ] A|regimemap|sphere|5|centred|0.1|16000|4                     wall     0.153 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.967268235,"data":"  [A   318/432  ] A|regimemap|sphere|5|centred|0.1|16000|5                     wall     0.159 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.971279577,"data":"  [A   319/432  ] A|regimemap|sphere|5|centred|0.1|16000|6                     wall     0.155 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.976125083,"data":"  [A   320/432  ] A|regimemap|sphere|5|centred|0.1|16000|7                     wall     0.158 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":873.980470973,"data":"  [A   321/432  ] A|regimemap|sphere|5|centred|0.1|16000|8                     wall     0.154 s  RSS    39.1 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.197023051,"data":"  [A   322/432  ] A|regimemap|sphere|5|centred|0.1|16000|9                     wall     0.154 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.202248719,"data":"  [A   323/432  ] A|regimemap|sphere|5|centred|0.1|16000|10                    wall     0.161 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.206912011,"data":"  [A   324/432  ] A|regimemap|sphere|5|centred|0.1|16000|11                    wall     0.153 s  RSS    38.9 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.212575478,"data":"  [A   325/432  ] A|regimemap|sphere|5|centred|0.1|16000|12                    wall     0.159 s  RSS    39.1 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.429035946,"data":"  [A   326/432  ] A|regimemap|sphere|5|centred|0.1|16000|13                    wall     0.154 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.434091782,"data":"  [A   327/432  ] A|regimemap|sphere|5|centred|0.1|16000|14                    wall     0.160 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.439130645,"data":"  [A   328/432  ] A|regimemap|sphere|5|centred|0.1|16000|15                    wall     0.154 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.444051424,"data":"  [A   329/432  ] A|regimemap|sphere|5|centred|0.1|16000|16                    wall     0.156 s  RSS    39.1 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.659425348,"data":"  [A   330/432  ] A|regimemap|sphere|5|centred|0.1|16000|17                    wall     0.154 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.664964575,"data":"  [A   331/432  ] A|regimemap|sphere|5|centred|0.1|16000|18                    wall     0.155 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.670288628,"data":"  [A   332/432  ] A|regimemap|sphere|5|centred|0.1|16000|19                    wall     0.153 s  RSS    39.0 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.674970915,"data":"  [A   333/432  ] A|regimemap|sphere|5|centred|0.1|16000|20                    wall     0.154 s  RSS    39.1 MB  elapsed     864 s\n"}
+,{"stream_name":"stdout","time":874.892026766,"data":"  [A   334/432  ] A|regimemap|sphere|5|centred|0.1|16000|21                    wall     0.154 s  RSS    39.0 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":874.896714569,"data":"  [A   335/432  ] A|regimemap|sphere|5|centred|0.1|16000|22                    wall     0.154 s  RSS    39.0 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":874.901128913,"data":"  [A   336/432  ] A|regimemap|sphere|5|centred|0.1|16000|23                    wall     0.153 s  RSS    39.0 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":875.316421251,"data":"  [A   337/432  ] A|regimemap|sphere|5|centred|0.1|64000|0                     wall     0.485 s  RSS    43.6 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":875.526486387,"data":"  [A   338/432  ] A|regimemap|sphere|5|centred|0.1|64000|1                     wall     0.558 s  RSS    43.6 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":875.532276637,"data":"  [A   339/432  ] A|regimemap|sphere|5|centred|0.1|64000|2                     wall     0.556 s  RSS    43.6 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":875.537429527,"data":"  [A   340/432  ] A|regimemap|sphere|5|centred|0.1|64000|3                     wall     0.424 s  RSS    43.7 MB  elapsed     865 s\n"}
+,{"stream_name":"stdout","time":875.751049319,"data":"  [A   341/432  ] A|regimemap|sphere|5|centred|0.1|64000|4                     wall     0.384 s  RSS    43.7 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.160604247,"data":"  [A   342/432  ] A|regimemap|sphere|5|centred|0.1|64000|5                     wall     0.567 s  RSS    43.6 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.164970974,"data":"  [A   343/432  ] A|regimemap|sphere|5|centred|0.1|64000|6                     wall     0.517 s  RSS    43.6 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.168546861,"data":"  [A   344/432  ] A|regimemap|sphere|5|centred|0.1|64000|7                     wall     0.563 s  RSS    43.7 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.383919476,"data":"  [A   345/432  ] A|regimemap|sphere|5|centred|0.1|64000|8                     wall     0.453 s  RSS    43.6 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.592280733,"data":"  [A   346/432  ] A|regimemap|sphere|5|centred|0.1|64000|11                    wall     0.401 s  RSS    43.7 MB  elapsed     866 s\n"}
+,{"stream_name":"stdout","time":876.802281913,"data":"  [A   347/432  ] A|regimemap|sphere|5|centred|0.1|64000|9                     wall     0.556 s  RSS    43.6 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":876.805913614,"data":"  [A   348/432  ] A|regimemap|sphere|5|centred|0.1|64000|10                    wall     0.555 s  RSS    43.6 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.018926199,"data":"  [A   349/432  ] A|regimemap|sphere|5|centred|0.1|64000|12                    wall     0.490 s  RSS    43.7 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.22797649,"data":"  [A   350/432  ] A|regimemap|sphere|5|centred|0.1|64000|13                    wall     0.491 s  RSS    43.7 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.233083207,"data":"  [A   351/432  ] A|regimemap|sphere|5|centred|0.1|64000|14                    wall     0.414 s  RSS    43.6 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.237260307,"data":"  [A   352/432  ] A|regimemap|sphere|5|centred|0.1|64000|15                    wall     0.412 s  RSS    43.7 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.654972815,"data":"  [A   353/432  ] A|regimemap|sphere|5|centred|0.1|64000|16                    wall     0.541 s  RSS    43.7 MB  elapsed     867 s\n"}
+,{"stream_name":"stdout","time":877.86248142,"data":"  [A   354/432  ] A|regimemap|sphere|5|centred|0.1|64000|17                    wall     0.557 s  RSS    43.6 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":877.867006525,"data":"  [A   355/432  ] A|regimemap|sphere|5|centred|0.1|64000|18                    wall     0.469 s  RSS    43.6 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":877.871574697,"data":"  [A   356/432  ] A|regimemap|sphere|5|centred|0.1|64000|19                    wall     0.557 s  RSS    43.7 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":878.088223781,"data":"  [A   357/432  ] A|regimemap|sphere|5|centred|0.1|64000|20                    wall     0.397 s  RSS    43.7 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":878.498274702,"data":"  [A   358/432  ] A|regimemap|sphere|5|centred|0.1|64000|21                    wall     0.563 s  RSS    43.6 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":878.503199592,"data":"  [A   359/432  ] A|regimemap|sphere|5|centred|0.1|64000|22                    wall     0.526 s  RSS    43.6 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":878.508535822,"data":"  [A   360/432  ] A|regimemap|sphere|5|centred|0.1|64000|23                    wall     0.557 s  RSS    43.7 MB  elapsed     868 s\n"}
+,{"stream_name":"stdout","time":880.531697675,"data":"  [A   361/432  ] A|regimemap|sphere|5|centred|0.1|256000|0                    wall     2.254 s  RSS    59.4 MB  elapsed     870 s\n"}
+,{"stream_name":"stdout","time":880.743904068,"data":"  [A   362/432  ] A|regimemap|sphere|5|centred|0.1|256000|2                    wall     2.193 s  RSS    59.3 MB  elapsed     871 s\n"}
+,{"stream_name":"stdout","time":880.947953091,"data":"  [A   363/432  ] A|regimemap|sphere|5|centred|0.1|256000|1                    wall     2.371 s  RSS    59.3 MB  elapsed     871 s\n"}
+,{"stream_name":"stdout","time":880.95252266,"data":"  [A   364/432  ] A|regimemap|sphere|5|centred|0.1|256000|3                    wall     2.374 s  RSS    59.4 MB  elapsed     871 s\n"}
+,{"stream_name":"stdout","time":883.170402487,"data":"  [A   365/432  ] A|regimemap|sphere|5|centred|0.1|256000|4                    wall     2.441 s  RSS    59.4 MB  elapsed     873 s\n"}
+,{"stream_name":"stdout","time":883.380080902,"data":"  [A   366/432  ] A|regimemap|sphere|5|centred|0.1|256000|5                    wall     2.438 s  RSS    59.4 MB  elapsed     873 s\n"}
+,{"stream_name":"stdout","time":883.384697864,"data":"  [A   367/432  ] A|regimemap|sphere|5|centred|0.1|256000|6                    wall     2.368 s  RSS    59.3 MB  elapsed     873 s\n"}
+,{"stream_name":"stdout","time":883.38913373,"data":"  [A   368/432  ] A|regimemap|sphere|5|centred|0.1|256000|7                    wall     2.308 s  RSS    59.4 MB  elapsed     873 s\n"}
+,{"stream_name":"stdout","time":885.607044291,"data":"  [A   369/432  ] A|regimemap|sphere|5|centred|0.1|256000|8                    wall     2.287 s  RSS    59.4 MB  elapsed     875 s\n"}
+,{"stream_name":"stdout","time":885.817364842,"data":"  [A   370/432  ] A|regimemap|sphere|5|centred|0.1|256000|9                    wall     2.369 s  RSS    59.3 MB  elapsed     876 s\n"}
+,{"stream_name":"stdout","time":885.82119114,"data":"  [A   371/432  ] A|regimemap|sphere|5|centred|0.1|256000|10                   wall     2.370 s  RSS    59.4 MB  elapsed     876 s\n"}
+,{"stream_name":"stdout","time":885.825404273,"data":"  [A   372/432  ] A|regimemap|sphere|5|centred|0.1|256000|11                   wall     2.248 s  RSS    59.5 MB  elapsed     876 s\n"}
+,{"stream_name":"stdout","time":887.845366524,"data":"  [A   373/432  ] A|regimemap|sphere|5|centred|0.1|256000|12                   wall     2.210 s  RSS    59.5 MB  elapsed     878 s\n"}
+,{"stream_name":"stdout","time":888.255190268,"data":"  [A   374/432  ] A|regimemap|sphere|5|centred|0.1|256000|13                   wall     2.401 s  RSS    59.4 MB  elapsed     878 s\n"}
+,{"stream_name":"stdout","time":888.259299806,"data":"  [A   375/432  ] A|regimemap|sphere|5|centred|0.1|256000|14                   wall     2.296 s  RSS    59.4 MB  elapsed     878 s\n"}
+,{"stream_name":"stdout","time":888.264283466,"data":"  [A   376/432  ] A|regimemap|sphere|5|centred|0.1|256000|15                   wall     2.394 s  RSS    59.5 MB  elapsed     878 s\n"}
+,{"stream_name":"stdout","time":890.282352278,"data":"  [A   377/432  ] A|regimemap|sphere|5|centred|0.1|256000|16                   wall     2.248 s  RSS    59.5 MB  elapsed     880 s\n"}
+,{"stream_name":"stdout","time":890.492357162,"data":"  [A   378/432  ] A|regimemap|sphere|5|centred|0.1|256000|19                   wall     2.186 s  RSS    59.5 MB  elapsed     880 s\n"}
+,{"stream_name":"stdout","time":890.9031582,"data":"  [A   379/432  ] A|regimemap|sphere|5|centred|0.1|256000|17                   wall     2.461 s  RSS    59.4 MB  elapsed     881 s\n"}
+,{"stream_name":"stdout","time":890.906979889,"data":"  [A   380/432  ] A|regimemap|sphere|5|centred|0.1|256000|18                   wall     2.458 s  RSS    59.4 MB  elapsed     881 s\n"}
+,{"stream_name":"stdout","time":892.724838911,"data":"  [A   381/432  ] A|regimemap|sphere|5|centred|0.1|256000|20                   wall     2.277 s  RSS    59.5 MB  elapsed     883 s\n"}
+,{"stream_name":"stdout","time":892.938050016,"data":"  [A   382/432  ] A|regimemap|sphere|5|centred|0.1|256000|21                   wall     2.291 s  RSS    59.5 MB  elapsed     883 s\n"}
+,{"stream_name":"stdout","time":893.148552275,"data":"  [A   383/432  ] A|regimemap|sphere|5|centred|0.1|256000|22                   wall     2.228 s  RSS    59.4 MB  elapsed     883 s\n"}
+,{"stream_name":"stdout","time":893.357860734,"data":"  [A   384/432  ] A|regimemap|sphere|5|centred|0.1|256000|23                   wall     2.283 s  RSS    59.5 MB  elapsed     883 s\n"}
+,{"stream_name":"stdout","time":903.596241722,"data":"  [A   385/432  ] A|regimemap|sphere|5|centred|0.1|1000000|0                   wall    10.741 s  RSS    76.5 MB  elapsed     893 s\n"}
+,{"stream_name":"stdout","time":903.606872141,"data":"  [A   386/432  ] A|regimemap|sphere|5|centred|0.1|1000000|1                   wall    10.651 s  RSS    76.4 MB  elapsed     893 s\n"}
+,{"stream_name":"stdout","time":904.01808256,"data":"  [A   387/432  ] A|regimemap|sphere|5|centred|0.1|1000000|2                   wall    10.686 s  RSS    76.5 MB  elapsed     894 s\n"}
+,{"stream_name":"stdout","time":904.23047995,"data":"  [A   388/432  ] A|regimemap|sphere|5|centred|0.1|1000000|3                   wall    10.810 s  RSS    76.4 MB  elapsed     894 s\n"}
+,{"stream_name":"stdout","time":914.264745219,"data":"  [A   389/432  ] A|regimemap|sphere|5|centred|0.1|1000000|4                   wall    10.646 s  RSS    76.5 MB  elapsed     904 s\n"}
+,{"stream_name":"stdout","time":914.4733977,"data":"  [A   390/432  ] A|regimemap|sphere|5|centred|0.1|1000000|5                   wall    10.832 s  RSS    76.5 MB  elapsed     904 s\n"}
+,{"stream_name":"stdout","time":914.884712495,"data":"  [A   391/432  ] A|regimemap|sphere|5|centred|0.1|1000000|6                   wall    10.756 s  RSS    76.5 MB  elapsed     905 s\n"}
+,{"stream_name":"stdout","time":915.300484629,"data":"  [A   392/432  ] A|regimemap|sphere|5|centred|0.1|1000000|7                   wall    10.894 s  RSS    76.5 MB  elapsed     905 s\n"}
+,{"stream_name":"stdout","time":924.931851205,"data":"  [A   393/432  ] A|regimemap|sphere|5|centred|0.1|1000000|8                   wall    10.584 s  RSS    76.5 MB  elapsed     915 s\n"}
+,{"stream_name":"stdout","time":925.343063944,"data":"  [A   394/432  ] A|regimemap|sphere|5|centred|0.1|1000000|9                   wall    10.842 s  RSS    76.5 MB  elapsed     915 s\n"}
+,{"stream_name":"stdout","time":925.957298744,"data":"  [A   395/432  ] A|regimemap|sphere|5|centred|0.1|1000000|10                  wall    10.940 s  RSS    76.5 MB  elapsed     916 s\n"}
+,{"stream_name":"stdout","time":926.167470421,"data":"  [A   396/432  ] A|regimemap|sphere|5|centred|0.1|1000000|11                  wall    10.675 s  RSS    76.4 MB  elapsed     916 s\n"}
+,{"stream_name":"stdout","time":935.596946993,"data":"  [A   397/432  ] A|regimemap|sphere|5|centred|0.1|1000000|12                  wall    10.638 s  RSS    76.5 MB  elapsed     925 s\n"}
+,{"stream_name":"stdout","time":936.209484554,"data":"  [A   398/432  ] A|regimemap|sphere|5|centred|0.1|1000000|13                  wall    10.828 s  RSS    76.5 MB  elapsed     926 s\n"}
+,{"stream_name":"stdout","time":937.021915967,"data":"  [A   399/432  ] A|regimemap|sphere|5|centred|0.1|1000000|14                  wall    10.954 s  RSS    76.4 MB  elapsed     927 s\n"}
+,{"stream_name":"stdout","time":937.029876607,"data":"  [A   400/432  ] A|regimemap|sphere|5|centred|0.1|1000000|15                  wall    10.714 s  RSS    76.4 MB  elapsed     927 s\n"}
+,{"stream_name":"stdout","time":946.262155727,"data":"  [A   401/432  ] A|regimemap|sphere|5|centred|0.1|1000000|16                  wall    10.642 s  RSS    76.4 MB  elapsed     936 s\n"}
+,{"stream_name":"stdout","time":947.074512834,"data":"  [A   402/432  ] A|regimemap|sphere|5|centred|0.1|1000000|17                  wall    10.846 s  RSS    76.5 MB  elapsed     937 s\n"}
+,{"stream_name":"stdout","time":947.88990821,"data":"  [A   403/432  ] A|regimemap|sphere|5|centred|0.1|1000000|18                  wall    10.695 s  RSS    76.4 MB  elapsed     938 s\n"}
+,{"stream_name":"stdout","time":948.097868868,"data":"  [A   404/432  ] A|regimemap|sphere|5|centred|0.1|1000000|19                  wall    11.008 s  RSS    76.5 MB  elapsed     938 s\n"}
+,{"stream_name":"stdout","time":957.130506668,"data":"  [A   405/432  ] A|regimemap|sphere|5|centred|0.1|1000000|20                  wall    10.796 s  RSS    76.5 MB  elapsed     947 s\n"}
+,{"stream_name":"stdout","time":957.940576563,"data":"  [A   406/432  ] A|regimemap|sphere|5|centred|0.1|1000000|21                  wall    10.798 s  RSS    76.5 MB  elapsed     948 s\n"}
+,{"stream_name":"stdout","time":958.953507112,"data":"  [A   407/432  ] A|regimemap|sphere|5|centred|0.1|1000000|22                  wall    10.854 s  RSS    76.5 MB  elapsed     949 s\n"}
+,{"stream_name":"stdout","time":958.958086629,"data":"  [A   408/432  ] A|regimemap|sphere|5|centred|0.1|1000000|23                  wall    10.704 s  RSS    76.5 MB  elapsed     949 s\n"}
+,{"stream_name":"stdout","time":1002.870852517,"data":"  [A   409/432  ] A|regimemap|sphere|5|centred|0.1|4000000|1                   wall    44.751 s  RSS   191.0 MB  elapsed     993 s\n"}
+,{"stream_name":"stdout","time":1003.882343511,"data":"  [A   410/432  ] A|regimemap|sphere|5|centred|0.1|4000000|0                   wall    46.632 s  RSS   191.0 MB  elapsed     994 s\n"}
+,{"stream_name":"stdout","time":1003.886672686,"data":"  [A   411/432  ] A|regimemap|sphere|5|centred|0.1|4000000|3                   wall    44.740 s  RSS   191.0 MB  elapsed     994 s\n"}
+,{"stream_name":"stdout","time":1005.702230961,"data":"  [A   412/432  ] A|regimemap|sphere|5|centred|0.1|4000000|2                   wall    46.533 s  RSS   190.9 MB  elapsed     995 s\n"}
+,{"stream_name":"stdout","time":1047.815446416,"data":"  [A   413/432  ] A|regimemap|sphere|5|centred|0.1|4000000|4                   wall    44.815 s  RSS   191.0 MB  elapsed    1038 s\n"}
+,{"stream_name":"stdout","time":1048.830386326,"data":"  [A   414/432  ] A|regimemap|sphere|5|centred|0.1|4000000|5                   wall    44.782 s  RSS   190.9 MB  elapsed    1039 s\n"}
+,{"stream_name":"stdout","time":1049.645577203,"data":"  [A   415/432  ] A|regimemap|sphere|5|centred|0.1|4000000|6                   wall    45.711 s  RSS   191.0 MB  elapsed    1039 s\n"}
+,{"stream_name":"stdout","time":1051.661869577,"data":"  [A   416/432  ] A|regimemap|sphere|5|centred|0.1|4000000|7                   wall    45.863 s  RSS   191.0 MB  elapsed    1041 s\n"}
+,{"stream_name":"stdout","time":1095.177911421,"data":"  [A   417/432  ] A|regimemap|sphere|5|centred|0.1|4000000|10                  wall    45.391 s  RSS   191.0 MB  elapsed    1085 s\n"}
+,{"stream_name":"stdout","time":1095.79316707,"data":"  [A   418/432  ] A|regimemap|sphere|5|centred|0.1|4000000|8                   wall    47.827 s  RSS   191.0 MB  elapsed    1086 s\n"}
+,{"stream_name":"stdout","time":1096.808204573,"data":"  [A   419/432  ] A|regimemap|sphere|5|centred|0.1|4000000|9                   wall    47.792 s  RSS   190.9 MB  elapsed    1087 s\n"}
+,{"stream_name":"stdout","time":1097.223185915,"data":"  [A   420/432  ] A|regimemap|sphere|5|centred|0.1|4000000|11                  wall    45.478 s  RSS   191.0 MB  elapsed    1087 s\n"}
+,{"stream_name":"stdout","time":1142.150958873,"data":"  [A   421/432  ] A|regimemap|sphere|5|centred|0.1|4000000|12                  wall    46.790 s  RSS   191.0 MB  elapsed    1132 s\n"}
+,{"stream_name":"stdout","time":1142.765050593,"data":"  [A   422/432  ] A|regimemap|sphere|5|centred|0.1|4000000|13                  wall    46.803 s  RSS   190.9 MB  elapsed    1133 s\n"}
+,{"stream_name":"stdout","time":1143.781260152,"data":"  [A   423/432  ] A|regimemap|sphere|5|centred|0.1|4000000|14                  wall    46.936 s  RSS   190.9 MB  elapsed    1134 s\n"}
+,{"stream_name":"stdout","time":1144.200399704,"data":"  [A   424/432  ] A|regimemap|sphere|5|centred|0.1|4000000|15                  wall    46.830 s  RSS   191.0 MB  elapsed    1134 s\n"}
+,{"stream_name":"stdout","time":1188.726397054,"data":"  [A   425/432  ] A|regimemap|sphere|5|centred|0.1|4000000|17                  wall    45.783 s  RSS   191.0 MB  elapsed    1179 s\n"}
+,{"stream_name":"stdout","time":1189.137923813,"data":"  [A   426/432  ] A|regimemap|sphere|5|centred|0.1|4000000|16                  wall    46.945 s  RSS   191.0 MB  elapsed    1179 s\n"}
+,{"stream_name":"stdout","time":1189.549980419,"data":"  [A   427/432  ] A|regimemap|sphere|5|centred|0.1|4000000|18                  wall    45.661 s  RSS   190.9 MB  elapsed    1179 s\n"}
+,{"stream_name":"stdout","time":1191.363584116,"data":"  [A   428/432  ] A|regimemap|sphere|5|centred|0.1|4000000|19                  wall    47.044 s  RSS   191.0 MB  elapsed    1181 s\n"}
+,{"stream_name":"stdout","time":1234.072326214,"data":"  [A   429/432  ] A|regimemap|sphere|5|centred|0.1|4000000|20                  wall    45.224 s  RSS   191.0 MB  elapsed    1224 s\n"}
+,{"stream_name":"stdout","time":1234.282349515,"data":"  [A   430/432  ] A|regimemap|sphere|5|centred|0.1|4000000|21                  wall    45.106 s  RSS   191.0 MB  elapsed    1224 s\n"}
+,{"stream_name":"stdout","time":1234.888857408,"data":"  [A   431/432  ] A|regimemap|sphere|5|centred|0.1|4000000|22                  wall    45.292 s  RSS   191.0 MB  elapsed    1225 s\n"}
+,{"stream_name":"stdout","time":1236.095762356,"data":"  [A   432/432  ] A|regimemap|sphere|5|centred|0.1|4000000|23                  wall    44.542 s  RSS   191.0 MB  elapsed    1226 s\n"}
+,{"stream_name":"stdout","time":1236.138764867,"data":"  3 of 3 cells have a complete phase A\n"}
+,{"stream_name":"stdout","time":1236.13880418,"data":"\n"}
+,{"stream_name":"stdout","time":1236.13881234,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1236.138817851,"data":"PHASE C  references at 64000000 and 256000000, six replicates each, at beta_adq\n"}
+,{"stream_name":"stdout","time":1236.13882312,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":1236.138828512,"data":"  [C] 36 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":1290.667882768,"data":"  [C     1/36   ] C|regimemap|ackley|10|centred|0.03|64000000|1                wall    54.359 s  RSS   106.5 MB  elapsed      55 s\n"}
+,{"stream_name":"stdout","time":1290.673283299,"data":"  [C     2/36   ] C|regimemap|ackley|10|centred|0.03|64000000|2                wall    54.492 s  RSS   106.5 MB  elapsed      55 s\n"}
+,{"stream_name":"stdout","time":1290.678610435,"data":"  [C     3/36   ] C|regimemap|ackley|10|centred|0.03|64000000|3                wall    54.426 s  RSS   106.6 MB  elapsed      55 s\n"}
+,{"stream_name":"stdout","time":1294.503851202,"data":"  [C     4/36   ] C|regimemap|ackley|10|centred|0.03|64000000|0                wall    58.233 s  RSS  2542.2 MB  elapsed      58 s\n"}
+,{"stream_name":"stdout","time":1345.039445796,"data":"  [C     5/36   ] C|regimemap|ackley|10|centred|0.03|64000000|4                wall    54.202 s  RSS   106.5 MB  elapsed     109 s\n"}
+,{"stream_name":"stdout","time":1345.044298495,"data":"  [C     6/36   ] C|regimemap|ackley|10|centred|0.03|64000000|5                wall    54.277 s  RSS   106.5 MB  elapsed     109 s\n"}
+,{"stream_name":"stdout","time":1507.610570792,"data":"  [C     7/36   ] C|regimemap|ackley|10|centred|0.03|256000000|0               wall   216.747 s  RSS   106.7 MB  elapsed     271 s\n"}
+,{"stream_name":"stdout","time":1511.231790392,"data":"  [C     8/36   ] C|regimemap|ackley|10|centred|0.03|256000000|1               wall   216.532 s  RSS   106.9 MB  elapsed     275 s\n"}
+,{"stream_name":"stdout","time":1561.350054811,"data":"  [C     9/36   ] C|regimemap|ackley|10|centred|0.03|256000000|3               wall   216.223 s  RSS   106.8 MB  elapsed     325 s\n"}
+,{"stream_name":"stdout","time":1561.758390824,"data":"  [C    10/36   ] C|regimemap|ackley|10|centred|0.03|256000000|2               wall   216.507 s  RSS   106.7 MB  elapsed     326 s\n"}
+,{"stream_name":"stdout","time":1723.518368704,"data":"  [C    11/36   ] C|regimemap|ackley|10|centred|0.03|256000000|4               wall   215.809 s  RSS   106.7 MB  elapsed     487 s\n"}
+,{"stream_name":"stdout","time":1726.935244986,"data":"  [C    12/36   ] C|regimemap|ackley|10|centred|0.03|256000000|5               wall   215.677 s  RSS   106.7 MB  elapsed     491 s\n"}
+,{"stream_name":"stdout","time":1786.073673223,"data":"  [C    13/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|1             wall   224.119 s  RSS   351.0 MB  elapsed     550 s\n"}
+,{"stream_name":"stdout","time":1789.087006186,"data":"  [C    14/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|0             wall   227.578 s  RSS  2483.2 MB  elapsed     553 s\n"}
+,{"stream_name":"stdout","time":1947.850399667,"data":"  [C    15/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|2             wall   224.196 s  RSS   351.0 MB  elapsed     712 s\n"}
+,{"stream_name":"stdout","time":1960.29483815,"data":"  [C    16/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|3             wall   233.342 s  RSS   351.0 MB  elapsed     724 s\n"}
+,{"stream_name":"stdout","time":2015.435350322,"data":"  [C    17/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|5             wall   226.284 s  RSS   351.0 MB  elapsed     779 s\n"}
+,{"stream_name":"stdout","time":2020.258899886,"data":"  [C    18/36   ] C|regimemap|rastrigin|40|centred|0.01|64000000|4             wall   234.036 s  RSS   351.0 MB  elapsed     784 s\n"}
+,{"stream_name":"stdout","time":2873.796840761,"data":"  [C    19/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|1            wall   913.450 s  RSS   351.2 MB  elapsed    1638 s\n"}
+,{"stream_name":"stdout","time":2874.211461404,"data":"  [C    20/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|0            wall   926.224 s  RSS   351.2 MB  elapsed    1638 s\n"}
+,{"stream_name":"stdout","time":2930.144223833,"data":"  [C    21/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|2            wall   914.661 s  RSS   351.2 MB  elapsed    1694 s\n"}
+,{"stream_name":"stdout","time":2946.390358686,"data":"  [C    22/36   ] C|regimemap|sphere|5|centred|0.1|64000000|0                  wall    16.151 s  RSS  2503.3 MB  elapsed    1710 s\n"}
+,{"stream_name":"stdout","time":2949.009040093,"data":"  [C    23/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|3            wall   928.583 s  RSS   351.1 MB  elapsed    1713 s\n"}
+,{"stream_name":"stdout","time":2959.048810206,"data":"  [C    24/36   ] C|regimemap|sphere|5|centred|0.1|64000000|1                  wall    12.468 s  RSS    62.1 MB  elapsed    1723 s\n"}
+,{"stream_name":"stdout","time":2961.657529934,"data":"  [C    25/36   ] C|regimemap|sphere|5|centred|0.1|64000000|2                  wall    12.471 s  RSS    62.1 MB  elapsed    1726 s\n"}
+,{"stream_name":"stdout","time":2971.68789565,"data":"  [C    26/36   ] C|regimemap|sphere|5|centred|0.1|64000000|3                  wall    12.476 s  RSS    62.1 MB  elapsed    1736 s\n"}
+,{"stream_name":"stdout","time":2974.101776973,"data":"  [C    27/36   ] C|regimemap|sphere|5|centred|0.1|64000000|4                  wall    12.343 s  RSS    62.1 MB  elapsed    1738 s\n"}
+,{"stream_name":"stdout","time":2984.339144911,"data":"  [C    28/36   ] C|regimemap|sphere|5|centred|0.1|64000000|5                  wall    12.486 s  RSS    62.0 MB  elapsed    1748 s\n"}
+,{"stream_name":"stdout","time":3024.433909145,"data":"  [C    29/36   ] C|regimemap|sphere|5|centred|0.1|256000000|0                 wall    50.149 s  RSS    62.3 MB  elapsed    1788 s\n"}
+,{"stream_name":"stdout","time":3034.664815319,"data":"  [C    30/36   ] C|regimemap|sphere|5|centred|0.1|256000000|1                 wall    50.171 s  RSS    62.3 MB  elapsed    1799 s\n"}
+,{"stream_name":"stdout","time":3074.957583333,"data":"  [C    31/36   ] C|regimemap|sphere|5|centred|0.1|256000000|2                 wall    50.365 s  RSS    62.3 MB  elapsed    1839 s\n"}
+,{"stream_name":"stdout","time":3085.399895183,"data":"  [C    32/36   ] C|regimemap|sphere|5|centred|0.1|256000000|3                 wall    50.582 s  RSS    62.3 MB  elapsed    1849 s\n"}
+,{"stream_name":"stdout","time":3126.696983892,"data":"  [C    33/36   ] C|regimemap|sphere|5|centred|0.1|256000000|4                 wall    51.545 s  RSS    62.3 MB  elapsed    1891 s\n"}
+,{"stream_name":"stdout","time":3135.323026816,"data":"  [C    34/36   ] C|regimemap|sphere|5|centred|0.1|256000000|5                 wall    49.814 s  RSS    62.3 MB  elapsed    1899 s\n"}
+,{"stream_name":"stdout","time":3604.259409801,"data":"  [C    35/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|4            wall   730.413 s  RSS   351.2 MB  elapsed    2368 s\n"}
+,{"stream_name":"stdout","time":3609.672972827,"data":"  [C    36/36   ] C|regimemap|rastrigin|40|centred|0.01|256000000|5            wall   735.268 s  RSS   351.1 MB  elapsed    2374 s\n"}
+,{"stream_name":"stdout","time":3609.677127087,"data":"  regimemap|ackley|10|centred|0.03                 C5m 0.104912  D1 0.047283  not adequate (C5m FAIL, D1 FAIL)\n"}
+,{"stream_name":"stdout","time":3609.677153085,"data":"  regimemap|rastrigin|40|centred|0.01              C5m 0.214455  D1 0.010541  not adequate (C5m FAIL)\n"}
+,{"stream_name":"stdout","time":3609.677179861,"data":"  regimemap|sphere|5|centred|0.1                   C5m 0.001141  D1 0.000062  adequate\n"}
+,{"stream_name":"stdout","time":3609.677185445,"data":"  adequate at 64000000: 1 of 3 cells\n"}
+,{"stream_name":"stdout","time":3609.677190623,"data":"\n"}
+,{"stream_name":"stdout","time":3609.677195325,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3609.677200059,"data":"PHASE C1  sufficiency pass at 64000000, 1 cells\n"}
+,{"stream_name":"stdout","time":3609.677204981,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":3609.677210067,"data":"  [C1] 6 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":4041.004467551,"data":"  [C1     1/6    ] P|regimemap|sphere|5|centred|0.1|64000000|2                  wall   431.258 s  RSS    67.6 MB  elapsed     431 s\n"}
+,{"stream_name":"stdout","time":4041.827824221,"data":"  [C1     2/6    ] P|regimemap|sphere|5|centred|0.1|64000000|3                  wall   432.049 s  RSS    67.6 MB  elapsed     432 s\n"}
+,{"stream_name":"stdout","time":4043.249470204,"data":"  [C1     3/6    ] P|regimemap|sphere|5|centred|0.1|64000000|0                  wall   433.397 s  RSS    67.5 MB  elapsed     434 s\n"}
+,{"stream_name":"stdout","time":4043.662673172,"data":"  [C1     4/6    ] P|regimemap|sphere|5|centred|0.1|64000000|1                  wall   433.779 s  RSS    67.6 MB  elapsed     434 s\n"}
+,{"stream_name":"stdout","time":4275.416614541,"data":"  [C1     5/6    ] P|regimemap|sphere|5|centred|0.1|64000000|4                  wall   234.350 s  RSS    67.3 MB  elapsed     666 s\n"}
+,{"stream_name":"stdout","time":4277.024567954,"data":"  [C1     6/6    ] P|regimemap|sphere|5|centred|0.1|64000000|5                  wall   235.177 s  RSS    67.5 MB  elapsed     667 s\n"}
+,{"stream_name":"stdout","time":4277.02983334,"data":"\n"}
+,{"stream_name":"stdout","time":4277.029870762,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4277.029876097,"data":"PHASE B and C'  production beta and its check, 1 cells\n"}
+,{"stream_name":"stdout","time":4277.029879717,"data":"------------------------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":4277.02988458,"data":"  [B] 1 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":4277.238031824,"data":"  [B     1/1    ] B|regimemap|sphere|5|centred|0.1|16000|0                     wall     0.093 s  RSS    39.7 MB  elapsed       0 s\n"}
+,{"stream_name":"stdout","time":4277.238178688,"data":"  [C'] 6 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":4289.881816447,"data":"  [C'     1/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|6                  wall    12.597 s  RSS    61.9 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":4289.887014503,"data":"  [C'     2/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|7                  wall    12.519 s  RSS    61.9 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":4289.891588584,"data":"  [C'     3/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|8                  wall    12.531 s  RSS    62.0 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":4289.896624582,"data":"  [C'     4/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|9                  wall    12.630 s  RSS    62.1 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":4298.719067178,"data":"  [C'     5/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|10                 wall     8.720 s  RSS    61.9 MB  elapsed      21 s\n"}
+,{"stream_name":"stdout","time":4298.924524314,"data":"  [C'     6/6    ] Q|regimemap|sphere|5|centred|0.1|64000000|11                 wall     8.859 s  RSS    62.1 MB  elapsed      22 s\n"}
+,{"stream_name":"stdout","time":4298.92746697,"data":"\n"}
+,{"stream_name":"stdout","time":4298.92751476,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":4298.927520963,"data":"tasks run by this job: 481   task execution 4289 s\n"}
+,{"stream_name":"stdout","time":4298.927526215,"data":"not stopped: every phase ran\n"}
+,{"stream_name":"stdout","time":4298.927531028,"data":"errored or timed-out tasks: 0\n"}
+,{"stream_name":"stdout","time":4298.927535931,"data":"files  /kaggle/working/calprec2-full-20261025-233913-s9of15\n"}
+,{"stream_name":"stdout","time":4298.927541743,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":4299.005853985,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":4302.514607841,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4302.514655466,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4303.157369355,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4303.15740254,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4306.001904309,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4307.652884137,"data":"[NbConvertApp] Writing 310296 bytes to __results__.html\n"}
+]
