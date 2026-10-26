@@ -164,15 +164,13 @@
       "ledger": "N41"
     }
   ],
-  "status": "RUNNING",
-  "index": 14,
+  "status": "READY",
+  "index": 15,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "calprec2-ext-s14of15-a1",
-  "args": "--workers 4 --rows RMAP,CLIFF,ONSET --throughput runs/calprec2-smoke-ext-kaggle-20261025-065222 --stop-after 30000.0 --shard 14 --nshards 15",
-  "data_dirs": [
-    "runs/calprec2-smoke-ext-kaggle-20261025-065222"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -371,6 +369,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261026T093212Z",
         "fetched_at": "2026-10-26T15:02:40+05:30"
+      }
+    ],
+    "ext-s14of15": [
+      {
+        "attempt": 1,
+        "job": "calprec2-ext-s14of15-a1",
+        "folder": "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 318,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T111710Z",
+        "fetched_at": "2026-10-26T16:47:18+05:30"
       }
     ]
   },
@@ -779,6 +791,15 @@
       "attempt": 1,
       "job": "calprec2-ext-s14of15-a1",
       "note": "logs/kgrun-calprec2-ext-s14of15-a1.log"
+    },
+    {
+      "at": "2026-10-26T16:47:18+05:30",
+      "run": "laptop.20261026T111710Z",
+      "event": "fetched",
+      "item": "ext-finalize",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713: runner exit 0; now READY"
     }
   ],
   "definition": {

@@ -1,0 +1,3 @@
+cell,shard,rows
+regimemap|ackley|40|centred|0.03,14,RMAP
+regimemap|rastrigin|80|centred|0.1,14,ONSET
