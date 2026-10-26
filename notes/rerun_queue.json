@@ -52,13 +52,15 @@
       "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-smoke-cal3-a1",
+  "args": "--smoke --plan-from runs/rerun-plan-20261026-210435 --rows RMAP-CAL,CLIFF-CAL,ONSET-CAL --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261026-210435"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -72,6 +74,15 @@
       "attempt": 1,
       "job": "",
       "note": "notes/queues/rerun-cal3.json; previous state archived to notes/queue-archive/20261026-213519-calprec2-ext-done.json; N42: RMAP-CAL, CLIFF-CAL, ONSET-CAL on the N41 betas; smoke + 2 shards; plan rerun-plan-20261026-210435"
+    },
+    {
+      "at": "2026-10-26T21:36:34+05:30",
+      "run": "laptop.20261026T160550Z",
+      "event": "intent",
+      "item": "smoke-cal3",
+      "attempt": 1,
+      "job": "rerun-smoke-cal3-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
