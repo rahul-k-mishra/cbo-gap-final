@@ -1,0 +1,43 @@
+==============================================================================
+rerunq tick  run laptop.20261026T113210Z  2026-10-26T17:02:10+05:30
+  python 3.12.3
+  state file notes/rerun_queue.json
+  state READY  item 15  attempt 1  job -
+  definition notes/queues/calprec2-ext.json (sha256 1a5b78e9b58b2a09ec3d3122954a0bd1563b182a69bbe253e05d990eeb8a9cc0)
+  profile calprec2-ext [calprec2]  rows RMAP,CLIFF,ONSET  throughput runs/calprec2-smoke-ext-kaggle-20261025-065222  stop-after 30000  ceiling 21600.0  workers 4  cells 41
+    expect python 3.13.15 numpy 2.1.3; calprec2_sha256 3947d7ba; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+LAUNCH  item 15 (ext-finalize), attempt 1, job calprec2-ext-finalize-a1  [calprec2 profile calprec2-ext]
+  P1 code pin: calprec2.py, costprobe2.py as pinned
+  FIN: 15 input folder(s): runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225, runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230, runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716, runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231, runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238, runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216, runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717, runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229, runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717, runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217, runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720, runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216, runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229, runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225, runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job calprec2-ext-finalize-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-ext-finalize-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-ext-finalize-a1
+    | Cannot access kernel 'ericsom/cbo-calprec2-ext-finalize-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-ext-finalize-a1: DENIED  (judged: Cannot access kernel 'ericsom/cbo-calprec2-ext-finalize-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.)
+  denied: control status of calprec2-long-s25of26-a1 (L4), to tell a free name from a credential failure
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job calprec2-long-s25of26-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-long-s25of26-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-long-s25of26-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-long-s25of26-a1: COMPLETE  (judged: ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE")
+  L3: kernel absent on Kaggle, name unused
+  push 1 of 3: accepted
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py launch --job calprec2-ext-finalize-a1 --user ericsom --script calprec2.py --data-dirs runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713 --args=--rows RMAP,CLIFF,ONSET --finalize runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225,runs/calprec2-ext-s1of15-a1-kaggle-20261025-130230,runs/calprec2-ext-s2of15-a1-kaggle-20261025-144716,runs/calprec2-ext-s3of15-a1-kaggle-20261025-180231,runs/calprec2-ext-s4of15-a1-kaggle-20261025-200238,runs/calprec2-ext-s5of15-a1-kaggle-20261025-223216,runs/calprec2-ext-s6of15-a1-kaggle-20261026-001717,runs/calprec2-ext-s7of15-a1-kaggle-20261026-023229,runs/calprec2-ext-s8of15-a1-kaggle-20261026-044717,runs/calprec2-ext-s9of15-a1-kaggle-20261026-063217,runs/calprec2-ext-s10of15-a1-kaggle-20261026-091720,runs/calprec2-ext-s11of15-a1-kaggle-20261026-113216,runs/calprec2-ext-s12of15-a1-kaggle-20261026-130229,runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225,runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713
+  kgrun exit code 1  (console: logs/kgrun-calprec2-ext-finalize-a1.log)
+    | data folder runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225 is not named in --args as runs/calprec2-ext-s0of15-a1-kaggle-20261025-103225
+HALT: kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release

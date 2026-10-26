@@ -164,7 +164,7 @@
       "ledger": "N41"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "HALTED",
   "index": 15,
   "attempt": 1,
   "resume_dirs": [],
@@ -188,7 +188,7 @@
     "runs/calprec2-ext-s14of15-a1-kaggle-20261026-164713"
   ],
   "anomaly": null,
-  "halt_reason": "",
+  "halt_reason": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release",
   "kernel_check": null,
   "attempts": {
     "ext-s0of15": [
@@ -825,6 +825,15 @@
       "attempt": 1,
       "job": "calprec2-ext-finalize-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-26T17:02:21+05:30",
+      "run": "laptop.20261026T113210Z",
+      "event": "halt",
+      "item": "ext-finalize",
+      "attempt": 1,
+      "job": "calprec2-ext-finalize-a1",
+      "note": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release"
     }
   ],
   "definition": {
