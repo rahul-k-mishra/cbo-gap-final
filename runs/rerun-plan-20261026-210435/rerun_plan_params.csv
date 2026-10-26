@@ -1,0 +1,25 @@
+name,value
+mode,precheck
+env,python 3.12.3 numpy 2.5.3
+platform,Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+archive,/home/rahul/Research/cbo-gap-final/zenodo-v1
+calprec2_dir,/home/rahul/Research/cbo-gap-final/runs/calprec2-finalize-20261023-112503;/home/rahul/Research/cbo-gap-final/runs/calprec2-ext-finalize-a2-kaggle-20261026-204714
+calprec2_sha256,0fc98d232892cc5e2ed0fc22d14a03700276b9eead293036ff8b0f2fbb7c2668;2783222b4fde2aaeda5bfadedc36dc33dec7673519392632d3d5454c18e6adb3
+entropy,20261016
+kind_traj,81
+kind_boot,71
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+rerun_sha256,de28b69a550c953887c19c1058968363cfb4e14050e14a2f6c7088e43194aca1
+rerunlib_sha256,6a7ddf42242d5101086741e3a341db9711b2d47fdbfd60710be9229de8895b07
+V0,PASS
+P1,PASS
+S1,PASS
+O1,PASS
+A-BETA/A-SIGMA,PASS
+C2,PASS
+K1,PASS
+K2,PASS
+K4,PASS
+K5,PASS
+same_as,runs/rerun-plan-20261023-112643
+calprec2_rows,present
