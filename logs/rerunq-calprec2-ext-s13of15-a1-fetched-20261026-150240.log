@@ -1,0 +1,47 @@
+==============================================================================
+rerunq tick  run laptop.20261026T093212Z  2026-10-26T15:02:12+05:30
+  python 3.12.3
+  state file notes/rerun_queue.json
+  state RUNNING  item 13  attempt 1  job calprec2-ext-s13of15-a1
+  definition notes/queues/calprec2-ext.json (sha256 1a5b78e9b58b2a09ec3d3122954a0bd1563b182a69bbe253e05d990eeb8a9cc0)
+  profile calprec2-ext [calprec2]  rows RMAP,CLIFF,ONSET  throughput runs/calprec2-smoke-ext-kaggle-20261025-065222  stop-after 30000  ceiling 21600.0  workers 4  cells 41
+    expect python 3.13.15 numpy 2.1.3; calprec2_sha256 3947d7ba; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  calprec2-ext-s13of15-a1
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job calprec2-ext-s13of15-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-ext-s13of15-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-ext-s13of15-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-calprec2-ext-s13of15-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-ext-s13of15-a1: COMPLETE  (judged: ericsom/cbo-calprec2-ext-s13of15-a1 has status "KernelWorkerStatus.COMPLETE")
+FETCH  calprec2-ext-s13of15-a1 (kaggle status COMPLETE)
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py fetch --job calprec2-ext-s13of15-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-calprec2-ext-s13of15-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job calprec2-ext-s13of15-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    | FETCH OUTPUT into /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225
+    |   $ kaggle kernels output ericsom/cbo-calprec2-ext-s13of15-a1 -p /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_params.csv
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_plan.csv
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_tasks.csv
+    | Kernel log downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/cbo-calprec2-ext-s13of15-a1.log 
+    |   4 files, manifest written to sha256.txt
+    |     d24816945a9c496a6ef63903953c972c592dfd052f6b785067e1f43fe1dcdfc7  calprec2-full-20261026-081523-s13of15/calprec2_params.csv
+    |     d8026a487c7956455d77c241dc555ffa21b2446a1a4f468da04d169d18eca4f1  calprec2-full-20261026-081523-s13of15/calprec2_plan.csv
+    |     d6fa91cba9aff6fd0da7c23f886f34d247f0a8205f4c6ec4a5595985bddd005d  calprec2-full-20261026-081523-s13of15/calprec2_tasks.csv
+    |     d0ca6874ed24fba8b1f8e65ad07e24e6ec3e7f4612cb340d3664bd1c0903554f  cbo-calprec2-ext-s13of15-a1.log
+    | ==============================================================================
+  runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225: manifest verified, 4 files
+  runner exit 0  python 3.13.15  numpy 2.1.3  mode full  run dir /kaggle/working/calprec2-full-20261026-081523-s13of15  D-SMOKE None  completed 325
+  F2C: 325 rows end ok; runner summary 'tasks run by this job' 325, errored 0
+  runner exit 0; state now READY

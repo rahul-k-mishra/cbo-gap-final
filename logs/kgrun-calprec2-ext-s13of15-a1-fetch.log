@@ -1,0 +1,17 @@
+==============================================================================
+kgrun  action fetch  job calprec2-ext-s13of15-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/cbo-gap-queue
+==============================================================================
+FETCH OUTPUT into /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225
+  $ kaggle kernels output ericsom/cbo-calprec2-ext-s13of15-a1 -p /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_params.csv
+Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_plan.csv
+Output file downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/calprec2-full-20261026-081523-s13of15/calprec2_tasks.csv
+Kernel log downloaded to /home/rahul/cbo-gap-queue/runs/calprec2-ext-s13of15-a1-kaggle-20261026-150225/cbo-calprec2-ext-s13of15-a1.log 
+  4 files, manifest written to sha256.txt
+    d24816945a9c496a6ef63903953c972c592dfd052f6b785067e1f43fe1dcdfc7  calprec2-full-20261026-081523-s13of15/calprec2_params.csv
+    d8026a487c7956455d77c241dc555ffa21b2446a1a4f468da04d169d18eca4f1  calprec2-full-20261026-081523-s13of15/calprec2_plan.csv
+    d6fa91cba9aff6fd0da7c23f886f34d247f0a8205f4c6ec4a5595985bddd005d  calprec2-full-20261026-081523-s13of15/calprec2_tasks.csv
+    d0ca6874ed24fba8b1f8e65ad07e24e6ec3e7f4612cb340d3664bd1c0903554f  cbo-calprec2-ext-s13of15-a1.log
+==============================================================================
