@@ -7,8 +7,10 @@ It reads the plan written by rerun.py --precheck and the trajectory run
 folders written by rerun.py, and computes every slope, interval, verdict,
 contrast, regression coefficient, onset, heterogeneity statistic and
 audit summary that notes/ANALYSIS_CRITERIA.md specifies (decided by Rahul
-in twelve messages of 2026-10-16). It evolves no trajectory. It writes
-CSV files into a new run folder and prints everything.
+in twelve messages of 2026-10-16, and for the three calibrated r rows in
+the fourteenth message of 2026-10-26, CAL1 to CAL5 below). It evolves no
+trajectory. It writes CSV files into a new run folder and prints
+everything.
 
 The criteria below are copied from notes/ANALYSIS_CRITERIA.md before the
 first execution of this script; item numbers refer to that file.
@@ -35,7 +37,8 @@ INPUTS AND CHECKS BEFORE ANY STATISTIC
       Worked example: a SIGMA realization whose beta reads 2.5e2 while the
       plan says 2.4e2: exit 2, naming the task. An anisotropic row whose
       seed_key differs from its task id's key: exit 2.
-  A1  ALL SEVENTEEN ROWS COMPLETE (Rahul, D3, 2026-10-16). A row is
+  A1  ALL TWENTY ROWS COMPLETE (Rahul, D3, 2026-10-16; extended to the
+      twenty rows by CAL4, 2026-10-26). A row is
       complete when every realization of every one of its cells (shared
       cells included) is present and complete, and no cell's beta is
       pending. If any row is not complete, the script prints every row's
@@ -44,9 +47,11 @@ INPUTS AND CHECKS BEFORE ANY STATISTIC
       thirteen archived-beta rows first would produce a partial set of
       numbers before the calibrated rows exist, and partial numbers invite
       a conclusion drawn before the evidence is in. One stop, no partial
-      analysis.
+      analysis. The same holds for the calibrated r rows: nothing about
+      RMAP-CAL is printed while ONSET-CAL is incomplete.
       Worked example: ONSET with 2148 of 2160 realizations present, or
-      CONC with its beta pending: exit 7, nothing computed.
+      CONC with its beta pending, or ONSET-CAL with 2159 of 2160: exit 7,
+      nothing computed.
 
 ITEM 0  ESTIMAND. Each realization's slope is regimemap.fit_slope on the
   window. S-slope = the mean of the realization slopes (primary; every
@@ -279,34 +284,134 @@ SECTION 8  (tenth to twelfth messages).
   No round-1 interval is reused or compared: the approved key shares no
   realization across d, tau_0 or r.
 
-GUARD (2026-10-25; ledger N42). rerunlib now defines twenty rows: the
-  seventeen above and RMAP-CAL, CLIFF-CAL and ONSET-CAL. This script's
-  criteria cover the seventeen only. Rows it has no pre-registered
-  criteria for would still be read and some of their statistics computed;
-  the margin (5b) would mix them in through rerunlib.PAIRED. So it refuses:
-  if rerunlib.ROWS differs from ANALYSIS_ROWS it prints both, computes
-  nothing and exits 2. It runs again only after an amendment fixes the new
-  rows' criteria (notes/ANALYSIS_CRITERIA.md) and this script implements
-  it. The seventeen-row result (runs/rerun-analysis-20261025-051314) is
-  reproduced at commit 8c9b799, whose rerunlib.py, rerun.py and this file
-  are the ones it ran with (ledger N42, reproduction procedure).
-  Worked example: rerunlib.ROWS with "RMAP-CAL" appended: "GUARD: ...",
-  exit 2, no folder.
+THE CALIBRATED r ROWS (fourteenth message, 2026-10-26; notes/
+ANALYSIS_CRITERIA.md CAL1 to CAL5; ledger N41, N42). RMAP-CAL, CLIFF-CAL
+and ONSET-CAL are the cells of RMAP, CLIFF and ONSET run on the N41
+calprec2 betas. Everything above applies to them unchanged, except:
+  CAL1  MARGIN. m is the seventeen-row m, 3 x S with S the median over
+      the cell arms of SIGMA, ANISO, RMAP, CLIFF and ONSET only (MARGIN_ROWS;
+      rerunlib.PAIRED now also lists the three new rows and is NOT used
+      for S). It is not recomputed with the new rows. This is an exception
+      to A8 as worded: the calibrated rows borrow a margin fixed before
+      their gaps existed, and the manuscript says so.
+      RATIO GUARD. Before any gap of a calibrated row, the script prints
+      the median per-cell SD (W-full) over the cell arms of RMAP-CAL,
+      CLIFF-CAL and ONSET-CAL, a shared cell once, and its ratio, larger
+      over smaller, to the calprec2-group median and to the probe-group
+      median. REVISIT iff either ratio > 1.5, or either ratio is not
+      finite (a NaN median fails safe). On REVISIT it prints
+      "MARGIN REVISIT REQUIRED (calibrated r rows)", computes no phase-3
+      statistic for those rows (no gap, contrast, coefficient, onset or
+      verdict), writes its files and exits 6.
+      Worked example (illustrative): medians 0.026582 (calprec2) and
+      0.025384 (probe); calibrated r 0.030: ratios 1.13 and 1.18, no
+      revisit. 0.040: ratios 1.50 and 1.58, REVISIT.
+  CAL2  CONTRASTS: mirror. RMAP-CAL: contrast 3 per cell, contrast 2
+      (0.01 - 0.5 per arm), J3 panel b1, b2, b3. CLIFF-CAL: contrast 3.
+      ONSET-CAL: contrast 3, onsets and J4, contrast 6, J2 severity and
+      trend. Same signs, windows, DIFFERENCE rule, equivalence rule and
+      item 6. Nothing is computed between a probe row and its calibrated
+      row: the owner row is in the seed key, so they are independent
+      replications (N40). Partm P-M4 for RMAP-CAL against ONSET-CAL is
+      vacuous for the same reason as for RMAP against ONSET.
+  CAL3  NOT-ADEQUATE FLAG, every row (the seventeen included). A cell is
+      not adequate when its plan column cal_adequacy starts with "not
+      adequate" (calprec2's adequacy, copied by the precheck). Every
+      statistic is computed from all its cells, as before; none is
+      excluded or recomputed. Each statistic (analysis_stats.csv), per-cell
+      row (_cells), audit summary row (_audit), R^2 row (_r2) and onset
+      row (_onsets) carries a column not_adequate naming, as module|
+      objective|d|law|tau0, every not-adequate calibration cell among the
+      cells it uses ("" when none). A pooled figure names the union over
+      its units. analysis_margin_calibrated.csv holds
+      not_adequate_in_margin_pool and not_adequate_in_calibrated_r_pool,
+      with the ratio guard's values; it is written after the CAL4 check. The column and rows were added after
+      the seventeen-row results were seen; they change no value.
+      Worked example: RMAP-CAL, isotropic, ackley, d 10, contrast 2 at r
+      1.0 uses the cells at tau0 0.01 and 0.5; the first is regimemap|
+      ackley|10|centred|0.01, "not adequate (C5m FAIL, D1 FAIL)", so the
+      row's not_adequate reads "regimemap|ackley|10|centred|0.01". The
+      pooled contrast at d 10, r 1.0 names it too, with any other unit's.
+  CAL4  ONE ANALYSIS, AND THE SEVENTEEN-ROW REPRODUCTION CHECK.
+      --reproduce DIR names the seventeen-row result folder. It must be
+      runs/rerun-analysis-20261025-051314, whose sha256.txt hashes to
+      REPRO_MANIFEST_SHA256 (pinned, 01c202c8...29d5e1), and every file
+      must verify against that sha256.txt; otherwise exit 2. Worked
+      example: --reproduce runs/rerun-analysis-20261025-061500 (another
+      folder): exit 2 before anything is read. The script runs in this order:
+      (a) A0, A1 over all twenty rows (exit 7 as above);
+      (b) phase 1, the margin and phase 3 for the seventeen rows only;
+      (c) the check: for each of analysis_completeness, _cells, _margin,
+          _stats, _onsets, _audit, _r2 and _adequacy (.csv), the
+          seventeen-row rows the run produced, in order, must equal the
+          old file's rows: same number of rows, and every value of every
+          old column equal as a string. The one column added by this
+          version, not_adequate, is not compared; analysis_margin.csv and
+          analysis_onsets.csv keep the seventeen rows' content only (the
+          calibrated rows' guard and onsets go to their own files).
+          The seventeen-row rows are: in _completeness, _cells and
+          _stats, the rows whose row is one of the seventeen; in
+          _onsets, the rows of ONSET; in _adequacy, the calibration
+          cells of CONC, TAU8, SIGMA and ANISO; _margin, _audit and _r2
+          in full. analysis_params.csv is not compared (its hashes, plan
+          and folder list differ by design).
+          On any mismatch it prints "17-ROW REPRODUCTION FAILED" and the
+          first twenty differences, writes the seventeen-row files and
+          analysis_reproduction.csv, computes nothing for the calibrated
+          rows and exits 8. A mismatch is a finding, not something to
+          patch. The margin is checked first, as soon as it is computed
+          and before any gap: S, the two group medians, m, the ratio, the
+          verdict and the cell-arm count must equal analysis_margin.csv
+          of DIR (0.026038, 0.026582, 0.025384, 0.078113 as printed in
+          N39, at full precision); a mismatch there exits 8 at once.
+      (d) only after PASS: phase 1 for the calibrated rows, the ratio
+          guard, phase 3 for them, the adequacy report.
+      Where it runs: the laptop, Python 3.12.3, NumPy 2.5.3, the
+      environment that produced the seventeen-row result. The equality is
+      exact, so any other environment is expected to fail it (rule 7).
+      Worked example: m prints 0.078113 and every seventeen-row value
+      matches: "17-ROW REPRODUCTION PASS", the calibrated rows proceed.
+      One SIGMA c3 lo95 reading -0.04121 where the old file has -0.04122:
+      FAILED at analysis_stats.csv, that row and column; exit 8; no
+      calibrated-row number exists.
+  CAL5  TARGET COUNTS SPLIT BY PROVENANCE, every calibrated row. For each
+      row of rerunlib.CALROWS, its distinct calibration cells are counted
+      by category = label + " | " + provenance, where a provenance
+      beginning "beta_prod" is shortened to "beta_prod" (its N_cell
+      varies). Printed and written to analysis_adequacy_split.csv. No
+      statistic is flagged for it and no value changes. A calibration cell
+      shared by RMAP-CAL and ONSET-CAL is counted in both rows.
+      Worked example: a row with cells "target" / "beta_prod, calibration
+      N_cell 4000000", "target" / "beta_prod, calibration N_cell 64000"
+      and "target" / "beta_adq; C1 found no sufficient level" prints
+      "target | beta_prod  2" and "target | beta_adq; C1 found no
+      sufficient level  1".
+
+GUARD. If rerunlib.ROWS differs from ANALYSIS_ROWS (the twenty rows in
+  their order) the script prints both, computes nothing and exits 2.
+  Worked example: a twenty-first row in rerunlib: "GUARD: ...", exit 2.
 
 OUTPUT (new folder <outdir>/rerun-analysis-<stamp>/, every file "x")
   analysis_params.csv, analysis_completeness.csv, analysis_cells.csv,
   analysis_margin.csv, analysis_stats.csv (every contrast, coefficient,
   severity, onset contrast, audit difference, pooled figure with item 6),
   analysis_onsets.csv, analysis_audit.csv, analysis_r2.csv,
-  analysis_adequacy.csv.
+  analysis_adequacy.csv, analysis_adequacy_split.csv (CAL5),
+  analysis_margin_calibrated.csv (CAL1 guard, CAL3 pool flags),
+  analysis_onsets_calibrated.csv (ONSET-CAL's onsets and J4 counts),
+  analysis_reproduction.csv (CAL4: per file, PASS or FAIL, rows compared,
+  differences).
 
 HOW TO RUN (from the repository root, venv active)
     python scripts/rerun_analysis.py --plan-from runs/rerun-plan-<stamp> \
+        --reproduce runs/rerun-analysis-20261025-051314 \
         --runs runs/<run folder> --runs runs/<run folder> ... --workers 2
-  Exit codes: 0 completed; 2 setup or A0; 6 MARGIN REVISIT REQUIRED; 7
-  INCOMPLETE, analysis refused (A1, D3). Each is final when it occurs:
-  2 and 7 stop before any statistic, 6 after the per-cell phase and the
-  margin.
+  Exit codes: 0 completed; 2 setup or A0; 6 MARGIN REVISIT REQUIRED
+  (seventeen rows, or calibrated r rows); 7 INCOMPLETE, analysis refused
+  (A1, D3); 8 17-ROW REPRODUCTION FAILED (CAL4). Each is final when it
+  occurs: 2 and 7 stop before any statistic; 8 after the seventeen rows
+  and before any calibrated-row statistic; 6 after the margin step that
+  triggered it.
 
 NumPy only. Python 3.8 to 3.11 syntax.
 """
@@ -321,6 +426,7 @@ for _v in THREAD_VARS:
 import argparse                                                 # noqa: E402
 import csv                                                      # noqa: E402
 import datetime                                                 # noqa: E402
+import io                                                       # noqa: E402
 import json                                                     # noqa: E402
 import math                                                     # noqa: E402
 import multiprocessing                                          # noqa: E402
@@ -349,10 +455,19 @@ K_TOL = 3.0
 REVISIT_RATIO = 1.5
 FLAG_FRAC = 0.01
 REFSIZE_CAP = 1250
-ANALYSIS_ROWS = ["BETA-ISO", "BETA-ANI", "LAWPANEL", "CONC", "PROBEARM", "ADAPT", "TAU8", "REFSIZE",
-                 "SYNTH", "NAMED", "HORIZON", "GEOM", "SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
+BASE_ROWS = ["BETA-ISO", "BETA-ANI", "LAWPANEL", "CONC", "PROBEARM", "ADAPT", "TAU8", "REFSIZE",
+             "SYNTH", "NAMED", "HORIZON", "GEOM", "SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
+CALR_ROWS = ["RMAP-CAL", "CLIFF-CAL", "ONSET-CAL"]
+ANALYSIS_ROWS = BASE_ROWS + CALR_ROWS
+MARGIN_ROWS = ["SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"]
 CALGROUP = ["SIGMA", "ANISO"]
 PROBEGROUP = ["RMAP", "CLIFF", "ONSET"]
+EXIT_REPRO = 8
+REPRO_DIR = "rerun-analysis-20261025-051314"
+REPRO_MANIFEST_SHA256 = "01c202c8d2fae83c0fe683d1cc55a802dd59c2e27fdf1fab158578a5e029d5e1"
+REPRO_FILES = ["analysis_completeness.csv", "analysis_cells.csv", "analysis_margin.csv", "analysis_stats.csv",
+               "analysis_onsets.csv", "analysis_audit.csv", "analysis_r2.csv", "analysis_adequacy.csv"]
+REPRO_SHOW = 20
 
 fit_slope = cp.MODS["regimemap"].fit_slope
 fit_curv = cp.MODS["regime"].fit_curv
@@ -397,6 +512,36 @@ def write_csv(outdir, name, cols, rows):
             w.writerow([r.get(c, "") for c in cols] if isinstance(r, dict) else r)
         fh.flush()
         os.fsync(fh.fileno())
+
+
+def as_strings(cols, rows):
+    """The rows exactly as write_csv would write them, read back as strings
+    (header first). Used by the CAL4 comparison."""
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(cols)
+    for r in rows:
+        w.writerow([r.get(c, "") for c in cols] if isinstance(r, dict) else r)
+    buf.seek(0)
+    return list(csv.reader(buf))
+
+
+# --------------------------------------------------------------------------
+# CAL3: not-adequate calibration cells
+# --------------------------------------------------------------------------
+
+def na_label(c):
+    """module|objective|d|law|tau0 of c's calibration cell if calprec2 judged
+    it not adequate, else None (also for rows without a calprec2 beta)."""
+    pr = c["plan_row"]
+    if c["row"] not in rl.CALROWS or not pr.get("cal_adequacy", "").startswith("not adequate"):
+        return None
+    return "|".join([c["module"], c["obj"], str(c["d"]), c["law"], pr["tau0"]])
+
+
+def na_flag(cells):
+    labs = sorted(set(x for x in (na_label(c) for c in cells) if x is not None))
+    return "; ".join(labs)
 
 
 # --------------------------------------------------------------------------
@@ -652,7 +797,8 @@ def hetero(y, v):
 
 STAT_COLS = ["row", "quantity", "group", "level", "unit", "window", "estimate", "lo95", "hi95",
              "p5", "p95", "verdict", "equivalence", "half_width_90", "nonfinite", "flag", "k",
-             "sd_units", "vbar", "tau2_mm", "Q", "I2", "trunc", "round1_orientation", "note"]
+             "sd_units", "vbar", "tau2_mm", "Q", "I2", "trunc", "round1_orientation", "note",
+             "not_adequate"]
 
 
 class Stats(object):
@@ -662,11 +808,12 @@ class Stats(object):
         self.margin = None
 
     def one(self, row, quantity, group, level, unit, wlabel, point, vec, primary, equiv=False,
-            orient=False, note="", het=None):
+            orient=False, note="", het=None, cells=None):
         q = pct(vec)
         d = {"row": row, "quantity": quantity, "group": group, "level": level, "unit": unit,
              "window": wlabel, "estimate": point, "lo95": q["lo"], "hi95": q["hi"], "p5": q["p5"],
-             "p95": q["p95"], "nonfinite": "{} of {}".format(q["nf"], B), "note": note}
+             "p95": q["p95"], "nonfinite": "{} of {}".format(q["nf"], B), "note": note,
+             "not_adequate": na_flag(cells or [])}
         if q["nf"] > FLAG_FRAC * B:
             d["flag"] = "FLAG non-finite above 1%"
             self.flags.append("{} {} {} {}".format(row, quantity, group, unit))
@@ -703,6 +850,8 @@ class Stats(object):
             extra += "  k {} sd_units {} vbar {} tau2_mm {} I2 {} {}".format(
                 het["k"], fmt(het["sd_units"]), fmt(het["vbar"], 6), fmt(het["tau2_mm"], 6), het["I2"],
                 het["trunc"])
+        if d["not_adequate"]:
+            extra += "  [not adequate: {}]".format(d["not_adequate"])
         say("  {:<9} {:<26} {:<34} {:<7} {:<22} {:<7} {} [{}, {}] {}{}".format(
             row, quantity[:26], group[:34], level, unit[:22], wlabel, fmt(point), fmt(q["lo"]),
             fmt(q["hi"]), d["verdict"], extra))
@@ -710,16 +859,18 @@ class Stats(object):
 
     def family(self, row, quantity, group, units, wlabel, primary, equiv=False, orient=False,
                note=""):
-        """units: list of (label, point, vec). Emits each unit and the pooled
-        unweighted mean with item 6's statistics."""
+        """units: list of (label, point, vec, cells), cells the plan cells the
+        unit's value is computed from (CAL3). Emits each unit and the pooled
+        unweighted mean with item 6's statistics; the pooled row's
+        not_adequate names the union over the units it pools."""
         excl = [u[0] for u in units if not np.isfinite(u[1])]
         units = [u for u in units if np.isfinite(u[1])]
         if excl:
             note = (note + "; " if note else "") + "excluded units (a cell without a finite S-slope): " + \
                 ",".join(excl)
             say("  {} {} {}: excluded units {}; k {}".format(row, quantity, group, ",".join(excl), len(units)))
-        for lab, p, v in units:
-            self.one(row, quantity, group, "unit", lab, wlabel, p, v, primary, equiv, orient, note)
+        for lab, p, v, cs in units:
+            self.one(row, quantity, group, "unit", lab, wlabel, p, v, primary, equiv, orient, note, cells=cs)
         if len(units) >= 1:
             pts = np.array([u[1] for u in units])
             vecs = np.vstack([u[2] for u in units])
@@ -728,7 +879,8 @@ class Stats(object):
             self.one(row, quantity, group, "pooled", "mean of {} units".format(len(units)), wlabel,
                      float(np.mean(pts)), vecs.mean(axis=0), primary, False, orient,
                      note + ("; " if note and equiv else "") +
-                     ("equivalence per cell only (D2)" if equiv else ""), het)
+                     ("equivalence per cell only (D2)" if equiv else ""), het,
+                     cells=[c for u in units for c in u[3]])
 
 
 def windows_for(cs):
@@ -774,7 +926,7 @@ def conc_like(ctx, st, row):
     for t in taus:
         cs = [C(u, d, t) for u in units for d in (dlo, dhi)]
         for w, wl, prim in windows_for(cs):
-            us = [(ulab(u),) + change(u, t, w) for u in units]
+            us = [(ulab(u),) + change(u, t, w) + ([C(u, dhi, t), C(u, dlo, t)],) for u in units]
             st.family(row, "c1 dimension d{}-d{}".format(dhi, dlo), "tau0={}".format(t), us, wl, prim)
     # contrast 2
     for d in dims:
@@ -784,7 +936,7 @@ def conc_like(ctx, st, row):
             for u in units:
                 p1, v1 = ctx.S(C(u, d, ttight), "none", w)
                 p0, v0 = ctx.S(C(u, d, tloose), "none", w)
-                us.append((ulab(u), p1 - p0, v1 - v0))
+                us.append((ulab(u), p1 - p0, v1 - v0, [C(u, d, ttight), C(u, d, tloose)]))
             st.family(row, "c2 target {}-{}".format(ttight, tloose), "d={}".format(d), us, wl, prim)
     # contrast 4 (law), unit objective
     if row in ("CONC", "PROBEARM"):
@@ -794,9 +946,11 @@ def conc_like(ctx, st, row):
                 for w, wl, prim in windows_for(cs):
                     us = []
                     for o in objs:
-                        p1, v1 = ctx.S(ctx.cell(row, obj=o, d=d, law="mix-0.1", tau=t), "none", w)
-                        p0, v0 = ctx.S(ctx.cell(row, obj=o, d=d, law="centred", tau=t), "none", w)
-                        us.append((o, p1 - p0, v1 - v0))
+                        c1 = ctx.cell(row, obj=o, d=d, law="mix-0.1", tau=t)
+                        c0 = ctx.cell(row, obj=o, d=d, law="centred", tau=t)
+                        p1, v1 = ctx.S(c1, "none", w)
+                        p0, v0 = ctx.S(c0, "none", w)
+                        us.append((o, p1 - p0, v1 - v0, [c1, c0]))
                     st.family(row, "c4 law mix-0.1-centred", "d={} tau0={}".format(d, t), us, wl, prim)
     # CON pairs and TMM
     allc = [C(u, d, t) for u in units for d in (dlo, dhi) for t in (ttight, tmid, tloose)]
@@ -808,7 +962,7 @@ def conc_like(ctx, st, row):
             for u in units:
                 a1, b1 = change(u, t1, w)
                 a2, b2 = change(u, t2, w)
-                us.append((ulab(u), a1 - a2, b1 - b2))
+                us.append((ulab(u), a1 - a2, b1 - b2, [C(u, d, t) for d in (dlo, dhi) for t in (t1, t2)]))
             name = "CON({}, {})".format(t1, t2)
             if (t1, t2) == (ttight, tloose):
                 name += " = contrast 7"
@@ -820,7 +974,8 @@ def conc_like(ctx, st, row):
             a, va = change(u, ttight, w)
             b, vb = change(u, tloose, w)
             c_, vc = change(u, tmid, w)
-            us.append((ulab(u), a - (b + c_) / 2.0, va - (vb + vc) / 2.0))
+            us.append((ulab(u), a - (b + c_) / 2.0, va - (vb + vc) / 2.0,
+                       [C(u, d, t) for d in (dlo, dhi) for t in (ttight, tloose, tmid)]))
         st.family(row, "TMM", "change({}) - mean(change({}), change({}))".format(ttight, tloose, tmid),
                   us, wl, prim)
     # REGF
@@ -840,7 +995,8 @@ def conc_like(ctx, st, row):
             cv_ = ols_coef(X, np.vstack(vecs))
             coefs[u] = (cp_, cv_)
         for j, nm in ((1, "REGF b_d"), (2, "REGF b_tau"), (3, "REGF b_dtau")):
-            us = [(ulab(u), float(coefs[u][0][j]), coefs[u][1][j]) for u in units]
+            us = [(ulab(u), float(coefs[u][0][j]), coefs[u][1][j], [C(u, d, t) for d, t in cells_u])
+                  for u in units]
             st.family(row, nm, "{} d x {} tau0".format(len(dims), len(taus)), us, wl, prim)
 
 
@@ -861,7 +1017,7 @@ def paired_gaps(ctx, st, row):
             for c in cs:
                 pa, va = ctx.S(c, "anisotropic", w)
                 pi, vi = ctx.S(c, "isotropic", w)
-                us.append((c["obj"], pa - pi, va - vi))
+                us.append((c["obj"], pa - pi, va - vi, [c]))
             st.family(row, "c3 aniso-iso", lab, us, wl, prim, equiv=True)
 
 
@@ -887,7 +1043,7 @@ def target_contrast_paired(ctx, st, row):
                 for c1, c0 in pairs:
                     p1, v1 = ctx.S(c1, df, w)
                     p0, v0 = ctx.S(c0, df, w)
-                    us.append((c1["obj"], p1 - p0, v1 - v0))
+                    us.append((c1["obj"], p1 - p0, v1 - v0, [c1, c0]))
                 st.family(row, "c2 target {}-{}".format(ttight, tloose), lab, us, wl, prim)
 
 
@@ -909,17 +1065,19 @@ def sigma_a2(ctx, st):
                             p, v = ctx.S(ctx.cell(row, obj=o, d=d, tau=t, r=r), df, w)
                             pts.append(p)
                             vecs.append(v)
-                        us.append((o, float(ols_coef(X, np.array(pts))[0]), ols_coef(X, np.vstack(vecs))[0]))
+                        us.append((o, float(ols_coef(X, np.array(pts))[0]), ols_coef(X, np.vstack(vecs))[0],
+                                   [ctx.cell(row, obj=o, d=d, tau=t, r=r) for r in rs]))
                     st.family(row, "A2 coef of slope on r", "{} d={} tau0={}".format(df, d, t), us, wl, prim)
 
 
-def rmap_panel(ctx, st):
-    row = "RMAP"
+def rmap_panel(ctx, st, row, partner):
+    """J3 for RMAP (partner ONSET) and, mirrored (CAL2), RMAP-CAL (partner
+    ONSET-CAL)."""
     g = rl.GRID[row]
     cells_u = [(t, r) for t in g["taus"] for r in g["rs"]]
     X = np.array([[1.0, math.log10(0.5 / t), math.log2(r / 0.5),
                    math.log10(0.5 / t) * math.log2(r / 0.5)] for t, r in cells_u])
-    hdr("RMAP  panel model Delta = a + b1 g + b2 h + b3 g h (J3)")
+    hdr("{}  panel model Delta = a + b1 g + b2 h + b3 g h (J3)".format(row))
     for df in g["diffs"]:
         for d in g["dims"]:
             cs = [ctx.cell(row, obj=o, d=d, tau=t, r=r) for o in g["objs"] for t, r in cells_u]
@@ -933,19 +1091,25 @@ def rmap_panel(ctx, st):
                         vecs.append(-1.0 - v)
                     coefs[o] = (ols_coef(X, np.array(pts)), ols_coef(X, np.vstack(vecs)))
                 for j, nm in ((1, "panel b1"), (2, "panel b2"), (3, "panel b3")):
-                    us = [(o, float(coefs[o][0][j]), coefs[o][1][j]) for o in g["objs"]]
+                    us = [(o, float(coefs[o][0][j]), coefs[o][1][j],
+                           [ctx.cell(row, obj=o, d=d, tau=t, r=r) for t, r in cells_u]) for o in g["objs"]]
                     st.family(row, nm, "{} d={}".format(df, d), us, wl, prim)
-    say("  partm P-M4 (RMAP against ONSET at tau0 0.1, r 1.0): vacuous; those cells are shared,")
+    say("  partm P-M4 ({} against {} at tau0 0.1, r 1.0): vacuous; those cells are shared,".format(
+        row, partner))
     say("  so the comparison is identically zero by construction. No number.")
 
 
-def onset_block(ctx, st, onset_rows):
-    row = "ONSET"
+def onset_block(ctx, st, onset_rows, row):
+    """H3, J4, contrast 6 and J2 for ONSET and, mirrored (CAL2), ONSET-CAL."""
     g = rl.GRID[row]
     rs, objs, dims = g["rs"], g["objs"], g["dims"]
     t = g["tau"]
-    hdr("ONSET  onsets (H3), contrast 6, onset against 1 (J4), severity (J2)")
+    hdr("{}  onsets (H3), contrast 6, onset against 1 (J4), severity (J2)".format(row))
     ons = {}
+
+    def ocells(o, d):
+        objs_ = objs if o == "pooled" else [o]
+        return [ctx.cell(row, obj=x, d=d, tau=t, r=r) for x in objs_ for r in rs]
     for df in g["diffs"]:
         for d in dims:
             per = []
@@ -975,8 +1139,9 @@ def onset_block(ctx, st, onset_rows):
         cnt.setdefault((lvl, df), [0, 0])
         cnt[(lvl, df)][0] += 1 if con else 0
         cnt[(lvl, df)][1] += 1
-        rec = {"diffusion": df, "objective": o, "d": d, "onset": pt, "lo95": q["lo"], "hi95": q["hi"],
-               "contains_1": "yes" if con else "no", "nonfinite": "{} of {}".format(q["nf"], B)}
+        rec = {"row": row, "diffusion": df, "objective": o, "d": d, "onset": pt, "lo95": q["lo"],
+               "hi95": q["hi"], "contains_1": "yes" if con else "no", "nonfinite": "{} of {}".format(q["nf"], B),
+               "not_adequate": na_flag(ocells(o, d))}
         if o != "pooled":
             rec["v_i"] = float(np.nanvar(vv, ddof=1))
         onset_rows.append(rec)
@@ -990,8 +1155,9 @@ def onset_block(ctx, st, onset_rows):
             say("  pooled onset {} d={} (onset of the mean curve, not the mean of onsets): "
                 "per-objective heterogeneity k {} sd_units {} I2 {} {}".format(
                     df, d, h["k"], fmt(h["sd_units"]), h["I2"], h["trunc"]))
-            onset_rows.append(dict({"diffusion": df, "objective": "heterogeneity of per-objective onsets",
-                                    "d": d}, **h))
+            onset_rows.append(dict({"row": row, "diffusion": df,
+                                    "objective": "heterogeneity of per-objective onsets", "d": d,
+                                    "not_adequate": na_flag(ocells("pooled", d))}, **h))
     say("")
     for lvl in ("objective", "pooled"):
         tot = [0, 0]
@@ -1000,26 +1166,30 @@ def onset_block(ctx, st, onset_rows):
             tot[0] += k
             tot[1] += n
             say("  J4 {:<9} {:<11} {} of {} intervals contain 1".format(lvl, df, k, n))
-            onset_rows.append({"diffusion": df, "objective": "J4 count " + lvl,
-                               "contains_1": "{} of {}".format(k, n)})
+            onset_rows.append({"row": row, "diffusion": df, "objective": "J4 count " + lvl,
+                               "contains_1": "{} of {}".format(k, n),
+                               "not_adequate": na_flag([c for d in dims for c in ocells("pooled", d)])})
         say("  J4 {:<9} {:<11} {} of {} intervals contain 1".format(lvl, "both", tot[0], tot[1]))
-        onset_rows.append({"diffusion": "both", "objective": "J4 count " + lvl,
-                           "contains_1": "{} of {}".format(tot[0], tot[1])})
+        onset_rows.append({"row": row, "diffusion": "both", "objective": "J4 count " + lvl,
+                           "contains_1": "{} of {}".format(tot[0], tot[1]),
+                           "not_adequate": na_flag([c for d in dims for c in ocells("pooled", d)])})
     say("  (a description of where the intervals fall, not a claim that the onset is at 1)")
     # contrast 6
     for df in g["diffs"]:
         us = [(o, ons[(df, o, max(dims))][0] - ons[(df, o, min(dims))][0],
                ons[(df, o, max(dims))][1] - ons[(df, o, min(dims))][1]) for o in objs]
         for lab, p, v in us:
-            st.one(row, "c6 onset d{}-d{}".format(max(dims), min(dims)), df, "unit", lab, "W-full", p, v, True)
+            st.one(row, "c6 onset d{}-d{}".format(max(dims), min(dims)), df, "unit", lab, "W-full", p, v, True,
+                   cells=ocells(lab, max(dims)) + ocells(lab, min(dims)))
         het = hetero([u[1] for u in us], [float(np.nanvar(u[2], ddof=1)) for u in us])
         pp = ons[(df, "pooled", max(dims))]
         p0 = ons[(df, "pooled", min(dims))]
         st.one(row, "c6 onset d{}-d{}".format(max(dims), min(dims)), df, "pooled",
                "pooled onsets (mean curve)", "W-full", pp[0] - p0[0], pp[1] - p0[1], True,
-               note="pooled = onset of mean curve; heterogeneity of per-objective contrasts", het=het)
+               note="pooled = onset of mean curve; heterogeneity of per-objective contrasts", het=het,
+               cells=ocells("pooled", max(dims)) + ocells("pooled", min(dims)))
     # severity and trend
-    hdr("ONSET  severity S(1,3), sensitivity S(0.75,3), and their trend on log2 d (J2)")
+    hdr("{}  severity S(1,3), sensitivity S(0.75,3), and their trend on log2 d (J2)".format(row))
     Xd = np.array([[math.log2(d), 1.0] for d in dims])
     for nm, rlo in (("severity S(1,3)", 1.0), ("severity S(0.75,3) boundary-spanning", 0.75)):
         sev = {}
@@ -1027,16 +1197,19 @@ def onset_block(ctx, st, onset_rows):
             for d in dims:
                 us = []
                 for o in objs:
-                    p3, v3 = ctx.S(ctx.cell(row, obj=o, d=d, tau=t, r=3.0), df, "full")
-                    p1, v1 = ctx.S(ctx.cell(row, obj=o, d=d, tau=t, r=rlo), df, "full")
+                    c3_ = ctx.cell(row, obj=o, d=d, tau=t, r=3.0)
+                    c1_ = ctx.cell(row, obj=o, d=d, tau=t, r=rlo)
+                    p3, v3 = ctx.S(c3_, df, "full")
+                    p1, v1 = ctx.S(c1_, df, "full")
                     sev[(df, o, d)] = (p3 - p1, v3 - v1)
-                    us.append((o, p3 - p1, v3 - v1))
+                    us.append((o, p3 - p1, v3 - v1, [c3_, c1_]))
                 st.family(row, nm, "{} d={}".format(df, d), us, "W-full", True)
             us = []
             for o in objs:
                 pts = np.array([sev[(df, o, d)][0] for d in dims])
                 Y = np.vstack([sev[(df, o, d)][1] for d in dims])
-                us.append((o, float(ols_coef(Xd, pts)[0]), ols_coef(Xd, Y)[0]))
+                us.append((o, float(ols_coef(Xd, pts)[0]), ols_coef(Xd, Y)[0],
+                           [ctx.cell(row, obj=o, d=d, tau=t, r=rr) for d in dims for rr in (3.0, rlo)]))
             st.family(row, nm + " trend per doubling of d", df, us, "W-full", True,
                       note="coefficient only; no shape is claimed")
 
@@ -1048,9 +1221,11 @@ def refsize_block(ctx, st):
     hdr("REFSIZE  contrast 5, J_inf {} - {} on J <= {}".format(jhi, jlo, REFSIZE_CAP))
     us = []
     for o in g["objs"]:
-        p1, v1 = ctx.S(ctx.cell(row, obj=o, d=g["d"], tau=0.1, jinf=jhi), "none", "full")
-        p0, v0 = ctx.S(ctx.cell(row, obj=o, d=g["d"], tau=0.1, jinf=jlo), "none", "full")
-        us.append((o, p1 - p0, v1 - v0))
+        c1 = ctx.cell(row, obj=o, d=g["d"], tau=0.1, jinf=jhi)
+        c0 = ctx.cell(row, obj=o, d=g["d"], tau=0.1, jinf=jlo)
+        p1, v1 = ctx.S(c1, "none", "full")
+        p0, v0 = ctx.S(c0, "none", "full")
+        us.append((o, p1 - p0, v1 - v0, [c1, c0]))
     st.family(row, "c5 J_inf {}-{}".format(jhi, jlo), "J <= {}".format(REFSIZE_CAP), us, "W-full", True)
 
 
@@ -1082,7 +1257,8 @@ def audit_block(ctx, st, row, audit_rows):
                                "tau0": c["tau"], "J": J, "n": v.size, "mean": float(v.mean()),
                                "sd": float(np.std(v, ddof=1)), "p5": float(np.percentile(v, 5)),
                                "p95": float(np.percentile(v, 95)), "ref_ratio_mean": float(ref.mean()),
-                               "floor": fl, "floor_flag": "floor (J tau0 < 1)" if J * tf < 1 else ""})
+                               "floor": fl, "floor_flag": "floor (J tau0 < 1)" if J * tf < 1 else "",
+                               "not_adequate": na_flag([c])})
     say("  per-cell ratio summaries written to analysis_audit.csv ({} rows)".format(len(audit_rows)))
     dims = g["dims"]
     dlo, dhi = min(dims), max(dims)
@@ -1100,7 +1276,7 @@ def audit_block(ctx, st, row, audit_rows):
                 i0 = boot_idx(rl.boot_key(c0, c0["owner"]), c0["M"])
                 a1, a0 = R[id(c1)][J], R[id(c0)][J]
                 us.append((u[0] if len(laws) == 1 else "{}/{}".format(*u),
-                           float(a1.mean() - a0.mean()), a1[i1].mean(axis=1) - a0[i0].mean(axis=1)))
+                           float(a1.mean() - a0.mean()), a1[i1].mean(axis=1) - a0[i0].mean(axis=1), [c1, c0]))
             st.family(row, "audit ratio(J) d{}-d{}".format(dhi, dlo), "tau0={} J={}".format(t, J), us,
                       "audit", True, orient=True, note="round 1 printed d{} - d{}".format(dlo, dhi))
             pooled = st.rows[-1]
@@ -1132,7 +1308,7 @@ def r2_blocks(ctx, complete, r2_rows):
         for nm, v in vals:
             say("  {:<48} R^2 = {:.4f}   (OLS of the {} cell S-slopes, W-full)".format(nm, v, len(cs)))
             r2_rows.append({"row": row, "fit": nm, "R2": v, "R2_out": "", "RMSE_out": "",
-                            "note": "response: cell S-slope on W-full; mechanism.r2_of"})
+                            "note": "response: cell S-slope on W-full; mechanism.r2_of", "not_adequate": na_flag(cs)})
     if "SYNTH" in complete and "NAMED" in complete:
         hdr("SYNTH -> NAMED  regime P6.3, nested models, point values, no verdict (L2)")
 
@@ -1154,17 +1330,189 @@ def r2_blocks(ctx, complete, r2_rows):
             say("  {:<26} R^2 in {:.4f}  R^2 out {:.4f}  RMSE out {:.4f}".format(nm, a, b, c_))
             r2_rows.append({"row": "SYNTH->NAMED", "fit": "P6.3 " + nm, "R2": a, "R2_out": b,
                             "RMSE_out": c_, "note": "regime.fit_predict; response cell S-slope (item 0), "
-                                                     "where the archive used the mean-curve slope"})
+                                                     "where the archive used the mean-curve slope",
+                            "not_adequate": na_flag(ctx.rows["SYNTH"] + ctx.rows["NAMED"])})
 
 
 # --------------------------------------------------------------------------
-# main
+# phase 1, per-cell records, margin, the CAL4 check, CAL5 counts
 # --------------------------------------------------------------------------
+
+CCOLS = ["row", "cell", "owner", "diffusion", "window", "J", "M", "S_slope", "sd_boot", "lo95", "hi95",
+         "one_sided_upper95", "upper_bound_le_minus1", "nonfinite", "S_curve_secondary", "S_curve_lo95",
+         "S_curve_hi95", "curvature_mean_per_realization", "curvature_lo95", "curvature_hi95",
+         "ess_min_ref_mean", "ess_min_sub_mean", "beta", "beta_source", "flag", "not_adequate"]
+ONSET_COLS = ["diffusion", "objective", "d", "onset", "lo95", "hi95", "contains_1", "nonfinite", "v_i", "k",
+              "sd_units", "vbar", "tau2_mm", "Q", "I2", "trunc", "not_adequate"]
+AUDIT_COLS = ["row", "objective", "d", "law", "tau0", "J", "n", "mean", "sd", "p5", "p95", "ref_ratio_mean",
+              "floor", "floor_flag", "not_adequate"]
+R2_COLS = ["row", "fit", "R2", "R2_out", "RMSE_out", "note", "not_adequate"]
+ADQ_COLS = ["module", "objective", "d", "law", "tau0", "label", "beta", "tau_ref", "tau_ref_n", "range",
+            "adequacy", "C5m", "D1", "med_64M", "med_256M", "provenance", "flags"]
+
+
+def phase1(rows, by_row, real, workers, results):
+    """Per-cell computations for the given rows; fills results and returns
+    the cell-window instances in emission order."""
+    jobs = {}
+    inst = []
+    for row in rows:
+        for c in by_row[row]:
+            wins = [("full", "W-full")]
+            if has_ge(c):
+                wins.append(("ge", "W-ge"))
+            if row == "REFSIZE" and rl.jlist_of(c) != win_full(c):
+                wins.append(("grid", "W-grid"))
+            bk = rl.key_str(rl.boot_key(c, c["owner"]))
+            for w, wl in wins:
+                Js = tuple(window(c, w))
+                jid = (bk, Js)
+                inst.append((row, c, w, wl, jid))
+                if jid in jobs or jid in results:
+                    continue
+                E = dict((df, dict((rep, real[task_tid(c, df, rep)]["E"]) for rep in range(c["M"])))
+                         for df in c["diffs"])
+                keys = dict((rep, rl.key_str(rl.traj_key(c, c["owner"], rep))) for rep in range(c["M"]))
+                jobs[jid] = {"id": jid, "bkey": rl.boot_key(c, c["owner"]), "Js": list(Js),
+                             "diffs": c["diffs"], "reps": list(range(c["M"])), "E": E, "keys": keys,
+                             "curv": c["module"] == "regime"}
+    say("  {} cell-window instances, {} distinct computations, {} workers".format(len(inst), len(jobs), workers))
+    pool = multiprocessing.Pool(processes=workers)
+    try:
+        for o in pool.imap_unordered(cw_task, list(jobs.values()), chunksize=1):
+            results[o["id"]] = o
+    finally:
+        pool.close()
+        pool.join()
+    return inst
+
+
+def cell_records(inst, results, real, cell_rows, cflags):
+    for row, c, w, wl, jid in inst:
+        r = results[jid]
+        for d_ in r["dropped"]:
+            say("  {} {} {} rep {} key {}: {} {}".format(row, rl.cell_label(c), wl, d_[0], d_[1], d_[2], d_[3]))
+        nk = len(r["kept"])
+        flag = "FLAG: {} realizations dropped".format(len(r["dropped"])) if len(r["dropped"]) > 1 else ""
+        if flag:
+            cflags.append("{} {} {}".format(row, rl.cell_label(c), wl))
+        naf = na_flag([c])
+        for df in c["diffs"]:
+            s = r["diffs"][df]
+            if "S" not in s:
+                cell_rows.append({"row": row, "cell": rl.cell_label(c), "diffusion": df, "window": wl,
+                                  "M": "0 of {}".format(c["M"]), "flag": "no realization kept",
+                                  "not_adequate": naf})
+                continue
+            q, qc = s["q"], s["qc"]
+            ver = ("yes" if q["p95"] <= -1.0 else "no") if w == "full" else "sensitivity, no verdict"
+            rec = {"row": row, "cell": rl.cell_label(c), "owner": c["owner"], "diffusion": df,
+                   "window": wl, "J": " ".join(str(J) for J in window(c, w)),
+                   "M": "{} of {}".format(nk, c["M"]), "S_slope": s["S"], "sd_boot": s["sd"],
+                   "lo95": q["lo"], "hi95": q["hi"], "one_sided_upper95": q["p95"],
+                   "upper_bound_le_minus1": ver, "nonfinite": "{} of {}".format(q["nf"], B),
+                   "S_curve_secondary": s["Sc"], "S_curve_lo95": qc["lo"], "S_curve_hi95": qc["hi"],
+                   "beta": repr(c["beta"]), "beta_source": rl.BETA_SOURCE[row], "flag": flag,
+                   "not_adequate": naf}
+            if q["nf"] > FLAG_FRAC * B:
+                rec["flag"] = (flag + "; " if flag else "") + "FLAG non-finite above 1%"
+                cflags.append("{} {} {} non-finite".format(row, rl.cell_label(c), wl))
+            if "C" in s:
+                rec["curvature_mean_per_realization"] = s["C"]
+                rec["curvature_lo95"] = s["qC"]["lo"]
+                rec["curvature_hi95"] = s["qC"]["hi"]
+            if row in ("BETA-ISO", "BETA-ANI") and w == "full":
+                ex = [real[task_tid(c, df, rep)]["extras"] for rep in range(c["M"])]
+                rec["ess_min_ref_mean"] = float(np.mean([e["ess_min_ref"] for e in ex]))
+                rec["ess_min_sub_mean"] = json.dumps(dict(
+                    (str(J), float(np.mean([e["ess_min_sub.{}".format(J)] for e in ex])))
+                    for J in rl.jlist_of(c)))
+            cell_rows.append(rec)
+            say("  {:<9} {:<60} {:<11} {:<6} M {:<8} S {} [{}, {}] ub95 {} <=-1: {}  S-curve {}{}{}".format(
+                row, rl.cell_label(c)[:60], df, wl, rec["M"], fmt(s["S"]), fmt(q["lo"]), fmt(q["hi"]),
+                fmt(q["p95"]), ver, fmt(s["Sc"]),
+                ("  curv " + fmt(s["C"], 5)) if "C" in s else "",
+                ("  [not adequate: {}]".format(naf)) if naf else ""))
+
+
+def arm_sds(rows, by_row, results):
+    """(boot key, diffusion) -> (row, SD), a shared cell once (5b)."""
+    sds = {}
+    for row in rows:
+        for c in by_row[row]:
+            bk = rl.key_str(rl.boot_key(c, c["owner"]))
+            r = results[(bk, tuple(win_full(c)))]
+            for df in c["diffs"]:
+                if (bk, df) in sds:
+                    continue
+                sds[(bk, df)] = (row if c["owner"] == row else c["owner"], r["diffs"][df].get("sd", float("nan")))
+    return sds
+
+
+def adequacy_rows(cells, rows):
+    """analysis_adequacy.csv records for the calibration cells of the given
+    rows, in plan order, each calibration cell once."""
+    adq = []
+    seen = set()
+    for c in cells:
+        if c["row"] not in rows:
+            continue
+        pr = c["plan_row"]
+        k = rl.calprec2_key(c)
+        if k in seen or pr["cal_label"] == "":
+            continue
+        seen.add(k)
+        adq.append({"module": k[0], "objective": k[1], "d": k[2], "law": k[3], "tau0": k[4],
+                    "label": pr["cal_label"], "beta": pr["beta"], "tau_ref": pr["cal_tau_ref"],
+                    "tau_ref_n": pr["cal_tau_ref_n"], "range": pr["cal_range"], "adequacy": pr["cal_adequacy"],
+                    "C5m": pr["cal_C5m"], "D1": pr["cal_D1"], "med_64M": pr["cal_med_64M"],
+                    "med_256M": pr["cal_med_256M"], "provenance": pr["cal_provenance"], "flags": pr["cal_flags"]})
+    return adq
+
+
+def split_category(pr):
+    """CAL5: label + " | " + provenance, beta_prod's N_cell dropped."""
+    prov = pr["cal_provenance"]
+    if prov.startswith("beta_prod"):
+        prov = "beta_prod"
+    return "{} | {}".format(pr["cal_label"], prov)
+
+
+def compare_old(old_dir, rels, tables, names=None):
+    """CAL4. tables: file name -> (cols, rows). Returns (per-file records,
+    differences). Every value of every column of the old file must equal
+    the new value of the same column, as a string, row by row."""
+    recs, diffs = [], []
+    for name in (names or REPRO_FILES):
+        old = list(csv.reader(open(rl.find_file(old_dir, rels, name), newline="")))
+        cols, rows = tables[name]
+        new = as_strings(cols, rows)
+        oh, nh = old[0], new[0]
+        miss = [h for h in oh if h not in nh]
+        nd = 0
+        if miss:
+            diffs.append((name, "header", "", "columns {} absent from the new table".format(miss), ""))
+            nd += 1
+        elif len(old) != len(new):
+            diffs.append((name, "rows", "", "{} old rows".format(len(old) - 1), "{} new rows".format(len(new) - 1)))
+            nd += 1
+        else:
+            pos = [nh.index(h) for h in oh]
+            for i in range(1, len(old)):
+                for j, h in enumerate(oh):
+                    if old[i][j] != new[i][pos[j]]:
+                        diffs.append((name, "row {}".format(i), h, old[i][j], new[i][pos[j]]))
+                        nd += 1
+        recs.append([name, "PASS" if nd == 0 else "FAIL", len(old) - 1, len(new) - 1, nd])
+    return recs, diffs
+
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--plan-from", required=True)
+    ap.add_argument("--reproduce", required=True,
+                    help="the seventeen-row result folder (CAL4), runs/rerun-analysis-20261025-051314")
     ap.add_argument("--runs", action="append", default=[])
     ap.add_argument("--archive", default=None)
     ap.add_argument("--outdir", default=None)
@@ -1186,18 +1534,19 @@ def main():
         " TOST 5% each side".format(B))
     say("  bootstrap indices: default_rng(SeedSequence(boot key, kind {})).integers(0, n, (B, n))".format(
         rl.KIND_BOOT))
-    say("  margin m = {} x median per-cell SD over the paired rows; revisit ratio > {}".format(
-        K_TOL, REVISIT_RATIO))
+    say("  margin m = {} x median per-cell SD over {}; revisit ratio > {}; calibrated r rows {} borrow m"
+        " (CAL1)".format(K_TOL, ",".join(MARGIN_ROWS), REVISIT_RATIO, ",".join(CALR_ROWS)))
     say("  rate verdict: one-sided 95% upper bound <= -1, W-full; non-finite flag above {:.0%} of B".format(
         FLAG_FRAC))
     say("  plan {}".format(a.plan_from))
+    say("  reproduce {}  (CAL4: the seventeen rows must equal it, as strings)".format(a.reproduce))
     for f in a.runs:
         say("  run  {}".format(f))
 
     if list(rl.ROWS) != ANALYSIS_ROWS:
         say("\n  GUARD: rerunlib.ROWS is {}".format(",".join(rl.ROWS)))
-        say("  this analysis has criteria for {} only (ledger N42).".format(",".join(ANALYSIS_ROWS)))
-        say("  Nothing computed, no folder written. The seventeen-row result is reproduced at commit 8c9b799.")
+        say("  this analysis has criteria for {} only.".format(",".join(ANALYSIS_ROWS)))
+        say("  Nothing computed, no folder written.")
         sys.exit(2)
     if not rerun.check_p1():
         sys.stderr.write("P1 failed\n")
@@ -1208,6 +1557,15 @@ def main():
         if pparams.get(k) != hs[k]:
             sys.stderr.write("plan built with a different {} ({} vs {})\n".format(k, pparams.get(k), hs[k]))
             sys.exit(2)
+    old_rels = rl.verify_folder(a.reproduce)
+    msha = rl.file_sha(os.path.join(a.reproduce, "sha256.txt"))
+    if os.path.basename(os.path.normpath(a.reproduce)) != REPRO_DIR or msha != REPRO_MANIFEST_SHA256:
+        sys.stderr.write("--reproduce {}: expected {} with sha256.txt {}, found sha256.txt {}\n".format(
+            a.reproduce, REPRO_DIR, REPRO_MANIFEST_SHA256, msha))
+        sys.exit(2)
+    for name in REPRO_FILES:
+        rl.find_file(a.reproduce, old_rels, name)
+    say("  reproduce folder verified against its sha256.txt ({} files)".format(len(old_rels)))
 
     expected = {}
     for c in cells:
@@ -1219,7 +1577,7 @@ def main():
     hdr("A0  reading run folders")
     real = load_runs(a.runs, expected)
 
-    hdr("A1  completeness per row")
+    hdr("A1  completeness per row (all twenty, CAL4)")
     by_row = {}
     for c in cells:
         by_row.setdefault(c["row"], []).append(c)
@@ -1246,205 +1604,195 @@ def main():
     os.makedirs(outdir)
     write_csv(outdir, "analysis_params.csv", ["name", "value"],
               [["rerun_analysis_sha256", me], ["plan", a.plan_from], ["plan_sha256", plan_sha],
-               ["runs", ";".join(a.runs)], ["B", B], ["python", platform.python_version()],
-               ["numpy", np.__version__], ["workers", a.workers]] + [[k, v] for k, v in sorted(hs.items())])
+               ["runs", ";".join(a.runs)], ["reproduce", a.reproduce], ["B", B],
+               ["python", platform.python_version()], ["numpy", np.__version__], ["workers", a.workers]] +
+              [[k, v] for k, v in sorted(hs.items())])
     write_csv(outdir, "analysis_completeness.csv", ["row", "realizations", "present", "status"], comp_rows)
     say("  run dir {}".format(outdir))
 
-    # ---------------- phase 1: per-cell statistics ----------------
-    hdr("PHASE 1  per-cell S-slope, S-curve, intervals, rate verdict (items 0 to 4)")
-    jobs = {}
-    inst = []
-    for row in complete:
-        for c in by_row[row]:
-            wins = [("full", "W-full")]
-            if has_ge(c):
-                wins.append(("ge", "W-ge"))
-            if row == "REFSIZE" and rl.jlist_of(c) != win_full(c):
-                wins.append(("grid", "W-grid"))
-            bk = rl.key_str(rl.boot_key(c, c["owner"]))
-            for w, wl in wins:
-                Js = tuple(window(c, w))
-                jid = (bk, Js)
-                inst.append((row, c, w, wl, jid))
-                if jid in jobs:
-                    continue
-                E = dict((df, dict((rep, real[task_tid(c, df, rep)]["E"]) for rep in range(c["M"])))
-                         for df in c["diffs"])
-                keys = dict((rep, rl.key_str(rl.traj_key(c, c["owner"], rep))) for rep in range(c["M"]))
-                jobs[jid] = {"id": jid, "bkey": rl.boot_key(c, c["owner"]), "Js": list(Js),
-                             "diffs": c["diffs"], "reps": list(range(c["M"])), "E": E, "keys": keys,
-                             "curv": c["module"] == "regime"}
-    say("  {} cell-window instances, {} distinct computations, {} workers".format(len(inst), len(jobs),
-                                                                                a.workers))
     results = {}
-    pool = multiprocessing.Pool(processes=a.workers)
-    try:
-        for o in pool.imap_unordered(cw_task, list(jobs.values()), chunksize=1):
-            results[o["id"]] = o
-    finally:
-        pool.close()
-        pool.join()
-    cell_rows = []
-    cflags = []
-    for row, c, w, wl, jid in inst:
-        r = results[jid]
-        for d_ in r["dropped"]:
-            say("  {} {} {} rep {} key {}: {} {}".format(row, rl.cell_label(c), wl, d_[0], d_[1], d_[2], d_[3]))
-        nk = len(r["kept"])
-        flag = "FLAG: {} realizations dropped".format(len(r["dropped"])) if len(r["dropped"]) > 1 else ""
-        if flag:
-            cflags.append("{} {} {}".format(row, rl.cell_label(c), wl))
-        for df in c["diffs"]:
-            s = r["diffs"][df]
-            if "S" not in s:
-                cell_rows.append({"row": row, "cell": rl.cell_label(c), "diffusion": df, "window": wl,
-                                  "M": "0 of {}".format(c["M"]), "flag": "no realization kept"})
-                continue
-            q, qc = s["q"], s["qc"]
-            ver = ("yes" if q["p95"] <= -1.0 else "no") if w == "full" else "sensitivity, no verdict"
-            rec = {"row": row, "cell": rl.cell_label(c), "owner": c["owner"], "diffusion": df,
-                   "window": wl, "J": " ".join(str(J) for J in window(c, w)),
-                   "M": "{} of {}".format(nk, c["M"]), "S_slope": s["S"], "sd_boot": s["sd"],
-                   "lo95": q["lo"], "hi95": q["hi"], "one_sided_upper95": q["p95"],
-                   "upper_bound_le_minus1": ver, "nonfinite": "{} of {}".format(q["nf"], B),
-                   "S_curve_secondary": s["Sc"], "S_curve_lo95": qc["lo"], "S_curve_hi95": qc["hi"],
-                   "beta": repr(c["beta"]), "beta_source": rl.BETA_SOURCE[row], "flag": flag}
-            if q["nf"] > FLAG_FRAC * B:
-                rec["flag"] = (flag + "; " if flag else "") + "FLAG non-finite above 1%"
-                cflags.append("{} {} {} non-finite".format(row, rl.cell_label(c), wl))
-            if "C" in s:
-                rec["curvature_mean_per_realization"] = s["C"]
-                rec["curvature_lo95"] = s["qC"]["lo"]
-                rec["curvature_hi95"] = s["qC"]["hi"]
-            if row in ("BETA-ISO", "BETA-ANI") and w == "full":
-                ex = [real[task_tid(c, df, rep)]["extras"] for rep in range(c["M"])]
-                rec["ess_min_ref_mean"] = float(np.mean([e["ess_min_ref"] for e in ex]))
-                rec["ess_min_sub_mean"] = json.dumps(dict(
-                    (str(J), float(np.mean([e["ess_min_sub.{}".format(J)] for e in ex])))
-                    for J in rl.jlist_of(c)))
-            cell_rows.append(rec)
-            say("  {:<9} {:<60} {:<11} {:<6} M {:<8} S {} [{}, {}] ub95 {} <=-1: {}  S-curve {}{}".format(
-                row, rl.cell_label(c)[:60], df, wl, rec["M"], fmt(s["S"]), fmt(q["lo"]), fmt(q["hi"]),
-                fmt(q["p95"]), ver, fmt(s["Sc"]),
-                ("  curv " + fmt(s["C"], 5)) if "C" in s else ""))
-    ccols = ["row", "cell", "owner", "diffusion", "window", "J", "M", "S_slope", "sd_boot", "lo95", "hi95",
-             "one_sided_upper95", "upper_bound_le_minus1", "nonfinite", "S_curve_secondary", "S_curve_lo95",
-             "S_curve_hi95", "curvature_mean_per_realization", "curvature_lo95", "curvature_hi95",
-             "ess_min_ref_mean", "ess_min_sub_mean", "beta", "beta_source", "flag"]
-    write_csv(outdir, "analysis_cells.csv", ccols, cell_rows)
-    say("\n  curvature (regime rows): mean of per-realization regime.fit_curv values (L3); the archive")
-    say("  fitted the mean curve (regime.py line 362). No straightness verdict.")
-
-    # ---------------- reference adequacy ----------------
-    hdr("REFERENCE ADEQUACY  calprec2 per calibration cell, as measured, no pooled verdict")
-    adq = []
-    seen = set()
-    for c in cells:
-        if c["row"] not in rl.CALROWS:
-            continue
-        pr = c["plan_row"]
-        k = rl.calprec2_key(c)
-        if k in seen or pr["cal_label"] == "":
-            continue
-        seen.add(k)
-        rec = {"module": k[0], "objective": k[1], "d": k[2], "law": k[3], "tau0": k[4],
-               "label": pr["cal_label"], "beta": pr["beta"], "tau_ref": pr["cal_tau_ref"],
-               "tau_ref_n": pr["cal_tau_ref_n"], "range": pr["cal_range"], "adequacy": pr["cal_adequacy"],
-               "C5m": pr["cal_C5m"], "D1": pr["cal_D1"], "med_64M": pr["cal_med_64M"],
-               "med_256M": pr["cal_med_256M"], "provenance": pr["cal_provenance"], "flags": pr["cal_flags"]}
-        adq.append(rec)
-        say("  {:<10} {:<11} d={:<3} {:<8} tau0={:<5} {:<24} C5m {} D1 {} 64M {} 256M {}".format(
-            k[0], k[1], k[2], k[3], k[4], rec["label"][:24], rec["C5m"], rec["D1"], rec["med_64M"],
-            rec["med_256M"]))
-    write_csv(outdir, "analysis_adequacy.csv",
-              ["module", "objective", "d", "law", "tau0", "label", "beta", "tau_ref", "tau_ref_n", "range",
-               "adequacy", "C5m", "D1", "med_64M", "med_256M", "provenance", "flags"], adq)
-
+    cell_rows, cflags = [], []
+    onset_rows, onset_rows_cal, audit_rows, r2_rows = [], [], [], []
+    margin_rows, guard_rows = [], []
     ctx = Ctx(dict((row, by_row[row]) for row in complete), results, real)
     st = Stats()
 
-    # ---------------- phase 2: margin ----------------
-    hdr("PHASE 2  margin (5b), before any gap")
-    paired_ok = all(r in complete for r in rl.PAIRED)
-    margin_rows = []
-    revisit = False
-    if not paired_ok:
-        say("  paired rows incomplete ({}): margin not computed, no diffusion gap computed".format(
-            ",".join(r for r in rl.PAIRED if r not in complete)))
-    else:
-        sds = {}
-        for row in rl.PAIRED:
-            for c in by_row[row]:
-                bk = rl.key_str(rl.boot_key(c, c["owner"]))
-                r = results[(bk, tuple(win_full(c)))]
-                for df in c["diffs"]:
-                    if (bk, df) in sds:
-                        continue
-                    sds[(bk, df)] = (row if c["owner"] == row else c["owner"], r["diffs"][df].get("sd", float("nan")))
-        allsd = np.array([v[1] for v in sds.values()])
-        S = float(np.nanmedian(allsd))
-        gm = {}
-        for gname, grows in (("calprec2", CALGROUP), ("probe", PROBEGROUP)):
-            v = np.array([sd for (bk, df), (row, sd) in sds.items() if row in grows])
-            gm[gname] = float(np.nanmedian(v))
-            say("  group {:<9} rows {:<18} cell arms {:>4}  median SD {:.6f}".format(
-                gname, ",".join(grows), v.size, gm[gname]))
-        ratio = max(gm.values()) / min(gm.values())
-        st.margin = K_TOL * S
-        revisit = ratio > REVISIT_RATIO
-        say("  S = median over {} cell arms = {:.6f};  m = 3 x S = {:.6f}".format(allsd.size, S, st.margin))
-        say("  group ratio {:.4f}  {}".format(ratio, "MARGIN REVISIT REQUIRED" if revisit else
-                                              "no revisit (ratio <= 1.5)"))
-        margin_rows = [["S", S], ["m", st.margin], ["median_calprec2", gm["calprec2"]],
-                       ["median_probe", gm["probe"]], ["ratio", ratio],
-                       ["verdict", "MARGIN REVISIT REQUIRED" if revisit else "no revisit"],
-                       ["cell_arms", allsd.size]]
-    write_csv(outdir, "analysis_margin.csv", ["name", "value"], margin_rows)
+    def write_all(adq, split_rows, repro_rows):
+        write_csv(outdir, "analysis_cells.csv", CCOLS, cell_rows)
+        write_csv(outdir, "analysis_margin.csv", ["name", "value"], margin_rows)
+        write_csv(outdir, "analysis_stats.csv", STAT_COLS, st.rows)
+        write_csv(outdir, "analysis_onsets.csv", ONSET_COLS, onset_rows)
+        write_csv(outdir, "analysis_onsets_calibrated.csv", ONSET_COLS, onset_rows_cal)
+        write_csv(outdir, "analysis_margin_calibrated.csv", ["name", "value"], guard_rows)
+        write_csv(outdir, "analysis_audit.csv", AUDIT_COLS, audit_rows)
+        write_csv(outdir, "analysis_r2.csv", R2_COLS, r2_rows)
+        write_csv(outdir, "analysis_adequacy.csv", ADQ_COLS, adq)
+        write_csv(outdir, "analysis_adequacy_split.csv", ["row", "category", "cells"], split_rows)
+        write_csv(outdir, "analysis_reproduction.csv", ["file", "verdict", "old_rows", "new_rows", "differences"],
+                  repro_rows)
+
+    # ================= the seventeen rows =================
+    hdr("PHASE 1  the seventeen rows: per-cell S-slope, S-curve, intervals, rate verdict (items 0 to 4)")
+    inst = phase1(BASE_ROWS, by_row, real, a.workers, results)
+    cell_records(inst, results, real, cell_rows, cflags)
+    say("\n  curvature (regime rows): mean of per-realization regime.fit_curv values (L3); the archive")
+    say("  fitted the mean curve (regime.py line 362). No straightness verdict.")
+
+    hdr("PHASE 2  margin (5b), before any gap; pool {}".format(",".join(MARGIN_ROWS)))
+    sds = arm_sds(MARGIN_ROWS, by_row, results)
+    allsd = np.array([v[1] for v in sds.values()])
+    S = float(np.nanmedian(allsd))
+    gm = {}
+    for gname, grows in (("calprec2", CALGROUP), ("probe", PROBEGROUP)):
+        v = np.array([sd for (bk, df), (row, sd) in sds.items() if row in grows])
+        gm[gname] = float(np.nanmedian(v))
+        say("  group {:<9} rows {:<18} cell arms {:>4}  median SD {:.6f}".format(
+            gname, ",".join(grows), v.size, gm[gname]))
+    ratio = max(gm.values()) / min(gm.values())
+    st.margin = K_TOL * S
+    revisit = ratio > REVISIT_RATIO
+    say("  S = median over {} cell arms = {:.6f};  m = 3 x S = {:.6f}".format(allsd.size, S, st.margin))
+    say("  group ratio {:.4f}  {}".format(ratio, "MARGIN REVISIT REQUIRED" if revisit else
+                                          "no revisit (ratio <= 1.5)"))
+    margin_rows.extend([["S", S], ["m", st.margin], ["median_calprec2", gm["calprec2"]],
+                        ["median_probe", gm["probe"]], ["ratio", ratio],
+                        ["verdict", "MARGIN REVISIT REQUIRED" if revisit else "no revisit"],
+                        ["cell_arms", allsd.size]])
+    base_cal = [r for r in rl.CALROWS if r in BASE_ROWS]
+    mrec, mdiff = compare_old(a.reproduce, old_rels, {"analysis_margin.csv": (["name", "value"], margin_rows)},
+                              ["analysis_margin.csv"])
+    if mdiff:
+        say("\n  17-ROW REPRODUCTION FAILED at the margin (CAL4):")
+        for d_ in mdiff[:REPRO_SHOW]:
+            say("    {}  {}  {}  old {!r}  new {!r}".format(*d_))
+        say("  No gap is computed. A mismatch is a finding, not something to patch. Exit {}.".format(EXIT_REPRO))
+        write_all(adequacy_rows(cells, base_cal), [], mrec)
+        say("\n  files {}".format(outdir))
+        sys.exit(EXIT_REPRO)
+    say("  margin equals {}'s analysis_margin.csv, every value as a string (CAL4)".format(a.reproduce))
     if revisit:
         say("\n  MARGIN REVISIT REQUIRED: no gap computed, no verdict for the paired rows. Exit 6.")
+        write_all(adequacy_rows(cells, base_cal), [], [])
         sys.exit(6)
 
-    # ---------------- phase 3: comparisons ----------------
-    hdr("PHASE 3  contrasts, coefficients, onsets, audit (items 6 to 8)")
-    onset_rows, audit_rows, r2_rows = [], [], []
+    hdr("PHASE 3  the seventeen rows: contrasts, coefficients, onsets, audit (items 6 to 8)")
     for row in ("CONC", "PROBEARM", "TAU8", "GEOM"):
-        if row in complete:
-            conc_like(ctx, st, row)
-            audit_block(ctx, st, row, audit_rows)
-        else:
-            say("  {} not analysed: incomplete or beta pending".format(row))
-    if paired_ok:
-        for row in rl.PAIRED:
-            paired_gaps(ctx, st, row)
+        conc_like(ctx, st, row)
+        audit_block(ctx, st, row, audit_rows)
+    for row in MARGIN_ROWS:
+        paired_gaps(ctx, st, row)
     for row in ("SIGMA", "ANISO", "RMAP"):
-        if row in complete:
-            target_contrast_paired(ctx, st, row)
-    if "SIGMA" in complete:
-        sigma_a2(ctx, st)
-    if "RMAP" in complete:
-        rmap_panel(ctx, st)
-    if "ONSET" in complete:
-        onset_block(ctx, st, onset_rows)
-    if "REFSIZE" in complete:
-        refsize_block(ctx, st)
+        target_contrast_paired(ctx, st, row)
+    sigma_a2(ctx, st)
+    rmap_panel(ctx, st, "RMAP", "ONSET")
+    onset_block(ctx, st, onset_rows, "ONSET")
+    refsize_block(ctx, st)
     r2_blocks(ctx, complete, r2_rows)
-    say("\n  Not computed (L1): cliff (i) and (ii), regimemap 'map informative', partm P-M3.")
-    say("  No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO, BETA-ANI; CLIFF has")
-    say("  contrast 3 only. No round-1 interval is reused or compared.")
 
-    write_csv(outdir, "analysis_stats.csv", STAT_COLS, st.rows)
-    write_csv(outdir, "analysis_onsets.csv",
-              ["diffusion", "objective", "d", "onset", "lo95", "hi95", "contains_1", "nonfinite", "v_i", "k",
-               "sd_units", "vbar", "tau2_mm", "Q", "I2", "trunc"], onset_rows)
-    write_csv(outdir, "analysis_audit.csv",
-              ["row", "objective", "d", "law", "tau0", "J", "n", "mean", "sd", "p5", "p95", "ref_ratio_mean",
-               "floor", "floor_flag"], audit_rows)
-    write_csv(outdir, "analysis_r2.csv", ["row", "fit", "R2", "R2_out", "RMSE_out", "note"], r2_rows)
+    # ================= CAL4: the reproduction check =================
+    hdr("CAL4  the seventeen rows against {} (every value, as a string)".format(a.reproduce))
+    adq17 = adequacy_rows(cells, base_cal)
+    tables = {"analysis_completeness.csv": (["row", "realizations", "present", "status"],
+                                            [r for r in comp_rows if r[0] in BASE_ROWS]),
+              "analysis_cells.csv": (CCOLS, cell_rows),
+              "analysis_margin.csv": (["name", "value"], margin_rows),
+              "analysis_stats.csv": (STAT_COLS, st.rows),
+              "analysis_onsets.csv": (ONSET_COLS, onset_rows),
+              "analysis_audit.csv": (AUDIT_COLS, audit_rows),
+              "analysis_r2.csv": (R2_COLS, r2_rows),
+              "analysis_adequacy.csv": (ADQ_COLS, adq17)}
+    repro_rows, diffs = compare_old(a.reproduce, old_rels, tables)
+    for r in repro_rows:
+        say("  {:<28} {}  old rows {:>6}  new rows {:>6}  differences {}".format(*r))
+    if diffs:
+        say("\n  17-ROW REPRODUCTION FAILED: {} difference(s); the first {}:".format(len(diffs), REPRO_SHOW))
+        for d_ in diffs[:REPRO_SHOW]:
+            say("    {}  {}  {}  old {!r}  new {!r}".format(*d_))
+        say("  Nothing is computed for the calibrated r rows. The seventeen-row files are written for")
+        say("  inspection. A mismatch is a finding, not something to patch. Exit {}.".format(EXIT_REPRO))
+        write_all(adq17, [], repro_rows)
+        say("\n  files {}".format(outdir))
+        sys.exit(EXIT_REPRO)
+    say("\n  17-ROW REPRODUCTION PASS: {} files, every value of every old column equal as a string".format(
+        len(repro_rows)))
+
+    # ================= the calibrated r rows =================
+    hdr("PHASE 1  calibrated r rows {}: per-cell statistics".format(",".join(CALR_ROWS)))
+    inst = phase1(CALR_ROWS, by_row, real, a.workers, results)
+    cell_records(inst, results, real, cell_rows, cflags)
+
+    pool_na = na_flag([c for row in MARGIN_ROWS for c in by_row[row]])
+    guard_rows.append(["not_adequate_in_margin_pool", pool_na])
+    say("  margin pool cells not adequate (CAL3; S and m unchanged): {}".format(pool_na or "none"))
+
+    hdr("CAL1  ratio guard for the calibrated r rows, before any of their gaps; m stays {:.6f}".format(st.margin))
+    csds = arm_sds(CALR_ROWS, by_row, results)
+    cv = np.array([v[1] for v in csds.values()])
+    cmed = float(np.nanmedian(cv))
+    r_cal = max(cmed, gm["calprec2"]) / min(cmed, gm["calprec2"])
+    r_probe = max(cmed, gm["probe"]) / min(cmed, gm["probe"])
+    undefined = not (np.isfinite(r_cal) and np.isfinite(r_probe))
+    crevisit = undefined or r_cal > REVISIT_RATIO or r_probe > REVISIT_RATIO
+    if undefined:
+        say("  a ratio is undefined (median {!r}): treated as REVISIT".format(cmed))
+    say("  calibrated r rows: cell arms {}  median SD {:.6f}".format(cv.size, cmed))
+    say("  ratio to calprec2 group ({:.6f}) {:.4f};  ratio to probe group ({:.6f}) {:.4f}".format(
+        gm["calprec2"], r_cal, gm["probe"], r_probe))
+    say("  {}".format("MARGIN REVISIT REQUIRED (calibrated r rows)" if crevisit else
+                      "no revisit (both ratios <= 1.5)"))
+    guard_rows.extend([["median_calibrated_r", cmed], ["cell_arms_calibrated_r", cv.size],
+                        ["not_adequate_in_calibrated_r_pool", na_flag([c for row in CALR_ROWS for c in by_row[row]])],
+                        ["ratio_calibrated_r_to_calprec2", r_cal], ["ratio_calibrated_r_to_probe", r_probe],
+                        ["verdict_calibrated_r",
+                         "MARGIN REVISIT REQUIRED (calibrated r rows)" if crevisit else "no revisit"]])
+
+    if not crevisit:
+        hdr("PHASE 3  calibrated r rows: the base rows' quantities, mirrored (CAL2)")
+        for row in CALR_ROWS:
+            paired_gaps(ctx, st, row)
+        target_contrast_paired(ctx, st, "RMAP-CAL")
+        rmap_panel(ctx, st, "RMAP-CAL", "ONSET-CAL")
+        onset_block(ctx, st, onset_rows_cal, "ONSET-CAL")
+        say("\n  No quantity compares a probe row with its calibrated row (CAL2; N40).")
+
+    # ---------------- reference adequacy and CAL5 ----------------
+    hdr("REFERENCE ADEQUACY  calprec2 per calibration cell, as measured, no pooled verdict")
+    adq = adequacy_rows(cells, rl.CALROWS)
+    for rec in adq:
+        say("  {:<10} {:<11} d={:<3} {:<8} tau0={:<5} {:<24} C5m {} D1 {} 64M {} 256M {}".format(
+            rec["module"], rec["objective"], rec["d"], rec["law"], rec["tau0"], rec["label"][:24], rec["C5m"],
+            rec["D1"], rec["med_64M"], rec["med_256M"]))
+    hdr("CAL5  calibration cells per calibrated row, by label and provenance")
+    split_rows = []
+    for row in rl.CALROWS:
+        cnt = {}
+        seen = set()
+        for c in by_row[row]:
+            k = rl.calprec2_key(c)
+            if k in seen:
+                continue
+            seen.add(k)
+            cat = split_category(c["plan_row"])
+            cnt[cat] = cnt.get(cat, 0) + 1
+        for cat in sorted(cnt):
+            split_rows.append([row, cat, cnt[cat]])
+            say("  {:<10} {:<72} {:>4}".format(row, cat, cnt[cat]))
+
+    write_all(adq, split_rows, repro_rows)
+    if crevisit:
+        say("\n  MARGIN REVISIT REQUIRED (calibrated r rows): no phase-3 statistic for {}. Exit 6.".format(
+            ",".join(CALR_ROWS)))
+        say("\n  files {}".format(outdir))
+        sys.exit(6)
+    say("\n  Not computed (L1): cliff (i) and (ii), regimemap 'map informative', partm P-M3.")
+    say("  No contrast in ADAPT, LAWPANEL, HORIZON, SYNTH, NAMED, BETA-ISO, BETA-ANI; CLIFF and CLIFF-CAL")
+    say("  have contrast 3 only. No round-1 interval is reused or compared.")
 
     hdr("SUMMARY")
     say("  rows analysed: {}".format(",".join(complete)))
-    say("  statistics written: {}".format(len(st.rows)))
+    say("  statistics written: {} ({} in the seventeen rows)".format(
+        len(st.rows), sum(1 for r in st.rows if r["row"] in BASE_ROWS)))
+    say("  statistics naming a not-adequate cell: {}".format(sum(1 for r in st.rows if r["not_adequate"])))
     for f in cflags + st.flags:
         say("  FLAG {}".format(f))
     if not (cflags or st.flags):

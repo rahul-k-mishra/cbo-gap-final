@@ -1760,6 +1760,15 @@ instruction of 2026-10-15.
         2.
     - C7, audit floor flags: CONC 192 of 1440, PROBEARM 192 of 1440,
       TAU8 198 of 1440, GEOM 462 of 3360.
+    - Correction to C6 (2026-10-26, criteria CAL5). "target adequate"
+      above counts every target cell, including those whose beta is
+      beta_adq under calprec2's BA rule (provenance "beta_adq; C1 found no
+      sufficient level" or "beta_adq; C6 failed for beta_prod"). The
+      336-cell table has such cells in all four modules. The split by
+      label and provenance, per calibrated row, is printed by the
+      twenty-row analysis (analysis_adequacy_split.csv) and is copied
+      here from its log when it has run. No count is filled in before
+      then.
   - Observation, not decided (Claude, from the archive source).
     regime.fit_predict (zenodo-v1/regime.py lines 409 to 422) standardizes
     the features but takes no log of covtr, disp, fvar or dist0, the
@@ -1893,7 +1902,8 @@ instruction of 2026-10-15.
         0.042876230428251914, C5m 0.081208, D1 0.004416.
     - Seven target-labelled, adequate cells have provenance "beta_adq; C1
       found no sufficient level": their beta is the adequacy beta, not a
-      production-level beta. They are cliff ackley d 40 tau0 0.1;
+      production-level beta. "target 34" above includes them (CAL5: the
+      split per row comes from the twenty-row analysis). They are cliff ackley d 40 tau0 0.1;
       regimemap ackley d 10, 20 and 80 at tau0 0.1; regimemap rastrigin
       d 10 tau0 0.01 and d 80 tau0 0.1; regimemap sphere d 40 tau0 0.01.
       Every other target cell has provenance "beta_prod, calibration

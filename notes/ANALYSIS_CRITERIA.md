@@ -2482,18 +2482,48 @@ CAL4. A1 over twenty rows. DECIDED: one analysis over all twenty rows,
         claim into a tested fact. The analysis code changes for the new
         rows, the flags and the guard; without the check, that those
         changes left the old path untouched would be an assertion.
-CAL5. OPEN, Rahul's addition: seven target-labelled, adequate cells of
-    the N41 table have provenance "beta_adq; C1 found no sufficient
-    level". Their beta is the adequacy beta, not a production-level beta
-    (ledger N41, result). They are:
-    - cliff ackley d 40 tau0 0.1;
-    - regimemap ackley d 10, 20 and 80, tau0 0.1;
-    - regimemap rastrigin d 10 tau0 0.01;
-    - regimemap rastrigin d 80 tau0 0.1;
-    - regimemap sphere d 40 tau0 0.01.
-    The finalize's summary counts ("target 34", "adequate 34") do not
-    show them. How the analysis treats and reports them is not decided;
-    it is put to Rahul as a question in its turn.
+CAL5. Target cells whose beta is beta_adq. DECIDED: report, do not flag;
+    split the target counts.
+    - The cells: target-labelled, adequate calibration cells whose beta is
+      beta_adq under calprec2's BA rule (calprec2.py lines 217 to 227,
+      confirmed by Rahul 2026-10-11). Provenance is "beta_adq; C1 found no
+      sufficient level" or "beta_adq; C6 failed for beta_prod". In the N41
+      table there are seven, all of the first kind:
+      - cliff ackley d 40 tau0 0.1;
+      - regimemap ackley d 10, 20 and 80, tau0 0.1;
+      - regimemap rastrigin d 10 tau0 0.01;
+      - regimemap rastrigin d 80 tau0 0.1;
+      - regimemap sphere d 40 tau0 0.01.
+      The 336-cell table has cells of both kinds in boundary, crossed,
+      mechanism and sigma.
+    - Docstring text: for each calibrated row (rerunlib.CALROWS, the
+      seventeen-row ones included), its distinct calibration cells are
+      counted by category = label + " | " + provenance, with a provenance
+      beginning "beta_prod" shortened to "beta_prod". The counts are
+      printed and written to analysis_adequacy_split.csv. No statistic is
+      flagged and no value changes. The ledger's tallies (N39 C6, N41) are
+      corrected the same way, from that output.
+    - Worked example: cells "target" / "beta_prod, calibration N_cell
+      4000000", "target" / "beta_prod, calibration N_cell 64000" and
+      "target" / "beta_adq; C1 found no sufficient level" give "target |
+      beta_prod 2" and "target | beta_adq; C1 found no sufficient level
+      1".
+    - Rahul's reasons: these cells' tau0 is established by the same 5%
+      criterion as every other target cell, so flagging them would put
+      them in the same class as cells that failed a check, which they did
+      not. CAL3's flag marks cells whose tau0 is not established; this is
+      a different thing. His objection was that the summary counts hide
+      them, and splitting the counts answers it.
+    - What this costs, recorded as Rahul instructed: a reader of a
+      statistic does not see at the point of use that the beta came from
+      the median rule and was verified on the same replicates that judged
+      adequacy. It is visible only in the per-cell adequacy table and the
+      split counts. The manuscript must say so where it describes
+      calibration.
+
+CAL1 to CAL5 are decided. They are implemented in
+scripts/rerun_analysis.py (docstring "THE CALIBRATED r ROWS"); the review
+of that change is notes/RERUN_REVIEW.md, 2026-10-26.
 
 ---
 

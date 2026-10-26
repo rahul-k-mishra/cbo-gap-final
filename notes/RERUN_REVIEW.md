@@ -293,3 +293,112 @@ Nothing further needs Rahul's decision before rerun.py --precheck runs.
 The precheck reads no analysis criterion. Its own criteria (V0, P1, S1,
 A-BETA, A-SIGMA, C2, O1, K1, K2, K4) are fixed, and on any failure it
 stops and reports the numbers without loosening a tolerance.
+
+## 2026-10-26, third pass: the calibrated r rows (CAL1 to CAL5)
+
+- Reviewed: scripts/rerun_analysis.py as changed for RMAP-CAL, CLIFF-CAL
+  and ONSET-CAL (1807 lines, md5 a2d75624c0231233f415de951f907344), and
+  notes/queues/rerun-cal3.json. Against notes/ANALYSIS_CRITERIA.md,
+  fourteenth message, CAL1 to CAL5.
+- Not changed, deliberately: rerun.py, rerunlib.py and costprobe2.py. The
+  plan runs/rerun-plan-20261026-210435 records rerunlib's and costprobe2's
+  hashes, the analysis refuses a plan built with different ones, and the
+  queue pins all three. A change to any of them would need a new precheck
+  and would break the K5 link to the seventeen-row plan.
+- Written by the author of the change (Claude). A second, independent read
+  was made by a separate agent, given the code and the criteria but not
+  this review; its findings and their disposition are below.
+- Nothing was executed in any mode. The checks made:
+  - a parse under the Python 3.8 grammar (ast.parse, feature_version
+    (3, 8));
+  - a static walk for names read but never bound: only __file__;
+  - a grep that every rl. and rerun. attribute used is defined in its
+    module (the two the grep missed, JCOLS and KIND_BOOT, are bound by
+    tuple assignment in rerunlib.py);
+  - the CAL4 comparison functions (as_strings, compare_old), extracted
+    from the file and run against runs/rerun-analysis-20261025-051314 fed
+    to itself through the new column lists: every file PASS, 0
+    differences. Negative control: one value in analysis_stats.csv
+    lengthened by one digit gives FAIL with that row and column. This tests
+    the comparison, not the analysis;
+  - the queue definition, passed through rerunq.py's own
+    validate_definition (extracted from the file): it validates. Its job
+    names rerun-smoke-cal3-a1, rerun-cal3-s0of2-a1, rerun-cal3-s1of2-a1
+    match nothing under runs/ or logs/ (L3);
+  - the seventeen-row plan is a byte prefix of the new plan (cmp), so
+    cells load in the same order.
+
+### Criteria against docstring, example and code
+
+| Criterion | Docstring | Example | Code | Result |
+|---|---|---|---|---|
+| A1 over twenty rows (CAL4) | yes | yes | main, A1 | ok; exit 7 unchanged |
+| CAL1 m not recomputed; pool = the five rows | yes | yes | MARGIN_ROWS, arm_sds | ok; rerunlib.PAIRED now has eight rows and is no longer used for S |
+| CAL1 ratio guard, both ratios, 1.5, shared cell once | yes | yes | main, CAL1 block | NaN passed silently: fixed (G4) |
+| CAL2 mirror, per row | yes | yes | paired_gaps, target_contrast_paired, rmap_panel, onset_block | ok; rmap_panel and onset_block take the row; the J2 header was hard-coded "ONSET": fixed (G5) |
+| CAL2 nothing between probe and calibrated rows | yes | n/a | none computed | ok |
+| CAL3 flag on every statistic, unit and pooled | yes | yes | na_label, na_flag, Stats.one, Stats.family | audit, R^2, J4 counts and the margin pool were missing in the first draft: fixed before the review (G1) |
+| CAL4 order: 17 rows, margin check, full check, then calibrated rows | yes | yes | main | ok |
+| CAL4 the flag column the only difference | yes | n/a | ONSET_COLS, guard file | a row column in _onsets and seven rows in _margin: fixed (G2) |
+| CAL4 the reference folder | yes | added (G3) | main | not pinned: fixed (G3) |
+| CAL4 exit 8, nothing for the calibrated rows | yes | yes | main | ok; the margin is checked first and exits 8 before any gap |
+| CAL5 split per calibrated row | yes | yes | split_category, main | ok; a shared cell counts in both rows, stated |
+
+### The seventeen-row path, function by function
+
+- Emission order: BASE_ROWS is costprobe2.ROW_ORDER, the old rl.ROWS.
+  MARGIN_ROWS is the old rl.PAIRED in the same order. The old rl.CALROWS
+  equals base_cal. Phase 3 calls the same functions in the same order.
+- Phase 1: the same jobs, the same instance order. A calibrated-row job
+  cannot collide with a seventeen-row one: the owner index is in the boot
+  key.
+- Values: every unit tuple gains a fourth element (its cells), which only
+  feeds not_adequate. Notes, verdicts, orientations and estimates are
+  computed as before. Both readers found every family() call site passing
+  four-tuples.
+- At the check, every in-memory table holds seventeen-row records only.
+
+### Found and fixed in this pass
+
+- G1. CAL3 coverage, first draft: the not_adequate column covered
+  analysis_stats and analysis_cells only. Added: audit summary rows, R^2
+  rows, the onset rows and J4 counts, and the margin pools.
+- G2. CAL4's "the flag column is the only permitted difference" was
+  broken twice (independent read): analysis_onsets.csv had a new row
+  column, and analysis_margin.csv grew from 7 to 14 rows. The calibrated
+  rows' onsets now go to analysis_onsets_calibrated.csv, and the guard
+  values and pool flags to analysis_margin_calibrated.csv. Every old file
+  now differs from N39's only by not_adequate (checked by header
+  comparison against the old folder).
+- G3. --reproduce accepted any folder whose sha256.txt verified
+  (independent read). It is now pinned: basename
+  rerun-analysis-20261025-051314 and sha256.txt hashing to
+  01c202c8d2fae83c0fe683d1cc55a802dd59c2e27fdf1fab158578a5e029d5e1;
+  otherwise exit 2.
+- G4. A NaN median in the ratio guard gave "no revisit" (independent
+  read). An undefined ratio is now treated as REVISIT and says so.
+- G5. The J2 section header read "ONSET" for ONSET-CAL (console only).
+
+### Needs Rahul's decision
+
+- R1. On a calibrated-row REVISIT, the code withholds ALL of their
+  phase-3 output: gaps, contrast 2, the J3 panel, contrast 6, J2, and also
+  the onsets and J4 counts, which carry no verdict. CAL1 as recorded says
+  "no gap, DIFFERENCE verdict or equivalence verdict". Every contrast and
+  coefficient carries a DIFFERENCE verdict, so withholding those follows
+  from the wording. Withholding the onsets and J4 counts goes further
+  (independent read). The code matches its docstring; the criterion does
+  not authorize the extra step explicitly.
+  Recommendation: keep it. It is what 5b does for the seventeen rows
+  (exit 6 before phase 3, onsets included), so one rule covers both. A
+  REVISIT means the margin is in question, and onsets printed alone would
+  be a partial set, which D3 exists to prevent.
+
+### What the first execution must show
+
+- The smoke and both shards: exit 0, D-SMOKE PASS, the header hashes the
+  queue pins.
+- The analysis, on the laptop (Python 3.12.3, NumPy 2.5.3), with all eight
+  run folders (the four arch shards, the two cal shards, the two cal3
+  shards): "margin equals ...", then "17-ROW REPRODUCTION PASS", then the
+  calibrated rows' ratio guard printed before any of their gaps.
