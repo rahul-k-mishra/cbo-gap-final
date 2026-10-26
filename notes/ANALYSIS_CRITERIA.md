@@ -2375,6 +2375,13 @@ CAL1. Margin. DECIDED: keep m = 0.078113, with a ratio guard.
       - The calibrated rows borrow a margin fixed before their gaps
         existed.
       - The manuscript must say both.
+    - On REVISIT (Rahul, 2026-10-26, review item R1): no phase-3 output at
+      all for the calibrated rows. That is no gap, contrast, coefficient
+      or verdict, and also no onsets and no J4 counts, though those carry
+      no verdict. Rahul's reason: 5b already does this for the seventeen
+      rows, and onsets printed alone are the partial set D3 exists to
+      prevent. A reader would have numbers from a row whose margin is in
+      doubt, with nothing to place them against.
 CAL2. Contrasts. DECIDED: mirror.
     - Each calibrated row gets exactly its base row's contrasts and
       section-8 quantities, with the same signs, windows and DIFFERENCE

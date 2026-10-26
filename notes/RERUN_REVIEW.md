@@ -393,6 +393,11 @@ stops and reports the numbers without loosening a tolerance.
   (exit 6 before phase 3, onsets included), so one rule covers both. A
   REVISIT means the margin is in question, and onsets printed alone would
   be a partial set, which D3 exists to prevent.
+  DECIDED by Rahul, 2026-10-26: withhold them; the code stays as written.
+  His reason: 5b already does this for the seventeen rows, and onsets
+  printed alone are the partial set D3 exists to prevent. A reader would
+  have numbers from a row whose margin is in doubt, with nothing to place
+  them against.
 
 ### What the first execution must show
 

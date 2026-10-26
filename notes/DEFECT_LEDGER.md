@@ -2033,9 +2033,13 @@ instruction of 2026-10-15.
     - Both shards use the identical --rows list and --nshards 2, RMAP-CAL
       launched with ONSET-CAL (notes/RERUN_RUNBOOK.md, the rule that ties
       RMAP and ONSET together; the shared cells are owned by RMAP-CAL).
-    - Not decided here: whether the shards go through the rerun queue (a
-      new definition under notes/queues/ and "rerunq.py load") or by
-      hand under the runbook, and the smoke before them.
+    - Decided by Rahul, 2026-10-26: through the rerun queue, a smoke
+      first, as the last two sets ran. The definition is
+      notes/queues/rerun-cal3.json (commit 5a94392). Its timing folders
+      are runs/costprobe2-s0-kaggle-20261010-103952 and
+      runs/costprobe2-s1-kaggle-20261011-101343. Rahul confirmed that his
+      schedule run used these two, the same two as every schedule in this
+      project.
 
 ## Checked and found sound
 
