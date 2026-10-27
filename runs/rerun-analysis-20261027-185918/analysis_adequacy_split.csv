@@ -1,0 +1,28 @@
+row,category,cells
+CONC,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",4
+CONC,"beta, not adequate (C5m FAIL, D1 FAIL) | beta_adq; reference not adequate",3
+CONC,target | beta_adq; C1 found no sufficient level,11
+CONC,target | beta_adq; C6 failed for beta_prod,1
+CONC,target | beta_prod,125
+TAU8,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",8
+TAU8,"beta, not adequate (C5m FAIL, D1 FAIL) | beta_adq; reference not adequate",6
+TAU8,target | beta_adq; C1 found no sufficient level,21
+TAU8,target | beta_adq; C6 failed for beta_prod,2
+TAU8,target | beta_prod,107
+SIGMA,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",1
+SIGMA,"beta, not adequate (C5m FAIL, D1 FAIL) | beta_adq; reference not adequate",2
+SIGMA,target | beta_adq; C1 found no sufficient level,6
+SIGMA,target | beta_prod,15
+ANISO,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",1
+ANISO,"beta, not adequate (C5m FAIL, D1 FAIL) | beta_adq; reference not adequate",2
+ANISO,target | beta_adq; C1 found no sufficient level,5
+ANISO,target | beta_prod,16
+RMAP-CAL,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",3
+RMAP-CAL,"beta, not adequate (C5m FAIL, D1 FAIL) | beta_adq; reference not adequate",3
+RMAP-CAL,target | beta_adq; C1 found no sufficient level,3
+RMAP-CAL,target | beta_prod,15
+CLIFF-CAL,"beta, not adequate (C5m FAIL) | beta_adq; reference not adequate",1
+CLIFF-CAL,target | beta_adq; C1 found no sufficient level,1
+CLIFF-CAL,target | beta_prod,6
+ONSET-CAL,target | beta_adq; C1 found no sufficient level,4
+ONSET-CAL,target | beta_prod,11

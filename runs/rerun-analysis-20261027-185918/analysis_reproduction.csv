@@ -1,0 +1,9 @@
+file,verdict,old_rows,new_rows,differences
+analysis_completeness.csv,PASS,17,17,0
+analysis_cells.csv,PASS,3225,3225,0
+analysis_margin.csv,PASS,7,7,0
+analysis_stats.csv,PASS,6282,6282,0
+analysis_onsets.csv,PASS,56,56,0
+analysis_audit.csv,PASS,7680,7680,0
+analysis_r2.csv,PASS,9,9,0
+analysis_adequacy.csv,PASS,336,336,0
