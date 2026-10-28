@@ -1,0 +1,222 @@
+====================================================================================================
+CBO-GAP onsetdiag -- why three per-objective onsets of 2.00 pool to 1.00 (N42), read-only
+====================================================================================================
+  onsetdiag sha256 ad337adc7a8ecb70109b24bdabc4942f8613e45e90592f6921977863b22b4041
+  rerunlib sha256  6a7ddf42242d5101086741e3a341db9711b2d47fdbfd60710be9229de8895b07
+  python 3.12.3   numpy 2.5.3   platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   workers 2
+  --n39 runs/rerun-analysis-20261025-051314   --twenty runs/rerun-analysis-20261027-185918
+  writes nothing; no seed (nothing random); point S-slopes only, no bootstrap
+
+  What this prints, in plain words. The onset of a curve is where a single bend (a
+  hinge) fits the S-slope-against-log-r curve best, chosen among r = 0.75, 1.0, 1.25,
+  1.5 and 2.0. The pooled onset is the bend of the AVERAGE curve over the three
+  objectives, not the average of their bends. For isotropic d = 80 the script prints
+  each curve, how badly a bend at each candidate fits it (RSS: smaller fits better),
+  where the best bend lands, and a text plot, for ONSET (probe beta) and ONSET-CAL
+  (fixed beta). Two facts about the candidates: a bend at 0.75 is just a straight
+  line; a bend at 2.0 has only r = 3.0 to its right, so it always fits r = 3.0
+  exactly and is judged on the first five points alone. R1 checks that the committed
+  onsets follow from the committed slopes; D checks onset_bp's choice by a second
+  route; SCOPE lists every dimension so the d = 80 case can be compared with the rest.
+
+----------------------------------------------------------------------------------------------------
+V1  manifests
+----------------------------------------------------------------------------------------------------
+  runs/rerun-analysis-20261025-051314 verified (9 files)
+  runs/rerun-analysis-20261027-185918 verified (13 files)
+
+----------------------------------------------------------------------------------------------------
+V2  cells (W-full point S-slopes)
+----------------------------------------------------------------------------------------------------
+  ONSET     runs/rerun-analysis-20261025-051314/analysis_cells.csv  sha256 cbdfba6e4971a563698e1ff75935aefa04df4011cd1563c963e0a6a23f665335  180 cells, each once
+  ONSET     runs/rerun-analysis-20261025-051314/analysis_onsets.csv  sha256 3525fb9de8a0427e54cb61f24ab6d3bd0d8f04df9e8551f3bc46a005b77b95fc  rows: onset 40, heterogeneity 10, J4 count 6; R1 uses the 40 onset rows
+  ONSET-CAL runs/rerun-analysis-20261027-185918/analysis_cells.csv  sha256 c0b150faa3e1a198c805c2fd3d7bd2dd3461669f2b9152bb355aee580556d1d2  180 cells, each once
+  ONSET-CAL runs/rerun-analysis-20261027-185918/analysis_onsets_calibrated.csv  sha256 3fa2ac48571681a5a8fab692be5eb53f0dad3a97e1dd58afb060b8a5e2283368  rows: onset 40, heterogeneity 10, J4 count 6; R1 uses the 40 onset rows
+
+----------------------------------------------------------------------------------------------------
+V3  ONSET slopes equal in both folders
+----------------------------------------------------------------------------------------------------
+  ONSET: 180 cells equal as strings in runs/rerun-analysis-20261025-051314 and runs/rerun-analysis-20261027-185918
+
+----------------------------------------------------------------------------------------------------
+R1  every recorded onset recomputed from the recorded slopes
+----------------------------------------------------------------------------------------------------
+  R1 ONSET     40 of 40 equal (analysis_onsets.csv)
+  R1 ONSET-CAL 40 of 40 equal (analysis_onsets_calibrated.csv)
+
+----------------------------------------------------------------------------------------------------
+D  onset_bp's choice against an independent RSS route (pinv projection)
+----------------------------------------------------------------------------------------------------
+  D ONSET     40 of 40 agree
+  D ONSET-CAL 40 of 40 agree
+
+----------------------------------------------------------------------------------------------------
+DETAIL  isotropic d = 80: the curves, the hinge fits, where each onset lands
+----------------------------------------------------------------------------------------------------
+
+  ONSET  isotropic d=80
+
+    ackley: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -0.8611  -0.8353  -0.7042  -0.5104  -0.3492  -0.3805
+      steps  +0.0258  +0.1311  +0.1938  +0.1612  -0.0313   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.7850   +0.3240   +0.0981   3.472797e-02
+      c at r=1.0   3     -0.7690   +0.3200   +0.1202   3.413491e-02
+      c at r=1.25  3     -0.7550   +0.4905   -0.1026   3.383051e-02
+      c at r=1.5   3     -0.7608   +0.5634   -0.2831   2.694005e-02
+      c at r=2.0   3     -0.7679   +0.5604   -0.5631   1.476617e-02  <- onset
+      at the onset 2.00: fitted  -0.9292  -0.7679  -0.6429  -0.5407  -0.3795  -0.3805
+                       residual +0.0681  -0.0673  -0.0613  +0.0303  +0.0303  -0.0000
+
+    rastrigin: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -1.1240  -1.1915  -1.2225  -1.2619  -1.1503  -0.4961
+      steps  -0.0675  -0.0310  -0.0394  +0.1116  +0.6542   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -1.2225   +0.3748   +0.0231   2.193132e-01
+      c at r=1.0   3     -1.3626   -0.8293   +1.4453   1.335609e-01
+      c at r=1.25  3     -1.2384   -0.4688   +1.2985   7.547561e-02
+      c at r=1.5   3     -1.1963   -0.2978   +1.3933   3.067203e-02
+      c at r=2.0   3     -1.1799   -0.0493   +1.8199   1.078748e-02  <- onset
+      at the onset 2.00: fitted  -1.1657  -1.1799  -1.1909  -1.1998  -1.2140  -0.4961
+                       residual +0.0416  -0.0117  -0.0317  -0.0620  +0.0638  -0.0000
+
+    sphere: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -1.0088  -0.9462  -0.8697  -0.5490  -0.3287  -0.3044
+      steps  +0.0626  +0.0765  +0.3207  +0.2203  +0.0243   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.9288   +0.4335   +0.1663   5.457725e-02
+      c at r=1.0   3     -0.9128   +0.3337   +0.3134   5.054554e-02
+      c at r=1.25  3     -0.8827   +0.5349   +0.0972   5.377124e-02
+      c at r=1.5   3     -0.8835   +0.6911   -0.1830   5.132236e-02
+      c at r=2.0   3     -0.8915   +0.7300   -0.5302   3.687834e-02  <- onset
+      at the onset 2.00: fitted  -1.1015  -0.8915  -0.7286  -0.5954  -0.3854  -0.3044
+                       residual +0.0927  -0.0547  -0.1411  +0.0465  +0.0567  -0.0000
+
+    mean curve (pooled): S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -0.9980  -0.9910  -0.9321  -0.7737  -0.6094  -0.3937
+      steps  +0.0070  +0.0589  +0.1584  +0.1644  +0.2157   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.9788   +0.3774   +0.0958   1.887175e-02
+      c at r=1.0   3     -1.0148   -0.0586   +0.6263   2.769544e-03  <- onset
+      c at r=1.25  3     -0.9587   +0.1856   +0.4310   3.021626e-03
+      c at r=1.5   3     -0.9469   +0.3189   +0.3091   9.589869e-03
+      c at r=2.0   3     -0.9464   +0.4137   +0.2422   1.517824e-02
+      at the onset 1.00: fitted  -0.9980  -1.0148  -0.8881  -0.7846  -0.6213  -0.3911
+                       residual +0.0000  +0.0238  -0.0440  +0.0109  +0.0119  -0.0026
+
+    mean of the three per-objective fitted curves (each at its own onset):
+      -1.0654  -0.9464  -0.8541  -0.7787  -0.6596  -0.3937
+      its RSS against the mean curve 1.517824e-02
+    mean curve's RSS at each per-objective onset, against its own onset 1.00:
+      ackley     onset 2.00  mean-curve RSS there 1.517824e-02   at 1.00 2.769544e-03
+      rastrigin  onset 2.00  mean-curve RSS there 1.517824e-02   at 1.00 2.769544e-03
+      sphere     onset 2.00  mean-curve RSS there 1.517824e-02   at 1.00 2.769544e-03
+
+  text plot: S-slope from -1.262 (left) to -0.304 (right); one line per r
+  r=0.75  |         R      SM       A                                   |
+  r=1.0   |    R            M  S      A                                 |
+  r=1.25  |  R                  M   S         A                         |
+  r=1.5   |R                              M             S A             |
+  r=2.0   |       R                                 M               AS  |
+  r=3.0   |                                                R     MA    S|
+  (A ackley, R rastrigin, S sphere, M mean curve; * two or more letters in one column)
+
+  ONSET-CAL  isotropic d=80
+
+    ackley: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -0.8710  -0.8585  -0.7120  -0.5586  -0.3207  -0.3704
+      steps  +0.0124  +0.1465  +0.1535  +0.2379  -0.0497   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.8050   +0.3392   +0.1076   3.898070e-02
+      c at r=1.0   3     -0.7965   +0.2587   +0.2216   3.696556e-02
+      c at r=1.25  3     -0.7735   +0.4680   -0.0317   3.889518e-02
+      c at r=1.5   3     -0.7768   +0.5455   -0.1977   3.518180e-02
+      c at r=2.0   3     -0.7851   +0.5850   -0.5624   1.907033e-02  <- onset
+      at the onset 2.00: fitted  -0.9534  -0.7851  -0.6546  -0.5479  -0.3796  -0.3704
+                       residual +0.0825  -0.0734  -0.0574  -0.0106  +0.0589  -0.0000
+
+    rastrigin: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -1.0880  -1.1608  -1.2291  -1.2607  -1.1767  -0.5024
+      steps  -0.0728  -0.0683  -0.0316  +0.0840  +0.6744   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -1.1996   +0.3524   +0.0073   2.451418e-01
+      c at r=1.0   3     -1.3491   -0.9075   +1.4925   1.536977e-01
+      c at r=1.25  3     -1.2214   -0.5555   +1.3713   8.471756e-02
+      c at r=1.5   3     -1.1770   -0.3704   +1.4624   3.732578e-02
+      c at r=2.0   3     -1.1593   -0.1148   +1.9314   1.029322e-02  <- onset
+      at the onset 2.00: fitted  -1.1263  -1.1593  -1.1850  -1.2059  -1.2389  -0.5024
+                       residual +0.0383  -0.0015  -0.0442  -0.0548  +0.0622  +0.0000
+
+    sphere: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -0.9504  -0.9813  -0.7794  -0.5302  -0.3105  -0.3385
+      steps  -0.0309  +0.2019  +0.2493  +0.2196  -0.0280   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.8886   +0.4052   +0.1495   6.608231e-02
+      c at r=1.0   3     -0.8845   +0.2290   +0.3835   6.004296e-02
+      c at r=1.25  3     -0.8451   +0.5730   -0.0274   6.601828e-02
+      c at r=1.5   3     -0.8495   +0.6966   -0.2843   5.822910e-02
+      c at r=2.0   3     -0.8586   +0.7166   -0.6591   3.873372e-02  <- onset
+      at the onset 2.00: fitted  -1.0647  -0.8586  -0.6987  -0.5680  -0.3619  -0.3385
+                       residual +0.1143  -0.1227  -0.0808  +0.0378  +0.0513  -0.0000
+
+    mean curve (pooled): S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+      y      -0.9698  -1.0002  -0.9069  -0.7832  -0.6027  -0.4038
+      steps  -0.0304  +0.0933  +0.1237  +0.1805  +0.1989   (y at the next r minus y at this r)
+      candidate   rank    a         b1        b2        RSS
+      c at r=0.75  2     -0.9644   +0.3656   +0.0882   2.108938e-02
+      c at r=1.0   3     -1.0100   -0.1399   +0.6992   1.019868e-03  <- onset
+      c at r=1.25  3     -0.9466   +0.1618   +0.4374   4.766706e-03
+      c at r=1.5   3     -0.9345   +0.2906   +0.3268   1.071155e-02
+      c at r=2.0   3     -0.9344   +0.3956   +0.2366   1.756365e-02
+      at the onset 1.00: fitted  -0.9698  -1.0100  -0.8853  -0.7833  -0.6224  -0.3957
+                       residual +0.0000  +0.0098  -0.0216  +0.0001  +0.0198  -0.0081
+
+    mean of the three per-objective fitted curves (each at its own onset):
+      -1.0482  -0.9344  -0.8461  -0.7739  -0.6601  -0.4038
+      its RSS against the mean curve 1.756365e-02
+    mean curve's RSS at each per-objective onset, against its own onset 1.00:
+      ackley     onset 2.00  mean-curve RSS there 1.756365e-02   at 1.00 1.019868e-03
+      rastrigin  onset 2.00  mean-curve RSS there 1.756365e-02   at 1.00 1.019868e-03
+      sphere     onset 2.00  mean-curve RSS there 1.756365e-02   at 1.00 1.019868e-03
+
+  text plot: S-slope from -1.261 (left) to -0.311 (right); one line per r
+  r=0.75  |           R      M S    A                                   |
+  r=1.0   |      R         M S      A                                   |
+  r=1.25  |  R                   M       S    A                         |
+  r=1.5   |R                             M             A S              |
+  r=2.0   |     R                                    M                AS|
+  r=3.0   |                                                R     M A S  |
+  (A ackley, R rastrigin, S sphere, M mean curve; * two or more letters in one column)
+
+----------------------------------------------------------------------------------------------------
+SCOPE  every (row, diffusion, d): per-objective onsets, pooled onset
+----------------------------------------------------------------------------------------------------
+  'last' marks an onset at 2.0, the candidate with only r = 3.0 to its right (F2)
+  ONSET     anisotropic d=5   ackl 1.25       rast 1.25       sphe 1.50        pooled 1.25       pooled among objectives: yes
+  ONSET     anisotropic d=10  ackl 2.00 last  rast 2.00 last  sphe 1.50        pooled 2.00 last  pooled among objectives: yes
+  ONSET     anisotropic d=20  ackl 1.50       rast 2.00 last  sphe 1.00        pooled 1.50       pooled among objectives: yes
+  ONSET     anisotropic d=40  ackl 1.00       rast 1.25       sphe 2.00 last   pooled 1.00       pooled among objectives: yes
+  ONSET     anisotropic d=80  ackl 1.25       rast 1.50       sphe 1.50        pooled 1.25       pooled among objectives: yes
+  ONSET     isotropic   d=5   ackl 1.50       rast 1.25       sphe 2.00 last   pooled 1.50       pooled among objectives: yes
+  ONSET     isotropic   d=10  ackl 1.00       rast 1.00       sphe 1.25        pooled 1.25       pooled among objectives: yes
+  ONSET     isotropic   d=20  ackl 1.50       rast 1.50       sphe 2.00 last   pooled 1.50       pooled among objectives: yes
+  ONSET     isotropic   d=40  ackl 1.00       rast 2.00 last  sphe 1.25        pooled 1.25       pooled among objectives: yes
+  ONSET     isotropic   d=80  ackl 2.00 last  rast 2.00 last  sphe 2.00 last   pooled 1.00       pooled among objectives: no
+  ONSET: pooled onset equal to none of the three per-objective onsets in 1 of 10
+  ONSET-CAL anisotropic d=5   ackl 2.00 last  rast 1.25       sphe 2.00 last   pooled 1.25       pooled among objectives: yes
+  ONSET-CAL anisotropic d=10  ackl 1.50       rast 2.00 last  sphe 1.25        pooled 1.25       pooled among objectives: yes
+  ONSET-CAL anisotropic d=20  ackl 1.50       rast 1.50       sphe 1.00        pooled 1.50       pooled among objectives: yes
+  ONSET-CAL anisotropic d=40  ackl 1.25       rast 1.50       sphe 1.25        pooled 1.25       pooled among objectives: yes
+  ONSET-CAL anisotropic d=80  ackl 2.00 last  rast 2.00 last  sphe 2.00 last   pooled 2.00 last  pooled among objectives: yes
+  ONSET-CAL isotropic   d=5   ackl 1.25       rast 1.50       sphe 1.25        pooled 1.25       pooled among objectives: yes
+  ONSET-CAL isotropic   d=10  ackl 2.00 last  rast 2.00 last  sphe 1.00        pooled 1.00       pooled among objectives: yes
+  ONSET-CAL isotropic   d=20  ackl 1.50       rast 2.00 last  sphe 1.50        pooled 1.50       pooled among objectives: yes
+  ONSET-CAL isotropic   d=40  ackl 1.25       rast 2.00 last  sphe 1.25        pooled 1.50       pooled among objectives: no
+  ONSET-CAL isotropic   d=80  ackl 2.00 last  rast 2.00 last  sphe 2.00 last   pooled 1.00       pooled among objectives: no
+  ONSET-CAL: pooled onset equal to none of the three per-objective onsets in 2 of 10
+
+----------------------------------------------------------------------------------------------------
+SUMMARY
+----------------------------------------------------------------------------------------------------
+  peak RSS (main process) 39.9 MB
+  R1 all equal, D all agree; nothing written
