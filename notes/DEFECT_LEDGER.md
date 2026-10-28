@@ -2412,7 +2412,33 @@ instruction of 2026-10-15.
     runs/rerun-plan-20261026-210435. The analysis reproduces the twenty
     rows against runs/rerun-analysis-20261027-185918. Everything runs
     through the queue, smoke first, resumable.
-  OPEN: criteria awaiting Rahul's approval.
+  - Read-back and amendments (Rahul, 2026-10-28); criteria APPROVED with
+    them (ANALYSIS_CRITERIA, "Sixteenth message", rewritten):
+    - Baseline check: range >= delta, replacing Claude's delta / 2. Reason
+      (Rahul): it ties the check to the estimand's own unit rather than a
+      fraction chosen without derivation, and it is less strict than delta
+      / 2, so fewer units lose a verdict for a reason that could not be
+      justified. delta / 2 was arbitrary and was replaced for that reason.
+    - Interval: hybrid. It interpolates as every other row does when both
+      order statistics are finite, and gives the censoring label otherwise.
+      ONSET-R then differs only in the censored case, which is forced
+      rather than chosen. pct() must not be reused: it drops non-finite
+      values and would silently discard censored resamples. The paper must
+      state how the interval differs, and that a censored limit is
+      reported as a bound, not a value.
+    - Grid: 17 points, 0.3 to 4.8; baseline 0.3, 0.35, 0.42, 0.5; the
+      search starts at 0.6. Reason (Rahul): an assumed-clean region below
+      the baseline is the same blind spot as a bend with nothing to its
+      right, the defect this row exists to fix. Measuring down to 0.5,
+      instead of assuming no degradation below 0.85, is worth 4320 extra
+      tasks; runtime is not the constraint. Tasks: 24480.
+    - The 14-point projection and its 8 shards no longer apply. The
+      17-point projection is rerun by Rahul (logged), and the shard count
+      is fixed from the new plan's schedule.
+    - The synthetic expected values were re-derived for the new grid and
+      baseline (C1 to C9, with C5b added). O2 must pass in the precheck
+      before the plan is written.
+  OPEN: code, precheck, schedule and queue to follow, in that order.
 
 ## Checked and found sound
 
