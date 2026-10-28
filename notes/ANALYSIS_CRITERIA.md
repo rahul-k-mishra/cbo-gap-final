@@ -2534,6 +2534,56 @@ of that change is notes/RERUN_REVIEW.md, 2026-10-26.
 
 ---
 
+### Fifteenth message (2026-10-28): onsets (ledger N43)
+
+Decided by Rahul, 2026-10-28: drop onset intervals. No resample-level
+classification script is written.
+
+- Rahul's reason: the script's best outcome would still be exploratory
+  evidence for a claim the paper does not need. It would use a rule chosen
+  after the curves were seen and a threshold (m, 5b) borrowed from another
+  purpose. The organising contrast rests on the per-cell rate verdicts by
+  region (C2) and on contrast 3. The severity result rests on slopes at
+  fixed r (S(1,3), S(0.75,3), J2). Neither uses an onset.
+- Dropped as claims, for ONSET and ONSET-CAL alike:
+  - J4 (onset against r = 1: every "k of n intervals contain 1", per
+    objective and pooled);
+  - contrast 6 (onset d 80 - d 5);
+  - the 95% interval column of the onsets (H3);
+  - the onset heterogeneity rows (H2 applied to onsets).
+  H3, J4 and contrast 6 stay in the committed analysis as computations.
+  analysis_onsets.csv, analysis_onsets_calibrated.csv and the c6 rows of
+  analysis_stats.csv are unchanged and are not rerun. Nothing in this
+  file's earlier text that defines them is deleted; this entry overrides
+  their use as claims.
+- What the paper does:
+  - reports the slope-against-r curves and their point bends (H3 point
+    estimates) as exploratory, with no location estimated and no
+    interval;
+  - states as a limitation that it cannot say, with an interval, where
+    along r the slope begins to degrade;
+  - withdraws round 1's "nine of ten bootstrap intervals contain r = 1"
+    (zenodo-v1/sn-article.tex lines 38 and 628) in one sentence. The
+    sentence names that the rerun gives 6 of 10 in both designs (ONSET,
+    N39; ONSET-CAL, N42; J4 pooled) under the approved bootstrap, and
+    names both changes, the realizations and the bootstrap unit, with no
+    cause assigned.
+- Wording held:
+  - "does not hold on the rerun", never "changed significantly" or any
+    comparative test language (the two counts are not tested against
+    each other);
+  - 6 of 10 appears only as the reason the earlier statement is
+    withdrawn, never as a finding that the onset is separated from r = 1,
+    and with no per-dimension list of which intervals exclude 1;
+  - the point bends are never called onsets of degradation; a bend at
+    2.00 is not interpreted without its curve (N43).
+- Worked example of the withdrawal sentence's content, not its final
+  wording: the earlier version stated that nine of ten bootstrap
+  intervals for the breakpoint contained r = 1. On the rerun, with
+  realizations resampled within cells, six of ten do, in both designs.
+  The rerun changed both the realizations and the bootstrap unit, and the
+  statement is withdrawn without attributing the difference to either.
+
 ## Corrections to the first decision message, from the logs
 
 All seven accepted by Rahul in the second message (2026-10-16) and

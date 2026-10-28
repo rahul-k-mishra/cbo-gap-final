@@ -2329,8 +2329,32 @@ instruction of 2026-10-15.
       for before and after (for example each scaled by its own SD) break
       this invariance.
   - No amendment of the estimator is proposed (Rahul's instruction).
-    What would settle the threshold question is listed in Claude's reply
-    of 2026-10-28 and is not run. OPEN.
+  - Decision (Rahul, 2026-10-28): drop onset intervals; no resample-level
+    classification script, no threshold sweep. Recorded in
+    notes/ANALYSIS_CRITERIA.md, "Fifteenth message (2026-10-28)".
+    - Reason (Rahul): the script's best outcome would still be
+      exploratory evidence for a claim the paper does not need, using a
+      rule chosen after the curves were seen and a threshold borrowed
+      from another purpose. The organising contrast rests on the
+      per-cell rate verdicts by region and contrast 3; the severity
+      result rests on slopes at fixed r. Neither uses an onset.
+    - Dropped as claims: J4, contrast 6, the onset interval column and
+      the onset heterogeneity rows, in ONSET and ONSET-CAL. The committed
+      CSVs (analysis_onsets.csv, analysis_onsets_calibrated.csv, the c6
+      rows of analysis_stats.csv) keep them as computations, unchanged.
+    - The paper reports the curves and point bends as exploratory, with
+      no location estimated and no interval. It states as a limitation
+      that it cannot say, with an interval, where along r the slope
+      begins to degrade. It withdraws round 1's "nine of ten intervals
+      contain r = 1" in one sentence. That sentence names that the rerun
+      gives 6 of 10 in both designs under the approved bootstrap, names
+      both changes (the realizations and the bootstrap unit), and assigns
+      no cause.
+    - Wording: "does not hold on the rerun", never "changed
+      significantly". 6 of 10 appears only as the reason for the
+      withdrawal, never as a finding that the onset is separated from
+      r = 1.
+  OPEN until that text is written and verified by the rule-8 diff.
 
 ## Checked and found sound
 
