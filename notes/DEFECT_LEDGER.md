@@ -2163,8 +2163,14 @@ instruction of 2026-10-15.
         says). Whether that is a property of the fit on averaged curves
         or a defect, I do not know. A check of the pooled curve at d 80
         against the three objectives' curves would settle it.
-        scripts/onsetdiag.py (read-only, writes nothing) is that check;
-        not yet run.
+        scripts/onsetdiag.py (read-only, writes nothing) is that check.
+        Its first run crashed before any result
+        (logs/onsetdiag-20261028.log, exit 1): read_onsets took every
+        row of analysis_onsets.csv for an onset, but onset_block also
+        writes 10 heterogeneity rows and 6 J4 count rows (d empty), and
+        N39's file has no not_adequate column. Fixed: every row is
+        classified by kind, the header and kind counts are checked per
+        folder, R1 compares the 40 onset rows only. Not yet rerun.
       - Caveat on every d 80 reading of ONSET-CAL (Rahul, 2026-10-28).
         Two of its three d 80 calibration cells do not carry a
         production beta. From the N41 finalize's calprec2_beta.csv

@@ -52,7 +52,35 @@ WHAT IT PRINTS, IN ORDER
   V1  Both manifests verify (every file listed in sha256.txt hashes as
       listed). Failure: exit 2, nothing else printed.
   V2  Each of the 180 (diffusion, objective, d, r) cells of each row is
-      present exactly once in W-full. Failure: exit 2.
+      present exactly once in W-full. Every row of the onset file is
+      classified by kind (ONSET FILE ROW KINDS below); the header must be
+      rerun_analysis's ONSET_COLS (N39's file: the same without the last
+      column, not_adequate, which CAL3 added after N39 ran), and the kind
+      counts must be onset 40,
+      heterogeneity 10, J4 count 6. Failure: exit 2 with the file, row and
+      kind named, never a traceback.
+
+  ONSET FILE ROW KINDS (from rerun_analysis.py onset_block, the only
+  writer of analysis_onsets.csv and analysis_onsets_calibrated.csv;
+  columns ONSET_COLS at HEAD, and in N39's folder ONSET_COLS without
+  not_adequate; 56 rows each, CAL4's "onsets 56"):
+  - onset: objective is ackley, rastrigin, sphere or "pooled"; diffusion
+    isotropic or anisotropic; d, onset, lo95, hi95, contains_1, nonfinite
+    set (v_i for objectives only). 2 diffusions x 4 x 5 d = 40. R1
+    compares these, and only these.
+  - heterogeneity: objective "heterogeneity of per-objective onsets"; d
+    set, onset empty; k, sd_units, vbar, tau2_mm, Q, I2, trunc. 2 x 5 =
+    10. Not compared: computed from the bootstrap variances, which this
+    script does not have.
+  - J4 count: objective "J4 count objective" or "J4 count pooled";
+    diffusion isotropic, anisotropic or "both"; d and onset empty;
+    contains_1 "k of n". 2 x 3 = 6. Not compared: they count intervals.
+  Contrast 6 is not in this file; onset_block writes it through Stats
+  into analysis_stats.csv.
+  Example: the row "isotropic,pooled,80,1.0,..." is kind onset and enters
+  R1 as ("isotropic", "pooled", 80) -> 1.0; the row
+  "both,J4 count pooled,,,,,2 of 5,..." is kind J4 count and is skipped.
+  A J4 count row, whose d is empty, stopped the first run with int('').
   V3  The ONSET W-full S-slopes in the two folders are equal as strings
       (CAL4 already showed it; checked again because the two folders are
       read here). Failure: exit 2.
@@ -135,6 +163,14 @@ import rerunlib as rl                                           # noqa: E402
 
 ROWS = [("ONSET", "n39", "analysis_onsets.csv"),
         ("ONSET-CAL", "twenty", "analysis_onsets_calibrated.csv")]
+# N39's folder was written before CAL3 added the not_adequate column.
+HEADER_KIND = {"ONSET": "N39", "ONSET-CAL": "current"}
+ONSET_COLS = ["diffusion", "objective", "d", "onset", "lo95", "hi95", "contains_1", "nonfinite", "v_i", "k",
+              "sd_units", "vbar", "tau2_mm", "Q", "I2", "trunc", "not_adequate"]
+HET_LABEL = "heterogeneity of per-objective onsets"
+J4_LABELS = ("J4 count objective", "J4 count pooled")
+ONSET_COLS_N39 = ONSET_COLS[:-1]
+ONSET_KIND_COUNTS = {"onset": 40, "heterogeneity": 10, "J4 count": 6}
 DETAIL = ("isotropic", 80)
 LETTER = {"ackley": "A", "rastrigin": "R", "sphere": "S", "mean": "M"}
 PLOT_W = 61
@@ -187,21 +223,49 @@ def read_slopes(path, row, g):
     return out, len(want)
 
 
-def read_onsets(path, g):
-    """{(diffusion, objective, d): onset float}, heterogeneity rows skipped."""
+def onset_kind(rec, g):
+    """The row kind of one analysis_onsets(_calibrated).csv row, as
+    rerun_analysis.onset_block writes it (see ONSET FILE ROW KINDS)."""
+    o = rec["objective"]
+    if o in g["objs"] or o == "pooled":
+        return "onset"
+    if o == HET_LABEL:
+        return "heterogeneity"
+    if o in J4_LABELS:
+        return "J4 count"
+    return None
+
+
+def read_onsets(path, g, header):
+    """{(diffusion, objective, d): onset float} from the onset rows only.
+    Every row is classified; an unknown kind, a missing field in an onset
+    row, or a kind count other than ONSET_KIND_COUNTS stops with exit 2."""
     out = {}
+    kinds = {}
     with open(path, newline="") as fh:
-        for rec in csv.DictReader(fh):
-            if rec["objective"].startswith("heterogeneity"):
+        rd = csv.DictReader(fh)
+        cols = ONSET_COLS_N39 if header == "N39" else ONSET_COLS
+        if rd.fieldnames != cols:
+            fail("{}: header {} is not the expected {} header {}".format(path, rd.fieldnames, header, cols))
+        for i, rec in enumerate(rd):
+            k = onset_kind(rec, g)
+            if k is None:
+                fail("{}: data row {} has unknown kind (objective '{}')".format(path, i + 1, rec["objective"]))
+            kinds[k] = kinds.get(k, 0) + 1
+            if k != "onset":
                 continue
+            if rec["d"] == "" or rec["onset"] == "":
+                fail("{}: onset row {} lacks d or onset".format(path, i + 1))
             key = (rec["diffusion"], rec["objective"], int(rec["d"]))
             if key in out:
                 fail("{}: {} appears twice".format(path, key))
             out[key] = float(rec["onset"])
+    if kinds != ONSET_KIND_COUNTS:
+        fail("{}: row kinds {} differ from the expected {}".format(path, kinds, ONSET_KIND_COUNTS))
     want = [(df, o, d) for df in g["diffs"] for o in list(g["objs"]) + ["pooled"] for d in g["dims"]]
     if sorted(out) != sorted(want):
-        fail("{}: expected {} onset rows, found {}".format(path, len(want), len(out)))
-    return out
+        fail("{}: onset rows do not cover every (diffusion, objective or pooled, d)".format(path))
+    return out, kinds
 
 
 def profile(rs, y):
@@ -364,8 +428,9 @@ def main():
         slopes[row], n = read_slopes(p, row, g)
         say("  {:<9} {}  sha256 {}  {} cells, each once".format(row, p, sha(p), n))
         q = os.path.join(folders[fk], onf)
-        rec[row] = read_onsets(q, g)
-        say("  {:<9} {}  sha256 {}  {} onsets".format(row, q, sha(q), len(rec[row])))
+        rec[row], kinds = read_onsets(q, g, HEADER_KIND[row])
+        say("  {:<9} {}  sha256 {}  rows: onset {}, heterogeneity {}, J4 count {}; R1 uses the {} onset rows".format(
+            row, q, sha(q), kinds["onset"], kinds["heterogeneity"], kinds["J4 count"], len(rec[row])))
 
     hdr("V3  ONSET slopes equal in both folders")
     p2 = os.path.join(a.twenty, "analysis_cells.csv")
