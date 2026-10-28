@@ -2649,6 +2649,16 @@ O-R3. Baseline check. If max - min of gamma over the four baseline
   "baseline not flat": r_delta is printed, no verdict is given.
   Example: baseline -1.00, -1.00, -1.00, -0.94: range 0.06 > 0.05: not
   flat (control C6).
+  READ-BACK (Claude, 2026-10-28, for Rahul's decision): delta / 2 is
+  arbitrary. It was not derived. Two thresholds have stated reasons:
+  - range >= 4 delta / 3, derived: the largest amount any of four values
+    can sit above their mean is 3/4 of their range. Below 4 delta / 3, no
+    baseline point can itself count as degraded (g >= delta).
+  - range >= delta, reasoned but chosen: the estimand measures
+    delta-sized change. If the admissible region alone varies by delta,
+    a delta crossing cannot be told from variation inside the baseline.
+  Claude recommends range >= delta. It replaces delta / 2 if Rahul
+  amends.
 
 O-R4. Positive control (O2), on synthetic curves with known crossings.
   It runs in rerun.py's precheck before the plan is written (no plan
@@ -2696,6 +2706,19 @@ O-R5. Bootstrap. Realizations resampled within each cell, independently
   - A resample with a non-finite slope in any of the 14 cells gives a
     non-finite r_delta; it is excluded and counted; above 1% of B the unit
     is FLAG (the existing FLAG_FRAC rule) and gets no verdict.
+  - READ-BACK (Claude, 2026-10-28): the ranked-value rule is forced
+    only where a limit touches a censored resample. There, the two order
+    statistics that the interpolated percentile of the other rows uses
+    include a censored value, which has no number. Where both are
+    finite, the other rows' rule (np.percentile, linear) is possible.
+    The existing pct() must not be reused: it drops non-finite values,
+    so it would silently discard censored resamples. Proposed amendment,
+    for Rahul: interpolate exactly as the other rows when both order
+    statistics are finite, and give the censoring label otherwise. With
+    either rule, the paper must state how ONSET-R's interval differs from
+    the other rows', and that a limit falling on a censored resample is
+    reported as a bound ("beyond 4.8", "at or below the baseline"), not a
+    value.
   - Example: 260 of 10000 resamples right-censored, the rest finite.
     9740 finite values rank below the 260 censored ones, so the 9750th
     smallest is censored: hi95 reads "beyond 4.8". With 250 or fewer
