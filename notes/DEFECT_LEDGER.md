@@ -2163,6 +2163,24 @@ instruction of 2026-10-15.
         says). Whether that is a property of the fit on averaged curves
         or a defect, I do not know. A check of the pooled curve at d 80
         against the three objectives' curves would settle it.
+        scripts/onsetdiag.py (read-only, writes nothing) is that check;
+        not yet run.
+      - Caveat on every d 80 reading of ONSET-CAL (Rahul, 2026-10-28).
+        Two of its three d 80 calibration cells do not carry a
+        production beta. From the N41 finalize's calprec2_beta.csv
+        (runs/calprec2-ext-finalize-a2-kaggle-20261026-204714):
+        regimemap|ackley|80|centred|0.1 and
+        regimemap|rastrigin|80|centred|0.1 are label "target",
+        provenance "beta_adq; C1 found no sufficient level", adequacy
+        "adequate"; regimemap|sphere|80|centred|0.1 is "beta_prod,
+        calibration N_cell 1000000". The ackley and rastrigin betas at d 80
+        are therefore the adequacy beta: the reference is adequate, but no
+        production level met C1. The d 80 contrast-3 gaps, onsets, J4 and
+        severity of ONSET-CAL rest on these two cells for two of three
+        objectives, and every pooled d 80 figure averages over them. The
+        text must say so wherever a d 80 ONSET-CAL number
+        appears. CAL3's not_adequate flag does not mark these cells
+        (they are adequate), so the log's flags do not show this.
   OPEN until the manuscript text that uses these numbers is written and
   verified by the rule-8 diff, and until the calibrated rows are tallied.
 
