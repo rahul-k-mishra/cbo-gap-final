@@ -1,0 +1,4 @@
+ONSET-CAL tasks read: 2160 (expected 2160)
+projection (r grid of 17 points, M 48): tasks 24480, summed wall 392831 s
+  at 4 workers, perfect scaling: 98208 s; shards at 21600 s: 5; at 10800 s: 10
+  basis: ONSET-CAL's measured Kaggle per-task walls, mean per (d, diffusion, objective), assumed independent of r
