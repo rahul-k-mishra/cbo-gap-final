@@ -2472,8 +2472,52 @@ instruction of 2026-10-15.
       - The main() wiring of rerun_analysis (the twenty-row check, then
         ONSET-R) was read, not executed; no end-to-end fixture covers it.
       Python 3.8 grammar parse passes for all three files.
-  OPEN: the 17-point projection, the precheck with O2 and K5, the schedule
-  and the queue, in that order.
+  - 17-point projection. Source: logs/onsetr-projection17-20261028.log
+    (commit 256c420). "ONSET-CAL tasks read: 2160 (expected 2160)";
+    "projection (r grid of 17 points, M 48): tasks 24480, summed wall
+    392831 s"; "at 4 workers, perfect scaling: 98208 s; shards at 21600 s:
+    5; at 10800 s: 10".
+  - Precheck. Source: logs/rerun-precheck4-20261028.log (commit 256c420);
+    plan runs/rerun-plan-20261028-212945, manifest verified by Claude
+    (sha256sum -c OK), rerun_plan.csv sha256 5fc3b0b2...42ea.
+    - Header: rerun.py 52864b42...dacbd, rerunlib.py 31f4b360...e430,
+      costprobe2.py ea5cb2e1...f64b; python 3.12.3, numpy 2.5.3.
+    - V0(b): "ONSET-R cells 510 realizations 24480 design (N44) (510,
+      24480) ok". "merged calprec2 cells 377". O1 PASS (ten of ten).
+    - O2: 26 control lines, all "ok", then "O2 PASS", before the plan was
+      built.
+    - "archive check: 2658 ok, 0 FAIL, 738 not applicable"; "K4 PASS (52
+      groups with more than one row)"; "K1 PASS (39084 distinct (group,
+      rep) keys)"; K2 PASS.
+    - K5: "old plan runs/rerun-plan-20261026-210435/rerun_plan.csv: 2034
+      rows over 20 row names; new plan has 2034 rows of those names", "K5
+      PASS".
+  - Schedule. Source: logs/rerun-schedule-onsetr-20261028-2130.log
+    (commit ce6a032); rows ONSET-R, "tasks 24480", --nshards 8, 10, 12 and
+    14 at 4 workers, the same script hashes and plan.
+    - At 10 shards: 2447 to 2449 tasks each, summed wall 38333 to 38336 s,
+      "estimate 9583" or "9584 s at 4 workers"; all labelled lower bounds.
+    - Rahul's sum over the ten shard lines: 383344 s. Against the
+      projection's 392831 s from ONSET-CAL's Kaggle walls, two independent
+      bases agree to 2.5% (Rahul's figure).
+  - Decision (Rahul, 2026-10-28): 10 shards at 9584 s each, 44% of the
+    21600 s ceiling (Rahul's figure). Reason: as for every previous set,
+    the estimates assume perfect scaling and the measured shards have
+    overrun by up to 30%, so a shard should be able to run at better than
+    twice its estimate and still finish.
+  - Queue definition: notes/queues/rerun-onsetr.json. Profile rerun-onsetr
+    (family rerun, workers 4, plan runs/rerun-plan-20261028-212945 with
+    its sha256, the timing folders costprobe2-s0 20261010-103952 and s1
+    20261011-101343, expect python 3.13.15 and numpy 2.1.3). Items:
+    smoke-onsetr, then onsetr-s0of10 to onsetr-s9of10, rows ONSET-R,
+    ledger N44. Shard exit 5 resumes from the shard's own earlier attempt
+    folders (rerunq R2, max_attempts 5). It passes
+    rerunq.validate_definition (Claude).
+  - Untested path (Claude): rerun_analysis.py's main() from the twenty-row
+    check (O-R10) to the ONSET-R stage and the final write has been read
+    and not executed. A0 refuses any run without ONSET-R complete, so
+    without a rehearsal its first execution is the real analysis.
+  OPEN: the queue load, the shards, the analysis.
 
 ## Checked and found sound
 

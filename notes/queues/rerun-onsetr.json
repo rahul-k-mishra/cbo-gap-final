@@ -1,0 +1,30 @@
+{
+  "name": "rerun-onsetr",
+  "note": "N44: trajectories of ONSET-R (17-point r grid 0.3 to 4.8, M 48, N41 calprec2 betas); plan runs/rerun-plan-20261028-212945 (logs/rerun-precheck4-20261028.log: O2 PASS, K5 PASS); 24480 tasks; 10 shards at 9584 s each (logs/rerun-schedule-onsetr-20261028-2130.log), Rahul's decision 2026-10-28; smoke first; shard exit 5 resumes from its own earlier attempts; rerun_sha256, rerunlib_sha256 and costprobe2_sha256 are filled by 'rerunq.py load' from the committed files",
+  "kaggle_user": "ericsom",
+  "max_attempts": 5,
+  "max_file_mb": 50,
+  "profiles": {
+    "rerun-onsetr": {
+      "family": "rerun",
+      "workers": 4,
+      "plan": "runs/rerun-plan-20261028-212945",
+      "plan_sha256": "5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea",
+      "timing": ["runs/costprobe2-s0-kaggle-20261010-103952", "runs/costprobe2-s1-kaggle-20261011-101343"],
+      "expect": {"python": "3.13.15", "numpy": "2.1.3"}
+    }
+  },
+  "queue": [
+    {"id": "smoke-onsetr", "profile": "rerun-onsetr", "kind": "smoke", "set": "onsetr", "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s0of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 0, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s1of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 1, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s2of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 2, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s3of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 3, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s4of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 4, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s5of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 5, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s6of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 6, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s7of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 7, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s8of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 8, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"},
+    {"id": "onsetr-s9of10", "profile": "rerun-onsetr", "kind": "shard", "set": "onsetr", "shard": 9, "nshards": 10, "ledger": "N44", "rows": "ONSET-R"}
+  ]
+}
