@@ -2301,6 +2301,12 @@ instruction of 2026-10-15.
     claim (+0.144 per doubling, isotropic) does not use the onset.
   - No amendment proposed (Rahul's instruction): this item records what
     the current numbers can and cannot support. OPEN.
+  - The counts and the classification above are Claude's. Rahul's
+    instruction (2026-10-28): settle all 80 onsets and round 1's ten from
+    a script, the rule printed as post hoc with its date, both
+    differences per onset. scripts/onsetclass.py (read-only, writes
+    nothing) does it; not yet run. Its output supersedes the counts and
+    calls above for any use in the manuscript.
 
 ## Checked and found sound
 
