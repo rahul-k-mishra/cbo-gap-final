@@ -132,7 +132,7 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
@@ -163,6 +163,15 @@
       "attempt": 1,
       "job": "rerun-smoke-onsetr-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-28T23:27:20+05:30",
+      "run": "laptop.20261028T175442Z",
+      "event": "launched",
+      "item": "smoke-onsetr",
+      "attempt": 1,
+      "job": "rerun-smoke-onsetr-a1",
+      "note": "logs/kgrun-rerun-smoke-onsetr-a1.log"
     }
   ],
   "definition": {
