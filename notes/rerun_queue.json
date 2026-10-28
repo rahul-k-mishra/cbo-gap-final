@@ -132,13 +132,15 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-smoke-onsetr-a1",
+  "args": "--smoke --plan-from runs/rerun-plan-20261028-212945 --rows ONSET-R --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261028-212945"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -152,6 +154,15 @@
       "attempt": 1,
       "job": "",
       "note": "notes/queues/rerun-onsetr.json; previous state archived to notes/queue-archive/20261028-232422-rerun-cal3-done.json; N44: ONSET-R, smoke then 10 shards, plan runs/rerun-plan-20261028-212945; rehearsal passed O-R10 on 11 files"
+    },
+    {
+      "at": "2026-10-28T23:24:51+05:30",
+      "run": "laptop.20261028T175442Z",
+      "event": "intent",
+      "item": "smoke-onsetr",
+      "attempt": 1,
+      "job": "rerun-smoke-onsetr-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
