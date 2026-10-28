@@ -2515,7 +2515,7 @@ instruction of 2026-10-15.
     rerunq.validate_definition (Claude).
   - Untested path (Claude): rerun_analysis.py's main() from the twenty-row
     check (O-R10) to the ONSET-R stage and the final write has been read
-    and not executed. A0 refuses any run without ONSET-R complete, so
+    and not executed. A1 refuses any run without ONSET-R complete (exit 7), so
     without a rehearsal its first execution is the real analysis.
   OPEN: the queue load, the shards, the analysis.
 
