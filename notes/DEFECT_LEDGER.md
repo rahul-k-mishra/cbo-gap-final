@@ -1769,6 +1769,22 @@ instruction of 2026-10-15.
       twenty-row analysis (analysis_adequacy_split.csv) and is copied
       here from its log when it has run. No count is filled in before
       then.
+      - Filled 2026-10-28 from logs/rerun-analysis20-20261027.log, block
+        "CAL5" (the same counts are in
+        runs/rerun-analysis-20261027-185918/analysis_adequacy_split.csv).
+        Cells per row, label | provenance:
+        - CONC: target | beta_prod 125; target | beta_adq; C1 found no
+          sufficient level 11; target | beta_adq; C6 failed for beta_prod
+          1; beta C5m FAIL 4; beta C5m and D1 FAIL 3.
+        - TAU8: beta_prod 107; C1 found no sufficient level 21; C6 failed
+          for beta_prod 2; beta C5m FAIL 8; beta C5m and D1 FAIL 6.
+        - SIGMA: beta_prod 15; C1 found no sufficient level 6; beta C5m
+          FAIL 1; beta C5m and D1 FAIL 2.
+        - ANISO: beta_prod 16; C1 found no sufficient level 5; beta C5m
+          FAIL 1; beta C5m and D1 FAIL 2.
+        "target adequate" in C6 above is therefore not "production beta"
+        in any of the four rows. The manuscript reports the split, not
+        the C6 line alone (CAL5, report and do not flag).
   - Observation, not decided (Claude, from the archive source).
     regime.fit_predict (zenodo-v1/regime.py lines 409 to 422) standardizes
     the features but takes no log of covtr, disp, fvar or dist0, the
@@ -1910,6 +1926,17 @@ instruction of 2026-10-15.
       N_cell <n>". This is a record, not a finding; how the
       analysis treats these cells belongs to the criteria amendment
       (N42).
+    - Split per calibrated row, 2026-10-28 (CAL5; logs/rerun-analysis20-
+      20261027.log, block "CAL5"), cells, label | provenance:
+      - RMAP-CAL: target | beta_prod 15; target | beta_adq; C1 found no
+        sufficient level 3; beta C5m FAIL 3; beta C5m and D1 FAIL 3.
+      - CLIFF-CAL: beta_prod 6; C1 found no sufficient level 1; beta C5m
+        FAIL 1.
+      - ONSET-CAL: beta_prod 11; C1 found no sufficient level 4. No
+        beta-labelled cell.
+      These are per row. RMAP-CAL and ONSET-CAL share the regimemap cells
+      at tau0 0.1, d 10 and d 40, so the RMAP-CAL and ONSET-CAL counts are
+      not a partition of the 33 regimemap cells and are not to be added.
   CLOSED 2026-10-26 as to the calibration. The trajectory rerun on these
   betas is N42's.
 
@@ -2040,6 +2067,104 @@ instruction of 2026-10-15.
       runs/costprobe2-s1-kaggle-20261011-101343. Rahul confirmed that his
       schedule run used these two, the same two as every schedule in this
       project.
+  - The rerun-cal3 queue ran to DONE (Rahul, 2026-10-27): smoke exit 0;
+    runs/rerun-cal3-s0of2-a1-kaggle-20261027-011714 and
+    runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215, runner exit 0, each
+    kernel log "completed 3096  errors 0  not started 0"; no resume. Timer
+    disabled.
+  - Result, the twenty-row analysis (CAL1 to CAL5). Source: commit
+    91a10de, run folder runs/rerun-analysis-20261027-185918 (sha256.txt,
+    13 files, verified by Claude with sha256sum -c), console log
+    logs/rerun-analysis20-20261027.log. Run by Rahul on the laptop.
+    Everything below is copied from the log or the CSVs.
+    - Header: rerun_analysis sha256 b241fe15...fa0a7 (the file committed
+      in 5a94392), rerun.py de28b69a...aca1, rerunlib.py 6a7ddf42...5b07,
+      costprobe2.py ea5cb2e1...f64b; python 3.12.3, numpy 2.5.3,
+      Linux-7.0.0-38-generic, workers 2; B 10000; plan
+      runs/rerun-plan-20261026-210435, rerun_plan.csv sha256
+      1d9b4031...9c64; reproduce runs/rerun-analysis-20261025-051314,
+      "verified against its sha256.txt (9 files)". P1 "ok" for all
+      thirteen modules. The CAL4 environment holds.
+    - Run folders: the four arch shards, the two cal shards and the two
+      cal3 shards. A0 read 4767, 4767, 4767, 4767, 5616, 5616, 3096 and
+      3096 complete realizations. No smoke folder was passed.
+    - A1: all twenty rows complete; RMAP-CAL 2880, CLIFF-CAL 1728,
+      ONSET-CAL 2160, the seventeen as in N39.
+    - Margin: identical to N39 (calprec2 576 cell arms, 0.026582; probe
+      516, 0.025384; S 0.026038 over 1092; m 0.078113; ratio 1.0472),
+      and "margin equals runs/rerun-analysis-20261025-051314's
+      analysis_margin.csv, every value as a string (CAL4)".
+    - CAL4: all eight files PASS with differences 0 (completeness 17,
+      cells 3225, margin 7, stats 6282, onsets 56, audit 7680, r2 9,
+      adequacy 336); "17-ROW REPRODUCTION PASS: 8 files, every value of
+      every old column equal as a string". The not_adequate column and the
+      CAL rows change no seventeen-row value.
+    - CAL1 guard: "calibrated r rows: cell arms 516  median SD 0.025827";
+      ratio to the calprec2 group 1.0292, to the probe group 1.0174; "no
+      revisit". m stays 0.078113 for RMAP-CAL, CLIFF-CAL and ONSET-CAL.
+    - CAL3, margin pool: six SIGMA and ANISO cells are not adequate
+      (crossed and sigma, ackley d 10 and 40 and rastrigin d 40, all tau0
+      0.01). "S and m unchanged".
+    - Phase 1, calibrated rows: "342 cell-window instances, 318 distinct
+      computations".
+    - CAL5: the split is copied into N39 (C6 correction) and N41
+      (result).
+    - Summary: "statistics written: 7092 (6282 in the seventeen rows)";
+      "statistics naming a not-adequate cell: 1012"; "no FLAG"; "wall
+      3641.8 s   peak RSS (main process) 235.2 MB".
+    - Not yet tallied: the C1 to C7 counts for the three calibrated rows.
+      The log prints J4's counts and nothing else of that kind, and
+      scripts/rerun_tally.py knows only the seventeen rows (REGION_ROWS).
+      No count over the calibrated rows is recorded until a script Rahul
+      runs prints it.
+    - What the calibrated rows show against N39's probe-beta rows, read
+      line by line from the log (Claude, 2026-10-28). The two designs are
+      independent replications (N40) and CAL2 forbids a contrast or a
+      verdict between them, so this is a side-by-side reading, not a
+      test.
+      - Contrast 3, ONSET-CAL, pooled, W-full, d 40: positive DIFFERENCE
+        at r 0.75 to 1.5; r 2.0 +0.0099 [-0.0291, +0.0467], contains 0;
+        r 3.0 -0.1268 [-0.1803, -0.0739], DIFFERENCE. N39's ONSET: r 2.0
+        +0.0102 [-0.0256, +0.0437]; r 3.0 -0.1390 [-0.1964, -0.0825].
+      - d 80: positive DIFFERENCE at r 0.75 to 1.25; r 1.5 +0.0112
+        [-0.0205, +0.0427], contains 0; r 2.0 -0.1424 [-0.1896,
+        -0.0977] and r 3.0 -0.1667 [-0.2292, -0.1104], DIFFERENCE. N39:
+        r 1.5 +0.0054 [-0.0428, +0.0522]; r 2.0 -0.0845 [-0.1325,
+        -0.0375]; r 3.0 -0.2009 [-0.2996, -0.1195].
+      - Per objective (order ackley, rastrigin, sphere), in both designs
+        rastrigin's gap is positive DIFFERENCE where ackley's and
+        sphere's are negative: ONSET-CAL d 40 r 2.0 -0.1039, +0.3770,
+        -0.2436; d 80 r 1.5 -0.0775, +0.4023, -0.2912; d 80 r 2.0
+        -0.2868, +0.3321, -0.4724. rastrigin turns negative only at d 80
+        r 3.0 (-0.2213). ONSET-CAL has no not-adequate cell.
+      - A4 holds for both: a sign change across r is not a claim; each
+        cell's gap and verdict is reported.
+      - Onsets, isotropic, pooled: ONSET-CAL d 5 1.25 [1.25, 2.00]; d 10
+        1.00 [1.00, 2.00]; d 20 1.50 [1.25, 2.00]; d 40 1.50 [1.25,
+        1.50]; d 80 1.00 [1.00, 1.00]. N39: 1.50 [1.50, 2.00]; 1.25
+        [1.00, 2.00]; 1.50 [1.25, 2.00]; 1.25 [1.25, 1.50]; 1.00 [1.00,
+        1.25].
+      - J4, ONSET-CAL: objective isotropic 9 of 15, anisotropic 13 of
+        15, both 22 of 30; pooled 2 of 5, 4 of 5, 6 of 10. N39: 8 of
+        15, 14 of 15, 22 of 30; 2 of 5, 4 of 5, 6 of 10.
+      - Contrast 6, onset d80 - d5, isotropic pooled: ONSET-CAL -0.2500
+        [-1.0000, +0.0000], contains 0; N39 -0.5000 [-1.0000, -0.2500],
+        DIFFERENCE. Anisotropic pooled: +0.7500 [-0.5000, +1.0000]; N39
+        +0.0000 [-0.7500, +0.7500]. Every per-objective interval
+        contains 0 in both.
+      - J2, severity S(1,3) trend on log2 d, pooled: isotropic +0.1542
+        [+0.1389, +0.1695] (N39 +0.1292 [+0.1148, +0.1432]); anisotropic
+        +0.0230 [-0.0032, +0.0501] (N39 -0.0078 [-0.0330, +0.0165]).
+        S(1,3) isotropic d 5: +0.0219 [-0.0447, +0.0867], contains 0
+        (N39 +0.1357 [+0.0824, +0.1892]).
+      - Observation, not decided: at d 80 every isotropic per-objective
+        onset is 2.00 [2.00, 2.00], and the pooled onset is 1.00 in both
+        designs (H3 pools the mean curve, not the onsets, as the log
+        says). Whether that is a property of the fit on averaged curves
+        or a defect, I do not know. A check of the pooled curve at d 80
+        against the three objectives' curves would settle it.
+  OPEN until the manuscript text that uses these numbers is written and
+  verified by the rule-8 diff, and until the calibrated rows are tallied.
 
 ## Checked and found sound
 
