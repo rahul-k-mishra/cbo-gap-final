@@ -97,6 +97,26 @@ and cliff cells) instead of the archived probe.
     Worked example: (regimemap, ackley, 10, centred, 0.1, 1.5, 50000, 1.0)
     -> [[RMAP, ONSET], [RMAP-CAL, ONSET-CAL]].
 
+ONSET-R (2026-10-28; ledger N44; notes/ANALYSIS_CRITERIA.md, "Sixteenth
+message", O-R1 to O-R11). A twenty-first row, appended after the twenty, so
+every existing key and owner index is unchanged; its owner index is 20.
+  - Cells: regimemap; ackley, rastrigin, sphere; d 5, 10, 20, 40, 80;
+    isotropic and anisotropic; centred; tau0 0.1; J_inf 50000, T 1.0, J10;
+    r on ONSETR_RS (17 points, 0.3 to 4.8); M = 48. 255 cells, 510 cell
+    arms, 24480 realizations (ROW_COUNTS; V0 checks them, since ONSET-R is
+    not in Table 2).
+  - beta from calprec2_beta.csv at (regimemap, objective, d, centred, 0.1),
+    the N41 table (CALROWS). sigma from regimemap.sigma_of, imported;
+    A-SIGMA checks it against regimemap_D_real.csv at the r values the
+    archive has (1.0, 2.0) and is "not applicable" at the others.
+  - K4 groups by key fields, beta, M, J grid and diffusions. M = 48 differs
+    from every other row, so ONSET-R shares no cell: every ONSET-R group is
+    owned by ONSET-R.
+  - The estimand (O-R2), its baseline check (O-R3), the hybrid interval
+    (O-R5) and the positive control O2 (O-R4) are defined below, under
+    "ONSET-R: the threshold crossing", so that rerun.py's precheck and
+    rerun_analysis.py run the same code.
+
 ONSET ESTIMATOR (item 7, H3). regimemap.py lines 496 to 505, retyped
 because bp is nested inside main and cannot be imported (rule 4 does not
 cover it). onset_bp(rs, y): x = log r; for each candidate c in x without
@@ -146,14 +166,20 @@ KIND_TRAJ, KIND_BOOT, KIND_SMOKE = 81, 71, 83
 
 EXT_ROWS = ["RMAP-CAL", "CLIFF-CAL", "ONSET-CAL"]
 EXT_BASE = {"RMAP-CAL": "RMAP", "CLIFF-CAL": "CLIFF", "ONSET-CAL": "ONSET"}
-ROWS = list(cp.ROW_ORDER) + EXT_ROWS
+ONSETR_ROWS = ["ONSET-R"]
+ROWS = list(cp.ROW_ORDER) + EXT_ROWS + ONSETR_ROWS
 MODULES, OBJ_NAMES, LAWS, ARMS = cp.MODULES, cp.OBJ_NAMES, cp.LAWS, cp.ARMS
 GRID = dict(cp.GRID)
 for _r in EXT_ROWS:
     GRID[_r] = cp.GRID[EXT_BASE[_r]]
+# N44, O-R1: ONSET's factors with the dense r grid and M = 48.
+ONSETR_RS = [0.3, 0.35, 0.42, 0.5, 0.6, 0.7, 0.85, 1.0, 1.2, 1.4, 1.7, 2.0, 2.4, 2.8, 3.4, 4.0, 4.8]
+GRID["ONSET-R"] = dict(cp.GRID["ONSET"], rs=list(ONSETR_RS), M=48)
+# Rows not in Table 2: (cell arms, realizations) of the design (V0).
+ROW_COUNTS = {"ONSET-R": (510, 24480)}
 JGRIDS, JCOLS = cp.JGRIDS, cp.JCOLS
-PAIRED = ["SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"] + EXT_ROWS
-CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"] + EXT_ROWS
+PAIRED = ["SIGMA", "ANISO", "RMAP", "CLIFF", "ONSET"] + EXT_ROWS + ONSETR_ROWS
+CALROWS = ["CONC", "TAU8", "SIGMA", "ANISO"] + EXT_ROWS + ONSETR_ROWS
 AUDIT_ROWS = ["CONC", "PROBEARM", "TAU8", "GEOM"]
 DT, LAM, SIGMA_ISO, JINF = 0.01, 1.0, 0.2, 50000
 B_VIS = 30.0
@@ -179,6 +205,7 @@ BETA_SOURCE = {
     "RMAP-CAL": "calprec2_beta.csv",
     "CLIFF-CAL": "calprec2_beta.csv",
     "ONSET-CAL": "calprec2_beta.csv",
+    "ONSET-R": "calprec2_beta.csv",
 }
 
 
@@ -276,7 +303,7 @@ def cells_of(row):
                     for t in g["taus"]:
                         out.append(_cell(row, "crossed", o, d, tau=t, r=r, subarm=2,
                                          diffs=g["diffs"]))
-    elif row == "ONSET":
+    elif row in ("ONSET", "ONSET-R"):
         for o in g["objs"]:
             for d in g["dims"]:
                 for r in g["rs"]:
@@ -477,6 +504,10 @@ ARCH_CHECK = {
 for _r in EXT_ROWS:
     _f, _m, _bcol, _scol, _fmt = ARCH_CHECK[EXT_BASE[_r]]
     ARCH_CHECK[_r] = (_f, _m, None, _scol, _fmt)
+# N44: ONSET-R checks sigma against ONSET's archived file where the archive
+# has that r (1.0 and 2.0); elsewhere archive_check returns "not applicable".
+_f, _m, _bcol, _scol, _fmt = ARCH_CHECK["ONSET"]
+ARCH_CHECK["ONSET-R"] = (_f, _m, None, _scol, _fmt)
 
 
 def printed_tol(s, fmt):
@@ -537,6 +568,8 @@ def archive_check(c, diff, beta, sigma):
     spec = ARCH_CHECK.get(c["row"])
     if spec is None:
         return "not applicable", "no archived beta or sigma for this row"
+    if c["row"] in ONSETR_ROWS and c["r"] not in GRID["ONSET"]["rs"]:
+        return "not applicable", "r {!r} is not in the archived ONSET grid".format(c["r"])
     fname, match, bcol, scol, pfmt = spec
     want = [(col, _field_value(c, f, diff)) for col, f in match]
     hits = [r for r in archived_rows(fname) if all(_matches(r[col], v) for col, v in want)]
@@ -556,6 +589,168 @@ def archive_check(c, diff, beta, sigma):
 # --------------------------------------------------------------------------
 # onset (item 7, H3) and its control O1
 # --------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
+# ONSET-R: the threshold crossing (N44, O-R2 to O-R5) and its control O2
+# --------------------------------------------------------------------------
+
+ONSETR_NBASE = 4                  # baseline points r 0.3, 0.35, 0.42, 0.5 (O-R2)
+ONSETR_DELTAS = (0.05, 0.10, 0.20)
+ONSETR_DELTA = 0.10               # primary (O-R6)
+LEFT_LABEL = "at or below 0.5"
+RIGHT_LABEL = "beyond 4.8"
+
+
+def crossing(y, delta, rs=None, nbase=ONSETR_NBASE):
+    """O-R2. y: gamma at the grid points rs (default ONSETR_RS). Returns
+    (value, info): value is r_delta (float), -inf (left-censored), +inf
+    (right-censored) or nan (a non-finite gamma). info: dict with base,
+    range, flat (range < delta, O-R3), k, f.
+    Worked example (control C2): baseline -1.00, gamma -0.97 at 1.2 and
+    -0.87 at 1.4 and >= -0.87 after: at delta 0.10, k at 1.4, f 0.7,
+    r_delta = 1.2 x (1.4/1.2)^0.7 = 1.336731."""
+    rs = ONSETR_RS if rs is None else rs
+    yy = [float(v) for v in y]
+    if len(yy) != len(rs):
+        raise ValueError("curve has {} points, grid {}".format(len(yy), len(rs)))
+    info = {"base": float("nan"), "range": float("nan"), "flat": False, "k": None, "f": None}
+    if not all(math.isfinite(v) for v in yy):
+        return float("nan"), info
+    base = sum(yy[:nbase]) / nbase
+    rng = max(yy[:nbase]) - min(yy[:nbase])
+    info.update({"base": base, "range": rng, "flat": not (rng >= delta)})
+    g = [v - base for v in yy]
+    for k in range(nbase, len(rs)):
+        if all(x >= delta for x in g[k:]):
+            info["k"] = k
+            if g[k - 1] >= delta:
+                return float("-inf"), info
+            f = (delta - g[k - 1]) / (g[k] - g[k - 1])
+            info["f"] = f
+            return rs[k - 1] * (rs[k] / rs[k - 1]) ** f, info
+    return float("inf"), info
+
+
+def hybrid_limits(v):
+    """O-R5. v: resampled values with -inf / +inf for censoring and nan for
+    non-finite. nan is dropped (and counted by the caller). For q = 2.5 and
+    97.5 the two order statistics np.percentile's linear rule uses
+    (positions floor and ceil of q (n - 1)) are read; both finite: the
+    limit is np.percentile's own value, as every other row; otherwise the
+    censoring label. Returns (lo, hi, n), lo and hi a float or a label.
+    Worked example (control C9): 9700 values k/100 and 300 +inf: lo
+    2.49975, hi "beyond 4.8"."""
+    a = np.asarray(v, dtype=float)
+    a = np.sort(a[~np.isnan(a)])
+    n = int(a.size)
+    if n == 0:
+        return float("nan"), float("nan"), 0
+    out = []
+    for q in (2.5, 97.5):
+        pos = q / 100.0 * (n - 1)
+        i, j = int(math.floor(pos)), int(math.ceil(pos))
+        xi, xj = a[i], a[j]
+        if np.isfinite(xi) and np.isfinite(xj):
+            with np.errstate(invalid="ignore"):
+                out.append(float(np.percentile(a, q)))
+        elif np.isneginf(xi) and not np.isposinf(xj):
+            out.append(LEFT_LABEL)
+        elif np.isposinf(xj) and not np.isneginf(xi):
+            out.append(RIGHT_LABEL)
+        else:
+            out.append("undefined (left- and right-censored neighbours)")
+    return out[0], out[1], n
+
+
+def onsetr_verdict(lo, hi):
+    """O-R6 for an interval from hybrid_limits. A limit that is neither a
+    finite number nor one of the two censoring labels gives no verdict."""
+    for x in (lo, hi):
+        if not ((isinstance(x, float) and math.isfinite(x)) or x in (LEFT_LABEL, RIGHT_LABEL)):
+            return "no verdict (limit {!r})".format(x)
+    above = (lo == RIGHT_LABEL) or (isinstance(lo, float) and lo > 1.0)
+    below = (hi == LEFT_LABEL) or (isinstance(hi, float) and hi < 1.0)
+    if above:
+        return "above 1"
+    if below:
+        return "below 1"
+    return "not distinguishable from 1"
+
+
+def _closed(rs, k, f):
+    return rs[k - 1] * (rs[k] / rs[k - 1]) ** f
+
+
+def _curve(spec):
+    return [spec(r) for r in ONSETR_RS]
+
+
+# O-R4: (name, curve, {delta: (expected, flat)}) with expected a float, "left"
+# or "right". The closed form is evaluated from (r_(k-1), r_k, f) written in
+# the criteria, independently of crossing().
+_I = ONSETR_RS.index
+O2_CASES = [
+    ("C1 step", _curve(lambda r: -1.0 if r <= 1.7 else -0.75),
+     {0.05: ((1.7, 2.0, 0.2), True), 0.10: ((1.7, 2.0, 0.4), True), 0.20: ((1.7, 2.0, 0.8), True)}),
+    ("C2 rise then plateau",
+     _curve(lambda r: -1.0 if r <= 1.0 else {1.2: -0.97, 1.4: -0.87, 1.7: -0.77}.get(r, -0.72)),
+     {0.05: ((1.2, 1.4, 0.2), True), 0.10: ((1.2, 1.4, 0.7), True), 0.20: ((1.4, 1.7, 0.7), True)}),
+    ("C3 no crossing", _curve(lambda r: -0.97 if r == 4.8 else -1.0),
+     {0.05: ("right", True), 0.10: ("right", True), 0.20: ("right", True)}),
+    ("C4 transient", _curve(lambda r: -0.85 if r == 1.2 else (-1.0 if r <= 1.7 else -0.75)),
+     {0.05: ((1.7, 2.0, 0.2), True), 0.10: ((1.7, 2.0, 0.4), True), 0.20: ((1.7, 2.0, 0.8), True)}),
+    ("C5 below the boundary", _curve(lambda r: -1.0 if r <= 0.85 else -0.75),
+     {0.05: ((0.85, 1.0, 0.2), True), 0.10: ((0.85, 1.0, 0.4), True), 0.20: ((0.85, 1.0, 0.8), True)}),
+    ("C5b first searched step", _curve(lambda r: -1.0 if r <= 0.5 else -0.75),
+     {0.05: ((0.5, 0.6, 0.2), True), 0.10: ((0.5, 0.6, 0.4), True), 0.20: ((0.5, 0.6, 0.8), True)}),
+    ("C6 baseline not flat", [-1.0, -1.0, -1.0, -0.88] + _curve(lambda r: -1.0 if r <= 1.7 else -0.75)[4:],
+     {0.05: ((1.7, 2.0, 0.32), False), 0.10: ((1.7, 2.0, 0.52), False), 0.20: ((1.7, 2.0, 0.92), True)}),
+    ("C7 left-censored", [-1.0, -1.0, -1.0, -0.79] + [-0.70] * 13,
+     {0.05: ("left", False), 0.10: ("left", False), 0.20: ((0.5, 0.6, 0.0425 / 0.09), False)}),
+]
+
+
+def onsetr_control():
+    """O2 (O-R4): C1 to C7 and C9. Returns (passed, report lines). C8 needs
+    the analysis's bootstrap and runs in rerun_analysis.py."""
+    ok = True
+    rep = []
+    for name, y, exp in O2_CASES:
+        for delta in ONSETR_DELTAS:
+            want, wflat = exp[delta]
+            got, info = crossing(y, delta)
+            if want == "left":
+                good, wtxt = got == float("-inf"), LEFT_LABEL
+            elif want == "right":
+                good, wtxt = got == float("inf"), RIGHT_LABEL
+            else:
+                r0, r1, f = want
+                if ONSETR_RS[_I(r1) - 1] != r0:
+                    raise ValueError("O2 case {}: {} is not the grid point before {}".format(name, r0, r1))
+                wv = _closed(ONSETR_RS, _I(r1), f)
+                good, wtxt = math.isfinite(got) and abs(got - wv) <= 1e-12, "{:.12f}".format(wv)
+            good = good and (info["flat"] == wflat)
+            ok = ok and good
+            gtxt = (LEFT_LABEL if got == float("-inf") else RIGHT_LABEL if got == float("inf")
+                    else "{:.12f}".format(got))
+            rep.append("O2 {:<26} delta {:.2f}  expected {} ({})  computed {} ({})  {}".format(
+                name, delta, wtxt, "flat" if wflat else "not flat", gtxt,
+                "flat" if info["flat"] else "not flat", "ok" if good else "FAIL"))
+    v = [k / 100.0 for k in range(9700)] + [float("inf")] * 300
+    lo, hi, n = hybrid_limits(v)
+    good = isinstance(lo, float) and abs(lo - 2.49975) <= 1e-12 and hi == RIGHT_LABEL and n == 10000
+    ok = ok and good
+    rep.append("O2 C9 censored interval    expected lo 2.49975 hi {}  computed lo {} hi {}  {}".format(
+        RIGHT_LABEL, lo, hi, "ok" if good else "FAIL"))
+    v2 = np.array([k / 100.0 for k in range(10000)])
+    lo2, hi2, _ = hybrid_limits(v2)
+    p = np.percentile(v2, [2.5, 97.5])
+    good = lo2 == float(p[0]) and hi2 == float(p[1])
+    ok = ok and good
+    rep.append("O2 C9 uncensored interval  expected np.percentile {} {}  computed {} {}  {}".format(
+        float(p[0]), float(p[1]), lo2, hi2, "ok" if good else "FAIL"))
+    return ok, rep
+
 
 def onset_bp(rs, y):
     """regimemap.py lines 496 to 505, retyped (bp is nested in main)."""

@@ -14,7 +14,7 @@ estimator, the finite-J audit) are in scripts/rerunlib.py.
 It runs in four modes, in this order:
   --precheck   (laptop; no trajectory) builds the PLAN: every cell of every
                row, its owner row and seed key, its beta and sigma. Runs
-               V0, P1, S1, A-BETA, A-SIGMA, C2, O1, K1, K2 and K4 and
+               V0, P1, S1, A-BETA, A-SIGMA, C2, O1, O2, K1, K2 and K4 and
                writes a plan folder. The archive's CSVs and the manuscript
                source are read here and nowhere else, because the Kaggle
                bundle ships only two archived CSVs (kgrun.py ARCHIVE_CSVS).
@@ -157,6 +157,25 @@ PRE-SPECIFIED CRITERIA (fixed 2026-10-16, before first execution)
       Worked example: --same-as runs/rerun-plan-20261023-112643 with every
       old row byte-equal: K5 PASS. One archived beta reprinted differently:
       K5 FAIL, exit 2.
+  N44 AMENDMENTS (2026-10-28, before any execution of this version; the
+      row ONSET-R of rerunlib; notes/ANALYSIS_CRITERIA.md "Sixteenth
+      message", O-R1, O-R4, O-R9):
+    - V0: (a) also skips ONSET-R, whose GRID entry is ONSET's with the
+      dense r grid and M 48, not costprobe2's; (b) counts ONSET-R against
+      rerunlib.ROW_COUNTS, the design's (510 cell arms, 24480
+      realizations), since ONSET-R is not in Table 2.
+      Worked example: 3 objectives x 5 d x 17 r = 255 cells x 2 diffusions
+      = 510, x 48 = 24480: pass.
+    - O2  THE ONSET-R POSITIVE CONTROL (O-R4), after O1 and before the plan
+      is built: rerunlib.onsetr_control() runs the synthetic curves C1 to
+      C7 at delta 0.05, 0.10 and 0.20 and the interval cases C9, each
+      against its closed form. Any FAIL: "O2 FAILED", exit 2, no plan
+      written. A plan records O2 PASS, and load_plan refuses a plan
+      without it.
+      Worked example: C2 at delta 0.10 must give 1.2 x (1.4/1.2)^0.7 =
+      1.336731 within 1e-12; anything else, exit 2 before any plan.
+    - K4 needs no change: group identity includes M, so ONSET-R (M 48)
+      joins no existing group, and expected_shared is unchanged.
   F1  FINITE-J AUDIT IDENTITY (section 8.5). For every realization of CONC,
       PROBEARM, TAU8 and GEOM, the initial ensemble is redrawn from the
       realization's seed and the log-ESS of the full redrawn reference must
@@ -352,16 +371,16 @@ def script_hashes():
 
 def check_v0():
     hdr("V0  plan identity (costprobe2 P0(a); Table 2 counts)")
-    ok = cp.p0_values([r for r in rl.ROWS if r not in rl.EXT_BASE])
+    ok = cp.p0_values([r for r in rl.ROWS if r not in rl.EXT_BASE and r not in rl.ONSETR_ROWS])
     for row in rl.ROWS:
         cells = rl.cells_of(row)
         n = sum(len(c["diffs"]) for c in cells)
         m = sum(len(c["diffs"]) * c["M"] for c in cells)
-        want = cp.TABLE2[rl.EXT_BASE.get(row, row)]
+        want = rl.ROW_COUNTS[row] if row in rl.ROW_COUNTS else cp.TABLE2[rl.EXT_BASE.get(row, row)]
         good = (n, m) == tuple(want)
         ok = ok and good
-        print("  V0(b) {:<9} cells {:>4} realizations {:>5}  Table 2 {}  {}".format(
-            row, n, m, want, "ok" if good else "MISMATCH"))
+        print("  V0(b) {:<9} cells {:>4} realizations {:>5}  {} {}  {}".format(
+            row, n, m, "design (N44)" if row in rl.ROW_COUNTS else "Table 2", want, "ok" if good else "MISMATCH"))
     return ok
 
 
@@ -581,6 +600,15 @@ def precheck(a):
         sys.stderr.write("O1 failed: no plan written\n")
         sys.exit(2)
 
+    hdr("O2  ONSET-R positive control (N44, O-R4), before the plan is built")
+    o2_ok, o2_rep = rl.onsetr_control()
+    for ln in o2_rep:
+        print("  " + ln)
+    print("  O2 {}".format("PASS" if o2_ok else "O2 FAILED"))
+    if not o2_ok:
+        sys.stderr.write("O2 failed: no plan written\n")
+        sys.exit(2)
+
     entries, chk_rows, flags = build_plan(cal)
     k5 = "not run"
     if a.same_as:
@@ -595,7 +623,7 @@ def precheck(a):
               ["archive", rl.ARCH], ["calprec2_dir", cal_dir], ["calprec2_sha256", cal_sha],
               ["entropy", rl.ENTROPY], ["kind_traj", rl.KIND_TRAJ], ["kind_boot", rl.KIND_BOOT]]
     params += [[k, v] for k, v in sorted(hs.items())]
-    params += [["V0", "PASS"], ["P1", "PASS"], ["S1", "PASS"], ["O1", "PASS"]]
+    params += [["V0", "PASS"], ["P1", "PASS"], ["S1", "PASS"], ["O1", "PASS"], ["O2", "PASS"]]
     params += [["A-BETA/A-SIGMA", "PASS" if flags["A"] else "FAIL"],
                ["C2", "PASS" if flags["C2"] else "FAIL"],
                ["K1", "PASS" if flags["K1"] else "FAIL"], ["K2", "PASS" if flags["K2"] else "FAIL"],
@@ -636,7 +664,7 @@ def load_plan(folder):
     rels = rl.verify_folder(folder)
     ppath = rl.find_file(folder, rels, "rerun_plan_params.csv")
     params = dict((r[0], r[1]) for r in csv.reader(open(ppath, newline="")) if r and r[0] != "name")
-    for k in ("V0", "P1", "S1", "O1", "A-BETA/A-SIGMA", "C2", "K1", "K2", "K4"):
+    for k in ("V0", "P1", "S1", "O1", "O2", "A-BETA/A-SIGMA", "C2", "K1", "K2", "K4"):
         if params.get(k) != "PASS":
             sys.stderr.write("plan {}: {} is {!r}, not PASS; refused\n".format(folder, k, params.get(k)))
             sys.exit(2)

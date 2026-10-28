@@ -2438,7 +2438,42 @@ instruction of 2026-10-15.
     - The synthetic expected values were re-derived for the new grid and
       baseline (C1 to C9, with C5b added). O2 must pass in the precheck
       before the plan is written.
-  OPEN: code, precheck, schedule and queue to follow, in that order.
+  - Code (Claude, 2026-10-28; nothing executed by Claude on project data):
+    - rerunlib.py: the ONSET-R row (ONSETR_RS, GRID, ROW_COUNTS, PAIRED,
+      CALROWS, BETA_SOURCE, cells_of), the A-SIGMA exception for r not in
+      ONSET's archived grid, crossing() (O-R2, O-R3), hybrid_limits()
+      (O-R5), onsetr_verdict() (O-R6) and onsetr_control() (O2: C1 to C7 at
+      three deltas, C9).
+    - rerun.py: V0 counts ONSET-R against ROW_COUNTS; O2 runs after O1 and
+      before build_plan, with no plan written unless it passes; plans record
+      O2 and load_plan requires it.
+    - rerun_analysis.py: ANALYSIS_ROWS includes ONSET-R; the reproduction
+      pin is moved to runs/rerun-analysis-20261027-185918 (sha256.txt
+      036bbbbe...ffdcab); one twenty-row check over eleven files, after the
+      calibrated rows and before ONSET-R (exit 8); O2 plus C8 before any
+      data is read (exit 2); onsetr_block (O-R2 to O-R8) writing
+      analysis_onsetr.csv.
+    - Pre-run checks, as run by Claude:
+      - (1) Inputs were read from their writers: the plan columns
+        (PLAN_COLS, including tau0) and the eleven reproduction files
+        (write_all).
+      - (2) Every new failure is a named exit, never a traceback.
+      - (3) Input contact on committed files, structural output only.
+        GUARD matches; V0 PASS with ONSET-R 510 / 24480. A-SIGMA for ONSET-R
+        gives 60 ok (r 1.0 and 2.0) and 450 not applicable. The twenty-row
+        folder's manifest hash equals the pin, and all eleven files compare
+        PASS against themselves with 0 differences.
+      - (4) Synthetic only: O2 passes on its cases and C8 passes. A fixture
+        of the ONSET-R block (fake realizations, B reduced to 200) ran end
+        to end through phase 1, onsetr_block and analysis_onsetr.csv. It
+        exercised above 1, below 1, baseline not flat, right-censored,
+        pooled, and pooled not computed. Its first attempt stopped on a
+        fixture omission (plan rows without tau0), not a code defect.
+      - The main() wiring of rerun_analysis (the twenty-row check, then
+        ONSET-R) was read, not executed; no end-to-end fixture covers it.
+      Python 3.8 grammar parse passes for all three files.
+  OPEN: the 17-point projection, the precheck with O2 and K5, the schedule
+  and the queue, in that order.
 
 ## Checked and found sound
 
