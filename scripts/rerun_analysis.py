@@ -1683,7 +1683,7 @@ def onsetr_block(ctx, rows_out):
                                          "objective": "pooled (mean log r_delta)",
                                          "r_delta": "not computed (an objective's point value is censored "
                                                     "or non-finite)", "verdict": "descriptive"})
-                        say("  {:<11} d={:<3} pooled    not computed (an objective's point is censored)".format(df, d))
+                        say("  {:<11} d={:<3} pooled    not computed (an objective's point is censored or non-finite)".format(df, d))
                         continue
                     pp = math.exp(sum(math.log(x) for x in pvs) / len(pvs))
                     M_ = np.vstack([per[o][1] for o in objs])

@@ -2517,7 +2517,37 @@ instruction of 2026-10-15.
     check (O-R10) to the ONSET-R stage and the final write has been read
     and not executed. A1 refuses any run without ONSET-R complete (exit 7), so
     without a rehearsal its first execution is the real analysis.
-  OPEN: the queue load, the shards, the analysis.
+  - Rehearsal before the load (Rahul, 2026-10-28). scripts/onsetr_rehearsal.py
+    writes SYNTHETIC ONSET-R realizations, keyed as the plan's tasks, into
+    ~/cbo-rehearsal/REHEARSAL-SYNTHETIC-onsetr-<stamp>/ with a README. It
+    refuses any --out inside the repository (exit 2). rerun_analysis then
+    runs on the eight real shard folders plus that folder, with --outdir
+    under ~/cbo-rehearsal. The real evidence is the twenty-row
+    reproduction check (O-R10) and that main() runs from it through the
+    ONSET-R stage to the write. Its ONSET-R numbers are synthetic and never
+    quoted; nothing synthetic goes into runs/ or a commit.
+    - Pre-run checks (Claude):
+      - (1) Inputs were read from their writers: rerun.py's REAL_COLS and
+        plan_row; load_runs's checks.
+      - (2) The refusal is a named exit 2.
+      - (3) Input contact: the generator, run into the session scratchpad
+        on the real plan, wrote 24480 rows. rerun_analysis.load_runs (A0)
+        accepted 24480 of 24480 against the plan's ONSET-R tasks. --out runs
+        was refused, exit 2.
+      - (4) Synthetic: phase 1 and onsetr_block on that folder, B reduced to
+        200, reached every path: above 1, including a crossing inside a
+        rise; below 1; not distinguishable; right-censored; left-censored;
+        baseline not flat; a non-finite cell with FLAG, in both arms by
+        pairing; pooled computed and not computed.
+      - One printed label, "point is censored" for a pooled line whose
+        objective was non-finite, was corrected in rerun_analysis.py (not
+        pinned by the queue).
+    - Not reachable by construction: FLAG with a finite point. A resample is
+      non-finite only if its cell kept no realization, and then the point
+      is non-finite too, so the verdict reads "point non-finite" (checked
+      first) while the FLAG is still raised.
+  OPEN: the rehearsal's output (read before the load), the queue load, the
+  shards, the analysis.
 
 ## Checked and found sound
 
