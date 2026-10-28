@@ -132,19 +132,32 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "RUNNING",
-  "index": 0,
+  "status": "READY",
+  "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-smoke-onsetr-a1",
-  "args": "--smoke --plan-from runs/rerun-plan-20261028-212945 --rows ONSET-R --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261028-212945"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
-  "attempts": {},
+  "attempts": {
+    "smoke-onsetr": [
+      {
+        "attempt": 1,
+        "job": "rerun-smoke-onsetr-a1",
+        "folder": "runs/rerun-smoke-onsetr-a1-kaggle-20261028-233227",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": null,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261028T180223Z",
+        "fetched_at": "2026-10-28T23:32:32+05:30"
+      }
+    ]
+  },
   "history": [
     {
       "at": "2026-10-28T23:24:22+05:30",
@@ -172,6 +185,15 @@
       "attempt": 1,
       "job": "rerun-smoke-onsetr-a1",
       "note": "logs/kgrun-rerun-smoke-onsetr-a1.log"
+    },
+    {
+      "at": "2026-10-28T23:32:32+05:30",
+      "run": "laptop.20261028T180223Z",
+      "event": "fetched",
+      "item": "onsetr-s0of10",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-smoke-onsetr-a1-kaggle-20261028-233227: runner exit 0, D-SMOKE PASS; now READY"
     }
   ],
   "definition": {
