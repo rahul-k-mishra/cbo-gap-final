@@ -132,7 +132,7 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
@@ -207,6 +207,15 @@
       "attempt": 1,
       "job": "rerun-onsetr-s0of10-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-28T23:50:14+05:30",
+      "run": "laptop.20261028T181723Z",
+      "event": "launched",
+      "item": "onsetr-s0of10",
+      "attempt": 1,
+      "job": "rerun-onsetr-s0of10-a1",
+      "note": "logs/kgrun-rerun-onsetr-s0of10-a1.log"
     }
   ],
   "definition": {
