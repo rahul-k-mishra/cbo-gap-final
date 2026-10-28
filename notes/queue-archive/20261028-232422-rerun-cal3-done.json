@@ -1,0 +1,207 @@
+{
+  "schema": 2,
+  "kaggle_user": "ericsom",
+  "profiles": {
+    "rerun-cal3": {
+      "family": "rerun",
+      "workers": 4,
+      "plan": "runs/rerun-plan-20261026-210435",
+      "plan_sha256": "1d9b4031938755f285922c30ffce2210cebd7e1d403898967c04b79cf2a39c64",
+      "timing": [
+        "runs/costprobe2-s0-kaggle-20261010-103952",
+        "runs/costprobe2-s1-kaggle-20261011-101343"
+      ],
+      "expect": {
+        "python": "3.13.15",
+        "numpy": "2.1.3",
+        "rerun_sha256": "de28b69a550c953887c19c1058968363cfb4e14050e14a2f6c7088e43194aca1",
+        "rerunlib_sha256": "6a7ddf42242d5101086741e3a341db9711b2d47fdbfd60710be9229de8895b07",
+        "costprobe2_sha256": "ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b"
+      }
+    }
+  },
+  "max_attempts": 5,
+  "max_file_mb": 50,
+  "queue": [
+    {
+      "id": "smoke-cal3",
+      "profile": "rerun-cal3",
+      "kind": "smoke",
+      "set": "cal3",
+      "ledger": "N42",
+      "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
+    },
+    {
+      "id": "cal3-s0of2",
+      "profile": "rerun-cal3",
+      "kind": "shard",
+      "set": "cal3",
+      "shard": 0,
+      "nshards": 2,
+      "ledger": "N42",
+      "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
+    },
+    {
+      "id": "cal3-s1of2",
+      "profile": "rerun-cal3",
+      "kind": "shard",
+      "set": "cal3",
+      "shard": 1,
+      "nshards": 2,
+      "ledger": "N42",
+      "rows": "RMAP-CAL,CLIFF-CAL,ONSET-CAL"
+    }
+  ],
+  "status": "DONE",
+  "index": 3,
+  "attempt": 1,
+  "resume_dirs": [],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
+  "anomaly": null,
+  "halt_reason": "",
+  "kernel_check": null,
+  "attempts": {
+    "smoke-cal3": [
+      {
+        "attempt": 1,
+        "job": "rerun-smoke-cal3-a1",
+        "folder": "runs/rerun-smoke-cal3-a1-kaggle-20261026-214714",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": null,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T161710Z",
+        "fetched_at": "2026-10-26T21:47:18+05:30"
+      }
+    ],
+    "cal3-s0of2": [
+      {
+        "attempt": 1,
+        "job": "rerun-cal3-s0of2-a1",
+        "folder": "runs/rerun-cal3-s0of2-a1-kaggle-20261027-011714",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 3096,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T194710Z",
+        "fetched_at": "2026-10-27T01:17:20+05:30"
+      }
+    ],
+    "cal3-s1of2": [
+      {
+        "attempt": 1,
+        "job": "rerun-cal3-s1of2-a1",
+        "folder": "runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 3096,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261026T230210Z",
+        "fetched_at": "2026-10-27T04:32:21+05:30"
+      }
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-26T21:35:19+05:30",
+      "run": "manual",
+      "event": "load",
+      "item": "smoke-cal3",
+      "attempt": 1,
+      "job": "",
+      "note": "notes/queues/rerun-cal3.json; previous state archived to notes/queue-archive/20261026-213519-calprec2-ext-done.json; N42: RMAP-CAL, CLIFF-CAL, ONSET-CAL on the N41 betas; smoke + 2 shards; plan rerun-plan-20261026-210435"
+    },
+    {
+      "at": "2026-10-26T21:36:34+05:30",
+      "run": "laptop.20261026T160550Z",
+      "event": "intent",
+      "item": "smoke-cal3",
+      "attempt": 1,
+      "job": "rerun-smoke-cal3-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-26T21:39:04+05:30",
+      "run": "laptop.20261026T160550Z",
+      "event": "launched",
+      "item": "smoke-cal3",
+      "attempt": 1,
+      "job": "rerun-smoke-cal3-a1",
+      "note": "logs/kgrun-rerun-smoke-cal3-a1.log"
+    },
+    {
+      "at": "2026-10-26T21:47:18+05:30",
+      "run": "laptop.20261026T161710Z",
+      "event": "fetched",
+      "item": "cal3-s0of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-smoke-cal3-a1-kaggle-20261026-214714: runner exit 0, D-SMOKE PASS; now READY"
+    },
+    {
+      "at": "2026-10-26T22:02:19+05:30",
+      "run": "laptop.20261026T163210Z",
+      "event": "intent",
+      "item": "cal3-s0of2",
+      "attempt": 1,
+      "job": "rerun-cal3-s0of2-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-26T22:05:42+05:30",
+      "run": "laptop.20261026T163210Z",
+      "event": "launched",
+      "item": "cal3-s0of2",
+      "attempt": 1,
+      "job": "rerun-cal3-s0of2-a1",
+      "note": "logs/kgrun-rerun-cal3-s0of2-a1.log"
+    },
+    {
+      "at": "2026-10-27T01:17:20+05:30",
+      "run": "laptop.20261026T194710Z",
+      "event": "fetched",
+      "item": "cal3-s1of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-cal3-s0of2-a1-kaggle-20261027-011714: runner exit 0; now READY"
+    },
+    {
+      "at": "2026-10-27T01:32:18+05:30",
+      "run": "laptop.20261026T200210Z",
+      "event": "intent",
+      "item": "cal3-s1of2",
+      "attempt": 1,
+      "job": "rerun-cal3-s1of2-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-27T01:35:21+05:30",
+      "run": "laptop.20261026T200210Z",
+      "event": "launched",
+      "item": "cal3-s1of2",
+      "attempt": 1,
+      "job": "rerun-cal3-s1of2-a1",
+      "note": "logs/kgrun-rerun-cal3-s1of2-a1.log"
+    },
+    {
+      "at": "2026-10-27T04:32:21+05:30",
+      "run": "laptop.20261026T230210Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215: runner exit 0; now DONE"
+    }
+  ],
+  "definition": {
+    "name": "rerun-cal3",
+    "path": "notes/queues/rerun-cal3.json",
+    "sha256": "9a8cf47a18bd4c8f71102f52f6529dc127f4f75e867fdfe2038bbb0162d757b7",
+    "archived_previous": "notes/queue-archive/20261026-213519-calprec2-ext-done.json"
+  }
+}
