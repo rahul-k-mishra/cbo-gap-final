@@ -2356,6 +2356,64 @@ instruction of 2026-10-15.
       r = 1.
   OPEN until that text is written and verified by the rule-8 diff.
 
+- N44 (design, 2026-10-28; Rahul approved the onset-resolution
+  experiment). A new row, ONSET-R, on a dense r grid with a pre-registered
+  threshold-crossing estimand (notes/ANALYSIS_CRITERIA.md, "Sixteenth
+  message"). Nothing has run beyond the projection.
+  - Projection. Source: logs/onsetr-projection-20261028.log (commit
+    4f18cfd; run by Rahul on the laptop; reads only committed files).
+    - "ONSET-CAL tasks read: 2160 (expected 2160)".
+    - Measured Kaggle wall per task, by d, over r 0.75 to 3.0: d 5 3.60 to
+      3.77 s; d 10 6.04 to 6.41; d 20 10.54 to 10.78; d 40 19.96 to
+      20.72; d 80 38.78 to 39.85. Rahul's reading: flat in r at every d,
+      so the no-r-dependence assumption holds and no cost probe is
+      needed.
+    - "projection (r grid of 14 points, M 48): tasks 20160, summed wall
+      323508 s"; "at 4 workers, perfect scaling: 80877 s; shards at 21600
+      s: 4; at 10800 s: 8".
+    - Basis: ONSET-CAL's measured Kaggle per-task walls, extrapolated to
+      the new r values and to M 48. The queue's own schedule will use
+      costprobe2's walls; the unit key (module, objective, d, diffusion,
+      J_inf, T, J grid, arm) has no r, so they cover every new task.
+  - Betas, checked in code (Claude, 2026-10-28):
+    - rerunlib reads calprec2_beta.csv by (module, objective, d, law,
+      tau0), with no r and no diffusion;
+    - calprec2 solves beta on the t = 0 ensemble, regimemap sampler "X0 =
+      rng.standard_normal((Jinf, d))" (regimemap.py line 202), before r or
+      sigma enter.
+    The N41 table covers all fifteen (objective, d) cells at tau0 0.1. No
+    calprec2 run is needed.
+  - Memory: the cal3 shards, on these units, printed "peak RSS max 350.0
+    MB" and "344.0 MB" (budget 3072 MB); r does not change array sizes.
+  - Untested: r above 3.0 has never run in the regimemap module. The
+    queue smoke runs the smallest task, so r 4.8 at d 80 first runs in a
+    shard. A non-finite slope there is counted and flagged by the
+    analysis (O-R5), not a crash.
+  - Decisions (Rahul, 2026-10-28):
+    - M = 48. Reason: at M = 12 the per-cell SD is about the size of a
+      step's rise at low d, which would leave the dense grid unreadable
+      and reproduce the problem in a new form.
+    - delta = 0.10 primary; 0.05 and 0.20 sensitivity with no verdict;
+      all three fixed before any data.
+    - Upper end 4.8. Reason: without points beyond 3.0 the row reproduces
+      the exact defect it exists to fix, a crossing near the top of the
+      grid with nothing to its right.
+    - 8 shards at the 10800 s target. Reason: as N37, N38 and N42, the
+      estimates assume perfect scaling and the measured shards have
+      overrun by up to 30%; one shard at 80877 s is far over the ceiling.
+    - Order: criteria first, approved before any code; then the code with
+      the four pre-run checks; then the precheck with K5; then the
+      schedule; then the queue definition. The estimator's positive
+      control (O2) must be committed and passing before the plan is
+      built: it runs inside the precheck, which writes no plan unless it
+      passes.
+  - Constraints: nothing already computed changes. ONSET-R is appended
+    (owner index 20). The new plan must pass K5 against
+    runs/rerun-plan-20261026-210435. The analysis reproduces the twenty
+    rows against runs/rerun-analysis-20261027-185918. Everything runs
+    through the queue, smoke first, resumable.
+  OPEN: criteria awaiting Rahul's approval.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);

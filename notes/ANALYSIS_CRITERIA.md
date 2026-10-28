@@ -2584,6 +2584,181 @@ classification script is written.
   The rerun changed both the realizations and the bootstrap unit, and the
   statement is withdrawn without attributing the difference to either.
 
+### Sixteenth message (2026-10-28): ONSET-R, the onset-resolution row (ledger N44)
+
+PROPOSED by Claude, 2026-10-28. Rahul approves this section before any
+code is written. Every rule below is fixed before any ONSET-R trajectory
+exists; nothing in it was chosen after seeing ONSET-R data. It was
+written after the ONSET and ONSET-CAL curves had been seen (N43), and it
+uses those curves for nothing but the grid range and M.
+
+Decided by Rahul, 2026-10-28: M = 48; delta 0.10 primary, 0.05 and 0.20
+sensitivity with no verdict; grid upper end 4.8; 8 shards at the 10800 s
+target. Reasons are in N44.
+
+O-R1. The row. ONSET-R, appended after the twenty rows (owner index 20;
+  every existing key and owner index unchanged).
+  - Module regimemap; objectives ackley, rastrigin, sphere; d 5, 10, 20,
+    40, 80; diffusions isotropic and anisotropic; law centred; tau0 0.1;
+    J_inf 50000, T 1.0, the J10 grid, DT and LAM as ONSET-CAL.
+  - r grid (14 points): 0.5, 0.6, 0.7, 0.85, 1.0, 1.2, 1.4, 1.7, 2.0, 2.4,
+    2.8, 3.4, 4.0, 4.8. sigma = sigma_of(diffusion, d, r) as for ONSET.
+  - M = 48 realizations per cell (reps 0 to 47). 2 x 3 x 5 x 14 = 420
+    cells, 20160 tasks.
+  - beta from calprec2_beta.csv (the N41 table) at (regimemap, objective,
+    d, centred, 0.1); the beta does not depend on r or the diffusion
+    (N44). The cells whose provenance is "beta_adq; C1 found no sufficient
+    level" (ackley d 10, 20, 80; rastrigin d 80) are reported with that
+    caveat, never excluded (CAL3 practice).
+  - Fresh realizations everywhere: no cell is shared with any existing
+    row (no K4 share group), including r 1.0 and 2.0, which ONSET-CAL
+    also has.
+
+O-R2. The estimand: the sustained threshold crossing r_delta, per unit
+  (diffusion, objective, d).
+  - gamma(r): the cell's S-slope (fit_slope over the window, the existing
+    S statistic), W-full primary.
+  - Baseline gamma_adm: the mean of gamma at the four admissible points
+    r = 0.5, 0.6, 0.7, 0.85.
+  - Excess g(r) = gamma(r) - gamma_adm. A rise of the slope toward 0 is
+    degradation; g > 0.
+  - k: the smallest grid index with r_k >= 1.0 such that g(r_j) >= delta
+    for every j >= k (sustained). Comparisons are on the floating values
+    as computed, with no tolerance.
+  - If k exists and g(r_(k-1)) < delta: log r_delta = log r_(k-1) +
+    f (log r_k - log r_(k-1)), with f = (delta - g(r_(k-1))) / (g(r_k) -
+    g(r_(k-1))); that is, r_delta = r_(k-1) (r_k / r_(k-1))^f.
+  - If k exists and g(r_(k-1)) >= delta (possible only when r_k = 1.0):
+    left-censored, "at or below 0.85".
+  - If no k exists: right-censored, "beyond 4.8".
+  - delta = 0.10 primary (a loss of one tenth of the J^-1 exponent);
+    0.05 and 0.20 sensitivity, computed identically, no verdict.
+  - Why there is no start/end ambiguity: r_delta is a level crossing of
+    the curve against its own admissible baseline, not a bend location.
+    A curve that rises from r 1 to 2 and then flattens crosses during its
+    rise; a curve flat to 2.4 that then jumps crosses inside the jump.
+    It always reads "the smallest r beyond which the slope stays
+    degraded by at least delta".
+  - Worked example: baseline -1.00; gamma -0.97 at 1.2 and -0.87 at 1.4,
+    and >= -0.87 from there on. g(1.2) = 0.03, g(1.4) = 0.13; delta 0.10:
+    f = 0.07 / 0.10 = 0.7; r_delta = 1.2 x (1.4/1.2)^0.7 = 1.336731
+    (control C2 below).
+
+O-R3. Baseline check. If max - min of gamma over the four baseline
+  points exceeds delta / 2 (0.05 at the primary delta), the unit is
+  "baseline not flat": r_delta is printed, no verdict is given.
+  Example: baseline -1.00, -1.00, -1.00, -0.94: range 0.06 > 0.05: not
+  flat (control C6).
+
+O-R4. Positive control (O2), on synthetic curves with known crossings.
+  It runs in rerun.py's precheck before the plan is written (no plan
+  unless it passes) and again at the start of rerun_analysis.py (exit 2
+  unless it passes). Curves are values of gamma at the 14 grid points;
+  expected r_delta at delta 0.05 / 0.10 / 0.20; a computed value passes
+  if it is within 1e-12 of the closed form r_(k-1) (r_k/r_(k-1))^f, and
+  a censored case passes only if the same censoring is returned.
+  - C1 step: -1.00 up to r 1.7, -0.75 from 2.0. f = 0.2 / 0.4 / 0.8
+    between 1.7 and 2.0: 1.756164 / 1.814184 / 1.936038.
+  - C2 rise then plateau: -1.00 up to 1.0; -0.97, -0.87, -0.77 at 1.2,
+    1.4, 1.7; -0.72 from 2.0. 1.2 to 1.4, f 0.2: 1.237572; 1.2 to 1.4, f
+    0.7: 1.336731; 1.4 to 1.7, f 0.7: 1.603809. The crossing lies inside
+    the rise, not at its end (the N43 failure of H3).
+  - C3 no crossing: -1.00 up to 4.0, -0.97 at 4.8: right-censored at all
+    three.
+  - C4 transient: as C1 with -0.85 at 1.2 (g 0.15, then 0 at 1.4 and
+    1.7): same values as C1. The sustained rule ignores the excursion; a
+    first-crossing rule would give 1.0 to 1.2.
+  - C5 at the boundary: -1.00 at the baseline, -0.75 from 1.0. 0.85 to
+    1.0: 0.878082 / 0.907092 / 0.968019, below 1.
+  - C6 baseline not flat: baseline -1.00, -1.00, -1.00, -0.94 (mean
+    -0.985, range 0.06); -1.00 at 1.0 to 1.7, -0.75 from 2.0. f 0.26 /
+    0.46 / 0.86: 1.773373 / 1.831961 / 1.955008; flagged not flat at
+    0.10 (range 0.06 > 0.05) and at 0.05 (0.06 > 0.025), not at 0.20.
+  - C7 left-censored: baseline -1.00, -1.00, -1.00, -0.85 (mean -0.9625,
+    range 0.15); -0.75 from 1.0. Left-censored at 0.05 and 0.10; at 0.20
+    g(0.85) = 0.1125 < 0.20, crossing 0.85 to 1.0, f 0.875: 0.979890.
+  - C8 bootstrap: a unit whose realizations are identical within each
+    cell gives lo95 = hi95 = the point value.
+  Values are printed to six decimals here; the control compares at full
+  precision against the closed form.
+
+O-R5. Bootstrap. Realizations resampled within each cell, independently
+  across cells (each r is its own cell with its own keys), B = 10000,
+  indices from default_rng(SeedSequence(boot key, kind 71)) as every
+  other row. On each resample all 14 slopes of the unit are recomputed,
+  then gamma_adm, g and r_delta.
+  - Interval: nearest-rank order statistics, because censored values make
+    interpolated percentiles undefined. Left-censored resamples rank
+    below every finite value, right-censored above. lo95 = the 250th
+    smallest of B, hi95 = the 9750th. A limit that falls on a censored
+    resample reads "at or below 0.85" or "beyond 4.8".
+  - A resample with a non-finite slope in any of the 14 cells gives a
+    non-finite r_delta; it is excluded and counted; above 1% of B the unit
+    is FLAG (the existing FLAG_FRAC rule) and gets no verdict.
+  - Example: 260 of 10000 resamples right-censored, the rest finite:
+    hi95 is the 9750th smallest, which is finite (9740 finite values lie
+    below the 260 censored), so the interval is finite at the top only if
+    fewer than 251 resamples are right-censored. Here 260 > 250: hi95
+    reads "beyond 4.8".
+
+O-R6. Verdict per unit, delta 0.10, W-full only.
+  - "above 1": lo95 > 1.0 (a lo95 of "beyond 4.8" counts as above).
+  - "below 1": hi95 < 1.0 (an hi95 of "at or below 0.85" counts as
+    below).
+  - "not distinguishable from 1": otherwise.
+  - No verdict: point estimate censored (reported "no crossing up to
+    4.8" or "at or below 0.85"), baseline not flat (O-R3), or FLAG.
+  - Examples: [1.12, 1.70]: above 1. [0.92, 1.40]: not distinguishable.
+    [at or below 0.85, 0.97]: below 1.
+  - 30 units. Verdicts are reported as counts per diffusion and in all;
+    no multiplicity correction and no family-wise claim. The point value
+    and both limits are reported for every unit.
+
+O-R7. Pooled, per (diffusion, d): the mean over the three objectives of
+  log r_delta, with the existing heterogeneity statistics on the
+  per-objective log r_delta (bootstrap variances). Descriptive: interval
+  reported, no verdict. Not computed if any objective's point value is
+  censored; in a resample, any right-censored objective makes the pooled
+  value right-censored, any left-censored (and none right) left-censored,
+  both together non-finite. It is not the crossing of a mean curve.
+
+O-R8. Also computed for ONSET-R: phase 1 per cell (S-slope, interval,
+  rate verdict, S-curve) as for every row; W-ge for O-R2 to O-R7 as
+  sensitivity, no verdict.
+  Not computed, and not claimed: H3 bends, J4, contrast 6, contrast 3,
+  severity, any trend of r_delta across d, any comparison with ONSET or
+  ONSET-CAL (independent replications, N40; onsets dropped, N43). ONSET-R
+  does not enter the 5b margin pool, and m plays no part in it.
+
+O-R9. What counts as a failure.
+  - Before any trajectory: O2 fails (precheck writes no plan); K5 fails
+    against runs/rerun-plan-20261026-210435; any existing precheck check
+    fails.
+  - Queue: the smoke's determinism check fails (exit 3); a shard ends
+    incomplete after resumes; per-worker peak RSS above 3072 MB.
+  - Analysis:
+    - O2 fails, or any setup check fails: exit 2;
+    - any row incomplete: exit 7, nothing computed;
+    - the twenty-row reproduction fails: exit 8, nothing about ONSET-R is
+      computed.
+  - Unit level: the no-verdict cases of O-R6, each counted and listed.
+
+O-R10. Reproduction. rerun_analysis.py's reproduction pin moves to
+  runs/rerun-analysis-20261027-185918. Every old row and old column of
+  each of its CSVs must equal the new run's, as strings, before ONSET-R is
+  computed: analysis_completeness, cells, margin, stats, onsets, audit,
+  r2, adequacy, margin_calibrated, onsets_calibrated, adequacy_split.
+  That folder matched N39 on the seventeen rows (CAL4), so the chain back
+  to N39 holds. Like CAL4, the run is on the laptop (Python 3.12.3, NumPy
+  2.5.3).
+
+O-R11. Order of work. Criteria approved; code with the four pre-run
+  checks; O2 committed and passing in the precheck, which then writes the
+  plan and runs K5; the schedule (8 shards at the target, Rahul's
+  decision); the queue definition notes/queues/rerun-onsetr.json (smoke,
+  then 8 shards, resumable on exit 5 as the existing profiles), then
+  "rerunq.py load"; the analysis after the queue is DONE.
+
 ## Corrections to the first decision message, from the logs
 
 All seven accepted by Rahul in the second message (2026-10-16) and
