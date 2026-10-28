@@ -2677,6 +2677,7 @@ O-R4. Positive control (O2), on synthetic curves with known crossings.
   - C7 left-censored: baseline -1.00, -1.00, -1.00, -0.85 (mean -0.9625,
     range 0.15); -0.75 from 1.0. Left-censored at 0.05 and 0.10; at 0.20
     g(0.85) = 0.1125 < 0.20, crossing 0.85 to 1.0, f 0.875: 0.979890.
+    Flagged not flat at all three (0.15 exceeds 0.025, 0.05 and 0.10).
   - C8 bootstrap: a unit whose realizations are identical within each
     cell gives lo95 = hi95 = the point value.
   Values are printed to six decimals here; the control compares at full
@@ -2695,11 +2696,10 @@ O-R5. Bootstrap. Realizations resampled within each cell, independently
   - A resample with a non-finite slope in any of the 14 cells gives a
     non-finite r_delta; it is excluded and counted; above 1% of B the unit
     is FLAG (the existing FLAG_FRAC rule) and gets no verdict.
-  - Example: 260 of 10000 resamples right-censored, the rest finite:
-    hi95 is the 9750th smallest, which is finite (9740 finite values lie
-    below the 260 censored), so the interval is finite at the top only if
-    fewer than 251 resamples are right-censored. Here 260 > 250: hi95
-    reads "beyond 4.8".
+  - Example: 260 of 10000 resamples right-censored, the rest finite.
+    9740 finite values rank below the 260 censored ones, so the 9750th
+    smallest is censored: hi95 reads "beyond 4.8". With 250 or fewer
+    right-censored, the 9750th smallest is finite.
 
 O-R6. Verdict per unit, delta 0.10, W-full only.
   - "above 1": lo95 > 1.0 (a lo95 of "beyond 4.8" counts as above).
