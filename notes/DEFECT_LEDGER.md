@@ -2190,123 +2190,147 @@ instruction of 2026-10-15.
   OPEN until the manuscript text that uses these numbers is written and
   verified by the rule-8 diff, and until the calibrated rows are tallied.
 
-- N43 (finding, design of the onset estimator; found 2026-10-28). The
-  H3 onset is the location of the best single bend. That location does
-  not distinguish the start of a rise from its end, or from a steepening
-  of a rise already under way, and nothing in any output says which it
-  is. The code is sound; the estimand is not an onset as reported.
-  - Source: logs/onsetdiag-20261028-b.log (scripts/onsetdiag.py, run
-    by Rahul on the laptop, exit 0; python 3.12.3, numpy 2.5.3). R1: 40
-    of 40 recorded onsets equal in ONSET and in ONSET-CAL; D: 40 of 40
-    agree in each. The committed onsets of N39 and N42 are exactly what
-    H3 specifies, computed correctly. The first run of the script
-    crashed on input (N42) and gave no result.
-  - Mechanism (from the algebra, onsetdiag docstring F1 and F2). The
-    candidates are r 0.75, 1.0, 1.25, 1.5, 2.0. A bend at 0.75 is a
-    straight line. A bend at 2.0 has only r 3.0 to its right, fits it
-    exactly, and is judged on a straight line through the first five
-    points. A curve that rises from about r 1 to r 2 and then stops is
-    close to a line on those five points, so its best bend is 2.0: the
-    end of the rise. A curve flat to r 2 that jumps at r 3 also lands
-    at 2.0: the start. Same number, opposite meaning.
-  - Isotropic d 80, DETAIL block of the log, point W-full S-slopes at r
-    0.75 .. 3.0: ONSET ackley -0.861, -0.835, -0.704, -0.510, -0.349,
-    -0.381 and sphere -1.009, -0.946, -0.870, -0.549, -0.329, -0.304
-    (bend 2.00, the end of their rise); rastrigin -1.124, -1.192,
-    -1.223, -1.262, -1.150, -0.496 (bend 2.00, the start). The mean
-    curve bends at 1.00, which is no objective's bend. ONSET-CAL has
-    the same shapes and bends.
-  - Every onset at 2.00. SCOPE block of the log, "last" entries:
-    - ONSET: anisotropic d 10 ackley, rastrigin and pooled; anisotropic
-      d 20 rastrigin; anisotropic d 40 sphere; isotropic d 5 sphere;
-      isotropic d 20 sphere; isotropic d 40 rastrigin; isotropic d 80
-      ackley, rastrigin, sphere.
-    - ONSET-CAL: anisotropic d 5 ackley, sphere; anisotropic d 10
-      rastrigin; anisotropic d 80 ackley, rastrigin, sphere and pooled;
-      isotropic d 10 ackley, rastrigin; isotropic d 20 rastrigin;
-      isotropic d 40 rastrigin; isotropic d 80 ackley, rastrigin,
-      sphere.
-    - Count, made by Claude from that list, not printed by a script:
-      ONSET 10 of 30 per-objective and 1 of 10 pooled; ONSET-CAL 13 of
-      30 and 1 of 10; 25 of 80 in all. A (diffusion, d) with at least one
-      2.00: 7 of 10 in each row. Not for the manuscript until a script
-      prints it.
-  - Reading of each per-objective 2.00 from its own curve (Claude,
-    2026-10-28; point W-full S-slopes from analysis_cells.csv, no
-    interval, so a description, not a verdict). Rule, chosen by Claude
-    after the curves had been listed, so post hoc: before = y(2.0) - y(0.75), after = y(3.0) - y(2.0), against
-    m = 0.078113 (5b) as the size of a change worth naming. start: after
-    > m, before <= m. end: before > m, after <= m. continues: both > m
-    (the bend marks a steepening of a rise already under way). no rise:
-    both <= m. Example: ONSET isotropic d 80 ackley, before +0.512,
-    after -0.031: end.
-    - ONSET: anisotropic d 10 ackley +0.083 / +0.232 continues;
-      anisotropic d 10 rastrigin +0.016 / +0.156 start; anisotropic d 20
-      rastrigin +0.096 / +0.146 continues; anisotropic d 40 sphere +0.200
-      / +0.016 end; isotropic d 5 sphere +0.022 / +0.154 start; isotropic
-      d 20 sphere +0.109 / +0.201 continues; isotropic d 40 rastrigin
-      -0.137 / +0.366 start; isotropic d 80 ackley +0.512 / -0.031 end;
-      isotropic d 80 rastrigin -0.026 / +0.654 start; isotropic d 80
-      sphere +0.680 / +0.024 end.
-    - ONSET-CAL: anisotropic d 5 ackley +0.195 / -0.120 end (a single
-      jump at r 2.0, -0.976 to -0.783, then a fall); anisotropic d 5
-      sphere +0.128 / +0.121 continues; anisotropic d 10 rastrigin +0.003
-      / +0.092 start; anisotropic d 80 ackley +0.127 / +0.171 continues;
-      anisotropic d 80 rastrigin +0.065 / +0.121 start; anisotropic d 80
-      sphere +0.098 / +0.232 continues; isotropic d 10 ackley +0.076 /
-      +0.117 start; isotropic d 10 rastrigin -0.038 / +0.037 no rise;
-      isotropic d 20 rastrigin -0.057 / +0.119 start; isotropic d 40
-      rastrigin -0.110 / +0.387 start; isotropic d 80 ackley +0.550 /
-      -0.050 end; isotropic d 80 rastrigin -0.089 / +0.674 start;
-      isotropic d 80 sphere +0.640 / -0.028 end.
-    - Of the 23: start 10, end 6, continues 6, no rise 1 (Claude's
-      count). Rastrigin accounts for 8 of the 10 starts. Every end is
-      ackley or sphere. Several calls sit within a few thousandths of m
-      (ONSET-CAL isotropic d 10 ackley before +0.076; anisotropic d 10
-      rastrigin after +0.092); the rule is descriptive and on points.
-    - Not read: the 55 onsets at 0.75 to 1.5. The same one-bend model
-      can put a bend at the end of a rise that finishes inside the grid;
-      the F2 property only makes it most visible at 2.0. Until those
-      curves are read, they carry the same unresolved meaning.
-  - What depends on an onset and what does not.
-    - Onset-dependent, not reportable as onsets: every per-objective
-      and pooled onset of ONSET and ONSET-CAL (H3 makes the per-objective
-      one primary); J4 (each interval is an interval for the bend
-      location, so "contains 1: no" can come from an end knee, as at
-      isotropic d 80 ackley [2.00, 2.00], whose rise begins after r 1.0);
-      contrast 6 (a d 80 minus d 5 difference of bends that are of
-      different kinds at d 80); the heterogeneity rows of the onset
-      files. N42's reading "the isotropic onset separated from r = 1"
-      rests on J4 and on pooled bends of mean curves, and falls with it.
-    - Not onset-dependent, unaffected: contrast 3 (per-cell gaps,
-      including the sign change at d 40 and d 80); severity S(1,3),
-      S(0.75,3) and their trend on log2 d (J2), which use the slopes at
-      fixed r 1, 0.75 and 3; the per-cell slopes and rate verdicts; the
-      RMAP panel.
-  - Round 1. zenodo-v1/sn-article.tex tab:onset reports only the pooled
-    bend of the mean curve, with this estimator (the O1 control
-    reproduced all ten). The abstract (line 38) and section
-    "Beyond the condition" (line 628) state that "the onset is not
-    resolvable from the boundary r = 1, nine of ten bootstrap intervals
-    containing it". The defect is the same: the claim treats the bend
-    location as the onset. Its three r_onset 2.00 entries, read from the
-    table's own mean curves under the rule above: isotropic d 20
-    (-1.020 ... -0.977, -0.802; before +0.043, after +0.175) start;
-    anisotropic d 5 (-1.025 ... -0.923, -0.796; +0.102, +0.127)
-    continues; anisotropic d 80 (-0.837 ... -0.721, -0.616; +0.116,
-    +0.105) continues. An interval for a bend that can move between a
-    start knee and an end knee is wide for that reason as well as for
-    lack of power, so "not resolvable from r = 1" is not supported as a
-    statement about where degradation begins. The round-1 severity
-    claim (+0.144 per doubling, isotropic) does not use the onset.
-  - No amendment proposed (Rahul's instruction): this item records what
-    the current numbers can and cannot support. OPEN.
-  - The counts and the classification above are Claude's. Rahul's
-    instruction (2026-10-28): settle all 80 onsets and round 1's ten from
-    a script, the rule printed as post hoc with its date, both
-    differences per onset. scripts/onsetclass.py (read-only, writes
-    nothing) does it; not yet run. Its output supersedes the counts and
-    calls above for any use in the manuscript.
+- N43 (finding, design of the onset estimator; found 2026-10-28; revised
+  2026-10-28 from logs/onsetclass-20261028.log). The H3 onset is the
+  location of the best single bend of the S-slope curve over log r. The
+  estimator cannot tell the start of a rise from its end, and nothing in
+  its output says which a bend is. On these data it is a start in most
+  cases and an end only at 2.00 and once at 1.25. At 2.00 it is not
+  interpretable without the curve.
+  - First wording, withdrawn: "the estimand is not an onset as reported".
+    That rested on the 25 onsets at 2.00 alone. The classification of all
+    80 (below) does not support it as a statement about the whole grid.
+  - Sources:
+    - logs/onsetdiag-20261028-b.log (exit 0): R1 40 of 40 and D 40 of
+      40 in each row. The committed onsets of N39 and N42 are what H3
+      specifies, computed correctly.
+    - logs/onsetclass-20261028.log (scripts/onsetclass.py, sha256 in its
+      header; run by Rahul on the laptop, exit 0): manifests and both
+      archive files verified; "R ONSET 40 of 40 equal", "R ONSET-CAL 40
+      of 40 equal"; "O1 PASS: 10 of 10"; m = 0.07811313532738592 from
+      N39's analysis_margin.csv.
+    The first onsetdiag run crashed on input (N42) and gave no result.
+  - Mechanism (from the algebra, onsetdiag docstring F1 and F2).
+    - The candidates are r 0.75, 1.0, 1.25, 1.5, 2.0. A bend at 0.75 is
+      a straight line.
+    - A bend at 2.0 has only r 3.0 to its right and fits that point
+      exactly, so it is judged on a straight line through the first five
+      points. A curve that rises from r 1 to r 2 and then stops is close
+      to such a line and lands at 2.0, the end of its rise. A curve flat
+      to r 2 that jumps at r 3 also lands at 2.0, the start of its rise.
+  - The rule, as printed in the log. It is post hoc: fixed by Claude on
+    2026-10-28 after the curves of the 25 onsets at 2.00 had been seen;
+    its extension to bends below 2.0 was written before any of the other
+    55 was computed. before = y(onset) - y(0.75); after = y(3.0) -
+    y(onset); against m:
+    - start: after > m, before <= m;
+    - end: before > m, after <= m;
+    - continues: both > m;
+    - no rise: both <= m;
+    - line: onset 0.75 (no case).
+    It works on point slopes, with no interval, and describes rather than
+    tests. "start" says the net rise lies after the bend. It does not say
+    the rise begins at the bend.
+  - Counts, as printed (COUNTS block):
+    - ONSET, objective: start 19, end 3, continues 6, no rise 2, of 30.
+      Pooled: start 8, end 0, continues 1, no rise 1, of 10.
+    - ONSET-CAL, objective: start 21, end 4, continues 3, no rise 2, of
+      30. Pooled: start 9, end 0, continues 1, no rise 0, of 10.
+    - By onset value, ONSET: 1.00 start 6, no rise 1 (of 7); 1.25 start
+      8, continues 1, no rise 2 (of 11); 1.50 start 9, continues 2 (of
+      11); 2.00 start 4, end 3, continues 4 (of 11).
+    - By onset value, ONSET-CAL: 1.00 start 4 (of 4); 1.25 start 11, end
+      1 (of 12); 1.50 start 9, no rise 1 (of 10); 2.00 start 6, end 3,
+      continues 4, no rise 1 (of 14).
+    - The one end below 2.00 is ONSET-CAL anisotropic d 5 rastrigin, onset
+      1.25, before +0.0837, after +0.0684, dist 0.0056.
+    - These supersede Claude's hand counts of the first wording.
+  - Where the estimator is sound, and where not, on these data.
+    - Bends at 1.00 to 1.50: no end at 1.00 or 1.50 in either row, and
+      the one end at 1.25 sits 0.0056 from m. A bend there has the net
+      rise after it, so it can be read as "the rise lies at or after this
+      r". Whether it starts at the bend is not established by the rule.
+      Several of these curves wobble by a few hundredths with no clear
+      rise before r 2 (for example ONSET isotropic d 5 rastrigin, onset
+      1.25, y -1.038, -1.039, -1.089, -1.077, -1.035 at r 0.75 .. 2.0).
+      There the bend is located by noise, which the wide intervals
+      reflect.
+    - Bends at 2.00: start, end and continues all occur (ONSET 4, 3, 4;
+      ONSET-CAL 6, 3, 4, plus one no rise). A 2.00 is not interpretable
+      without its curve. Isotropic d 80 is the clearest case. Ackley and
+      sphere end their rise at 2.00, while rastrigin starts its rise
+      there, in both rows. That is the onsetdiag DETAIL, now confirmed by
+      onsetclass.
+    - Pooled bends: no end in 20. The isotropic d 80 pooled bend, 1.00, is
+      a start of the mean curve's rise. It is not the bend of any
+      objective (onsetdiag SCOPE).
+  - Consequences for the reported quantities. Each J4 or contrast-6
+    interval is an interval of bend locations over resamples. The
+    classification above is of the point curves only, so whether
+    resampled bends are starts is not measured.
+    - J4 "contains 1: yes" rests on resamples with bends at 1.00, the
+      value at which no point curve is an end. J4 "no" at [2.00, 2.00]
+      for ackley and sphere at isotropic d 80 is the end of a rise and
+      cannot be read as a late onset.
+    - N42's "isotropic onset separated from r = 1" rests on pooled bends
+      that are starts at the point level: ONSET isotropic d 5 1.50, d 20
+      1.50, d 40 1.25; ONSET-CAL d 5 1.25 (dist 0.0036), d 20 1.50, d 40
+      1.50. Its interval upper ends reach 2.00, the ambiguous value.
+    - Contrast 6, pooled, compares two pooled starts at d 80 and d 5. Per
+      objective, isotropic, it compares d 80 ends (ackley, sphere) with d
+      5 bends and cannot be read.
+    - Not onset-dependent and unaffected: contrast 3 (including the sign
+      change at d 40 and d 80), severity S(1,3), S(0.75,3) and their
+      trend (J2), the per-cell slopes and rate verdicts, and the RMAP
+      panel.
+  - Round 1 (tab:onset, ten pooled bends, the same estimator; O1 PASS).
+    ROUND-1 counts: start 7, end 0, continues 2 (anisotropic d 5 and d 80,
+    both at 2.00), no rise 1 (isotropic d 10, 1.25, dist 0.0036).
+    - The point estimates are not ends. Claude's earlier argument that
+      round 1's intervals are wide because bends move between start and
+      end knees is not supported at the point level and is withdrawn.
+    - The claim itself (abstract, line 38; line 628) is about intervals:
+      "nine of ten bootstrap intervals containing" r = 1. Those intervals
+      came from 300 resamples pooled over objectives and realizations.
+      The revision rejected that unit (ANALYSIS_CRITERIA item 3, P4), and
+      O1 reproduces the points only, not the intervals.
+    - The rerun's intervals with the approved unit (realizations within
+      cells) give J4 pooled "6 of 10 intervals contain 1" in ONSET (N39)
+      and in ONSET-CAL (N42); isotropic d 5, d 20 and d 40 exclude 1 in
+      both. Nine of ten does not replicate. A new run (ONSET) and a new
+      bootstrap unit differ from round 1 at once, so which of the two
+      causes the difference is not separable.
+    - Round 1's "not resolvable from r = 1" does not survive into the
+      revision as a claim. The defect is not the start/end confusion
+      here; it is that the claim does not replicate under the approved
+      bootstrap, on bends that are mostly starts.
+  - Near the threshold (NEAR block). dist is the smaller of |before - m|
+    and |after - m|.
+    - ONSET: dist <= 0.005 in 1, <= 0.01 in 5, <= 0.02 in 12, <= 0.05 in
+      20, of 40.
+    - ONSET-CAL: 3, 6, 11 and 17 of 40.
+    - ROUND-1: 1, 1, 1 and 5 of 10.
+    - m was set as 3 x the median per-cell bootstrap SD of a slope, for
+      diffusion-arm differences. before and after are differences of two
+      cells, so their noise is larger than one cell's. A call within a
+      few hundredths of m can therefore be moved by sampling noise.
+    - Invariance, from the definitions and Claude's reading of the
+      printed values; not printed by a script. Under any single threshold
+      applied to both before and after:
+      - start implies before < after, and end implies before > after, so
+        no threshold turns a start into an end or an end into a start;
+      - a no rise or continues can become an end only if before > after.
+        In the log that holds for one curve, ONSET-CAL anisotropic d 5
+        sphere (continues, +0.1285 / +0.1212), and for round 1
+        anisotropic d 80 (continues, +0.1160 / +0.1046).
+      So "start-like against end-like" is fixed by the sign of after -
+      before, whatever the threshold. How many are start rather than
+      continues or no rise depends on the threshold. Separate thresholds
+      for before and after (for example each scaled by its own SD) break
+      this invariance.
+  - No amendment of the estimator is proposed (Rahul's instruction).
+    What would settle the threshold question is listed in Claude's reply
+    of 2026-10-28 and is not run. OPEN.
 
 ## Checked and found sound
 

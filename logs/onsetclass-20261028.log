@@ -1,0 +1,314 @@
+====================================================================================================
+CBO-GAP onsetclass -- what kind of bend each H3 onset is (N43), read-only
+====================================================================================================
+  onsetclass sha256 81ce406d397d6286d499ecd42a0d79f1dcf0b683cf63b0d86113849c760eb541
+  onsetdiag sha256  ad337adc7a8ecb70109b24bdabc4942f8613e45e90592f6921977863b22b4041
+  rerunlib sha256   6a7ddf42242d5101086741e3a341db9711b2d47fdbfd60710be9229de8895b07
+  python 3.12.3   numpy 2.5.3   platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39   workers 2
+  --n39 runs/rerun-analysis-20261025-051314   --twenty runs/rerun-analysis-20261027-185918   archive /home/rahul/Research/cbo-gap-final/zenodo-v1
+  writes nothing; no seed (nothing random); point S-slopes only, no bootstrap
+
+  What this prints, in plain words. Each H3 onset is where one bend fits a curve of
+  S-slope against log r best. A bend can sit where a rise starts, where it ends, or
+  where a rise already under way gets steeper, and the onset number alone does not
+  say which. For every onset of ONSET (probe beta) and ONSET-CAL (fixed beta), 80 in
+  all, and for round 1's ten, this script measures the net rise of the curve up to
+  the bend ('before') and from the bend to r = 3.0 ('after'), and names the bend by
+  comparing both with the margin m. A rise is the slope moving from -1 toward 0.
+
+  THE RULE IS POST HOC. It was fixed by Claude on 2026-10-28 (ledger N43) after the
+  curves of the 25 onsets at 2.00, the isotropic d 80 mean curves and round 1's ten
+  mean curves had been seen. Its extension to bends below 2.0 was written on 2026-10-28
+  before any of the other 55 was computed. It describes the point curves; it is not
+  a test. Rule: before = y(onset) - y(0.75); after = y(3.0) - y(onset);
+    start      after > m, before <= m      end      before > m, after <= m
+    continues  both > m                    no rise  both <= m
+    line       onset 0.75: a bend at the first point is a straight line, no bend
+  dist = the smaller of |before - m| and |after - m|: the call cannot change unless m
+  moves by at least dist.
+
+----------------------------------------------------------------------------------------------------
+V1  manifests and archive
+----------------------------------------------------------------------------------------------------
+  runs/rerun-analysis-20261025-051314 verified (9 files)
+  runs/rerun-analysis-20261027-185918 verified (13 files)
+  /home/rahul/Research/cbo-gap-final/zenodo-v1/regimemap_D_real.csv  sha256 e641816b024c2e606a52c002c97f7c2d238559cb92663741f3bfccc4304026ab  equals zenodo-v1.sha256
+  /home/rahul/Research/cbo-gap-final/zenodo-v1/sn-article.tex  sha256 fd65f9ad2800a1c6cec7576955b2fa8c3c6445db76044699b382b75f57c65f34  equals zenodo-v1.sha256
+
+----------------------------------------------------------------------------------------------------
+V2  cells and onset files (onsetdiag readers)
+----------------------------------------------------------------------------------------------------
+  ONSET     runs/rerun-analysis-20261025-051314/analysis_cells.csv  sha256 cbdfba6e4971a563698e1ff75935aefa04df4011cd1563c963e0a6a23f665335  180 cells, each once
+  ONSET     runs/rerun-analysis-20261025-051314/analysis_onsets.csv  sha256 3525fb9de8a0427e54cb61f24ab6d3bd0d8f04df9e8551f3bc46a005b77b95fc  rows: onset 40, heterogeneity 10, J4 count 6
+  ONSET-CAL runs/rerun-analysis-20261027-185918/analysis_cells.csv  sha256 c0b150faa3e1a198c805c2fd3d7bd2dd3461669f2b9152bb355aee580556d1d2  180 cells, each once
+  ONSET-CAL runs/rerun-analysis-20261027-185918/analysis_onsets_calibrated.csv  sha256 3fa2ac48571681a5a8fab692be5eb53f0dad3a97e1dd58afb060b8a5e2283368  rows: onset 40, heterogeneity 10, J4 count 6
+
+----------------------------------------------------------------------------------------------------
+V3  ONSET slopes equal in both folders
+----------------------------------------------------------------------------------------------------
+  ONSET: 180 cells equal as strings
+
+----------------------------------------------------------------------------------------------------
+M  the margin
+----------------------------------------------------------------------------------------------------
+  m = 0.07811313532738592 (runs/rerun-analysis-20261025-051314/analysis_margin.csv, row m)
+
+----------------------------------------------------------------------------------------------------
+O1  round 1: the ten mean curves of tab:onset from the archive (rerunlib.onset_control)
+----------------------------------------------------------------------------------------------------
+  O1 isotropic   d 5   computed 1.50  archived 1.50 (tex line 608)  ok
+       per-r means (diagnostic): computed -1.041 -1.031 -1.042 -1.061 -0.995 -0.945  table -1.041 -1.031 -1.042 -1.061 -0.995 -0.945
+  O1 isotropic   d 10  computed 1.25  archived 1.25 (tex line 609)  ok
+       per-r means (diagnostic): computed -1.006 -0.995 -1.003 -0.987 -0.963 -0.928  table -1.006 -0.995 -1.003 -0.987 -0.963 -0.928
+  O1 isotropic   d 20  computed 2.00  archived 2.00 (tex line 610)  ok
+       per-r means (diagnostic): computed -1.020 -1.017 -1.034 -1.015 -0.977 -0.802  table -1.020 -1.017 -1.034 -1.015 -0.977 -0.802
+  O1 isotropic   d 40  computed 1.25  archived 1.25 (tex line 611)  ok
+       per-r means (diagnostic): computed -0.944 -0.994 -0.962 -0.933 -0.732 -0.532  table -0.944 -0.994 -0.962 -0.933 -0.732 -0.532
+  O1 isotropic   d 80  computed 1.00  archived 1.00 (tex line 612)  ok
+       per-r means (diagnostic): computed -0.998 -1.013 -0.947 -0.766 -0.593 -0.404  table -0.998 -1.013 -0.947 -0.766 -0.593 -0.404
+  O1 anisotropic d 5   computed 2.00  archived 2.00 (tex line 615)  ok
+       per-r means (diagnostic): computed -1.025 -0.996 -0.913 -0.916 -0.923 -0.796  table -1.025 -0.996 -0.913 -0.916 -0.923 -0.796
+  O1 anisotropic d 10  computed 1.00  archived 1.00 (tex line 616)  ok
+       per-r means (diagnostic): computed -0.929 -0.930 -0.877 -0.878 -0.799 -0.772  table -0.929 -0.930 -0.877 -0.878 -0.799 -0.772
+  O1 anisotropic d 20  computed 1.25  archived 1.25 (tex line 617)  ok
+       per-r means (diagnostic): computed -0.904 -0.906 -0.920 -0.888 -0.833 -0.744  table -0.904 -0.906 -0.920 -0.888 -0.833 -0.744
+  O1 anisotropic d 40  computed 1.00  archived 1.00 (tex line 618)  ok
+       per-r means (diagnostic): computed -0.856 -0.855 -0.816 -0.771 -0.757 -0.698  table -0.856 -0.855 -0.816 -0.771 -0.757 -0.698
+  O1 anisotropic d 80  computed 2.00  archived 2.00 (tex line 619)  ok
+       per-r means (diagnostic): computed -0.837 -0.807 -0.780 -0.725 -0.721 -0.616  table -0.837 -0.807 -0.780 -0.725 -0.721 -0.616
+  O1 PASS: 10 of 10
+
+----------------------------------------------------------------------------------------------------
+R  recomputed onsets against the committed ones
+----------------------------------------------------------------------------------------------------
+  R ONSET     40 of 40 equal (analysis_onsets.csv)
+  R ONSET-CAL 40 of 40 equal (analysis_onsets_calibrated.csv)
+
+----------------------------------------------------------------------------------------------------
+TABLE  every onset: committed interval, before, after, dist, class
+----------------------------------------------------------------------------------------------------
+  curves: S-slope at r = 0.75, 1.0, 1.25, 1.5, 2.0, 3.0
+  ONSET     anisotropic d=5   ackley    onset 1.25  95% [1.0, 2.0]  before +0.0808  after +0.2501  dist 0.0027  continues
+                                       y -1.097 -0.997 -1.016 -0.943 -0.868 -0.766
+  ONSET     anisotropic d=5   rastrigin onset 1.25  95% [1.0, 2.0]  before -0.0094  after +0.1752  dist 0.0875  start
+                                       y -0.932 -0.922 -0.941 -0.904 -0.863 -0.766
+  ONSET     anisotropic d=5   sphere    onset 1.50  95% [1.0, 2.0]  before +0.0844  after +0.2486  dist 0.0062  continues
+                                       y -1.009 -0.974 -0.972 -0.925 -0.842 -0.676
+  ONSET     anisotropic d=5   pooled    onset 1.25  95% [1.0, 2.0]  before +0.0361  after +0.2405  dist 0.0421  start
+                                       y -1.013 -0.964 -0.977 -0.924 -0.857 -0.736
+  ONSET     anisotropic d=10  ackley    onset 2.00  95% [1.25, 2.0]  before +0.0834  after +0.2322  dist 0.0052  continues
+                                       y -0.909 -0.868 -0.869 -0.854 -0.825 -0.593
+  ONSET     anisotropic d=10  rastrigin onset 2.00  95% [1.0, 2.0]  before +0.0162  after +0.1558  dist 0.0619  start
+                                       y -0.939 -0.922 -0.928 -0.869 -0.922 -0.767
+  ONSET     anisotropic d=10  sphere    onset 1.50  95% [1.0, 2.0]  before +0.0978  after +0.1653  dist 0.0197  continues
+                                       y -1.012 -0.950 -0.924 -0.914 -0.824 -0.748
+  ONSET     anisotropic d=10  pooled    onset 2.00  95% [1.25, 2.0]  before +0.0957  after +0.1545  dist 0.0176  continues
+                                       y -0.953 -0.913 -0.907 -0.879 -0.857 -0.703
+  ONSET     anisotropic d=20  ackley    onset 1.50  95% [1.0, 2.0]  before +0.0303  after +0.2550  dist 0.0478  start
+                                       y -0.907 -0.889 -0.837 -0.876 -0.744 -0.621
+  ONSET     anisotropic d=20  rastrigin onset 2.00  95% [1.0, 2.0]  before +0.0956  after +0.1460  dist 0.0175  continues
+                                       y -0.928 -0.908 -0.917 -0.848 -0.832 -0.686
+  ONSET     anisotropic d=20  sphere    onset 1.00  95% [1.0, 2.0]  before -0.0087  after +0.2722  dist 0.0868  start
+                                       y -0.934 -0.943 -0.890 -0.834 -0.796 -0.671
+  ONSET     anisotropic d=20  pooled    onset 1.50  95% [1.0, 2.0]  before +0.0700  after +0.1934  dist 0.0081  start
+                                       y -0.923 -0.913 -0.881 -0.853 -0.791 -0.659
+  ONSET     anisotropic d=40  ackley    onset 1.00  95% [1.0, 2.0]  before +0.0210  after +0.1485  dist 0.0571  start
+                                       y -0.724 -0.703 -0.664 -0.659 -0.599 -0.554
+  ONSET     anisotropic d=40  rastrigin onset 1.25  95% [1.0, 2.0]  before +0.0120  after +0.1583  dist 0.0661  start
+                                       y -0.942 -0.914 -0.930 -0.902 -0.814 -0.772
+  ONSET     anisotropic d=40  sphere    onset 2.00  95% [1.0, 2.0]  before +0.2001  after +0.0160  dist 0.0621  end
+                                       y -0.938 -0.909 -0.831 -0.804 -0.738 -0.722
+  ONSET     anisotropic d=40  pooled    onset 1.00  95% [1.0, 2.0]  before +0.0260  after +0.1593  dist 0.0521  start
+                                       y -0.868 -0.842 -0.808 -0.788 -0.717 -0.683
+  ONSET     anisotropic d=80  ackley    onset 1.25  95% [1.0, 2.0]  before +0.0403  after +0.1845  dist 0.0378  start
+                                       y -0.724 -0.679 -0.684 -0.611 -0.558 -0.499
+  ONSET     anisotropic d=80  rastrigin onset 1.50  95% [1.0, 2.0]  before +0.0079  after +0.1802  dist 0.0702  start
+                                       y -0.872 -0.884 -0.890 -0.864 -0.805 -0.684
+  ONSET     anisotropic d=80  sphere    onset 1.50  95% [1.0, 2.0]  before +0.0694  after +0.2294  dist 0.0087  start
+                                       y -0.899 -0.866 -0.845 -0.830 -0.719 -0.601
+  ONSET     anisotropic d=80  pooled    onset 1.25  95% [1.0, 2.0]  before +0.0255  after +0.2117  dist 0.0526  start
+                                       y -0.832 -0.810 -0.806 -0.768 -0.694 -0.595
+  ONSET     isotropic   d=5   ackley    onset 1.50  95% [1.0, 2.0]  before +0.0339  after +0.2401  dist 0.0442  start
+                                       y -1.101 -1.047 -1.039 -1.068 -0.950 -0.827
+  ONSET     isotropic   d=5   rastrigin onset 1.25  95% [1.0, 2.0]  before -0.0511  after +0.0887  dist 0.0106  start
+                                       y -1.038 -1.039 -1.089 -1.077 -1.035 -1.000
+  ONSET     isotropic   d=5   sphere    onset 2.00  95% [1.25, 2.0]  before +0.0223  after +0.1542  dist 0.0558  start
+                                       y -1.046 -1.019 -1.023 -1.074 -1.024 -0.870
+  ONSET     isotropic   d=5   pooled    onset 1.50  95% [1.5, 2.0]  before -0.0112  after +0.1739  dist 0.0893  start
+                                       y -1.062 -1.035 -1.050 -1.073 -1.003 -0.899
+  ONSET     isotropic   d=10  ackley    onset 1.00  95% [1.0, 2.0]  before +0.0582  after +0.0986  dist 0.0199  start
+                                       y -0.995 -0.937 -0.935 -0.875 -0.912 -0.838
+  ONSET     isotropic   d=10  rastrigin onset 1.00  95% [1.0, 2.0]  before -0.0727  after +0.0284  dist 0.0497  no rise
+                                       y -1.039 -1.112 -1.111 -1.112 -1.091 -1.083
+  ONSET     isotropic   d=10  sphere    onset 1.25  95% [1.0, 2.0]  before -0.0185  after +0.0679  dist 0.0102  no rise
+                                       y -1.002 -1.008 -1.020 -0.990 -0.926 -0.953
+  ONSET     isotropic   d=10  pooled    onset 1.25  95% [1.0, 2.0]  before -0.0105  after +0.0645  dist 0.0137  no rise
+                                       y -1.012 -1.019 -1.022 -0.992 -0.976 -0.958
+  ONSET     isotropic   d=20  ackley    onset 1.50  95% [1.25, 2.0]  before +0.0100  after +0.2767  dist 0.0681  start
+                                       y -0.957 -0.974 -0.967 -0.947 -0.859 -0.670
+  ONSET     isotropic   d=20  rastrigin onset 1.50  95% [1.25, 2.0]  before -0.0752  after +0.0991  dist 0.0210  start
+                                       y -1.070 -1.097 -1.159 -1.145 -1.130 -1.046
+  ONSET     isotropic   d=20  sphere    onset 2.00  95% [1.0, 2.0]  before +0.1090  after +0.2009  dist 0.0309  continues
+                                       y -1.002 -1.009 -0.996 -0.940 -0.893 -0.692
+  ONSET     isotropic   d=20  pooled    onset 1.50  95% [1.25, 2.0]  before -0.0011  after +0.2080  dist 0.0792  start
+                                       y -1.010 -1.027 -1.041 -1.011 -0.961 -0.803
+  ONSET     isotropic   d=40  ackley    onset 1.00  95% [1.0, 1.25]  before +0.0078  after +0.4562  dist 0.0703  start
+                                       y -0.851 -0.843 -0.779 -0.680 -0.425 -0.387
+  ONSET     isotropic   d=40  rastrigin onset 2.00  95% [2.0, 2.0]  before -0.1373  after +0.3659  dist 0.2154  start
+                                       y -1.069 -1.111 -1.160 -1.219 -1.207 -0.841
+  ONSET     isotropic   d=40  sphere    onset 1.25  95% [1.0, 1.25]  before +0.0455  after +0.5065  dist 0.0327  start
+                                       y -0.955 -0.965 -0.910 -0.820 -0.549 -0.403
+  ONSET     isotropic   d=40  pooled    onset 1.25  95% [1.25, 1.5]  before +0.0090  after +0.4059  dist 0.0692  start
+                                       y -0.958 -0.973 -0.950 -0.906 -0.727 -0.544
+  ONSET     isotropic   d=80  ackley    onset 2.00  95% [2.0, 2.0]  before +0.5119  after -0.0313  dist 0.1094  end
+                                       y -0.861 -0.835 -0.704 -0.510 -0.349 -0.381
+  ONSET     isotropic   d=80  rastrigin onset 2.00  95% [2.0, 2.0]  before -0.0262  after +0.6542  dist 0.1043  start
+                                       y -1.124 -1.192 -1.223 -1.262 -1.150 -0.496
+  ONSET     isotropic   d=80  sphere    onset 2.00  95% [2.0, 2.0]  before +0.6801  after +0.0243  dist 0.0538  end
+                                       y -1.009 -0.946 -0.870 -0.549 -0.329 -0.304
+  ONSET     isotropic   d=80  pooled    onset 1.00  95% [1.0, 1.25]  before +0.0070  after +0.5973  dist 0.0711  start
+                                       y -0.998 -0.991 -0.932 -0.774 -0.609 -0.394
+  ONSET-CAL anisotropic d=5   ackley    onset 2.00  95% [1.0, 2.0]  before +0.1953  after -0.1198  dist 0.1172  end
+                                       y -0.978 -1.043 -1.003 -0.976 -0.783 -0.903
+  ONSET-CAL anisotropic d=5   rastrigin onset 1.25  95% [1.0, 2.0]  before +0.0837  after +0.0684  dist 0.0056  end
+                                       y -0.983 -0.954 -0.899 -0.932 -0.869 -0.831
+  ONSET-CAL anisotropic d=5   sphere    onset 2.00  95% [1.0, 2.0]  before +0.1285  after +0.1212  dist 0.0431  continues
+                                       y -1.034 -0.908 -1.012 -0.951 -0.905 -0.784
+  ONSET-CAL anisotropic d=5   pooled    onset 1.25  95% [1.0, 2.0]  before +0.0271  after +0.1320  dist 0.0510  start
+                                       y -0.998 -0.968 -0.971 -0.953 -0.852 -0.839
+  ONSET-CAL anisotropic d=10  ackley    onset 1.50  95% [1.0, 2.0]  before +0.0151  after +0.2262  dist 0.0630  start
+                                       y -0.961 -0.940 -0.876 -0.946 -0.749 -0.720
+  ONSET-CAL anisotropic d=10  rastrigin onset 2.00  95% [1.0, 2.0]  before +0.0034  after +0.0916  dist 0.0135  start
+                                       y -0.945 -0.933 -0.891 -0.920 -0.942 -0.850
+  ONSET-CAL anisotropic d=10  sphere    onset 1.25  95% [1.0, 2.0]  before -0.0762  after +0.3395  dist 0.1543  start
+                                       y -0.960 -0.979 -1.037 -0.883 -0.771 -0.697
+  ONSET-CAL anisotropic d=10  pooled    onset 1.25  95% [1.0, 2.0]  before +0.0207  after +0.1791  dist 0.0574  start
+                                       y -0.955 -0.950 -0.935 -0.917 -0.821 -0.756
+  ONSET-CAL anisotropic d=20  ackley    onset 1.50  95% [1.0, 2.0]  before +0.0003  after +0.2859  dist 0.0778  start
+                                       y -0.892 -0.900 -0.835 -0.892 -0.773 -0.606
+  ONSET-CAL anisotropic d=20  rastrigin onset 1.50  95% [1.0, 2.0]  before +0.0053  after +0.1772  dist 0.0728  start
+                                       y -0.904 -0.926 -0.901 -0.899 -0.845 -0.721
+  ONSET-CAL anisotropic d=20  sphere    onset 1.00  95% [1.0, 2.0]  before -0.0809  after +0.2891  dist 0.1590  start
+                                       y -0.923 -1.003 -0.919 -0.906 -0.824 -0.714
+  ONSET-CAL anisotropic d=20  pooled    onset 1.50  95% [1.0, 2.0]  before +0.0073  after +0.2183  dist 0.0708  start
+                                       y -0.906 -0.943 -0.885 -0.899 -0.814 -0.681
+  ONSET-CAL anisotropic d=40  ackley    onset 1.25  95% [1.0, 2.0]  before +0.0108  after +0.2861  dist 0.0673  start
+                                       y -0.793 -0.787 -0.782 -0.727 -0.661 -0.496
+  ONSET-CAL anisotropic d=40  rastrigin onset 1.50  95% [1.0, 2.0]  before -0.0233  after +0.1870  dist 0.1014  start
+                                       y -0.909 -0.921 -0.896 -0.933 -0.823 -0.746
+  ONSET-CAL anisotropic d=40  sphere    onset 1.25  95% [1.0, 2.0]  before +0.0143  after +0.1899  dist 0.0639  start
+                                       y -0.929 -0.880 -0.914 -0.810 -0.824 -0.724
+  ONSET-CAL anisotropic d=40  pooled    onset 1.25  95% [1.0, 2.0]  before +0.0128  after +0.2088  dist 0.0653  start
+                                       y -0.877 -0.862 -0.864 -0.823 -0.769 -0.655
+  ONSET-CAL anisotropic d=80  ackley    onset 2.00  95% [1.25, 2.0]  before +0.1268  after +0.1706  dist 0.0487  continues
+                                       y -0.734 -0.689 -0.716 -0.636 -0.607 -0.437
+  ONSET-CAL anisotropic d=80  rastrigin onset 2.00  95% [1.0, 2.0]  before +0.0652  after +0.1210  dist 0.0129  start
+                                       y -0.910 -0.885 -0.860 -0.858 -0.845 -0.724
+  ONSET-CAL anisotropic d=80  sphere    onset 2.00  95% [1.25, 2.0]  before +0.0981  after +0.2321  dist 0.0200  continues
+                                       y -0.881 -0.853 -0.834 -0.821 -0.783 -0.551
+  ONSET-CAL anisotropic d=80  pooled    onset 2.00  95% [1.25, 2.0]  before +0.0967  after +0.1745  dist 0.0186  continues
+                                       y -0.842 -0.809 -0.804 -0.772 -0.745 -0.570
+  ONSET-CAL isotropic   d=5   ackley    onset 1.25  95% [1.0, 2.0]  before -0.0684  after +0.0855  dist 0.0074  start
+                                       y -1.012 -1.026 -1.081 -1.022 -0.930 -0.995
+  ONSET-CAL isotropic   d=5   rastrigin onset 1.50  95% [1.0, 2.0]  before -0.0351  after +0.0681  dist 0.0100  no rise
+                                       y -1.039 -1.053 -1.033 -1.074 -1.042 -1.006
+  ONSET-CAL isotropic   d=5   sphere    onset 1.25  95% [1.0, 2.0]  before -0.0679  after +0.1326  dist 0.0545  start
+                                       y -1.038 -0.961 -1.106 -1.044 -0.973 -0.974
+  ONSET-CAL isotropic   d=5   pooled    onset 1.25  95% [1.25, 2.0]  before -0.0434  after +0.0817  dist 0.0036  start
+                                       y -1.030 -1.013 -1.073 -1.047 -0.982 -0.992
+  ONSET-CAL isotropic   d=10  ackley    onset 2.00  95% [1.0, 2.0]  before +0.0758  after +0.1166  dist 0.0024  start
+                                       y -1.031 -1.027 -0.960 -0.963 -0.955 -0.839
+  ONSET-CAL isotropic   d=10  rastrigin onset 2.00  95% [1.0, 2.0]  before -0.0376  after +0.0371  dist 0.0410  no rise
+                                       y -1.066 -1.074 -1.074 -1.079 -1.103 -1.066
+  ONSET-CAL isotropic   d=10  sphere    onset 1.00  95% [1.0, 2.0]  before -0.0672  after +0.0798  dist 0.0017  start
+                                       y -0.981 -1.048 -1.028 -1.007 -0.911 -0.968
+  ONSET-CAL isotropic   d=10  pooled    onset 1.00  95% [1.0, 2.0]  before -0.0237  after +0.0919  dist 0.0138  start
+                                       y -1.026 -1.050 -1.021 -1.016 -0.990 -0.958
+  ONSET-CAL isotropic   d=20  ackley    onset 1.50  95% [1.0, 2.0]  before +0.0428  after +0.2137  dist 0.0353  start
+                                       y -0.957 -0.940 -0.897 -0.914 -0.813 -0.700
+  ONSET-CAL isotropic   d=20  rastrigin onset 2.00  95% [1.0, 2.0]  before -0.0570  after +0.1186  dist 0.0405  start
+                                       y -1.090 -1.132 -1.123 -1.128 -1.147 -1.028
+  ONSET-CAL isotropic   d=20  sphere    onset 1.50  95% [1.25, 2.0]  before +0.0162  after +0.3442  dist 0.0619  start
+                                       y -0.984 -0.971 -1.021 -0.968 -0.895 -0.623
+  ONSET-CAL isotropic   d=20  pooled    onset 1.50  95% [1.25, 2.0]  before +0.0070  after +0.2192  dist 0.0711  start
+                                       y -1.010 -1.014 -1.014 -1.003 -0.951 -0.784
+  ONSET-CAL isotropic   d=40  ackley    onset 1.25  95% [1.0, 1.25]  before -0.0124  after +0.4812  dist 0.0905  start
+                                       y -0.873 -0.915 -0.885 -0.796 -0.557 -0.404
+  ONSET-CAL isotropic   d=40  rastrigin onset 2.00  95% [1.5, 2.0]  before -0.1103  after +0.3869  dist 0.1884  start
+                                       y -1.090 -1.150 -1.206 -1.241 -1.200 -0.813
+  ONSET-CAL isotropic   d=40  sphere    onset 1.25  95% [1.25, 1.5]  before +0.0567  after +0.5825  dist 0.0214  start
+                                       y -1.007 -0.976 -0.951 -0.858 -0.581 -0.368
+  ONSET-CAL isotropic   d=40  pooled    onset 1.50  95% [1.25, 1.5]  before +0.0248  after +0.4368  dist 0.0533  start
+                                       y -0.990 -1.013 -1.014 -0.965 -0.779 -0.528
+  ONSET-CAL isotropic   d=80  ackley    onset 2.00  95% [2.0, 2.0]  before +0.5503  after -0.0497  dist 0.1279  end
+                                       y -0.871 -0.859 -0.712 -0.559 -0.321 -0.370
+  ONSET-CAL isotropic   d=80  rastrigin onset 2.00  95% [2.0, 2.0]  before -0.0887  after +0.6744  dist 0.1668  start
+                                       y -1.088 -1.161 -1.229 -1.261 -1.177 -0.502
+  ONSET-CAL isotropic   d=80  sphere    onset 2.00  95% [2.0, 2.0]  before +0.6399  after -0.0280  dist 0.1061  end
+                                       y -0.950 -0.981 -0.779 -0.530 -0.311 -0.339
+  ONSET-CAL isotropic   d=80  pooled    onset 1.00  95% [1.0, 1.0]  before -0.0304  after +0.5964  dist 0.1085  start
+                                       y -0.970 -1.000 -0.907 -0.783 -0.603 -0.404
+  ROUND-1   isotropic   d=5   pooled    onset 1.50  tab:onset line 608  before -0.0196  after +0.1159  dist 0.0378  start
+                                       y -1.041 -1.031 -1.042 -1.061 -0.995 -0.945   (table prints -1.041 -1.031 -1.042 -1.061 -0.995 -0.945)
+  ROUND-1   isotropic   d=10  pooled    onset 1.25  tab:onset line 609  before +0.0027  after +0.0745  dist 0.0036  no rise
+                                       y -1.006 -0.995 -1.003 -0.987 -0.963 -0.928   (table prints -1.006 -0.995 -1.003 -0.987 -0.963 -0.928)
+  ROUND-1   isotropic   d=20  pooled    onset 2.00  tab:onset line 610  before +0.0423  after +0.1753  dist 0.0358  start
+                                       y -1.020 -1.017 -1.034 -1.015 -0.977 -0.802   (table prints -1.020 -1.017 -1.034 -1.015 -0.977 -0.802)
+  ROUND-1   isotropic   d=40  pooled    onset 1.25  tab:onset line 611  before -0.0171  after +0.4291  dist 0.0953  start
+                                       y -0.944 -0.994 -0.962 -0.933 -0.732 -0.532   (table prints -0.944 -0.994 -0.962 -0.933 -0.732 -0.532)
+  ROUND-1   isotropic   d=80  pooled    onset 1.00  tab:onset line 612  before -0.0152  after +0.6090  dist 0.0933  start
+                                       y -0.998 -1.013 -0.947 -0.766 -0.593 -0.404   (table prints -0.998 -1.013 -0.947 -0.766 -0.593 -0.404)
+  ROUND-1   anisotropic d=5   pooled    onset 2.00  tab:onset line 615  before +0.1013  after +0.1270  dist 0.0232  continues
+                                       y -1.025 -0.996 -0.913 -0.916 -0.923 -0.796   (table prints -1.025 -0.996 -0.913 -0.916 -0.923 -0.796)
+  ROUND-1   anisotropic d=10  pooled    onset 1.00  tab:onset line 616  before -0.0016  after +0.1584  dist 0.0797  start
+                                       y -0.929 -0.930 -0.877 -0.878 -0.799 -0.772   (table prints -0.929 -0.930 -0.877 -0.878 -0.799 -0.772)
+  ROUND-1   anisotropic d=20  pooled    onset 1.25  tab:onset line 617  before -0.0162  after +0.1757  dist 0.0943  start
+                                       y -0.904 -0.906 -0.920 -0.888 -0.833 -0.744   (table prints -0.904 -0.906 -0.920 -0.888 -0.833 -0.744)
+  ROUND-1   anisotropic d=40  pooled    onset 1.00  tab:onset line 618  before +0.0010  after +0.1570  dist 0.0771  start
+                                       y -0.856 -0.855 -0.816 -0.771 -0.757 -0.698   (table prints -0.856 -0.855 -0.816 -0.771 -0.757 -0.698)
+  ROUND-1   anisotropic d=80  pooled    onset 2.00  tab:onset line 619  before +0.1160  after +0.1046  dist 0.0264  continues
+                                       y -0.837 -0.807 -0.780 -0.725 -0.721 -0.616   (table prints -0.837 -0.807 -0.780 -0.725 -0.721 -0.616)
+
+----------------------------------------------------------------------------------------------------
+COUNTS  (descriptive; the rule is post hoc)
+----------------------------------------------------------------------------------------------------
+  ONSET     objective start 19  end 3  continues 6  no rise 2  line 0  of 30
+  ONSET     pooled    start 8  end 0  continues 1  no rise 1  line 0  of 10
+  ONSET-CAL objective start 21  end 4  continues 3  no rise 2  line 0  of 30
+  ONSET-CAL pooled    start 9  end 0  continues 1  no rise 0  line 0  of 10
+
+  ONSET     onset 1.00: start 6  end 0  continues 0  no rise 1  line 0  of 7
+  ONSET     onset 1.25: start 8  end 0  continues 1  no rise 2  line 0  of 11
+  ONSET     onset 1.50: start 9  end 0  continues 2  no rise 0  line 0  of 11
+  ONSET     onset 2.00: start 4  end 3  continues 4  no rise 0  line 0  of 11
+  ONSET-CAL onset 1.00: start 4  end 0  continues 0  no rise 0  line 0  of 4
+  ONSET-CAL onset 1.25: start 11  end 1  continues 0  no rise 0  line 0  of 12
+  ONSET-CAL onset 1.50: start 9  end 0  continues 0  no rise 1  line 0  of 10
+  ONSET-CAL onset 2.00: start 6  end 3  continues 4  no rise 1  line 0  of 14
+
+  ROUND-1   pooled    start 7  end 0  continues 2  no rise 1  line 0  of 10
+  ROUND-1 by onset: isotropic d=5 1.50 start; isotropic d=10 1.25 no rise; isotropic d=20 2.00 start; isotropic d=40 1.25 start; isotropic d=80 1.00 start; anisotropic d=5 2.00 continues; anisotropic d=10 1.00 start; anisotropic d=20 1.25 start; anisotropic d=40 1.00 start; anisotropic d=80 2.00 continues
+
+----------------------------------------------------------------------------------------------------
+NEAR  how many calls sit near m
+----------------------------------------------------------------------------------------------------
+  ONSET     dist <= 0.005 : 1  dist <= 0.01 : 5  dist <= 0.02 : 12  dist <= 0.05 : 20  of 40 classified onsets
+  ONSET-CAL dist <= 0.005 : 3  dist <= 0.01 : 6  dist <= 0.02 : 11  dist <= 0.05 : 17  of 40 classified onsets
+  ROUND-1   dist <= 0.005 : 1  dist <= 0.01 : 1  dist <= 0.02 : 1  dist <= 0.05 : 5  of 10 classified onsets
+  the ten smallest dist:
+    ONSET-CAL isotropic   d=10  sphere    onset 1.00  dist 0.0017  start
+    ONSET-CAL isotropic   d=10  ackley    onset 2.00  dist 0.0024  start
+    ONSET     anisotropic d=5   ackley    onset 1.25  dist 0.0027  continues
+    ROUND-1   isotropic   d=10  pooled    onset 1.25  dist 0.0036  no rise
+    ONSET-CAL isotropic   d=5   pooled    onset 1.25  dist 0.0036  start
+    ONSET     anisotropic d=10  ackley    onset 2.00  dist 0.0052  continues
+    ONSET-CAL anisotropic d=5   rastrigin onset 1.25  dist 0.0056  end
+    ONSET     anisotropic d=5   sphere    onset 1.50  dist 0.0062  continues
+    ONSET-CAL isotropic   d=5   ackley    onset 1.25  dist 0.0074  start
+    ONSET     anisotropic d=20  pooled    onset 1.50  dist 0.0081  start
+
+----------------------------------------------------------------------------------------------------
+SUMMARY
+----------------------------------------------------------------------------------------------------
+  peak RSS (main process) 40.3 MB
+  completed; nothing written
