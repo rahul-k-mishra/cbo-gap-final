@@ -141,6 +141,34 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   The manuscript's attributions of the measured quantity to FKR (line 60
   and others) are listed in the reply of 2026-10-29 and are to be fixed
   with N1. The SIAM obligation above stays OPEN.
+  SINGLE GROUND FOR WITHDRAWAL (recorded 2026-10-29, Rahul's decision).
+  The conceptual claim at manuscript lines 40, 547 and 698 ("the
+  theorem-admissible region and the observability region are different
+  sets") is withdrawn on ONE ground: this item, N1. The referee's ground
+  (R1, the Ackley misclassification) is distinct but not independent: it
+  is evidential and curable (route under "Ackley: the route"), and once
+  cured the claim still fails on N1. Full assessment in N45.
+  HOW THE WITHDRAWAL MUST BE WRITTEN (Rahul's instruction 2026-10-29;
+  identical text in N1 and N45):
+  - The reason given is N1, not the Ackley misclassification. Written the
+    other way it implies the claim would survive with valid objectives,
+    which is false, and invites the referee to ask why it was not simply
+    rerun on Sphere or Rastrigin.
+  - The Ackley correction (R1) is reported separately, in the assumption
+    audit, as a fix to Table 1.
+  - One sentence states that even with the classification corrected the
+    claim does not survive, and why: the condition 2 lambda > d sigma^2 is
+    a hypothesis of FKR Theorem 3.7, which owns no J exponent, and the
+    result that owns the measured exponent, GHV Theorem 2.6, has no
+    parameter condition, so there is no admissible region to compare.
+  - The referee's suggested demonstration on fully verified objectives
+    (costed at the end of "Ackley: the route", "Cost of a demonstration on
+    objectives that satisfy (6), (7), (27) outright") is NOT run: it would
+    demonstrate an ill-posed claim.
+  WHAT REPLACES THE CLAIM: cells inside the hypotheses of GHV Theorem 2.6
+  can fail the finite-window criterion. This is a statement about the
+  prefactor, not about an admissible region. It still needs O1 (Ackley in
+  A(0,0,0)) proved, since the three failing cells are all Ackley.
 - N2 (new, P). Conditions (6)-(7) are the wrong admissibility gate for
   Theorem 12; it needs a weak solution in C([0,T*], P_4), which GHV Theorem
   2.3 supplies for all f in A(s,l,l) with rho_0 in P_{2 v p_M}. Levy becomes
@@ -2738,6 +2766,28 @@ instruction of 2026-10-15.
   "demonstration on objectives that satisfy (6), (7), (27) outright"
   costed under "Ackley: the route" (the referee's alternative) would
   demonstrate an ill-posed claim and should not be run for that purpose.
+  Rahul's decision 2026-10-29: N1 is the single ground (recorded in N1).
+  HOW THE WITHDRAWAL MUST BE WRITTEN (Rahul's instruction 2026-10-29;
+  identical text in N1 and N45):
+  - The reason given is N1, not the Ackley misclassification. Written the
+    other way it implies the claim would survive with valid objectives,
+    which is false, and invites the referee to ask why it was not simply
+    rerun on Sphere or Rastrigin.
+  - The Ackley correction (R1) is reported separately, in the assumption
+    audit, as a fix to Table 1.
+  - One sentence states that even with the classification corrected the
+    claim does not survive, and why: the condition 2 lambda > d sigma^2 is
+    a hypothesis of FKR Theorem 3.7, which owns no J exponent, and the
+    result that owns the measured exponent, GHV Theorem 2.6, has no
+    parameter condition, so there is no admissible region to compare.
+  - The referee's suggested demonstration on fully verified objectives
+    (costed at the end of "Ackley: the route", "Cost of a demonstration on
+    objectives that satisfy (6), (7), (27) outright") is NOT run: it would
+    demonstrate an ill-posed claim.
+  WHAT REPLACES THE CLAIM: cells inside the hypotheses of GHV Theorem 2.6
+  can fail the finite-window criterion. This is a statement about the
+  prefactor, not about an admissible region. It still needs O1 (Ackley in
+  A(0,0,0)) proved, since the three failing cells are all Ackley.
   OPEN.
 
 ## Checked and found sound
@@ -2794,6 +2844,8 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
   Remark 2.7 is not re-checked and is not needed. Neither result has a
   parameter condition.
 
+NOT TO BE RUN for the admissible-region claim (N1, N45, 2026-10-29): it
+would demonstrate an ill-posed claim. Kept as a record of the costing.
 Cost of a demonstration on objectives that satisfy (6), (7), (27) outright:
 Sphere and Rastrigin are in EXP-ONSET at r = 0.75 (rmapj_real.csv, per
 realization), reported as never failing; re-reading them under the 95th
