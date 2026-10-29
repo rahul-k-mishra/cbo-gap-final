@@ -1,0 +1,15 @@
+==============================================================================
+kgrun  action fetch  job rerun-onsetr-s5of10-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/cbo-gap-queue
+==============================================================================
+FETCH OUTPUT into /home/rahul/cbo-gap-queue/runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727
+  $ kaggle kernels output ericsom/cbo-rerun-onsetr-s5of10-a1 -p /home/rahul/cbo-gap-queue/runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Output file downloaded to /home/rahul/cbo-gap-queue/runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727/rerun-s5of10-20261029-103515/rerun_params.csv
+Output file downloaded to /home/rahul/cbo-gap-queue/runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727/rerun-s5of10-20261029-103515/rerun_real.csv
+Kernel log downloaded to /home/rahul/cbo-gap-queue/runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727/cbo-rerun-onsetr-s5of10-a1.log 
+  3 files, manifest written to sha256.txt
+    ef67f80899804c5fab8db91403473affa74971358f7f415e848bad99e32e961f  cbo-rerun-onsetr-s5of10-a1.log
+    6c72285f6113ff59f288d42a2950a616dff48d1c8495314919140d909928b36b  rerun-s5of10-20261029-103515/rerun_params.csv
+    77e1e90cd022e7fb922360b568a80c0c4f2439da0994a19e422074c8c12f5822  rerun-s5of10-20261029-103515/rerun_real.csv
+==============================================================================
