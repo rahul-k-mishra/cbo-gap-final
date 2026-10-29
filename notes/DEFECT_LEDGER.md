@@ -141,6 +141,44 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   8/(c eta^2 eps), one power of c, c otherwise only inside the logarithm.
   Also verify "[4, Subsection 2.6]" and "[4, Table 1]" against the ESAIM
   version (v3 Section 2 has 2.1-2.5). OPEN.
+  UPDATE 2026-10-29 (read from Rahul's local copies in ~/cbo-refs/, kept
+  outside the repository because they are not his to redistribute:
+  2103.15130v6.pdf, "arXiv:2103.15130v6 [math.NA] 2 Aug 2024", 42 pages;
+  2312.07373v4.pdf, "arXiv:2312.07373v4 [math.PR] 13 Apr 2025", 42 pages).
+  - The v6 numbering stated above is wrong. v6 numbers by section, not
+    sequentially, and contains no Theorem 12, Theorem 14, Lemma 15,
+    Proposition 16 or Remark 25. In v6: Definition 3.1 (weak solution),
+    Theorem 3.2 (well-posedness, H = 1, conditions (19)-(21), citing [12,
+    Theorems 3.1, 3.2]), Remark 3.3 (test-function extension), Theorem 3.4
+    (H not 1), Definition 3.5 (A1-A3, conditions (24)-(26)), Theorem 3.7
+    (convergence in mean-field law; hypothesis 2 lambda > d sigma^2; T* is
+    (27)), Theorem 3.8 (convergence in probability, under the assumptions
+    of Theorem 3.7 and Proposition 3.11), Lemma 3.10, Proposition 3.11
+    (E[||V - Vbar||^2 | Omega_M] <= C_MFA N^-1, (32), under the assumptions
+    of Theorem 3.2; C_MFA depends on alpha, lambda, sigma, T, ...; no
+    parameter condition). Equation (83) of v6 is a Gronwall step in the
+    proof of Proposition 3.11, not the factor 8/(c eta^2 eps). The
+    sequential numbers above, and those in N1, R1 and O4-O8 (Theorems 6,
+    8, 12, Proposition 16, Remark 7, Definition 5), come from some other
+    version that is not on this machine; I do not know which. Every one of
+    them must be re-mapped to v6 by content before use.
+  - The manuscript's 3.7, 3.11 and (19)-(20) agree with v6 in number and
+    content. Whether SIAM J. Optim. 34(3) uses the same numbering is not
+    answerable from the preprint: v6 states no journal correspondence.
+    That half stays open until the SIAM PDF is read. The c^-2 claim was not
+    re-checked.
+  - GHV: the local copy is v4, not v3. v4 Section 2 has Subsections
+    2.1-2.6 (2.6 "Numerical experiment") and a Table 1 (parameters of that
+    experiment), so "[4, Subsection 2.6]" and "[4, Table 1]" exist in v4;
+    the ESAIM numbering is still unchecked (O6). Theorem 2.3 and Theorem
+    2.6 are stated for f in A(s,l,l) and any globally Lipschitz S (2.1,
+    (2.10)); the drift has unit coefficient (1.1), no lambda. v4
+    Subsection 5.2 sketches, without a stated theorem, well-posedness and
+    a mean-field estimate for u > l > 0 up to a finite time T < T+, where
+    the Bihari-LaSalle bound becomes singular. Rosenbrock is A(3,1,4)
+    (manuscript Proposition 2), so it is in that sketched case: N2's "no
+    existence theorem in either paper" holds for stated theorems, but the
+    text must mention 5.2. Still OPEN (SIAM comparison).
 - N4 (new, T). Supplement numbering: main text cites S2 for the error log
   (lines 477, 690) and S3 for withdrawn results; printed numbers are S3 and
   S4. Appendix A says "three blocks"; there are four sections. OPEN.
