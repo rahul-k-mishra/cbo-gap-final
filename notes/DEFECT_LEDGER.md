@@ -2669,6 +2669,77 @@ instruction of 2026-10-15.
   OPEN: the rehearsal's output (read before the load), the queue load, the
   shards, the analysis.
 
+- N45 (manuscript, P + T; standing set of corrections; recorded
+  2026-10-29). The measured exponent is attributed to FKR where its only
+  source is GHV Theorem 2.6 at p = 2 (N1 correction of 2026-10-29: FKR
+  Proposition 3.11, (32), bounds sup_t E[.|Omega_M]; the estimator (9) is
+  E sup_t). Rahul's decision 2026-10-29: NO manuscript edit until the
+  ONSET-R shards and the twenty-one-row analysis are in, because several
+  of these lines will be rewritten again then; one editing pass, under
+  rule 8. Line numbers are of manuscript/sn-article.tex at commit 9042beb.
+  WRONG
+  - 60: "addresses the mean-field approximation component" of FKR Theorem
+    3.8; that component is Proposition 3.11, which bounds sup E
+    conditioned on Omega_M, not the measured E sup.
+  - 40 (abstract, Fourth): "the region in which the theorem applies and
+    the region in which its exponent is visible"; the theorem carrying the
+    condition (FKR 3.7) owns no J exponent, and the one owning it (GHV 2.6)
+    has no parameter condition.
+  - 547: "Admissibility does not imply observability ... the region
+    satisfying the theorem's parameter condition and the region satisfying
+    ... rate-consistency ... are not the same set"; same conflation.
+  - 698: "theorem-admissible ... the paper's central conceptual point";
+    same conflation.
+  - 654: "Outside the condition [FKR 3.7] says nothing, so failures there
+    are not evidence against any theorem"; the reason is wrong (GHV 2.6
+    predicts J^-1 for every r); the conclusion holds for a different
+    reason (a finite-window slope cannot contradict an asymptotic bound).
+  IMPRECISE
+  - 66: the J^-1 benchmark is stated with no source; cite GHV 2.6, p = 2.
+  - 32 (abstract opening): frames the measured slope as the exponent of
+    the assembled FKR guarantee.
+  - 54: "the proven mean-field rate", "observability of the classical
+    theory": no theorem named.
+  - 352: "the proven rate switches on": no source.
+  - 211, last sentence: "Sections sigma-onset measure this axis" ties the
+    measured exponent to alpha_0 of Remark 4.8, which belongs to 3.7.
+  - 213 and 715: "a mean-field constant" is C_MFA of (32), the constant of
+    a weaker quantity than the one measured; say so.
+  - 450: compares the Section 4 constants (C_MFA) with the observable
+    exponent; also contradicts 205 ("none is used in Section 7").
+  - 38, 485, 508, 549, 634, 648, 685, 707: "admissible" / "non-admissible"
+    labels read as admissibility of the exponent's theorem (rule 10);
+    use "inside / outside the condition of FKR Theorem 3.7".
+  - sn-supplementary.tex S1 title and line 27: say it traces the constant
+    of FKR (32), not of the measured quantity.
+  FINE: 50, 56, 62, 80, 88, 104-109, 201, 215, 259, 284, 290, 301, 403,
+  495, 694, 700, 703, 705, 709; supplement line 33.
+  PROPOSED LINE 60 (not applied): "This paper does not measure the
+  end-to-end guarantee of \cite[Theorem 3.8]{fkr2024}, nor its mean-field
+  component \cite[Proposition 3.11]{fkr2024}, which bounds the supremum
+  over time of a mean-square error conditioned on a bounded event. The
+  estimator \eqref{eq:est} takes the supremum over time inside the
+  expectation and is not conditioned; the result that bounds it is the
+  pathwise estimate \cite[Theorem 2.6]{ghv2025} with $p=2$, and that is the
+  source of the $J^{-1}$ benchmark used throughout. A flatter fitted slope
+  is therefore not evidence against either result." followed by the
+  existing discretization sentences unchanged.
+  GROUNDS FOR WITHDRAWING THE CLAIM AT 40, 547, 698 (assessment
+  2026-10-29, Rahul's question; how the withdrawal is written is his
+  decision). The referee's ground (R1) and N1 are distinct, but they are
+  not two independent reasons to drop the claim. R1 is evidential and
+  curable: the three cells were not shown to satisfy the hypotheses, and
+  the route of "Ackley: the route" (GHV 2.3 existence, A1-A2 with
+  constants) would cure it. N1 is about what the claim means and cannot be
+  cured: with every hypothesis verified, the claim still compares the
+  condition region of a theorem that owns no exponent with the visibility
+  of an exponent owned by a theorem that has no condition. N1 alone
+  suffices; R1 alone would only require repair. Consequence: the
+  "demonstration on objectives that satisfy (6), (7), (27) outright"
+  costed under "Ackley: the route" (the referee's alternative) would
+  demonstrate an ill-posed claim and should not be run for that purpose.
+  OPEN.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
