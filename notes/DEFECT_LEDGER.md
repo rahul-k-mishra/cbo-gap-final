@@ -123,6 +123,24 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   withdrawn or restated as prefactor dependence on (r, d, tau_0). Proof
   obligation: confirm against the SIAM text that Proposition 3.11's
   hypotheses contain no parameter condition. OPEN.
+  CORRECTION 2026-10-29 (sup-E finding; arXiv v6 read in the PDF, page 16,
+  eyeballed; numbering re-mapped under N3). The measured exponent is NOT
+  the conclusion of FKR Proposition 3.11 (the "Proposition 16" above).
+  (32) bounds max_i sup_t E[ ||V^i_t - Vbar^i_t||^2 | Omega_M ] <= C_MFA
+  N^-1: supremum outside the expectation, conditioned on Omega_M. The
+  estimator, manuscript (9), is the mean over realizations and particles
+  of sup_t ||.||^2: supremum inside, unconditioned. sup E <= E sup, so
+  (32) does not bound the measured quantity. The only cited result that
+  does is GHV Theorem 2.6 at p = 2 ((2.11): (E sup |.|^2)^(1/2) <= C
+  J^(-1/2)), for every objective in A(s,l,l), with no parameter
+  condition and no lambda. FKR v6 p. 17 says the same: [31] (GHV)
+  improves (32) by removing the conditioning and "obtaining a pathwise
+  estimate". The rest of N1 stands and is strengthened: the theorem that
+  carries 2 lambda > d sigma^2 (3.7) owns no J exponent, and the theorem
+  that owns the measured exponent (GHV 2.6) has no parameter condition.
+  The manuscript's attributions of the measured quantity to FKR (line 60
+  and others) are listed in the reply of 2026-10-29 and are to be fixed
+  with N1. The SIAM obligation above stays OPEN.
 - N2 (new, P). Conditions (6)-(7) are the wrong admissibility gate for
   Theorem 12; it needs a weak solution in C([0,T*], P_4), which GHV Theorem
   2.3 supplies for all f in A(s,l,l) with rho_0 in P_{2 v p_M}. Levy becomes
@@ -2693,6 +2711,17 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
   Ackley and Levy the J^-1 rate is sourced from GHV Theorem 2.6 (q >= 6 for
   the exponent 1/2 at p = 2; Gaussian rho_0 qualifies), and that neither
   rate theorem has a parameter condition (N1).
+  CORRECTED 2026-10-29 (v6 numbering, N3 re-mapping; sup-E finding, N1).
+  Replace by: the measured exponent, of E sup_t ||.||^2, is sourced from
+  GHV Theorem 2.6 at p = 2 for EVERY objective, not only Ackley and Levy.
+  FKR Proposition 3.11 (requires Theorem 3.2's hypotheses, so excludes
+  Ackley and Levy) bounds the weaker conditioned quantity sup_t E[.|Omega_M]
+  and is cited only as the mean-field component of FKR Theorem 3.8 and as
+  the source of the constant traced in Section 4 and S1, never as the
+  source of the measured exponent. Theorem 2.6 needs rho_0 with bounded
+  moments of all orders (Gaussian qualifies); the q >= 6 reading of GHV
+  Remark 2.7 is not re-checked and is not needed. Neither result has a
+  parameter condition.
 
 Cost of a demonstration on objectives that satisfy (6), (7), (27) outright:
 Sphere and Rastrigin are in EXP-ONSET at r = 0.75 (rmapj_real.csv, per
