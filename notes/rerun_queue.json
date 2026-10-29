@@ -132,13 +132,17 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 9,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "rerun-onsetr-s8of10-a1",
+  "args": "--plan-from runs/rerun-plan-20261028-212945 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows ONSET-R --shard 8 --nshards 10 --workers 4",
+  "data_dirs": [
+    "runs/rerun-plan-20261028-212945",
+    "runs/costprobe2-s0-kaggle-20261010-103952",
+    "runs/costprobe2-s1-kaggle-20261011-101343"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -522,6 +526,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149: runner exit 0; now READY"
+    },
+    {
+      "at": "2026-10-30T02:02:30+05:30",
+      "run": "laptop.20261029T203224Z",
+      "event": "intent",
+      "item": "onsetr-s8of10",
+      "attempt": 1,
+      "job": "rerun-onsetr-s8of10-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
