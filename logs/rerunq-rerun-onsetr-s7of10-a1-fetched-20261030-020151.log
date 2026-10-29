@@ -1,0 +1,45 @@
+==============================================================================
+rerunq tick  run 40949790550.1  2026-10-30T02:01:47+05:30
+  python 3.12.15
+  state file notes/rerun_queue.json
+  state RUNNING  item 8  attempt 1  job rerun-onsetr-s7of10-a1
+  definition notes/queues/rerun-onsetr.json (sha256 01ab2be6b6c8585d6926662609a604c05caaeaa5555f01dffa999c53bde0a09b)
+  profile rerun-onsetr [rerun]  plan runs/rerun-plan-20261028-212945 (rerun_plan.csv 5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea)  timing runs/costprobe2-s0-kaggle-20261010-103952, runs/costprobe2-s1-kaggle-20261011-101343  workers 4
+    expect python 3.13.15 numpy 2.1.3; rerun_sha256 52864b42; rerunlib_sha256 31f4b360; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  rerun-onsetr-s7of10-a1
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job rerun-onsetr-s7of10-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job rerun-onsetr-s7of10-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-rerun-onsetr-s7of10-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-rerun-onsetr-s7of10-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-rerun-onsetr-s7of10-a1: COMPLETE  (judged: ericsom/cbo-rerun-onsetr-s7of10-a1 has status "KernelWorkerStatus.COMPLETE")
+FETCH  rerun-onsetr-s7of10-a1 (kaggle status COMPLETE)
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py fetch --job rerun-onsetr-s7of10-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-rerun-onsetr-s7of10-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job rerun-onsetr-s7of10-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    | FETCH OUTPUT into /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149
+    |   $ kaggle kernels output ericsom/cbo-rerun-onsetr-s7of10-a1 -p /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149/rerun-s7of10-20261029-172036/rerun_params.csv
+    | Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149/rerun-s7of10-20261029-172036/rerun_real.csv
+    | Kernel log downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149/cbo-rerun-onsetr-s7of10-a1.log 
+    |   3 files, manifest written to sha256.txt
+    |     d45c32370049c2ae795c716797818deac682abb24c155c1e295fe6a67b09608d  cbo-rerun-onsetr-s7of10-a1.log
+    |     5259a489c3b20f63907f40f02175e5d76a507c6b0107513bc36661a68c8305a5  rerun-s7of10-20261029-172036/rerun_params.csv
+    |     cea58b55bfdbd30b2956cb7ba82bd7f5eef003393de1ff48d1e5f754355c7165  rerun-s7of10-20261029-172036/rerun_real.csv
+    | ==============================================================================
+  runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149: manifest verified, 3 files
+  runner exit 0  python 3.13.15  numpy 2.1.3  mode run  run dir /kaggle/working/rerun-s7of10-20261029-172036  D-SMOKE None  completed 2448
+  F2: 2448 rows end ok; runner summary completed 2448
+  runner exit 0; state now READY
