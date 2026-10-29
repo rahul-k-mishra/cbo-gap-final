@@ -1,0 +1,65 @@
+==============================================================================
+rerunq tick  run laptop.20261029T140223Z  2026-10-29T19:32:23+05:30
+  python 3.12.3
+  state file notes/rerun_queue.json
+  state READY  item 7  attempt 1  job -
+  definition notes/queues/rerun-onsetr.json (sha256 01ab2be6b6c8585d6926662609a604c05caaeaa5555f01dffa999c53bde0a09b)
+  profile rerun-onsetr [rerun]  plan runs/rerun-plan-20261028-212945 (rerun_plan.csv 5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea)  timing runs/costprobe2-s0-kaggle-20261010-103952, runs/costprobe2-s1-kaggle-20261011-101343  workers 4
+    expect python 3.13.15 numpy 2.1.3; rerun_sha256 52864b42; rerunlib_sha256 31f4b360; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+LAUNCH  item 7 (onsetr-s6of10), attempt 1, job rerun-onsetr-s6of10-a1  [rerun profile rerun-onsetr]
+  P1 code pin: rerun.py, rerunlib.py, costprobe2.py as pinned
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job rerun-onsetr-s6of10-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job rerun-onsetr-s6of10-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-rerun-onsetr-s6of10-a1
+    | Cannot access kernel 'ericsom/cbo-rerun-onsetr-s6of10-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ==============================================================================
+  kaggle status of ericsom/cbo-rerun-onsetr-s6of10-a1: DENIED  (judged: Cannot access kernel 'ericsom/cbo-rerun-onsetr-s6of10-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug — use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.)
+  denied: control status of calprec2-long-s25of26-a1 (L4), to tell a free name from a credential failure
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job calprec2-long-s25of26-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-long-s25of26-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-long-s25of26-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-long-s25of26-a1: COMPLETE  (judged: ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE")
+  L3: kernel absent on Kaggle, name unused
+  push 1 of 3: accepted
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py launch --job rerun-onsetr-s6of10-a1 --user ericsom --script rerun.py --data-dirs runs/rerun-plan-20261028-212945,runs/costprobe2-s0-kaggle-20261010-103952,runs/costprobe2-s1-kaggle-20261011-101343 --args=--plan-from runs/rerun-plan-20261028-212945 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows ONSET-R --shard 6 --nshards 10 --workers 4
+  kgrun exit code 0  (console: logs/kgrun-rerun-onsetr-s6of10-a1.log)
+    | rerun_analysis.py                            109437  2026-10-29 14:05:12.997000  
+    | rerun_tally.py                                12415  2026-10-29 14:05:12.977000  
+    | rerunlib.py                                   44427  2026-10-29 14:05:13.010000  
+    | rmapj.py                                      11680  2026-10-29 14:05:13.297000  
+    | rmapj_real.csv                               379782  2026-10-29 14:05:14.371000  
+    | sigma.py                                      20661  2026-10-29 14:05:13.304000  
+    | verify.py                                     15711  2026-10-29 14:05:13.305000  
+    | visibility.py                                 20942  2026-10-29 14:05:13.246000
+    |   4 s: kgrun-bundle-af0621ace107ae54.sha256 listed
+    | GENERATE KERNEL  ericsom/cbo-rerun-onsetr-s6of10-a1
+    |   wrote /home/rahul/cbo-gap-queue/.kaggle-push/run.py and kernel-metadata.json
+    |   runner requires bundle af0621ace107ae54 in the mounted dataset, every file hashing as listed
+    |   private True  internet False  gpu False
+    |   runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+    |   runner will call: rerun.py --archive <found path> --outdir /kaggle/working --plan-from runs/rerun-plan-20261028-212945 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows ONSET-R --shard 6 --nshards 10 --workers 4
+    |   runner will rebuild rerun-plan-20261028-212945 under /tmp/kgrun-ship and replace runs/rerun-plan-20261028-212945 in the args
+    |   runner will rebuild costprobe2-s0-kaggle-20261010-103952 under /tmp/kgrun-ship and replace runs/costprobe2-s0-kaggle-20261010-103952 in the args
+    |   runner will rebuild costprobe2-s1-kaggle-20261011-101343 under /tmp/kgrun-ship and replace runs/costprobe2-s1-kaggle-20261011-101343 in the args
+    | PUSH KERNEL (this starts a batch run; 12 hour cap)
+    |   $ kaggle kernels push -p /home/rahul/cbo-gap-queue/.kaggle-push
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-rerun-onsetr-s6of10-a1
+    | LAUNCHED ericsom/cbo-rerun-onsetr-s6of10-a1; not polled, not fetched. Check it with:
+    |   python scripts/kgrun.py status --job rerun-onsetr-s6of10-a1
+    | ==============================================================================
