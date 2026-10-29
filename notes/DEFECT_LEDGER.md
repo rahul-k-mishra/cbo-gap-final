@@ -179,6 +179,70 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     (manuscript Proposition 2), so it is in that sketched case: N2's "no
     existence theorem in either paper" holds for stated theorems, but the
     text must mention 5.2. Still OPEN (SIAM comparison).
+  RE-MAPPING 2026-10-29 (Rahul's request; by content, from the v6 text,
+  extracted with pdftotext; formulas should be eyeballed in the PDF).
+  Old reference -> v6 result -> verdict.
+  - N1 "Theorem 12 (cited as 3.7)", convergence to the minimizer with
+    hypothesis 2 lambda > d sigma^2 -> Theorem 3.7 (hypothesis verbatim;
+    conclusions (28), (29)). HOLDS.
+  - N1 "Proposition 16 (cited as 3.11)", no parameter condition ->
+    Proposition 3.11. No parameter condition: HOLDS (C_MFA depends on
+    lambda, sigma). "Hypotheses are those of Theorems 6 and 8": 3.11 names
+    only Theorem 3.2; "6" -> 3.2 HOLDS; "8" CANNOT BE MATCHED (Section 3.3
+    restricts to H = 1, so Theorem 3.4 is not among 3.11's hypotheses).
+  - N1 "the J^-1 exponent the paper measures is the conclusion of ... FKR
+    Proposition 16" -> DOES NOT SURVIVE. (32) bounds
+    max_i sup_t E[ ||V - Vbar||^2 | Omega_M ] (sup outside the expectation,
+    conditioned on Omega_M). The estimator, manuscript (9), is the mean of
+    sup_t ||.||^2, i.e. E sup. sup E <= E sup, so (32) does not bound the
+    measured quantity. v6 itself (p. 17) says [31] (GHV) improves (32) by
+    removing the conditioning and "obtaining a pathwise estimate, see [31,
+    Theorem 2.6]". Only GHV Theorem 2.6 at p = 2 owns the measured exponent.
+  - N2 "Conditions (6)-(7)" -> these are the MANUSCRIPT's equations (6),
+    (7) (labels eq:F19, eq:F20 in sn-article.aux), i.e. v6 (19), (20); not
+    FKR numbers. "Wrong gate for Theorem 12": Theorem 3.7 assumes A1-A2,
+    rho_0 in P4 with v* in supp, and a weak solution in C([0,T*],P4); it
+    does not impose (19)-(20). HOLDS.
+  - N2 "existence via FKR Thm 6" -> Theorem 3.2 (H = 1; 3.4 for H not 1).
+    HOLDS.
+  - R1 "FKR condition (6)" -> manuscript (6) = v6 (19). Ackley fails it
+    (linear growth at w = 0 against C1 ||v||^2). HOLDS; cite as (19).
+    "A1-A2" -> Definition 3.5, (24)-(25). HOLDS.
+  - Ackley route "standing hypothesis of FKR Theorem 12" (p = 4, Gaussian
+    rho_0) -> Theorem 3.7. HOLDS (full support from manuscript line 301).
+    "FKR-aniso Theorem 2" is the 2022 paper, not on this machine: NOT
+    CHECKED.
+  - O2 "FKR A1-A2, nu = 1" -> (24) with nu in (0, inf); nu = 1 gives
+    E - E_min >= eta ||v - v*||, the form O2 uses. Form HOLDS; constants
+    not checked. The anisotropic part (nu <= 1/2, l-infinity) is the 2022
+    paper: NOT CHECKED.
+  - O3 "FKR (8)/(9)" (mean-field SDE / Fokker-Planck) -> v6 (7) / (8); v6
+    (9) is the informal N^-1 estimate of Remark 1.2. Matching with
+    lambda = 1, sigma = sqrt(2 theta) HOLDS FOR THE ISOTROPIC ARM AND H = 1
+    ONLY: v6 has no anisotropic equation, and its drift carries H. O3 must
+    say both.
+  - O4 "FKR Definition 5" -> Definition 3.1 (test class C_c^inf, rho_t ->
+    rho_0 pointwise). Same test class as GHV (4.9). HOLDS; note GHV (4.9)
+    is written with the CBS generator and carried to CBO by GHV Remark
+    4.3. "FKR Remark 7" -> Remark 3.3 (extension to C_*^2 under P4
+    regularity). HOLDS.
+  - O5 "Theorem 12 is stated for any weak solution" -> Theorem 3.7 ("if
+    rho in C([0,T*],P4) is a weak solution ..."). HOLDS.
+  - O7 "Levy (fails (6)" -> manuscript (6) = v6 (19). HOLDS.
+  - O8 "FKR Proposition 16 requires Theorem 6's hypotheses" -> 3.11
+    requires 3.2's. HOLDS. "For Ackley and Levy the rate is sourced from
+    GHV 2.6": HOLDS but is too narrow; by the N1 finding above, GHV 2.6 is
+    the source of the measured exponent for every objective.
+  - Cost paragraph "(6), (7), (27)": (6), (7) are manuscript equations;
+    (27) is not a manuscript equation (the manuscript has ten) and v6 (27)
+    defines T*, not a condition on an objective. CANNOT BE MATCHED.
+  - N3 "Theorem 14, Lemma 15, Remark 25" and "conditions (25)-(27)": no
+    content recorded with them. CANNOT BE MATCHED.
+  - N3 "(83): factor 8/(c eta^2 eps), one power of c" -> by content the
+    alpha_0 lower bound, Remark 4.8, (68)/(69): alpha_0 =
+    -8/(c(theta,lambda,sigma)^2 eta^2 eps) log(...). Two powers of c.
+    DOES NOT SURVIVE. The manuscript's "leading factor c^-2" (line 211)
+    agrees with v6.
 - N4 (new, T). Supplement numbering: main text cites S2 for the error log
   (lines 477, 690) and S3 for withdrawn results; printed numbers are S3 and
   S4. Appendix A says "three blocks"; there are four sections. OPEN.
