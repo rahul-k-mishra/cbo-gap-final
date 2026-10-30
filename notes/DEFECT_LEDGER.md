@@ -2544,6 +2544,37 @@ instruction of 2026-10-15.
     below 1 (the reference more concentrated than intended), largest in
     the centred law and at d 40, not monotone in d (PROBEARM d 5 median
     below d 10's; GEOM d 10 above 1, d 5 and d 40 below).
+  - CORRECTION TO RAHUL'S WORDING (2026-10-30, recorded at his
+    request): his "the probe protocol misses its target at tight targets
+    and high dimension" overstates the second part. The miss grows as
+    tau_0 falls, but it is not monotone in d: PROBEARM's d 5 median
+    (0.8754) is below its d 10 median (0.9021) at tau_0 0.01, and GEOM's
+    d 10 misses above 1 while d 5 and d 40 miss below. The largest misses
+    are at d 40 in both probe rows. The supplement must not say the miss
+    worsens with dimension. Supported wording: the miss grows as tau_0
+    falls; at tau_0 0.01 single cells reach 0.14 of target; it goes in both
+    directions; it is largest at d 40 in both probe rows.
+  - scripts/refratio2.py (written 2026-10-30, Rahul's instruction; a
+    second script, refratio.py and logs/refratio-20261030.log are kept).
+    Adds per-cell medians with their own bootstrap interval (same
+    resamples), a point reading "median within 5%" mirroring calprec2 C6
+    in form only, and TAU8. Rows audited, read from the code rather than
+    assumed: rerunlib.AUDIT_ROWS = CONC, PROBEARM, TAU8, GEOM; SIGMA and
+    ANISO were not audited (audit_ref_ratio empty in every shard row), so
+    they cannot be added. v1's seed rule and row codes are kept, so the
+    PROBEARM, GEOM and CONC means and intervals equal v1's by
+    construction. Same gate as v1 against the twenty-one-row analysis.
+    Pre-run checks, as run by Claude: (1) inputs from their writers, as
+    v1 plus AUDIT_ROWS (rerunlib line 183); (2) named exits on fixtures:
+    gate mismatch 3, F1 not ok 2, duplicate 2, tampered file 2, no --runs
+    2, a row absent 2; (3) input contact on the six real folders,
+    structural only: manifests verify; PROBEARM 144, GEOM 336, CONC 144,
+    TAU8 144 cells (TAU8 2160 rows, n 15); cell keys and n equal
+    analysis_audit.csv's; reps 0..n-1; no statistic computed or printed;
+    (4) synthetic fixture end to end, exit 0, including a right-skewed
+    cell whose mean interval is above 1 while its median interval
+    contains 1. Python 3.8 grammar parse passes. Nothing synthetic is
+    committed. OPEN until its log.
   OPEN as text (N45).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
@@ -3602,6 +3633,26 @@ instruction of 2026-10-15.
   labelled, not measured, unless one carries a main-text claim that
   depends on the concentration it reached (Rahul to settle, from the
   list in Claude's reply of 2026-10-30).
+  DECIDED (Rahul, 2026-10-30), GEOM: its contrasts leave the main text
+  (d40 - d5, tau 0.01 - 0.3, the interaction, REGF b_d, b_tau, b_dtau,
+  the CON pairs, TMM, and its finite-J audit contrasts read as
+  concentration effects). Reason: they compare cells as if at equal
+  concentration, and the achieved reference fractions differ by d at
+  nominal tau_0 0.01 (medians of cell means 0.8517 at d 5, 1.1858 at d 10,
+  0.4105 at d 40; logs/refratio-20261030.log), so a dimension contrast is
+  partly a calibration difference. Labelling tau_0 nominal does not repair
+  a contrast whose meaning needs equal concentration. Per-cell slopes
+  stay, read as fixed-beta results at the law probe's beta. TAU8 carries
+  the concentration-dependence result. GEOM is not recalibrated and not
+  re-expressed against achieved concentration.
+  DECIDED (Rahul, 2026-10-30), SYNTH and NAMED: to the supplement (already
+  supplementary in ANALYSIS_CRITERIA F8), tau_0 labelled nominal, their
+  miss described as unmeasured (the regime probe was never audited), not
+  small. Lost: the synthetic breadth of the operating-level claim, which
+  now covers TAU8's six named objectives at three dimensions. P6.3's
+  SYNTH -> NAMED point values go with them.
+  Still open from that list: ADAPT (the fixed arm's probe beta and the
+  fixed-against-adaptive claim at the tight target).
   DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
   - Remove the sentence at tex 703 ("A dedicated experiment controlling
     that concentration exactly at every ensemble size does not make the
