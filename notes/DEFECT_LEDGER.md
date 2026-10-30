@@ -2636,6 +2636,32 @@ instruction of 2026-10-15.
       tau_0, rep) pairs, 0 share seed_key (round 1's control.py shared
       seeds between arms, line 346). No fixed-against-adaptive contrast
       was pre-registered (ANALYSIS_CRITERIA, "No contrast in ADAPT").
+    - DECIDED (Rahul, 2026-10-30): the fixed-against-adaptive comparison
+      is dropped. Reasons: the arms are not seed-paired in the rerun; no
+      contrast was pre-registered; they differ at t = 0 by construction
+      (fixed arm at the probe's miss, adaptive on target). None is fixable
+      by running more of the same design. Each arm's own pre-registered
+      slope and bound stay; the adaptive arm is a diagnostic (a
+      time-varying beta is not the analysed algorithm); the fixed arm's
+      tau_0 is labelled by its measured starting ratio (adapt0.py).
+    - scripts/adapt0.py (written 2026-10-30): from extras le0, le_min,
+      le_max of every ADAPT realization, ratio0 = exp(le0)/(tau_0 J_inf)
+      and control.py's drift. Gates: adaptive |ratio0 - 1| <= 1e-6 (a
+      positive control, exit 3); fixed b_first equal to the row's beta
+      (exit 3). Fixed arm per cell: mean and median with 95% bootstrap
+      intervals, verdicts against 1, median within 5% as a point value;
+      drift per arm described, no comparison. Writes nothing. Pre-run
+      checks, as run by Claude: (1) inputs from their writers
+      (control.one_realisation's return, control.py 230 to 231, 333 to
+      336 and 377; rerun.py's extras); (2) named exits on fixtures:
+      positive control off 3, b_first mismatch 3, missing extras key 2,
+      unpaired arms 2, tampered file 2, no --runs 2; (3) input contact on
+      the four rerun-arch folders, structural only: 1080 ADAPT rows, 36
+      cells, both arms with reps 0..14 in every cell, R3 holds in every
+      fixed realization, tau_0 0.01 and 0.1, d 5, 10, 40, J_inf 50000;
+      no ratio computed or printed; (4) synthetic fixture end to end,
+      exit 0, reaching above 1, below 1 and contains 1. Python 3.8 grammar
+      parse passes. Nothing synthetic is committed. OPEN until its log.
   OPEN as text (N45).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
