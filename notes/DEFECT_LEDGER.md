@@ -492,7 +492,90 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     (fake summaries, the deposited audit.py and tex copied into the
     scratchpad), exit 0, both the reproduces and the does-not-reproduce
     paths reached. Python 3.8 grammar parse passes. Nothing synthetic is
-    committed. OPEN until its log.
+    committed.
+  - RESULT 2026-10-30. Source: logs/depositcheck-20261030.log (run by
+    Rahul on the laptop, exit 0; Python 3.12.3, NumPy 2.5.3, 2 workers;
+    script sha256 d1e70972...f356). P1 "68 files hash to
+    zenodo-v1.sha256: PASS"; P2, P3 PASS. P4 as printed: control.py,
+    boundary.py, sigma.py N_BOOT = 400; audit.py A2 range(500); A3
+    range(N_BOOT), N_BOOT = 2000; crossed.py N_BOOT = 400 (A3 uses only
+    its slopes). audit.py wall 11.1 s, exit 0. SUMMARY block:
+    - Table 4: reproduces (control.py, 400). All four means within R2
+      (deposited -1.00169, -0.99801, -0.83201, -0.81480) and all twelve
+      counts equal.
+    - Table 5: reproduces (boundary.py, 400). All eight means, SDs and
+      counts; "all" 117/144, 107/144, 125/144; caption 123/144. ci_hi <=
+      -0.85 gives 117/144, as the verdict column.
+    - 7.10 counts: reproduces (sigma.py, 400). Isotropic 71/93/115,
+      Bonferroni cost 11 (93 - 82); anisotropic 57/77/86, cost 9 (77 -
+      68).
+    - 7.10 coefficients: reproduces (audit.py A2, 500, NumPy 2.5.3).
+      Isotropic d 10: tau_0 0.1 -0.0470 [-0.102, -0.002]; tau_0 0.01
+      -0.0575 [-0.121, -0.015]; the three verdict claims hold (6 of 6, 2
+      of 2, 2 of 2). Isotropic d 40, about which the text says nothing:
+      "effect of practical size possible" at both tau_0.
+    - 7.11 counts: reproduces (audit.py A3, 2000, NumPy 2.5.3). Arm A 18
+      cells: equivalent 3, inconclusive 13, outside 2.
+    - NOT LOCATED: the six gaps of tex 497 (+0.004, +0.009, +0.024;
+      -0.005, +0.034, +0.014) are "within R2 at no level" of A3's arm-A
+      gaps in every one of the six (d, tau_0). For example d 40, tau_0 0.1:
+      published +0.024, audit 0.0187, 0.0300, -0.4365 at sigma 0.1, 0.2,
+      0.4. Per R7 no other construction was tried. They are untraced.
+    - Reading. The published counts follow from the deposited files and
+      code at the resample counts that code sets. What was false at tex 309
+      is "4000 resamples" and "the single archived re-analysis script",
+      not the traceability of these numbers. Tables 4, 5 and the 7.10
+      counts are tallies with no random draw; the 7.10 coefficients and
+      the 7.11 counts are a resampling reproduction on NumPy 2.5.3, and
+      the NumPy of the original audit run is not recorded. A tally shows
+      the counts follow from the stored per-cell intervals; it does not
+      re-derive those intervals (no per-realization data, ARC2).
+  PROPOSED DISCLOSURE TEXT (Rahul's instruction 2026-10-30; not applied;
+  groups A, C and D as in the reply of 2026-10-30, group B rewritten
+  from this result):
+    The deposit of the earlier version does not support several
+    statements made about it. That version said every reported interval
+    was a 4000-resample value from one archived re-analysis script, and
+    that no interval came from a computation outside the archive. Both
+    statements are false, but most of the numbers they describe can be
+    traced. The re-analysis script recomputed at 4000 resamples only the
+    paired gaps, severity trends, onset intervals and interaction
+    intervals of the regime-map experiments. The remaining counts were
+    computed by the deposited generating scripts and by a second deposited
+    script, audit.py, at the resample counts that code sets, and they
+    follow from the deposited files. The means and verdict counts of the
+    concentration-control and operating-level tables, and the tolerance
+    and Bonferroni counts of the condition sweep, are tallies of the
+    per-cell intervals that the generating scripts stored at 400
+    resamples. The tally involves no random draw. It shows that the
+    published counts follow from the stored intervals, but it does not
+    re-derive those intervals, for which the deposit holds no
+    per-realization data. The regression coefficients of the condition
+    sweep (500 resamples) and the equivalence counts of the diffusion
+    comparison (2000 resamples) are reproduced by running audit.py
+    unchanged on NumPy 2.5.3. The NumPy version of the original run is not
+    recorded, so this reproduction comes from one installation. The six
+    per-dimension gaps quoted for that comparison do not equal the gap
+    the deposited code reports at any of the three noise levels, and how
+    they were obtained has not been identified. The regime-map counts
+    equal the console output of regimemap.py at 400 resamples, a log that
+    was not deposited. [C] The intervals of the concentration-control
+    table and regression, the slope-SE reference scale and the value
+    0.078 were produced by code that was not deposited. Their point
+    estimates recompute from the deposited files, except 0.078, which the
+    deposited data give as 0.07747. The construction of those intervals
+    cannot be identified. [A] The earlier version also said the
+    re-analysis had been run on two installations that agreed to four
+    decimals. One such run has a console log, and that log was not
+    deposited. It said console logs and per-realization files were
+    archived for every confirmatory run. The deposit contains no console
+    log, and eight experiments are deposited as cell-level means. [D] It
+    described the isotropic and anisotropic arms as paired, but the
+    scripts gave them different seeds. No number from the earlier version
+    is reused here. Every number in this paper comes from the rerun
+    described in Section X, whose scripts, console logs and
+    per-realization files are deposited at [DOI].
+  OPEN until the disclosure is written in the manuscript pass (N45).
 - N9 (new, T). Section 7.12 says the three failing admissible cells are "of
   Section 7.15"; Conclusions say "three of the thirty in Section 7.12". They
   are EXP-ONSET r = 0.75 cells in rmapj_real.csv. OPEN.
@@ -2692,6 +2775,36 @@ instruction of 2026-10-15.
       withdrawal, never as a finding that the onset is separated from
       r = 1.
   OPEN until that text is written and verified by the rule-8 diff.
+  Addendum 2026-10-30 (source of round 1's onset claim; audit.py A4).
+  - Round 1's "not resolvable from the boundary" (tex 628; abstract 38;
+    conclusions 707; Table tab:onset, 602 to 620) comes from reboot.py's
+    onset(): the free breakpoint of regimemap.py at tau_0 0.1 on
+    regimemap_D_real.csv, d 5 to 80, r 0.75 to 3.0, 4000 resamples.
+    round1-zip/cbo-gap/logs_reboot.log, block "ONSET: free breakpoint in
+    log r at tau_0 = 0.1, 4000 resamples", prints the ten breakpoints and
+    intervals of Table tab:onset and "intervals excluding r = 1: 1 of 10"
+    (isotropic d 20, [1.25,2.00]). It is the estimator H3 retyped and that
+    this entry found unable to tell the start of a rise from its end.
+  - It does not come from audit.py A4. A4 is a different run of the same
+    kind of estimator: a single free hinge in log r by profile least
+    squares, on cliff_summary.csv (EXP-CLIFF), d 10 and 40 only,
+    candidates r 0.9 to 3.0, 400 resamples over objectives. Its output
+    (logs/depositcheck-20261030.log, appendix): anisotropic d 10 2.000
+    [2.00,3.00], d 40 1.500 [1.00,1.50]; isotropic d 10 1.500
+    [1.25,3.00], d 40 1.100 [1.00,1.50]. Its intervals contain 1.0 in 2 of
+    4 panels (the two d 40 panels), not 3. No A4 number is quoted in the
+    deposited text. Its only trace is tex 719's "the change-point
+    intervals" among what the re-analysis script recomputes, and audit.py
+    is the script that does so.
+  - ONSET-R REPLACES the free-breakpoint onset, in both its forms
+    (regimemap/reboot and audit A4); it does not correct it. ONSET-R has
+    a different estimand: a sustained threshold crossing against the
+    unit's own baseline, not the best single bend. It has a different
+    design (r grid 0.3 to 4.8, M 48) and a different interval (N44). No
+    ONSET-R number is compared with a breakpoint estimate (O-R8). The
+    text must not describe r_delta as a corrected or refined breakpoint.
+    The A4 "change-point intervals" claim at tex 719 is withdrawn with
+    the rest of that sentence (N8, group A).
 
 - N44 (design, 2026-10-28; Rahul approved the onset-resolution
   experiment). A new row, ONSET-R, on a dense r grid with a pre-registered
