@@ -3079,6 +3079,9 @@ after the perjcal projection, with its rows:
    tight-target change with the moderate-target interval; and P-C2's
    printing of the nested-design values beside its own, which compares
    two estimands the archive says not to compare.
+   Lapsed 2026-10-30: perjcal is not run (Rahul's decision, C2; ledger
+   N36 CLOSED, N45). K2's "in scope" is withdrawn; no perjcal criteria
+   will be set.
 
 ## What the rerun needs that this file does not yet give
 
@@ -3094,6 +3097,7 @@ committed before its first execution.
 
 For perjcal: the projection from scripts/perjcalprobe.py, Rahul's approval
 of the rows, then item 1 above.
+(Superseded 2026-10-30: perjcal is not run; see item 1.)
 
 Already in place: item 3's bootstrap key (fixed by the approved layout);
 the Kaggle determinism gate passed (ENVIRONMENT.md line 49); peak RSS at

@@ -446,6 +446,53 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     "NumPy 1.24.4 with Python 3.8.10 and NumPy 2.4.4 with Python 3.12.3",
     agreeing "to four decimals", has one log behind it: the NumPy 1.24.4
     one. No second log was found.
+  Addendum 2026-10-30 (full extent; Rahul: "a disclosure, not a
+  correction"). Sentences of the deposited text that rest on evidence
+  that does not exist or is misdescribed:
+  - Evidence absent: tex 309, the two-installation agreement (one log,
+    NumPy 1.24.4, round1-zip only); tex 719, "Console output ... together
+    with a reanalysis script that recomputes ... the tolerance and
+    Bonferroni tables" (no console output deposited, ARC1; reboot.py's log
+    says NOT RECOMPUTED for 7.5; the sentence has no verb); tex 719 and
+    728, the dagger rows' console log (ARC1, ARC5); tex 719, per-realization
+    files for every confirmatory run (eight experiments are cell means,
+    ARC2).
+  - Provenance misdescribed: tex 309, "every interval reported in this
+    paper is the 4000-resample value ... no reported interval originates
+    from a computation that is not in the archive", and "every trend
+    interval ... at 4000 resamples". The deposited code sets: control.py,
+    boundary.py, sigma.py, regimemap.py N_BOOT 400 (Table 4, Table 5, 7.10
+    counts, 7.12 counts); audit.py A2 range(500) in r_regression (7.10
+    coefficients); audit.py A3 N_BOOT 2000 (7.11 equivalence counts).
+  - No generating code: the N30 list, and tex 719's "Each pre-specified
+    criterion is stated in the docstring ... present in the archived copy"
+    for those numbers.
+  - Contradicted by the code (N31): tex 309, 495, 650, the pairing.
+  - Correction to Claude's reply of 2026-10-30: it gave the 7.10
+    coefficient intervals as 2000 resamples. audit.py's r_regression draws
+    range(500); N_BOOT 2000 is used by A3 only. A3 resamples the 4
+    objectives of each crossed_summary.csv cell (8 rows: 2 diffusions x 4
+    objectives), at 90%.
+  - scripts/depositcheck.py (written 2026-10-30, Rahul's instruction):
+    tallies control_summary.csv against Table 4, boundary_summary.csv
+    against Table 5 and sigma_summary.csv against the 7.10 counts, and runs
+    audit.py unchanged against the 7.10 coefficients and 7.11 counts, at
+    the deposited code's resample counts; no setting searched (R0). Writes
+    nothing. Pre-run checks, as run by Claude: (1) inputs read from their
+    writers (control.py 378 and 400, boundary.py 334 and 357, sigma.py 361
+    and 382, audit.py A2 and A3 print formats); (2) every failure a named
+    exit (fixture: manifest mismatch 2, unknown verdict 2, audit.py with a
+    write mode 2, audit.py exit 7 gives 3, silent audit.py gives 4, bad
+    --workers 2, missing archive 2); (3) input contact on the real deposit,
+    structural only: 68 files match zenodo-v1.sha256, all nine published
+    patterns found as expected in zenodo-v1/sn-article.tex, audit.py has no
+    write call, five N_BOOT assignments and both range() arguments found;
+    control 72 rows in 4 groups of 18, boundary 144 in 8 of 18, sigma 288 in
+    2 of 144, every verdict string known; (4) synthetic fixture end to end
+    (fake summaries, the deposited audit.py and tex copied into the
+    scratchpad), exit 0, both the reproduces and the does-not-reproduce
+    paths reached. Python 3.8 grammar parse passes. Nothing synthetic is
+    committed. OPEN until its log.
 - N9 (new, T). Section 7.12 says the three failing admissible cells are "of
   Section 7.15"; Conclusions say "three of the thirty in Section 7.12". They
   are EXP-ONSET r = 0.75 cells in rmapj_real.csv. OPEN.
@@ -1839,7 +1886,17 @@ instruction of 2026-10-15.
     - Achieved / tau0 1.000000.
   - No projection: the smoke runs the pair only. The full probe is the
     next run.
-  OPEN until the full probe.
+  CLOSED 2026-10-30, not run (Rahul's decision, C2; recorded in N45).
+  The full probe and perjcal's rows are not run. Reason: referee point
+  4 says the per-J-beta design "controls this quantity, but then the
+  fitted curve is obtained from a family of different algorithms rather
+  than from one algorithm at different ensemble sizes", and that "the
+  fixed-beta experiment suggested above seems necessary". A per-J-beta
+  rerun, at any precision, measures that family of algorithms, so it
+  cannot answer the question the referee asked. The fixed-beta experiment
+  is CONC, and it has run (N39, N44). Round 1's run was inconclusive
+  (0.0964 [0.0059, 0.2265] at tau_0 0.01, N34), and P-C1 to P-C3 would
+  be set only now, after the fixed-beta results have been seen.
 
 - N37 (decision, Rahul 2026-10-16; the archived-beta shard set). Source:
   logs/rerun-schedule-20261016-1945.log. That is rerun.py --schedule on
@@ -3107,6 +3164,43 @@ instruction of 2026-10-15.
     monotonicity tolerance, control.py's two-sided 0.15 criterion and the
     absolute-value P-E2 / P-C2 stay in the supplement, labelled as such.
   - N33: every reported slope names its estimand (S-slope primary).
+  DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
+  - Remove the sentence at tex 703 ("A dedicated experiment controlling
+    that concentration exactly at every ensemble size does not make the
+    contrast vanish, but is inconclusive about the mechanism of the
+    residual"), and the abstract's matching clause at 36 ("a dedicated
+    experiment that controls finite-ensemble concentration exactly ...
+    is inconclusive about the mechanism of the residual"). The 7.14
+    per-J-beta paragraphs (591 to 595) leave the main text.
+  - State the finite-J concentration deviation as a property of the
+    fixed-beta estimand: under one beta per cell, ESS_0(J)/J of the nested
+    subensembles departs from tau_0, by an amount that depends on d. That
+    is what one algorithm at different ensemble sizes does, and the
+    estimand includes it. The limitation is stated before the principal
+    claim, as the referee asks ("stated before").
+  - The limitation carries numbers, from the CONC finite-J audit (8.5),
+    not from ess_min_sub_mean. Source: logs/rerun-analysis21-20261030-1446.log,
+    block "CONC  finite-J audit (8.5)" (line 3822), per-cell summaries in
+    runs/rerun-analysis-20261030-144722/analysis_audit.csv (CONC 1440
+    rows); the same result as N39's. "CONC audit: 26 of 30 pooled
+    intervals exclude 0" (log line 4215). The quantity is ratio(J) =
+    ESS_0(J)/J/tau_0, difference d40 - d2, pooled over 12 units. All 30
+    pooled differences are positive (higher ratio at d 40). Examples
+    copied from the log: tau_0 0.1, J 10 +1.4113 [+1.0867, +1.7383], J
+    5000 +0.0350 [+0.0105, +0.0588]; tau_0 0.01, J 5000 +0.4677 [+0.3742,
+    +0.5653]. The four that contain 0 are tau_0 0.5, J 40 to 320. At tau_0
+    0.01 the points J 10 to 80 have J tau_0 < 1 and are floor-flagged
+    (attainability); the text must say so where they are quoted.
+  - Why not ess_min_sub_mean: analysis_cells.csv fills it only for
+    BETA-ISO (42 rows) and BETA-ANI (12 rows); every CONC row has it
+    empty. It is also a different quantity: the minimum over time of the
+    subensemble ESS in ess_surface (rerun_analysis.py docstring, L2), not
+    ESS_0(J)/J at t = 0.
+  - Round-1 perjcal goes to the supplement as a record: labelled a
+    different estimand (its own docstring and tex 591 say so) and
+    inconclusive, with N30's note that "[0.0069,0.2087]" (tex 593) has no
+    generating code and N34's log values (0.0156 [0.0010,0.0576], 0.0964
+    [0.0059,0.2265]).
   OPEN.
 
 ## Checked and found sound
