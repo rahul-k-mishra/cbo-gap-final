@@ -1,0 +1,14 @@
+ladder,"50000,200000,1000000,4000000"
+draws,48
+kind,41
+near,0.05
+controls,d40
+pc_tid,C|boundary|ackley|10|centred|0.01|64000000|0
+pc_cell,boundary|ackley|10|centred|0.01
+pc_key,20261010-32-4-0-10-0-0-64000000-0
+pc_betas,3.003580631134872
+pc_log_ess,13.253614003705112
+writer_sha256,711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3
+beta_table,calprec2-finalize-20261023-112503
+analysis,rerun-analysis-20261030-144722
+runs,rerun-cal-s0of2-a1-kaggle-20261025-003238;rerun-cal-s1of2-a1-kaggle-20261025-050238

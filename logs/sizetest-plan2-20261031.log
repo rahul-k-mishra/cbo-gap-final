@@ -1,0 +1,372 @@
+
+====================================================================================================
+sizetest.py  (ledger N40)  mode plan  --  writes the E1 plan folder (PF)
+====================================================================================================
+  script sha256   711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3
+  imports         refratio2 ad572d314971cff0  calprec2 3947d7ba86a55eec  costprobe2 ea5cb2e1d50e393a
+  python          3.12.3
+  numpy           2.5.3
+  platform        Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers         2 (this laptop process); --kaggle-workers 4 for the schedule
+  rows            CONC (mechanism), TAU8 (boundary)
+  ladder          50000, 200000, 1000000, 4000000   draws per (cell, N) 48
+  near            |x - 1| <= 0.05 (5%)
+  E1 seeds        calprec2.key_of(41, cell, N, rep); chunk ci: default_rng(SeedSequence(key + [ci]))
+  bootstrap       B 10000, SeedSequence([20261030, 6, cell index, level index])
+  controls        d 40 cells within 5%
+  schedule        --shard-target 0.5 x --ceiling 21600 s; --stop-after 36000 s
+
+====================================================================================================
+What this does, in plain words
+====================================================================================================
+  CONC and TAU8 were calibrated so that a very large sample (64 million particles) has
+  the target concentration. The runs use 50000-particle references, and in some cells
+  those references miss the target. The suspicion is that the miss is simply what a
+  50000-particle sample does at that beta. This script checks that in two ways.
+  
+  E0 only reads. calprec2 already solved beta on samples of 16000 and 64000 particles.
+  If the suspicion is right, those betas sit on a predictable side of the run's beta.
+  
+  E1 measures, on Kaggle. It draws fresh starting samples of 50000 particles, and of
+  larger sizes, from the same sampler, and computes their concentration at the run's
+  beta. No algorithm is run: nothing moves, only the starting cloud is drawn and
+  weighed. If the 50000-particle draws reproduce the run's miss and the miss disappears
+  as the sample grows, the cause is the reference size. If fresh 50000-particle draws
+  do not reproduce the run's miss, the cause is somewhere else.
+  
+  This plan draws nothing. It prints what E1 would cost, how it would be split into
+  Kaggle jobs, and what a rerun with larger references would need measured first.
+
+====================================================================================================
+Gates and reads  (G3, G1, G2)
+====================================================================================================
+  G3 PASS  mechanism, boundary, exactcal match costprobe2.ARCHIVE_SHA256
+  run  rerun-cal-s0of2-a1-kaggle-20261025-003238  3 files verified; CONC 1080, TAU8 1080
+  run  rerun-cal-s1of2-a1-kaggle-20261025-050238  3 files verified; CONC 1080, TAU8 1080
+  G1 PASS  CONC  144 cells, every mean equal to analysis_audit.csv
+  G1 PASS  TAU8  144 cells, every mean equal to analysis_audit.csv
+  G2 PASS  every CONC and TAU8 run beta equals calprec2_beta.csv's
+
+====================================================================================================
+Selection  (SEL)
+====================================================================================================
+  affected = run median not within 5% of 1; control = d 40 and within 5%
+  row   cell                                       beta   run med ratio_ref  why       calprec2 label
+  CONC  mechanism|ackley|10|centred|0.01          3.046    1.6771    0.7963  affected  beta, not adequate (C5m FAIL)
+  CONC  mechanism|ackley|10|centred|0.1            2.14    1.1449    1.0016  affected  beta, not adequate (C5m FAIL)
+  CONC  mechanism|ackley|10|mix-0.1|0.01          2.163    1.1216    0.9050  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  CONC  mechanism|ackley|40|centred|0.01          6.046    1.3596    0.9032  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  CONC  mechanism|ackley|40|centred|0.1           4.117    1.0231    1.0114  control   target
+  CONC  mechanism|ackley|40|centred|0.5           2.225    0.9929    0.9948  control   target
+  CONC  mechanism|ackley|40|mix-0.1|0.01          4.154    1.0706    0.9534  affected  target
+  CONC  mechanism|ackley|40|mix-0.1|0.1          0.8764    1.0070    1.0001  control   target
+  CONC  mechanism|ackley|40|mix-0.1|0.5          0.3087    0.9959    0.9966  control   target
+  CONC  mechanism|ackley|5|centred|0.01           2.119    1.4644    0.9966  affected  target
+  CONC  mechanism|ackley|5|centred|0.1            1.487    1.0693    1.0030  affected  target
+  CONC  mechanism|griewank|10|mix-0.1|0.01        9.416    1.0834    1.0338  affected  target
+  CONC  mechanism|griewank|40|centred|0.01        18.24    1.1883    0.9766  affected  beta, not adequate (C5m FAIL)
+  CONC  mechanism|griewank|40|centred|0.1         12.12    0.9661    0.9614  control   target
+  CONC  mechanism|griewank|40|centred|0.5         6.534    0.9883    0.9859  control   target
+  CONC  mechanism|griewank|40|mix-0.1|0.01        12.93    1.1613    0.9765  affected  target
+  CONC  mechanism|griewank|40|mix-0.1|0.1         8.537    1.0396    1.0074  control   target
+  CONC  mechanism|griewank|40|mix-0.1|0.5         5.429    0.9803    0.9900  control   target
+  CONC  mechanism|levy|40|centred|0.01            1.278    0.9802    0.9846  control   beta, not adequate (C5m FAIL)
+  CONC  mechanism|levy|40|centred|0.1            0.7537    1.0594    1.0065  affected  target
+  CONC  mechanism|levy|40|centred|0.5            0.3367    1.0004    1.0025  control   target
+  CONC  mechanism|levy|40|mix-0.1|0.01           0.7473    1.1032    1.0341  affected  target
+  CONC  mechanism|levy|40|mix-0.1|0.1           0.06203    0.9831    0.9886  control   target
+  CONC  mechanism|levy|40|mix-0.1|0.5           0.01467    0.9994    1.0002  control   target
+  CONC  mechanism|rastrigin|10|centred|0.1      0.07439    0.9408    0.9797  affected  target
+  CONC  mechanism|rastrigin|10|mix-0.1|0.01     0.07496    1.0799    1.0031  affected  target
+  CONC  mechanism|rastrigin|40|centred|0.01     0.05018    1.3161    0.9300  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  CONC  mechanism|rastrigin|40|centred|0.1      0.03416    0.9636    1.0005  control   target
+  CONC  mechanism|rastrigin|40|centred|0.5      0.01796    1.0380    1.0333  control   target
+  CONC  mechanism|rastrigin|40|mix-0.1|0.01     0.03444    1.2102    0.9659  affected  target
+  CONC  mechanism|rastrigin|40|mix-0.1|0.1      0.01153    1.0097    1.0124  control   target
+  CONC  mechanism|rastrigin|40|mix-0.1|0.5     0.004791    1.0101    1.0111  control   target
+  CONC  mechanism|rosenbrock|40|centred|0.01   0.0005897    1.0086    0.9846  control   target
+  CONC  mechanism|rosenbrock|40|centred|0.1    0.0002783    1.0021    1.0042  control   target
+  CONC  mechanism|rosenbrock|40|centred|0.5    0.0001021    0.9860    0.9868  control   target
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.01   0.000279    0.9911    0.9985  control   target
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.1    9.05e-06    0.9970    1.0002  control   target
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.5    2.044e-06    0.9989    0.9987  control   target
+  CONC  mechanism|sphere|10|centred|0.01          1.735    1.0593    0.9904  affected  target
+  CONC  mechanism|sphere|40|centred|0.01         0.4166    1.2188    0.9878  affected  target
+  CONC  mechanism|sphere|40|centred|0.1          0.2469    1.0067    0.9873  control   target
+  CONC  mechanism|sphere|40|centred|0.5           0.114    0.9909    0.9911  control   target
+  CONC  mechanism|sphere|40|mix-0.1|0.01         0.2459    1.0546    0.9991  affected  target
+  CONC  mechanism|sphere|40|mix-0.1|0.1         0.01844    1.0088    1.0043  control   target
+  CONC  mechanism|sphere|40|mix-0.1|0.5        0.004982    1.0037    1.0036  control   target
+  TAU8  boundary|ackley|10|centred|0.01           3.004    1.8739    0.8898  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|ackley|10|centred|0.02             2.8    1.7096    0.8696  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|ackley|10|centred|0.03           2.663    1.3987    0.8786  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|ackley|10|centred|0.05           2.448    1.1551    0.9602  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|ackley|10|centred|0.07           2.322    1.1389    0.9415  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|ackley|10|centred|0.1            2.139    1.1423    0.9925  affected  target
+  TAU8  boundary|ackley|40|centred|0.01           6.022    1.7082    0.9034  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|ackley|40|centred|0.02           5.498    1.5367    0.9442  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|ackley|40|centred|0.03           5.176    1.0781    0.9646  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|ackley|40|centred|0.05           4.744    1.0576    0.9911  affected  target
+  TAU8  boundary|ackley|40|centred|0.07           4.468    0.9806    0.9760  control   target
+  TAU8  boundary|ackley|40|centred|0.1            4.131    1.0464    0.9910  control   target
+  TAU8  boundary|ackley|40|centred|0.2            3.426    0.9961    0.9945  control   target
+  TAU8  boundary|ackley|40|centred|0.3            2.937    0.9791    1.0045  control   target
+  TAU8  boundary|ackley|5|centred|0.01             2.12    1.2050    0.9911  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|ackley|5|centred|0.02            1.932    0.9300    1.0045  affected  target
+  TAU8  boundary|ackley|5|centred|0.03            1.829    1.1145    0.9881  affected  target
+  TAU8  boundary|ackley|5|centred|0.05             1.69    1.1584    0.9892  affected  target
+  TAU8  boundary|ackley|5|centred|0.1             1.477    1.0985    1.0291  affected  target
+  TAU8  boundary|griewank|40|centred|0.01         18.14    1.2188    1.0008  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|griewank|40|centred|0.02          16.4    1.0125    0.9876  control   beta, not adequate (C5m FAIL)
+  TAU8  boundary|griewank|40|centred|0.03          15.3    1.0981    1.0040  affected  target
+  TAU8  boundary|griewank|40|centred|0.05         13.91    1.1019    1.0106  affected  target
+  TAU8  boundary|griewank|40|centred|0.07         13.01    1.0318    1.0052  control   target
+  TAU8  boundary|griewank|40|centred|0.1          11.94    1.0533    1.0228  affected  target
+  TAU8  boundary|griewank|40|centred|0.2          9.931    0.9871    0.9908  control   target
+  TAU8  boundary|griewank|40|centred|0.3          8.599    0.9845    0.9789  control   target
+  TAU8  boundary|levy|40|centred|0.01             1.272    1.2534    1.0224  affected  target
+  TAU8  boundary|levy|40|centred|0.02             1.123    1.1453    0.9865  affected  target
+  TAU8  boundary|levy|40|centred|0.03             1.029    1.0642    1.0017  affected  target
+  TAU8  boundary|levy|40|centred|0.05            0.9108    1.0244    1.0146  control   target
+  TAU8  boundary|levy|40|centred|0.07            0.8278    1.0678    1.0430  affected  target
+  TAU8  boundary|levy|40|centred|0.1             0.7587    1.0025    0.9841  control   target
+  TAU8  boundary|levy|40|centred|0.2              0.588    1.0114    1.0005  control   target
+  TAU8  boundary|levy|40|centred|0.3              0.488    0.9855    0.9838  control   target
+  TAU8  boundary|levy|5|centred|0.2               3.221    1.0514    1.0500  affected  target
+  TAU8  boundary|rastrigin|10|centred|0.01       0.1184    0.9142    0.9874  affected  target
+  TAU8  boundary|rastrigin|10|centred|0.02       0.1045    1.0849    1.0131  affected  target
+  TAU8  boundary|rastrigin|10|centred|0.03      0.09622    1.0546    1.0430  affected  target
+  TAU8  boundary|rastrigin|10|centred|0.07      0.08097    1.0525    0.9967  affected  target
+  TAU8  boundary|rastrigin|40|centred|0.01      0.05031    1.2791    0.8995  affected  beta, not adequate (C5m FAIL, D1 FAIL)
+  TAU8  boundary|rastrigin|40|centred|0.02      0.04567    1.3368    0.9554  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|rastrigin|40|centred|0.03      0.04283    1.2800    0.9884  affected  beta, not adequate (C5m FAIL)
+  TAU8  boundary|rastrigin|40|centred|0.05      0.03927    0.9198    1.0052  affected  target
+  TAU8  boundary|rastrigin|40|centred|0.07      0.03705    1.0586    0.9771  affected  target
+  TAU8  boundary|rastrigin|40|centred|0.1       0.03427    0.9864    0.9866  control   target
+  TAU8  boundary|rastrigin|40|centred|0.2       0.02849    0.9866    0.9839  control   target
+  TAU8  boundary|rastrigin|40|centred|0.3       0.02469    0.9703    0.9728  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.01    0.0005875    0.9504    0.9984  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.02    0.0004874    1.0031    0.9852  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.03    0.000429    1.0365    1.0053  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.05    0.0003642    0.9709    0.9928  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.07    0.0003182    1.0256    1.0270  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.1     0.0002784    0.9936    1.0028  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.2     0.0001994    1.0010    1.0052  control   target
+  TAU8  boundary|rosenbrock|40|centred|0.3     0.0001572    0.9847    0.9867  control   target
+  TAU8  boundary|sphere|40|centred|0.01          0.4141    1.3265    1.0202  affected  target
+  TAU8  boundary|sphere|40|centred|0.02          0.3645    1.0722    1.0038  affected  target
+  TAU8  boundary|sphere|40|centred|0.03          0.3349    1.0357    1.0026  control   target
+  TAU8  boundary|sphere|40|centred|0.05          0.2957    1.0776    1.0263  affected  target
+  TAU8  boundary|sphere|40|centred|0.07          0.2716    1.0232    1.0155  control   target
+  TAU8  boundary|sphere|40|centred|0.1           0.2455    1.0508    1.0081  affected  target
+  TAU8  boundary|sphere|40|centred|0.2           0.1933    0.9893    0.9919  control   target
+  TAU8  boundary|sphere|40|centred|0.3           0.1606    0.9877    0.9858  control   target
+  selected 109: affected 56, controls 53
+
+====================================================================================================
+E0  calprec2 phase A betas against the run beta  (a read)
+====================================================================================================
+  calprec2 folders read: 26; phase A tasks 48384; phase C tasks 4032
+  q(N) = median of 24 beta_solved at N / run beta;  s = run median / ratio_ref
+  row   cell                                         s     q 4000   q 16000   q 64000  q 256000 q 1000000 q 4000000  verdict
+  CONC  mechanism|ackley|10|centred|0.01        2.1062     1.2549    1.0964    1.0945    1.0485    1.0055    1.0000  agrees
+  CONC  mechanism|ackley|10|centred|0.1         1.1430     1.0771    1.0438    1.0233    1.0007    1.0075    1.0000  agrees
+  CONC  mechanism|ackley|10|mix-0.1|0.01        1.2394     1.1511    1.0828    1.0359    1.0087    1.0088    1.0000  agrees
+  CONC  mechanism|ackley|40|centred|0.01        1.5053     1.2216    1.1059    1.0180    1.0294    0.9890    1.0000  agrees
+  CONC  mechanism|ackley|40|centred|0.1         1.0116     1.0472    1.0283    1.0013    1.0026    1.0064    1.0000  (control)
+  CONC  mechanism|ackley|40|centred|0.5         0.9982     0.9985    0.9997    0.9987    0.9954    0.9970    0.9962  (control)
+  CONC  mechanism|ackley|40|mix-0.1|0.01        1.1229     1.0823    1.0917    1.0553    1.0248    1.0107    1.0000  agrees
+  CONC  mechanism|ackley|40|mix-0.1|0.1         1.0069     1.0146    0.9985    0.9977    0.9974    0.9986    0.9997  (control)
+  CONC  mechanism|ackley|40|mix-0.1|0.5         0.9993     0.9974    0.9978    0.9979    0.9977    0.9977    0.9977  (control)
+  CONC  mechanism|ackley|5|centred|0.01         1.4693     1.0805    1.0774    1.0303    1.0026    1.0005    1.0000  agrees
+  CONC  mechanism|ackley|5|centred|0.1          1.0661     1.0437    1.0233    1.0001    0.9967    0.9993    1.0011  agrees
+  CONC  mechanism|griewank|10|mix-0.1|0.01      1.0479     1.0217    1.0441    1.0078    1.0122    1.0078    1.0083  agrees
+  CONC  mechanism|griewank|40|centred|0.01      1.2167     1.1128    1.0755    1.0406    0.9966    1.0140    1.0000  agrees
+  CONC  mechanism|griewank|40|centred|0.1       1.0048     1.0381    0.9950    1.0003    0.9958    0.9918    0.9922  (control)
+  CONC  mechanism|griewank|40|centred|0.5       1.0025     0.9849    0.9897    0.9896    0.9900    0.9901    0.9897  (control)
+  CONC  mechanism|griewank|40|mix-0.1|0.01      1.1893     1.1171    1.0782    1.0254    1.0072    1.0004    1.0000  agrees
+  CONC  mechanism|griewank|40|mix-0.1|0.1       1.0319     1.0400    1.0112    1.0076    1.0011    1.0025    1.0014  (control)
+  CONC  mechanism|griewank|40|mix-0.1|0.5       0.9902     1.0005    0.9988    0.9973    0.9955    0.9959    0.9951  (control)
+  CONC  mechanism|levy|40|centred|0.01          0.9955     1.0962    1.0826    1.0156    1.0060    1.0000    1.0000  (control)
+  CONC  mechanism|levy|40|centred|0.1           1.0526     1.0088    0.9905    1.0075    1.0043    1.0016    1.0009  mixed
+  CONC  mechanism|levy|40|centred|0.5           0.9979     1.0020    1.0038    1.0026    1.0017    1.0023    1.0023  (control)
+  CONC  mechanism|levy|40|mix-0.1|0.01          1.0668     1.1415    1.0261    1.0190    1.0152    1.0090    1.0090  agrees
+  CONC  mechanism|levy|40|mix-0.1|0.1           0.9945     0.9973    0.9396    0.9514    0.9544    0.9523    0.9530  (control)
+  CONC  mechanism|levy|40|mix-0.1|0.5           0.9992     1.0005    1.0002    1.0002    1.0002    1.0002    1.0002  (control)
+  CONC  mechanism|rastrigin|10|centred|0.1      0.9604     1.0232    0.9956    0.9888    0.9990    0.9964    0.9943  agrees
+  CONC  mechanism|rastrigin|10|mix-0.1|0.01     1.0766     1.1306    1.0219    1.0334    1.0061    0.9992    1.0000  agrees
+  CONC  mechanism|rastrigin|40|centred|0.01     1.4152     1.0969    1.0716    1.0797    1.0044    1.0035    1.0000  agrees
+  CONC  mechanism|rastrigin|40|centred|0.1      0.9632     1.0691    1.0045    1.0096    1.0015    0.9999    1.0000  (control)
+  CONC  mechanism|rastrigin|40|centred|0.5      1.0045     1.0383    1.0250    1.0243    1.0247    1.0251    1.0250  (control)
+  CONC  mechanism|rastrigin|40|mix-0.1|0.01     1.2529     1.0997    1.0339    1.0464    1.0190    0.9981    1.0000  agrees
+  CONC  mechanism|rastrigin|40|mix-0.1|0.1      0.9974     1.0004    1.0104    1.0075    1.0067    1.0079    1.0076  (control)
+  CONC  mechanism|rastrigin|40|mix-0.1|0.5      0.9990     1.0092    1.0078    1.0079    1.0077    1.0078    1.0078  (control)
+  CONC  mechanism|rosenbrock|40|centred|0.01    1.0244     1.0405    1.0240    0.9956    0.9977    0.9996    0.9960  (control)
+  CONC  mechanism|rosenbrock|40|centred|0.1     0.9979     1.0072    1.0030    0.9966    1.0016    1.0024    1.0015  (control)
+  CONC  mechanism|rosenbrock|40|centred|0.5     0.9991     0.9879    0.9918    0.9846    0.9861    0.9859    0.9859  (control)
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.01    0.9926     1.0377    1.0036    1.0141    0.9993    1.0017    0.9994  (control)
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.1     0.9967     1.2534    1.0364    0.9894    1.0345    1.0081    1.0000  (control)
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.5     1.0002     1.0006    0.9982    0.9993    0.9990    0.9990    0.9991  (control)
+  CONC  mechanism|sphere|10|centred|0.01        1.0695     1.0432    1.0411    0.9990    1.0054    0.9939    0.9981  mixed
+  CONC  mechanism|sphere|40|centred|0.01        1.2339     1.1348    1.0565    1.0165    1.0104    1.0025    1.0000  agrees
+  CONC  mechanism|sphere|40|centred|0.1         1.0197     1.0109    1.0102    0.9955    0.9974    0.9959    0.9975  (control)
+  CONC  mechanism|sphere|40|centred|0.5         0.9998     0.9897    0.9943    0.9926    0.9927    0.9924    0.9925  (control)
+  CONC  mechanism|sphere|40|mix-0.1|0.01        1.0556     1.0717    1.0435    1.0090    1.0021    0.9992    1.0000  agrees
+  CONC  mechanism|sphere|40|mix-0.1|0.1         1.0045     1.0639    0.9801    1.0188    1.0228    1.0258    1.0188  (control)
+  CONC  mechanism|sphere|40|mix-0.1|0.5         1.0001     1.0020    1.0027    1.0025    1.0024    1.0026    1.0026  (control)
+  TAU8  boundary|ackley|10|centred|0.01         2.1060     1.2560    1.1416    1.1176    1.0632    1.0296    1.0000  agrees
+  TAU8  boundary|ackley|10|centred|0.02         1.9660     1.2113    1.1412    1.0521    1.0544    1.0030    1.0000  agrees
+  TAU8  boundary|ackley|10|centred|0.03         1.5920     1.1434    1.1133    1.0222    1.0305    1.0146    1.0000  agrees
+  TAU8  boundary|ackley|10|centred|0.05         1.2029     1.1235    1.0831    1.0415    1.0088    1.0021    1.0000  agrees
+  TAU8  boundary|ackley|10|centred|0.07         1.2096     1.0941    1.0308    1.0149    1.0153    0.9962    1.0000  agrees
+  TAU8  boundary|ackley|10|centred|0.1          1.1509     1.0622    1.0120    1.0188    1.0120    1.0096    1.0000  agrees
+  TAU8  boundary|ackley|40|centred|0.01         1.8907     1.1799    1.1117    1.0701    1.0459    1.0227    1.0000  agrees
+  TAU8  boundary|ackley|40|centred|0.02         1.6274     1.0938    1.0862    1.0447    1.0200    1.0088    1.0000  agrees
+  TAU8  boundary|ackley|40|centred|0.03         1.1177     1.0418    1.0488    1.0229    1.0134    0.9988    1.0000  agrees
+  TAU8  boundary|ackley|40|centred|0.05         1.0671     1.0512    1.0511    1.0300    1.0126    0.9964    1.0000  agrees
+  TAU8  boundary|ackley|40|centred|0.07         1.0048     1.0632    1.0315    1.0117    1.0033    0.9991    1.0000  (control)
+  TAU8  boundary|ackley|40|centred|0.1          1.0559     1.0587    0.9943    1.0052    1.0027    1.0004    1.0000  (control)
+  TAU8  boundary|ackley|40|centred|0.2          1.0016     1.0325    1.0164    1.0045    1.0008    1.0011    0.9979  (control)
+  TAU8  boundary|ackley|40|centred|0.3          0.9747     1.0094    1.0087    0.9977    1.0048    1.0029    1.0019  (control)
+  TAU8  boundary|ackley|5|centred|0.01          1.2159     1.0493    1.0619    1.0168    1.0097    1.0009    1.0000  agrees
+  TAU8  boundary|ackley|5|centred|0.02          0.9259     1.1391    1.0426    1.0261    1.0084    1.0042    1.0000  disagrees
+  TAU8  boundary|ackley|5|centred|0.03          1.1279     1.0829    1.0115    1.0199    1.0027    1.0094    1.0000  agrees
+  TAU8  boundary|ackley|5|centred|0.05          1.1710     1.0853    0.9969    1.0132    0.9962    0.9972    1.0000  mixed
+  TAU8  boundary|ackley|5|centred|0.1           1.0674     1.0496    1.0132    1.0115    1.0080    1.0094    1.0073  agrees
+  TAU8  boundary|griewank|40|centred|0.01       1.2177     1.2363    1.0585    1.0576    1.0162    1.0048    1.0000  agrees
+  TAU8  boundary|griewank|40|centred|0.02       1.0251     1.1369    1.0671    1.0148    1.0066    1.0019    1.0000  (control)
+  TAU8  boundary|griewank|40|centred|0.03       1.0937     1.1146    1.0232    1.0265    1.0079    1.0011    1.0000  agrees
+  TAU8  boundary|griewank|40|centred|0.05       1.0904     1.0970    1.0553    1.0102    1.0012    0.9997    1.0051  agrees
+  TAU8  boundary|griewank|40|centred|0.07       1.0264     1.0437    1.0150    1.0011    1.0035    1.0024    1.0000  (control)
+  TAU8  boundary|griewank|40|centred|0.1        1.0298     1.0283    1.0162    1.0136    1.0115    1.0071    1.0067  agrees
+  TAU8  boundary|griewank|40|centred|0.2        0.9963     1.0112    1.0040    0.9969    0.9980    0.9995    0.9975  (control)
+  TAU8  boundary|griewank|40|centred|0.3        1.0057     1.0089    0.9939    0.9944    0.9928    0.9923    0.9915  (control)
+  TAU8  boundary|levy|40|centred|0.01           1.2259     1.1796    1.0278    1.0325    1.0151    1.0050    1.0000  agrees
+  TAU8  boundary|levy|40|centred|0.02           1.1610     1.0940    1.0213    1.0064    1.0022    0.9939    1.0000  agrees
+  TAU8  boundary|levy|40|centred|0.03           1.0624     1.0803    1.0319    1.0079    1.0068    1.0018    1.0000  agrees
+  TAU8  boundary|levy|40|centred|0.05           1.0096     1.0460    1.0032    1.0134    1.0037    1.0024    1.0021  (control)
+  TAU8  boundary|levy|40|centred|0.07           1.0238     1.0210    1.0297    1.0089    1.0095    1.0122    1.0123  agrees
+  TAU8  boundary|levy|40|centred|0.1            1.0187     1.0288    0.9983    0.9973    0.9978    0.9950    0.9948  (control)
+  TAU8  boundary|levy|40|centred|0.2            1.0109     1.0063    1.0032    1.0013    1.0007    1.0005    1.0000  (control)
+  TAU8  boundary|levy|40|centred|0.3            1.0018     0.9829    0.9969    0.9944    0.9906    0.9907    0.9908  (control)
+  TAU8  boundary|levy|5|centred|0.2             1.0014     1.0346    1.0398    1.0411    1.0406    1.0414    1.0410  agrees
+  TAU8  boundary|rastrigin|10|centred|0.01      0.9259     1.0838    1.0423    1.0169    1.0156    1.0009    1.0000  disagrees
+  TAU8  boundary|rastrigin|10|centred|0.02      1.0709     1.0161    1.0387    1.0033    1.0005    1.0046    1.0019  agrees
+  TAU8  boundary|rastrigin|10|centred|0.03      1.0110     1.0782    1.0437    1.0163    1.0098    1.0131    1.0097  agrees
+  TAU8  boundary|rastrigin|10|centred|0.07      1.0560     1.0175    0.9890    1.0043    1.0004    0.9997    0.9995  mixed
+  TAU8  boundary|rastrigin|40|centred|0.01      1.4219     1.1880    1.0523    1.0432    1.0221    1.0046    1.0000  agrees
+  TAU8  boundary|rastrigin|40|centred|0.02      1.3993     1.1490    1.0933    1.0515    1.0007    1.0009    1.0000  agrees
+  TAU8  boundary|rastrigin|40|centred|0.03      1.2951     1.0953    1.0221    1.0181    1.0095    1.0103    1.0000  agrees
+  TAU8  boundary|rastrigin|40|centred|0.05      0.9151     1.1024    1.0306    1.0103    1.0032    1.0098    1.0000  disagrees
+  TAU8  boundary|rastrigin|40|centred|0.07      1.0834     1.0900    1.0088    0.9958    0.9935    0.9932    1.0000  mixed
+  TAU8  boundary|rastrigin|40|centred|0.1       0.9998     1.0418    1.0326    0.9943    0.9986    0.9996    1.0000  (control)
+  TAU8  boundary|rastrigin|40|centred|0.2       1.0028     1.0093    1.0131    0.9990    0.9980    0.9942    0.9949  (control)
+  TAU8  boundary|rastrigin|40|centred|0.3       0.9975     0.9905    0.9868    0.9939    0.9878    0.9871    0.9881  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.01     0.9519     1.0223    1.0524    1.0089    0.9978    1.0034    1.0000  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.02     1.0182     1.0038    1.0053    0.9996    0.9959    0.9980    0.9964  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.03     1.0310     1.0110    0.9933    1.0075    1.0006    1.0008    1.0024  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.05     0.9780     1.0144    0.9968    1.0020    0.9936    0.9965    0.9979  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.07     0.9987     1.0265    1.0095    1.0142    1.0096    1.0109    1.0097  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.1      0.9909     0.9832    1.0035    1.0011    1.0021    1.0019    1.0016  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.2      0.9958     1.0007    1.0000    1.0026    1.0033    1.0034    1.0031  (control)
+  TAU8  boundary|rosenbrock|40|centred|0.3      0.9981     0.9912    0.9905    0.9918    0.9908    0.9908    0.9909  (control)
+  TAU8  boundary|sphere|40|centred|0.01         1.3003     1.1164    1.0358    1.0144    1.0019    0.9985    1.0000  agrees
+  TAU8  boundary|sphere|40|centred|0.02         1.0681     1.0889    1.0583    1.0163    0.9948    1.0022    1.0000  agrees
+  TAU8  boundary|sphere|40|centred|0.03         1.0330     1.0486    1.0276    1.0044    0.9932    1.0038    1.0000  (control)
+  TAU8  boundary|sphere|40|centred|0.05         1.0500     1.0384    1.0284    1.0170    1.0048    1.0069    1.0050  agrees
+  TAU8  boundary|sphere|40|centred|0.07         1.0076     1.0139    1.0165    1.0130    1.0078    1.0037    1.0043  (control)
+  TAU8  boundary|sphere|40|centred|0.1          1.0424     1.0044    1.0060    1.0058    1.0021    1.0032    1.0032  agrees
+  TAU8  boundary|sphere|40|centred|0.2          0.9973     1.0082    1.0053    0.9948    0.9981    0.9970    0.9963  (control)
+  TAU8  boundary|sphere|40|centred|0.3          1.0020     1.0000    0.9934    0.9908    0.9930    0.9913    0.9926  (control)
+  affected: agrees 48, mixed 5, disagrees 3
+
+====================================================================================================
+PLAN  E1 cost from measured walls  (draws nothing)
+====================================================================================================
+  throughput: calprec2-smoke-kaggle-20261011-121225 (Kaggle; python 3.13.15, numpy 2.1.3). Seconds per point:
+  t_draw to draw and evaluate f, t_beta to weigh one beta. A laptop is slower;
+  these are Kaggle figures and a lower bound (perfect scaling).
+           N    tasks         core s     wall s at Kaggle W     largest task s
+       50000     5232          705.0                  176.2               0.25
+      200000     5232         2819.9                  705.0               1.01
+     1000000     5232        14099.4                 3524.8               5.04
+     4000000     5232        56397.5                14099.4              20.14
+  PC: boundary|ackley|10|centred|0.01 at N 64000000 with 1 beta(s): 70.5 s per job (committed wall 69.5 s, RSS 2495.6 MB); it runs in the
+      smoke and at the start of every e1 job
+  total core s 74092.2 (E1 and one PC)
+
+====================================================================================================
+PLAN  measured peak RSS for this evaluation  (RSS; corrected 2026-10-31)
+====================================================================================================
+  E1 streams each draw in chunks of 250000 and holds no sample. calprec2's phase C rows at
+  N 256000000 are streamed only; its 64M rows hold replicate 0 for calprec2's own E1
+  check and are printed only beside it, labelled held.
+  module        d           streamed (256M rows)                held (64M rows)
+  boundary      5         94.3 MB over 288 tasks       2518.5 MB over 288 tasks
+  boundary     10        145.9 MB over 288 tasks       2537.5 MB over 288 tasks
+  boundary     40        432.2 MB over 288 tasks       2497.5 MB over 288 tasks
+  mechanism     5         94.6 MB over 216 tasks       2522.6 MB over 216 tasks
+  mechanism    10        146.2 MB over 216 tasks       2560.7 MB over 216 tasks
+  mechanism    40        445.6 MB over 216 tasks       2505.3 MB over 216 tasks
+  calprec2's per-task budget G-RSS is 3072 MB; the scheduler flags a row above it.
+
+====================================================================================================
+PLAN  shard schedule for Kaggle  (S1, S2, T1, G-STOP)
+====================================================================================================
+  20928 E1 tasks (109 cells x 4 sizes x 48 draws), 4 Kaggle workers, PC 70.5 s per job
+  shard estimate = its tasks' est / workers + PC (perfect scaling: a lower bound)
+  at the target 10800 s (0.5 x 21600 s): smallest --nshards 2, largest shard 9323.2 s
+  at the ceiling 21600 s: smallest --nshards 1, largest shard 18575.9 s
+  RECOMMENDED: --nshards 2, the count at the target
+   shard    tasks     est core s       est wall s    timeout s      G-STOP (stop-after + timeout)
+       0    10464        37010.9           9323.2          600           36000 + 600 = 36600 PASS
+       1    10464        37010.9           9323.2          600           36000 + 600 = 36600 PASS
+  schedule: smoke first, then shards 0 to 1 one at a time, by rerunq.py (family sizetest)
+  The smoke draws one kind-42 sample per unit at N 4000000: 29 units, est 274.7 core s, plus PC.
+
+====================================================================================================
+PLAN  larger-reference rerun of the affected d 40 cells  (draws nothing)
+====================================================================================================
+  affected d 40 cells: 31 in 15 (module, objective, law) groups
+  measured trajectory cost per realization at J_inf 50000 (costprobe2 main units):
+  group                                 cells     wall s  peak RSS MB
+  boundary|ackley|40|centred                4       22.8        202.3
+  boundary|griewank|40|centred              4       16.9        202.5
+  boundary|levy|40|centred                  4       27.1        213.2
+  boundary|rastrigin|40|centred             5       21.5        202.8
+  boundary|sphere|40|centred                4       12.6        193.2
+  mechanism|ackley|40|centred               1       21.0        199.0
+  mechanism|ackley|40|mix-0.1               1 not measured not measured
+  mechanism|griewank|40|centred             1       17.3        199.0
+  mechanism|griewank|40|mix-0.1             1 not measured not measured
+  mechanism|levy|40|centred                 1       24.4        215.2
+  mechanism|levy|40|mix-0.1                 1 not measured not measured
+  mechanism|rastrigin|40|centred            1       22.1        199.0
+  mechanism|rastrigin|40|mix-0.1            1 not measured not measured
+  mechanism|sphere|40|centred               1       11.0        200.5
+  mechanism|sphere|40|mix-0.1               1 not measured not measured
+  NOT MEASURED: any trajectory at d 40 with J_inf above 50000; any trajectory at any d
+  above J_inf 100000 (REFSIZE, d 10, J <= 1250, is the largest measured).
+  Arithmetic, not a measurement: one J_inf x d float64 array is J_inf x d x 8 bytes:
+    J_inf    200000: 64.0 MB per array at d 40
+    J_inf   1000000: 320.0 MB per array at d 40
+    J_inf   4000000: 1280.0 MB per array at d 40
+  PROBE REQUIRED FIRST (rule 6): one realization of each group above at each candidate
+  J_inf in 200000, 1000000, 4000000, measuring wall and per-worker peak RSS: 45 units.
+  E1 decides J_needed per cell (J1); only the sizes it names need probing.
+  RERUN AFTER THE PROBE: the affected d 40 cells at J_needed, the run's beta, 15 realizations
+  each, as new rows with new seed keys: 465 realizations; its cost is the probe's measured
+  wall at J_needed times that count, printed by the probe's projection, not here.
+  Cells labelled 'not adequate' have no converged ratio_ref; a larger J_inf cannot be
+  judged against it.
+
+====================================================================================================
+PF  writing the E1 plan folder
+====================================================================================================
+  wrote /home/rahul/Research/cbo-gap-final/runs/sizetest-plan-20261031-033830
+  sizetest_e1_plan.csv sha256 ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e
+  next: python scripts/manifest.py (writes its sha256.txt), then commit the folder
+
+====================================================================================================
+sizetest.py plan done, exit 0  (nothing drawn)
+====================================================================================================
