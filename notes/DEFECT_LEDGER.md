@@ -3029,6 +3029,49 @@ instruction of 2026-10-15.
   ONSET-R (added 2026-10-30): the twenty-one-row analysis is in (N44,
   CLOSED). Its manuscript consequences (38, 602-620, 628, 707, 722) join
   this pass; listed in N44.
+  PROPOSED ONSET TEXT (Rahul's instruction 2026-10-30; not applied;
+  numbers from runs/rerun-analysis-20261030-144722/analysis_onsetr.csv):
+    "On a 17-point grid from r = 0.3 to 4.8, at tau_0 = 0.1 with 48
+    realizations per cell, we estimate for each of 30 units the smallest r
+    beyond which the fitted slope stays at least 0.10 above the unit's own
+    slope at r <= 0.5. That threshold and the verdict rule were fixed before
+    the runs. For 26 units the 95% interval of this crossing lies above
+    r = 1, the boundary of the condition 2 lambda > d sigma^2 of [FKR,
+    Theorem 3.7] (2 lambda > sigma^2 for anisotropic diffusion); none lies
+    below. Three, all anisotropic Ackley, are not distinguishable from 1.
+    One, isotropic Rastrigin at d = 10, shows no crossing up to r = 4.8.
+    No multiplicity correction is applied. The anisotropic verdicts depend
+    on the threshold: at 0.05, two anisotropic Ackley intervals lie below
+    1. Below r = 0.5 the slope is not the J^-1 slope in most units, so the
+    crossing locates a further departure, not the start of one."
+  Reason: it replaces Rahul's phrasing "degradation begins above the
+  boundary at 26 of 30 units", which overstates in three ways:
+  - "begins" is wrong: r_delta is where a sustained excess of delta is
+    first reached, not where departure starts; in the ramp units
+    (anisotropic Ackley) departure starts earlier, possibly inside the
+    baseline window;
+  - "degradation" needs its reference: the unit's own small-r slope, not
+    -1 (the rate criterion holds at r 0.3 in 2 of 30 cells);
+  - "the boundary" must be named: the condition of FKR Theorem 3.7
+    (isotropic) or of dissertation Theorem 3.6 (anisotropic), neither of
+    which owns the J^-1 exponent (N1).
+  DECIDED (Rahul, 2026-10-30), ONSET-R presentation:
+  - No trend of r_delta across d is claimed or computed, and no trend
+    analysis is run: the pattern has now been seen, so any such analysis
+    would be post hoc by construction. Reasons that go with it: isotropic
+    Rastrigin is non-monotone in d (3.921 at d 5, beyond 4.8 at d 10); the
+    pooled isotropic sequence has no d 10 value (not computed, O-R7);
+    pooled isotropic I2 is 0.9966 to 0.9994 at d 20 to 80, so the pooled
+    value is not a common crossing; "flat" for anisotropic would be an
+    equivalence claim (rule 10). The paper shows the table and says only
+    that no trend across d was specified or assessed.
+  - The paper shows all three deltas (0.05, 0.10, 0.20), not the primary
+    alone, because at 0.05 two anisotropic Ackley intervals lie below 1
+    (d 40 0.760 [0.653, 0.859], d 80 0.651 [0.610, 0.693]). 0.10 stays the
+    only delta with verdicts.
+  - W-ge is empty by construction at tau_0 0.1 (J tau_0 >= 1 holds for
+    every J of the grid, 10 to 5000), so analysis_onsetr.csv has no W-ge
+    line. The paper must say so, since O-R8 promises W-ge as sensitivity.
   OPEN.
 
 ## Checked and found sound
