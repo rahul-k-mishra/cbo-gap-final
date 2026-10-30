@@ -281,6 +281,12 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     (manuscript Proposition 2), so it is in that sketched case: N2's "no
     existence theorem in either paper" holds for stated theorems, but the
     text must mention 5.2. Still OPEN (SIAM comparison).
+  GHV HALF CLOSED 2026-10-31 on Rahul's decision (N45, GHV CITATION): the
+  manuscript cites arXiv 2312.07373v4 by its own numbering, the version
+  checked. "[4, Subsection 2.6]" and "[4, Table 1]" exist in v4 (both p.
+  15) with the content the text gives them; the list of GHV statements
+  and their v4 places is in N45. The FKR half (every [3, x.y] against the
+  SIAM PDF, and the c^-2 claim) stays OPEN.
   RE-MAPPING 2026-10-29 (Rahul's request; by content, from the v6 text,
   extracted with pdftotext; formulas should be eyeballed in the PDF).
   Old reference -> v6 result -> verdict.
@@ -2849,6 +2855,60 @@ instruction of 2026-10-15.
     whose run beta is beta_adq, that check is largely fixed by
     construction. The attribution concerns the calibration miss, not the
     tau_0 0.01 departure from -1, which N45 reports and does not explain.
+  - CORRECTION (Rahul, 2026-10-31) to the reason recorded above for
+    "DECIDED: E1 runs on Kaggle". Rahul's reason was partly wrong: he
+    said the 2500 MB peak ruled out the laptop. That figure is calprec2's
+    held 64M peak, not E1's; E1 streams, and its measured streamed figure
+    is at most 445.6 MB (logs/sizetest-plan2-20261031.log, mechanism d 40,
+    256M rows). The laptop has 11.4 GB of RAM. Memory was never the
+    obstacle on either machine. The reason that holds is cores and
+    throughput: 2 cores against Kaggle's 4, and the schedule (37010.9 core
+    s per shard) is priced from Kaggle walls.
+  - sizetest plan with --write-plan RESULT (Rahul, 2026-10-31, laptop,
+    python 3.12.3, numpy 2.5.3; logs/sizetest-plan2-20261031.log; script
+    sha256 711dc0e6...b4b3; committed 94d46bb):
+    - G3, G1 (CONC 144, TAU8 144), G2 PASS; selected 109 (affected 56,
+      controls 53); E0 agrees 48, mixed 5, disagrees 3, as the first plan.
+    - E1 cost: 705.0, 2819.9, 14099.4, 56397.5 core s at 50000 to
+      4000000; PC 70.5 s per job; total 74092.2 core s.
+    - Streamed peak RSS (256M rows): boundary 94.3, 145.9, 432.2 MB at d
+      5, 10, 40; mechanism 94.6, 146.2, 445.6 MB. Held (64M rows) 2497.5
+      to 2560.7 MB.
+    - Schedule: 20928 tasks; at the target 10800 s, 2 shards, largest
+      9323.2 s; at the ceiling, 1 shard at 18575.9 s. Shards 0 and 1:
+      10464 tasks, 37010.9 est core s, 9323.2 est wall s, timeout 600 s,
+      G-STOP 36000 + 600 = 36600 PASS. Smoke: 29 units at N 4000000, est
+      274.7 core s, plus PC.
+    - Plan folder runs/sizetest-plan-20261031-033830: sizetest_e1_plan.csv
+      sha256 ad4c1f72...e104e.
+  - DECIDED (Rahul, 2026-10-31): 2 shards, the count at the target. As
+    for every earlier set, the estimates assume perfect scaling and
+    measured shards have overrun them by up to 30%; the target is half
+    the ceiling for that reason, and --stop-after with resume absorbs an
+    overrun.
+  - PC MEMORY (checked 2026-10-31, Rahul's question). The plan prints the
+    PC row's committed RSS, 2495.6 MB. That figure is calprec2's: its
+    phase C row at 64M holds replicate 0 in memory (calprec2.py 713) for
+    calprec2's own streaming check. sizetest's PC does not hold: pc_task
+    (sizetest.py 538) streams the 64M points in chunks, exactly as E1
+    does, and the value it compares with is calprec2's streamed log-ESS
+    (calprec2.py 720 to 723). Its peak is therefore the streamed figure
+    for its cell (boundary d 10: 145.9 MB measured at 256M), not 2495.6
+    MB. PC also runs alone: run_pc starts a pool of one process
+    (sizetest.py 550) and returns before the scheduler is created
+    (sizetest.py 1055 then 1061 in smoke, 1118 then 1125 in e1), so no E1
+    worker is alive while it runs. 3072 MB is calprec2's per-task flag
+    in the scheduler, which PC does not pass through; a Kaggle session
+    has 30 GB. Not a risk; nothing changes. The smoke prints PC's own RSS
+    on Kaggle ("PC PASS ... RSS"), which is the first measurement of it.
+  - notes/queues/sizetest-e1.json written 2026-10-31: profile family
+    sizetest, workers 4, plan and plan_sha256 as above, throughput
+    runs/calprec2-smoke-kaggle-20261011-121225, stop_after 36000.0;
+    items smoke-sizetest, sizetest-s0of2, sizetest-s1of2 (set e1). Read
+    with rerunq's own checks before commit: validate_definition passes;
+    both folders pass folder_ok; the plan csv hashes to plan_sha256; job
+    names sizetest-e1-smoke-a1, sizetest-e1-s0of2-a1,
+    sizetest-e1-s1of2-a1, and their arguments, as R1Z expects.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
@@ -4024,6 +4084,76 @@ instruction of 2026-10-15.
     The explaining version was never available from these texts.
     Carrillo 2018 (where FKR's alpha constant originates) and the
     Riedl dissertation (in ~/cbo-refs) were not read for this.
+  DECIDED (Rahul, 2026-10-31), GHV CITATION: cite arXiv 2312.07373v4 (13
+  Apr 2025), the version Rahul holds and can verify line by line. Reason:
+  the numbering cited must be numbering that was checked. The reference
+  list shows the published DOI alongside, and names the arXiv version as
+  the one audited, so no reader takes the published numbering as
+  verified. If Hoffmann or Vaes send the ESAIM version, the citation is
+  updated then, from the swap list below. Closes O6 and the GHV half of
+  N3.
+  - Reference entry, to write in the manuscript pass: Gerber, Hoffmann,
+    Vaes, "Mean-field limits for consensus-based optimization and
+    sampling", arXiv:2312.07373v4 (2025), the version whose numbering is
+    cited; published in ESAIM Control Optim. Calc. Var., DOI
+    10.1051/cocv/2025060, whose numbering was not checked. The DOI
+    resolves (doi.org answered 302 to
+    www.esaim-cocv.org/10.1051/cocv/2025060, read 2026-10-31); the
+    publisher page refused the request (403), so the volume (31), the
+    paper number (74) and the year in the current entry (tex 743) are
+    not verified here.
+  - SWAP LIST: every GHV statement in manuscript/sn-article.tex (the
+    round-1 text; line numbers of that file), with its v4 place. Checked
+    against v4 2026-10-31.
+    - tex 50: "removed the conditioning on a bounded event and obtained a
+      pathwise mean-field limit at the classical Monte Carlo rate": v4
+      Theorem 2.6 (2.11), p. 10; pathwise chaos Remark 2.8, p. 10. No
+      pinpoint in the text. Holds.
+    - tex 56: "[Subsection 2.6]": Ackley, beta 3, d 2, J_inf 10^6, M 100,
+      J^-1 scaling of the squared coupled error, small-J breakdown with
+      ESS close to 1: v4 Subsection 2.6 and Table 1, p. 15. Holds.
+    - tex 62: "[Subsection 2.6]", ESS at small J: v4 p. 15. Holds.
+    - tex 88: notation beta, J follows GHV: v4 (1.1). No pinpoint.
+    - tex 94 to 101: Definition [Assumption H]: (2.1), (2.2a), (2.2b),
+      v4 p. 7; "main results require l = u": v4 p. 7 ("Our main results
+      hold for f in A(s, l, l)"). Holds; the text omits that L_f, c_l,
+      C_l, c_u, C_u are positive and s >= 0 (FINDING, minor).
+    - tex 109 and 119 (Table 1 column "main results"): class membership
+      against v4 Assumption H and the A(s, l, l) restriction. No pinpoint.
+    - tex 201: "the moment condition of [Assumption H] requires p_M = s+2
+      when l = 0 against 1 when l > 0". FINDING: Assumption H has no
+      moment condition; p_M is defined at v4 (2.3), p. 8, and enters as
+      the moment condition p >= 2 v p_M of Theorem 2.3 (p. 8). Cite (2.3)
+      and Theorem 2.3. The sentence also starts lower case.
+    - tex 219: "[Lemma 3.7]", the bound with C depending on (f, beta, p,
+      r) and the r-th moment, routed through Doukhan: v4 Lemma 3.7, p. 22
+      (f bounded below, 0 < p < r); v4 p. 5 cites [1] Agapiou et al. and
+      [21] Doukhan and Lang for it. Holds.
+    - tex 259: "[Lemma 3.7], one of three terms in Sznitman's argument".
+      FINDING: v4 p. 5 says "one of the terms in Sznitman's argument
+      (Lemma 3.7)"; the count three is not v4's. Say "one of the terms".
+    - tex 284: "[Subsection 2.6]" coupling structure (same initial
+      positions and Brownian motions as the first J particles): v4 p. 15.
+      Holds.
+    - tex 290: "[Table 1]: Delta t 0.01, T 1, lambda 1, sigma 1/5".
+      FINDING: v4 Table 1 (p. 15) has d 2, beta 3, sigma 1/5, rho_0
+      N(0, I_2), Delta t 0.01, T 1, J_inf 10^6, M 100, and no lambda; v4
+      (1.1) has unit drift. lambda = 1 matches GHV's drift, not Table 1.
+    - tex 403 and 694: GHV named without pinpoint; tex 694's "one
+      twentieth of the size in [GHV]" rests on J_inf 10^6 (Table 1).
+    - sn-supplementary.tex: the bibitem only (line 83); no pinpoint
+      found by text search.
+    - Ledger items carrying v4 numbering, to recheck at the same time:
+      N1 and O8 (Theorem 2.6, p = 2), N3 (Theorem 2.3, Theorem 2.6, (1.1),
+      (2.10), Subsection 5.2), O3 ((1.1), (2.5)), O4 ((4.9), Remark 4.3,
+      p. 29), O6, and the primary-text check above (Theorem 2.6, Lemma
+      3.7, Subsection 2.6).
+  - CANNOT BE SETTLED WITHOUT THE ESAIM TEXT (none blocks the
+    submission under this decision): whether the published numbering of
+    each item above equals v4's; whether any published statement
+    (hypotheses, constants, Subsection 2.6 and Table 1) differs from v4;
+    the published volume, paper number, year and title, since the
+    publisher page was not readable.
   DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
   - Remove the sentence at tex 703 ("A dedicated experiment controlling
     that concentration exactly at every ensemble size does not make the
@@ -4093,6 +4223,15 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
   using P_4 regularity.
 - O5. Theorem 12 is stated for any weak solution; uniqueness not needed; say so.
 - O6. Verify Theorem 2.3's numbering and wording in ESAIM COCV 31, Paper 74.
+  CLOSED 2026-10-31 against arXiv 2312.07373v4, the version cited by
+  Rahul's decision (N45, GHV CITATION). v4 Theorem 2.3 (p. 8): f in
+  A(s, l, l) with l <= s + 1, T > 0, rho_0 in P_p with p >= 2 v
+  p_M(s, l) ((2.3), p. 8); a strong solution of (1.3) with t ->
+  M_beta(rho_t) continuous, unique in that class, (2.4), t -> rho_t in
+  C([0, T], P_p) satisfying the Fokker-Planck equation (2.5). The header
+  above (taken from v3) agrees in content; it omits l <= s + 1, which is
+  vacuous (v4 Remark 2.1: A(s, l, u) is empty for l > s + 1), and the
+  uniqueness clause. The ESAIM wording remains unread.
 - O7. Rebuild Table 1 (see N2) with proofs: Sphere (C1 = 1, C2 = 1, C3 = 1,
   nu = 1/2, eta = 1); Rastrigin (|sin 2 pi x_i| <= 2 pi |x_i| gives
   C1 = 2 + 40 pi^2; C2 = 20 d; f >= ||x||^2 gives C3 = 1, nu = 1/2, eta = 1);
