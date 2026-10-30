@@ -1,0 +1,44 @@
+==============================================================================
+rerunq tick  run laptop.20261030T223249Z  2026-10-31T04:02:50+05:30
+  python 3.12.3
+  state file notes/rerun_queue.json
+  state RUNNING  item 0  attempt 1  job sizetest-e1-smoke-a1
+  definition notes/queues/sizetest-e1.json (sha256 d8e90fb216c9e28accd050f142ab214874d73e1a838647b529b9bd55216916c3)
+  profile sizetest-e1 [sizetest]  plan runs/sizetest-plan-20261031-033830 (sizetest_e1_plan.csv ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e)  throughput runs/calprec2-smoke-kaggle-20261011-121225  stop-after 36000.0  workers 4
+    expect python 3.13.15 numpy 2.1.3; sizetest_sha256 711dc0e6; calprec2_sha256 3947d7ba; costprobe2_sha256 ea5cb2e1
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  sizetest-e1-smoke-a1
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py status --job sizetest-e1-smoke-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job sizetest-e1-smoke-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-sizetest-e1-smoke-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-sizetest-e1-smoke-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-sizetest-e1-smoke-a1: COMPLETE  (judged: ericsom/cbo-sizetest-e1-smoke-a1 has status "KernelWorkerStatus.COMPLETE")
+FETCH  sizetest-e1-smoke-a1 (kaggle status COMPLETE)
+  $ /home/rahul/Research/cbo-gap-final/.venv/bin/python /home/rahul/cbo-gap-queue/scripts/kgrun.py fetch --job sizetest-e1-smoke-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-sizetest-e1-smoke-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job sizetest-e1-smoke-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/rahul/cbo-gap-queue
+    | ==============================================================================
+    | FETCH OUTPUT into /home/rahul/cbo-gap-queue/runs/sizetest-e1-smoke-a1-kaggle-20261031-040254
+    |   $ kaggle kernels output ericsom/cbo-sizetest-e1-smoke-a1 -p /home/rahul/cbo-gap-queue/runs/sizetest-e1-smoke-a1-kaggle-20261031-040254
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/sizetest-e1-smoke-a1-kaggle-20261031-040254/sizetest-smoke-20261030-222321/sizetest_e1.csv
+    | Output file downloaded to /home/rahul/cbo-gap-queue/runs/sizetest-e1-smoke-a1-kaggle-20261031-040254/sizetest-smoke-20261030-222321/sizetest_params.csv
+    | Kernel log downloaded to /home/rahul/cbo-gap-queue/runs/sizetest-e1-smoke-a1-kaggle-20261031-040254/cbo-sizetest-e1-smoke-a1.log 
+    |   3 files, manifest written to sha256.txt
+    |     b18bf69e0129b593c750c2758c2194207a12c41db20cc306d0fd546b182f65ba  cbo-sizetest-e1-smoke-a1.log
+    |     4d7beb02c1f12f1b54f83af95f682dbf2267847c51242689ca2ffcba4ce2f1e2  sizetest-smoke-20261030-222321/sizetest_e1.csv
+    |     086d7838506b6bf2625a4270984322f5eb5b19a0d39200a675acb5db5e1782a2  sizetest-smoke-20261030-222321/sizetest_params.csv
+    | ==============================================================================
+  runs/sizetest-e1-smoke-a1-kaggle-20261031-040254: manifest verified, 3 files
+  runner exit 0  python 3.13.15  numpy 2.1.3  mode smoke  run dir /kaggle/working/sizetest-smoke-20261030-222321  D-SMOKE PASS  completed 29
+  runner exit 0, D-SMOKE PASS; state now READY

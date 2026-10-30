@@ -1,0 +1,143 @@
+[{"stream_name":"stdout","time":0.886537439,"data":"kgrun runner: job sizetest-e1-smoke-a1\n"}
+,{"stream_name":"stdout","time":0.886599658,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":0.886606417,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.886610285,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":0.886614106,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.050805234,"data":"  listing  69 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.050840237,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/sizetest.py\n"}
+,{"stream_name":"stdout","time":1.05084521,"data":"  args     --mode smoke --plan-from runs/sizetest-plan-20261031-033830 --throughput runs/calprec2-smoke-kaggle-20261011-121225 --workers 4\n"}
+,{"stream_name":"stdout","time":3.959432002,"data":"  bundle   e03573a1bd6f198d: 68 files verified against kgrun-bundle-e03573a1bd6f198d.sha256\n"}
+,{"stream_name":"stdout","time":3.960254227,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":3.974559958,"data":"    data  sizetest-plan-20261031-033830  -\u003e  /tmp/kgrun-ship/sizetest-plan-20261031-033830   2 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":3.9775270320000002,"data":"        sizetest_e1_plan.csv: 109 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.977662433,"data":"        sizetest_plan_params.csv: 13 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.9777244229999997,"data":"        args: runs/sizetest-plan-20261031-033830 -\u003e /tmp/kgrun-ship/sizetest-plan-20261031-033830 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":3.983760079,"data":"    data  calprec2-smoke-kaggle-20261011-121225  -\u003e  /tmp/kgrun-ship/calprec2-smoke-kaggle-20261011-121225   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":3.983824484,"data":"        calprec2-smoke-20261011-061818/calprec2_params.csv: 10 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.985176478,"data":"        calprec2-smoke-20261011-061818/calprec2_plan.csv: 336 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":3.986028527,"data":"        calprec2-smoke-20261011-061818/calprec2_throughput.csv: 90 rows, 90 with end ok\n"}
+,{"stream_name":"stdout","time":3.986044831,"data":"        args: runs/calprec2-smoke-kaggle-20261011-121225 -\u003e /tmp/kgrun-ship/calprec2-smoke-kaggle-20261011-121225 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":3.986050875,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/sizetest.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --mode smoke --plan-from /tmp/kgrun-ship/sizetest-plan-20261031-033830 --throughput /tmp/kgrun-ship/calprec2-smoke-kaggle-20261011-121225 --workers 4\n"}
+,{"stream_name":"stdout","time":4.597998557,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.598031868,"data":"CBO-GAP sizetest  (ledger N40)  mode smoke\n"}
+,{"stream_name":"stdout","time":4.598036958,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.598041312,"data":"  python   3.13.15\n"}
+,{"stream_name":"stdout","time":4.598045386,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":4.602562625,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":4.602593893,"data":"  workers  4\n"}
+,{"stream_name":"stdout","time":4.603722679,"data":"  script   sha256 711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3\n"}
+,{"stream_name":"stdout","time":4.604691741,"data":"  calprec2.py sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a\n"}
+,{"stream_name":"stdout","time":4.605590803,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":4.605612249,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":4.605617716,"data":"  E1 seeds calprec2.key_of(41, cell, N, rep); smoke kind 42; chunk ci: default_rng(SeedSequence(key + [ci]))\n"}
+,{"stream_name":"stdout","time":4.6056224100000005,"data":"\n"}
+,{"stream_name":"stdout","time":4.605626013,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.605629987,"data":"G-FORK, G3, V2S\n"}
+,{"stream_name":"stdout","time":4.605633323,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.605637209,"data":"  G-FORK PASS  start method fork\n"}
+,{"stream_name":"stdout","time":4.607138863,"data":"  G3 PASS  mechanism, boundary, exactcal match costprobe2.ARCHIVE_SHA256\n"}
+,{"stream_name":"stdout","time":4.608722527,"data":"  V2S PASS  mechanism  X0 = draw_initial(rng, Jinf, d, objective, init)\n"}
+,{"stream_name":"stdout","time":4.610359108,"data":"  V2S PASS  boundary   X0 = rng.standard_normal((Jinf, d)) + MINIMIZER[objective]\n"}
+,{"stream_name":"stdout","time":4.610381236,"data":"\n"}
+,{"stream_name":"stdout","time":4.610385592,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.610389723,"data":"PF  the E1 plan folder\n"}
+,{"stream_name":"stdout","time":4.610393719,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.611812728,"data":"  plan     /tmp/kgrun-ship/sizetest-plan-20261031-033830\n"}
+,{"stream_name":"stdout","time":4.611827345,"data":"  plan     sizetest_e1_plan.csv sha256 ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e\n"}
+,{"stream_name":"stdout","time":4.611831686,"data":"  cells 109   ladder 50000,200000,1000000,4000000   draws 48   PC row C|boundary|ackley|10|centred|0.01|64000000|0\n"}
+,{"stream_name":"stdout","time":4.613359176,"data":"  throughput  /tmp/kgrun-ship/calprec2-smoke-kaggle-20261011-121225\n"}
+,{"stream_name":"stdout","time":4.613392228,"data":"  mode     smoke   shard 0 of 1\n"}
+,{"stream_name":"stdout","time":4.613643579,"data":"\n"}
+,{"stream_name":"stdout","time":4.613653552,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.613657864,"data":"T1  per-task timeout\n"}
+,{"stream_name":"stdout","time":4.613661639,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.613665718,"data":"  TIMEOUT_S = 600 s  (max(600, 5 x largest est 20.14 s))\n"}
+,{"stream_name":"stdout","time":4.613669493,"data":"\n"}
+,{"stream_name":"stdout","time":4.613673017,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.613676859,"data":"PC  positive control: recompute the plan's calprec2 phase C row\n"}
+,{"stream_name":"stdout","time":4.61368109,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":43.987610188,"data":"PC PASS  C|boundary|ackley|10|centred|0.01|64000000|0: 1 log-ESS values within 0.000e+00 (wall 39.3 s, RSS 113.0 MB)\n"}
+,{"stream_name":"stdout","time":43.991852803,"data":"\n"}
+,{"stream_name":"stdout","time":43.991896349,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":43.991903103,"data":"SM1  one kind-42 draw per unit at N 4000000: 29 units\n"}
+,{"stream_name":"stdout","time":43.991908033,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":43.997556302,"data":"  [smoke] 29 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":47.623356919,"data":"  [smoke     1/29   ] SMOKE|mechanism|ackley|10|centred|0.01|4000000|0             wall     3.520 s  RSS   113.3 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":47.831563081,"data":"  [smoke     2/29   ] SMOKE|mechanism|ackley|10|mix-0.1|0.01|4000000|0             wall     3.776 s  RSS    98.2 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":49.847217714,"data":"  [smoke     3/29   ] SMOKE|mechanism|ackley|5|centred|0.01|4000000|0              wall     2.091 s  RSS    75.2 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":51.262450432,"data":"  [smoke     4/29   ] SMOKE|mechanism|griewank|10|mix-0.1|0.01|4000000|0           wall     3.319 s  RSS    96.3 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":56.484032433,"data":"  [smoke     5/29   ] SMOKE|mechanism|ackley|40|centred|0.01|4000000|0             wall    12.367 s  RSS   269.7 MB  elapsed      12 s\n"}
+,{"stream_name":"stdout","time":57.698196291,"data":"  [smoke     6/29   ] SMOKE|mechanism|ackley|40|mix-0.1|0.01|4000000|0             wall    13.629 s  RSS   281.5 MB  elapsed      14 s\n"}
+,{"stream_name":"stdout","time":59.916978464,"data":"  [smoke     7/29   ] SMOKE|mechanism|griewank|40|centred|0.01|4000000|0           wall     9.883 s  RSS   269.8 MB  elapsed      16 s\n"}
+,{"stream_name":"stdout","time":62.933370227,"data":"  [smoke     8/29   ] SMOKE|mechanism|griewank|40|mix-0.1|0.01|4000000|0           wall    11.460 s  RSS   281.4 MB  elapsed      19 s\n"}
+,{"stream_name":"stdout","time":63.545262283,"data":"  [smoke     9/29   ] SMOKE|mechanism|rastrigin|10|centred|0.1|4000000|0           wall     3.548 s  RSS   113.4 MB  elapsed      20 s\n"}
+,{"stream_name":"stdout","time":66.760602966,"data":"  [smoke    10/29   ] SMOKE|mechanism|rastrigin|10|mix-0.1|0.01|4000000|0          wall     3.682 s  RSS   113.6 MB  elapsed      23 s\n"}
+,{"stream_name":"stdout","time":73.784212797,"data":"  [smoke    11/29   ] SMOKE|mechanism|levy|40|centred|0.01|4000000|0               wall    17.211 s  RSS   416.8 MB  elapsed      30 s\n"}
+,{"stream_name":"stdout","time":76.601171868,"data":"  [smoke    12/29   ] SMOKE|mechanism|levy|40|mix-0.1|0.01|4000000|0               wall    18.848 s  RSS   428.3 MB  elapsed      33 s\n"}
+,{"stream_name":"stdout","time":77.812939265,"data":"  [smoke    13/29   ] SMOKE|mechanism|rastrigin|40|centred|0.01|4000000|0          wall    14.230 s  RSS   342.4 MB  elapsed      34 s\n"}
+,{"stream_name":"stdout","time":79.427350009,"data":"  [smoke    14/29   ] SMOKE|mechanism|sphere|10|centred|0.01|4000000|0             wall     1.510 s  RSS    77.1 MB  elapsed      35 s\n"}
+,{"stream_name":"stdout","time":82.24459663,"data":"  [smoke    15/29   ] SMOKE|mechanism|rastrigin|40|mix-0.1|0.01|4000000|0          wall    15.317 s  RSS   357.9 MB  elapsed      38 s\n"}
+,{"stream_name":"stdout","time":83.459291778,"data":"  [smoke    16/29   ] SMOKE|mechanism|rosenbrock|40|centred|0.01|4000000|0         wall     9.604 s  RSS   336.7 MB  elapsed      39 s\n"}
+,{"stream_name":"stdout","time":84.869128331,"data":"  [smoke    17/29   ] SMOKE|mechanism|sphere|40|centred|0.01|4000000|0             wall     5.422 s  RSS   191.8 MB  elapsed      41 s\n"}
+,{"stream_name":"stdout","time":87.087316719,"data":"  [smoke    18/29   ] SMOKE|boundary|ackley|10|centred|0.01|4000000|0              wall     3.495 s  RSS   113.4 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":87.29454504,"data":"  [smoke    19/29   ] SMOKE|mechanism|rosenbrock|40|mix-0.1|0.01|4000000|0         wall    10.549 s  RSS   351.6 MB  elapsed      43 s\n"}
+,{"stream_name":"stdout","time":88.708325924,"data":"  [smoke    20/29   ] SMOKE|mechanism|sphere|40|mix-0.1|0.01|4000000|0             wall     6.295 s  RSS   205.0 MB  elapsed      45 s\n"}
+,{"stream_name":"stdout","time":89.316788822,"data":"  [smoke    21/29   ] SMOKE|boundary|ackley|5|centred|0.01|4000000|0               wall     2.060 s  RSS    75.3 MB  elapsed      45 s\n"}
+,{"stream_name":"stdout","time":91.931118631,"data":"  [smoke    22/29   ] SMOKE|boundary|levy|5|centred|0.2|4000000|0                  wall     2.590 s  RSS    81.0 MB  elapsed      48 s\n"}
+,{"stream_name":"stdout","time":95.547207763,"data":"  [smoke    23/29   ] SMOKE|boundary|rastrigin|10|centred|0.01|4000000|0           wall     3.423 s  RSS   113.4 MB  elapsed      52 s\n"}
+,{"stream_name":"stdout","time":97.360534085,"data":"  [smoke    24/29   ] SMOKE|boundary|griewank|40|centred|0.01|4000000|0            wall    10.023 s  RSS   269.9 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":97.570473499,"data":"  [smoke    25/29   ] SMOKE|boundary|ackley|40|centred|0.01|4000000|0              wall    12.496 s  RSS   269.9 MB  elapsed      54 s\n"}
+,{"stream_name":"stdout","time":103.188467698,"data":"  [smoke    26/29   ] SMOKE|boundary|sphere|40|centred|0.01|4000000|0              wall     5.588 s  RSS   191.8 MB  elapsed      59 s\n"}
+,{"stream_name":"stdout","time":106.400407529,"data":"  [smoke    27/29   ] SMOKE|boundary|levy|40|centred|0.01|4000000|0                wall    17.606 s  RSS   416.6 MB  elapsed      62 s\n"}
+,{"stream_name":"stdout","time":107.005350114,"data":"  [smoke    28/29   ] SMOKE|boundary|rosenbrock|40|centred|0.01|4000000|0          wall     9.551 s  RSS   336.8 MB  elapsed      63 s\n"}
+,{"stream_name":"stdout","time":107.81039276999999,"data":"  [smoke    29/29   ] SMOKE|boundary|rastrigin|40|centred|0.01|4000000|0           wall    12.140 s  RSS   342.5 MB  elapsed      64 s\n"}
+,{"stream_name":"stdout","time":107.81046301,"data":"\n"}
+,{"stream_name":"stdout","time":107.810487357,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":107.810495169,"data":"SM1  measured wall against the throughput estimate (reported, not a threshold)\n"}
+,{"stream_name":"stdout","time":107.810499964,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":107.810505136,"data":"  unit (cell used)                                 wall s      est s    ratio     RSS MB\n"}
+,{"stream_name":"stdout","time":107.810514318,"data":"  mechanism|ackley|10|centred|0.01                   3.52       4.18     0.84      113.3\n"}
+,{"stream_name":"stdout","time":107.81051938,"data":"  mechanism|ackley|10|mix-0.1|0.01                   3.78       4.55     0.83       98.2\n"}
+,{"stream_name":"stdout","time":107.810525158,"data":"  mechanism|ackley|40|centred|0.01                  12.37      14.61     0.85      269.7\n"}
+,{"stream_name":"stdout","time":107.810587619,"data":"  mechanism|ackley|40|mix-0.1|0.01                  13.63      15.97     0.85      281.5\n"}
+,{"stream_name":"stdout","time":107.810621391,"data":"  mechanism|ackley|5|centred|0.01                    2.09       2.60     0.81       75.2\n"}
+,{"stream_name":"stdout","time":107.810626698,"data":"  mechanism|griewank|10|mix-0.1|0.01                 3.32       3.87     0.86       96.3\n"}
+,{"stream_name":"stdout","time":107.81063343,"data":"  mechanism|griewank|40|centred|0.01                 9.88      11.10     0.89      269.8\n"}
+,{"stream_name":"stdout","time":107.810637465,"data":"  mechanism|griewank|40|mix-0.1|0.01                11.46      12.79     0.90      281.4\n"}
+,{"stream_name":"stdout","time":107.810644005,"data":"  mechanism|levy|40|centred|0.01                    17.21      18.68     0.92      416.8\n"}
+,{"stream_name":"stdout","time":107.810648385,"data":"  mechanism|levy|40|mix-0.1|0.01                    18.85      20.14     0.94      428.3\n"}
+,{"stream_name":"stdout","time":107.810715478,"data":"  mechanism|rastrigin|10|centred|0.1                 3.55       4.05     0.88      113.4\n"}
+,{"stream_name":"stdout","time":107.810726535,"data":"  mechanism|rastrigin|10|mix-0.1|0.01                3.68       4.34     0.85      113.6\n"}
+,{"stream_name":"stdout","time":107.81078546,"data":"  mechanism|rastrigin|40|centred|0.01               14.23      15.34     0.93      342.4\n"}
+,{"stream_name":"stdout","time":107.810793163,"data":"  mechanism|rastrigin|40|mix-0.1|0.01               15.32      16.67     0.92      357.9\n"}
+,{"stream_name":"stdout","time":107.810797636,"data":"  mechanism|rosenbrock|40|centred|0.01               9.60       9.97     0.96      336.7\n"}
+,{"stream_name":"stdout","time":107.810801772,"data":"  mechanism|rosenbrock|40|mix-0.1|0.01              10.55      11.01     0.96      351.6\n"}
+,{"stream_name":"stdout","time":107.810805405,"data":"  mechanism|sphere|10|centred|0.01                   1.51       1.87     0.81       77.1\n"}
+,{"stream_name":"stdout","time":107.810809322,"data":"  mechanism|sphere|40|centred|0.01                   5.42       6.08     0.89      191.8\n"}
+,{"stream_name":"stdout","time":107.810812944,"data":"  mechanism|sphere|40|mix-0.1|0.01                   6.29       7.21     0.87      205.0\n"}
+,{"stream_name":"stdout","time":107.810878963,"data":"  boundary|ackley|10|centred|0.01                    3.50       4.40     0.79      113.4\n"}
+,{"stream_name":"stdout","time":107.810886788,"data":"  boundary|ackley|40|centred|0.01                   12.50      14.87     0.84      269.9\n"}
+,{"stream_name":"stdout","time":107.810890936,"data":"  boundary|ackley|5|centred|0.01                     2.06       2.74     0.75       75.3\n"}
+,{"stream_name":"stdout","time":107.810895073,"data":"  boundary|griewank|40|centred|0.01                 10.02      11.14     0.90      269.9\n"}
+,{"stream_name":"stdout","time":107.810899176,"data":"  boundary|levy|40|centred|0.01                     17.61      18.40     0.96      416.6\n"}
+,{"stream_name":"stdout","time":107.810942341,"data":"  boundary|levy|5|centred|0.2                        2.59       2.91     0.89       81.0\n"}
+,{"stream_name":"stdout","time":107.810948388,"data":"  boundary|rastrigin|10|centred|0.01                 3.42       4.05     0.85      113.4\n"}
+,{"stream_name":"stdout","time":107.810952099,"data":"  boundary|rastrigin|40|centred|0.01                12.14      15.23     0.80      342.5\n"}
+,{"stream_name":"stdout","time":107.810955865,"data":"  boundary|rosenbrock|40|centred|0.01                9.55       9.90     0.96      336.8\n"}
+,{"stream_name":"stdout","time":107.811013431,"data":"  boundary|sphere|40|centred|0.01                    5.59       6.07     0.92      191.8\n"}
+,{"stream_name":"stdout","time":107.81102012,"data":"\n"}
+,{"stream_name":"stdout","time":107.811033961,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":107.8110382,"data":"tasks run by this job: 29   task execution 64 s\n"}
+,{"stream_name":"stdout","time":107.811041616,"data":"not stopped: every task ran\n"}
+,{"stream_name":"stdout","time":107.811044782,"data":"errored or timed-out tasks: 0\n"}
+,{"stream_name":"stdout","time":107.811048571,"data":"SMOKE PASS\n"}
+,{"stream_name":"stdout","time":107.811052286,"data":"files  /kaggle/working/sizetest-smoke-20261030-222321\n"}
+,{"stream_name":"stdout","time":107.811055909,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":107.856103147,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":110.444987454,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":110.445023367,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":110.822778999,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":110.822806759,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":112.589529384,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":113.807375534,"data":"[NbConvertApp] Writing 310426 bytes to __results__.html\n"}
+]
