@@ -47,13 +47,16 @@
       "ledger": "N40"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "sizetest-e1-s0of2-a1",
+  "args": "--mode e1 --plan-from runs/sizetest-plan-20261031-033830 --throughput runs/calprec2-smoke-kaggle-20261011-121225 --stop-after 36000.0 --shard 0 --nshards 2 --workers 4",
+  "data_dirs": [
+    "runs/sizetest-plan-20261031-033830",
+    "runs/calprec2-smoke-kaggle-20261011-121225"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -109,6 +112,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/sizetest-e1-smoke-a1-kaggle-20261031-040254: runner exit 0, D-SMOKE PASS; now READY"
+    },
+    {
+      "at": "2026-10-31T04:17:56+05:30",
+      "run": "laptop.20261030T224749Z",
+      "event": "intent",
+      "item": "sizetest-s0of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s0of2-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
