@@ -2730,7 +2730,58 @@ instruction of 2026-10-15.
     calprec2.N_LO patched to 200000 in the fixture process only), reaching
     PC PASS and all four classes. Python 3.8 grammar parse passes.
     Nothing synthetic is committed. OPEN until the plan log.
-  OPEN as text (N45).
+  - sizetest plan RESULT (Rahul ran it 2026-10-31, laptop, python
+    3.12.3, numpy 2.5.3, 2 workers; logs/sizetest-plan-20261031.log;
+    exit 0, nothing drawn):
+    - G3 PASS; G1 PASS for CONC 144 and TAU8 144 cells; G2 PASS.
+    - SEL: 109 selected, affected 56, controls 53 (log line 164).
+    - E0: 26 calprec2 folders, phase A tasks 48384, phase C tasks 4032.
+      Affected: agrees 48, mixed 5, disagrees 3 (log line 281).
+    - Disagrees: TAU8 ackley d 5 tau_0 0.02 (s 0.9259; q 16000 1.0426, q
+      64000 1.0261), rastrigin d 10 0.01 (s 0.9259; 1.0423, 1.0169),
+      rastrigin d 40 0.05 (s 0.9151; 1.0306, 1.0103). Mixed: CONC levy d
+      40 centred 0.1, CONC sphere d 10 centred 0.01, TAU8 ackley d 5 0.05,
+      rastrigin d 10 0.07, rastrigin d 40 0.07.
+    - E1 plan, Kaggle throughput (calprec2-smoke-kaggle-20261011-121225):
+      core s per ladder size 705.0 (50000), 2819.9 (200000), 14099.4
+      (1000000), 56397.5 (4000000), 5232 tasks each; PC 70.5 s; total
+      core s 74092.2.
+    - Larger-reference plan: 31 affected d 40 cells in 15 groups; 5
+      mechanism mix-0.1 groups have no costprobe2 unit ("not measured");
+      probe of 45 units required first; rerun 465 realizations.
+    Reading (Claude, 2026-10-31), read from the log and from
+    logs/refratio2-20261030.log, nothing computed:
+    - q(4000000) prints 1.0000 in most cells by construction: calprec2's
+      beta_adq is the median of the 24 phase A betas at 4,000,000
+      (calprec2.py 118), so where the run beta is beta_adq the top rung
+      is the run beta itself. The informative levels are 16000 and 64000.
+    - The fall of q towards 1 is not monotone in every cell. Example:
+      CONC ackley d 40 centred 0.01, q 1.2216, 1.1059, 1.0180, 1.0294,
+      0.9890, 1.0000.
+    - The three disagrees: each run median is below 1, but its 95%
+      interval contains 1 and reaches above it (refratio2, TAU8 per cell:
+      ackley d 5 0.02 median 0.9300 [0.8734, 1.1025], sd 0.2574;
+      rastrigin d 10 0.01 0.9142 [0.7452, 1.1046], sd 0.3100; rastrigin d
+      40 0.05 0.9198 [0.7852, 1.1138], sd 0.2591). Their neighbours at the
+      adjacent tau_0 have run medians above 1 (ackley d 5 0.01 1.2050,
+      0.03 1.1145; rastrigin d 10 0.02 1.0849; rastrigin d 40 0.03
+      1.2800, 0.07 1.0586). They are not misses resolved by 15
+      realizations; SEL selected them on the point median (refratio2 R5:
+      "a point value, not a test"). E1's H1 at 50000 tests this reading.
+    - The five mixed: four have run-median intervals containing 1 (CONC
+      sphere d 10 0.01 [0.9527, 1.0674]; TAU8 ackley d 5 0.05 [0.8329,
+      1.2338]; rastrigin d 10 0.07 [0.9715, 1.0799]; rastrigin d 40 0.07
+      [0.9923, 1.1269]). CONC levy d 40 centred 0.1 is resolved above 1
+      (1.0594 [1.0155, 1.0883]) while its q stays within 0.0095 of 1 at
+      every level from 4000 to 4000000: E0 cannot explain it.
+    - CORRECTION (Claude): the plan's "peak RSS bound, calprec2's
+      measured peak for the same streamed evaluation (phase C, N 64M)"
+      is mislabelled. Phase C at 64M holds replicate 0 in memory for
+      calprec2's streaming-equivalence check (calprec2.py E1), and that
+      held array is what the 2497.5 to 2560.7 MB peaks are. E1 here
+      streams only. The streamed-only figure is not printed by this
+      version; the rewrite prints it from calprec2's rows that hold
+      nothing. The label is fixed in the rewrite.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
