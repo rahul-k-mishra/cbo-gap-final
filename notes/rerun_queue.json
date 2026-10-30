@@ -47,7 +47,7 @@
       "ledger": "N40"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
@@ -79,6 +79,15 @@
       "attempt": 1,
       "job": "sizetest-e1-smoke-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-31T03:52:35+05:30",
+      "run": "laptop.20261030T221926Z",
+      "event": "launched",
+      "item": "smoke-sizetest",
+      "attempt": 1,
+      "job": "sizetest-e1-smoke-a1",
+      "note": "logs/kgrun-sizetest-e1-smoke-a1.log"
     }
   ],
   "definition": {
