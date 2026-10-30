@@ -1,0 +1,363 @@
+
+============================================================================================
+depositcheck.py  (ledger N8)  --  writes nothing
+============================================================================================
+  script sha256   d1e709724fcb09c84bb792c605998754d8fac02500344e0ec5c282791f99f356
+  archive         /home/rahul/Research/cbo-gap-final/zenodo-v1
+  manifest        /home/rahul/Research/cbo-gap-final/zenodo-v1.sha256
+  workers         2
+  audit timeout   3600 s
+  python          3.12.3
+  numpy           2.5.3
+  platform        Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  seeds           none drawn by this script; audit.py draws from its own numpy.random.default_rng(11)
+  tolerances      0.10, 0.15, 0.20
+  match rule      |x - p| <= 0.5 x 10^-k + 1e-12, k = decimals printed in p (R2)
+
+============================================================================================
+What this checks, in plain words
+============================================================================================
+  The deposited paper reports cell means and verdict counts in Tables 4 and 5, and
+  counts, coefficients and equivalence verdicts in Sections 7.10 and 7.11. Line 309
+  says every interval behind them is a 4000-resample value from one re-analysis
+  script. The deposited code says otherwise: the generating scripts store each cell's
+  interval in a summary file at their own resample count, and audit.py computes the
+  regression and equivalence intervals at its own counts. Those counts are printed
+  below, read from the code.
+  
+  For each table and section, this asks: if you take the deposited files and the
+  deposited code exactly as they are, do you get the numbers printed in the paper?
+  
+  For Tables 4 and 5 and the Section 7.10 counts, the answer needs no random draw: it
+  is a count of the stored per-cell verdicts or interval ends. A match shows the
+  published counts follow from the stored intervals. It does not show the stored
+  intervals are right; the deposit has no per-realization data to redo them.
+  
+  For the Section 7.10 coefficients and the Section 7.11 equivalence counts, audit.py is
+  run unchanged. Its intervals depend on how this NumPy draws random numbers; a mismatch
+  means 'not reproduced on this NumPy', not more than that.
+  
+  Where a number does not reproduce, both numbers are printed. Nothing is tuned to match.
+
+============================================================================================
+P1 to P4  checks before anything is read
+============================================================================================
+  P1  68 files hash to zenodo-v1.sha256: PASS
+  P2  9 published patterns each found in the deposited tex as expected: PASS
+  P3  audit.py has no write call and no open() with a mode: PASS
+  P4  resample counts set by the deposited code:
+      Table 4         control.py   N_BOOT = 400 (per-cell intervals in control_summary.csv)
+      Table 5         boundary.py  N_BOOT = 400 (per-cell intervals in boundary_summary.csv)
+      7.10 counts     sigma.py     N_BOOT = 400 (per-cell intervals in sigma_summary.csv)
+      7.10 coeffs     audit.py A2  range(500) in r_regression
+      7.11 counts     audit.py A3  range(N_BOOT) in equivalence, N_BOOT = 2000
+      (crossed.py N_BOOT = 400 sets crossed_summary.csv's intervals; A3 uses only its slopes)
+
+============================================================================================
+Table 4 (tab:control, tex 403 to 413)  against control_summary.csv  [R3]
+============================================================================================
+  fixed    tau0 0.1   n 18  mean published -1.0017  deposited -1.00169  reproduces
+      rate-consistent  published  17  deposited  17  reproduces
+      undecided        published   1  deposited   1  reproduces
+      not              published   0  deposited   0  reproduces
+  adaptive tau0 0.1   n 18  mean published -0.9980  deposited -0.99801  reproduces
+      rate-consistent  published  18  deposited  18  reproduces
+      undecided        published   0  deposited   0  reproduces
+      not              published   0  deposited   0  reproduces
+  fixed    tau0 0.01  n 18  mean published -0.8320  deposited -0.83201  reproduces
+      rate-consistent  published  10  deposited  10  reproduces
+      undecided        published   2  deposited   2  reproduces
+      not              published   6  deposited   6  reproduces
+  adaptive tau0 0.01  n 18  mean published -0.8148  deposited -0.81480  reproduces
+      rate-consistent  published   3  deposited   3  reproduces
+      undecided        published   5  deposited   5  reproduces
+      not              published  10  deposited  10  reproduces
+
+============================================================================================
+Table 5 (tab:boundary, tex 420 to 438)  against boundary_summary.csv  [R4]
+============================================================================================
+  tau0 0.30  n 18  mean -1.0227 / -1.02273 reproduces   sd 0.0417 / 0.04174 reproduces   rate-consistent at 0.15 18 / 18 reproduces
+  tau0 0.20  n 18  mean -1.0267 / -1.02667 reproduces   sd 0.0395 / 0.03948 reproduces   rate-consistent at 0.15 18 / 18 reproduces
+  tau0 0.10  n 18  mean -1.0134 / -1.01340 reproduces   sd 0.0583 / 0.05832 reproduces   rate-consistent at 0.15 18 / 18 reproduces
+  tau0 0.07  n 18  mean -0.9913 / -0.99132 reproduces   sd 0.0732 / 0.07324 reproduces   rate-consistent at 0.15 16 / 16 reproduces
+  tau0 0.05  n 18  mean -0.9705 / -0.97049 reproduces   sd 0.0788 / 0.07882 reproduces   rate-consistent at 0.15 15 / 15 reproduces
+  tau0 0.03  n 18  mean -0.9532 / -0.95318 reproduces   sd 0.0974 / 0.09740 reproduces   rate-consistent at 0.15 13 / 13 reproduces
+  tau0 0.02  n 18  mean -0.9054 / -0.90540 reproduces   sd 0.1253 / 0.12527 reproduces   rate-consistent at 0.15 10 / 10 reproduces
+  tau0 0.01  n 18  mean -0.8165 / -0.81649 reproduces   sd 0.2015 / 0.20152 reproduces   rate-consistent at 0.15 9 / 9 reproduces
+  (each pair is published / deposited)
+  all, rate-consistent at 0.15 (verdict column)  published 117/144  deposited 117/144  reproduces
+  all, at 0.10 (ci_hi <= -0.90)                  published 107/144  deposited 107/144  reproduces
+  all, at 0.20 (ci_hi <= -0.80)                  published 125/144  deposited 125/144  reproduces
+  caption, point-estimate rule at 0.15           published 123/144  deposited 123/144  reproduces
+  information only: ci_hi <= -0.85 gives 117/144, beside the verdict column's 117/144
+
+============================================================================================
+Section 7.10 counts (sec:sigma, tex 491)  against sigma_summary.csv  [R5]
+============================================================================================
+  isotropic    n 144  at 0.10/0.15/0.20 published 71/93/115  deposited 71/93/115   Bonferroni cost published 11  deposited 11 (93 - 82)   reproduces
+  anisotropic  n 144  at 0.10/0.15/0.20 published 57/77/86  deposited 57/77/86   Bonferroni cost published 9  deposited 9 (77 - 68)   reproduces
+
+============================================================================================
+Section 7.10 coefficients (sec:sigma, tex 487)  against audit.py A2  [R6]
+============================================================================================
+  audit.py A2 lines, verbatim:
+    anisotropic       5     0.1    -0.0391      [-0.055,-0.025] no effect of size 0.10 detected
+    anisotropic       5    0.01     0.0058      [-0.068,+0.079] no effect of size 0.10 detected
+    anisotropic      10     0.1     0.0172      [-0.017,+0.058] no effect of size 0.10 detected
+    anisotropic      10    0.01     0.0518      [+0.011,+0.092] no effect of size 0.10 detected
+    anisotropic      40     0.1     0.0398      [-0.022,+0.091] no effect of size 0.10 detected
+    anisotropic      40    0.01     0.0477      [+0.004,+0.092] no effect of size 0.10 detected
+    isotropic         5     0.1    -0.0384      [-0.066,-0.010] no effect of size 0.10 detected
+    isotropic         5    0.01    -0.0342      [-0.056,-0.000] no effect of size 0.10 detected
+    isotropic        10     0.1    -0.0470      [-0.102,-0.002] effect of practical size possible
+    isotropic        10    0.01    -0.0575      [-0.121,-0.015] effect of practical size possible
+    isotropic        40     0.1    -0.0565      [-0.167,+0.069] effect of practical size possible
+    isotropic        40    0.01    -0.0218      [-0.133,+0.089] effect of practical size possible
+  isotropic d 10 tau0 0.1   coefficient published -0.047 audit -0.0470 reproduces;  interval published [-0.102, -0.002] audit [-0.102, -0.002] reproduces
+  isotropic d 10 tau0 0.01  coefficient published -0.058 audit -0.0575 reproduces;  interval published [-0.121, -0.015] audit [-0.121, -0.015] reproduces
+  claim: all six anisotropic say 'no effect of size 0.10 detected': 6 of 6 lines do  reproduces
+  claim: both isotropic d 5 say 'no effect of size 0.10 detected': 2 of 2 lines do  reproduces
+  claim: both isotropic d 10 say 'effect of practical size possible': 2 of 2 lines do  reproduces
+  isotropic d 40 tau0 0.1: 'effect of practical size possible' (the text says nothing about this cell; no verdict)
+  isotropic d 40 tau0 0.01: 'effect of practical size possible' (the text says nothing about this cell; no verdict)
+
+============================================================================================
+Section 7.11 (sec:aniso, tex 497)  against audit.py A3, arm A  [R7]
+============================================================================================
+  audit.py A3 lines, verbatim (arm A is matched sigma; arm B is matched r):
+    A        0.1     5     0.1    0.0075      [-0.004,+0.019]     EQUIVALENT at margin
+    A        0.1     5    0.01    0.0317      [+0.015,+0.049]     EQUIVALENT at margin
+    A        0.1    10     0.1   -0.0420      [-0.078,-0.007]             inconclusive
+    A        0.1    10    0.01    0.0196      [-0.007,+0.061]             inconclusive
+    A        0.1    40     0.1    0.0187      [-0.000,+0.038]     EQUIVALENT at margin
+    A        0.1    40    0.01   -0.0378      [-0.121,+0.041]             inconclusive
+    A        0.2     5     0.1    0.0310      [-0.017,+0.080]             inconclusive
+    A        0.2     5    0.01   -0.0400      [-0.079,+0.016]             inconclusive
+    A        0.2    10     0.1    0.0382      [+0.000,+0.088]             inconclusive
+    A        0.2    10    0.01    0.0135      [-0.031,+0.058]             inconclusive
+    A        0.2    40     0.1    0.0300      [-0.003,+0.073]             inconclusive
+    A        0.2    40    0.01    0.0652      [-0.014,+0.144]             inconclusive
+    A        0.4     5     0.1   -0.0278      [-0.077,+0.029]             inconclusive
+    A        0.4     5    0.01   -0.0061      [-0.060,+0.044]             inconclusive
+    A        0.4    10     0.1    0.0313      [-0.012,+0.079]             inconclusive
+    A        0.4    10    0.01    0.0684      [+0.022,+0.112]             inconclusive
+    A        0.4    40     0.1   -0.4365      [-0.548,-0.322]  DIFFERENT beyond margin
+    A        0.4    40    0.01   -0.3421      [-0.471,-0.202]  DIFFERENT beyond margin
+    B        0.1     5     0.1   -0.0167      [-0.053,+0.028]             inconclusive
+    B        0.1     5    0.01    0.0734      [-0.031,+0.183]             inconclusive
+    B        0.1    10     0.1    0.0132      [-0.025,+0.038]     EQUIVALENT at margin
+    B        0.1    10    0.01    0.0166      [-0.020,+0.061]             inconclusive
+    B        0.1    40     0.1    0.0313      [+0.007,+0.053]             inconclusive
+    B        0.1    40    0.01    0.0501      [+0.015,+0.090]             inconclusive
+    B        0.5     5     0.1   -0.0304      [-0.081,+0.017]             inconclusive
+    B        0.5     5    0.01   -0.0049      [-0.080,+0.073]             inconclusive
+    B        0.5    10     0.1    0.0537      [+0.026,+0.085]             inconclusive
+    B        0.5    10    0.01    0.1060      [+0.073,+0.137]  DIFFERENT beyond margin
+    B        0.5    40     0.1    0.0680      [+0.047,+0.094]             inconclusive
+    B        0.5    40    0.01    0.1332      [+0.061,+0.206]  DIFFERENT beyond margin
+    B        0.9     5     0.1    0.0906      [+0.056,+0.120]  DIFFERENT beyond margin
+    B        0.9     5    0.01    0.0475      [-0.021,+0.124]             inconclusive
+    B        0.9    10     0.1    0.0890      [+0.028,+0.152]             inconclusive
+    B        0.9    10    0.01    0.0698      [-0.011,+0.151]             inconclusive
+    B        0.9    40     0.1    0.0949      [+0.034,+0.162]             inconclusive
+    B        0.9    40    0.01    0.1494      [+0.078,+0.246]  DIFFERENT beyond margin
+  arm A cells published 18  audit 18
+  equivalent    published   3  audit   3  reproduces
+  inconclusive  published  13  audit  13  reproduces
+  outside       published   2  audit   2  reproduces
+  The six gaps quoted per (d, tau0) name no sigma level. Located only, no verdict (R7):
+    d 5   tau0 0.1   published +0.004  audit by level: 0.1: 0.0075, 0.2: 0.0310, 0.4: -0.0278  ->  within R2 at no level
+    d 10  tau0 0.1   published +0.009  audit by level: 0.1: -0.0420, 0.2: 0.0382, 0.4: 0.0313  ->  within R2 at no level
+    d 40  tau0 0.1   published +0.024  audit by level: 0.1: 0.0187, 0.2: 0.0300, 0.4: -0.4365  ->  within R2 at no level
+    d 5   tau0 0.01  published -0.005  audit by level: 0.1: 0.0317, 0.2: -0.0400, 0.4: -0.0061  ->  within R2 at no level
+    d 10  tau0 0.01  published +0.034  audit by level: 0.1: 0.0196, 0.2: 0.0135, 0.4: 0.0684  ->  within R2 at no level
+    d 40  tau0 0.01  published +0.014  audit by level: 0.1: -0.0378, 0.2: 0.0652, 0.4: -0.3421  ->  within R2 at no level
+
+============================================================================================
+SUMMARY  (per table and section; published counts against the deposited files)
+============================================================================================
+  Table 4                      reproduces           at the deposited code's setting: control.py, 400 resamples
+  Table 5                      reproduces           at the deposited code's setting: boundary.py, 400 resamples
+  Section 7.10 counts          reproduces           at the deposited code's setting: sigma.py, 400 resamples
+  Section 7.10 coefficients    reproduces           at the deposited code's setting: audit.py A2, 500 resamples, NumPy 2.5.3
+  Section 7.11 counts          reproduces           at the deposited code's setting: audit.py A3, 2000 resamples, NumPy 2.5.3
+
+  Platform note (R8): Tables 4, 5 and the 7.10 counts involve no random draw. The 7.10
+  coefficients and the 7.11 counts come from audit.py's resampling on NumPy 2.5.3;
+  the NumPy of the original audit run is not recorded.
+
+============================================================================================
+Appendix: audit.py stdout, verbatim (/home/rahul/Research/cbo-gap-final/.venv/bin/python -I -B -X utf8 audit.py; wall 11.1 s; exit 0)
+============================================================================================
+====================================================================================
+CBO-GAP audit — statistical points closed without new simulation
+====================================================================================
+  Run in the directory holding the archived CSV files.
+
+====================================================================================
+A7 — realization count reconstructed from the files, not asserted
+====================================================================================
+  file                            cells   realizations     J values
+  boundary_raw.csv                  144           2160           10
+  cliff_raw.csv                     144           1728           10
+  control_raw.csv                    72           1080           10
+  crossed_raw.csv                   288           3456           10
+  ess_surface_raw.csv               269           5380           10
+  mechanism_raw.csv                 144           2160           10
+  sigma_raw.csv                     288           3456           10
+  visibility_raw.csv                144           2880           19
+  law_synth.csv                     336              0            0
+  TOTAL (files present here)       1829          22300
+
+  Note: this counts only files in this directory. The manuscript total
+  covers every phase; cross-check against the experiment matrix table.
+
+====================================================================================
+A1 — the noise floor, defined
+====================================================================================
+  Definition: sigma_floor = median over cells of SE(slope), where
+  SE(slope) is propagated from the stored per-J standard errors by
+  the delta method on the log-log regression. Previously the
+  manuscript compared effects against 0.055 without saying what it was.
+
+    boundary_raw.csv           n=144   median SE 0.0200   IQR [0.0160,0.0253]
+    cliff_raw.csv              n=144   median SE 0.0214   IQR [0.0167,0.0305]
+    control_raw.csv            n=72    median SE 0.0197   IQR [0.0155,0.0244]
+    crossed_raw.csv            n=288   median SE 0.0217   IQR [0.0165,0.0273]
+    ess_surface_raw.csv        n=36    median SE 0.0209   IQR [0.0183,0.0728]
+    mechanism_raw.csv          n=144   median SE 0.0353   IQR [0.0246,0.0416]
+    sigma_raw.csv              n=288   median SE 0.0219   IQR [0.0168,0.0273]
+    visibility_raw.csv         n=144   median SE 0.0190   IQR [0.0125,0.0277]
+
+    POOLED sigma_floor = 0.0219   IQR [0.0166,0.0291]   n=1260
+    This is the number the manuscript should quote, with its IQR.
+
+====================================================================================
+A2 — does r move the exponent inside the condition? with intervals
+====================================================================================
+  Previously: coefficients in [-0.057,+0.052] declared 'inside the noise
+  floor'. That compares a point estimate to a yardstick of the same size.
+  Here each coefficient gets a bootstrap interval over objectives.
+
+  diffusion         d     tau       coef               95% CI                    verdict
+  anisotropic       5     0.1    -0.0391      [-0.055,-0.025] no effect of size 0.10 detected
+  anisotropic       5    0.01     0.0058      [-0.068,+0.079] no effect of size 0.10 detected
+  anisotropic      10     0.1     0.0172      [-0.017,+0.058] no effect of size 0.10 detected
+  anisotropic      10    0.01     0.0518      [+0.011,+0.092] no effect of size 0.10 detected
+  anisotropic      40     0.1     0.0398      [-0.022,+0.091] no effect of size 0.10 detected
+  anisotropic      40    0.01     0.0477      [+0.004,+0.092] no effect of size 0.10 detected
+  isotropic         5     0.1    -0.0384      [-0.066,-0.010] no effect of size 0.10 detected
+  isotropic         5    0.01    -0.0342      [-0.056,-0.000] no effect of size 0.10 detected
+  isotropic        10     0.1    -0.0470      [-0.102,-0.002] effect of practical size possible
+  isotropic        10    0.01    -0.0575      [-0.121,-0.015] effect of practical size possible
+  isotropic        40     0.1    -0.0565      [-0.167,+0.069] effect of practical size possible
+  isotropic        40    0.01    -0.0218      [-0.133,+0.089] effect of practical size possible
+
+  The correct claim is 'no monotone dependence distinguishable under this
+  design', not 'r does not move the exponent'.
+
+====================================================================================
+A3 — equivalence test, isotropic versus anisotropic at matched sigma
+====================================================================================
+  A gap below 0.05 is not evidence of equivalence. Two one-sided tests
+  at the prespecified margin 0.05: equivalence holds only if the whole
+  interval for the difference lies inside the margin.
+  CAVEAT: the stored files hold cell means, not per-realization values,
+  so the arms cannot be paired even though they shared seeds. This
+  interval is therefore wider than a paired one would be, and the test
+  is conservative.
+
+  arm    level     d     tau       gap               90% CI                  verdict
+  A        0.1     5     0.1    0.0075      [-0.004,+0.019]     EQUIVALENT at margin
+  A        0.1     5    0.01    0.0317      [+0.015,+0.049]     EQUIVALENT at margin
+  A        0.1    10     0.1   -0.0420      [-0.078,-0.007]             inconclusive
+  A        0.1    10    0.01    0.0196      [-0.007,+0.061]             inconclusive
+  A        0.1    40     0.1    0.0187      [-0.000,+0.038]     EQUIVALENT at margin
+  A        0.1    40    0.01   -0.0378      [-0.121,+0.041]             inconclusive
+  A        0.2     5     0.1    0.0310      [-0.017,+0.080]             inconclusive
+  A        0.2     5    0.01   -0.0400      [-0.079,+0.016]             inconclusive
+  A        0.2    10     0.1    0.0382      [+0.000,+0.088]             inconclusive
+  A        0.2    10    0.01    0.0135      [-0.031,+0.058]             inconclusive
+  A        0.2    40     0.1    0.0300      [-0.003,+0.073]             inconclusive
+  A        0.2    40    0.01    0.0652      [-0.014,+0.144]             inconclusive
+  A        0.4     5     0.1   -0.0278      [-0.077,+0.029]             inconclusive
+  A        0.4     5    0.01   -0.0061      [-0.060,+0.044]             inconclusive
+  A        0.4    10     0.1    0.0313      [-0.012,+0.079]             inconclusive
+  A        0.4    10    0.01    0.0684      [+0.022,+0.112]             inconclusive
+  A        0.4    40     0.1   -0.4365      [-0.548,-0.322]  DIFFERENT beyond margin
+  A        0.4    40    0.01   -0.3421      [-0.471,-0.202]  DIFFERENT beyond margin
+  B        0.1     5     0.1   -0.0167      [-0.053,+0.028]             inconclusive
+  B        0.1     5    0.01    0.0734      [-0.031,+0.183]             inconclusive
+  B        0.1    10     0.1    0.0132      [-0.025,+0.038]     EQUIVALENT at margin
+  B        0.1    10    0.01    0.0166      [-0.020,+0.061]             inconclusive
+  B        0.1    40     0.1    0.0313      [+0.007,+0.053]             inconclusive
+  B        0.1    40    0.01    0.0501      [+0.015,+0.090]             inconclusive
+  B        0.5     5     0.1   -0.0304      [-0.081,+0.017]             inconclusive
+  B        0.5     5    0.01   -0.0049      [-0.080,+0.073]             inconclusive
+  B        0.5    10     0.1    0.0537      [+0.026,+0.085]             inconclusive
+  B        0.5    10    0.01    0.1060      [+0.073,+0.137]  DIFFERENT beyond margin
+  B        0.5    40     0.1    0.0680      [+0.047,+0.094]             inconclusive
+  B        0.5    40    0.01    0.1332      [+0.061,+0.206]  DIFFERENT beyond margin
+  B        0.9     5     0.1    0.0906      [+0.056,+0.120]  DIFFERENT beyond margin
+  B        0.9     5    0.01    0.0475      [-0.021,+0.124]             inconclusive
+  B        0.9    10     0.1    0.0890      [+0.028,+0.152]             inconclusive
+  B        0.9    10    0.01    0.0698      [-0.011,+0.151]             inconclusive
+  B        0.9    40     0.1    0.0949      [+0.034,+0.162]             inconclusive
+  B        0.9    40    0.01    0.1494      [+0.078,+0.246]  DIFFERENT beyond margin
+
+====================================================================================
+A4 — where does degradation begin? change-point, not eyeball
+====================================================================================
+  Three models fitted to mean slope against log r:
+    M0  single line;  M1  break fixed at the theoretical boundary r=1;
+    M2  break at a free location, estimated by profile least squares.
+  The manuscript may only say the empirical onset differs from r=1 if the
+  interval for the free breakpoint excludes 1.
+
+  diffusion        d     RSS M0     RSS M1     RSS M2      r_break    95% CI on r_break
+  anisotropic     10     0.0419     0.0318     0.0076        2.000          [2.00,3.00]
+  anisotropic     40     0.0147     0.0039     0.0015        1.500          [1.00,1.50]
+  isotropic       10     0.0068     0.0042     0.0015        1.500          [1.25,3.00]
+  isotropic       40     0.0705     0.0138     0.0109        1.100          [1.00,1.50]
+
+  If the interval contains 1.0, the data do not distinguish the empirical
+  onset from the theoretical boundary and the manuscript must say so.
+
+====================================================================================
+A5 — does the fitted exponent depend on the fitting window?
+====================================================================================
+  Mean fitted slope over cells at tau = 0.1, by lower and upper cutoff.
+
+      Jmin   Jmax=1280   Jmax=2560   Jmax=5000
+        10     -1.0182     -1.0180     -1.0223
+        20     -1.0211     -1.0201     -1.0249
+        40     -1.0079     -1.0104     -1.0188
+        80     -0.9875     -0.9976     -1.0120
+
+  A spread here comparable to the reported effects would mean the
+  exponent is partly an artefact of the window and must be reported as such.
+
+====================================================================================
+A6 — tolerance and multiplicity, for every file with stored intervals
+====================================================================================
+  file                         cells   tol 0.10   tol 0.15   tol 0.20 0.15 Bonferroni
+  boundary_summary.csv           144    107/144    117/144    125/144     not stored
+  cliff_summary.csv              144     58/144     79/144     93/144         68/144
+  control_summary.csv             72      33/72      48/72      52/72     not stored
+  crossed_summary.csv            288    127/288    174/288    204/288        145/288
+  mechanism_summary.csv          144    105/144    119/144    127/144     not stored
+  regimemap_M_summary.csv        240     68/240     91/240    108/240         77/240
+  regimemap_summary.csv          180     62/180     93/180    116/180         78/180
+  sigma_summary.csv              288    128/288    170/288    201/288        150/288
+  visibility_summary.csv         144     56/144     69/144     76/144     not stored
+
+  Every count quoted in the manuscript must appear with all three
+  tolerances beside it, not with 0.15 alone.
+
+====================================================================================
+done
+====================================================================================
+
+============================================================================================
+depositcheck.py done, exit 0
+============================================================================================
