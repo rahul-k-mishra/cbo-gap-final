@@ -132,17 +132,13 @@
       "rows": "ONSET-R"
     }
   ],
-  "status": "RUNNING",
-  "index": 10,
+  "status": "DONE",
+  "index": 11,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "rerun-onsetr-s9of10-a1",
-  "args": "--plan-from runs/rerun-plan-20261028-212945 --timing-from runs/costprobe2-s0-kaggle-20261010-103952 --timing-from runs/costprobe2-s1-kaggle-20261011-101343 --rows ONSET-R --shard 9 --nshards 10 --workers 4",
-  "data_dirs": [
-    "runs/rerun-plan-20261028-212945",
-    "runs/costprobe2-s0-kaggle-20261010-103952",
-    "runs/costprobe2-s1-kaggle-20261011-101343"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -285,6 +281,20 @@
         "resume_dirs": [],
         "fetched_run": "laptop.20261029T223223Z",
         "fetched_at": "2026-10-30T04:02:34+05:30"
+      }
+    ],
+    "onsetr-s9of10": [
+      {
+        "attempt": 1,
+        "job": "rerun-onsetr-s9of10-a1",
+        "folder": "runs/rerun-onsetr-s9of10-a1-kaggle-20261030-061727",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 2447,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261030T004723Z",
+        "fetched_at": "2026-10-30T06:17:35+05:30"
       }
     ]
   },
@@ -585,6 +595,15 @@
       "attempt": 1,
       "job": "rerun-onsetr-s9of10-a1",
       "note": "logs/kgrun-rerun-onsetr-s9of10-a1.log"
+    },
+    {
+      "at": "2026-10-30T06:17:35+05:30",
+      "run": "laptop.20261030T004723Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/rerun-onsetr-s9of10-a1-kaggle-20261030-061727: runner exit 0; now DONE"
     }
   ],
   "definition": {
