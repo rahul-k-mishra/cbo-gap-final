@@ -47,13 +47,16 @@
       "ledger": "N40"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "sizetest-e1-smoke-a1",
+  "args": "--mode smoke --plan-from runs/sizetest-plan-20261031-033830 --throughput runs/calprec2-smoke-kaggle-20261011-121225 --workers 4",
+  "data_dirs": [
+    "runs/sizetest-plan-20261031-033830",
+    "runs/calprec2-smoke-kaggle-20261011-121225"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -67,6 +70,15 @@
       "attempt": 1,
       "job": "",
       "note": "notes/queues/sizetest-e1.json; previous state archived to notes/queue-archive/20261031-034904-rerun-onsetr-done.json; N40: sizetest E1, smoke then 2 shards; plan runs/sizetest-plan-20261031-033830 (logs/sizetest-plan2-20261031.log)"
+    },
+    {
+      "at": "2026-10-31T03:49:37+05:30",
+      "run": "laptop.20261030T221926Z",
+      "event": "intent",
+      "item": "smoke-sizetest",
+      "attempt": 1,
+      "job": "sizetest-e1-smoke-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
