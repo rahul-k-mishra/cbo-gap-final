@@ -536,20 +536,20 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   from this result; the tex 497 gaps moved from B to C, Rahul
   2026-10-30, because they are numbers with no identifiable source and
   keeping them in B would soften the finding):
-    The deposit of the earlier version does not support several
-    statements made about it. That version said every reported interval
-    was a 4000-resample value from one archived re-analysis script, and
-    that no interval came from a computation outside the archive. Both
-    statements are false, but most of the numbers they describe can be
-    traced. The re-analysis script recomputed at 4000 resamples only the
-    paired gaps, severity trends, onset intervals and interaction
-    intervals of the regime-map experiments. The remaining counts were
-    computed by the deposited generating scripts and by a second deposited
-    script, audit.py, at the resample counts that code sets, and they
-    follow from the deposited files. The means and verdict counts of the
-    concentration-control and operating-level tables, and the tolerance
-    and Bonferroni counts of the condition sweep, are tallies of the
-    per-cell intervals that the generating scripts stored at 400
+    The deposit of the earlier version does not support several statements
+    made about it. That version said every reported interval was a
+    4000-resample value from one archived re-analysis script, and that no
+    interval came from a computation outside the archive. Both statements
+    are false, but most of the numbers they describe can be traced. The
+    re-analysis script recomputed at 4000 resamples only the paired gaps,
+    severity trends, onset intervals and interaction intervals of the
+    regime-map experiments. The remaining counts were computed by the
+    deposited generating scripts and by a second deposited script,
+    audit.py, at the resample counts that code sets, and they follow from
+    the deposited files. The means and verdict counts of the whole-run
+    control table (Table 4) and the operating-level table, and the
+    tolerance and Bonferroni counts of the condition sweep, are tallies of
+    the per-cell intervals that the generating scripts stored at 400
     resamples. The tally involves no random draw. It shows that the
     published counts follow from the stored intervals, but it does not
     re-derive those intervals, for which the deposit holds no
@@ -559,25 +559,43 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     unchanged on NumPy 2.5.3. The NumPy version of the original run is not
     recorded, so this reproduction comes from one installation. The
     regime-map counts equal the console output of regimemap.py at 400
-    resamples, a log that was not deposited. [C] The intervals of the
-    concentration-control table and regression, the slope-SE reference
-    scale and the value 0.078 were produced by code that was not
-    deposited. Their point estimates recompute from the deposited files,
-    except 0.078, which the deposited data give as 0.07747. The
-    construction of those intervals cannot be identified. The six
-    per-dimension gaps quoted for the diffusion comparison at matched
-    noise level have no identifiable source either: none equals the gap
-    the deposited code reports at any of the three noise levels. [A] The earlier version also said the
-    re-analysis had been run on two installations that agreed to four
-    decimals. One such run has a console log, and that log was not
-    deposited. It said console logs and per-realization files were
-    archived for every confirmatory run. The deposit contains no console
-    log, and eight experiments are deposited as cell-level means. [D] It
-    described the isotropic and anisotropic arms as paired, but the
+    resamples, a log that was not deposited.
+    The intervals of the calibrated-concentration table (Table 3), its
+    regression and its pairwise contrasts, including the separation of
+    +0.1940 and the interval [0.117, 0.381], the slope-SE reference scale,
+    the value 0.078 and the interval [0.0069, 0.2087] of the
+    per-size-temperature experiment were produced by code that was not
+    deposited, and the statement that every pre-specified criterion is in
+    the docstring of an archived script does not hold for them. Their
+    point estimates recompute from the deposited files, except 0.078,
+    which the deposited data give as 0.07747. The construction of those
+    intervals cannot be identified. The six per-dimension gaps quoted for
+    the diffusion comparison at matched noise level have no identifiable
+    source either: none equals the gap the deposited code reports at any
+    of the three noise levels.
+    The earlier version also said the re-analysis had been run on two
+    installations that agreed to four decimals. One such run has a console
+    log, and that log was not deposited. It said that a re-analysis script
+    recomputes the noise floor, the fitting-window sensitivity, the
+    equivalence tests, the change-point intervals and the tolerance and
+    Bonferroni tables. audit.py prints them but writes no file and was run
+    with no deposited log, and the re-analysis script itself states that
+    it does not recompute the operating-level tolerance table. It said
+    console logs are archived for the rows marked with a dagger in the
+    experiment table; that table marks no rows. It said console logs and
+    per-realization files were archived for every confirmatory run. The
+    deposit contains no console log, and eight experiments are deposited
+    as cell-level means.
+    It described the isotropic and anisotropic arms as paired, but the
     scripts gave them different seeds. No number from the earlier version
     is reused here. Every number in this paper comes from the rerun
     described in Section X, whose scripts, console logs and
     per-realization files are deposited at [DOI].
+    (Paragraphs: B, C, A, D. Four fixes applied 2026-10-30 at Rahul's
+    instruction: Table 4 / Table 3 naming; C completed to the N30 list
+    and the 719 docstring claim; A withdraws the 719 recompute sentence,
+    with "audit.py prints them" (Rahul's wording); A adds the dagger
+    rows, ARC5.)
   OPEN until the disclosure is written in the manuscript pass (N45).
 - N9 (new, T). Section 7.12 says the three failing admissible cells are "of
   Section 7.15"; Conclusions say "three of the thirty in Section 7.12". They
