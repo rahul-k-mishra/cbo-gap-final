@@ -3840,7 +3840,72 @@ instruction of 2026-10-15.
     extras (le0, le_min) and TAU8's (le0, le_mean, le_min).
   The redesigned adaptive arm (beta_cal start, per-realization target
   exp(le0)/J_inf, CONC seeds) is not written and not run unless the
-  paper chooses to explain the tau_0 0.01 departure (open, Rahul).
+  paper chooses to explain the tau_0 0.01 departure (settled below).
+  DECIDED (Rahul, 2026-10-31), THE TAU_0 0.01 DEPARTURE FROM -1: reported
+  as a measured property of the fixed-beta estimand, not explained.
+  Reasons:
+  - The paper is about whether the rate can be observed at finite
+    ensemble sizes, so the departure is a finding, not a defect to
+    explain.
+  - The explaining version needs a proof of how the cited theorem's
+    constants depend on beta, which neither Rahul nor Claude can point to
+    yet (primary-text check below), and a factorial design over three
+    rival mechanisms (finite-J starting concentration, concentration
+    fall during the run, a pre-asymptotic J window at high beta), one of
+    whose arms (the adaptive arm) is not the analysed algorithm.
+  - One of its tests, round 1's per-J calibration (perjcal), was already
+    inconclusive (N36, C2).
+  Discipline the reporting version commits the paper to:
+  - no explanatory verbs about the departure ("due to", "caused by",
+    "collapse" and the like);
+  - the drift (le0 - le_min) and the finite-J ratios ESS_0(J)/J/tau_0
+    reported as descriptions only;
+  - a fitted slope never called a rate;
+  - the window (J 10 to 5000, J_inf 50000) named every time a slope is
+    quoted.
+  On this decision the redesigned adaptive arm is never run.
+  DECIDED IN PRINCIPLE (Rahul, 2026-10-31), WINDOW EXTENSION: the same
+  fixed-beta algorithm over a wider J window, so that the referee's
+  first question (is the departure a finite-window effect; does the
+  slope approach -1 at larger J) is answered by measurement rather than
+  left open. It runs the same fixed-beta algorithm at the same beta, so
+  it does not change the estimand. COST NOT YET APPROVED. Not measured:
+  any trajectory at d 40 with J_inf above 50000, any trajectory above
+  J_inf 100000 (REFSIZE, d 10, J <= 1250, is the largest measured). The
+  J grid keeps J <= J_inf/10 (control.py and mechanism.py), so a window
+  to J = 50000 needs J_inf 500000. Under rule 6 a probe measuring wall
+  and per-worker peak RSS at each candidate J_inf comes before any
+  design. sizetest's plan step prices only the d 40 affected cells'
+  larger-reference rerun, not the window extension (sizetest.py 559 to
+  591).
+  PRIMARY-TEXT CHECK (Claude, 2026-10-31; ~/cbo-refs: fkr2024-siopt.pdf,
+  2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
+  how its constant depends on beta (FKR's alpha) in a quotable form?
+  - FKR 2024, SIAM J. Optim. 34(3):2973-3004, Theorem 3.8 (p. 2986):
+    "C_MFA > 0 depends exponentially on the parameters alpha, lambda,
+    and sigma, on T, and on delta^-1." Proposition 3.11 (p. 2988), the
+    N^-1 bound (3.13), gives only C_MFA = C_MFA(alpha, lambda, sigma, T,
+    C1, C2, M, K, M2, b1, b2). The discussion (p. 2989) refers to "the
+    exponential dependence of C_MFA on the parameter alpha". The proof
+    (arXiv v6 appendix, Proof of Proposition 3.11) takes a constant
+    C(alpha, C1, C2, M, M2, b1, b2) from Carrillo-Choi-Totzeck-Tse 2018
+    Lemma 3.2 and applies Groenwall; no explicit form in alpha is
+    written. arXiv v6 has the same statements (Theorem 3.8 p. 15,
+    Proposition 3.11 p. 16 with (32), discussion p. 17).
+  - GHV, arXiv 2312.07373v4 (the ESAIM COCV version cited is still not
+    in hand): Theorem 2.6 (p. 10) gives "a constant C > 0 independent of
+    J"; Lemma 3.7 (p. 22) "C depending only on (f, beta, p, r) and the
+    r-th moment of mu". No explicit beta dependence. Section 2.6 (p. 15),
+    about its own Ackley experiment, says the J^-1 scaling "holds only
+    for relatively large J", with small-J ESS "close to 1 in the early
+    stages": an observation, not a result.
+  - Reading: neither text states the beta dependence in a form the paper
+    could use to explain a slope departure. FKR states a qualitative
+    exponential dependence of an upper-bound constant; an upper bound's
+    constant says nothing about the fitted exponent in a finite window.
+    The explaining version was never available from these texts.
+    Carrillo 2018 (where FKR's alpha constant originates) and the
+    Riedl dissertation (in ~/cbo-refs) were not read for this.
   DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
   - Remove the sentence at tex 703 ("A dedicated experiment controlling
     that concentration exactly at every ensemble size does not make the
