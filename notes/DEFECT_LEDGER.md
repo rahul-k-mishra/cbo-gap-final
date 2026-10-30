@@ -596,6 +596,203 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     and the 719 docstring claim; A withdraws the 719 recompute sentence,
     with "audit.py prints them" (Rahul's wording); A adds the dagger
     rows, ARC5.)
+  DECIDED (Rahul, 2026-10-30): the disclosure appears in three places.
+  PLACEMENT: inside the paper's account of its relationship to the
+  earlier version, as the first part of that account, under its own
+  heading, before any results. The scientific withdrawals follow it,
+  separately, each with its own reason (the claim withdrawn on the N1
+  ground; round 1's onset claim, N43). Reason: the account answers
+  what of the earlier version still stands, and the disclosure's last
+  sentence (no earlier number used) is its premise; a separate section
+  would leave two lists to reconcile and read as an erratum; kept
+  separate inside it because deposit failures and wrong scientific
+  claims are different kinds and blended each would dilute the other.
+  MAIN-TEXT VERSION (about 150 words; not applied):
+    The deposit of the earlier version (DOI 10.5281/zenodo.22068685) does
+    not support four kinds of statement that version made about it. It
+    said every reported interval was a 4000-resample value from one
+    archived re-analysis script. Most of its counts were in fact computed
+    by other deposited scripts at 400, 500 or 2000 resamples. They follow
+    from the deposited files and code, but only from per-cell intervals
+    that the deposit stores and cannot re-derive, and two of them have
+    been reproduced on a single installation only. Some intervals and
+    values, among them those of the calibrated-concentration experiment
+    and the value 0.078, came from code that was not deposited, and how
+    they were computed cannot be identified. The earlier version also said
+    console logs, per-realization files and a check on a second
+    installation were archived; none of these is in the deposit. It
+    described the two diffusion arms as paired, and they were not. No
+    number from the earlier version is used in this paper. Supplementary
+    Section S1 lists each statement, what the deposit holds, and how this
+    was established.
+  WHY THE SHORT VERSION OMITS WHAT IT OMITS. It leaves out the
+  table-by-table mapping and resample counts; the untraced items other
+  than 0.078; 0.07747; reboot.py's NOT RECOMPUTED; the 30-gap scope of
+  the resample claim; the dagger rows; the docstring and change-point
+  sentences; the undeposited regime-map log. Three rules:
+  1. Every kind of false statement is named, in its true direction
+     (provenance; no deposited code; absent evidence; pairing). Only
+     instances are omitted, never a kind of failure.
+  2. No qualification of a favourable statement is dropped. "They
+     follow from the deposited files" keeps both limits (stored
+     intervals not re-derivable; two items on one installation).
+     Omitting a failure's detail is compression; omitting a limit on a
+     favourable claim would be concealment.
+  3. Nothing in this paper depends on the omitted detail: no earlier
+     number is used, so the detail bears on the earlier version, and
+     the paragraph names where it is.
+  Test: a reader of the paragraph alone holds no belief that S1
+  contradicts. Checked sentence by sentence against S1.
+  SUPPLEMENT VERSION, S1 (about 900 words; not applied):
+    S1. The deposit of the earlier version
+    S1.1 How this was established. Each statement below was checked
+    against the 68 files of the deposit, after verifying them against
+    their checksums. Where a console log is named, it comes from the
+    author's earlier machine. The two scripts written for this check,
+    depositcheck.py and n30_reconstruct.py, are deposited with this paper
+    together with their console logs. Each one fixed its comparison rules
+    before it was first run, and neither searched for a setting that would
+    make a published number match.
+    S1.2 Numbers that trace, under a false description.
+    (a) Section 6 said: "every interval reported in this paper is the
+    4000-resample value emitted by the single archived re-analysis script,
+    so that no reported interval originates from a computation that is not
+    in the archive." The re-analysis script, reboot.py, recomputes at 4000
+    resamples only these, from Sections 7.12 and 7.15: the paired gaps,
+    the severity trends, the onset intervals and the interaction
+    intervals. The other numbers come from elsewhere:
+    - Table 4 (Section 7.4): the means and verdict counts follow from
+    control_summary.csv. control.py computed the per-cell intervals at 400
+    resamples. This is a tally, with no random draw.
+    - Table 5 (Section 7.5), including the caption's 123/144: these follow
+    from boundary_summary.csv. boundary.py computed them at 400 resamples.
+    This is a tally.
+    - Section 7.10, tolerance and Bonferroni counts: these follow from
+    sigma_summary.csv. sigma.py computed them at 400 resamples. This is a
+    tally.
+    - Section 7.10, regression coefficients and intervals: these come from
+    audit.py at 500 resamples. Running audit.py unchanged on NumPy 2.5.3
+    reproduces them.
+    - Section 7.11, equivalence counts (3 equivalent, 13 inconclusive, 2
+    outside): these come from audit.py at 2000 resamples. It resamples
+    over objectives and does not pair the arms. Running it on NumPy 2.5.3
+    reproduces them.
+    - Section 7.12 counts: these come from regimemap.py at 400 resamples.
+    They equal that script's console output on the earlier machine, and
+    that log was not deposited.
+    A tally shows that the published counts follow from the per-cell
+    intervals stored in the deposit. It does not re-derive those
+    intervals, because the deposit holds no per-realization data for these
+    experiments. The NumPy version used for the original audit.py run is
+    not recorded.
+    (b) Section 6 said: "every trend interval in this paper is recomputed
+    ... at 4000 resamples." This is true for the severity trends of
+    Section 7.15. It is false for Section 7.10, which used 500 resamples,
+    and for Section 7.3, which is covered in S1.3.
+    (c) Section 6 said that moving from 400 to 4000 resamples moves an
+    interval endpoint "by less than 0.02 and no equivalence verdict
+    changes". The reboot.py log shows this only for the 30 paired gaps of
+    Section 7.15: "largest endpoint shift: 0.0163", "verdicts changed: 0".
+    It was not shown for any other interval.
+    S1.3 Numbers with no identifiable source. The following were produced
+    by code that is not in the deposit:
+    - (a) the intervals of Table 3 (Section 7.3);
+    - (b) the regression intervals of Section 7.3, which the abstract and
+    conclusions also quote; its three pairwise contrasts; and the
+    full-grid separation +0.1940 [+0.0682, +0.3105];
+    - (c) the interval [0.117, 0.381] (Sections 7.3 and 7.13);
+    - (d) the value 0.078 (abstract, Sections 7.3 and 7.14, conclusions),
+    which the deposited data give as 0.07747;
+    - (e) the slope-SE reference scale 0.0260, with interquartile range
+    [0.0191, 0.0341] (Section 1.2). The 0.05 equivalence margin of Section
+    6 was based on it, and no single specification reproduces the value
+    and the range together;
+    - (f) the interval [0.0069, 0.2087] of the per-size-temperature
+    experiment (Section 7.14);
+    - (g) the six per-dimension anisotropic-minus-isotropic gaps of
+    Section 7.11. None of them equals the gap the deposited code reports
+    at any of the three noise levels.
+    Where these items have point estimates, those recompute from the
+    deposited files, except in (d), (e) and (g). How the intervals were
+    computed cannot be identified. Appendix A said every pre-specified
+    criterion is stated in the docstring of an archived script; that does
+    not hold for any of (a) to (g).
+    S1.4 Statements about evidence that does not exist.
+    - (a) Section 6 said the re-analysis was run on two installations,
+    NumPy 1.24.4 with Python 3.8.10 and NumPy 2.4.4 with Python 3.12.3,
+    and that they agree to four decimals. There is one console log, from
+    NumPy 1.24.4 on the earlier machine, and it was not deposited. No log
+    of a NumPy 2.4.4 run exists.
+    - (b) Appendix A said a re-analysis script recomputes the noise floor,
+    the fitting-window sensitivity, the equivalence tests, the
+    change-point intervals, and the tolerance and Bonferroni tables.
+    audit.py prints them, but it writes no file, and no log of it was
+    deposited. reboot.py states in its own output that it does not
+    recompute the Section 7.5 table. The change-point intervals audit.py
+    prints are not quoted anywhere in the earlier version.
+    - (c) Appendix A and the Data availability statement said console logs
+    are archived for the rows of Table 2 marked with a dagger. Table 2
+    marks no rows, and the deposit contains no console log.
+    - (d) Appendix A said per-realization CSV files are archived for every
+    confirmatory run in Table 2. Eight experiments (control, boundary,
+    sigma, crossed, cliff, mechanism, ess_surface, visibility) are
+    deposited as means per cell and ensemble size, and the regime files
+    hold one row per cell.
+    S1.5 Statements the deposited code contradicts. The pairing claims are
+    false: Section 6, "Where two arms share seeds the resample is paired";
+    Section 7.11, the trace ratio "paired on the shared realization
+    index", over 180 pairs; Section 7.15, the paired gaps and their
+    intervals. The archived scripts gave the isotropic and anisotropic
+    arms different seeds, so every one of these comparisons is between
+    independent runs.
+    S1.6 What this paper does. No number from the earlier version is
+    reused. Every number comes from the rerun described in Section X. Its
+    scripts, console logs and per-realization files, and the checks in
+    S1.1, are deposited at [DOI].
+  V2 DEPOSIT DESCRIPTION (not applied):
+    Version 2 accompanies a new manuscript that replaces the one version 1
+    supported. The version 1 files are unchanged. The paper they
+    accompanied made several statements about them that the files do not
+    support. It said every reported interval was a 4000-resample value
+    from one re-analysis script; console logs and per-realization files
+    were archived for every confirmatory run; the re-analysis had been
+    checked on a second installation; and the isotropic and anisotropic
+    arms were paired. Some of its numbers came from code that is not in
+    version 1. Supplementary Section S1 of the new paper lists each
+    statement and what the files show. This version holds the scripts,
+    console logs and per-realization files of the rerun on which every
+    number in the new paper rests, together with the scripts and logs of
+    the checks in S1. It also holds four console logs from the author's
+    earlier machine that S1 cites, unchanged and with their original
+    checksums: logs_reboot.log, logs_M_full.log, logs_perjcal_full.log and
+    logs_exact_full.log.
+  V2 DEPOSIT MUST HOLD, for S1 (Rahul, 2026-10-30). Reason: a
+  disclosure resting on logs the reader cannot see repeats the defect it
+  discloses. Every log S1 cites, and what it supports:
+  - round1-zip/cbo-gap/logs_reboot.log, sha256 bc3fb23c...e616e: S1.2(a)
+    (what reboot.py recomputes at 4000), S1.2(c) (0.0163, verdicts
+    changed 0), S1.4(a) (the one NumPy 1.24.4 run), S1.4(b) (NOT
+    RECOMPUTED).
+  - round1-zip/cbo-gap/logs_M_full.log, sha256 797f48a1...a0a5: S1.2(a),
+    the Section 7.12 counts equal regimemap.py's console output.
+  - round1-zip/cbo-gap/logs_perjcal_full.log, sha256 ac41b574...d471:
+    S1.3(f), the intervals perjcal.py does print (0.0156 [0.0010,0.0576],
+    0.0964 [0.0059,0.2265]), against which [0.0069, 0.2087] is untraced.
+  - round1-zip/cbo-gap/logs_exact_full.log, sha256 690256de...89afc: the
+    positive control (R6) of n30_reconstruct.py reads it, so S1.3 rests
+    on it. Not named in Rahul's list; found from the script's R6.
+  - logs/n30-20261015-2201.log with scripts/n30_reconstruct.py: S1.1,
+    S1.3(a) to (e) (0.07747; specifications tried).
+  - logs/depositcheck-20261030.log with scripts/depositcheck.py: S1.1,
+    S1.2(a) (Tables 4, 5, 7.10, 7.11), S1.3(g), S1.4(b) (audit.py
+    prints them; appendix).
+  - n30_reconstruct.py imports measlib.py, which imports cbopaths.py and
+    detcheck.py; all three go in with it, or it does not run.
+    depositcheck.py imports nothing outside the standard library and
+    NumPy.
+  - S1.5 (pairing) rests on the version 1 scripts' seed tables, which are
+    in version 1; no log.
+  Full checksums are in round1-zip.sha256 lines 110, 112, 115, 116.
   OPEN until the disclosure is written in the manuscript pass (N45).
 - N9 (new, T). Section 7.12 says the three failing admissible cells are "of
   Section 7.15"; Conclusions say "three of the thirty in Section 7.12". They
@@ -2264,7 +2461,56 @@ instruction of 2026-10-15.
     unpaired with an interval for the difference of independent arms,
     pre-registered before it is computed. A paired version would need a
     new probe arm run with CONC's keys.
-  OPEN.
+  DECIDED (Rahul, 2026-10-30, C1): the comparison is dropped. Reasons:
+  the new paper's estimand is the fixed-beta algorithm at the
+  concentration it reaches, and the comparison answers only round 1's
+  question (how far the protocol change moved the result, "moved the
+  statistic by 0.300"); its value was as a paired measurement, which N40
+  shows does not exist; an unpaired interval (referee point 7's other
+  option) still cannot be read causally. Removing the sentence answers
+  referee point 7. PROBEARM is a legitimate fixed-beta algorithm (one
+  probe beta per cell, fixed seed 999 in mechanism.beta_for_target), at
+  a concentration other than its nominal tau_0; its results go to the
+  supplement as a record of the probe protocol, not as wrong.
+  The supplement must say, about the probe protocol:
+  1. What it was: mechanism.beta_for_target bisects beta until a probe
+     sample of 4000 particles (fixed seed) has ESS fraction tau_0; that
+     beta is used unchanged for the reference ensemble and its
+     subensembles.
+  2. Why that does not calibrate the reference: the probe's fraction
+     belongs to that sample and that size; target concentration is not
+     achieved concentration, and the protocol never checked the second.
+  3. How large the miss is, from the rerun (scripts/refratio.py, the
+     section 8.5 reference ratios), not round 1's untraced [0.117, 0.381]
+     (N8, S1.3(c)).
+  4. What it did to round 1: the probe-calibrated results (0.553
+     residual, 0.174 spread) were at an unknown concentration; "moved by
+     0.300" compared independent runs; both withdrawn, neither reused.
+  5. What the rerun's PROBEARM row is: designed as paired (N17), the
+     layout prevented it (N40); its results are a record of the probe
+     protocol, labelled by achieved concentration, with no contrast
+     against CONC.
+  CLOSED 2026-10-30 as a decision; the text is under N45.
+  - scripts/refratio.py (written 2026-10-30, Rahul's instruction): reads
+    audit_ref_ratio (rerunlib.audit_one: ESS_0(J_inf)/J_inf/tau_0 of the
+    redrawn reference under the row's beta) for PROBEARM, GEOM and CONC
+    from the committed shard folders; gate R2 against
+    runs/rerun-analysis-20261030-144722/analysis_audit.csv; per cell, mean
+    with a 95% bootstrap interval over realizations (B 10000) against 1;
+    each row against 1, no row-against-row contrast. Writes nothing.
+    Pre-run checks, as run by Claude: (1) inputs read from their writers
+    (rerun.py REAL_COLS; rerunlib.audit_one; rerun_analysis AUDIT_COLS
+    and its ref.mean() in rep order); (2) every failure a named exit
+    (fixture: gate mismatch 3, F1 not ok 2, duplicate (cell, rep) 2,
+    tampered file 2, no --runs 2, folder given twice 2, a row absent 2);
+    (3) input contact on the six real folders (rerun-arch s0 to s3,
+    rerun-cal s0 and s1), structural only: every sha256.txt verifies;
+    PROBEARM 2160 rows in 144 cells, GEOM 4032 in 336, CONC 2160 in 144,
+    every row end ok, F1 ok; the cell keys and n equal
+    analysis_audit.csv's; reps 0..n-1 in every cell; no mean compared or
+    printed; (4) synthetic fixture end to end (fake ratios, real schema),
+    exit 0, reaching above 1, below 1 and contains 1. Python 3.8 grammar
+    parse passes. Nothing synthetic is committed. OPEN until its log.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
@@ -3308,6 +3554,20 @@ instruction of 2026-10-15.
     monotonicity tolerance, control.py's two-sided 0.15 criterion and the
     absolute-value P-E2 / P-C2 stay in the supplement, labelled as such.
   - N33: every reported slope names its estimand (S-slope primary).
+  DECIDED (Rahul, 2026-10-30), CONC against PROBEARM (C1): dropped
+  (N40). Remove the "moved the statistic by 0.300" / "measured effects
+  of two protocol decisions" sentences (tex 396) and any other
+  probe-against-exact contrast. The supplement carries N40's five items.
+  NOMINAL TAU_0 LABELLING (Rahul, 2026-10-30): the rows run on probe betas
+  (PROBEARM, mechanism probe; GEOM, law probe; ADAPT, control probe;
+  REFSIZE, SYNTH, NAMED, HORIZON, regime probe; RMAP, ONSET, regimemap
+  probe; CLIFF, cliff probe) reach a concentration other than the probe's
+  target. Wherever one is reported, its tau_0 is called nominal (the
+  probe's target, not the concentration reached). PROBEARM and GEOM
+  carry measured reference ratios (refratio.py); the other eight are
+  labelled, not measured, unless one carries a main-text claim that
+  depends on the concentration it reached (Rahul to settle, from the
+  list in Claude's reply of 2026-10-30).
   DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
   - Remove the sentence at tex 703 ("A dedicated experiment controlling
     that concentration exactly at every ensemble size does not make the
