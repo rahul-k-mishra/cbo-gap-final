@@ -47,7 +47,7 @@
       "ledger": "N40"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
@@ -121,6 +121,15 @@
       "attempt": 1,
       "job": "sizetest-e1-s0of2-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-10-31T04:20:51+05:30",
+      "run": "laptop.20261030T224749Z",
+      "event": "launched",
+      "item": "sizetest-s0of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s0of2-a1",
+      "note": "logs/kgrun-sizetest-e1-s0of2-a1.log"
     }
   ],
   "definition": {
