@@ -2662,6 +2662,41 @@ instruction of 2026-10-15.
       no ratio computed or printed; (4) synthetic fixture end to end,
       exit 0, reaching above 1, below 1 and contains 1. Python 3.8 grammar
       parse passes. Nothing synthetic is committed. OPEN until its log.
+  - scripts/sizetest.py (written 2026-10-30, Rahul's instruction: test
+    the size reading rather than accept it). --mode plan reads and draws
+    nothing; --mode run adds PC and E1. READ: the run's CONC and TAU8
+    ratios (refratio2's readers and gate, G1); calprec2_beta.csv's beta,
+    label and tau_ref (G2: table beta equals the run beta in every cell);
+    E0, calprec2 phase A's 24 beta_solved per (cell, N) at N 4000 to
+    4,000,000 against the run beta, with a pre-registered direction
+    prediction; measured costs (calprec2 throughput, calprec2 phase C
+    peak RSS, costprobe2 trajectory walls at J_inf 50000). MEASUREMENT
+    (run mode only): E1, fresh t = 0 draws with calprec2's sampler and
+    streamed evaluation at the run beta, keys calprec2.key_of(41, cell,
+    N, rep); no trajectory. PC: a committed calprec2 phase C row at 64M
+    recomputed to 1e-12 before E1. Classes per cell (SIZE; SIZE, NOT
+    CONVERGED; NOT A MISS AT 50000; ELSEWHERE) and J_needed (J1), fixed in
+    the docstring. The plan step prints E1's cost per ladder size and the
+    larger-reference plan (affected d 40 groups, their measured J_inf
+    50000 walls and RSS, what is not measured, the probe needed, the
+    rerun's realization count). Writes nothing.
+    Pre-run checks, as run by Claude: (1) inputs from their writers
+    (calprec2 key_of, f_chunk, chunk_terms, combine_terms, tau_of,
+    load_throughput, task columns; finitej.ess_frac and exactcal.
+    log_ess_of are the same quantity; costprobe2_results columns); (2)
+    named exits on fixtures: PC mismatch 3, G2 beta mismatch 3, 23 phase
+    A draws 2, ladder without 50000 2, missing arguments 2; (3) input
+    contact, structural only: G3 holds for mechanism, boundary, exactcal;
+    calprec2_beta.csv 336 cells; 26 record folders (the NOT A RECORD s2
+    attempt excluded), phase A 24 draws per (cell, N), phase C 4032 rows,
+    no duplicate task; throughput 90 entries; costprobe2 42 main units
+    (mechanism d 2 to 40, boundary d 5 to 40); CONC 144 and TAU8 144 run
+    cells all in the table, G2 identity holds; no ratio, median or beta
+    ratio computed or printed; (4) synthetic fixture end to end in both
+    modes (fake betas, ratios and tables; the real archived samplers;
+    calprec2.N_LO patched to 200000 in the fixture process only), reaching
+    PC PASS and all four classes. Python 3.8 grammar parse passes.
+    Nothing synthetic is committed. OPEN until the plan log.
   OPEN as text (N45).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
