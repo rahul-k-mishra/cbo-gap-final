@@ -2799,8 +2799,134 @@ instruction of 2026-10-15.
       non-finite only if its cell kept no realization, and then the point
       is non-finite too, so the verdict reads "point non-finite" (checked
       first) while the FLAG is still raised.
-  OPEN: the rehearsal's output (read before the load), the queue load, the
-  shards, the analysis.
+  - Rehearsal output. Source: logs/rerun-analysis-rehearsal-OR10-20261028.log
+    (commit ae6e174): rerun_analysis sha256 f5c1dbef...56d7, python 3.12.3,
+    numpy 2.5.3; "O2 PASS (C1 to C9)"; "20-ROW REPRODUCTION PASS: 11
+    files"; "rerun_analysis exit 0". Its ONSET-R numbers are synthetic and
+    are not quoted anywhere.
+  - Queue. Smoke and shards s0of10 to s9of10 exit 0 (Rahul). Read by Claude
+    from the committed folders: every shard's sha256.txt verifies; headers
+    show python 3.13.15, numpy 2.1.3, plan runs/rerun-plan-20261028-212945,
+    rows ONSET-R; last "peak RSS max" per shard 356.4 to 377.9 MB, "OVER
+    BUDGET 0" in all ten (budget 3072 MB, O-R9).
+  - Analysis. Source: logs/rerun-analysis21-20261030-1446.log, folder
+    runs/rerun-analysis-20261030-144722 (commit 08edb0a; run by Rahul on
+    the laptop; sha256.txt verified by Claude). Header: rerun_analysis
+    sha256 f5c1dbef...56d7 (the rehearsal's), python 3.12.3, numpy 2.5.3,
+    workers 2, plan 20261028-212945, reproduce
+    runs/rerun-analysis-20261027-185918.
+    - "O2 PASS (C1 to C9)". A0 per shard: 2449, 2449, 2448 x 6, 2447,
+      2447 complete realizations; A1 "ONSET-R realizations 24480 present
+      24480 complete".
+    - "margin equals runs/rerun-analysis-20261027-185918's
+      analysis_margin.csv, every value as a string (O-R10)"; "20-ROW
+      REPRODUCTION PASS: 11 files, every value of every old column equal
+      as a string".
+    - "no FLAG"; "wall 3708.4 s"; "rerun_analysis exit 0".
+  - ONSET-R RESULT, W-full, delta 0.10 (primary). Every value below is from
+    runs/rerun-analysis-20261030-144722/analysis_onsetr.csv, rounded to
+    three decimals by Claude for this entry; full precision is in the file
+    and in the log. Format: r_0.10 [lo95, hi95], verdict (O-R6); adq marks
+    "beta_adq; C1 found no sufficient level". No unit's baseline is "not
+    flat" at 0.10, none is non-finite, none is FLAG.
+    isotropic
+      d 5   ackley 3.028 [2.676, beyond 4.8] above 1 (1483 of 10000
+            resamples right-censored); rastrigin 3.921 [3.642, 4.606] above
+            1; sphere 3.670 [2.529, 4.315] above 1; pooled 3.519 [3.178,
+            beyond 4.8], I2 0.0000 (tau2 truncated at 0).
+      d 10  ackley 2.431 [2.259, 3.515] above 1, adq; rastrigin beyond 4.8
+            [beyond 4.8, beyond 4.8], no verdict (point beyond 4.8; 9852 of
+            10000 resamples right-censored); sphere 3.575 [3.076, 4.176]
+            above 1; pooled not computed (O-R7).
+      d 20  ackley 1.856 [1.781, 1.949] above 1, adq; rastrigin 3.703
+            [3.552, 3.866] above 1; sphere 2.009 [1.904, 2.095] above 1;
+            pooled 2.399 [2.336, 2.462], I2 0.9966.
+      d 40  ackley 1.434 [1.376, 1.476]; rastrigin 2.759 [2.718, 2.806];
+            sphere 1.458 [1.433, 1.481]; all above 1; pooled 1.793 [1.766,
+            1.815], I2 0.9994.
+      d 80  ackley 1.107 [1.070, 1.151] adq; rastrigin 2.266 [2.240, 2.293]
+            adq; sphere 1.183 [1.148, 1.212]; all above 1; pooled 1.437
+            [1.415, 1.461], I2 0.9993.
+    anisotropic
+      d 5   ackley 1.619 [1.474, 2.434]; rastrigin 2.008 [1.650, 2.873];
+            sphere 1.457 [1.309, 2.034]; all above 1; pooled 1.680 [1.548,
+            1.997], I2 0.4081.
+      d 10  ackley 1.243 [0.989, 2.087] not distinguishable from 1, adq;
+            rastrigin 1.933 [1.655, 3.080] above 1; sphere 1.638 [1.354,
+            1.845] above 1; pooled 1.579 [1.433, 2.097], I2 0.2113.
+      d 20  ackley 1.471 [1.177, 1.831] above 1, adq; rastrigin 2.028
+            [1.523, 2.645] above 1; sphere 1.396 [1.270, 1.718] above 1;
+            pooled 1.609 [1.408, 1.869], I2 0.4436.
+      d 40  ackley 1.201 [0.954, 1.392] not distinguishable from 1;
+            rastrigin 1.981 [1.833, 2.176] above 1; sphere 1.516 [1.321,
+            1.844] above 1; pooled 1.533 [1.379, 1.691], I2 0.8945.
+      d 80  ackley 0.982 [0.819, 1.076] not distinguishable from 1, adq;
+            rastrigin 2.114 [1.879, 2.497] above 1, adq; sphere 1.437
+            [1.139, 1.636] above 1; pooled 1.440 [1.287, 1.560], I2 0.9598.
+    Counts (log, O-R6, no multiplicity correction, no family-wise claim):
+    isotropic 14 above 1, 1 no verdict (point beyond 4.8); anisotropic 12
+    above 1, 3 not distinguishable from 1; all 26, 1, 3; none below 1.
+  - Reading of the result (Claude, 2026-10-30; for Rahul to reverse):
+    - The right-censored unit, isotropic Rastrigin d 10: its slope stays at
+      or below the baseline -1.045 at every r up to 4.0 (-1.033 there) and
+      is -0.988 at 4.8, short of baseline + 0.10. No
+      crossing exists on the grid; the label is a bound, "beyond 4.8".
+    - The three not-distinguishable units are anisotropic Ackley at d 10,
+      40 and 80; the other two anisotropic Ackley units (d 5 and 20) are
+      above 1. What they share is a curve shape, not a beta: d 40 has a
+      production beta, while d 20 has adq and is above 1. Their slopes rise
+      steadily from r 0.3 with no step, so the 0.10 crossing lands near r
+      1 and the resamples straddle it. At d 80 the four baseline slopes are
+      -0.825, -0.813, -0.801, -0.782, already rising inside the baseline
+      window, with a range of 0.043, under delta, so O-R3 calls it flat.
+    - Phase 1 of ONSET-R (analysis_cells.csv): at r 0.3 the rate criterion
+      (one-sided upper 95% bound <= -1) holds in 2 of the 30 cells
+      (isotropic Rastrigin d 5 and d 10). The baseline is therefore each
+      unit's own slope at small r, not the J^-1 slope; r_delta measures
+      departure from it.
+    - W-ge sensitivity (O-R8) is empty by construction, not omitted: at
+      tau0 0.1, W-ge keeps J with J tau0 >= 1, which is every J of the grid
+      (10 to 5000), so windows_for gives W-full only and the file has no
+      W-ge line. The paper must say so.
+    - Delta sensitivity, no verdict. At 0.05, anisotropic Ackley d 40 is
+      0.760 [0.653, 0.859] and d 80 is 0.651 [0.610, 0.693], both
+      intervals below 1. Anisotropic Ackley d 10 is 0.800 [0.622, 1.201],
+      with 3 resamples left-censored. Anisotropic Sphere d 20 is 0.934
+      [0.770, 1.271] and d 80 is 0.879 [0.790, 1.038]. Isotropic Ackley d
+      80 is 1.024 [0.967, 1.059]. Anisotropic pooled d 80 is
+      0.970 [0.898, 1.055]. Isotropic Rastrigin d 80's baseline range,
+      0.058, makes it "not flat" at 0.05. At 0.20 every anisotropic point
+      is finite (the smallest is Ackley d 80, 1.726 [1.580, 2.070]); the
+      isotropic points at d 5 (Ackley, Rastrigin) and d 10 (Rastrigin,
+      Sphere) are beyond 4.8, and pooled d 5 and d 10 are not computed.
+      Read from these values, not computed: between 0.05 and 0.20 the
+      anisotropic crossings move much further than the isotropic ones at
+      d 40 and 80 (Ackley d 80: 0.651 and 1.726 anisotropic, 1.024 and
+      1.268 isotropic). That is the ramp-versus-step difference above.
+    - Pooled isotropic I2 is 0.9966 to 0.9994 at d 20 to 80: the three
+      objectives disagree far beyond their bootstrap error, and the pooled
+      value is a geometric mean of different crossings, not a common one.
+    - Trends across d: not computed and not claimed (O-R8). Pattern
+      notes, not claims: isotropic Rastrigin is not monotone in d (3.921
+      at d 5, beyond 4.8 at d 10). The pooled isotropic sequence has no d
+      10 value. "Flat" for anisotropic would be an equivalence claim
+      (rule 10).
+    - Scope: tau0 0.1, centred law, regimemap module, three objectives, d
+      5 to 80, J_inf 50000, T 1.0, fixed calprec2 betas, M 48, a grid down
+      to r 0.3. No comparison with ONSET or ONSET-CAL (O-R8; N40, N43).
+    - The boundary r = 1 is the condition 2 lambda > d sigma^2 of FKR
+      Theorem 3.7 (isotropic) and 2 lambda > sigma^2 of dissertation
+      Theorem 3.6 (anisotropic; regimemap.sigma_of). Neither theorem owns
+      the J^-1 exponent, and GHV 2.6, which does, has no such condition
+      (N1). For Ackley the other hypotheses are not verified (R1, O1).
+  - Manuscript consequences, for the single editing pass with N45 (not
+    applied): 38 (abstract, Third), 628 and 707 state that the onset "is
+    not resolvable" or "cannot be distinguished" from r = 1; 602-620
+    (Table tab:onset, the free-breakpoint r_onset, dropped in N43) and 722
+    ("change-point analysis") rest on the withdrawn estimator. Wording is
+    Rahul's decision; see the reply of 2026-10-30.
+  CLOSED 2026-10-30 (commit 08edb0a for the run; this entry for the
+  record). The manuscript text it implies is OPEN under N45.
 
 - N45 (manuscript, P + T; standing set of corrections; recorded
   2026-10-29). The measured exponent is attributed to FKR where its only
@@ -2900,6 +3026,9 @@ instruction of 2026-10-15.
   can fail the finite-window criterion. This is a statement about the
   prefactor, not about an admissible region. It still needs O1 (Ackley in
   A(0,0,0)) proved, since the three failing cells are all Ackley.
+  ONSET-R (added 2026-10-30): the twenty-one-row analysis is in (N44,
+  CLOSED). Its manuscript consequences (38, 602-620, 628, 707, 722) join
+  this pass; listed in N44.
   OPEN.
 
 ## Checked and found sound
