@@ -520,7 +520,8 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       -0.005, +0.034, +0.014) are "within R2 at no level" of A3's arm-A
       gaps in every one of the six (d, tau_0). For example d 40, tau_0 0.1:
       published +0.024, audit 0.0187, 0.0300, -0.4365 at sigma 0.1, 0.2,
-      0.4. Per R7 no other construction was tried. They are untraced.
+      0.4. Per R7 no other construction was tried. They are untraced,
+      and they belong with the N30 list (group C of the disclosure).
     - Reading. The published counts follow from the deposited files and
       code at the resample counts that code sets. What was false at tex 309
       is "4000 resamples" and "the single archived re-analysis script",
@@ -532,7 +533,9 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       re-derive those intervals (no per-realization data, ARC2).
   PROPOSED DISCLOSURE TEXT (Rahul's instruction 2026-10-30; not applied;
   groups A, C and D as in the reply of 2026-10-30, group B rewritten
-  from this result):
+  from this result; the tex 497 gaps moved from B to C, Rahul
+  2026-10-30, because they are numbers with no identifiable source and
+  keeping them in B would soften the finding):
     The deposit of the earlier version does not support several
     statements made about it. That version said every reported interval
     was a 4000-resample value from one archived re-analysis script, and
@@ -554,17 +557,17 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     sweep (500 resamples) and the equivalence counts of the diffusion
     comparison (2000 resamples) are reproduced by running audit.py
     unchanged on NumPy 2.5.3. The NumPy version of the original run is not
-    recorded, so this reproduction comes from one installation. The six
-    per-dimension gaps quoted for that comparison do not equal the gap
-    the deposited code reports at any of the three noise levels, and how
-    they were obtained has not been identified. The regime-map counts
-    equal the console output of regimemap.py at 400 resamples, a log that
-    was not deposited. [C] The intervals of the concentration-control
-    table and regression, the slope-SE reference scale and the value
-    0.078 were produced by code that was not deposited. Their point
-    estimates recompute from the deposited files, except 0.078, which the
-    deposited data give as 0.07747. The construction of those intervals
-    cannot be identified. [A] The earlier version also said the
+    recorded, so this reproduction comes from one installation. The
+    regime-map counts equal the console output of regimemap.py at 400
+    resamples, a log that was not deposited. [C] The intervals of the
+    concentration-control table and regression, the slope-SE reference
+    scale and the value 0.078 were produced by code that was not
+    deposited. Their point estimates recompute from the deposited files,
+    except 0.078, which the deposited data give as 0.07747. The
+    construction of those intervals cannot be identified. The six
+    per-dimension gaps quoted for the diffusion comparison at matched
+    noise level have no identifiable source either: none equals the gap
+    the deposited code reports at any of the three noise levels. [A] The earlier version also said the
     re-analysis had been run on two installations that agreed to four
     decimals. One such run has a console log, and that log was not
     deposited. It said console logs and per-realization files were
@@ -2776,6 +2779,16 @@ instruction of 2026-10-15.
       r = 1.
   OPEN until that text is written and verified by the rule-8 diff.
   Addendum 2026-10-30 (source of round 1's onset claim; audit.py A4).
+  - CORRECTIONS TO RAHUL'S READING (2026-10-30; recorded at his
+    request as corrections):
+    - He read round 1's "not resolvable from r = 1" as coming from
+      audit.py A4. It came from reboot.py's onset function on the Part D
+      regime-map runs (regimemap_D_real.csv) at 4000 resamples.
+    - He read A4's intervals as containing 1.0 in three of four panels.
+      They contain it in two of four (the d 40 panels).
+    - No A4 number appears anywhere in the deposited text. Its only trace
+      is tex 719's "the change-point intervals", in the sentence group A
+      of the disclosure already withdraws.
   - Round 1's "not resolvable from the boundary" (tex 628; abstract 38;
     conclusions 707; Table tab:onset, 602 to 620) comes from reboot.py's
     onset(): the free breakpoint of regimemap.py at tau_0 0.1 on
