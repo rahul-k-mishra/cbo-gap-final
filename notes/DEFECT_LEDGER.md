@@ -2782,6 +2782,51 @@ instruction of 2026-10-15.
       streams only. The streamed-only figure is not printed by this
       version; the rewrite prints it from calprec2's rows that hold
       nothing. The label is fixed in the rewrite.
+  - DECIDED (Rahul, 2026-10-31): E1 runs on Kaggle, CPU only, in the
+    resumable queue; smoke first; a shard's exit 5 resumes from its own
+    folders; the same halt rules. Ladder 50000, 200000, 1000000, 4000000
+    and 48 draws kept (not trimmed).
+  - scripts/sizetest.py rewritten 2026-10-31, before any E1 draw (the
+    single-process --mode run was never executed and is removed). Modes:
+    plan (laptop; as before, plus the corrected RSS figure, the shard
+    schedule S1/S2/T1/G-STOP, and --write-plan, which writes
+    runs/sizetest-plan-<stamp>/ with sizetest_e1_plan.csv and
+    sizetest_plan_params.csv, PF); smoke (Kaggle; G-FORK, G3, V2S, PF,
+    PC, one kind-42 draw per unit at the largest N, SM1); e1 (Kaggle; one
+    shard; PC first; calprec2's scheduler with timeout and --stop-after;
+    resume RS under rule 17; one row per draw in sizetest_e1.csv); analyse
+    (laptop; A1 completeness, then H1, J1 and the classes). E1 keys
+    unchanged (kind 41). Rules and worked examples in its docstring.
+  - scripts/rerunq.py: family sizetest added (items smoke and shard; pins
+    sizetest.py, calprec2.py, costprobe2.py; LDZ, R1Z, SMZ, F2Z, R2Z in
+    its docstring). No change to the rerun or calprec2 families: the
+    three committed definitions validate and give the same job names.
+  - Pre-run checks, as run by Claude 2026-10-31: (1) inputs read from
+    their writers (calprec2 Runner, Out, base_row, error_row, TASKS,
+    key_of, f_chunk, chunk_terms, combine_terms, load_throughput,
+    verify_folder; kgrun ships every scripts/*.py but kgrun.py and
+    rerunq.py; rerunq's existing family functions); (2) named exits on
+    fixtures: smoke 0 SMOKE PASS; e1 stopped 5; resume chain a1 -> a2 ->
+    a3 skips 2 then 4 complete rows; resume with other workers 2, other
+    shard 2, a folder twice 2; G-STOP 2; missing resume folder 2; PC
+    mismatch 3 before any folder is written; analyse complete 0,
+    incomplete 4, a complete row in two folders 2, a smoke folder mixed
+    in 2, a folder given twice 2; (3) input contact, structural only:
+    the 26 calprec2-long folders hold phase C rows at 256M for every
+    (module, d) the plan selects (counts only); (4) synthetic fixture end
+    to end (plan --write-plan, smoke, e1 stop and resume, analyse, all
+    outputs under the scratchpad, calprec2.N_LO patched in the fixture
+    process only), and rerunq's sizetest functions on the fixture's
+    fetched-folder layout: 21 checks pass (job names, arguments, clean
+    headers, F2Z, wrong shard, stop_after, missing read line, PC FAIL,
+    numpy, pin, row count, finalize refused). Python 3.8 grammar parse
+    passes for both files. Nothing synthetic is committed.
+  - Not yet done: the plan rerun with --write-plan on the committed
+    inputs (Rahul), its folder's manifest, the shard count read from
+    that log, the queue definition notes/queues/sizetest-e1.json, and
+    CLAUDE.md rule 22's sentence "A definition's items are rerun.py or
+    calprec2.py jobs", which needs Rahul's amendment to include
+    sizetest.py.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
