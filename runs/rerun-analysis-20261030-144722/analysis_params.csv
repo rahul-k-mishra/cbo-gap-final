@@ -1,0 +1,13 @@
+name,value
+rerun_analysis_sha256,f5c1dbef53076a426262748205fc8cdb662b0be82f3e4728feb4e6608fa756d7
+plan,runs/rerun-plan-20261028-212945
+plan_sha256,5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea
+runs,runs/rerun-arch-s0of4-a1-kaggle-20261024-020220;runs/rerun-arch-s1of4-a1-kaggle-20261024-133226;runs/rerun-arch-s2of4-a1-kaggle-20261024-160215;runs/rerun-arch-s3of4-a1-kaggle-20261024-200233;runs/rerun-cal-s0of2-a1-kaggle-20261025-003238;runs/rerun-cal-s1of2-a1-kaggle-20261025-050238;runs/rerun-cal3-s0of2-a1-kaggle-20261027-011714;runs/rerun-cal3-s1of2-a1-kaggle-20261027-043215;runs/rerun-onsetr-s0of10-a1-kaggle-20261029-024727;runs/rerun-onsetr-s1of10-a1-kaggle-20261029-054727;runs/rerun-onsetr-s2of10-a1-kaggle-20261029-084728;runs/rerun-onsetr-s3of10-a1-kaggle-20261029-121727;runs/rerun-onsetr-s4of10-a1-kaggle-20261029-154728;runs/rerun-onsetr-s5of10-a1-kaggle-20261029-191727;runs/rerun-onsetr-s6of10-a1-kaggle-20261029-223227;runs/rerun-onsetr-s7of10-a1-kaggle-20261030-020149;runs/rerun-onsetr-s8of10-a1-kaggle-20261030-040227;runs/rerun-onsetr-s9of10-a1-kaggle-20261030-061727
+reproduce,runs/rerun-analysis-20261027-185918
+B,10000
+python,3.12.3
+numpy,2.5.3
+workers,2
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+rerun_sha256,52864b4240b4bf0c4e4ef1fabeae1a4ac7ad3342991188e3a487dd1bb55dacbd
+rerunlib_sha256,31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430

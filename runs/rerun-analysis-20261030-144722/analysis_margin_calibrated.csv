@@ -1,0 +1,8 @@
+name,value
+not_adequate_in_margin_pool,crossed|ackley|10|centred|0.01; crossed|ackley|40|centred|0.01; crossed|rastrigin|40|centred|0.01; sigma|ackley|10|centred|0.01; sigma|ackley|40|centred|0.01; sigma|rastrigin|40|centred|0.01
+median_calibrated_r,0.02582665308289189
+cell_arms_calibrated_r,516
+not_adequate_in_calibrated_r_pool,cliff|ackley|10|centred|0.1; regimemap|ackley|10|centred|0.01; regimemap|ackley|10|centred|0.03; regimemap|ackley|40|centred|0.01; regimemap|ackley|40|centred|0.03; regimemap|rastrigin|40|centred|0.01; regimemap|rastrigin|40|centred|0.03
+ratio_calibrated_r_to_calprec2,1.0292413253904698
+ratio_calibrated_r_to_probe,1.0174381899789746
+verdict_calibrated_r,no revisit
