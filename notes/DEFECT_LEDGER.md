@@ -63,6 +63,48 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   DOI 10.1007/978-3-031-02462-7_46), Theorem 2, condition 2 lambda > sigma^2;
   A2 there uses l-infinity balls and nu in (0, 1/2]. Not in the reference list.
   OPEN.
+  UPDATE 2026-10-30 (Riedl's dissertation, ~/cbo-refs/riedl-dissertation.pdf,
+  "Mathematical Foundations of Interacting Multi-Particle Systems for
+  Optimization", TUM, submitted 10.04.2024, accepted 02.09.2024, 448 pp.,
+  https://mediatum.ub.tum.de/doc/1738466/1738466.pdf; text layer read).
+  - "nu in (0, 1/2]" above is WRONG: the conference paper (reprinted as
+    P2, LNCS 13224, Definition 2, (5)-(6)) has nu in (0, inf), l-infinity
+    balls. Its Theorem 2: rho_0 in P4 with rho_0(B^inf_r(v*)) > 0 for all
+    r, 2 lambda > sigma^2, conclusion min V <= eps and exponential decay.
+  - The dissertation states before the reprint: "The proof of [CBO-II,
+    Theorem 2] in the print below contains a subtle technical mistake. A
+    corrected version of it is available both on arXiv and at the end of
+    Section 3.1.1, where we prove Theorem 3.6, which strengthens the
+    original result". So the conference Theorem 2 must not be the result
+    relied on. (The corrected arXiv version's identifier is not given
+    there; I do not know it.)
+  - Dissertation Theorem 3.6 (anisotropic; dynamics (3.2) with D = diag,
+    (2.5), no cutoff H): Assumption 3.5 A1, A2 ((3.26) local coercivity in
+    l-infinity, nu in (0, inf); (3.27) far field outside B^inf_{R0}); rho_0
+    in P4, x* in supp(rho_0), V(rho_0) > 0; eps in (0, V(rho_0)), theta in
+    (0,1); lambda, sigma > 0 with 2 lambda > sigma^2; T* (3.28).
+    Conclusion for ANY weak solution rho in C([0,T*], P4) of (3.3)
+    (Remark 3.7): V(rho_T) = eps for some T in [(1-theta)/(1+theta/2) T*,
+    T*], with (3.30)-(3.31). Proof given in the dissertation ("Proof of
+    Theorem 3.6", Section 3.1.1). This is the auditable theorem for the
+    anisotropic boundary that referee point 2 asks for.
+  - Existence for it: Remark 3.7 points to Theorem 3.4 under W1-W2
+    (Assumption 3.3). W1 is (3.7), C1(1 + ||x|| + ||x'||)||x - x'||, with
+    the additive 1 (the dissertation calls its omission "an unnecessary
+    restriction"); W2 is bounded above or quadratic far-field growth.
+    Theorem 3.4's proof is by reference ("follows verbatim ... [Car+18]"),
+    so GHV Theorem 2.3 stays the audited existence route for both
+    diffusions.
+  - Citability: a TUM doctoral dissertation, accepted, publicly hosted; it
+    can be cited in its own right for Theorem 3.6, which carries its own
+    proof. The conference paper is cited as the origin, not as the theorem
+    relied on. Its mean-field approximation, Proposition 3.16 ((3.72),
+    under W1-W2, no parameter condition), has the sup-E-conditioned form
+    of FKR 3.11 and does not own the measured exponent either (N1).
+  - For O2: the anisotropic part need not use nu <= 1/2; it must be
+    redone against Assumption 3.5 (l-infinity balls B^inf_{R0}), with
+    constants. Not checked here.
+  Still OPEN (manuscript text; O2 constants).
 - R3 (ref, R). Section 7.13: beta solved per realization on its own reference
   ensemble (exactcal.py one_realisation). Fixed-beta rerun of EXP-CAL needed:
   144 cells, 2160 realizations, 3.7 h on the Win7 machine. OPEN.
@@ -141,6 +183,20 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   The manuscript's attributions of the measured quantity to FKR (line 60
   and others) are listed in the reply of 2026-10-29 and are to be fixed
   with N1. The SIAM obligation above stays OPEN.
+  SETTLED BY THE AUTHOR (2026-10-30; by email from Konstantin Riedl to
+  Rahul, in reply to Rahul's request of 2026-10-29; words as relayed by
+  Rahul): the condition 2*lambda > d*sigma^2 "is needed to obtain decay of
+  the functional V(rho_t) in Lemma 4.1, the Lyapunov functional analysed
+  for global convergence to the minimiser"; Proposition 3.11 "does not
+  need it per se"; "since Theorem 3.8 combines the two results, the
+  condition is needed again there". He also said the latest arXiv version
+  has more detail, in particular an appendix not in SIOPT because of page
+  limits, and that they tried to keep the same numbering in both versions,
+  at least for the main theorems. The numbering was then checked against
+  the SIOPT PDF itself (N3 update of 2026-10-30), not taken from this.
+  The SIAM obligation of this item is CLOSED: SIOPT Proposition 3.11,
+  (3.13), p. 2988, is stated under "the assumptions of Theorem 3.2" with no
+  parameter condition (read in the rendered page).
   SINGLE GROUND FOR WITHDRAWAL (recorded 2026-10-29, Rahul's decision).
   The conceptual claim at manuscript lines 40, 547 and 698 ("the
   theorem-admissible region and the observability region are different
@@ -289,6 +345,55 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     -8/(c(theta,lambda,sigma)^2 eta^2 eps) log(...). Two powers of c.
     DOES NOT SURVIVE. The manuscript's "leading factor c^-2" (line 211)
     agrees with v6.
+  UPDATE 2026-10-30: SIOPT COMPARED (Rahul's copy ~/cbo-refs/
+  fkr2024-siopt.pdf, SIAM J. Optim. 34(3) 2973-3004, 32 pp., sent by
+  Riedl; pages 2984, 2985, 2987, 2988 and 2999 read as rendered images,
+  the rest, including Theorem 3.8 on p. 2986, from the text layer).
+  - Result numbers, SIOPT = v6, same content: Definition 3.1 (p. 2984),
+    Theorem 3.2, Remark 3.3, Theorem 3.4 (p. 2984), Definition 3.5,
+    Theorem 3.7 (p. 2985), Theorem 3.8, Remark 3.9, Lemma 3.10 (pp.
+    2986-87), Proposition 3.11 (p. 2988), Remark 4.8 (p. 2999), Section 3.3.
+    Every result the manuscript cites by number exists under that number in
+    SIOPT.
+  - Equation numbers all DIFFER: SIOPT numbers by section. v6 (18) ->
+    (3.1); (19) -> (3.2); (20) -> (3.3); (21) -> (3.4); (24) -> (3.5);
+    (25) -> (3.6); (26) -> (3.7); (27) -> (3.8); (31) -> (3.12); (32) ->
+    (3.13); (68) -> (4.30); (69) -> (4.31); v6 (34) -> (3.15). The
+    manuscript uses no bare FKR equation number; keep it so, or cite
+    SIOPT's.
+  - (4.30)/(4.31) read in the rendered page: -8/(c(theta,lambda,sigma)^2
+    eta^2 eps), two powers of c, as in v6.
+  - ARXIV-ONLY (v6 "Appendix: Extended proof details of Section 3.3", p.
+    36 on): the values b1 = 0, b2 = exp(alpha(sup E - E_min)) and b1 =
+    C4^2 + b2, b2 = 2(C2/C3)(1 + 1/(alpha C3 C4^2)) (v6 (77)); c_M =
+    exp(alpha C2 (1 + sqrt M)) (v6 (84)) and the three consensus-point
+    bounds in c_M (v6 (81)-(83)). SIOPT Section 5 (pp. 3000-3001,
+    (5.1)-(5.3)) has neither. The BDG dimension remark ("the constant ...
+    depends on the dimension d") IS in SIOPT Section 5. The alpha_0 in
+    O(d log(eps)/eps) sentence IS in SIOPT (after (3.15)).
+  - Manuscript consequences (to N45): main line 201 and supplement lines
+    27 and 29 (b1, b2, c_M, the three terms) must cite arXiv v6, Appendix,
+    not SIOPT, and say so. The note under reference [3] must name v6 (the
+    dissertation reprints v5, numbered differently), state that results
+    are cited by numbers common to v6 and SIOPT, and that proof details
+    from the v6 appendix are cited to arXiv.
+  - THE OLD SEQUENTIAL NUMBERS ARE v5. Riedl's dissertation (Paper P1)
+    reprints arXiv:2103.15130v5 (23 Mar 2024), numbered sequentially:
+    Definition 5, Theorem 6, Remark 7, Theorem 8, Definition 9 (A1-A3,
+    (23)-(25)), Theorem 12 ((26) T*, (27), (28)), Theorem 13, Remark 14,
+    Lemma 15, Proposition 16 ((31)), Remark 24 (alpha_0, (63)-(64)),
+    Lemma 25, FKR (8) SDE, (9) Fokker-Planck. Against v5:
+    Theorem 6, Theorem 12, Proposition 16, Definition 5, Remark 7 and
+    (8)/(9) MATCH in number and content (so O3's "(8)/(9)" was correct for
+    v5). "Theorems 6 and 8" in N1: v5 Proposition 16 also names only
+    Theorem 6, so "and 8" was wrong in v5 too. N3's "Theorem 14" and
+    "Remark 25" do not exist in v5 (Remark 14, Lemma 25; the alpha_0
+    remark is Remark 24). v5 (83) is a bound in the proof of Lemma 25, and
+    v5 (63)-(64) carry c^2, so "one power of c" has no source in any
+    version: it was a misreading. "(25)-(27)" in v5 are A3, T*, and
+    V(rho_T) = eps; the cost paragraph's "(27)" is not an objective
+    condition in v5 either and stays UNMATCHED.
+  N3 is CLOSED on numbering. The manuscript work it implies is in N45.
 - N4 (new, T). Supplement numbering: main text cites S2 for the error log
   (lines 477, 690) and S3 for withdrawn results; printed numbers are S3 and
   S4. Appendix A says "three blocks"; there are four sections. OPEN.
@@ -2740,7 +2845,14 @@ instruction of 2026-10-15.
     use "inside / outside the condition of FKR Theorem 3.7".
   - sn-supplementary.tex S1 title and line 27: say it traces the constant
     of FKR (32), not of the measured quantity.
-  FINE: 50, 56, 62, 80, 88, 104-109, 201, 215, 259, 284, 290, 301, 403,
+  CITATION SOURCE (added 2026-10-30, N3 SIOPT comparison): main 201 and
+  supplement 27, 29 cite proof details (b1, b2, c_M, the three terms)
+  that exist only in the arXiv v6 appendix: cite "arXiv v6, Appendix" and
+  say so; rewrite the note under reference [3] to name v6, state the
+  shared numbering, and the appendix exception. Add the dissertation
+  (Theorem 3.6) and the EvoApplications paper for the anisotropic
+  boundary (R2, referee point 2).
+  FINE: 50, 56, 62, 80, 88, 104-109, 215, 259, 284, 290, 301, 403,
   495, 694, 700, 703, 705, 709; supplement line 33.
   PROPOSED LINE 60 (not applied): "This paper does not measure the
   end-to-end guarantee of \cite[Theorem 3.8]{fkr2024}, nor its mean-field
