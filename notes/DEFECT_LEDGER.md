@@ -2692,7 +2692,9 @@ instruction of 2026-10-15.
       share J_inf 50000, T 1.0, K 100, J10 and M 15 with CONC; the
       control and mechanism realizations use the same update (control.py
       211 to 250, mechanism.py 219 to 240); sigma and dt defaults of the
-      two modules were not compared line by line.
+      two modules were not compared line by line. (Compared 2026-10-31:
+      identical, and the rerun passes 0.2 and 0.01 to both; see N45,
+      ADAPT.)
   - scripts/sizetest.py (written 2026-10-30, Rahul's instruction: test
     the size reading rather than accept it). --mode plan reads and draws
     nothing; --mode run adds PC and E1. READ: the run's CONC and TAU8
@@ -3804,8 +3806,41 @@ instruction of 2026-10-15.
   small. Lost: the synthetic breadth of the operating-level claim, which
   now covers TAU8's six named objectives at three dimensions. P6.3's
   SYNTH -> NAMED point values go with them.
-  Still open from that list: ADAPT (the fixed arm's probe beta and the
-  fixed-against-adaptive claim at the tight target).
+  DECIDED (Rahul, 2026-10-31), ADAPT: supplement only, labelled
+  diagnostic, supporting no claim. It carries the fixed arm's measured
+  starting ratios and both arms' drift (logs/adapt0-20261030.log, N40).
+  Reasons:
+  - The fixed-against-adaptive comparison is dropped (N40, 2026-10-30).
+  - The fixed arm is a worse-calibrated duplicate of CONC cells that
+    already exist on calprec2 betas with identical run settings. Read
+    2026-10-31, not assumed:
+    - Archived defaults, control.py 285 to 291 and mechanism.py 282 to
+      288: sigma 0.2, dt 0.01, T 1.0, lambda 1.0 in both; K = T/dt = 100.
+    - The rerun passes neither default. rerunlib.realise calls both
+      modules with rerunlib.DT (0.01) and sigma_for(c, diff), which
+      returns SIGMA_ISO (0.2) for both modules, because every CONC and
+      ADAPT plan row has sigma_design empty and neither module is in
+      the r-indexed list (rerunlib 184, 426 to 431, 923, 926).
+    - runs/rerun-plan-20261028-212945/rerun_plan.csv: CONC 144 cells
+      (mechanism, centred 72, mix-0.1 72), ADAPT 72 cells (control,
+      centred, fixed 36, adaptive 36); both J_inf 50000, T 1.0, K 100,
+      M 15, J10. All 36 ADAPT (objective, d, tau_0) cells are CONC
+      centred cells.
+    - Objectives, MINIMIZER, OFFSET_SCALE and draw_initial are textually
+      identical in the two modules. Both realizations draw X0 then one
+      standard_normal((J_inf, d)) increment per step, in the same order,
+      and apply the same update with the same weighting (control.py 211
+      to 250, mechanism.py 193 to 197 and 219 to 240). Bitwise equality
+      of the two modules at a shared seed and beta has not been run.
+    - The fixed arm differs from CONC only in its beta (a 4000-particle
+      probe, control.py 333 to 336, against calprec2) and its seeds.
+  - The adaptive arm is a time-varying beta, not the analysed algorithm
+    (control.py's own header says so).
+  - The fall of concentration during a run is already recorded in CONC's
+    extras (le0, le_min) and TAU8's (le0, le_mean, le_min).
+  The redesigned adaptive arm (beta_cal start, per-realization target
+  exp(le0)/J_inf, CONC seeds) is not written and not run unless the
+  paper chooses to explain the tau_0 0.01 departure (open, Rahul).
   DECIDED (Rahul, 2026-10-30), perjcal (C2): not run (N36 CLOSED).
   - Remove the sentence at tex 703 ("A dedicated experiment controlling
     that concentration exactly at every ensemble size does not make the
