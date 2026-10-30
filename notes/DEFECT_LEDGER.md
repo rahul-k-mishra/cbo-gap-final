@@ -2661,7 +2661,38 @@ instruction of 2026-10-15.
       fixed realization, tau_0 0.01 and 0.1, d 5, 10, 40, J_inf 50000;
       no ratio computed or printed; (4) synthetic fixture end to end,
       exit 0, reaching above 1, below 1 and contains 1. Python 3.8 grammar
-      parse passes. Nothing synthetic is committed. OPEN until its log.
+      parse passes. Nothing synthetic is committed.
+    - RESULT 2026-10-30. Source: logs/adapt0-20261030.log (run by Rahul,
+      exit 0; Python 3.12.3, NumPy 2.5.3, 2 workers). 36 cells, 540
+      realizations per arm. "R2 PASS: every adaptive realization within
+      1e-06 of 1 (largest |ratio0 - 1| 1.553e-11)"; R3 PASS. Adaptive
+      drift 0.0000 (median of cell medians) at both tau_0. Fixed arm,
+      SUMMARY (mean a/b/c; median a/b/c; median within 5%; median, min,
+      max of cell medians; fixed drift):
+      - tau_0 0.01: d 5 2/3/1, 2/3/1, 1 of 6, 0.9426, 0.7688, 1.1617,
+        2.9447; d 10 5/1/0, 5/1/0, 0 of 6, 1.7788, 0.2591, 4.6460,
+        2.9982; d 40 0/6/0, 0/6/0, 0 of 6, 0.3117, 0.0935, 0.7634,
+        2.4794; all 18: 1 within 5%, median 0.8582, 0.0935 to 4.6460.
+      - tau_0 0.1: d 5 4 of 6 within 5%, median 0.9784; d 10 2 of 6,
+        1.0252, max 1.7330; all 18: 4/12/2 on medians, 7
+        within 5%, median 0.9632, 0.5707 to 1.7330; d 40 0/6/0, median
+        0.7635.
+      - Extremes, per cell: levy d 40 tau_0 0.01 median 0.0935 [0.0794,
+        0.1130]; ackley d 10 tau_0 0.01 median 4.6460 [4.0371, 5.8895]
+        (realizations 2.0222 to 6.2960); smallest single realization
+        rastrigin d 40 tau_0 0.01, 0.0105.
+      - In all, 8 of 36 cells have a median within 5% (1 at tau_0 0.01, 7
+        at 0.1).
+    - Reading (Claude, 2026-10-30): at tau_0 0.01 the fixed arm's cell
+      medians under one nominal label run from 0.0935 to 4.6460 of target,
+      wider than the tenfold step between the two nominal levels. CONC
+      and TAU8 rows also store le0 and le_min in extras (TAU8 also
+      le_mean), so the fall of concentration during a fixed-beta run is
+      recorded for the calibrated rows themselves. The ADAPT plan rows
+      share J_inf 50000, T 1.0, K 100, J10 and M 15 with CONC; the
+      control and mechanism realizations use the same update (control.py
+      211 to 250, mechanism.py 219 to 240); sigma and dt defaults of the
+      two modules were not compared line by line.
   - scripts/sizetest.py (written 2026-10-30, Rahul's instruction: test
     the size reading rather than accept it). --mode plan reads and draws
     nothing; --mode run adds PC and E1. READ: the run's CONC and TAU8
