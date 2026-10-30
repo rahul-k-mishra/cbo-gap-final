@@ -490,6 +490,10 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   full SeedSequence key. The finished runs and scripts/calprec.py at
   7f5e257 are not edited, and the finished runs are not rerun to correct
   it. OPEN until the extended calprec is committed.
+  CLOSED 2026-10-30 (stale condition met): scripts/calprec2.py, committed
+  in 203a564, derives every stream as default_rng(SeedSequence(key +
+  (chunk,))) over the full key (docstring, line 406 at the time of this
+  entry); no 32-bit reduction. Its production table is b663797 (N28).
 - N17 (design decision, Rahul 2026-10-10, RERUN_PLAN F2). EXP-MECH
   (mechanism.py: probe beta) and EXP-CAL (exactcal.py: beta solved per
   realization) have the same grid (mechanism.py 294-297, exactcal.py
@@ -808,6 +812,9 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
       evidence on their precision at tight targets.
     See CALPREC_V2_SPEC section 2.
   OPEN until calprec v2 has run on the four rows.
+  CLOSED 2026-10-30 (stale condition met): calprec v2 ran on the four rows;
+  finalize b663797, calprec2_beta.csv, 336 cells (309 target, 27 beta).
+  The later extension to the regimemap cells is N41.
 - N28 (design change, Rahul 2026-10-11, before calprec v2's full run).
   calprec v2 drops the climb, the adequacy search and the per-cell solve
   for two fixed reference sizes.
@@ -1550,6 +1557,14 @@ instruction of 2026-10-15.
     "What the rerun must do" above). No such decision has been made
     (ANALYSIS_CRITERIA_DRAFT items 3 and 5).
   OPEN.
+  CLOSED 2026-10-30 as to the rerun: decided in notes/ANALYSIS_CRITERIA.md
+  5a ("This settles the decision N31 left open"; commit aaf7aa4): the
+  rerun's seed key omits the diffusion coordinate in the paired rows
+  (rerunlib PAIRED). Checked by Claude on ONSET-R only: across the ten
+  shard rerun_real.csv files, 24480 ok rows, all 12240 (objective, d, r,
+  rep) pairs carry the same seed_key in both arms. The manuscript
+  consequence (round 1's pairing claims at tex 309 and 650 were false
+  for the archived runs) is carried to N45.
 - N32 (archive, criteria; record and rule). Three archived criteria repeat
   analysis-design errors catalogued in supplement S3 (ledger S1):
   - boundary.py line 373, monotonicity in tau_0 as "np.all(diffs >= -0.02)":
@@ -1568,6 +1583,12 @@ instruction of 2026-10-15.
   is not made. The archived results computed under them stay in the
   supplement, labelled with this entry. OPEN until the rerun analysis
   docstring is committed.
+  CLOSED 2026-10-30 (stale condition met): scripts/rerun_analysis.py,
+  committed in db25e41 before its first execution, ITEM 4: the rate
+  verdict is the one-sided 95% upper bound <= -1, with "No monotonicity
+  claim, no tolerance count, no N_vis, no -0.85"; dimension changes are
+  signed (contrast 1, d40 - d2) and resampled within cells, never an
+  absolute value. The supplement labelling is carried to N45.
 - N33 (archive and manuscript, T; design rule). Two per-cell slope
   estimands, reported without distinction.
   - Slope of the averaged curve: E_J averaged over realizations at each J,
@@ -1588,6 +1609,12 @@ instruction of 2026-10-15.
   (ANALYSIS_CRITERIA_DRAFT, "A choice that comes before items 1 to 6").
   The rerun files store E_J per realization, so either can be computed.
   OPEN until that docstring is committed.
+  CLOSED 2026-10-30 (stale condition met): scripts/rerun_analysis.py
+  (db25e41, before first execution), ITEM 0: S-slope, the mean of the
+  realization slopes, is primary for every verdict; S-curve, the slope of
+  the mean curve, is a secondary column read by no verdict; worked
+  example given. The manuscript must name the estimand of every number
+  (carried to N45).
 - N34 (record; second read-only source). round1-zip/, a round-1 working
   directory from Rahul's earlier laptop, extracted by Rahul and made
   read-only (dr-xr-xr-x throughout). Treated exactly as zenodo-v1: read,
@@ -3072,6 +3099,14 @@ instruction of 2026-10-15.
   - W-ge is empty by construction at tau_0 0.1 (J tau_0 >= 1 holds for
     every J of the grid, 10 to 5000), so analysis_onsetr.csv has no W-ge
     line. The paper must say so, since O-R8 promises W-ge as sensitivity.
+  CARRIED FROM ENTRIES CLOSED 2026-10-30 (text only):
+  - N31: round 1's "paired on the shared realization index" (tex 309,
+    650) was false for the archived runs; say so where round-1 paired
+    figures are mentioned. The rerun's pairing is real (5a).
+  - N32: the archived results computed under boundary.py's 0.02
+    monotonicity tolerance, control.py's two-sided 0.15 criterion and the
+    absolute-value P-E2 / P-C2 stay in the supplement, labelled as such.
+  - N33: every reported slope names its estimand (S-slope primary).
   OPEN.
 
 ## Checked and found sound
