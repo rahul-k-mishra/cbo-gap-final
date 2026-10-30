@@ -2510,7 +2510,41 @@ instruction of 2026-10-15.
     analysis_audit.csv's; reps 0..n-1 in every cell; no mean compared or
     printed; (4) synthetic fixture end to end (fake ratios, real schema),
     exit 0, reaching above 1, below 1 and contains 1. Python 3.8 grammar
-    parse passes. Nothing synthetic is committed. OPEN until its log.
+    parse passes. Nothing synthetic is committed.
+  - RESULT 2026-10-30. Source: logs/refratio-20261030.log (run by Rahul,
+    exit 0; Python 3.12.3, NumPy 2.5.3, 2 workers; script sha256
+    b6ee1ca5...082a). Six folders verified; R2 PASS for PROBEARM 144,
+    GEOM 336, CONC 144 cells. SUMMARY, copied (cells; above 1 / below 1 /
+    contains 1; median, min, max of cell means):
+    - PROBEARM tau_0 0.5: 48; 25/16/7; 1.0027, 0.9041, 1.0446. tau_0 0.1:
+      48; 17/22/9; 0.9977, 0.5584, 1.1247. tau_0 0.01: 48; 13/28/7;
+      0.9071, 0.1373, 1.2973; by d at 0.01, medians 1.0138 (d 2), 0.8754
+      (5), 0.9021 (10), 0.6154 (40). Lowest cells are centred-law: ackley
+      d 40 0.1373 [0.0987, 0.1768], d 10 0.1965, d 5 0.2226; rosenbrock d
+      40 0.1894; levy d 40 0.2090. All 144: 55/66/23.
+    - GEOM tau_0 0.01: 42; 10/26/6; 0.8282, 0.1989, 1.6591; d 5 median
+      0.8517 (3/9/2), d 10 1.1858 (7/3/4), d 40 0.4105 (0/14/0, range
+      0.1989 to 0.8028). d 40 medians by tau_0 0.01 to 0.3: 0.4105,
+      0.5926, 0.6820, 0.7780, 0.8337, 0.8829, 0.9492, 0.9757. d 10 is
+      above 1 in 7 to 12 of 14 cells at tau_0 0.01 to 0.1. All 336:
+      107/184/45.
+    - CONC tau_0 0.5: 48; 16/26/6; 0.9958, 0.9656, 1.0352. tau_0 0.1: 48;
+      21/10/17; 1.0062, 0.9417, 1.0641. tau_0 0.01: 48; 10/3/35; 1.0155,
+      0.9597, 1.6217; d 40 5/0/7, median 1.1191. Highest: ackley centred
+      d 10 1.6217 [1.2344, 1.9948] (sd 0.7643, realizations 0.3957 to
+      2.7532), d 5 1.4153, d 40 1.3905; rastrigin centred d 40 1.2876;
+      griewank d 40 1.2305 and 1.1852. All 144: 47/39/58.
+  - Reading (Claude, 2026-10-30). The script tests means; calprec2
+    calibrates the median reference fraction over six draws to within 5%
+    (calprec2.py C6, line 213). CONC's spread at tau_0 0.5 and 0.1 lies
+    within 0.94 to 1.07; its above-1 means at tau_0 0.01 have large SDs
+    and are consistent with a right-skewed fraction whose median is on
+    target, but the log prints no per-cell median, so that is not shown.
+    The probe misses grow as tau_0 falls; at tau_0 0.01 they are mostly
+    below 1 (the reference more concentrated than intended), largest in
+    the centred law and at d 40, not monotone in d (PROBEARM d 5 median
+    below d 10's; GEOM d 10 above 1, d 5 and d 40 below).
+  OPEN as text (N45).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
