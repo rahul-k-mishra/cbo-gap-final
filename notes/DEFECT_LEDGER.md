@@ -2574,7 +2574,68 @@ instruction of 2026-10-15.
     (4) synthetic fixture end to end, exit 0, including a right-skewed
     cell whose mean interval is above 1 while its median interval
     contains 1. Python 3.8 grammar parse passes. Nothing synthetic is
-    committed. OPEN until its log.
+    committed.
+  - RESULT v2 2026-10-30. Source: logs/refratio2-20261030.log (run by
+    Rahul, exit 0; Python 3.12.3, NumPy 2.5.3). R2 PASS for PROBEARM 144,
+    GEOM 336, CONC 144, TAU8 144 cells. The mean verdict totals equal v1's
+    (PROBEARM 55/66/23, GEOM 107/184/45, CONC 47/39/58), as the shared
+    seed rule requires. SUMMARY, copied (mean a/b/c; median a/b/c; cells
+    with median within 5%; median, min, max of cell medians):
+    - CONC tau_0 0.5: 16/26/6; 16/25/7; 48 of 48; 0.9959, 0.9650, 1.0380.
+      tau_0 0.1: 21/10/17; 18/9/21; 44 of 48; 1.0066, 0.9408, 1.1449.
+      tau_0 0.01: 10/3/35; 7/1/40; 33 of 48; 1.0156, 0.9713, 1.6771; by
+      d, within 5%: 12 (d 2), 11 (5), 7 (10), 3 (40); d 40 median 1.1323.
+      Highest medians: ackley centred d 10 1.6771 [1.0529, 2.4114], d 5
+      1.4644 [0.7892, 1.8313], d 40 1.3596 [1.0030, 1.9053]; rastrigin
+      centred d 40 1.3161. All 144: median within 5% 125.
+    - TAU8, median within 5% (of 18; of 6 at d 40) by tau_0 0.01, 0.02,
+      0.03, 0.05, 0.07, 0.1, 0.2, 0.3: 10, 11, 11, 12, 14, 14, 17, 18; d 40:
+      1, 2, 2, 2, 4, 4, 6, 6. d 40 medians of cell medians: 1.2662,
+      1.1087, 1.0712, 1.0410, 1.0287, 1.0245, 0.9927, 0.9846. tau_0 0.1,
+      all d: 0.9711 to 1.1423. tau_0 0.01, d 40: ackley 1.7082 [1.4028,
+      1.8459], sphere 1.3265, rastrigin 1.2791, levy 1.2534 [1.1592,
+      1.3361], griewank 1.2188, rosenbrock 0.9504. tau_0 0.02, d 40: all
+      six medians >= 1.0031 (ackley 1.5367, rastrigin 1.3368, levy 1.1453,
+      sphere 1.0722, griewank 1.0125, rosenbrock 1.0031); three median
+      intervals above 1 (ackley, rastrigin, levy). All 144: within 5% 107.
+    - PROBEARM tau_0 0.01 medians by d: 1.0149, 0.8744, 0.9158, 0.6234;
+      lowest cell median 0.1355. GEOM tau_0 0.01 d 40: medians 0/13/1,
+      none within 5%, median of medians 0.4584.
+  - Reading (Claude, 2026-10-30):
+    - The medians do not show a right tail behind CONC's high means: the
+      high cells are as high in the median (ackley centred d 10 mean
+      1.6217, median 1.6771). It is a miss at the run's reference size.
+      calprec2 calibrates on six references of 64,000,000 particles (C5m,
+      D1 and C6 at N_LO; calprec2.py 115 to 129, 213); every CONC and TAU8
+      run uses J_inf 50000 (plan). At tight targets and d 40 the fraction
+      at 50000 lies above the 64M value. Not adequate cells contribute
+      (CONC tau_0 0.01: 4 of 12 at d 40 and 2 of 12 at d 10 are "beta, not
+      adequate"; ackley d 40 centred among them), but adequate cells miss
+      too (TAU8 levy d 40 tau_0 0.01, label "target", median 1.2534).
+    - TAU8 at d 40 misses above target for tau_0 0.01 to 0.1, shrinking
+      as tau_0 loosens; the six 0.02 medians all lie above 1. Systematic,
+      not noise. At tau_0 0.2 and 0.3 every d 40 median is within 5%.
+    - The PROBEARM wording and the GEOM decision stand on the medians.
+  - ADAPT (read 2026-10-30, control.py and the shards):
+    - Fixed arm's beta: beta0, bisected on a 4000-particle probe drawn
+      with default_rng(999 + 131 d) so that its ESS fraction is tau_0
+      (control.py 333 to 336), then held for the whole run. The adaptive
+      arm starts from the same beta0 but re-solves on the reference
+      ensemble before the first step (control.py 230 to 231, goal
+      log(tau_0 J_inf)), so at t = 0 it is on target on its reference and
+      the fixed arm is at the probe's miss.
+    - The fixed arm's achieved initial concentration is recorded for every
+      realization: rerun.py stores one_realisation's le0 (log ESS of the
+      run's own reference at the first step) in the extras column of every
+      ADAPT row, both arms (example: fixed, tau_0 0.1, le0 8.441383...).
+      Ratio = exp(le0) / (tau_0 J_inf). No redraw and no audit are needed;
+      the adaptive arm's ratio is 1 by construction, a positive control.
+      CORRECTION: Claude's reply of 2026-10-30 said measuring ADAPT would
+      need new redraw code for control.py. It does not.
+    - The rerun's ADAPT arms are not seed-paired: of 540 (objective, d,
+      tau_0, rep) pairs, 0 share seed_key (round 1's control.py shared
+      seeds between arms, line 346). No fixed-against-adaptive contrast
+      was pre-registered (ANALYSIS_CRITERIA, "No contrast in ADAPT").
   OPEN as text (N45).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
