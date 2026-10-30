@@ -2772,8 +2772,8 @@ instruction of 2026-10-15.
       sphere d 10 0.01 [0.9527, 1.0674]; TAU8 ackley d 5 0.05 [0.8329,
       1.2338]; rastrigin d 10 0.07 [0.9715, 1.0799]; rastrigin d 40 0.07
       [0.9923, 1.1269]). CONC levy d 40 centred 0.1 is resolved above 1
-      (1.0594 [1.0155, 1.0883]) while its q stays within 0.0095 of 1 at
-      every level from 4000 to 4000000: E0 cannot explain it.
+      (1.0594 [1.0155, 1.0883]) while its q is 1.0088, 0.9905, 1.0075,
+      1.0043, 1.0016, 1.0009 from 4000 to 4000000: E0 cannot explain it.
     - CORRECTION (Claude): the plan's "peak RSS bound, calprec2's
       measured peak for the same streamed evaluation (phase C, N 64M)"
       is mislabelled. Phase C at 64M holds replicate 0 in memory for
