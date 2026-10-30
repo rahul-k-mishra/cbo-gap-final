@@ -347,9 +347,10 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       by "rerunq.py load", which is refused unless the current state is DONE
       and archives that state under notes/queue-archive/ (amended
       2026-10-25, Rahul's decision; ledger N42). The first queue, the eight
-      rerun jobs, is the archived one. A definition's items are rerun.py
-      or calprec2.py jobs (rerunq.py docstring, schema 2). Anything else
-      goes through the runbooks by hand.
+      rerun jobs, is the archived one. A definition's items are rerun.py,
+      calprec2.py or sizetest.py jobs (rerunq.py docstring, schema 2;
+      sizetest.py added: amended 2026-10-31, Rahul's decision; ledger
+      N40). Anything else goes through the runbooks by hand.
     - The dispatch token is a fine-grained personal access token of
       Rahul's, limited to this repository, with Actions read and write
       only, and an expiry date. It exists only in cron-job.org's job
