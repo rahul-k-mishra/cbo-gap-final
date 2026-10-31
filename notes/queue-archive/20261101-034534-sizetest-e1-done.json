@@ -1,0 +1,202 @@
+{
+  "schema": 2,
+  "kaggle_user": "ericsom",
+  "profiles": {
+    "sizetest-e1": {
+      "family": "sizetest",
+      "workers": 4,
+      "plan": "runs/sizetest-plan-20261031-033830",
+      "plan_sha256": "ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e",
+      "throughput": "runs/calprec2-smoke-kaggle-20261011-121225",
+      "stop_after": 36000.0,
+      "expect": {
+        "python": "3.13.15",
+        "numpy": "2.1.3",
+        "sizetest_sha256": "711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3",
+        "calprec2_sha256": "3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a",
+        "costprobe2_sha256": "ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b"
+      }
+    }
+  },
+  "max_attempts": 5,
+  "max_file_mb": 50,
+  "queue": [
+    {
+      "id": "smoke-sizetest",
+      "profile": "sizetest-e1",
+      "kind": "smoke",
+      "set": "e1",
+      "ledger": "N40"
+    },
+    {
+      "id": "sizetest-s0of2",
+      "profile": "sizetest-e1",
+      "kind": "shard",
+      "set": "e1",
+      "shard": 0,
+      "nshards": 2,
+      "ledger": "N40"
+    },
+    {
+      "id": "sizetest-s1of2",
+      "profile": "sizetest-e1",
+      "kind": "shard",
+      "set": "e1",
+      "shard": 1,
+      "nshards": 2,
+      "ledger": "N40"
+    }
+  ],
+  "status": "DONE",
+  "index": 3,
+  "attempt": 1,
+  "resume_dirs": [],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
+  "anomaly": null,
+  "halt_reason": "",
+  "kernel_check": null,
+  "attempts": {
+    "smoke-sizetest": [
+      {
+        "attempt": 1,
+        "job": "sizetest-e1-smoke-a1",
+        "folder": "runs/sizetest-e1-smoke-a1-kaggle-20261031-040254",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 29,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261030T223249Z",
+        "fetched_at": "2026-10-31T04:02:58+05:30"
+      }
+    ],
+    "sizetest-s0of2": [
+      {
+        "attempt": 1,
+        "job": "sizetest-e1-s0of2-a1",
+        "folder": "runs/sizetest-e1-s0of2-a1-kaggle-20261031-070253",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 10464,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261031T013249Z",
+        "fetched_at": "2026-10-31T07:03:01+05:30"
+      }
+    ],
+    "sizetest-s1of2": [
+      {
+        "attempt": 1,
+        "job": "sizetest-e1-s1of2-a1",
+        "folder": "runs/sizetest-e1-s1of2-a1-kaggle-20261031-100254",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 10464,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "laptop.20261031T043250Z",
+        "fetched_at": "2026-10-31T10:03:01+05:30"
+      }
+    ]
+  },
+  "history": [
+    {
+      "at": "2026-10-31T03:49:04+05:30",
+      "run": "manual",
+      "event": "load",
+      "item": "smoke-sizetest",
+      "attempt": 1,
+      "job": "",
+      "note": "notes/queues/sizetest-e1.json; previous state archived to notes/queue-archive/20261031-034904-rerun-onsetr-done.json; N40: sizetest E1, smoke then 2 shards; plan runs/sizetest-plan-20261031-033830 (logs/sizetest-plan2-20261031.log)"
+    },
+    {
+      "at": "2026-10-31T03:49:37+05:30",
+      "run": "laptop.20261030T221926Z",
+      "event": "intent",
+      "item": "smoke-sizetest",
+      "attempt": 1,
+      "job": "sizetest-e1-smoke-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-31T03:52:35+05:30",
+      "run": "laptop.20261030T221926Z",
+      "event": "launched",
+      "item": "smoke-sizetest",
+      "attempt": 1,
+      "job": "sizetest-e1-smoke-a1",
+      "note": "logs/kgrun-sizetest-e1-smoke-a1.log"
+    },
+    {
+      "at": "2026-10-31T04:02:58+05:30",
+      "run": "laptop.20261030T223249Z",
+      "event": "fetched",
+      "item": "sizetest-s0of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/sizetest-e1-smoke-a1-kaggle-20261031-040254: runner exit 0, D-SMOKE PASS; now READY"
+    },
+    {
+      "at": "2026-10-31T04:17:56+05:30",
+      "run": "laptop.20261030T224749Z",
+      "event": "intent",
+      "item": "sizetest-s0of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s0of2-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-31T04:20:51+05:30",
+      "run": "laptop.20261030T224749Z",
+      "event": "launched",
+      "item": "sizetest-s0of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s0of2-a1",
+      "note": "logs/kgrun-sizetest-e1-s0of2-a1.log"
+    },
+    {
+      "at": "2026-10-31T07:03:01+05:30",
+      "run": "laptop.20261031T013249Z",
+      "event": "fetched",
+      "item": "sizetest-s1of2",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/sizetest-e1-s0of2-a1-kaggle-20261031-070253: runner exit 0; now READY"
+    },
+    {
+      "at": "2026-10-31T07:10:17+05:30",
+      "run": "41156434685.1",
+      "event": "intent",
+      "item": "sizetest-s1of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s1of2-a1",
+      "note": "resume none"
+    },
+    {
+      "at": "2026-10-31T07:11:29+05:30",
+      "run": "41156434685.1",
+      "event": "launched",
+      "item": "sizetest-s1of2",
+      "attempt": 1,
+      "job": "sizetest-e1-s1of2-a1",
+      "note": "logs/kgrun-sizetest-e1-s1of2-a1.log"
+    },
+    {
+      "at": "2026-10-31T10:03:01+05:30",
+      "run": "laptop.20261031T043250Z",
+      "event": "fetched",
+      "item": "",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/sizetest-e1-s1of2-a1-kaggle-20261031-100254: runner exit 0; now DONE"
+    }
+  ],
+  "definition": {
+    "name": "sizetest-e1",
+    "path": "notes/queues/sizetest-e1.json",
+    "sha256": "d8e90fb216c9e28accd050f142ab214874d73e1a838647b529b9bd55216916c3",
+    "archived_previous": "notes/queue-archive/20261031-034904-rerun-onsetr-done.json"
+  }
+}
