@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 1,
   "attempt": 2,
   "resume_dirs": [
@@ -1207,6 +1207,15 @@
       "attempt": 2,
       "job": "c5-x-drill-a2",
       "note": "resume runs/c5-x-drill-a1-kaggle-20261101-042033"
+    },
+    {
+      "at": "2026-11-01T04:23:57+05:30",
+      "run": "41250038907.1",
+      "event": "launched",
+      "item": "drill-c5",
+      "attempt": 2,
+      "job": "c5-x-drill-a2",
+      "note": "logs/kgrun-c5-x-drill-a2.log"
     }
   ],
   "definition": {
