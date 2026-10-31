@@ -1,0 +1,783 @@
+==============================================================================
+kgrun  action run  job jinfprobe-s1of3-a1  dataset ericsom/cbo-gap-archive
+  repository /home/rahul/Research/cbo-gap-final
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/rahul/Research/cbo-gap-final/.kaggle-bundle
+  ship data   costprobe2-s0-kaggle-20261010-103952   5 files, manifest verified, tracked and clean in git
+  ship data   costprobe2-s1-kaggle-20261011-101343   5 files, manifest verified, tracked and clean in git
+  ship data   calprec2-finalize-20261023-112503   2 files, manifest verified, tracked and clean in git
+  ship data   jinfprobe-smoke-a1-kaggle-20261031-180019   4 files, manifest verified, tracked and clean in git
+  bundle id 149edc43ac862e47  (kgrun-bundle-149edc43ac862e47.sha256, 78 files listed)
+  26 archive files + 35 round-2 scripts + 4 shipped folder(s); bundle 80 files, 2.6 MB
+  dataset id ericsom/cbo-gap-archive
+VERSION DATASET
+  $ kaggle datasets version -p /home/rahul/Research/cbo-gap-final/.kaggle-bundle -m kgrun jinfprobe-s1of3-a1 2026-10-31T21:10:50 -r skip
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Starting upload for file kgrun-ship-000-0001-cbo-costprobe2-s0.log
+  0%|          | 0.00/75.0k [00:00<?, ?B/s] 21%|██▏       | 16.0k/75.0k [00:00<00:00, 80.2kB/s]100%|██████████| 75.0k/75.0k [00:01<00:00, 57.9kB/s]
+Upload successful: kgrun-ship-000-0001-cbo-costprobe2-s0.log (75KB)
+Starting upload for file kgrun-ship-000-0004-costprobe2_results.csv
+  0%|          | 0.00/105k [00:00<?, ?B/s] 15%|█▌        | 16.0k/105k [00:00<00:00, 140kB/s]100%|██████████| 105k/105k [00:01<00:00, 78.6kB/s]
+Upload successful: kgrun-ship-000-0004-costprobe2_results.csv (105KB)
+Starting upload for file kgrun-ship-002-0000-sha256.txt
+  0%|          | 0.00/84.0 [00:00<?, ?B/s]100%|██████████| 84.0/84.0 [00:00<00:00, 582B/s]100%|██████████| 84.0/84.0 [00:01<00:00, 83.6B/s]
+Upload successful: kgrun-ship-002-0000-sha256.txt (84B)
+Starting upload for file refratio2.py
+  0%|          | 0.00/18.0k [00:00<?, ?B/s] 89%|████████▉ | 16.0k/18.0k [00:00<00:00, 108kB/s]100%|██████████| 18.0k/18.0k [00:01<00:00, 17.1kB/s]
+Upload successful: refratio2.py (18KB)
+Starting upload for file jinfprobe.py
+  0%|          | 0.00/47.1k [00:00<?, ?B/s] 34%|███▍      | 16.0k/47.1k [00:00<00:00, 98.0kB/s]100%|██████████| 47.1k/47.1k [00:00<00:00, 48.5kB/s]
+Upload successful: jinfprobe.py (47KB)
+Starting upload for file visibility.py
+  0%|          | 0.00/20.5k [00:00<?, ?B/s] 78%|███████▊  | 16.0k/20.5k [00:00<00:00, 114kB/s]100%|██████████| 20.5k/20.5k [00:01<00:00, 20.5kB/s]
+Upload successful: visibility.py (20KB)
+Starting upload for file depositcheck.py
+  0%|          | 0.00/34.6k [00:00<?, ?B/s] 46%|████▌     | 16.0k/34.6k [00:00<00:00, 117kB/s]100%|██████████| 34.6k/34.6k [00:01<00:00, 33.7kB/s]
+Upload successful: depositcheck.py (35KB)
+Starting upload for file control.py
+  0%|          | 0.00/22.1k [00:00<?, ?B/s] 72%|███████▏  | 16.0k/22.1k [00:00<00:00, 149kB/s]100%|██████████| 22.1k/22.1k [00:01<00:00, 22.6kB/s]
+Upload successful: control.py (22KB)
+Starting upload for file reboot.py
+  0%|          | 0.00/12.8k [00:00<?, ?B/s]100%|██████████| 12.8k/12.8k [00:00<00:00, 75.5kB/s]100%|██████████| 12.8k/12.8k [00:01<00:00, 12.0kB/s]
+Upload successful: reboot.py (13KB)
+Starting upload for file audit.py
+  0%|          | 0.00/18.4k [00:00<?, ?B/s] 87%|████████▋ | 16.0k/18.4k [00:00<00:00, 127kB/s]100%|██████████| 18.4k/18.4k [00:01<00:00, 18.4kB/s]
+Upload successful: audit.py (18KB)
+Starting upload for file cliff.py
+  0%|          | 0.00/20.7k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.7k [00:00<00:00, 66.1kB/s]100%|██████████| 20.7k/20.7k [00:01<00:00, 18.4kB/s]
+Upload successful: cliff.py (21KB)
+Starting upload for file rerun.py
+  0%|          | 0.00/54.0k [00:00<?, ?B/s] 30%|██▉       | 16.0k/54.0k [00:00<00:00, 87.1kB/s]100%|██████████| 54.0k/54.0k [00:01<00:00, 44.4kB/s]
+Upload successful: rerun.py (54KB)
+Starting upload for file kgrun-bundle-149edc43ac862e47.sha256
+  0%|          | 0.00/6.41k [00:00<?, ?B/s]100%|██████████| 6.41k/6.41k [00:00<00:00, 64.2kB/s]100%|██████████| 6.41k/6.41k [00:00<00:00, 7.01kB/s]
+Upload successful: kgrun-bundle-149edc43ac862e47.sha256 (6KB)
+Starting upload for file mkfig2.py
+  0%|          | 0.00/1.78k [00:00<?, ?B/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 17.8kB/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 1.94kB/s]
+Upload successful: mkfig2.py (2KB)
+Starting upload for file m4_slopese.py
+  0%|          | 0.00/11.5k [00:00<?, ?B/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 89.8kB/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 11.8kB/s]
+Upload successful: m4_slopese.py (11KB)
+Starting upload for file sizetest.py
+  0%|          | 0.00/65.4k [00:00<?, ?B/s] 24%|██▍       | 16.0k/65.4k [00:00<00:00, 148kB/s]100%|██████████| 65.4k/65.4k [00:01<00:00, 58.7kB/s]
+Upload successful: sizetest.py (65KB)
+Starting upload for file partm.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 17.2kB/s]
+Upload successful: partm.py (17KB)
+Starting upload for file mkfig5.py
+  0%|          | 0.00/2.33k [00:00<?, ?B/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 2.57kB/s]
+Upload successful: mkfig5.py (2KB)
+Starting upload for file mechanism.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████▏ | 16.0k/19.7k [00:00<00:00, 148kB/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 20.9kB/s]
+Upload successful: mechanism.py (20KB)
+Starting upload for file finitej.py
+  0%|          | 0.00/9.66k [00:00<?, ?B/s]100%|██████████| 9.66k/9.66k [00:00<00:00, 87.7kB/s]100%|██████████| 9.66k/9.66k [00:01<00:00, 9.62kB/s]
+Upload successful: finitej.py (10KB)
+Starting upload for file m3_bootmc.py
+  0%|          | 0.00/9.99k [00:00<?, ?B/s]100%|██████████| 9.99k/9.99k [00:00<00:00, 75.9kB/s]100%|██████████| 9.99k/9.99k [00:01<00:00, 9.14kB/s]
+Upload successful: m3_bootmc.py (10KB)
+Starting upload for file regimemap.py
+  0%|          | 0.00/27.2k [00:00<?, ?B/s] 59%|█████▉    | 16.0k/27.2k [00:00<00:00, 143kB/s]100%|██████████| 27.2k/27.2k [00:00<00:00, 29.9kB/s]
+Upload successful: regimemap.py (27KB)
+Starting upload for file m6_hetero.py
+  0%|          | 0.00/14.2k [00:00<?, ?B/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 115kB/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 14.6kB/s]
+Upload successful: m6_hetero.py (14KB)
+Starting upload for file mkfig4.py
+  0%|          | 0.00/2.17k [00:00<?, ?B/s]100%|██████████| 2.17k/2.17k [00:00<00:00, 19.3kB/s]100%|██████████| 2.17k/2.17k [00:01<00:00, 1.93kB/s]
+Upload successful: mkfig4.py (2KB)
+Starting upload for file kgrun-ship-001-0001-cbo-costprobe2-s1.log
+  0%|          | 0.00/64.5k [00:00<?, ?B/s] 25%|██▍       | 16.0k/64.5k [00:00<00:00, 140kB/s]100%|██████████| 64.5k/64.5k [00:01<00:00, 60.2kB/s]
+Upload successful: kgrun-ship-001-0001-cbo-costprobe2-s1.log (64KB)
+Starting upload for file c6.py
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 88.2kB/s]100%|██████████| 11.2k/11.2k [00:01<00:00, 11.3kB/s]
+Upload successful: c6.py (11KB)
+Starting upload for file m5_gapwidth.py
+  0%|          | 0.00/12.3k [00:00<?, ?B/s]100%|██████████| 12.3k/12.3k [00:00<00:00, 122kB/s]100%|██████████| 12.3k/12.3k [00:01<00:00, 12.3kB/s]
+Upload successful: m5_gapwidth.py (12KB)
+Starting upload for file calprec2_hashaudit.py
+  0%|          | 0.00/20.8k [00:00<?, ?B/s] 77%|███████▋  | 16.0k/20.8k [00:00<00:00, 141kB/s]100%|██████████| 20.8k/20.8k [00:01<00:00, 19.2kB/s]
+Upload successful: calprec2_hashaudit.py (21KB)
+Starting upload for file kgrun-ship-000-0000-sha256.txt
+  0%|          | 0.00/454 [00:00<?, ?B/s]100%|██████████| 454/454 [00:00<00:00, 476B/s]
+Upload successful: kgrun-ship-000-0000-sha256.txt (454B)
+Starting upload for file onsetclass.py
+  0%|          | 0.00/18.1k [00:00<?, ?B/s] 88%|████████▊ | 16.0k/18.1k [00:00<00:00, 112kB/s]100%|██████████| 18.1k/18.1k [00:01<00:00, 18.4kB/s]
+Upload successful: onsetclass.py (18KB)
+Starting upload for file detcheck.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 151kB/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 15.9kB/s]
+Upload successful: detcheck.py (15KB)
+Starting upload for file rerun_analysis.py
+  0%|          | 0.00/107k [00:00<?, ?B/s] 15%|█▍        | 16.0k/107k [00:00<00:00, 122kB/s]100%|██████████| 107k/107k [00:01<00:00, 79.1kB/s]
+Upload successful: rerun_analysis.py (107KB)
+Starting upload for file perjcal.py
+  0%|          | 0.00/12.6k [00:00<?, ?B/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 104kB/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 13.0kB/s]
+Upload successful: perjcal.py (13KB)
+Starting upload for file verify.py
+  0%|          | 0.00/15.3k [00:00<?, ?B/s]100%|██████████| 15.3k/15.3k [00:00<00:00, 102kB/s]100%|██████████| 15.3k/15.3k [00:01<00:00, 15.5kB/s]
+Upload successful: verify.py (15KB)
+Starting upload for file onsetr_rehearsal.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 109kB/s]100%|██████████| 15.2k/15.2k [00:01<00:00, 14.0kB/s]
+Upload successful: onsetr_rehearsal.py (15KB)
+Starting upload for file rmapj.py
+  0%|          | 0.00/11.4k [00:00<?, ?B/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 78.6kB/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 11.8kB/s]
+Upload successful: rmapj.py (11KB)
+Starting upload for file kgrun-ship-index.json
+  0%|          | 0.00/2.36k [00:00<?, ?B/s]100%|██████████| 2.36k/2.36k [00:00<00:00, 16.0kB/s]100%|██████████| 2.36k/2.36k [00:00<00:00, 2.45kB/s]
+Upload successful: kgrun-ship-index.json (2KB)
+Starting upload for file kgrun-ship-003-0000-sha256.txt
+  0%|          | 0.00/332 [00:00<?, ?B/s]100%|██████████| 332/332 [00:00<00:00, 2.94kB/s]100%|██████████| 332/332 [00:01<00:00, 331B/s]  
+Upload successful: kgrun-ship-003-0000-sha256.txt (332B)
+Starting upload for file kgrun-ship-001-0002-costprobe2_objcheck.csv
+  0%|          | 0.00/5.51k [00:00<?, ?B/s]100%|██████████| 5.51k/5.51k [00:00<00:00, 54.8kB/s]100%|██████████| 5.51k/5.51k [00:00<00:00, 5.82kB/s]
+Upload successful: kgrun-ship-001-0002-costprobe2_objcheck.csv (6KB)
+Starting upload for file exactcal.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▊| 16.0k/16.2k [00:00<00:00, 137kB/s]100%|██████████| 16.2k/16.2k [00:00<00:00, 16.7kB/s]
+Upload successful: exactcal.py (16KB)
+Starting upload for file memprobe.py
+  0%|          | 0.00/12.2k [00:00<?, ?B/s]100%|██████████| 12.2k/12.2k [00:00<00:00, 125kB/s]100%|██████████| 12.2k/12.2k [00:01<00:00, 12.3kB/s]
+Upload successful: memprobe.py (12KB)
+Starting upload for file h1null.py
+  0%|          | 0.00/30.2k [00:00<?, ?B/s] 53%|█████▎    | 16.0k/30.2k [00:00<00:00, 140kB/s]100%|██████████| 30.2k/30.2k [00:01<00:00, 30.4kB/s]
+Upload successful: h1null.py (30KB)
+Starting upload for file ess_surface.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s] 99%|█████████▉| 16.0k/16.2k [00:00<00:00, 158kB/s]100%|██████████| 16.2k/16.2k [00:01<00:00, 15.9kB/s]
+Upload successful: ess_surface.py (16KB)
+Starting upload for file crossed.py
+  0%|          | 0.00/22.8k [00:00<?, ?B/s] 70%|███████   | 16.0k/22.8k [00:00<00:00, 136kB/s]100%|██████████| 22.8k/22.8k [00:00<00:00, 24.9kB/s]
+Upload successful: crossed.py (23KB)
+Starting upload for file rerun_tally.py
+  0%|          | 0.00/12.1k [00:00<?, ?B/s]100%|██████████| 12.1k/12.1k [00:00<00:00, 12.6kB/s]
+Upload successful: rerun_tally.py (12KB)
+Starting upload for file m7_pairing.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 152kB/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 21.4kB/s]
+Upload successful: m7_pairing.py (20KB)
+Starting upload for file kgrun-ship-003-0002-jinfprobe_params.csv
+  0%|          | 0.00/618 [00:00<?, ?B/s]100%|██████████| 618/618 [00:00<00:00, 5.80kB/s]100%|██████████| 618/618 [00:00<00:00, 674B/s]  
+Upload successful: kgrun-ship-003-0002-jinfprobe_params.csv (618B)
+Starting upload for file calprec2.py
+  0%|          | 0.00/72.9k [00:00<?, ?B/s]100%|██████████| 72.9k/72.9k [00:01<00:00, 62.0kB/s]
+Upload successful: calprec2.py (73KB)
+Starting upload for file m1_estimands.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 85.2kB/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 11.1kB/s]
+Upload successful: m1_estimands.py (11KB)
+Starting upload for file refscale.py
+  0%|          | 0.00/35.1k [00:00<?, ?B/s] 46%|████▌     | 16.0k/35.1k [00:00<00:00, 131kB/s]100%|██████████| 35.1k/35.1k [00:01<00:00, 34.0kB/s]
+Upload successful: refscale.py (35KB)
+Starting upload for file kgrun-ship-001-0003-costprobe2_params.csv
+  0%|          | 0.00/273 [00:00<?, ?B/s]100%|██████████| 273/273 [00:00<00:00, 2.22kB/s]100%|██████████| 273/273 [00:01<00:00, 268B/s]  
+Upload successful: kgrun-ship-001-0003-costprobe2_params.csv (273B)
+Starting upload for file kgrun-ship-003-0003-jinfprobe_results.csv
+  0%|          | 0.00/58.9k [00:00<?, ?B/s] 27%|██▋       | 16.0k/58.9k [00:00<00:00, 115kB/s]100%|██████████| 58.9k/58.9k [00:01<00:00, 54.4kB/s]
+Upload successful: kgrun-ship-003-0003-jinfprobe_results.csv (59KB)
+Starting upload for file boundary.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s] 81%|████████  | 16.0k/19.7k [00:00<00:00, 144kB/s]100%|██████████| 19.7k/19.7k [00:01<00:00, 19.8kB/s]
+Upload successful: boundary.py (20KB)
+Starting upload for file rmapj_real.csv
+  0%|          | 0.00/371k [00:00<?, ?B/s]  4%|▍         | 16.0k/371k [00:00<00:02, 127kB/s]100%|██████████| 371k/371k [00:01<00:00, 195kB/s] 
+Upload successful: rmapj_real.csv (371KB)
+Starting upload for file kgrun-ship-000-0003-costprobe2_params.csv
+  0%|          | 0.00/273 [00:00<?, ?B/s]100%|██████████| 273/273 [00:00<00:00, 302B/s]
+Upload successful: kgrun-ship-000-0003-costprobe2_params.csv (273B)
+Starting upload for file rerunlib.py
+  0%|          | 0.00/43.4k [00:00<?, ?B/s]100%|██████████| 43.4k/43.4k [00:01<00:00, 39.8kB/s]
+Upload successful: rerunlib.py (43KB)
+Starting upload for file kgrun-ship-001-0000-sha256.txt
+  0%|          | 0.00/454 [00:00<?, ?B/s]100%|██████████| 454/454 [00:00<00:00, 506B/s]
+Upload successful: kgrun-ship-001-0000-sha256.txt (454B)
+Starting upload for file cbopaths.py
+  0%|          | 0.00/3.36k [00:00<?, ?B/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 32.8kB/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 3.56kB/s]
+Upload successful: cbopaths.py (3KB)
+Starting upload for file measlib.py
+  0%|          | 0.00/12.0k [00:00<?, ?B/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 111kB/s]100%|██████████| 12.0k/12.0k [00:01<00:00, 12.3kB/s]
+Upload successful: measlib.py (12KB)
+Starting upload for file exactcal_real.csv
+  0%|          | 0.00/413k [00:00<?, ?B/s]  4%|▍         | 16.0k/413k [00:00<00:02, 151kB/s]100%|██████████| 413k/413k [00:00<00:00, 2.28MB/s]100%|██████████| 413k/413k [00:02<00:00, 202kB/s] 
+Upload successful: exactcal_real.csv (413KB)
+Starting upload for file costprobe2.py
+  0%|          | 0.00/75.2k [00:00<?, ?B/s]100%|██████████| 75.2k/75.2k [00:00<00:00, 679kB/s]100%|██████████| 75.2k/75.2k [00:01<00:00, 49.9kB/s]
+Upload successful: costprobe2.py (75KB)
+Starting upload for file regime.py
+  0%|          | 0.00/25.8k [00:00<?, ?B/s] 62%|██████▏   | 16.0k/25.8k [00:00<00:00, 111kB/s]100%|██████████| 25.8k/25.8k [00:01<00:00, 25.3kB/s]
+Upload successful: regime.py (26KB)
+Starting upload for file law.py
+  0%|          | 0.00/34.3k [00:00<?, ?B/s]100%|██████████| 34.3k/34.3k [00:00<00:00, 36.6kB/s]
+Upload successful: law.py (34KB)
+Starting upload for file ess_extend.py
+  0%|          | 0.00/13.6k [00:00<?, ?B/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 109kB/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 14.0kB/s]
+Upload successful: ess_extend.py (14KB)
+Starting upload for file kgrun-ship-002-0001-calprec2_beta.csv
+  0%|          | 0.00/135k [00:00<?, ?B/s] 71%|███████▏  | 96.0k/135k [00:00<00:00, 673kB/s]100%|██████████| 135k/135k [00:01<00:00, 92.2kB/s]
+Upload successful: kgrun-ship-002-0001-calprec2_beta.csv (135KB)
+Starting upload for file manifest.py
+  0%|          | 0.00/8.29k [00:00<?, ?B/s]100%|██████████| 8.29k/8.29k [00:00<00:00, 60.1kB/s]100%|██████████| 8.29k/8.29k [00:01<00:00, 8.38kB/s]
+Upload successful: manifest.py (8KB)
+Starting upload for file ess_panel.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s] 93%|█████████▎| 16.0k/17.2k [00:00<00:00, 124kB/s]100%|██████████| 17.2k/17.2k [00:01<00:00, 15.9kB/s]
+Upload successful: ess_panel.py (17KB)
+Starting upload for file kgrun-ship-000-0002-costprobe2_objcheck.csv
+  0%|          | 0.00/5.51k [00:00<?, ?B/s]100%|██████████| 5.51k/5.51k [00:00<00:00, 49.1kB/s]100%|██████████| 5.51k/5.51k [00:00<00:00, 5.86kB/s]
+Upload successful: kgrun-ship-000-0002-costprobe2_objcheck.csv (6KB)
+Starting upload for file m2_window.py
+  0%|          | 0.00/14.6k [00:00<?, ?B/s]100%|██████████| 14.6k/14.6k [00:00<00:00, 128kB/s]100%|██████████| 14.6k/14.6k [00:01<00:00, 14.6kB/s]
+Upload successful: m2_window.py (15KB)
+Starting upload for file refratio.py
+  0%|          | 0.00/16.9k [00:00<?, ?B/s] 95%|█████████▍| 16.0k/16.9k [00:00<00:00, 159kB/s]100%|██████████| 16.9k/16.9k [00:01<00:00, 16.9kB/s]
+Upload successful: refratio.py (17KB)
+Starting upload for file kgrun-ship-001-0004-costprobe2_results.csv
+  0%|          | 0.00/79.8k [00:00<?, ?B/s] 20%|██        | 16.0k/79.8k [00:00<00:00, 129kB/s]100%|██████████| 79.8k/79.8k [00:01<00:00, 67.9kB/s]
+Upload successful: kgrun-ship-001-0004-costprobe2_results.csv (80KB)
+Starting upload for file kgrun-ship-003-0001-cbo-jinfprobe-smoke-a1.log
+  0%|          | 0.00/28.6k [00:00<?, ?B/s] 56%|█████▌    | 16.0k/28.6k [00:00<00:00, 136kB/s]100%|██████████| 28.6k/28.6k [00:00<00:00, 29.8kB/s]
+Upload successful: kgrun-ship-003-0001-cbo-jinfprobe-smoke-a1.log (29KB)
+Starting upload for file costprobe.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 104kB/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 11.5kB/s]
+Upload successful: costprobe.py (11KB)
+Starting upload for file onsetdiag.py
+  0%|          | 0.00/24.5k [00:00<?, ?B/s] 65%|██████▌   | 16.0k/24.5k [00:00<00:00, 153kB/s]100%|██████████| 24.5k/24.5k [00:01<00:00, 24.6kB/s]
+Upload successful: onsetdiag.py (24KB)
+Starting upload for file perjcalprobe.py
+  0%|          | 0.00/29.2k [00:00<?, ?B/s]100%|██████████| 29.2k/29.2k [00:01<00:00, 29.7kB/s]
+Upload successful: perjcalprobe.py (29KB)
+Starting upload for file sigma.py
+  0%|          | 0.00/20.2k [00:00<?, ?B/s] 79%|███████▉  | 16.0k/20.2k [00:00<00:00, 129kB/s]100%|██████████| 20.2k/20.2k [00:00<00:00, 21.5kB/s]
+Upload successful: sigma.py (20KB)
+Starting upload for file calprec.py
+  0%|          | 0.00/19.8k [00:00<?, ?B/s]100%|██████████| 19.8k/19.8k [00:00<00:00, 21.2kB/s]
+Upload successful: calprec.py (20KB)
+Starting upload for file n30_reconstruct.py
+  0%|          | 0.00/36.5k [00:00<?, ?B/s] 44%|████▍     | 16.0k/36.5k [00:01<00:01, 10.7kB/s]100%|██████████| 36.5k/36.5k [00:02<00:00, 15.3kB/s]
+Upload successful: n30_reconstruct.py (36KB)
+Starting upload for file adapt0.py
+  0%|          | 0.00/17.3k [00:00<?, ?B/s] 92%|█████████▏| 16.0k/17.3k [00:00<00:00, 128kB/s]100%|██████████| 17.3k/17.3k [00:00<00:00, 17.7kB/s]
+Upload successful: adapt0.py (17KB)
+Dataset version is being created. Please check progress at https://www.kaggle.com/datasets/ericsom/cbo-gap-archive
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ready
+  3 s: status 'ready'
+WAIT FOR THIS BUNDLE  ericsom/cbo-gap-archive lists kgrun-bundle-149edc43ac862e47.sha256  (every 30 s, timeout 1800 s)
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                              size  creationDate                
+----------------------------------------------  ------  --------------------------  
+adapt0.py                                        17717  2026-10-31 13:25:11.630000  
+audit.py                                         18819  2026-10-31 13:25:11.616000  
+boundary.py                                      20168  2026-10-31 13:25:11.620000  
+c6.py                                            11509  2026-10-31 13:25:11.550000  
+calprec.py                                       20285  2026-10-31 13:25:11.621000  
+calprec2.py                                      74692  2026-10-31 13:25:11.593000  
+calprec2_hashaudit.py                            21288  2026-10-31 13:25:11.546000  
+cbopaths.py                                       3445  2026-10-31 13:25:11.694000  
+cliff.py                                         21241  2026-10-31 13:25:11.752000  
+control.py                                       22663  2026-10-31 13:25:11.620000  
+costprobe.py                                     11037  2026-10-31 13:25:11.693000  
+costprobe2.py                                    77006  2026-10-31 13:25:11.836000  
+crossed.py                                       23357  2026-10-31 13:25:12.047000  
+depositcheck.py                                  35473  2026-10-31 13:25:11.772000  
+detcheck.py                                      15562  2026-10-31 13:25:11.871000  
+ess_extend.py                                    13945  2026-10-31 13:25:12.015000  
+ess_panel.py                                     17625  2026-10-31 13:25:11.864000  
+ess_surface.py                                   16586  2026-10-31 13:25:11.835000  
+exactcal.py                                      16596  2026-10-31 13:25:11.867000  
+exactcal_real.csv                               423255  2026-10-31 13:25:12.158000  
+finitej.py                                        9895  2026-10-31 13:25:11.898000  
+h1null.py                                        30928  2026-10-31 13:25:11.890000  
+jinfprobe.py                                     48220  2026-10-31 13:25:12.085000  
+kgrun-bundle-149edc43ac862e47.sha256              6568  2026-10-31 13:25:12.039000  
+kgrun-ship-000-0000-sha256.txt                     454  2026-10-31 13:25:11.855000  
+kgrun-ship-000-0001-cbo-costprobe2-s0.log        76814  2026-10-31 13:25:11.856000  
+kgrun-ship-000-0002-costprobe2_objcheck.csv       5644  2026-10-31 13:25:12.207000  
+kgrun-ship-000-0003-costprobe2_params.csv          273  2026-10-31 13:25:12.124000  
+kgrun-ship-000-0004-costprobe2_results.csv      107620  2026-10-31 13:25:12.165000  
+kgrun-ship-001-0000-sha256.txt                     454  2026-10-31 13:25:11.873000  
+kgrun-ship-001-0001-cbo-costprobe2-s1.log        66018  2026-10-31 13:25:11.916000  
+kgrun-ship-001-0002-costprobe2_objcheck.csv       5644  2026-10-31 13:25:12.181000  
+kgrun-ship-001-0003-costprobe2_params.csv          273  2026-10-31 13:25:12.171000  
+kgrun-ship-001-0004-costprobe2_results.csv       81722  2026-10-31 13:25:12.185000  
+kgrun-ship-002-0000-sha256.txt                      84  2026-10-31 13:25:11.917000  
+kgrun-ship-002-0001-calprec2_beta.csv           137943  2026-10-31 13:25:12.184000  
+kgrun-ship-003-0000-sha256.txt                     332  2026-10-31 13:25:12.134000  
+kgrun-ship-003-0001-cbo-jinfprobe-smoke-a1.log   29269  2026-10-31 13:25:11.998000  
+kgrun-ship-003-0002-jinfprobe_params.csv           618  2026-10-31 13:25:12.198000  
+kgrun-ship-003-0003-jinfprobe_results.csv        60343  2026-10-31 13:25:12.277000  
+kgrun-ship-index.json                             2421  2026-10-31 13:25:11.948000  
+law.py                                           35107  2026-10-31 13:25:12.146000  
+m1_estimands.py                                  11063  2026-10-31 13:25:12.027000  
+m2_window.py                                     14916  2026-10-31 13:25:11.920000  
+m3_bootmc.py                                     10228  2026-10-31 13:25:12.030000  
+m4_slopese.py                                    11750  2026-10-31 13:25:12.039000  
+m5_gapwidth.py                                   12581  2026-10-31 13:25:12.134000  
+m6_hetero.py                                     14514  2026-10-31 13:25:12.023000  
+m7_pairing.py                                    20201  2026-10-31 13:25:11.760000  
+manifest.py                                       8492  2026-10-31 13:25:12.091000  
+measlib.py                                       12338  2026-10-31 13:25:12.070000  
+mechanism.py                                     20139  2026-10-31 13:25:12.011000  
+memprobe.py                                      12538  2026-10-31 13:25:11.872000  
+mkfig2.py                                         1825  2026-10-31 13:25:12.110000  
+mkfig4.py                                         2223  2026-10-31 13:25:12.124000  
+mkfig5.py                                         2391  2026-10-31 13:25:11.896000  
+n30_reconstruct.py                               37371  2026-10-31 13:25:12.039000  
+onsetclass.py                                    18579  2026-10-31 13:25:11.679000  
+onsetdiag.py                                     25052  2026-10-31 13:25:11.930000  
+onsetr_rehearsal.py                              15524  2026-10-31 13:25:12.066000  
+partm.py                                         17573  2026-10-31 13:25:12.085000  
+perjcal.py                                       12877  2026-10-31 13:25:12.041000  
+perjcalprobe.py                                  29928  2026-10-31 13:25:12.098000  
+reboot.py                                        13085  2026-10-31 13:25:12.242000  
+refratio.py                                      17319  2026-10-31 13:25:11.663000  
+refratio2.py                                     18430  2026-10-31 13:25:11.760000  
+refscale.py                                      35973  2026-10-31 13:25:12.137000  
+regime.py                                        26398  2026-10-31 13:25:11.653000  
+regimemap.py                                     27824  2026-10-31 13:25:11.702000  
+rerun.py                                         55270  2026-10-31 13:25:11.986000  
+rerun_analysis.py                               109437  2026-10-31 13:25:12.184000  
+rerun_tally.py                                   12415  2026-10-31 13:25:12.158000  
+rerunlib.py                                      44427  2026-10-31 13:25:12.110000  
+rmapj.py                                         11680  2026-10-31 13:25:12.153000  
+rmapj_real.csv                                  379782  2026-10-31 13:25:12.196000  
+sigma.py                                         20661  2026-10-31 13:25:12.255000  
+sizetest.py                                      66953  2026-10-31 13:25:12.171000  
+verify.py                                        15711  2026-10-31 13:25:12.288000  
+visibility.py                                    20942  2026-10-31 13:25:12.258000
+  2 s: kgrun-bundle-149edc43ac862e47.sha256 listed
+GENERATE KERNEL  ericsom/cbo-jinfprobe-s1of3-a1
+  wrote /home/rahul/Research/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+  runner requires bundle 149edc43ac862e47 in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: jinfprobe.py --archive <found path> --outdir /kaggle/working --mode run --costprobe runs/costprobe2-s0-kaggle-20261010-103952,runs/costprobe2-s1-kaggle-20261011-101343 --beta-table runs/calprec2-finalize-20261023-112503 --smoke runs/jinfprobe-smoke-a1-kaggle-20261031-180019 --shard 1 --nshards 3 --workers 4
+  runner will rebuild costprobe2-s0-kaggle-20261010-103952 under /tmp/kgrun-ship and replace runs/costprobe2-s0-kaggle-20261010-103952 in the args
+  runner will rebuild costprobe2-s1-kaggle-20261011-101343 under /tmp/kgrun-ship and replace runs/costprobe2-s1-kaggle-20261011-101343 in the args
+  runner will rebuild calprec2-finalize-20261023-112503 under /tmp/kgrun-ship and replace runs/calprec2-finalize-20261023-112503 in the args
+  runner will rebuild jinfprobe-smoke-a1-kaggle-20261031-180019 under /tmp/kgrun-ship and replace runs/jinfprobe-smoke-a1-kaggle-20261031-180019 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/rahul/Research/cbo-gap-final/.kaggle-push
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-jinfprobe-s1of3-a1
+POLL until the run finishes (every 60 s)
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.RUNNING"
+  $ kaggle kernels status ericsom/cbo-jinfprobe-s1of3-a1
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ericsom/cbo-jinfprobe-s1of3-a1 has status "KernelWorkerStatus.COMPLETE"
+  finished after 8485 s
+FETCH OUTPUT into /home/rahul/Research/cbo-gap-final/runs/jinfprobe-s1of3-a1-kaggle-20261031-233459
+  $ kaggle kernels output ericsom/cbo-jinfprobe-s1of3-a1 -p /home/rahul/Research/cbo-gap-final/runs/jinfprobe-s1of3-a1-kaggle-20261031-233459
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/jinfprobe-s1of3-a1-kaggle-20261031-233459/jinfprobe-run-20261031-154346-s1of3/jinfprobe_params.csv
+Output file downloaded to /home/rahul/Research/cbo-gap-final/runs/jinfprobe-s1of3-a1-kaggle-20261031-233459/jinfprobe-run-20261031-154346-s1of3/jinfprobe_results.csv
+Kernel log downloaded to /home/rahul/Research/cbo-gap-final/runs/jinfprobe-s1of3-a1-kaggle-20261031-233459/cbo-jinfprobe-s1of3-a1.log 
+  3 files, manifest written to sha256.txt
+    a6e1d6fcc49311ce3102fb32bdbd37a59740757e5a9e623111a6fbc1847abc57  cbo-jinfprobe-s1of3-a1.log
+    3e0603b1a84ef003ba9fd9389b261108ea438d0ec2a66c3ab7b71814ccb24491  jinfprobe-run-20261031-154346-s1of3/jinfprobe_params.csv
+    b4cc5ce1cb0306a25b42a8c478d77ca747ee77741e83bab6e95beeb5bee62a32  jinfprobe-run-20261031-154346-s1of3/jinfprobe_results.csv
+==============================================================================
