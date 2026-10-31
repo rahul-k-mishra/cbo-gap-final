@@ -1087,22 +1087,13 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
-  "index": 1,
-  "attempt": 3,
-  "resume_dirs": [
-    "runs/c5-x-drill-a1-kaggle-20261101-042033",
-    "runs/c5-x-drill-a2-kaggle-20261101-043921"
-  ],
-  "job": "c5-x-drill-a3",
-  "args": "--mode drill --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --stop-after 150.0",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "status": "READY",
+  "index": 2,
+  "attempt": 1,
+  "resume_dirs": [],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1147,6 +1138,21 @@
         ],
         "fetched_run": "41251288695.1",
         "fetched_at": "2026-11-01T04:39:23+05:30"
+      },
+      {
+        "attempt": 3,
+        "job": "c5-x-drill-a3",
+        "folder": "runs/c5-x-drill-a3-kaggle-20261101-045823",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 4,
+        "d_smoke": null,
+        "resume_dirs": [
+          "runs/c5-x-drill-a1-kaggle-20261101-042033",
+          "runs/c5-x-drill-a2-kaggle-20261101-043921"
+        ],
+        "fetched_run": "41252642933.1",
+        "fetched_at": "2026-11-01T04:58:25+05:30"
       }
     ]
   },
@@ -1258,6 +1264,15 @@
       "attempt": 3,
       "job": "c5-x-drill-a3",
       "note": "logs/kgrun-c5-x-drill-a3.log"
+    },
+    {
+      "at": "2026-11-01T04:58:25+05:30",
+      "run": "41252642933.1",
+      "event": "fetched",
+      "item": "c5-s0of116",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/c5-x-drill-a3-kaggle-20261101-045823: runner exit 0; now READY"
     }
   ],
   "definition": {
