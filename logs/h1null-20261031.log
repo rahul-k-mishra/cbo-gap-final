@@ -1,0 +1,204 @@
+
+====================================================================================================
+h1null.py  (ledger N40)  --  writes nothing
+EXPLORATORY, POST HOC: written after H1's failures were seen (ledger N40). Not confirmatory.
+====================================================================================================
+  script sha256   03d2251911c8a9f9198de9a09aa5b8ecfb0cb44984e2df766de3703ca041a7a5
+  sizetest sha256 711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3
+  python          3.12.3
+  numpy           2.5.3
+  platform        Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers         2
+  perm-h1         1000
+  perm-test       20000
+  alpha           0.05   verdict cut-offs 0.001 and 0.05   near 0.05   B 10000
+  seeds           X1 SeedSequence([20261030, 6, ci, li]) (sizetest's); P1 ([20261031, 1, ci, 0|1]); P2 ([20261031, 2, ci]) and ([20261031, 3, ci, p]); P3 ([20261031, 4, ci])
+
+====================================================================================================
+What this does, in plain words
+====================================================================================================
+  Each cell has 15 run values and 48 fresh values of the same quantity: the concentration
+  of a 50000-particle starting sample at the run's beta, over the target. If the run's
+  samples are what calprec2's sampler gives, both sets are draws from one distribution.
+  
+  sizetest's H1 asked whether the run's median sits inside an interval built for the fresh
+  median alone. It forgot that the run's median, from only 15 values, wobbles too. So H1
+  can fail when nothing is wrong. This script does three things:
+    - it measures how often H1 fails when nothing is wrong, by shuffling each cell's 63
+      values between the two sets and applying H1 to the shuffles (P2);
+    - it tests each cell with a shuffle test whose false-alarm rate is at most 5% by
+      construction (P3);
+    - it counts, in the cells where the run met its target (the controls), how many such
+      alarms there are. If that count is far above 5% of the controls, the run's samples
+      differ from the sampler's: a correctness finding. If not, ELSEWHERE came from H1.
+  That count is the HEADLINE. P4 restates the size result without using the run at all.
+
+====================================================================================================
+Inputs and identity checks  (A1, G1, RM, X1)
+====================================================================================================
+  plan     runs/sizetest-plan-20261031-033830   sizetest_e1_plan.csv sha256 ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e
+  cells 109   ladder 50000,200000,1000000,4000000   draws 48
+  analyse log logs/sizetest-analyse-20261031.log  sha256 9611b3d17387520c324b8be3453f284fca6bc5fd79b9c95b5ed034c668e1a5ab
+  read /home/rahul/Research/cbo-gap-final/runs/sizetest-e1-s0of2-a1-kaggle-20261031-070253: shard 0 of 2, 10464 rows, 10464 complete
+  read /home/rahul/Research/cbo-gap-final/runs/sizetest-e1-s1of2-a1-kaggle-20261031-100254: shard 1 of 2, 10464 rows, 10464 complete
+  A1 PASS  planned 20928, complete 20928; platform python 3.13.15 numpy 2.1.3
+  run  rerun-cal-s0of2-a1-kaggle-20261025-003238  3 files verified; CONC 1080, TAU8 1080
+  run  rerun-cal-s1of2-a1-kaggle-20261025-050238  3 files verified; CONC 1080, TAU8 1080
+  G1 PASS  CONC  144 cells, every mean equal to analysis_audit.csv
+  G1 PASS  TAU8  144 cells, every mean equal to analysis_audit.csv
+  RM PASS  109 plan cells, 15 run values each, every median equal to the plan's
+  X1 PASS  every cell's class, J_needed and group equal the analyse log's
+  largest per-worker peak RSS 76.7 MB
+
+====================================================================================================
+HEADLINE  (P3 in the control cells; decides correctness finding against test artefact)
+EXPLORATORY, POST HOC: written after H1's failures were seen (ledger N40). Not confirmatory.
+====================================================================================================
+
+  CONTROLS: 3 of 53 rejected by the valid test at alpha 0.05.
+  P(Binomial(53, 0.05) >= 3) = 0.498
+
+  >>> NOT ABOVE THE NOMINAL LEVEL <<<
+      The valid test finds no more control differences than chance gives at its level.
+      This does not show that the references agree with the sampler (rule 10); it shows
+      that this test, at this size, finds no excess. Read P2 for whether H1's failures are
+      within H1's own null rate.
+
+  secondary, affected: 6 of 56 rejected; P(Binomial(56, 0.05) >= 6) = 0.0602: NOT ABOVE THE NOMINAL LEVEL
+  secondary, all     : 9 of 109 rejected; P(Binomial(109, 0.05) >= 9) = 0.096: NOT ABOVE THE NOMINAL LEVEL
+
+====================================================================================================
+P2  how often H1 fails when there is no difference
+====================================================================================================
+  f_c per cell from 1000 shuffles (Monte Carlo s.e. at most 0.016); E = expected H1 failures,
+  F = observed (ELSEWHERE), q = P(X >= F) under the null rates
+  control   cells  53   mean f_c 0.339   E 18.0   F  19   q 0.432:  H1 fails no more often here than it does with no difference
+  affected  cells  56   mean f_c 0.334   E 18.7   F  14   q 0.932:  H1 fails no more often here than it does with no difference
+
+====================================================================================================
+P1, P2, P3 per cell
+====================================================================================================
+  row   cell                                    run med   E1 med run IQR  E1 IQR  run sd   E1 sd  se rt    f_c     P3 p  group    analyse class
+  CONC  mechanism|ackley|10|centred|0.01         1.6771   1.5198  1.1926  1.0744  0.3341  0.1472   2.27  0.329  0.61102  affected SIZE, NOT CONVERGED
+  CONC  mechanism|ackley|10|centred|0.1          1.1449   1.0978  0.2176  0.1973  0.0670  0.0289   2.31  0.334  0.55227  affected SIZE
+  CONC  mechanism|ackley|10|mix-0.1|0.01         1.1216   1.1492  0.4726  0.3535  0.1138  0.0551   2.07  0.354  0.80746  affected SIZE, NOT CONVERGED
+  CONC  mechanism|ackley|40|centred|0.01         1.3596   1.5146  0.9108  0.8544  0.2332  0.1258   1.85  0.339  0.66102  affected SIZE, NOT CONVERGED
+  CONC  mechanism|ackley|40|centred|0.1          1.0231   1.0716  0.1101  0.1174  0.0270  0.0192   1.40  0.320  0.13189  control  ELSEWHERE
+  CONC  mechanism|ackley|40|centred|0.5          0.9929   0.9974  0.0165  0.0158  0.0051  0.0028   1.83  0.320  0.54127  control  NOT A MISS AT 50000
+  CONC  mechanism|ackley|40|mix-0.1|0.01         1.0706   1.1694  0.4255  0.3585  0.1341  0.0614   2.18  0.377  0.55617  affected SIZE
+  CONC  mechanism|ackley|40|mix-0.1|0.1          1.0070   0.9984  0.0141  0.0127  0.0033  0.0014   2.43  0.351  0.04470  control  ELSEWHERE  REJECT
+  CONC  mechanism|ackley|40|mix-0.1|0.5          0.9959   0.9964  0.0037  0.0028  0.0010  0.0004   2.40  0.341  0.56742  control  ELSEWHERE
+  CONC  mechanism|ackley|5|centred|0.01          1.4644   1.1991  1.0778  0.5887  0.2803  0.0804   3.48  0.328  0.21009  affected ELSEWHERE
+  CONC  mechanism|ackley|5|centred|0.1           1.0693   1.0589  0.2323  0.2892  0.0748  0.0457   1.63  0.343  0.86091  affected SIZE
+  CONC  mechanism|griewank|10|mix-0.1|0.01       1.0834   1.0393  0.1546  0.1448  0.0543  0.0202   2.69  0.313  0.44463  affected NOT A MISS AT 50000
+  CONC  mechanism|griewank|40|centred|0.01       1.1883   1.3338  0.5767  0.5485  0.1363  0.0694   1.96  0.334  0.35423  affected SIZE
+  CONC  mechanism|griewank|40|centred|0.1        0.9661   0.9871  0.1901  0.1248  0.0540  0.0172   3.15  0.343  0.67082  control  NOT A MISS AT 50000
+  CONC  mechanism|griewank|40|centred|0.5        0.9883   0.9853  0.0108  0.0126  0.0026  0.0015   1.70  0.339  0.39428  control  NOT A MISS AT 50000
+  CONC  mechanism|griewank|40|mix-0.1|0.01       1.1613   1.1004  0.3301  0.3393  0.1053  0.0431   2.44  0.334  0.56187  affected SIZE
+  CONC  mechanism|griewank|40|mix-0.1|0.1        1.0396   1.0200  0.0568  0.1051  0.0138  0.0127   1.09  0.330  0.41073  control  NOT A MISS AT 50000
+  CONC  mechanism|griewank|40|mix-0.1|0.5        0.9803   0.9908  0.0276  0.0230  0.0087  0.0029   3.04  0.330  0.16854  control  ELSEWHERE
+  CONC  mechanism|levy|40|centred|0.01           0.9802   1.0998  0.1533  0.5041  0.0506  0.0756   0.67  0.361  0.29174  control  SIZE
+  CONC  mechanism|levy|40|centred|0.1            1.0594   1.0206  0.0590  0.0757  0.0189  0.0151   1.25  0.347  0.09245  affected ELSEWHERE
+  CONC  mechanism|levy|40|centred|0.5            1.0004   1.0023  0.0059  0.0059  0.0015  0.0010   1.60  0.340  0.40188  control  NOT A MISS AT 50000
+  CONC  mechanism|levy|40|mix-0.1|0.01           1.1032   1.1178  0.2095  0.2108  0.0605  0.0324   1.87  0.355  0.89981  affected SIZE
+  CONC  mechanism|levy|40|mix-0.1|0.1            0.9831   0.9894  0.0134  0.0189  0.0030  0.0039   0.79  0.369  0.33063  control  ELSEWHERE
+  CONC  mechanism|levy|40|mix-0.1|0.5            0.9994   0.9999  0.0028  0.0028  0.0008  0.0004   1.95  0.338  0.61172  control  NOT A MISS AT 50000
+  CONC  mechanism|rastrigin|10|centred|0.1       0.9408   0.9993  0.0866  0.0700  0.0228  0.0097   2.35  0.344  0.00405  affected ELSEWHERE  REJECT
+  CONC  mechanism|rastrigin|10|mix-0.1|0.01      1.0799   1.1294  0.2573  0.2133  0.0687  0.0286   2.40  0.342  0.45333  affected SIZE
+  CONC  mechanism|rastrigin|40|centred|0.01      1.3161   1.3660  0.5328  0.8142  0.1206  0.0730   1.65  0.325  0.65072  affected SIZE, NOT CONVERGED
+  CONC  mechanism|rastrigin|40|centred|0.1       0.9636   1.0137  0.0989  0.1522  0.0305  0.0267   1.14  0.361  0.31543  control  ELSEWHERE
+  CONC  mechanism|rastrigin|40|centred|0.5       1.0380   1.0346  0.0142  0.0151  0.0036  0.0020   1.78  0.343  0.45723  control  NOT A MISS AT 50000
+  CONC  mechanism|rastrigin|40|mix-0.1|0.01      1.2102   1.1445  0.3658  0.3735  0.1082  0.0754   1.44  0.341  0.63952  affected SIZE
+  CONC  mechanism|rastrigin|40|mix-0.1|0.1       1.0097   1.0128  0.0247  0.0205  0.0072  0.0027   2.62  0.315  0.67107  control  NOT A MISS AT 50000
+  CONC  mechanism|rastrigin|40|mix-0.1|0.5       1.0101   1.0112  0.0028  0.0031  0.0010  0.0004   2.32  0.353  0.32473  control  ELSEWHERE
+  CONC  mechanism|rosenbrock|40|centred|0.01     1.0086   1.0097  0.0962  0.1720  0.0238  0.0250   0.95  0.350  0.96765  control  NOT A MISS AT 50000
+  CONC  mechanism|rosenbrock|40|centred|0.1      1.0021   1.0055  0.0390  0.0282  0.0107  0.0026   4.12  0.310  0.58852  control  NOT A MISS AT 50000
+  CONC  mechanism|rosenbrock|40|centred|0.5      0.9860   0.9875  0.0060  0.0045  0.0017  0.0005   3.52  0.363  0.18959  control  ELSEWHERE
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.01     0.9911   1.0264  0.0824  0.0848  0.0220  0.0115   1.91  0.336  0.14439  control  ELSEWHERE
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.1      0.9970   0.9952  0.0205  0.0165  0.0055  0.0029   1.91  0.339  0.75416  control  NOT A MISS AT 50000
+  CONC  mechanism|rosenbrock|40|mix-0.1|0.5      0.9989   0.9989  0.0015  0.0022  0.0004  0.0003   1.36  0.337  0.93095  control  NOT A MISS AT 50000
+  CONC  mechanism|sphere|10|centred|0.01         1.0593   0.9999  0.1287  0.1609  0.0301  0.0281   1.07  0.326  0.23834  affected NOT A MISS AT 50000
+  CONC  mechanism|sphere|40|centred|0.01         1.2188   1.1282  0.5836  0.3955  0.1386  0.0504   2.75  0.380  0.46323  affected SIZE
+  CONC  mechanism|sphere|40|centred|0.1          1.0067   1.0018  0.0771  0.0682  0.0199  0.0091   2.19  0.335  0.73551  control  NOT A MISS AT 50000
+  CONC  mechanism|sphere|40|centred|0.5          0.9909   0.9914  0.0063  0.0089  0.0018  0.0012   1.49  0.318  0.73991  control  NOT A MISS AT 50000
+  CONC  mechanism|sphere|40|mix-0.1|0.01         1.0546   1.0458  0.1592  0.2141  0.0453  0.0225   2.01  0.337  0.98645  affected NOT A MISS AT 50000
+  CONC  mechanism|sphere|40|mix-0.1|0.1          1.0088   1.0044  0.0149  0.0176  0.0040  0.0018   2.24  0.344  0.24754  control  ELSEWHERE
+  CONC  mechanism|sphere|40|mix-0.1|0.5          1.0037   1.0039  0.0010  0.0024  0.0003  0.0002   1.08  0.341  0.49278  control  NOT A MISS AT 50000
+  TAU8  boundary|ackley|10|centred|0.01          1.8739   1.8344  0.5040  0.8446  0.1216  0.1247   0.97  0.273  0.84816  affected SIZE, NOT CONVERGED
+  TAU8  boundary|ackley|10|centred|0.02          1.7096   1.5357  0.8552  0.7916  0.2275  0.0906   2.51  0.334  0.37828  affected SIZE, NOT CONVERGED
+  TAU8  boundary|ackley|10|centred|0.03          1.3987   1.2847  0.6278  0.6256  0.1834  0.0973   1.89  0.327  0.57832  affected SIZE, NOT CONVERGED
+  TAU8  boundary|ackley|10|centred|0.05          1.1551   1.1581  0.2727  0.3835  0.0750  0.0656   1.14  0.351  0.99130  affected SIZE
+  TAU8  boundary|ackley|10|centred|0.07          1.1389   1.1617  0.2112  0.3653  0.0568  0.0573   0.99  0.354  0.81261  affected SIZE
+  TAU8  boundary|ackley|10|centred|0.1           1.1423   1.1281  0.1655  0.2562  0.0471  0.0203   2.32  0.291  0.55762  affected SIZE
+  TAU8  boundary|ackley|40|centred|0.01          1.7082   1.3603  0.4047  0.8766  0.1207  0.1383   0.87  0.346  0.16314  affected ELSEWHERE
+  TAU8  boundary|ackley|40|centred|0.02          1.5367   1.1941  0.6523  0.3491  0.2057  0.0407   5.05  0.327  0.01070  affected ELSEWHERE  REJECT
+  TAU8  boundary|ackley|40|centred|0.03          1.0781   1.1924  0.5470  0.2026  0.1241  0.0265   4.68  0.356  0.05970  affected ELSEWHERE
+  TAU8  boundary|ackley|40|centred|0.05          1.0576   1.1094  0.3257  0.2799  0.0914  0.0340   2.69  0.317  0.47228  affected SIZE
+  TAU8  boundary|ackley|40|centred|0.07          0.9806   1.0478  0.2017  0.2396  0.0643  0.0309   2.08  0.366  0.40233  control  SIZE
+  TAU8  boundary|ackley|40|centred|0.1           1.0464   1.0315  0.0801  0.1531  0.0247  0.0240   1.03  0.315  0.86166  control  NOT A MISS AT 50000
+  TAU8  boundary|ackley|40|centred|0.2           0.9961   1.0068  0.0434  0.0780  0.0107  0.0089   1.20  0.347  0.57512  control  NOT A MISS AT 50000
+  TAU8  boundary|ackley|40|centred|0.3           0.9791   1.0129  0.0478  0.0417  0.0128  0.0089   1.43  0.352  0.00965  control  ELSEWHERE  REJECT
+  TAU8  boundary|ackley|5|centred|0.01           1.2050   1.0050  0.3809  0.5865  0.1208  0.1148   1.05  0.359  0.34853  affected NOT A MISS AT 50000
+  TAU8  boundary|ackley|5|centred|0.02           0.9300   1.0738  0.2663  0.4866  0.0762  0.0659   1.16  0.333  0.23799  affected ELSEWHERE
+  TAU8  boundary|ackley|5|centred|0.03           1.1145   1.0080  0.4515  0.4803  0.1082  0.0785   1.38  0.316  0.56217  affected NOT A MISS AT 50000
+  TAU8  boundary|ackley|5|centred|0.05           1.1584   1.0304  0.3396  0.3206  0.0831  0.0561   1.48  0.352  0.28394  affected ELSEWHERE
+  TAU8  boundary|ackley|5|centred|0.1            1.0985   1.0709  0.1846  0.2383  0.0651  0.0327   1.99  0.343  0.68372  affected NOT A MISS AT 50000
+  TAU8  boundary|griewank|40|centred|0.01        1.2188   1.2166  0.6850  0.6105  0.2061  0.0931   2.21  0.318  1.00000  affected SIZE
+  TAU8  boundary|griewank|40|centred|0.02        1.0125   1.2343  0.2019  0.2662  0.0472  0.0476   0.99  0.325  0.00785  control  ELSEWHERE  REJECT
+  TAU8  boundary|griewank|40|centred|0.03        1.0981   1.1306  0.2832  0.2341  0.0832  0.0325   2.56  0.345  0.64437  affected SIZE
+  TAU8  boundary|griewank|40|centred|0.05        1.1019   1.0701  0.3462  0.1709  0.1096  0.0196   5.59  0.315  0.55982  affected SIZE
+  TAU8  boundary|griewank|40|centred|0.07        1.0318   1.0834  0.1799  0.1510  0.0384  0.0185   2.07  0.328  0.25654  control  SIZE
+  TAU8  boundary|griewank|40|centred|0.1         1.0533   1.0648  0.1539  0.1321  0.0377  0.0253   1.49  0.327  0.86846  affected NOT A MISS AT 50000
+  TAU8  boundary|griewank|40|centred|0.2         0.9871   0.9909  0.0583  0.0688  0.0145  0.0158   0.92  0.364  0.92295  control  NOT A MISS AT 50000
+  TAU8  boundary|griewank|40|centred|0.3         0.9845   0.9884  0.0567  0.0278  0.0140  0.0047   3.00  0.320  0.74176  control  NOT A MISS AT 50000
+  TAU8  boundary|levy|40|centred|0.01            1.2534   1.2132  0.1779  0.3651  0.0477  0.0549   0.87  0.347  0.56622  affected SIZE
+  TAU8  boundary|levy|40|centred|0.02            1.1453   1.0008  0.1360  0.3113  0.0415  0.0330   1.26  0.309  0.03890  affected ELSEWHERE  REJECT
+  TAU8  boundary|levy|40|centred|0.03            1.0642   1.0679  0.1103  0.1992  0.0397  0.0194   2.05  0.343  0.87161  affected SIZE
+  TAU8  boundary|levy|40|centred|0.05            1.0244   1.0590  0.1895  0.1692  0.0520  0.0317   1.64  0.357  0.67982  control  NOT A MISS AT 50000
+  TAU8  boundary|levy|40|centred|0.07            1.0678   1.0555  0.1224  0.0782  0.0325  0.0107   3.03  0.333  0.65512  affected NOT A MISS AT 50000
+  TAU8  boundary|levy|40|centred|0.1             1.0025   0.9957  0.0502  0.0668  0.0151  0.0110   1.37  0.346  0.66522  control  NOT A MISS AT 50000
+  TAU8  boundary|levy|40|centred|0.2             1.0114   1.0008  0.0193  0.0333  0.0045  0.0051   0.87  0.310  0.30938  control  NOT A MISS AT 50000
+  TAU8  boundary|levy|40|centred|0.3             0.9855   0.9859  0.0119  0.0181  0.0034  0.0033   1.03  0.328  0.98960  control  NOT A MISS AT 50000
+  TAU8  boundary|levy|5|centred|0.2              1.0514   1.0500  0.0153  0.0108  0.0043  0.0015   2.96  0.323  0.58457  affected NOT A MISS AT 50000
+  TAU8  boundary|rastrigin|10|centred|0.01       0.9142   1.1583  0.3653  0.3780  0.1050  0.0609   1.73  0.337  0.02435  affected ELSEWHERE  REJECT
+  TAU8  boundary|rastrigin|10|centred|0.02       1.0849   1.0628  0.1298  0.3338  0.0314  0.0386   0.81  0.335  0.45188  affected NOT A MISS AT 50000
+  TAU8  boundary|rastrigin|10|centred|0.03       1.0546   1.1259  0.1690  0.2871  0.0394  0.0354   1.11  0.322  0.34138  affected SIZE
+  TAU8  boundary|rastrigin|10|centred|0.07       1.0525   1.0221  0.1021  0.1134  0.0259  0.0157   1.65  0.350  0.34133  affected ELSEWHERE
+  TAU8  boundary|rastrigin|40|centred|0.01       1.2791   1.5495  0.8763  0.7637  0.2449  0.1155   2.12  0.354  0.38653  affected SIZE, NOT CONVERGED
+  TAU8  boundary|rastrigin|40|centred|0.02       1.3368   1.2977  0.4848  0.3918  0.1472  0.0632   2.33  0.316  0.90005  affected SIZE
+  TAU8  boundary|rastrigin|40|centred|0.03       1.2800   1.2051  0.1562  0.4027  0.0408  0.0735   0.55  0.339  0.49008  affected SIZE
+  TAU8  boundary|rastrigin|40|centred|0.05       0.9198   1.1575  0.3493  0.3070  0.1090  0.0396   2.76  0.320  0.00665  affected ELSEWHERE  REJECT
+  TAU8  boundary|rastrigin|40|centred|0.07       1.0586   1.0754  0.1245  0.1560  0.0376  0.0271   1.39  0.313  0.75986  affected SIZE
+  TAU8  boundary|rastrigin|40|centred|0.1        0.9864   1.0409  0.0842  0.1374  0.0194  0.0165   1.18  0.338  0.13014  control  ELSEWHERE
+  TAU8  boundary|rastrigin|40|centred|0.2        0.9866   1.0110  0.0635  0.0776  0.0171  0.0099   1.73  0.345  0.17954  control  NOT A MISS AT 50000
+  TAU8  boundary|rastrigin|40|centred|0.3        0.9703   0.9689  0.0519  0.0356  0.0177  0.0030   5.97  0.333  0.76296  control  NOT A MISS AT 50000
+  TAU8  boundary|rosenbrock|40|centred|0.01      0.9504   1.0367  0.1986  0.1713  0.0475  0.0296   1.60  0.322  0.11339  control  ELSEWHERE
+  TAU8  boundary|rosenbrock|40|centred|0.02      1.0031   0.9737  0.1276  0.1272  0.0411  0.0203   2.02  0.329  0.44528  control  NOT A MISS AT 50000
+  TAU8  boundary|rosenbrock|40|centred|0.03      1.0365   1.0101  0.1089  0.0867  0.0308  0.0135   2.27  0.340  0.37978  control  ELSEWHERE
+  TAU8  boundary|rosenbrock|40|centred|0.05      0.9709   0.9913  0.0524  0.0544  0.0116  0.0071   1.63  0.337  0.13604  control  ELSEWHERE
+  TAU8  boundary|rosenbrock|40|centred|0.07      1.0256   1.0229  0.0378  0.0440  0.0096  0.0056   1.70  0.333  0.77501  control  NOT A MISS AT 50000
+  TAU8  boundary|rosenbrock|40|centred|0.1       0.9936   1.0079  0.0438  0.0339  0.0113  0.0050   2.27  0.346  0.17869  control  ELSEWHERE
+  TAU8  boundary|rosenbrock|40|centred|0.2       1.0010   1.0053  0.0171  0.0178  0.0043  0.0017   2.47  0.363  0.24609  control  ELSEWHERE
+  TAU8  boundary|rosenbrock|40|centred|0.3       0.9847   0.9880  0.0076  0.0114  0.0025  0.0014   1.73  0.305  0.27959  control  ELSEWHERE
+  TAU8  boundary|sphere|40|centred|0.01          1.3265   1.1599  0.4021  0.4496  0.1218  0.0574   2.12  0.313  0.19554  affected ELSEWHERE
+  TAU8  boundary|sphere|40|centred|0.02          1.0722   1.0648  0.1508  0.3246  0.0416  0.0445   0.93  0.287  0.95660  affected SIZE
+  TAU8  boundary|sphere|40|centred|0.03          1.0357   1.0435  0.1493  0.1913  0.0461  0.0291   1.58  0.347  0.81731  control  NOT A MISS AT 50000
+  TAU8  boundary|sphere|40|centred|0.05          1.0776   1.0629  0.1094  0.1462  0.0311  0.0150   2.08  0.352  0.62457  affected NOT A MISS AT 50000
+  TAU8  boundary|sphere|40|centred|0.07          1.0232   1.0381  0.0805  0.1089  0.0195  0.0140   1.40  0.339  0.50437  control  NOT A MISS AT 50000
+  TAU8  boundary|sphere|40|centred|0.1           1.0508   0.9967  0.0585  0.0873  0.0158  0.0073   2.15  0.325  0.01000  affected ELSEWHERE  REJECT
+  TAU8  boundary|sphere|40|centred|0.2           0.9893   0.9913  0.0400  0.0385  0.0120  0.0040   3.01  0.359  0.90270  control  NOT A MISS AT 50000
+  TAU8  boundary|sphere|40|centred|0.3           0.9877   0.9854  0.0116  0.0254  0.0028  0.0037   0.77  0.345  0.78841  control  NOT A MISS AT 50000
+
+====================================================================================================
+P4  the size result without the run (E1 against calprec2's table only)
+====================================================================================================
+  affected cells  56: off at 50000  39 (not adequate 18); not off  17
+           of the off cells, J_needed: 50000 0, 200000 13, 1000000 12, 4000000 5, none 9
+  control  cells  53: off at 50000   6 (not adequate  2); not off  47
+           of the off cells, J_needed: 50000 0, 200000 4, 1000000 2, 4000000 0, none 0
+
+====================================================================================================
+h1null.py done, exit 0
+EXPLORATORY, POST HOC: written after H1's failures were seen (ledger N40). Not confirmatory.
+HEADLINE: controls 3 of 53, NOT ABOVE THE NOMINAL LEVEL
+====================================================================================================

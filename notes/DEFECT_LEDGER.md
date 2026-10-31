@@ -4467,6 +4467,69 @@ instruction of 2026-10-15.
     into the wrong shard, folders from different script hashes, smoke
     mixed with run, a folder twice, G-STOP, out-of-range shard, missing
     input: exit 2; guard holds back groups, exit 6; report exit 0.
+  JINFPROBE PLAN (logs/jinfprobe-plan-20261031.log, laptop, Python
+    3.12.3, NumPy 2.5.3, script sha256 ff39978e...6124, exit 0): 42
+    units, 252 tasks; tasks whose anchor-scaled RSS prediction exceeds
+    the 24000 MB budget: 0; anchor-scaled R2 workers at d 40: 4 up to
+    1000000, 2 at 2000000, 1 at 4000000; at d 10: 3 at 4000000. S1 at
+    the 10800 s target: K = 3, largest shard load 10418 s (48.2% of
+    21600 s). A schedule from M1, not a measurement.
+  JINFPROBE SMOKE (runs/jinfprobe-smoke-a1-kaggle-20261031-180019,
+    console log in the folder, kgrun log logs/kgrun-jinfprobe-smoke-a1.log;
+    read by Claude from the folder 2026-10-31, header checked under rule
+    18: Python 3.13.15, NumPy 2.1.3, Linux-6.18.55+, 4 workers, script
+    sha256 ff39978e...6124, the plan's; costprobe and beta table as
+    planned). Kernel finished after 634 s; task execution 607 s; 84 tasks
+    (42 units at 50000 and 200000), 0 errored or timed out, held back by
+    R2: 0, not stopped, SMOKE PASS. Every group ran at 4 workers.
+    Largest per-task peak RSS 586.6 MB (boundary levy d 40 at 200000).
+    Rahul's column view of the results file split E_json on its commas;
+    no number from it is used anywhere.
+    - FIRST TRAJECTORIES ABOVE J_inf 100000 IN THIS PROJECT. At 200000,
+      largest measured RSS per d: d 2 65.2, d 5 120.2, d 10 192.6, d 40
+      586.6 MB; the guard's largest prediction per group (R1 from the
+      smoke's own 50000 row): 164.2, 220.1, 308.4, 817.3 MB. In all 84
+      rows the measured RSS is below both pred_rss_mb and the plan's
+      anchor-scaled prediction (row-by-row comparison by Claude against
+      the results file and the plan log; no number computed). R1 erred
+      on the safe side at every row.
+    - WALL against M1: all 12 d 40 rows at 200000 are above the plan's
+      estimate, from boundary levy 109.792 s against 108.3 to mechanism
+      levy 135.412 against 97.3 and mechanism rosenbrock 85.565 against
+      57.0. Below the estimate: 3 rows at 200000 (boundary griewank 5
+      13.830 against 14.9, boundary rosenbrock 10 17.317 against 19.9,
+      boundary levy 10 28.303 against 29.8) and 4 at 50000 (boundary
+      levy 5, 10 and 40, boundary rosenbrock 40). The same size differs
+      between sessions in both directions (50000, d 40: mechanism sphere
+      13.010 s against costprobe2's 10.99; boundary levy 22.439 against
+      27.10), so part of every miss is session-to-session variation and
+      part is the departure from linear in P; the plan with --smoke
+      prints both (SAME, SCALE).
+    - DECIDED (Claude, 2026-10-31, under Rahul's standing position):
+      THE SHARD SCHEDULE IS RECOMPUTED FROM THE SMOKE. Reason: K = 3 was
+      chosen by M1, and M1 is below the measured wall at every d 40 unit
+      at the largest size measured, and the d 40 units carry the largest
+      estimates. A schedule must be priced from the measurement nearest the
+      sizes it schedules. jinfprobe.py amended before any shard ran
+      (rules SM-IN, SC, M2, R1S, S2 in its docstring, fixed before the
+      plan that uses them): est2 carries each unit's measured excess over
+      linear between 50000 and 200000 to every larger size and never
+      assumes better than linear; R1S is R1 through the smoke's two rows;
+      run mode requires --smoke and assigns shards from it; the smoke
+      folder is a resume parameter. The run-time guard is unchanged: it
+      predicts from each shard's own rows. Pre-run checks run by Claude:
+      Python 3.8 grammar; SM-IN on the committed smoke folder (84 rows,
+      every unit at both sizes, 252 tasks priced; counts only);
+      synthetic fixture (ladder 500, 2000, 5000; fake anchors and betas;
+      real archived dynamics): plan with --smoke exit 0; budget patched
+      to 40 MB: groups below 4 workers and a held-back group listed;
+      two shards with --smoke exit 0 (shard 1 through seven stops, exit
+      5, and resumes); report with --smoke exit 0, 126 rows; refusals
+      exit 2: run without --smoke, smoke mode with --smoke, a smoke folder
+      missing a row, one naming another beta table, a tampered manifest,
+      a resume naming another smoke folder, a resume with another
+      stop-after; plan without --smoke identical from M1 on to the
+      previous version's.
   PRIMARY-TEXT CHECK (Claude, 2026-10-31; ~/cbo-refs: fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?

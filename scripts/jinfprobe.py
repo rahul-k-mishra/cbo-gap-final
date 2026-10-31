@@ -101,10 +101,62 @@ PRE-SPECIFIED RULES (fixed 2026-10-31, before first execution)
   SMOKE  --mode smoke: every unit at 50000 and 200000 only (kind 92), one
       job. SMOKE PASS iff no task errored or timed out and no group was
       held back by R2; exit 0, else exit 4.
+
+AFTER THE SMOKE (added 2026-10-31, after the smoke
+runs/jinfprobe-smoke-a1-kaggle-20261031-180019 was read and before any
+shard ran; ledger N45). The smoke measured walls above M1's estimate and
+peak RSS below R1's prediction, so the shard schedule is computed from the
+smoke's own rows, not from costprobe2's anchors. The run-time guard R1/R2
+is unchanged: during a shard it still predicts from that shard's own rows.
+  SM-IN  --smoke DIR: read only after its sha256.txt verifies; one
+      jinfprobe_params.csv with mode smoke, the smoke ladder, kind 92, and
+      the same costprobe and beta-table names as this job; one
+      jinfprobe_results.csv in which every row ends ok and every unit has
+      exactly one row at each smoke size (84 rows). Exit 2 otherwise.
+      Required in run mode; optional in plan and report.
+  SC  SMOKE AGAINST THE PLAN (plan with --smoke; printed, decides
+      nothing). Per smoke row: measured wall and M1 est, wall / est;
+      measured RSS against the R1 prediction the smoke itself used
+      (pred_rss_mb) and against the anchor-scaled prediction plan mode
+      printed, as RSS / prediction. Also, per unit, SAME = smoke wall at
+      50000 / costprobe2 wall50 (the same size on another session) and
+      SCALE = (wall 200000 / wall 50000) / (P(200000) / P(50000)) (1 is
+      linear in P). Per (N, d): count, min, median, max of each ratio.
+  M2  COST MODEL FROM THE SMOKE (replaces M1 for S2, T1 and STOP). For a
+      unit with smoke walls w50 at 50000 and w200 at 200000:
+      b = max(1, ln(w200 / w50) / ln(P(200000) / P(50000))), and
+      est2(N) = w50 at 50000, w200 at 200000, w200 x (P(N) / P(200000))^b
+      above. b carries the unit's measured excess over linear forward to
+      every larger size and is never below linear: an overestimate, if
+      it is one, costs shards; an underestimate costs a STOP and a resume.
+      Worked example: w50 10.0 s, w200 50.0 s: P 60110 and 240110,
+      b = ln 5 / ln 3.99451 = 1.162; est2(500000) = 50.0 x (630110 /
+      240110)^1.162 = 153.4 s; est2(4000000) = 50.0 x (5040110 /
+      240110)^1.162 = 1719.2 s. w50 10.0 s, w200 36.0 s: b = 1 (floored);
+      est2(500000) = 36.0 x 630110 / 240110 = 94.5 s.
+      Not covered: a cache step between 200000 and 4000000 that the
+      smoke could not see (b would be too small there); STOP covers it.
+  R1S RSS FOR THE SCHEDULE: R1 with the smoke's two rows as the unit's
+      measured sizes (at the smoke sizes, the measured RSS itself).
+      Worked example: 100 MB at 50000 and 400 MB at 200000: at 4000000,
+      400 + 300 x (5040110 - 240110) / (240110 - 60110) = 8400.0 MB; R2
+      with budget 24000 MB and --workers 4: 2 workers. Plan prints, per
+      group (N, d) over all units, the largest R1S prediction and its R2
+      workers, every group below --workers, and every group R1S would
+      hold back (with every larger N at that d).
+  S2  SHARDS FROM THE SMOKE: S1 exactly, with est2 for est and R1S for
+      the anchor-scaled prediction. Plan prints K = 1 .. 24 and the
+      smallest K at the target 10800 s, per shard its tasks, units, load,
+      T1 TIMEOUT_S (max(600, 5 x largest est2)), auto --stop-after and
+      G-STOP; and the kgrun command of every shard at that K. A shard's
+      load uses each task's own R1S workers; the run sets workers per
+      group from the largest prediction in it, so where units of one
+      group differ the load is optimistic by that difference.
   NULL RATE (every rule above): none is a statistical criterion. G-FORK,
-      G3, IN, RS and G-STOP are deterministic checks of inputs and
-      settings; M1, R1, R2, S1, T1 and STOP schedule the work and decide no
-      scientific question. Nothing here fires by chance.
+      G3, IN, SM-IN, RS and G-STOP are deterministic checks of inputs and
+      settings; M1, M2, R1, R1S, R2, S1, S2, T1 and STOP schedule the work
+      and decide no scientific question; SC prints ratios and decides
+      nothing. Nothing here fires by chance.
 
 WHAT THE RESULTS ARE FOR, AND WHAT THEY ARE NOT
   They are the measured wall and peak RSS that the C5 and C6 designs must
@@ -115,12 +167,15 @@ WHAT THE RESULTS ARE FOR, AND WHAT THEY ARE NOT
 MODES
   plan    LAPTOP. Reads the inputs; prints the units, the M1 estimate per
           task, the R1 anchor prediction and R2 workers, the S1 schedule for
-          K = 1 .. 16 and the K at the target. Writes nothing.
+          K = 1 .. 16 and the K at the target. With --smoke: SM-IN, SC,
+          then M2, R1S and S2 in place of the M1 schedule. Writes nothing.
   smoke   KAGGLE. G-FORK, G3, IN, then the smoke tasks.
-  run     KAGGLE. One shard: G-FORK, G3, IN, G-STOP, RS, then its groups.
+  run     KAGGLE. One shard: G-FORK, G3, IN, SM-IN, G-STOP, RS, then its
+          groups, assigned by S2. --smoke is required.
   report  LAPTOP. Reads fetched folders (smoke or run, not mixed); prints
           per unit and N the measured wall, the M1 estimate and their
-          ratio, and the peak RSS. Writes nothing.
+          ratio, and the peak RSS; with --smoke also est2 and wall / est2.
+          Writes nothing.
 
 EXIT CODES
   0  ran to the end (plan, report; smoke PASS; run with every task done).
@@ -133,9 +188,10 @@ EXIT CODES
 
 HOW TO RUN (repository root; Python 3.8 to 3.13, NumPy only)
     python -B scripts/jinfprobe.py --mode plan
+    python -B scripts/jinfprobe.py --mode plan --smoke runs/D
   smoke and run go to Kaggle through kgrun.py (rule 13):
     --mode smoke --costprobe runs/A,runs/B --beta-table runs/C --workers 4
-    --mode run --costprobe runs/A,runs/B --beta-table runs/C --shard S --nshards K --workers 4
+    --mode run --costprobe runs/A,runs/B --beta-table runs/C --smoke runs/D --shard S --nshards K --workers 4
 """
 import os
 
@@ -190,7 +246,7 @@ COLS = ["tid", "phase", "cell", "n", "rep", "module", "objective", "d", "jinf", 
         "end"]
 RESUME_KEYS = ("mode", "shard", "nshards", "workers", "stop_after", "ladder", "kind", "budget_mb", "script_sha256",
                "calprec2_sha256", "costprobe2_sha256", "rerunlib_sha256", "costprobe", "beta_table", "python",
-               "numpy")
+               "numpy", "smoke")
 TASK_FN = "jinfprobe"
 
 
@@ -274,6 +330,32 @@ def workers_for(pred, workers, budget):
     return int(min(workers, math.floor(budget / pred))) if pred > 0 else workers
 
 
+def b_of(sm):
+    """M2. sm: {N: (wall, rss, pred)} of one unit's smoke rows."""
+    lo, hi = SMOKE_LADDER[0], SMOKE_LADDER[-1]
+    return max(1.0, math.log(sm[hi][0] / sm[lo][0]) / math.log(particles(hi) / float(particles(lo))))
+
+
+def est2_of(sm, n):
+    if n in sm:
+        return sm[n][0]
+    hi = SMOKE_LADDER[-1]
+    return sm[hi][0] * (particles(n) / float(particles(hi))) ** b_of(sm)
+
+
+def rss2_of(anchor, sm, n):
+    """R1S."""
+    if n in sm:
+        return sm[n][1]
+    return predict_rss(anchor, dict((m, v[1]) for m, v in sm.items()), n)
+
+
+def median(v):
+    v = sorted(v)
+    k = len(v)
+    return v[k // 2] if k % 2 else 0.5 * (v[k // 2 - 1] + v[k // 2])
+
+
 # ----------------------------------------------------------------------
 # inputs
 # ----------------------------------------------------------------------
@@ -320,17 +402,62 @@ def read_betas(folder):
     return out
 
 
-def make_tasks(anchors, betas, ladder, kind):
+def read_smoke(folder, a):
+    """SM-IN. ({unit: {N: (wall, rss, pred)}}, params) from a verified smoke folder."""
+    rels = verified(folder)
+    pp = [r for r in rels if os.path.basename(r) == PARAMS_CSV]
+    rr = [r for r in rels if os.path.basename(r) == ROWS_CSV]
+    if len(pp) != 1 or len(rr) != 1:
+        raise Stop(2, "SM-IN: {}: expected one {} and one {}".format(folder, PARAMS_CSV, ROWS_CSV))
+    pr = read_kv(os.path.join(folder, pp[0]))
+    want = {"mode": "smoke", "ladder": ",".join(str(n) for n in SMOKE_LADDER), "kind": str(K_SMOKE),
+            "costprobe": ",".join(os.path.basename(x.rstrip("/")) for x in a.costprobe),
+            "beta_table": os.path.basename(a.beta_table.rstrip("/"))}
+    bad = sorted(k for k in want if pr.get(k) != want[k])
+    if bad:
+        raise Stop(2, "SM-IN: {}: smoke parameters differ in {}".format(folder, bad))
+    sm = dict((u, {}) for u in UNITS)
+    rows = 0
+    with io.open(os.path.join(folder, rr[0]), "r", newline="", encoding="utf-8") as fh:
+        for x in csv.DictReader(fh):
+            rows += 1
+            if x.get("end") != "ok":
+                raise Stop(2, "SM-IN: smoke row {} did not end ok".format(x.get("tid")))
+            u, n = (x["module"], x["objective"], int(x["d"])), int(x["jinf"])
+            if u not in sm or n not in SMOKE_LADDER or x["tid"] != "JP{}|{}|{}".format(K_SMOKE, unit_id(u), n):
+                raise Stop(2, "SM-IN: smoke row {} is not a smoke task".format(x.get("tid")))
+            if n in sm[u]:
+                raise Stop(2, "SM-IN: smoke task {} appears twice".format(x["tid"]))
+            sm[u][n] = (float(x["wall_s"]), float(x["rss_mb"]), float(x["pred_rss_mb"]))
+    for u in UNITS:
+        if sorted(sm[u]) != sorted(SMOKE_LADDER):
+            raise Stop(2, "SM-IN: unit {} has smoke rows at {}".format(unit_id(u), sorted(sm[u])))
+    say("  SM-IN PASS  {}: {} rows, every unit at {}; smoke script sha256 {}".format(
+        os.path.basename(folder.rstrip("/")), rows, ", ".join(str(n) for n in SMOKE_LADDER), pr.get("script_sha256")))
+    return sm, pr
+
+
+def make_tasks(anchors, betas, ladder, kind, smoke=None):
     tasks = []
     for u in UNITS:
         for n in ladder:
             key = (SEED0, kind, cp.MODULES.index(u[0]), cp.OBJ_NAMES.index(u[1]), u[2], n)
-            tasks.append({"tid": "JP{}|{}|{}".format(kind, unit_id(u), n), "phase": "JP", "n": n, "rep": 0,
-                          "c": (u[0], u[1], u[2], LAW, TAU_BETA), "unit": u, "module": u[0], "objective": u[1],
-                          "d": u[2], "jinf": n, "jlist": jext(n), "K": int(round(T_END / RL.DT)),
-                          "beta": float(betas[u]), "beta_s": betas[u], "key": key,
-                          "est": est_of(anchors[u][0], n), "anchor_rss": anchors[u][1]})
+            t = {"tid": "JP{}|{}|{}".format(kind, unit_id(u), n), "phase": "JP", "n": n, "rep": 0,
+                 "c": (u[0], u[1], u[2], LAW, TAU_BETA), "unit": u, "module": u[0], "objective": u[1],
+                 "d": u[2], "jinf": n, "jlist": jext(n), "K": int(round(T_END / RL.DT)),
+                 "beta": float(betas[u]), "beta_s": betas[u], "key": key,
+                 "est": est_of(anchors[u][0], n), "anchor_rss": anchors[u][1]}
+            if smoke is not None:
+                t["est1"] = t["est"]
+                t["est"] = est2_of(smoke[u], n)
+                t["sched_rss"] = rss2_of(anchors[u][1], smoke[u], n)
+            tasks.append(t)
     return tasks
+
+
+def sched_rss(t):
+    """The prediction S1 / S2 price a task's workers with."""
+    return t["sched_rss"] if "sched_rss" in t else predict_rss(t["anchor_rss"], {}, t["n"])
 
 
 def assign(tasks, k, workers, budget):
@@ -342,7 +469,7 @@ def assign(tasks, k, workers, budget):
     def load_of(ts):
         s = 0.0
         for t in ts:
-            w = workers_for(predict_rss(t["anchor_rss"], {}, t["n"]), workers, budget)
+            w = workers_for(sched_rss(t), workers, budget)
             s += t["est"] / max(w, 1)
         return s
 
@@ -425,6 +552,7 @@ def header(a, mode):
     say("  seeds    SeedSequence(({}, kind, module index, objective index, d, J_inf)); kind {} run, {} smoke".format(
         SEED0, K_RUN, K_SMOKE))
     say("  budget   {:.0f} MB for concurrent tasks (R2)".format(a.budget_mb))
+    say("  smoke    {}".format(os.path.basename(a.smoke.rstrip("/")) if a.smoke else "none (M1, S1)"))
 
 
 def timing(a, tasks):
@@ -443,6 +571,7 @@ def params_rows(a, mode, ladder, kind, stop):
             ["costprobe", ",".join(os.path.basename(x.rstrip("/")) for x in a.costprobe)],
             ["beta_table", os.path.basename(a.beta_table.rstrip("/"))],
             ["python", platform.python_version()], ["numpy", np.__version__],
+            ["smoke", os.path.basename(a.smoke.rstrip("/")) if a.smoke else ""],
             ["resume_from", a.resume_from or ""]]
 
 
@@ -571,26 +700,129 @@ def inputs(a):
     return anchors, betas
 
 
+def rel(path):
+    """A repository path as runs/... for printed commands."""
+    ab = os.path.abspath(path)
+    r = os.path.relpath(ab, REPO)
+    return ab if r.startswith("..") else r
+
+
+def summary(v):
+    return "{:>3} {:>7.2f} {:>7.2f} {:>7.2f}".format(len(v), min(v), median(v), max(v))
+
+
+def plan_smoke(a, anchors, betas):
+    """SM-IN, SC, M2, R1S, R2 per group. Returns the tasks priced by M2 and R1S."""
+    hdr("SM-IN  the smoke")
+    sm, _pr = read_smoke(os.path.abspath(a.smoke), a)
+    lo, hi = SMOKE_LADDER[0], SMOKE_LADDER[-1]
+    hdr("SC  the smoke against the plan  (ratios printed; they decide nothing)")
+    say("  wall/est: measured wall / M1 est.  RSS/pred: measured / the R1 prediction the smoke used (pred_rss_mb).")
+    say("  RSS/plan: measured / the anchor-scaled prediction plan mode printed (R1 with no measurement).")
+    say("  {:<26} {:>8} {:>9} {:>9} {:>8} {:>9} {:>9} {:>8} {:>9} {:>8}".format(
+        "unit", "J_inf", "wall s", "est s", "wall/est", "RSS MB", "pred MB", "RSS/pred", "plan MB", "RSS/plan"))
+    acc = {}
+    for u in UNITS:
+        for n in SMOKE_LADDER:
+            w, r, p = sm[u][n]
+            e = est_of(anchors[u][0], n)
+            q = predict_rss(anchors[u][1], {}, n)
+            g = acc.setdefault((n, u[2]), ([], [], []))
+            g[0].append(w / e)
+            g[1].append(r / p)
+            g[2].append(r / q)
+            say("  {:<26} {:>8} {:>9.3f} {:>9.1f} {:>8.2f} {:>9.1f} {:>9.1f} {:>8.2f} {:>9.1f} {:>8.2f}".format(
+                unit_id(u), n, w, e, w / e, r, p, r / p, q, r / q))
+    say("\n  per (J_inf, d): count, min, median, max")
+    say("  {:<14} {:>30} {:>30} {:>30}".format("J_inf, d", "wall/est", "RSS/pred", "RSS/plan"))
+    for k in sorted(acc):
+        say("  {:<14} {:>30} {:>30} {:>30}".format("{}, {}".format(*k), summary(acc[k][0]), summary(acc[k][1]),
+                                                   summary(acc[k][2])))
+    say("\n  SAME = smoke wall at {} / costprobe2 wall50;  SCALE = (wall {} / wall {}) / (P({}) / P({}))"
+        " = {:.5f}^-1 x wall ratio;  b (M2)".format(lo, hi, lo, hi, lo, particles(hi) / float(particles(lo))))
+    say("  {:<26} {:>9} {:>9} {:>8} {:>8} {:>7}".format("unit", "wall50 s", "smoke s", "SAME", "SCALE", "b"))
+    per_d = {}
+    for u in UNITS:
+        same = sm[u][lo][0] / anchors[u][0]
+        scale = (sm[u][hi][0] / sm[u][lo][0]) / (particles(hi) / float(particles(lo)))
+        g = per_d.setdefault(u[2], ([], [], []))
+        g[0].append(same)
+        g[1].append(scale)
+        g[2].append(b_of(sm[u]))
+        say("  {:<26} {:>9.2f} {:>9.3f} {:>8.2f} {:>8.2f} {:>7.3f}".format(
+            unit_id(u), anchors[u][0], sm[u][lo][0], same, scale, b_of(sm[u])))
+    say("\n  per d: count, min, median, max")
+    say("  {:<6} {:>30} {:>30} {:>30}".format("d", "SAME", "SCALE", "b"))
+    for d in sorted(per_d):
+        say("  {:<6} {:>30} {:>30} {:>30}".format(d, summary(per_d[d][0]), summary(per_d[d][1]),
+                                                 summary(per_d[d][2])))
+    tasks = make_tasks(anchors, betas, LADDER, K_RUN, sm)
+    hdr("M2, R1S, R2 per task  (a schedule from the smoke, not a measurement)")
+    say("  {:<26} {:>8} {:>7} {:>10} {:>10} {:>12} {:>8}".format("unit", "J_inf", "b", "M1 est s", "est2 s",
+                                                                "R1S MB", "workers"))
+    for t in tasks:
+        say("  {:<26} {:>8} {:>7.3f} {:>10.1f} {:>10.1f} {:>12.1f} {:>8}".format(
+            unit_id(t["unit"]), t["n"], b_of(sm[t["unit"]]), t["est1"], t["est"], t["sched_rss"],
+            workers_for(t["sched_rss"], a.workers, a.budget_mb)))
+    hdr("R2 per group (J_inf, d) over all units, from R1S  (the run predicts from its own rows; this is the schedule)")
+    blocked, below, held = set(), [], []
+    for n, d in sorted(set((t["n"], t["d"]) for t in tasks)):
+        gts = [t for t in tasks if t["n"] == n and t["d"] == d]
+        pred = max(t["sched_rss"] for t in gts)
+        w = workers_for(pred, a.workers, a.budget_mb)
+        if d in blocked or w < 1:
+            blocked.add(d)
+            held.append((n, d))
+            say("  group J_inf {:>8} d {:>2}: largest R1S {:>9.1f} MB  HELD BACK".format(n, d, pred))
+            continue
+        if w < a.workers:
+            below.append((n, d, w))
+        say("  group J_inf {:>8} d {:>2}: largest R1S {:>9.1f} MB  workers {}".format(n, d, pred, w))
+    say("  groups below --workers {}: {}".format(a.workers, ", ".join("J_inf {} d {} ({})".format(*x) for x in below)
+                                                 or "none"))
+    say("  groups R1S would hold back: {}".format(", ".join("J_inf {} d {}".format(*x) for x in held) or "none"))
+    return tasks
+
+
+def shard_commands(a, k):
+    cpf = ",".join(rel(x) for x in a.costprobe)
+    bt, smf = rel(a.beta_table), rel(a.smoke)
+    extra = "" if a.budget_mb == BUDGET_MB else " --budget-mb {!r}".format(a.budget_mb)
+    say("\n  kgrun commands at K = {} (repository root, venv active, set -o noclobber; one at a time,"
+        " commit each fetched folder and log before the next):".format(k))
+    for i in range(k):
+        job = "jinfprobe-s{}of{}-a1".format(i, k)
+        say("    python scripts/kgrun.py run --job {} --script jinfprobe.py --data-dirs \"{},{},{}\" --args \"--mode run"
+            " --costprobe {} --beta-table {} --smoke {} --shard {} --nshards {} --workers {}{}\""
+            " > logs/kgrun-{}.log 2>&1".format(job, cpf, bt, smf, cpf, bt, smf, i, k, a.workers, extra, job))
+
+
 def mode_plan(a):
     header(a, "plan")
     anchors, betas = inputs(a)
-    tasks = make_tasks(anchors, betas, LADDER, K_RUN)
-    hdr("M1, R1 (anchor-scaled), R2 per task  (a schedule, not a measurement)")
-    say("  J window per J_inf (JEXT) and particles per step P:")
-    for n in LADDER:
-        say("    J_inf {:>8}: P {:>9}  J {}".format(n, particles(n), ",".join(str(J) for J in jext(n))))
-    say("  {:<26} {:>8} {:>9} {:>10} {:>12} {:>8}".format("unit", "J_inf", "wall50 s", "est s", "pred RSS MB",
-                                                          "workers"))
-    for t in tasks:
-        p = predict_rss(t["anchor_rss"], {}, t["n"])
-        say("  {:<26} {:>8} {:>9.2f} {:>10.1f} {:>12.1f} {:>8}".format(
-            unit_id(t["unit"]), t["n"], anchors[t["unit"]][0], t["est"], p, workers_for(p, a.workers, a.budget_mb)))
-    held = [t for t in tasks if workers_for(predict_rss(t["anchor_rss"], {}, t["n"]), a.workers, a.budget_mb) < 1]
-    say("  tasks whose anchor-scaled prediction exceeds the budget: {} (R1 refines this from the unit's own"
-        " smaller sizes during the run)".format(len(held)))
-    hdr("S1  shard schedule (elapsed estimate under perfect scaling; overruns of up to 30% have been measured)")
+    if a.smoke:
+        tasks = plan_smoke(a, anchors, betas)
+        kmax, name = 24, "S2  shard schedule from the smoke (M2, R1S)"
+    else:
+        tasks = make_tasks(anchors, betas, LADDER, K_RUN)
+        kmax, name = 16, "S1  shard schedule"
+        hdr("M1, R1 (anchor-scaled), R2 per task  (a schedule, not a measurement)")
+        say("  J window per J_inf (JEXT) and particles per step P:")
+        for n in LADDER:
+            say("    J_inf {:>8}: P {:>9}  J {}".format(n, particles(n), ",".join(str(J) for J in jext(n))))
+        say("  {:<26} {:>8} {:>9} {:>10} {:>12} {:>8}".format("unit", "J_inf", "wall50 s", "est s", "pred RSS MB",
+                                                              "workers"))
+        for t in tasks:
+            p = predict_rss(t["anchor_rss"], {}, t["n"])
+            say("  {:<26} {:>8} {:>9.2f} {:>10.1f} {:>12.1f} {:>8}".format(
+                unit_id(t["unit"]), t["n"], anchors[t["unit"]][0], t["est"], p,
+                workers_for(p, a.workers, a.budget_mb)))
+        held = [t for t in tasks if workers_for(predict_rss(t["anchor_rss"], {}, t["n"]), a.workers, a.budget_mb) < 1]
+        say("  tasks whose anchor-scaled prediction exceeds the budget: {} (R1 refines this from the unit's own"
+            " smaller sizes during the run)".format(len(held)))
+    hdr(name + " (elapsed estimate under perfect scaling; overruns of up to 30% have been measured)")
     pick = None
-    for k in range(1, 17):
+    for k in range(1, kmax + 1):
         _s, loads = assign(tasks, k, a.workers, a.budget_mb)
         mx = max(loads.values())
         say("  K {:>2}: largest shard {:>9.0f} s = {:>5.1f}% of {:.0f} s".format(k, mx, 100.0 * mx / C2.CEILING_DEFAULT,
@@ -598,15 +830,21 @@ def mode_plan(a):
         if pick is None and mx <= SHARD_TARGET_S:
             pick = k
     if pick is None:
-        say("  no K up to 16 meets the target {:.0f} s".format(SHARD_TARGET_S))
+        say("  no K up to {} meets the target {:.0f} s".format(kmax, SHARD_TARGET_S))
     else:
         shards, loads = assign(tasks, pick, a.workers, a.budget_mb)
         say("  at the target {:.0f} s: K = {}".format(SHARD_TARGET_S, pick))
         for i in range(pick):
             to = max(TIMEOUT_FLOOR, C2.TIMEOUT_FACTOR * max(t["est"] for t in shards[i]))
-            say("    shard {}: {} tasks, {} units, load {:.0f} s, TIMEOUT_S {:.0f} s, auto --stop-after {:.0f} s".format(
-                i, len(shards[i]), len(shards[i]) // len(LADDER), loads[i], to,
-                min(C2.STOP_AFTER_DEFAULT, C2.KAGGLE_CAP_S - to - 600.0)))
+            stop = min(C2.STOP_AFTER_DEFAULT, C2.KAGGLE_CAP_S - to - 600.0)
+            gs = "PASS" if stop > 0 and stop + to <= C2.KAGGLE_CAP_S else "FAIL"
+            say("    shard {}: {} tasks, {} units, load {:.0f} s, TIMEOUT_S {:.0f} s, auto --stop-after {:.0f} s"
+                "{}".format(i, len(shards[i]), len(shards[i]) // len(LADDER), loads[i], to, stop,
+                            ", G-STOP " + gs if a.smoke else ""))
+            if a.smoke:
+                say("      units {}".format(", ".join(sorted(set(unit_id(t["unit"]) for t in shards[i])))))
+        if a.smoke:
+            shard_commands(a, pick)
     hdr("jinfprobe.py plan done, exit 0  (nothing written)")
     return 0
 
@@ -626,7 +864,9 @@ def mode_run(a):
     header(a, "run")
     gates()
     anchors, betas = inputs(a)
-    tasks = make_tasks(anchors, betas, LADDER, K_RUN)
+    hdr("SM-IN  the smoke (S2 assigns the shards from it)")
+    sm, _pr = read_smoke(os.path.abspath(a.smoke), a)
+    tasks = make_tasks(anchors, betas, LADDER, K_RUN, sm)
     shards, _loads = assign(tasks, a.nshards, a.workers, a.budget_mb)
     mine = shards[a.shard]
     say("  shard {} of {}: {} tasks, units {}".format(a.shard, a.nshards, len(mine),
@@ -661,17 +901,20 @@ def mode_report(a):
         if len(set(p.get(k) for p in prms)) != 1:
             raise Stop(2, "folders differ in {}".format(k))
     anchors = read_anchors(DEFAULT_COSTPROBE if not a.costprobe_given else [os.path.abspath(x) for x in a.costprobe])
+    sm = read_smoke(os.path.abspath(a.smoke), a)[0] if a.smoke else None
     say("  platform python {} numpy {}".format(prms[0].get("python"), prms[0].get("numpy")))
-    say("  {:<26} {:>8} {:>10} {:>10} {:>7} {:>10} {:>10}".format("unit", "J_inf", "wall s", "est s", "ratio",
-                                                               "RSS MB", "pred MB"))
+    say("  {:<26} {:>8} {:>10} {:>10} {:>7} {:>10} {:>10}{}".format("unit", "J_inf", "wall s", "est s", "ratio",
+                                                                 "RSS MB", "pred MB",
+                                                                 " {:>10} {:>7}".format("est2 s", "ratio2") if sm else ""))
     for u in UNITS:
         for x in sorted((r for r in store.values() if r["module"] == u[0] and r["objective"] == u[1]
                          and int(r["d"]) == u[2]), key=lambda r: int(r["jinf"])):
             n = int(x["jinf"])
             e = est_of(anchors[u][0], n)
             w = float(x["wall_s"])
-            say("  {:<26} {:>8} {:>10.1f} {:>10.1f} {:>7.2f} {:>10} {:>10}".format(
-                unit_id(u), n, w, e, w / e, x["rss_mb"], x["pred_rss_mb"]))
+            e2 = " {:>10.1f} {:>7.2f}".format(est2_of(sm[u], n), w / est2_of(sm[u], n)) if sm else ""
+            say("  {:<26} {:>8} {:>10.1f} {:>10.1f} {:>7.2f} {:>10} {:>10}{}".format(
+                unit_id(u), n, w, e, w / e, x["rss_mb"], x["pred_rss_mb"], e2))
     say("  complete rows {}; largest peak RSS {:.1f} MB".format(
         len(store), max([float(r["rss_mb"]) for r in store.values()] or [float("nan")])))
     hdr("jinfprobe.py report done, exit 0")
@@ -689,6 +932,7 @@ def main():
     ap.add_argument("--nshards", type=int, default=1)
     ap.add_argument("--stop-after", type=float, default=None)
     ap.add_argument("--resume-from", default="")
+    ap.add_argument("--smoke", default="", help="the fetched smoke folder (SM-IN); required in run mode")
     ap.add_argument("--folder", action="append", default=[], help="report: fetched folder; repeat")
     ap.add_argument("--archive", default=None)
     ap.add_argument("--outdir", default=None)
@@ -701,6 +945,10 @@ def main():
         raise Stop(2, "--resume-from is for mode run only")
     if a.mode == "smoke" and a.nshards != 1:
         raise Stop(2, "smoke is one job")
+    if a.mode == "run" and not a.smoke:
+        raise Stop(2, "run: --smoke is required (S2 assigns the shards from the smoke)")
+    if a.mode == "smoke" and a.smoke:
+        raise Stop(2, "--smoke is for plan, run and report")
     if a.mode == "plan":
         return mode_plan(a)
     if a.mode == "smoke":
