@@ -45,6 +45,9 @@ experiment. Everything in this file is non-negotiable.
                                    plus the DOI sentence, which reproduces the submitted text
     .github/workflows/rerun-queue.yml   the rerun queue's tick, dispatched every
                                    15 minutes from cron-job.org (rule 22)
+    .github/workflows/rerun-queue-admin.yml   the queue's manual subcommands
+                                   (show, verify, check, release, halt, load),
+                                   run by hand from GitHub (rule 22)
     scripts/rerunq-tick.{service,timer}, scripts/rerunq-stop.service
                                    the laptop driver of the same tick, a
                                    systemd user timer in ~/cbo-gap-queue
@@ -342,15 +345,23 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       state HALTED, exits 3 and disables itself. Nothing continues until
       Rahul has read the halt reason, released the state, checked the
       laptop clone for unpushed commits, and re-enabled both drivers.
+      The laptop timer is optional: the workflow alone runs the queue.
+      check, verify, release, halt and load can be run by Rahul either on
+      the laptop or through .github/workflows/rerun-queue-admin.yml, which
+      runs the same rerunq.py subcommand and commits what it wrote; a
+      Claude session never triggers it (amended 2026-11-01, Rahul's
+      instruction that C5 run with no laptop involvement; ledger N45).
     - The queue covers the items of the definition loaded into
       notes/rerun_queue.json: a committed file under notes/queues/, started
       by "rerunq.py load", which is refused unless the current state is DONE
       and archives that state under notes/queue-archive/ (amended
       2026-10-25, Rahul's decision; ledger N42). The first queue, the eight
       rerun jobs, is the archived one. A definition's items are rerun.py,
-      calprec2.py or sizetest.py jobs (rerunq.py docstring, schema 2;
-      sizetest.py added: amended 2026-10-31, Rahul's decision; ledger
-      N40). Anything else goes through the runbooks by hand.
+      calprec2.py, sizetest.py or c5run.py jobs (rerunq.py docstring,
+      schema 2; sizetest.py added: amended 2026-10-31, Rahul's decision;
+      ledger N40; c5run.py added: amended 2026-11-01, Rahul's instruction
+      to automate C5; ledger N45). Anything else goes through the
+      runbooks by hand.
     - The dispatch token is a fine-grained personal access token of
       Rahul's, limited to this repository, with Actions read and write
       only, and an expiry date. It exists only in cron-job.org's job

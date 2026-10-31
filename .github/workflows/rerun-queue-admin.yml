@@ -1,0 +1,161 @@
+# The rerun queue's manual subcommands, run from GitHub instead of the laptop
+# (ledger N45, 2026-11-01: Rahul's instruction that C5 run with no laptop
+# involvement). Started only by hand: Actions > rerun-queue-admin > Run
+# workflow, or "gh workflow run rerun-queue-admin.yml -f command=...".
+# It runs exactly one of scripts/rerunq.py show, verify, check, release,
+# halt or load, with the inputs given, and for the four that change the
+# state commits and pushes what rerunq.py wrote (the state file, and for
+# load the archived state), as Rahul would on the laptop. It decides
+# nothing: every rule (K1, LD, the release modes) is rerunq.py's own.
+# It shares the tick's concurrency group, so it never runs during a tick.
+
+name: rerun-queue-admin
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "rerunq.py subcommand"
+        required: true
+        type: choice
+        options: [show, verify, check, release, halt, load]
+      mode:
+        description: "release only: start, repoll, next-attempt or next-item"
+        required: false
+        type: choice
+        default: none
+        options: [none, start, repoll, next-attempt, next-item]
+      checked_by_hand:
+        description: "release next-attempt only: the status you saw on Kaggle yourself (K1)"
+        required: false
+        type: choice
+        default: none
+        options: [none, COMPLETE, ERROR, CANCEL_ACKNOWLEDGED, ABSENT]
+      definition:
+        description: "load only: a committed definition, e.g. notes/queues/c5.json"
+        required: false
+        default: ""
+      note:
+        description: "the note recorded in the state's history (required for check, release, halt, load)"
+        required: false
+        default: ""
+      enable_queue:
+        description: "after a successful release or load, enable the rerun-queue workflow"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: rerun-queue
+  cancel-in-progress: false
+
+jobs:
+  admin:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Kolkata
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Python 3.12, as on the laptop
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the laptop's pinned environment
+        run: python -m pip install --quiet -r requirements.lock
+
+      # Only "check" talks to Kaggle (kgrun status); the files are written
+      # for it alone and removed at the end. Contents are never printed.
+      - name: Write the Kaggle credentials (check only; never printed)
+        if: inputs.command == 'check'
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          KAGGLE_ACCESS_TOKEN: ${{ secrets.KAGGLE_ACCESS_TOKEN }}
+        run: |
+          umask 077
+          mkdir -p "$HOME/.kaggle"
+          python - <<'EOF'
+          import json, os, stat, sys
+          u, k = os.environ.get("KAGGLE_USERNAME", ""), os.environ.get("KAGGLE_KEY", "")
+          t = os.environ.get("KAGGLE_ACCESS_TOKEN", "")
+          if not u or not k or not t:
+              sys.exit("secret KAGGLE_USERNAME, KAGGLE_KEY or KAGGLE_ACCESS_TOKEN is missing")
+          d = os.path.expanduser("~/.kaggle")
+          for name, text in (("kaggle.json", json.dumps({"username": u, "key": k})), ("access_token", t)):
+              path = os.path.join(d, name)
+              fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+              with os.fdopen(fd, "w") as fh:
+                  fh.write(text)
+              os.chmod(path, 0o600)
+              print("{} written, mode {:o}".format(name, stat.S_IMODE(os.stat(path).st_mode)))
+          EOF
+
+      - name: Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run the subcommand
+        env:
+          CMD: ${{ inputs.command }}
+          MODE: ${{ inputs.mode }}
+          HAND: ${{ inputs.checked_by_hand }}
+          DEF: ${{ inputs.definition }}
+          NOTE: ${{ inputs.note }}
+        run: |
+          set -eu
+          case "$CMD" in
+            show|verify)
+              python scripts/rerunq.py "$CMD" ;;
+            check|halt)
+              test -n "$NOTE" || { echo "a note is required for $CMD"; exit 2; }
+              python scripts/rerunq.py "$CMD" --note "$NOTE" ;;
+            release)
+              test -n "$NOTE" || { echo "a note is required for release"; exit 2; }
+              test "$MODE" != none || { echo "release needs a mode"; exit 2; }
+              if [ "$HAND" != none ]; then
+                python scripts/rerunq.py release --mode "$MODE" --note "$NOTE" --checked-by-hand "$HAND"
+              else
+                python scripts/rerunq.py release --mode "$MODE" --note "$NOTE"
+              fi ;;
+            load)
+              test -n "$NOTE" || { echo "a note is required for load"; exit 2; }
+              test -n "$DEF" || { echo "load needs a definition"; exit 2; }
+              python scripts/rerunq.py load --definition "$DEF" --note "$NOTE" ;;
+          esac
+
+      - name: Commit and push what rerunq.py wrote
+        if: inputs.command == 'check' || inputs.command == 'release' || inputs.command == 'halt' || inputs.command == 'load'
+        env:
+          CMD: ${{ inputs.command }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          set -eu
+          git add -A -- notes/rerun_queue.json notes/queue-archive
+          git status --porcelain
+          git commit -q -m "rerun queue admin: $CMD $MODE by hand through rerun-queue-admin (run ${{ github.run_id }}; K6, N45)"
+          # One push, never forced. A rejection means main moved since the
+          # checkout; nothing is re-applied: run the subcommand again.
+          git push origin HEAD:refs/heads/main
+
+      - name: Enable the rerun-queue workflow
+        if: success() && inputs.enable_queue && (inputs.command == 'release' || inputs.command == 'load')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow enable rerun-queue.yml --repo "${{ github.repository }}"
+
+      - name: Remove the Kaggle credentials
+        if: always()
+        run: rm -f "$HOME/.kaggle/kaggle.json" "$HOME/.kaggle/access_token"

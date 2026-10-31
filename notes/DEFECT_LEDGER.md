@@ -4569,12 +4569,12 @@ instruction of 2026-10-15.
       W-arch = 10 to 5000 (the archived J10 points), W-hi = 5000 to
       400000 (8 points), W-ext = all 17. The top point is at J_inf / 10
       in every window, as in the archive.
-    - SEEDS: SeedSequence((20261101, 95, row index (CONC 0, TAU8 1),
+    - SEEDS (SUPERSEDED, see C5 DESIGN REVISIONS): SeedSequence((20261101, 95, row index (CONC 0, TAU8 1),
       module index, objective index, d, law index, round(10^4 x tau_0),
       4000000, rep)); bootstrap key the same with kind 96 and no rep.
       Integers only, so injective by construction; new kinds, shared
       with no other script.
-    - ESTIMATOR, unchanged from rerun_analysis items 0 to 3: per
+    - ESTIMATOR (INTERVALS SUPERSEDED, see C5 DESIGN REVISIONS), unchanged from rerun_analysis items 0 to 3: per
       realization regimemap.fit_slope on the window; S-slope = the mean
       over realizations; B = 10000 percentile resamples of realizations
       from the cell's bootstrap key; a realization with a non-finite or
@@ -4606,7 +4606,7 @@ instruction of 2026-10-15.
       the classes are not a matched comparison (N40, qualification 2).
       NULL RATE: nominal 0.05 per cell when both sets come from one
       distribution.
-    - POOLED, per (row, tau_0): the unweighted mean over units ((objective,
+    - POOLED (CLARIFIED, see C5 DESIGN REVISIONS), per (row, tau_0): the unweighted mean over units ((objective,
       law) in CONC, objective in TAU8) of R1a, D-win and D-ref, with
       rerun_analysis item 6's heterogeneity; DIFFERENCE rule only, no
       equivalence, no PERSISTS on a pooled figure (its spread mixes
@@ -4643,7 +4643,7 @@ instruction of 2026-10-15.
         50000 carries a reference-size effect in that cell; reported per
         cell with no cause. No DIFFERENCE: "no reference-size effect
         found", with the interval; never "the references agree".
-    - IMPLEMENTATION (after the price is read): two new rerun.py rows,
+    - IMPLEMENTATION (SUPERSEDED, see C5 DESIGN REVISIONS) (after the price is read): two new rerun.py rows,
       CONC-X and TAU8-X, added as N42 and N44 added theirs, so that the
       queue (rule 22 covers rerun.py jobs) can run the shards; an
       analysis script with the readings above in its docstring and the
@@ -4661,7 +4661,175 @@ instruction of 2026-10-15.
       FEASIBLE, that unit's 90 tasks named, the rest priced as "the
       largest runnable version"; refusals exit 2: two folders of three,
       a folder twice, a task in two folders, a tampered manifest.
-  PRIMARY-TEXT CHECK (Claude, 2026-10-31; ~/cbo-refs: fkr2024-siopt.pdf,
+  JINFPROBE RESULT (logs/jinfprobe-report-20261101.log, laptop, report
+    exit 0; read by Claude from the log, 2026-11-01). The three shard
+    folders, 84 rows each, 84 complete each; the smoke read for est2 (SM-IN
+    PASS); platform python 3.13.15, numpy 2.1.3; complete rows 252;
+    largest peak RSS 10713.7 MB (boundary levy d 40 at 4000000).
+    - Measured wall / M1 estimate, range per J_inf: 50000 0.73 to 1.56;
+      200000 0.67 to 1.88; 500000 0.67 to 1.48; 1000000 0.65 to 1.73;
+      2000000 0.65 to 1.68; 4000000 0.75 to 1.79. M1 (linear in particles
+      from costprobe2's walls) is off by up to these factors in both
+      directions.
+    - Measured wall / M2 estimate (est2, the smoke-based model the shards
+      were scheduled with), range per J_inf: 50000 0.5 to 1.18; 200000
+      0.52 to 1.28; 500000 0.5 to 1.46; 1000000 0.5 to 1.45; 2000000 0.5
+      to 1.43; 4000000 0.38 to 1.47. M2 was meant never to underestimate;
+      it did, by up to the upper ends above (the case its docstring named:
+      b floored at 1 where the cost steps up beyond 200000). The shards
+      were scheduled at about half the cap, and none stopped.
+    - Peak RSS above the run-time guard's prediction (pred_rss_mb), rows
+      per J_inf: 50000 1, 200000 0, 500000 13, 1000000 36, 2000000 16,
+      4000000 25 (of 42 each). At 4000000 the largest is boundary levy d
+      40, 10713.7 MB against 10573.5 predicted. The guard's line through
+      the two largest measured sizes predicts slightly low from 500000
+      on; it never mattered against a 24000 MB budget with 2 workers at d
+      40. c5price prices with the measured 4000000 RSS x 1.10, not the
+      guard's prediction.
+    - What the probe establishes: every C5 task (one realization of a CONC
+      or TAU8 unit at J_inf 4000000, J window to 400000) has run inside a
+      Kaggle session; its measured wall and peak RSS are the price's
+      inputs. Single realizations at one beta per unit: not a slope, not
+      a result about the algorithm.
+  C5 PRICE (logs/c5price-20261101.log, laptop, exit 0, script sha256
+    10688bff...9a24; read by Claude from the log): FEASIBLE, every task
+    fits one session. Workers: d 2, 5, 10: 4 (R_d 596.9, 1619.0, 2959.4
+    MB); d 40: 2 (R_d 10713.7 MB, x 1.10 = 11785.1). 4320 tasks;
+    3091579 task-seconds; 1242373 session-seconds under perfect scaling;
+    by row and d (tasks, task-seconds, session-seconds): CONC 2 540,
+    86330, 21583; CONC 5 540, 171030, 42757; CONC 10 540, 304195, 76049;
+    CONC 40 540, 800422, 400211; TAU8 5 720, 234874, 58719; TAU8 10 720,
+    417237, 104309; TAU8 40 720, 1077491, 538746. At the 10800 s target
+    K = 116: 37 to 39 tasks per shard, loads 10706 to 10739 s, T1 10305
+    or 10656 s, auto --stop-after 31944 or 32295 s.
+  C5 DESIGN REVISIONS (Claude, 2026-11-01, while writing the code, before
+    any C5 run; each with its reason; nothing of C5 had run):
+    - IMPLEMENTATION: not two rerun.py rows. rerun_analysis.py refuses to
+      run unless rerunlib.ROWS equals its 21 rows, and refuses a plan
+      built with another rerunlib.py hash; adding rows to rerunlib would
+      stop the confirmed 21-row analysis from being re-run at HEAD. So
+      CONC-X and TAU8-X are rows of a separate script, scripts/c5run.py,
+      which imports everything it shares (rerunlib's cell coordinates,
+      key layout and finite-J audit, the archived one_realisation,
+      calprec2's scheduler as jinfprobe used it at 4000000, c5price's
+      shard rule); rerun.py, rerunlib.py and rerun_analysis.py are
+      unchanged. Consequence: the queue needs a fourth family, c5
+      (rerunq.py, docstring "THE C5 FAMILY"), and CLAUDE.md rule 22's list
+      of queue scripts gains c5run.py (amended 2026-11-01 on Rahul's
+      instruction to automate C5; see rule 22).
+    - SEEDS: rerunlib's layout instead of a new one, so a C5 key reads
+      like the key of the cell it extends: (rerunlib.ENTROPY 20261016,
+      kind, owner 21 CONC-X / 22 TAU8-X, rerunlib.coord_fields, rep), kind
+      95 run, 96 bootstrap, 97 smoke, 98 drill. Owners 21 and 22 are no
+      rerunlib row; J_inf 4000000 is in the key; kinds 95 to 98 are used
+      nowhere else.
+    - B1 (new gate): every C5 beta equals, as a string, the beta of the
+      same cell in runs/rerun-plan-20261023-112643, the plan the 50000
+      CONC and TAU8 cells ran under; the analysis checks the same against
+      the 50000 rows themselves (B2). Input contact by Claude on the
+      committed folders: B1 PASS, 288 cells.
+    - INTERVALS: the null fixture, run on synthetic cells while checking
+      c5_analysis.py, showed the paired and two-sample percentile-
+      bootstrap intervals at n = 15 rejecting a true null above 0.10 at
+      one noise level (synthetic only; the analysis's own run prints the
+      rates that count). By the rule fixed above, D-win and D-ref would
+      then not have been verdicts, which is the S1 failure mode (a
+      criterion whose null behaviour was not checked) caught before the
+      run this time. The verdicts therefore use Student t intervals on
+      the per-realization slopes (one-sample for R1a to R1c, paired for
+      D-win, Welch for D-ref; pooled: normal interval on SE = sqrt(sum
+      se_i^2) / k); the percentile-bootstrap intervals are still printed
+      beside them, with their own null rates, and decide nothing. On the
+      same synthetic fixture every t-based criterion, pooled ones
+      included, rejected at or below 0.10 at every level, and the rule
+      (above 0.10 not used; 0.05 to 0.10 used with the rate printed) is
+      unchanged.
+    - POOLED: N45 said "per (row, tau_0)" with units (objective, law) /
+      objective, which leaves d open. Primary: per (row, d, tau_0), as
+      rerun_analysis pools; secondary: per (row, tau_0) with units
+      (objective, law, d) / (objective, d).
+    - DRILL (new queue item, before the shards): 12 tasks of CONC-X d 2
+      (the unit with the smallest measured 4000000 wall, tau_0 0.5, both
+      laws, reps 0 to 5), kind 98, not data, with --stop-after 150 so that
+      attempt 1 exits 5 and the queue resumes it. Reason: the exit-5
+      resume path has never executed under the queue or in any Kaggle run
+      of this project (below).
+  C5 AUTOMATION, WHAT THE RECORD SHOWS (Claude, 2026-11-01; from the
+    committed queue archives, notes/rerun_queue.json read with the Read
+    tool, the kgrun logs, and the GitHub API via gh):
+    - THE LAPTOP TIMER WAS THE DRIVER. It ran the same tick as the
+      workflow (scripts/rerunq-tick.service: same command, a clone reset
+      to origin/main, a self-disable on failure). Nothing in a tick needs
+      a local machine. Launches and fetches by driver, from the history of
+      the five archived or current queue states: GitHub 5 launches and 2
+      fetches; laptop 37 launches and 38 fetches; every halt recovery
+      (check, release, load) by hand on the laptop.
+    - CRON-JOB.ORG HAS STARTED NO TICK SINCE 2026-10-23. The workflow has
+      30 runs in all (gh api, total_count). 8 are workflow_dispatch, all
+      on 2026-10-23 between 13:18 and 16:44 UTC; the other 22 are
+      GitHub's own schedule, 2026-10-23 to 2026-10-31, hours apart. The
+      cause is not visible from here: the cron-job.org job's execution
+      history and the dispatch token's expiry date are Rahul's to check.
+      Without the dispatcher an unattended queue advances only when
+      GitHub's schedule fires.
+    - THE EXIT-5 RESUME PATH HAS NEVER RUN ON KAGGLE: no queue history
+      records an automatic next attempt after exit 5, and no kgrun log
+      shows a shipped resume folder. It has run only in local fixtures.
+      Hence the drill.
+    - HALT RECOVERY needed the laptop (rerunq.py check, release, verify,
+      load). Now .github/workflows/rerun-queue-admin.yml runs each of
+      them by hand from GitHub, commits and pushes what rerunq.py wrote,
+      and can re-enable the queue workflow; it shares the tick's
+      concurrency group.
+    - The repository is private: every tick is billed at least one
+      minute of Actions time; a 15-minute cadence is 96 ticks a day.
+      Whether the account's included minutes cover that is Rahul's fact.
+    - THE QUEUE IS SERIAL by construction: one state, one index, one job.
+      L2 (intent before launch), L3 (names never reused), K1 (a kernel
+      check before a new attempt) and the halt-stops-everything rule are
+      written for one job at a time. Running several shards at once would
+      need either several independent states (one queue per slice of the
+      shards) or a state with slots; both change L1's push contention
+      (three tries) and are not written. Kaggle's limit on concurrent
+      sessions for this account was not found in Kaggle's documentation
+      from here.
+  C5 CODE AND PRE-RUN CHECKS (Claude, 2026-11-01; nothing of C5 has run).
+    scripts/c5run.py (sha256 3c6a569f...c959), scripts/c5_analysis.py
+    (345b1d33...57be), scripts/rerunq.py with the c5 family (74517b58...
+    f53d), .github/workflows/rerun-queue-admin.yml, notes/queues/c5.json
+    (smoke, drill, 116 shards). Checks run by Claude:
+    - Python 3.8 grammar of the three scripts; YAML of both workflows.
+    - Input contact on the committed folders (counts and verdicts only):
+      IN PASS, B1 PASS (288 cells), 4320 tasks, 4320 distinct keys, 288
+      bootstrap keys, 116 shards of 37 to 39 tasks (as c5price's log);
+      the definition validates, its five folders pass LD's checks, job
+      names and arguments as specified; c5_analysis reads the real
+      sizetest log's classes (109 cells, 56 affected, 53 control).
+    - c5run fixture (fake walls, RSS and betas; the real archived
+      dynamics at J_inf 5000): plan exit 0 with S2 PASS at its own K and
+      exit 2 at a wrong K; B1 mismatch exit 2; smoke SMOKE PASS (both
+      members identical, F1 ok); drill exit 5, 5, then 0 over three
+      attempts with resumes; a full shard of 253 tasks exit 0; refusals
+      exit 2: a resume with another stop-after, a run resuming from a
+      drill folder, smoke with a resume, drill without --stop-after.
+    - rerunq c5 family on simulated fetched folders (real c5run output in
+      kgrun's layout): 24 checks pass (job names, arguments, smoke, the
+      three drill attempts with read lines, a shard; halts on a wrong
+      shard, a row-count mismatch, an F1 failure, N - 1 of N, numpy, a
+      missing B1 line, a pin, a drill stop_after other than the
+      profile's; finalize and a missing profile key refused). The
+      sizetest family's earlier harness still passes on the patched file.
+    - c5_analysis: the null fixture (synthetic) as above; a planted
+      fixture (synthetic C5 and 50000 folders: TAU8 tau_0 0.01 flatter on
+      J >= 5000, CONC d 40 tau_0 0.5 a 50000 slope offset) recovers both
+      where planted, with counts elsewhere near the null rates; refusals:
+      half the C5 folders exit 7, a folder twice exit 2, no 50000 folder
+      exit 2 (B2).
+    Not checked: an actual tick on GitHub of the c5 family (the smoke and
+    drill are that check, while Rahul can still watch); the F1 audit's
+    memory at d 40 and 4000000 (the probe did not run the audit; it
+    redraws the 4000000 x d start after the trajectory's arrays are freed).
+: fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
   - FKR 2024, SIAM J. Optim. 34(3):2973-3004, Theorem 3.8 (p. 2986):

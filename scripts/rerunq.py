@@ -207,6 +207,67 @@ Smoke first, shard exit 5 resumes from its own folders, same halt rules")
       sizetest-e1-*/sizetest_e1.csv, with N = 0 a halt and max_attempts
       the cap; anything else HALT).
 
+THE C5 FAMILY (2026-11-01, before first execution; ledger N45; Rahul's
+instruction "C5 fully automated from GitHub to Kaggle with no laptop
+involvement at all")
+    c5        c5run.py modes smoke, drill and run (rows CONC-X and TAU8-X:
+              every CONC and TAU8 cell at J_inf 4000000); timing (the three
+              jinfprobe run folders), beta_table (the calprec2 finalize
+              folder), rerun_plan (the plan whose CONC and TAU8 cells the
+              50000 run used), drill_stop_after, workers; items smoke,
+              drill or shard.
+  Every rule above (L1 to L5, F1, P1C, K1, R2's exit handling) applies
+  unchanged, except where this section says otherwise. No finalize:
+  c5_analysis.py reads the fetched folders.
+  JOB NAMES: c5-<set>-smoke-a<A>, c5-<set>-drill-a<A>,
+    c5-<set>-s<S>of<K>-a<A>; kernel cbo-<job>.
+  ARGUMENTS, built from the profile (C = --timing T0,T1,T2 --beta-table B
+    --rerun-plan P --workers W):
+    smoke: --mode smoke C
+    drill: --mode drill C --stop-after X   (X = drill_stop_after)
+    shard: --mode run C --shard S --nshards K
+    data folders: T0, T1, T2, B and P; resume folders as in R2.
+  PINS (P1C): c5run.py, jinfprobe.py, c5price.py, calprec2.py,
+    costprobe2.py and rerunlib.py.
+  LDX LOAD: as LD; T0, T1, T2, B and P must pass the folder checks.
+  R1X HEADER, from cbo-<job>.log, after the banner "CBO-GAP c5run":
+      (a) "python" and "numpy" equal expect;
+      (b) the six "sha256" lines equal the six pins;
+      (c) "mode     M   shard S of K" with (M, S, K) = (smoke, 0, 1),
+          (drill, 0, 1) or (run, S, K) of the item;
+      (d) the "timing", "beta table" and "rerun plan" lines name the
+          profile's folders (basenames); "B1 PASS" printed;
+      (e) "files  <dir>": the basename is exactly
+          c5run-<mode>-YYYYMMDD-HHMMSS, plus -s<S>of<K> for a run, the
+          fetched folder holds exactly one c5run-* folder with that
+          basename, and its c5run_params.csv records mode, shard, nshards,
+          workers, kind (97 smoke, 98 drill, 95 run), the six hashes, the
+          three input names, budget_mb 24000.0, and for a drill stop_after
+          as the profile sets it;
+      (f) for a resumed attempt, a line "  read <folder>: shard S of K, N
+          rows, M complete" for each resume folder.
+      Any mismatch: HALT, the folder committed.
+      Worked example: files /kaggle/working/c5run-run-20261102-101500-
+      s7of116 with params shard 7, nshards 116, kind 95: pass.
+      c5run-run-20261102-101500-s8of116: HALT on (e).
+  SMX SMOKE: runner exit 0, "SMOKE PASS", and rows ending ok number exactly
+      "tasks run by this job" with "errored or timed-out tasks: 0". Then
+      the next item; otherwise HALT, and nothing after it launches.
+  F2X COMPLETE DOWNLOAD (drill and shard): exactly one
+      c5run-*/c5run_real.csv; its rows ending ok number exactly "tasks run
+      by this job", with "errored or timed-out tasks: 0" and "F1
+      failures: 0". Exit 0 requires "not stopped: every task ran" and
+      "complete rows, this job and resumed: N of N"; exit 5 requires
+      "STOPPED by --stop-after". Otherwise HALT, the folder committed.
+      Worked example: "tasks run by this job: 38", 38 rows ok, "complete
+      rows, this job and resumed: 38 of 38", exit 0: pass. Exit 0 with
+      "37 of 38": HALT.
+  R2X EXIT: smoke as SMX; drill and shard as R2 (0 next item; 5 next
+      attempt resuming from every earlier attempt folder of the item
+      holding a c5run-*/c5run_real.csv, with C = 0 a halt and
+      max_attempts the cap; anything else HALT). The drill exists so that
+      the exit-5 path runs on Kaggle under the queue before any shard.
+
 PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
 ------------------------------------------------------------------------
   L1  THE STATE FILE IS THE LOCK. A tick changes the state only by a
@@ -511,16 +572,25 @@ WAIT = ("QUEUED", "RUNNING", "NEW_SCRIPT", "CANCEL_REQUESTED")
 FINISHED = ("COMPLETE", "ERROR", "CANCEL_ACKNOWLEDGED")
 PINNED = (("rerun.py", "rerun_sha256"), ("rerunlib.py", "rerunlib_sha256"),
           ("costprobe2.py", "costprobe2_sha256"))
-FAMILY_SCRIPT = {"rerun": "rerun.py", "calprec2": "calprec2.py", "sizetest": "sizetest.py"}
+FAMILY_SCRIPT = {"rerun": "rerun.py", "calprec2": "calprec2.py", "sizetest": "sizetest.py", "c5": "c5run.py"}
 FAMILY_PINS = {"rerun": PINNED,
                "calprec2": (("calprec2.py", "calprec2_sha256"), ("costprobe2.py", "costprobe2_sha256")),
                "sizetest": (("sizetest.py", "sizetest_sha256"), ("calprec2.py", "calprec2_sha256"),
-                            ("costprobe2.py", "costprobe2_sha256"))}
-FAMILY_KINDS = {"rerun": ("smoke", "shard"), "calprec2": ("shard", "finalize"), "sizetest": ("smoke", "shard")}
+                            ("costprobe2.py", "costprobe2_sha256")),
+               "c5": (("c5run.py", "c5run_sha256"), ("jinfprobe.py", "jinfprobe_sha256"),
+                      ("c5price.py", "c5price_sha256"), ("calprec2.py", "calprec2_sha256"),
+                      ("costprobe2.py", "costprobe2_sha256"), ("rerunlib.py", "rerunlib_sha256"))}
+FAMILY_KINDS = {"rerun": ("smoke", "shard"), "calprec2": ("shard", "finalize"), "sizetest": ("smoke", "shard"),
+                "c5": ("smoke", "drill", "shard")}
 PROFILE_KEYS = {"rerun": ("family", "workers", "plan", "plan_sha256", "timing", "expect"),
                 "calprec2": ("family", "workers", "rows", "throughput", "stop_after", "ceiling", "cells",
                              "expect"),
-                "sizetest": ("family", "workers", "plan", "plan_sha256", "throughput", "stop_after", "expect")}
+                "sizetest": ("family", "workers", "plan", "plan_sha256", "throughput", "stop_after", "expect"),
+                "c5": ("family", "workers", "timing", "beta_table", "rerun_plan", "drill_stop_after", "expect")}
+C5_KIND = {"smoke": 97, "drill": 98, "shard": 95}
+C5_HASH_LABELS = (("c5run_sha256", "script  "), ("jinfprobe_sha256", "jinfprobe.py"), ("c5price_sha256", "c5price.py"),
+                  ("calprec2_sha256", "calprec2.py"), ("costprobe2_sha256", "costprobe2.py"),
+                  ("rerunlib_sha256", "rerunlib.py"))
 SIZETEST_PLAN_CSV = "sizetest_e1_plan.csv"     # sizetest.py PLAN_CSV
 ARCHIVE_DIR = "notes/queue-archive"
 CEILING_DEFAULT = 21600.0           # calprec2.py CEILING_DEFAULT, written to its params when --ceiling is absent
@@ -683,6 +753,10 @@ def history(s, run, event, note):
 
 
 def job_name(s, item, attempt):
+    if family_of(s, item) == "c5":
+        if item["kind"] in ("smoke", "drill"):
+            return "c5-{}-{}-a{}".format(item["set"], item["kind"], attempt)
+        return "c5-{}-s{}of{}-a{}".format(item["set"], item["shard"], item["nshards"], attempt)
     if family_of(s, item) == "sizetest":
         if item["kind"] == "smoke":
             return "sizetest-{}-smoke-a{}".format(item["set"], attempt)
@@ -721,7 +795,17 @@ def job_spec(s):
     """(job, args, data folders) for the current item and attempt."""
     item = s["queue"][s["index"]]
     p = profile_of(s, item)
-    if p["family"] == "sizetest":
+    if p["family"] == "c5":
+        common = "--timing {} --beta-table {} --rerun-plan {} --workers {}".format(
+            ",".join(p["timing"]), p["beta_table"], p["rerun_plan"], p["workers"])
+        if item["kind"] == "smoke":
+            args = "--mode smoke " + common
+        elif item["kind"] == "drill":
+            args = "--mode drill {} --stop-after {!r}".format(common, float(p["drill_stop_after"]))
+        else:
+            args = "--mode run {} --shard {} --nshards {}".format(common, item["shard"], item["nshards"])
+        data = list(p["timing"]) + [p["beta_table"], p["rerun_plan"]]
+    elif p["family"] == "sizetest":
         if item["kind"] == "smoke":
             args = "--mode smoke --plan-from {} --throughput {} --workers {}".format(
                 p["plan"], p["throughput"], p["workers"])
@@ -753,6 +837,8 @@ def job_spec(s):
 
 
 def holds_rows(folder, family="rerun"):
+    if family == "c5":
+        return bool(glob.glob(os.path.join(ROOT, folder, "c5run-*", "c5run_real.csv")))
     if family == "sizetest":
         return bool(glob.glob(os.path.join(ROOT, folder, "sizetest-e1-*", "sizetest_e1.csv")))
     if family == "calprec2":
@@ -1134,6 +1220,8 @@ def runner_text(folder, job):
 
 
 def read_runner(text, family="rerun"):
+    if family == "c5":
+        return read_runner_c5(text)
     if family == "sizetest":
         return read_runner_sizetest(text)
     return read_runner_calprec2(text) if family == "calprec2" else read_runner_rerun(text)
@@ -1188,6 +1276,141 @@ def read_runner_sizetest(text):
     if m:
         f["pc"] = m[-1]
     return f
+
+
+def read_runner_c5(text):
+    """R1X, F2X, SMX: the lines c5run.py prints after its banner "CBO-GAP c5run"."""
+    f = {"exit": None, "python": None, "numpy": None, "hashes": {}, "mode": None, "shard": None, "nshards": None,
+         "timing": None, "beta_table": None, "rerun_plan": None, "b1": False, "rundir": None, "resume_read": set(),
+         "ran": None, "errors": None, "f1": None, "stopped": False, "notstopped": False, "complete": None,
+         "completed": None, "smoke": None, "plan_sha": None}
+    if text is None:
+        return f
+    ex = re.findall(r"kgrun runner: exit code (-?\d+)", text)
+    if ex:
+        f["exit"] = int(ex[-1])
+    i = text.find("CBO-GAP c5run")
+    body = text[i:] if i >= 0 else ""
+    for key, pat in (("python", r"^  python   (\S+)\s*$"), ("numpy", r"^  numpy    (\S+)\s*$"),
+                     ("timing", r"^  timing   (\S+)\s*$"), ("beta_table", r"^  beta table (\S+)\s*$"),
+                     ("rerun_plan", r"^  rerun plan (\S+)\s*$")):
+        m = re.search(pat, body, re.M)
+        if m:
+            f[key] = m.group(1)
+    for key, label in C5_HASH_LABELS:
+        m = re.search(r"^  " + re.escape(label) + r" sha256 ([0-9a-f]{64})\s*$", body, re.M)
+        if m:
+            f["hashes"][key] = m.group(1)
+    m = re.search(r"^  mode     (\w+)   shard (\d+) of (\d+)\s*$", body, re.M)
+    if m:
+        f["mode"], f["shard"], f["nshards"] = m.group(1), int(m.group(2)), int(m.group(3))
+    f["b1"] = bool(re.search(r"^  B1 PASS ", body, re.M))
+    m = re.findall(r"^files  (\S+)\s*$", body, re.M)
+    if m:
+        f["rundir"] = m[-1]
+    for path in re.findall(r"^  read (\S+): shard \S+ of \S+, \d+ rows, \d+ complete\s*$", body, re.M):
+        f["resume_read"].add(os.path.basename(path.rstrip("/")))
+    m = re.findall(r"^tasks run by this job: (\d+)   task execution", body, re.M)
+    if m:
+        f["ran"] = int(m[-1])
+        f["completed"] = f["ran"]
+    m = re.findall(r"^errored or timed-out tasks: (\d+)\s*$", body, re.M)
+    if m:
+        f["errors"] = int(m[-1])
+    m = re.findall(r"^F1 failures: (\d+)\s*$", body, re.M)
+    if m:
+        f["f1"] = int(m[-1])
+    m = re.findall(r"^complete rows, this job and resumed: (\d+) of (\d+)\s*$", body, re.M)
+    if m:
+        f["complete"] = (int(m[-1][0]), int(m[-1][1]))
+    f["stopped"] = bool(re.search(r"^STOPPED by --stop-after", body, re.M))
+    f["notstopped"] = bool(re.search(r"^not stopped: every task ran\s*$", body, re.M))
+    m = re.findall(r"^SMOKE (PASS|FAIL)\s*$", body, re.M)
+    if m:
+        f["smoke"] = m[-1]
+    return f
+
+
+def header_problems_c5(s, item, f, folder):
+    """R1X (smoke, drill and shard), with SMX's row count for a smoke."""
+    p = profile_of(s, item)
+    e = p["expect"]
+    out = []
+    if f["python"] != e["python"]:
+        out.append("python {}, expected {}".format(f["python"], e["python"]))
+    if f["numpy"] != e["numpy"]:
+        out.append("numpy {}, expected {}".format(f["numpy"], e["numpy"]))
+    for _, k in FAMILY_PINS["c5"]:
+        if f["hashes"].get(k) != e[k]:
+            out.append("{} {}, expected {}".format(k, f["hashes"].get(k), e[k]))
+    names = {"timing": ",".join(os.path.basename(x.rstrip("/")) for x in p["timing"]),
+             "beta_table": os.path.basename(p["beta_table"].rstrip("/")),
+             "rerun_plan": os.path.basename(p["rerun_plan"].rstrip("/"))}
+    for k, v in sorted(names.items()):
+        if f[k] != v:
+            out.append("{} {}, expected {}".format(k, f[k], v))
+    if not f["b1"]:
+        out.append("no 'B1 PASS' line")
+    kind = item["kind"]
+    mode = "run" if kind == "shard" else kind
+    S, K = (item["shard"], item["nshards"]) if kind == "shard" else (0, 1)
+    if (f["mode"], f["shard"], f["nshards"]) != (mode, S, K):
+        out.append("mode {} shard {} of {}, expected {} shard {} of {}".format(
+            f["mode"], f["shard"], f["nshards"], mode, S, K))
+    base = os.path.basename((f["rundir"] or "").rstrip("/"))
+    tag = "" if K == 1 else "-s{}of{}".format(S, K)
+    if not re.fullmatch(r"c5run-" + mode + r"-\d{8}-\d{6}" + re.escape(tag), base):
+        out.append("files {}, expected a basename c5run-{}-YYYYMMDD-HHMMSS{}".format(f["rundir"], mode, tag))
+    subs = sorted(os.path.basename(d) for d in glob.glob(os.path.join(folder, "c5run-*")) if os.path.isdir(d))
+    if subs != [base]:
+        out.append("fetched c5run-* folder(s) {}, expected exactly [{}]".format(subs, base))
+    else:
+        pp = os.path.join(folder, base, "c5run_params.csv")
+        got = {}
+        if os.path.isfile(pp):
+            with open(pp, newline="") as fh:
+                got = dict((r[0], r[1]) for r in csv.reader(fh) if r)
+        want = {"mode": mode, "shard": str(S), "nshards": str(K), "workers": str(p["workers"]),
+                "kind": str(C5_KIND[kind]), "budget_mb": "24000.0", "timing": names["timing"],
+                "beta_table": names["beta_table"], "rerun_plan": names["rerun_plan"]}
+        for k, _l in C5_HASH_LABELS:
+            want["script_sha256" if k == "c5run_sha256" else k] = e[k]
+        if kind == "drill":
+            want["stop_after"] = repr(float(p["drill_stop_after"]))
+        for k, v in sorted(want.items()):
+            if got.get(k) != v:
+                out.append("{}/c5run_params.csv {} {!r}, expected {!r}".format(base, k, got.get(k), v))
+        if kind == "smoke":
+            rows = os.path.join(folder, base, "c5run_real.csv")
+            nok = 0
+            if os.path.isfile(rows):
+                with open(rows, newline="") as fh:
+                    nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+            if f["ran"] is None or nok != f["ran"] or f["errors"] != 0:
+                out.append("SMX: {} smoke rows end ok, tasks run {}, errored {}".format(nok, f["ran"], f["errors"]))
+    for d in s["resume_dirs"]:
+        if os.path.basename(d.rstrip("/")) not in f["resume_read"]:
+            out.append("no 'read' line for resume folder " + d)
+    return out
+
+
+def f2_problem_c5(s, item, folder, rel, f):
+    """F2X (drill and shard): None, or the halt reason."""
+    csvs = glob.glob(os.path.join(folder, "c5run-*", "c5run_real.csv"))
+    if len(csvs) != 1:
+        return "F2X: {} c5run-*/c5run_real.csv file(s) in {}, expected 1".format(len(csvs), rel)
+    with open(csvs[0], newline="") as fh:
+        nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+    say("  F2X: {} rows end ok; runner 'tasks run by this job' {}, errored {}, F1 failures {}, complete {}".format(
+        nok, f["ran"], f["errors"], f["f1"], f["complete"]))
+    if f["ran"] is None or nok != f["ran"] or f["errors"] != 0 or f["f1"] != 0:
+        return ("F2X: download incomplete or summary missing: {} rows end ok in {}, tasks run {}, errored {}, "
+                "F1 failures {}".format(nok, rel, f["ran"], f["errors"], f["f1"]))
+    if f["exit"] == 0 and (not f["notstopped"] or f["complete"] is None or f["complete"][0] != f["complete"][1]):
+        return "F2X: exit 0 without 'not stopped: every task ran' and N of N complete rows in {}".format(rel)
+    if f["exit"] == 5 and not f["stopped"]:
+        return "F2X: exit 5 without 'STOPPED by --stop-after' in {}".format(rel)
+    return None
 
 
 def header_problems_sizetest(s, item, f, folder):
@@ -1470,7 +1693,9 @@ def shard_problems(item, rundir, folder):
 
 
 def header_problems(s, item, f, folder):
-    """R1 (rerun), R1C/R1F (calprec2) or R1Z (sizetest)."""
+    """R1 (rerun), R1C/R1F (calprec2), R1Z (sizetest) or R1X (c5)."""
+    if family_of(s, item) == "c5":
+        return header_problems_c5(s, item, f, folder)
     if family_of(s, item) == "sizetest":
         return header_problems_sizetest(s, item, f, folder)
     if family_of(s, item) == "calprec2":
@@ -1499,7 +1724,10 @@ def header_problems(s, item, f, folder):
 
 
 def f2_problem(s, item, folder, rel, f):
-    """F2 (rerun shard), F2C/F2F (calprec2) or F2Z (sizetest shard): None, else the halt reason."""
+    """F2 (rerun shard), F2C/F2F (calprec2), F2Z (sizetest shard) or F2X (c5 drill, shard): None, else the halt
+    reason."""
+    if family_of(s, item) == "c5":
+        return f2_problem_c5(s, item, folder, rel, f)
     if family_of(s, item) == "sizetest":
         return f2_problem_sizetest(s, item, folder, rel, f)
     if family_of(s, item) == "calprec2":
@@ -1567,7 +1795,7 @@ def do_fetch(ctx, kstatus):
         raise Halt("R1: header of {}: {}".format(rel, "; ".join(probs)), paths)
     if item["kind"] == "finalize" and code != 0:
         raise Halt("R2C: finalize {} exit {}; only 0 is accepted".format(rel, code), paths)
-    if item["kind"] in ("shard", "finalize"):
+    if item["kind"] in ("shard", "finalize", "drill"):
         bad = f2_problem(s, item, folder, rel, f)
         if bad:
             raise Halt(bad, paths)
@@ -1647,6 +1875,9 @@ def tick(a):
         if fam == "rerun":
             say("  profile {} [rerun]  plan {} (rerun_plan.csv {})  timing {}  workers {}".format(
                 name, p["plan"], p["plan_sha256"], ", ".join(p["timing"]), p["workers"]))
+        elif fam == "c5":
+            say("  profile {} [c5]  timing {}  beta table {}  rerun plan {}  drill stop-after {}  workers {}".format(
+                name, ", ".join(p["timing"]), p["beta_table"], p["rerun_plan"], p["drill_stop_after"], p["workers"]))
         elif fam == "sizetest":
             say("  profile {} [sizetest]  plan {} ({} {})  throughput {}  stop-after {}  workers {}".format(
                 name, p["plan"], SIZETEST_PLAN_CSV, p["plan_sha256"], p["throughput"], p["stop_after"],
@@ -1727,6 +1958,8 @@ def load_definition(a):
         fam = p["family"]
         if fam == "rerun":
             dirs = [p["plan"]] + list(p["timing"])
+        elif fam == "c5":
+            dirs = list(p["timing"]) + [p["beta_table"], p["rerun_plan"]]
         elif fam == "sizetest":
             dirs = [p["plan"], p["throughput"]]
         else:
@@ -1815,7 +2048,7 @@ def verify(a):
     probs += ["R1: " + x for x in header_problems(s, item, f, folder)]
     if f["exit"] != 0:
         probs.append("R2: runner exit {}, next-item needs 0".format(f["exit"]))
-    if item["kind"] in ("shard", "finalize"):
+    if item["kind"] in ("shard", "finalize", "drill"):
         bad = f2_problem(s, item, folder, rel, f)
         if bad:
             probs.append(bad)
@@ -1911,7 +2144,7 @@ def manual(a):
             fam = family_of(s, item)
             s["resume_dirs"] = ([r["folder"] for r in s["attempts"].get(item["id"], [])
                                  if holds_rows(r["folder"], fam)]
-                                if item["kind"] == "shard" else [])
+                                if item["kind"] in ("shard", "drill") else [])
             s["job"], s["args"], s["data_dirs"] = "", "", []
             s["status"] = "READY"
         else:

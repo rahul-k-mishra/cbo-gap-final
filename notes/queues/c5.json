@@ -1,0 +1,1085 @@
+{
+  "name": "c5",
+  "note": "N45: C5, the window extension with C6's second reading folded in; rows CONC-X and TAU8-X of scripts/c5run.py (288 cells, M 15, J_inf 4000000, J window to 400000); 4320 tasks; K = 116 at the 10800 s target (logs/c5price-20261101.log), checked by 'c5run.py --mode plan --nshards 116' (S2 PASS); smoke first, then the drill (forces exit 5 and resumes, so the resume path runs under the queue before any shard), then the shards; shard exit 5 resumes from its own earlier attempts; the six pinned hashes are filled by 'rerunq.py load' from the committed files",
+  "kaggle_user": "ericsom",
+  "max_attempts": 5,
+  "max_file_mb": 50,
+  "profiles": {
+    "c5": {
+      "family": "c5",
+      "workers": 4,
+      "timing": [
+        "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+        "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+        "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818"
+      ],
+      "beta_table": "runs/calprec2-finalize-20261023-112503",
+      "rerun_plan": "runs/rerun-plan-20261023-112643",
+      "drill_stop_after": 150.0,
+      "expect": {
+        "python": "3.13.15",
+        "numpy": "2.1.3"
+      }
+    }
+  },
+  "queue": [
+    {
+      "id": "smoke-c5",
+      "profile": "c5",
+      "kind": "smoke",
+      "set": "x",
+      "ledger": "N45"
+    },
+    {
+      "id": "drill-c5",
+      "profile": "c5",
+      "kind": "drill",
+      "set": "x",
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s0of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 0,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s1of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 1,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s2of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 2,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s3of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 3,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s4of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 4,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s5of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 5,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s6of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 6,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s7of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 7,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s8of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 8,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s9of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 9,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s10of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 10,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s11of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 11,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s12of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 12,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s13of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 13,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s14of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 14,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s15of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 15,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s16of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 16,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s17of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 17,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s18of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 18,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s19of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 19,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s20of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 20,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s21of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 21,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s22of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 22,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s23of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 23,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s24of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 24,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s25of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 25,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s26of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 26,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s27of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 27,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s28of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 28,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s29of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 29,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s30of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 30,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s31of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 31,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s32of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 32,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s33of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 33,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s34of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 34,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s35of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 35,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s36of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 36,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s37of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 37,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s38of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 38,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s39of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 39,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s40of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 40,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s41of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 41,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s42of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 42,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s43of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 43,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s44of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 44,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s45of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 45,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s46of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 46,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s47of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 47,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s48of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 48,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s49of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 49,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s50of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 50,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s51of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 51,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s52of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 52,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s53of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 53,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s54of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 54,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s55of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 55,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s56of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 56,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s57of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 57,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s58of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 58,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s59of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 59,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s60of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 60,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s61of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 61,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s62of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 62,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s63of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 63,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s64of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 64,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s65of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 65,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s66of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 66,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s67of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 67,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s68of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 68,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s69of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 69,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s70of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 70,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s71of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 71,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s72of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 72,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s73of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 73,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s74of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 74,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s75of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 75,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s76of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 76,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s77of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 77,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s78of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 78,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s79of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 79,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s80of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 80,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s81of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 81,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s82of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 82,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s83of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 83,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s84of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 84,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s85of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 85,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s86of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 86,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s87of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 87,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s88of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 88,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s89of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 89,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s90of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 90,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s91of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 91,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s92of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 92,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s93of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 93,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s94of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 94,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s95of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 95,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s96of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 96,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s97of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 97,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s98of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 98,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s99of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 99,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s100of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 100,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s101of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 101,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s102of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 102,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s103of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 103,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s104of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 104,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s105of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 105,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s106of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 106,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s107of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 107,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s108of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 108,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s109of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 109,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s110of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 110,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s111of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 111,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s112of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 112,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s113of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 113,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s114of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 114,
+      "nshards": 116,
+      "ledger": "N45"
+    },
+    {
+      "id": "c5-s115of116",
+      "profile": "c5",
+      "kind": "shard",
+      "set": "x",
+      "shard": 115,
+      "nshards": 116,
+      "ledger": "N45"
+    }
+  ]
+}

@@ -1,0 +1,308 @@
+
+====================================================================================================
+CBO-GAP c5price  (ledger N45, C5 design; rule 6)  --  writes nothing, draws no random number
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4 (per Kaggle session in PR; local pool for the K sweep)
+  script   sha256 10688bff2f0d846dea5060d8440e8966c18c9975c2eba4450025e022b85e9a24
+  jinfprobe.py sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  design   CONC + TAU8, 288 cells, M 15, J_inf 4000000, J window 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,160000,320000,400000
+  budget   24000 MB, RSS factor 1.10, target 10800 s, kmax 400
+  seeds    none (no random number is drawn)
+
+====================================================================================================
+IN  the probe
+====================================================================================================
+  read jinfprobe-s0of3-a1-kaggle-20261031-210629: shard 0 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s1of3-a1-kaggle-20261031-233459: shard 1 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s2of3-a1-kaggle-20261101-015818: shard 2 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  IN PASS  252 complete tasks, every unit at every ladder size
+
+====================================================================================================
+PW, PR  per unit at J_inf 4000000 (measured)
+====================================================================================================
+  unit                           wall s     RSS MB
+  mechanism|ackley|2            220.209      538.7
+  mechanism|ackley|5            340.578     1306.2
+  mechanism|ackley|10           643.756     2548.4
+  mechanism|ackley|40          1524.123     9360.3
+  mechanism|rastrigin|2         137.394      533.7
+  mechanism|rastrigin|5         346.743     1297.6
+  mechanism|rastrigin|10        655.831     2551.2
+  mechanism|rastrigin|40       1662.314     9355.9
+  mechanism|sphere|2            157.935      542.3
+  mechanism|sphere|5            182.654     1305.7
+  mechanism|sphere|10           378.016     2555.7
+  mechanism|sphere|40           901.749     9359.8
+  mechanism|griewank|2          133.104      538.3
+  mechanism|griewank|5          323.084     1302.0
+  mechanism|griewank|10         521.324     2570.8
+  mechanism|griewank|40        1333.097     9366.2
+  mechanism|levy|2              156.140      596.9
+  mechanism|levy|5              401.134     1397.5
+  mechanism|levy|10             663.953     2729.3
+  mechanism|levy|40            2131.218    10470.2
+  mechanism|rosenbrock|2        154.442      537.3
+  mechanism|rosenbrock|5        306.137     1305.8
+  mechanism|rosenbrock|10       517.063     2535.0
+  mechanism|rosenbrock|40      1341.082     9356.2
+  boundary|ackley|5             376.802     1548.6
+  boundary|ackley|10            579.606     2671.5
+  boundary|ackley|40           1610.126     9509.6
+  boundary|rastrigin|5          327.976     1461.2
+  boundary|rastrigin|10         636.950     2652.8
+  boundary|rastrigin|40        1657.066     9460.5
+  boundary|sphere|5             229.890     1449.8
+  boundary|sphere|10            416.133     2648.8
+  boundary|sphere|40            985.009     9481.4
+  boundary|griewank|5           327.953     1451.4
+  boundary|griewank|10          573.746     2647.3
+  boundary|griewank|40         1320.173     9474.6
+  boundary|levy|5               403.393     1619.0
+  boundary|levy|10              736.754     2959.4
+  boundary|levy|40             2061.088    10713.7
+  boundary|rosenbrock|5         291.270     1469.0
+  boundary|rosenbrock|10        533.784     2661.1
+  boundary|rosenbrock|40       1345.632     9474.0
+  d  2: R_d 596.9 MB, x 1.10 = 656.6 MB, workers 4
+  d  5: R_d 1619.0 MB, x 1.10 = 1780.9 MB, workers 4
+  d 10: R_d 2959.4 MB, x 1.10 = 3255.3 MB, workers 4
+  d 40: R_d 10713.7 MB, x 1.10 = 11785.1 MB, workers 2
+
+====================================================================================================
+FEAS  does every task fit one session
+====================================================================================================
+  tasks 4320 (288 cells x M 15)
+  FEASIBLE: every task fits one session
+
+====================================================================================================
+PS  shards: the full design
+====================================================================================================
+  row      d   tasks     task-seconds    session-seconds
+  CONC     2     540            86330              21583
+  CONC     5     540           171030              42757
+  CONC    10     540           304195              76049
+  CONC    40     540           800422             400211
+  TAU8     5     720           234874              58719
+  TAU8    10     720           417237             104309
+  TAU8    40     720          1077491             538746
+  all           4320          3091579            1242373
+  K    1: largest shard   1242373 s = 2875.9% of the 43200 s cap
+  K    2: largest shard    621187 s = 1437.9% of the 43200 s cap
+  K    3: largest shard    414124 s = 958.6% of the 43200 s cap
+  K    4: largest shard    310595 s = 719.0% of the 43200 s cap
+  K    5: largest shard    248475 s = 575.2% of the 43200 s cap
+  K    6: largest shard    207062 s = 479.3% of the 43200 s cap
+  K    7: largest shard    177509 s = 410.9% of the 43200 s cap
+  K    8: largest shard    155311 s = 359.5% of the 43200 s cap
+  K    9: largest shard    138047 s = 319.6% of the 43200 s cap
+  K   10: largest shard    124237 s = 287.6% of the 43200 s cap
+  K   11: largest shard    112963 s = 261.5% of the 43200 s cap
+  K   12: largest shard    103533 s = 239.7% of the 43200 s cap
+  K   13: largest shard     95594 s = 221.3% of the 43200 s cap
+  K   14: largest shard     88755 s = 205.5% of the 43200 s cap
+  K   15: largest shard     82825 s = 191.7% of the 43200 s cap
+  K   16: largest shard     77656 s = 179.8% of the 43200 s cap
+  K   17: largest shard     73102 s = 169.2% of the 43200 s cap
+  K   18: largest shard     69030 s = 159.8% of the 43200 s cap
+  K   19: largest shard     65400 s = 151.4% of the 43200 s cap
+  K   20: largest shard     62121 s = 143.8% of the 43200 s cap
+  K   25: largest shard     49721 s = 115.1% of the 43200 s cap
+  K   30: largest shard     41412 s =  95.9% of the 43200 s cap
+  K   35: largest shard     35516 s =  82.2% of the 43200 s cap
+  K   40: largest shard     31074 s =  71.9% of the 43200 s cap
+  K   45: largest shard     27617 s =  63.9% of the 43200 s cap
+  K   50: largest shard     24861 s =  57.5% of the 43200 s cap
+  K   55: largest shard     22607 s =  52.3% of the 43200 s cap
+  K   60: largest shard     20708 s =  47.9% of the 43200 s cap
+  K   65: largest shard     19120 s =  44.3% of the 43200 s cap
+  K   70: largest shard     17759 s =  41.1% of the 43200 s cap
+  K   75: largest shard     16585 s =  38.4% of the 43200 s cap
+  K   80: largest shard     15546 s =  36.0% of the 43200 s cap
+  K   85: largest shard     14628 s =  33.9% of the 43200 s cap
+  K   90: largest shard     13810 s =  32.0% of the 43200 s cap
+  K   95: largest shard     13088 s =  30.3% of the 43200 s cap
+  K  100: largest shard     12433 s =  28.8% of the 43200 s cap
+  K  105: largest shard     11859 s =  27.5% of the 43200 s cap
+  K  110: largest shard     11305 s =  26.2% of the 43200 s cap
+  K  115: largest shard     10815 s =  25.0% of the 43200 s cap
+  K  120: largest shard     10372 s =  24.0% of the 43200 s cap
+  K  125: largest shard      9947 s =  23.0% of the 43200 s cap
+  K  130: largest shard      9569 s =  22.2% of the 43200 s cap
+  K  135: largest shard      9224 s =  21.4% of the 43200 s cap
+  K  140: largest shard      8881 s =  20.6% of the 43200 s cap
+  K  145: largest shard      8585 s =  19.9% of the 43200 s cap
+  K  150: largest shard      8308 s =  19.2% of the 43200 s cap
+  K  155: largest shard      8034 s =  18.6% of the 43200 s cap
+  K  160: largest shard      7771 s =  18.0% of the 43200 s cap
+  K  165: largest shard      7537 s =  17.4% of the 43200 s cap
+  K  170: largest shard      7321 s =  16.9% of the 43200 s cap
+  K  175: largest shard      7107 s =  16.5% of the 43200 s cap
+  K  180: largest shard      6906 s =  16.0% of the 43200 s cap
+  K  185: largest shard      6742 s =  15.6% of the 43200 s cap
+  K  190: largest shard      6558 s =  15.2% of the 43200 s cap
+  K  195: largest shard      6384 s =  14.8% of the 43200 s cap
+  K  200: largest shard      6230 s =  14.4% of the 43200 s cap
+  K  205: largest shard      6079 s =  14.1% of the 43200 s cap
+  K  210: largest shard      5930 s =  13.7% of the 43200 s cap
+  K  215: largest shard      5790 s =  13.4% of the 43200 s cap
+  K  220: largest shard      5665 s =  13.1% of the 43200 s cap
+  K  225: largest shard      5529 s =  12.8% of the 43200 s cap
+  K  230: largest shard      5425 s =  12.6% of the 43200 s cap
+  K  235: largest shard      5300 s =  12.3% of the 43200 s cap
+  K  240: largest shard      5193 s =  12.0% of the 43200 s cap
+  K  245: largest shard      5081 s =  11.8% of the 43200 s cap
+  K  250: largest shard      4989 s =  11.5% of the 43200 s cap
+  K  255: largest shard      4882 s =  11.3% of the 43200 s cap
+  K  260: largest shard      4797 s =  11.1% of the 43200 s cap
+  K  265: largest shard      4717 s =  10.9% of the 43200 s cap
+  K  270: largest shard      4607 s =  10.7% of the 43200 s cap
+  K  275: largest shard      4536 s =  10.5% of the 43200 s cap
+  K  280: largest shard      4444 s =  10.3% of the 43200 s cap
+  K  285: largest shard      4376 s =  10.1% of the 43200 s cap
+  K  290: largest shard      4310 s =  10.0% of the 43200 s cap
+  K  295: largest shard      4234 s =   9.8% of the 43200 s cap
+  K  300: largest shard      4162 s =   9.6% of the 43200 s cap
+  K  305: largest shard      4089 s =   9.5% of the 43200 s cap
+  K  310: largest shard      4034 s =   9.3% of the 43200 s cap
+  K  315: largest shard      3958 s =   9.2% of the 43200 s cap
+  K  320: largest shard      3903 s =   9.0% of the 43200 s cap
+  K  325: largest shard      3831 s =   8.9% of the 43200 s cap
+  K  330: largest shard      3777 s =   8.7% of the 43200 s cap
+  K  335: largest shard      3731 s =   8.6% of the 43200 s cap
+  K  340: largest shard      3667 s =   8.5% of the 43200 s cap
+  K  345: largest shard      3621 s =   8.4% of the 43200 s cap
+  K  350: largest shard      3557 s =   8.2% of the 43200 s cap
+  K  355: largest shard      3510 s =   8.1% of the 43200 s cap
+  K  360: largest shard      3466 s =   8.0% of the 43200 s cap
+  K  365: largest shard      3425 s =   7.9% of the 43200 s cap
+  K  370: largest shard      3370 s =   7.8% of the 43200 s cap
+  K  375: largest shard      3324 s =   7.7% of the 43200 s cap
+  K  380: largest shard      3282 s =   7.6% of the 43200 s cap
+  K  385: largest shard      3242 s =   7.5% of the 43200 s cap
+  K  390: largest shard      3206 s =   7.4% of the 43200 s cap
+  K  395: largest shard      3166 s =   7.3% of the 43200 s cap
+  K  400: largest shard      3122 s =   7.2% of the 43200 s cap
+  at the target 10800 s: K = 116
+    shard   0:   38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard   1:   38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard   2:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   3:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   4:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   5:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   6:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   7:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   8:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   9:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  10:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  11:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  12:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  13:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  14:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  15:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  16:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  17:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  18:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  19:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  20:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  21:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  22:   38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  23:   38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  24:   38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  25:   38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  26:   38 tasks, load   10708 s, T1  10656 s, auto --stop-after  31944 s
+    shard  27:   38 tasks, load   10708 s, T1  10656 s, auto --stop-after  31944 s
+    shard  28:   38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  29:   38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  30:   38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  31:   38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  32:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  33:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  34:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  35:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  36:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  37:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  38:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  39:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  40:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  41:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  42:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  43:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  44:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  45:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  46:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  47:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  48:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  49:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  50:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  51:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  52:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  53:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  54:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  55:   37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  56:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  57:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  58:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  59:   37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  60:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  61:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  62:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  63:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  64:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  65:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  66:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  67:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  68:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  69:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  70:   38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  71:   38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  72:   38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  73:   38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  74:   39 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  75:   39 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  76:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  77:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  78:   38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  79:   38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  80:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  81:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  82:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  83:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  84:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  85:   37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  86:   38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  87:   38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  88:   38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  89:   38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  90:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  91:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  92:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  93:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  94:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  95:   37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  96:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard  97:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard  98:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard  99:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 100:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 101:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 102:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 103:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 104:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 105:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 106:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 107:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 108:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 109:   37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 110:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 111:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 112:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 113:   37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 114:   38 tasks, load   10739 s, T1  10305 s, auto --stop-after  32295 s
+    shard 115:   38 tasks, load   10739 s, T1  10305 s, auto --stop-after  32295 s
+
+====================================================================================================
+c5price.py done, exit 0  (nothing written)
+====================================================================================================
