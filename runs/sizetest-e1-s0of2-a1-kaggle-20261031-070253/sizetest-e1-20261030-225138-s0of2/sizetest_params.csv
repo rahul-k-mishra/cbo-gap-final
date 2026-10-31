@@ -1,0 +1,16 @@
+mode,e1
+plan_sha256,ad4c1f7244f06d81e0c2a2e5abe8df3f40b8797458bcc1d9d4c5fc218fe3104e
+throughput,calprec2-smoke-kaggle-20261011-121225
+shard,0
+nshards,2
+workers,4
+stop_after,36000.0
+ladder,"50000,200000,1000000,4000000"
+draws,48
+kind,41
+script_sha256,711dc0e6ac484121385a9d28090981ae1518f28f0cfe02e417086266abb6c4b3
+calprec2_sha256,3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+costprobe2_sha256,ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+python,3.13.15
+numpy,2.1.3
+resume_from,
