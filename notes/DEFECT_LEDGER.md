@@ -2944,6 +2944,54 @@ instruction of 2026-10-15.
       plan sha256, ladder, draws and kind match the plan; planned 20928,
       complete 20928, extra 0, missing 0. Adding the smoke folder stops
       with exit 2 (kind differs), as A1 intends.
+  - ANALYSE RESULT (Rahul, 2026-10-31, laptop, python 3.12.3, numpy
+    2.5.3, workers 2; logs/sizetest-analyse-20261031.log; script sha256
+    711dc0e6...b4b3; exit 0). A1: both shard folders read, 10464 of
+    10464 complete each; platform of every folder python 3.13.15, numpy
+    2.1.3; planned 20928, complete 20928, missing 0; largest per-task
+    peak RSS 441.6 MB. Classes by the pre-specified rule:
+    - affected 56: SIZE 23 (not adequate 7), SIZE, NOT CONVERGED 8 (8),
+      NOT A MISS AT 50000 11 (1), ELSEWHERE 14 (3).
+    - control 53: SIZE 3 (1), SIZE, NOT CONVERGED 0, NOT A MISS AT 50000
+      31 (0), ELSEWHERE 19 (1).
+    - J_needed, affected d 40 cells classed SIZE: 50000 0, 200000 7,
+      1000000 7, 4000000 2.
+    - ELSEWHERE is not concentrated in the affected cells: 19 of the 53
+      controls fail H1, against 14 of the 56 affected cells.
+  - H1 IS MIS-SPECIFIED (Claude's design error, found 2026-10-31 on
+    reading the result; Rahul's question). H1 asks whether the run median
+    (np.median of the cell's 15 run ratios) lies inside the 95%
+    percentile bootstrap interval for the median of E1's 48 draws at
+    50000. That interval describes the uncertainty of the E1 median only.
+    The run median is itself a sample median, of 15 draws, and its own
+    sampling spread is ignored. If both come from one distribution, the
+    two medians differ by noise whose variance is the sum of both, and
+    the 15-draw median has the larger share of it. So H1 fails by noise
+    alone far more often than 5%, and it fails most often where the E1
+    interval is narrowest. The log shows this in cells where nothing is
+    wrong at any size, e.g. CONC mechanism rastrigin 40 mix-0.1 0.5: run
+    1.0101, E1 1.0112 [1.0102, 1.0120], ratio_ref 1.0111; TAU8 boundary
+    rosenbrock 40 0.2: run 1.0010, E1 1.0053 [1.0013, 1.0072], ratio_ref
+    1.0052. Same cause as the nine of S1: a criterion fixed without
+    working out its rate under the null. The worked example in the
+    docstring checked the arithmetic, not the null. How often H1 fails
+    by noise alone is not known: no script has computed it. Whether 19
+    of 53 is consistent with it is therefore not known either.
+  - CONSEQUENCE. ELSEWHERE, as computed, cannot tell a run whose
+    references differ from calprec2's sampler from a run whose median
+    fell outside a too-narrow interval. Some ELSEWHERE gaps are large
+    against the E1 interval (TAU8 boundary griewank 40 0.02, a control:
+    run 1.0125, E1 1.2343 [1.1137, 1.2945]; TAU8 boundary rastrigin 10
+    0.01: run 0.9142, E1 1.1583 [1.0866, 1.3024]), but whether they are
+    large against the run median's own spread is not in the log. SIZE
+    and SIZE, NOT CONVERGED require H1 to hold, so those counts carry the
+    same defect. The parts of the rule that do not use the run (off at
+    50000, J_needed: E1 medians against ratio_ref, both from calprec2's
+    sampler) are unaffected by it. The pre-specified classification
+    stands as the reported result; any corrected test is post hoc and is
+    labelled exploratory. OPEN: whether the run's references agree with
+    calprec2's sampler at 50000 is undecided; if they do not, that is a
+    correctness finding about CONC and TAU8, not a calibration note.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
