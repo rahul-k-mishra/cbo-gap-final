@@ -3051,6 +3051,48 @@ instruction of 2026-10-15.
       sampler was not settled. A larger E1 at 50000, with its null rate
       worked out first under item 1, is the way to settle it, for
       Rahul to decide.
+  - h1null RESULT (Rahul, 2026-10-31, laptop, python 3.12.3, numpy
+    2.5.3, workers 2; logs/h1null-20261031.log; script sha256
+    03d22519...a7a5, sizetest 711dc0e6...b4b3; perm-h1 1000, perm-test
+    20000, the pre-specified values; exit 0). EXPLORATORY, POST HOC.
+    - Checks: A1 PASS (20928 of 20928); G1 PASS (CONC 144, TAU8 144); RM
+      PASS (109 cells, 15 run values each); X1 PASS (analyse log sha256
+      9611b3d1...a5ab); largest per-worker peak RSS 76.7 MB.
+    - HEADLINE: controls 3 of 53 rejected at 0.05; P(Binomial(53, 0.05)
+      >= 3) = 0.498: NOT ABOVE THE NOMINAL LEVEL. Secondary: affected 6
+      of 56, 0.0602; all 9 of 109, 0.096; both NOT ABOVE by the same rule.
+    - P2: control mean f_c 0.339, E 18.0, F 19, q 0.432; affected mean
+      f_c 0.334, E 18.7, F 14, q 0.932: in both groups "H1 fails no more
+      often here than it does with no difference".
+    - P3 rejections (9): controls CONC mechanism ackley 40 mix-0.1 0.1,
+      TAU8 boundary ackley 40 0.3, TAU8 boundary griewank 40 0.02;
+      affected CONC mechanism rastrigin 10 0.1, TAU8 boundary ackley 40
+      0.02, levy 40 0.02, rastrigin 10 0.01, rastrigin 40 0.05, sphere 40
+      0.1. All nine were ELSEWHERE in analyse. Run median against E1
+      median at 50000, from the P1 table: below it in CONC rastrigin 10
+      0.1 (0.9408, 0.9993), TAU8 rastrigin 10 0.01 (0.9142, 1.1583),
+      rastrigin 40 0.05 (0.9198, 1.1575), griewank 40 0.02 (1.0125,
+      1.2343), ackley 40 0.3 (0.9791, 1.0129); above it in the other
+      four. No common direction.
+    - P4: affected 56: off at 50000 39 (not adequate 18), not off 17; of
+      the 39, J_needed 200000 13, 1000000 12, 4000000 5, none 9.
+      Controls 53: off 6 (not adequate 2), not off 47; of the 6, J_needed
+      200000 4, 1000000 2.
+    - The 9 "none" cells (from logs/sizetest-analyse-20261031.log, J_needed
+      "none"): CONC mechanism ackley 10 centred 0.01, ackley 10 mix-0.1
+      0.01, ackley 40 centred 0.01, rastrigin 40 centred 0.01; TAU8
+      boundary ackley 10 0.01, 0.02, 0.03, ackley 40 0.01, rastrigin 40
+      0.01. Every one is labelled "not adequate" by calprec2 (its
+      ratio_ref is not a converged value, C5m or D1 failed at 64M or
+      256M), every one is at tau_0 0.01 to 0.03, and eight are SIZE, NOT
+      CONVERGED; boundary ackley 40 0.01 was ELSEWHERE.
+  - OBLIGATION APPLIED (NOT ABOVE, with P2 agreeing; Rahul, 2026-10-31).
+    Done, as the reporting rule for N40: ELSEWHERE is not reported as a
+    finding in the paper; H1's defect (above) is reported in its place;
+    the size reading rests on P4, labelled exploratory and post hoc. No
+    manuscript text has been written for N40; the text enters once, in
+    the rule 8 editing pass, under this rule. The P3 result is reported
+    as "no excess of differences found", never as agreement (rule 10).
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
