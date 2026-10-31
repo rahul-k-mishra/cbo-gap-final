@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
@@ -1122,6 +1122,15 @@
       "attempt": 1,
       "job": "c5-x-smoke-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-11-01T03:47:19+05:30",
+      "run": "41247372397.1",
+      "event": "launched",
+      "item": "smoke-c5",
+      "attempt": 1,
+      "job": "c5-x-smoke-a1",
+      "note": "logs/kgrun-c5-x-smoke-a1.log"
     }
   ],
   "definition": {
