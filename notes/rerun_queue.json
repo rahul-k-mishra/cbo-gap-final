@@ -1087,13 +1087,19 @@
       "ledger": "N45"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "c5-x-drill-a1",
+  "args": "--mode drill --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --stop-after 150.0",
+  "data_dirs": [
+    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
+    "runs/calprec2-finalize-20261023-112503",
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1149,6 +1155,15 @@
       "attempt": 1,
       "job": "",
       "note": "runs/c5-x-smoke-a1-kaggle-20261101-040241: runner exit 0, D-SMOKE PASS; now READY"
+    },
+    {
+      "at": "2026-11-01T04:04:02+05:30",
+      "run": "41248739610.1",
+      "event": "intent",
+      "item": "drill-c5",
+      "attempt": 1,
+      "job": "c5-x-drill-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
