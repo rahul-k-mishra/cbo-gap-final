@@ -2992,6 +2992,65 @@ instruction of 2026-10-15.
     labelled exploratory. OPEN: whether the run's references agree with
     calprec2's sampler at 50000 is undecided; if they do not, that is a
     correctness finding about CONC and TAU8, not a calibration note.
+  - SAME FAILURE MODE, SECOND TIME (recorded 2026-10-31 at Rahul's
+    instruction). H1 is the failure catalogued nine times in S1 (the
+    nine analysis-design errors of supplement S3): a criterion fixed
+    before the run, with a worked example, but without its rate under
+    the null computed. It has now happened twice: the nine in round 1,
+    and H1 in round 2, written by Claude. The worked example rule (CLAUDE.md
+    rule 5) did not catch it, because a worked example checks the
+    arithmetic of one case, not how often the criterion fires when
+    nothing is there.
+  - WHAT CLAUDE DOES DIFFERENTLY (checkable, from 2026-10-31):
+    1. Every criterion in a docstring Claude writes that classifies,
+       tests or gates carries its own line beginning "NULL RATE:", which
+       states the null in words, the probability that the criterion
+       fires under it, and how that is known: either "by construction"
+       with the argument written out, or the log path of a null run by a
+       script Rahul ran before the criterion is applied to real data. A
+       reviewer can check this by listing the criteria and grepping for
+       the lines.
+    2. A criterion whose NULL RATE line says "not known", or has none, is
+       not used to classify or decide anything: it is printed as
+       description only.
+    3. A criterion that compares two estimates names, in the docstring,
+       the sampling variance of each and where each enters the
+       statistic. A point estimate set against an interval built for
+       the other estimate alone (H1's form) is not used.
+    4. The pre-run checks Claude reports include a NULL FIXTURE:
+       synthetic data with no effect by construction, run through the
+       whole script, with the criterion's firing count printed. Claude
+       reports that it ran and that the values were synthetic.
+  - scripts/h1null.py written 2026-10-31 (EXPLORATORY, POST HOC; Rahul's
+    instruction). Reads the plan, the two E1 shard folders, the rerun
+    shards and analysis the plan names, and the analyse log; writes
+    nothing. Identity checks G1, RM (each plan cell's run median
+    recomputed equal to the plan's) and X1 (analyse's classes recomputed
+    equal to the log's, cell by cell). P1 spread; P2 H1's failure rate
+    under shuffling of each cell's 63 values; P3 a two-sample permutation
+    test of medians (size at most 0.05 by construction); HEADLINE = P3
+    rejections among the 53 controls against Binomial(53, 0.05): p_up <=
+    0.001 WELL ABOVE (correctness finding), > 0.05 NOT ABOVE, otherwise
+    UNCLEAR; P4 the size counts without the run. Every criterion carries a
+    NULL RATE line (item 1 above). Obligations fixed before the run
+    (Rahul's request):
+    - NOT ABOVE: the run's references are not shown to differ from the
+      sampler. ELSEWHERE is read as H1's artefact only if P2 also says
+      H1's failures are within its null rate in both groups; then the
+      ELSEWHERE count is not reported as a finding, H1's defect is
+      reported in its place, and the size reading rests on P4, labelled
+      exploratory. Not reported as agreement (rule 10).
+    - WELL ABOVE: a correctness finding about CONC and TAU8. Before any
+      calibration statement goes in the paper: locate it (which cells,
+      the size of the differences in P1, and a line-by-line comparison
+      of how rerun.py computes audit_ref_ratio with how calprec2
+      evaluates the ESS fraction), and record it as a new ledger item
+      whether or not the differences are small.
+    - UNCLEAR: neither reading is reported. The paper states only what
+      does not use the run (P4) and that the run's agreement with the
+      sampler was not settled. A larger E1 at 50000, with its null rate
+      worked out first under item 1, is the way to settle it, for
+      Rahul to decide.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
