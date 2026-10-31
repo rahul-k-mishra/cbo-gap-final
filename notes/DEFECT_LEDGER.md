@@ -2909,6 +2909,41 @@ instruction of 2026-10-15.
     both folders pass folder_ok; the plan csv hashes to plan_sha256; job
     names sizetest-e1-smoke-a1, sizetest-e1-s0of2-a1,
     sizetest-e1-s1of2-a1, and their arguments, as R1Z expects.
+  - E1 ON KAGGLE RESULT (queue sizetest-e1, loaded d1bdcd5; DONE
+    2026-10-31, last fetch c2978f3; timer disabled by Rahul). Every job
+    attempt 1, runner exit code 0. Headers (rule 18): python 3.13.15,
+    numpy 2.1.3, workers 4, script sha256 711dc0e6...b4b3, calprec2.py
+    3947d7ba...e511a, costprobe2.py ea5cb2e1...f64b, plan csv sha256
+    ad4c1f72...e104e; G-FORK, G3, V2S PASS in all three.
+    - Smoke, runs/sizetest-e1-smoke-a1-kaggle-20261031-040254: 29 units
+      at N 4000000, task execution 64 s, 0 errored, SMOKE PASS.
+    - Shard 0, runs/sizetest-e1-s0of2-a1-kaggle-20261031-070253: 10464
+      tasks, task execution 8808 s, not stopped, 0 errored.
+    - Shard 1, runs/sizetest-e1-s1of2-a1-kaggle-20261031-100254: 10464
+      tasks, task execution 9696 s, not stopped, 0 errored. The plan's
+      estimate was 9323.2 s for each shard.
+    - PC, all three jobs: "PC PASS C|boundary|ackley|10|centred|0.01|
+      64000000|0: 1 log-ESS values within 0.000e+00". The printed figure
+      is the largest relative difference, so the recomputed log-ESS is
+      the committed float exactly, not merely within 1e-12. One beta
+      only: the PC row carries one log-ESS. PC wall and RSS: smoke 39.3
+      s, 113.0 MB; shard 0 39.5 s, 122.9 MB; shard 1 50.0 s, 123.3 MB.
+      Against the PC MEMORY check above: my prediction was the streamed
+      figure for its cell, about 145.9 MB (boundary d 10 at 256M); the
+      figure that had worried Rahul was 2495.6 MB, calprec2's held 64M
+      peak. Measured 113.0 to 123.3 MB.
+    - Draw peak RSS: smoke 428.3 MB (mechanism levy d 40 mix-0.1, N
+      4000000). E1 shards: "largest per-task peak RSS" 441.4 MB (shard 0)
+      and 441.6 MB (shard 1), both mechanism levy d 40 mix-0.1 at N
+      1000000. The plan's streamed figure for mechanism d 40 was 445.6
+      MB. No row carries an RSS flag or an error.
+    - Input contact before the analyse command (2026-10-31, Claude,
+      counts only, no result read): read_plan and read_run_folders on
+      the committed folders. 109 cells, ladder 50000 to 4000000, draws
+      48; both shard folders verify; 10464 rows, 10464 complete, in each;
+      plan sha256, ladder, draws and kind match the plan; planned 20928,
+      complete 20928, extra 0, missing 0. Adding the smoke folder stops
+      with exit 2 (kind differs), as A1 intends.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
