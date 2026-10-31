@@ -4530,6 +4530,137 @@ instruction of 2026-10-15.
       a resume naming another smoke folder, a resume with another
       stop-after; plan without --smoke identical from M1 on to the
       previous version's.
+  JINFPROBE SHARDS: runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,
+    runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,
+    runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 (Rahul, 2026-11-01:
+    each exit 0, 84 tasks). Headers read by Claude under rule 18: script
+    sha256 7b9d6e7f...8dc7f in all three, Python 3.13.15, NumPy 2.1.3,
+    the smoke folder named, no resume. The probe result is recorded from
+    the report log (logs/jinfprobe-report-20261101.log), not yet run.
+  C5 DESIGN (Claude, 2026-11-01, under Rahul's standing position;
+    FIXED BEFORE ANY PRICE WAS COMPUTED AND BEFORE ANY RUN; the run rows
+    and the analysis script are written only after the price is read).
+    THE WINDOW EXTENSION, WITH C6'S SECOND READING FOLDED IN.
+    - CELLS: every cell of CONC (six objectives x d 2, 5, 10, 40 x laws
+      centred, mix-0.1 x tau_0 0.5, 0.1, 0.01: 144) and of TAU8 (six
+      objectives x d 5, 10, 40 x tau_0 0.3, 0.2, 0.1, 0.07, 0.05, 0.03,
+      0.02, 0.01: 144): 288 cells, each at calprec2's fixed beta for that
+      cell (the beta its 50000 rerun used), the archived one_realisation
+      unmodified. Why all: the departure is reported per tau_0 and its
+      contrast against the loosest tau_0 needs every tau_0; C6's affected
+      and control cells span both rows; nothing is trimmed (standing
+      position). Not included: PROBEARM (a probe beta, not the
+      estimand), ADAPT (a time-varying beta, not the analysed
+      algorithm), and the other calibrated rows (SIGMA, ANISO), whose
+      modules the probe did not cover (rule 6). The extension's
+      statements are restricted to CONC and TAU8 and say so.
+    - J_INF: 4000000 for every cell. One size carries both readings on
+      the same realizations, and 4000000 is at or above every finite
+      J_needed of sizetest (200000, 1000000, 4000000), so the earlier
+      decision (C6's reading at J_inf up to J_needed) is met for every
+      cell that has one. The 9 "none" cells are read at 4000000 with no
+      size statement (N40, exclusion 4).
+    - M = 15 realizations per cell, the rows' own M: every extended cell
+      is the same estimand at the same precision as the 50000 cell it is
+      compared with. 4320 tasks, one realization each.
+    - J WINDOW at J_inf 4000000 (jinfprobe.jext, J <= J_inf / 10, the
+      archive's cap): 10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000,
+      10000, 20000, 40000, 80000, 160000, 320000, 400000. Windows:
+      W-arch = 10 to 5000 (the archived J10 points), W-hi = 5000 to
+      400000 (8 points), W-ext = all 17. The top point is at J_inf / 10
+      in every window, as in the archive.
+    - SEEDS: SeedSequence((20261101, 95, row index (CONC 0, TAU8 1),
+      module index, objective index, d, law index, round(10^4 x tau_0),
+      4000000, rep)); bootstrap key the same with kind 96 and no rep.
+      Integers only, so injective by construction; new kinds, shared
+      with no other script.
+    - ESTIMATOR, unchanged from rerun_analysis items 0 to 3: per
+      realization regimemap.fit_slope on the window; S-slope = the mean
+      over realizations; B = 10000 percentile resamples of realizations
+      from the cell's bootstrap key; a realization with a non-finite or
+      non-positive E on the window is dropped and named.
+    - READING 1 (C5), per cell, on the realizations at 4000000:
+      R1a S(W-hi) with its two-sided 95% interval.
+      R1b PERSISTS iff the 5th percentile of the resampled S(W-hi) is
+          above -1 (one-sided 95% lower bound above -1): the slope on J
+          5000 to 400000 is flatter than -1. Otherwise "lower bound at or
+          below -1", never "reaches -1".
+          NULL RATE: nominal 0.05 per cell when the true S(W-hi) is -1.
+      R1c rerun_analysis item 4 on W-hi: "upper bound <= -1: yes" iff
+          the 95th percentile is at most -1.
+          NULL RATE: nominal 0.05 per cell when the true S(W-hi) is -1.
+      R1d D-win = S(W-hi) - S(W-arch), the same realizations with one
+          index matrix (paired); DIFFERENCE iff the two-sided 95%
+          interval excludes 0, otherwise "95% interval contains 0".
+          A DIFFERENCE describes curvature of the fitted curve between
+          the two windows; it is not read as a change of rate.
+          NULL RATE: nominal 0.05 per cell under a pure power law (no
+          curvature).
+      W-ext's S-slope is printed as a description, with no verdict.
+    - READING 2 (C6), per cell: D-ref = S(W-arch at 4000000) -
+      S(W-arch at 50000), the second from the committed rerun's 15
+      realizations of the same cell; independent resamples from each
+      set's own bootstrap key; DIFFERENCE rule as R1d; never
+      equivalence. Printed per cell, pooled per (row, tau_0), and listed
+      by sizetest class (affected, control, neither) as a description;
+      the classes are not a matched comparison (N40, qualification 2).
+      NULL RATE: nominal 0.05 per cell when both sets come from one
+      distribution.
+    - POOLED, per (row, tau_0): the unweighted mean over units ((objective,
+      law) in CONC, objective in TAU8) of R1a, D-win and D-ref, with
+      rerun_analysis item 6's heterogeneity; DIFFERENCE rule only, no
+      equivalence, no PERSISTS on a pooled figure (its spread mixes
+      units). NULL RATE: nominal 0.05 per pooled figure under no
+      difference in every unit.
+    - HEADLINE COUNTS: for R1b, R1c, R1d and D-ref, the number of the 288
+      cells meeting the criterion, beside the number expected at the
+      criterion's measured null rate (below) and the binomial upper tail
+      of the observed count. No multiplicity adjustment; every cell is
+      printed.
+    - MEASURED NULL RATES (my N40 commitment): the analysis's pre-run
+      checks run a null fixture of synthetic realizations (pure power
+      laws, slope -1, multiplicative noise at several levels, n = 15;
+      two independent sets for D-ref) through the same code and print
+      each criterion's rejection rate. Percentile intervals at n = 15
+      tend to undercover, so the rates may exceed 0.05. Fixed now: a
+      criterion whose measured rate exceeds 0.10 at any tested noise
+      level is not used as a verdict (its intervals are printed, the
+      verdict column reads "not used, null rate x"); one between 0.05
+      and 0.10 is used with its measured rate printed beside it, and the
+      headline's expected count uses the measured rate.
+    - WHAT EACH OUTCOME ALLOWS THE PAPER TO SAY (the window named every
+      time, rule 10):
+      - PERSISTS at tau_0 0.01 in most units, pooled S(W-hi) above -1:
+        the departure measured on J 10 to 5000 is also present on J 5000
+        to 400000 at J_inf 4x10^6. Nothing about J beyond 400000.
+      - Not PERSISTS, with D-win DIFFERENCE below 0: the fitted slope is
+        steeper on the larger window; the departure on the archived
+        window is smaller there, by the printed amount. Not "a
+        finite-window effect that vanishes", not "the rate is recovered".
+      - Neither: the larger window does not separate the slope from -1
+        or from the archived window's; reported with its intervals.
+      - D-ref DIFFERENCE in a cell: the archived-window slope at J_inf
+        50000 carries a reference-size effect in that cell; reported per
+        cell with no cause. No DIFFERENCE: "no reference-size effect
+        found", with the interval; never "the references agree".
+    - IMPLEMENTATION (after the price is read): two new rerun.py rows,
+      CONC-X and TAU8-X, added as N42 and N44 added theirs, so that the
+      queue (rule 22 covers rerun.py jobs) can run the shards; an
+      analysis script with the readings above in its docstring and the
+      null fixture among its pre-run checks.
+    - PRICE: scripts/c5price.py (laptop, writes nothing): task wall = the
+      unit's measured 4000000 wall; workers per d from the largest
+      measured 4000000 peak RSS at that d x 1.10 within 24000 MB; FEAS
+      (every task fits one session: 5 x wall + 600 s within 43200 s, at
+      least one worker); shards by longest-first assignment to the 10800
+      s target. Pre-run checks run by Claude: Python 3.8 grammar; input
+      contact on the three committed shard folders (IN PASS, 42 units,
+      288 cells, 4320 tasks; counts only); synthetic fixture (fake walls
+      and RSS): FEASIBLE and a priced schedule, exit 0, whose totals
+      match the fixture's hand count; one unit made too slow: NOT
+      FEASIBLE, that unit's 90 tasks named, the rest priced as "the
+      largest runnable version"; refusals exit 2: two folders of three,
+      a folder twice, a task in two folders, a tampered manifest.
   PRIMARY-TEXT CHECK (Claude, 2026-10-31; ~/cbo-refs: fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
