@@ -1087,21 +1087,16 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
+  "status": "READY",
   "index": 1,
-  "attempt": 2,
+  "attempt": 3,
   "resume_dirs": [
-    "runs/c5-x-drill-a1-kaggle-20261101-042033"
+    "runs/c5-x-drill-a1-kaggle-20261101-042033",
+    "runs/c5-x-drill-a2-kaggle-20261101-043921"
   ],
-  "job": "c5-x-drill-a2",
-  "args": "--mode drill --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --stop-after 150.0",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1132,6 +1127,20 @@
         "resume_dirs": [],
         "fetched_run": "41249938636.1",
         "fetched_at": "2026-11-01T04:20:34+05:30"
+      },
+      {
+        "attempt": 2,
+        "job": "c5-x-drill-a2",
+        "folder": "runs/c5-x-drill-a2-kaggle-20261101-043921",
+        "kaggle_status": "ERROR",
+        "runner_exit": 5,
+        "completed": 4,
+        "d_smoke": null,
+        "resume_dirs": [
+          "runs/c5-x-drill-a1-kaggle-20261101-042033"
+        ],
+        "fetched_run": "41251288695.1",
+        "fetched_at": "2026-11-01T04:39:23+05:30"
       }
     ]
   },
@@ -1216,6 +1225,15 @@
       "attempt": 2,
       "job": "c5-x-drill-a2",
       "note": "logs/kgrun-c5-x-drill-a2.log"
+    },
+    {
+      "at": "2026-11-01T04:39:23+05:30",
+      "run": "41251288695.1",
+      "event": "fetched",
+      "item": "drill-c5",
+      "attempt": 3,
+      "job": "",
+      "note": "runs/c5-x-drill-a2-kaggle-20261101-043921: runner exit 5 (G-STOP), completed 4; next attempt resumes; now READY"
     }
   ],
   "definition": {
