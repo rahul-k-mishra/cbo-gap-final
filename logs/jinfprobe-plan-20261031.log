@@ -1,0 +1,316 @@
+
+====================================================================================================
+CBO-GAP jinfprobe  (ledger N45 C5, N40 C6; rule 6)  mode plan
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 ff39978ef7b9290081db31f14287e053be0af3bdcafd28cf339f03d959d56124
+  calprec2.py sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerunlib.py sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430
+  costprobe costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343
+  beta table calprec2-finalize-20261023-112503
+  units    42 (CONC mechanism d 2, 5, 10, 40; TAU8 boundary d 5, 10, 40; six objectives)
+  beta     calprec2 fixed beta at (centred, 0.01); law centred; sigma 0.2; dt 0.01; T 1.0
+  seeds    SeedSequence((20261031, kind, module index, objective index, d, J_inf)); kind 91 run, 92 smoke
+  budget   24000 MB for concurrent tasks (R2)
+
+====================================================================================================
+IN  inputs
+====================================================================================================
+  IN PASS  42 units, each with one costprobe2 anchor at J_inf 50000 and a calprec2 beta
+
+====================================================================================================
+M1, R1 (anchor-scaled), R2 per task  (a schedule, not a measurement)
+====================================================================================================
+  J window per J_inf (JEXT) and particles per step P:
+    J_inf    50000: P     60110  J 10,20,40,80,160,320,640,1280,2560,5000
+    J_inf   200000: P    240110  J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000
+    J_inf   500000: P    630110  J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,50000
+    J_inf  1000000: P   1260110  J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,100000
+    J_inf  2000000: P   2520110  J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,160000,200000
+    J_inf  4000000: P   5040110  J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,160000,320000,400000
+  unit                          J_inf  wall50 s      est s  pred RSS MB  workers
+  mechanism|ackley|2            50000      2.51        2.5         54.5        4
+  mechanism|ackley|2           200000      2.51       10.0        217.7        4
+  mechanism|ackley|2           500000      2.51       26.3        571.3        4
+  mechanism|ackley|2          1000000      2.51       52.6       1142.5        4
+  mechanism|ackley|2          2000000      2.51      105.2       2284.9        4
+  mechanism|ackley|2          4000000      2.51      210.5       4569.7        4
+  mechanism|ackley|5            50000      4.18        4.2         65.8        4
+  mechanism|ackley|5           200000      4.18       16.7        262.8        4
+  mechanism|ackley|5           500000      4.18       43.8        689.8        4
+  mechanism|ackley|5          1000000      4.18       87.7       1379.4        4
+  mechanism|ackley|5          2000000      4.18      175.4       2758.7        4
+  mechanism|ackley|5          4000000      4.18      350.7       5517.2        4
+  mechanism|ackley|10           50000      6.55        6.5         85.7        4
+  mechanism|ackley|10          200000      6.55       26.2        342.3        4
+  mechanism|ackley|10          500000      6.55       68.6        898.4        4
+  mechanism|ackley|10         1000000      6.55      137.3       1796.6        4
+  mechanism|ackley|10         2000000      6.55      274.5       3593.0        4
+  mechanism|ackley|10         4000000      6.55      549.0       7185.8        3
+  mechanism|ackley|40           50000     20.99       21.0        199.0        4
+  mechanism|ackley|40          200000     20.99       83.8        794.9        4
+  mechanism|ackley|40          500000     20.99      220.0       2086.0        4
+  mechanism|ackley|40         1000000     20.99      440.0       4171.7        4
+  mechanism|ackley|40         2000000     20.99      880.0       8343.1        2
+  mechanism|ackley|40         4000000     20.99     1759.9      16685.8        1
+  mechanism|rastrigin|2         50000      2.17        2.2         54.7        4
+  mechanism|rastrigin|2        200000      2.17        8.7        218.5        4
+  mechanism|rastrigin|2        500000      2.17       22.8        573.4        4
+  mechanism|rastrigin|2       1000000      2.17       45.5       1146.7        4
+  mechanism|rastrigin|2       2000000      2.17       91.1       2293.3        4
+  mechanism|rastrigin|2       4000000      2.17      182.1       4586.5        4
+  mechanism|rastrigin|5         50000      3.92        3.9         65.8        4
+  mechanism|rastrigin|5        200000      3.92       15.7        262.8        4
+  mechanism|rastrigin|5        500000      3.92       41.1        689.8        4
+  mechanism|rastrigin|5       1000000      3.92       82.1       1379.4        4
+  mechanism|rastrigin|5       2000000      3.92      164.3       2758.7        4
+  mechanism|rastrigin|5       4000000      3.92      328.5       5517.2        4
+  mechanism|rastrigin|10        50000      6.43        6.4         85.7        4
+  mechanism|rastrigin|10       200000      6.43       25.7        342.3        4
+  mechanism|rastrigin|10       500000      6.43       67.4        898.4        4
+  mechanism|rastrigin|10      1000000      6.43      134.7       1796.6        4
+  mechanism|rastrigin|10      2000000      6.43      269.4       3593.0        4
+  mechanism|rastrigin|10      4000000      6.43      538.8       7185.8        3
+  mechanism|rastrigin|40        50000     22.05       22.1        199.0        4
+  mechanism|rastrigin|40       200000     22.05       88.1        794.9        4
+  mechanism|rastrigin|40       500000     22.05      231.2       2086.0        4
+  mechanism|rastrigin|40      1000000     22.05      462.3       4171.7        4
+  mechanism|rastrigin|40      2000000     22.05      924.5       8343.1        2
+  mechanism|rastrigin|40      4000000     22.05     1848.9      16685.8        1
+  mechanism|sphere|2            50000      1.62        1.6         54.5        4
+  mechanism|sphere|2           200000      1.62        6.5        217.7        4
+  mechanism|sphere|2           500000      1.62       17.0        571.3        4
+  mechanism|sphere|2          1000000      1.62       34.0       1142.5        4
+  mechanism|sphere|2          2000000      1.62       68.0       2284.9        4
+  mechanism|sphere|2          4000000      1.62      135.9       4569.7        4
+  mechanism|sphere|5            50000      2.46        2.5         66.0        4
+  mechanism|sphere|5           200000      2.46        9.8        263.6        4
+  mechanism|sphere|5           500000      2.46       25.8        691.9        4
+  mechanism|sphere|5          1000000      2.46       51.7       1383.6        4
+  mechanism|sphere|5          2000000      2.46      103.3       2767.0        4
+  mechanism|sphere|5          4000000      2.46      206.6       5534.0        4
+  mechanism|sphere|10           50000      3.77        3.8         84.6        4
+  mechanism|sphere|10          200000      3.77       15.1        337.9        4
+  mechanism|sphere|10          500000      3.77       39.5        886.8        4
+  mechanism|sphere|10         1000000      3.77       79.0       1773.5        4
+  mechanism|sphere|10         2000000      3.77      158.1       3546.9        4
+  mechanism|sphere|10         4000000      3.77      316.1       7093.6        3
+  mechanism|sphere|40           50000     10.99       11.0        200.5        4
+  mechanism|sphere|40          200000     10.99       43.9        800.9        4
+  mechanism|sphere|40          500000     10.99      115.2       2101.8        4
+  mechanism|sphere|40         1000000     10.99      230.3       4203.2        4
+  mechanism|sphere|40         2000000     10.99      460.6       8406.0        2
+  mechanism|sphere|40         4000000     10.99      921.2      16811.5        1
+  mechanism|griewank|2          50000      2.05        2.0         54.4        4
+  mechanism|griewank|2         200000      2.05        8.2        217.3        4
+  mechanism|griewank|2         500000      2.05       21.5        570.3        4
+  mechanism|griewank|2        1000000      2.05       42.9       1140.4        4
+  mechanism|griewank|2        2000000      2.05       85.9       2280.7        4
+  mechanism|griewank|2        4000000      2.05      171.7       4561.3        4
+  mechanism|griewank|5          50000      3.50        3.5         64.9        4
+  mechanism|griewank|5         200000      3.50       14.0        259.2        4
+  mechanism|griewank|5         500000      3.50       36.7        680.3        4
+  mechanism|griewank|5        1000000      3.50       73.4       1360.5        4
+  mechanism|griewank|5        2000000      3.50      146.7       2720.9        4
+  mechanism|griewank|5        4000000      3.50      293.5       5441.7        4
+  mechanism|griewank|10         50000      5.49        5.5         85.0        4
+  mechanism|griewank|10        200000      5.49       21.9        339.5        4
+  mechanism|griewank|10        500000      5.49       57.5        891.0        4
+  mechanism|griewank|10       1000000      5.49      115.0       1781.9        4
+  mechanism|griewank|10       2000000      5.49      230.0       3563.6        4
+  mechanism|griewank|10       4000000      5.49      460.1       7127.1        3
+  mechanism|griewank|40         50000     17.29       17.3        199.0        4
+  mechanism|griewank|40        200000     17.29       69.1        794.9        4
+  mechanism|griewank|40        500000     17.29      181.3       2086.0        4
+  mechanism|griewank|40       1000000     17.29      362.5       4171.7        4
+  mechanism|griewank|40       2000000     17.29      724.9       8343.1        2
+  mechanism|griewank|40       4000000     17.29     1449.8      16685.8        1
+  mechanism|levy|2              50000      2.15        2.2         54.8        4
+  mechanism|levy|2             200000      2.15        8.6        218.9        4
+  mechanism|levy|2             500000      2.15       22.5        574.4        4
+  mechanism|levy|2            1000000      2.15       45.1       1148.8        4
+  mechanism|levy|2            2000000      2.15       90.2       2297.5        4
+  mechanism|levy|2            4000000      2.15      180.4       4594.9        4
+  mechanism|levy|5              50000      4.80        4.8         65.1        4
+  mechanism|levy|5             200000      4.80       19.2        260.0        4
+  mechanism|levy|5             500000      4.80       50.3        682.4        4
+  mechanism|levy|5            1000000      4.80      100.5       1364.7        4
+  mechanism|levy|5            2000000      4.80      201.1       2729.3        4
+  mechanism|levy|5            4000000      4.80      402.1       5458.5        4
+  mechanism|levy|10             50000      7.43        7.4         87.0        4
+  mechanism|levy|10            200000      7.43       29.7        347.5        4
+  mechanism|levy|10            500000      7.43       77.9        912.0        4
+  mechanism|levy|10           1000000      7.43      155.8       1823.8        4
+  mechanism|levy|10           2000000      7.43      311.5       3647.5        4
+  mechanism|levy|10           4000000      7.43      623.0       7294.8        3
+  mechanism|levy|40             50000     24.36       24.4        215.2        4
+  mechanism|levy|40            200000     24.36       97.3        859.6        4
+  mechanism|levy|40            500000     24.36      255.4       2255.9        4
+  mechanism|levy|40           1000000     24.36      510.8       4511.3        4
+  mechanism|levy|40           2000000     24.36     1021.5       9022.3        2
+  mechanism|levy|40           4000000     24.36     2043.0      18044.1        1
+  mechanism|rosenbrock|2        50000      1.03        1.0         54.3        4
+  mechanism|rosenbrock|2       200000      1.03        4.1        216.9        4
+  mechanism|rosenbrock|2       500000      1.03       10.8        569.2        4
+  mechanism|rosenbrock|2      1000000      1.03       21.6       1138.3        4
+  mechanism|rosenbrock|2      2000000      1.03       43.1       2276.5        4
+  mechanism|rosenbrock|2      4000000      1.03       86.3       4553.0        4
+  mechanism|rosenbrock|5        50000      2.98        3.0         66.5        4
+  mechanism|rosenbrock|5       200000      2.98       11.9        265.6        4
+  mechanism|rosenbrock|5       500000      2.98       31.3        697.1        4
+  mechanism|rosenbrock|5      1000000      2.98       62.5       1394.1        4
+  mechanism|rosenbrock|5      2000000      2.98      125.1       2788.0        4
+  mechanism|rosenbrock|5      4000000      2.98      250.1       5575.9        4
+  mechanism|rosenbrock|10       50000      4.63        4.6         85.0        4
+  mechanism|rosenbrock|10      200000      4.63       18.5        339.5        4
+  mechanism|rosenbrock|10      500000      4.63       48.5        891.0        4
+  mechanism|rosenbrock|10     1000000      4.63       97.1       1781.9        4
+  mechanism|rosenbrock|10     2000000      4.63      194.2       3563.6        4
+  mechanism|rosenbrock|10     4000000      4.63      388.3       7127.1        3
+  mechanism|rosenbrock|40       50000     14.27       14.3        198.9        4
+  mechanism|rosenbrock|40      200000     14.27       57.0        794.5        4
+  mechanism|rosenbrock|40      500000     14.27      149.6       2085.0        4
+  mechanism|rosenbrock|40     1000000     14.27      299.2       4169.6        4
+  mechanism|rosenbrock|40     2000000     14.27      598.4       8338.9        2
+  mechanism|rosenbrock|40     4000000     14.27     1196.7      16677.4        1
+  boundary|ackley|5             50000      3.77        3.8         68.6        4
+  boundary|ackley|5            200000      3.77       15.1        274.0        4
+  boundary|ackley|5            500000      3.77       39.6        719.1        4
+  boundary|ackley|5           1000000      3.77       79.1       1438.1        4
+  boundary|ackley|5           2000000      3.77      158.3       2876.1        4
+  boundary|ackley|5           4000000      3.77      316.5       5752.0        4
+  boundary|ackley|10            50000      6.55        6.5         86.0        4
+  boundary|ackley|10           200000      6.55       26.2        343.5        4
+  boundary|ackley|10           500000      6.55       68.7        901.5        4
+  boundary|ackley|10          1000000      6.55      137.3       1802.9        4
+  boundary|ackley|10          2000000      6.55      274.6       3605.5        4
+  boundary|ackley|10          4000000      6.55      549.2       7210.9        3
+  boundary|ackley|40            50000     22.85       22.8        202.3        4
+  boundary|ackley|40           200000     22.85       91.3        808.1        4
+  boundary|ackley|40           500000     22.85      239.5       2120.6        4
+  boundary|ackley|40          1000000     22.85      479.0       4240.9        4
+  boundary|ackley|40          2000000     22.85      957.9       8481.4        2
+  boundary|ackley|40          4000000     22.85     1915.8      16962.5        1
+  boundary|rastrigin|5          50000      4.01        4.0         68.0        4
+  boundary|rastrigin|5         200000      4.01       16.0        271.6        4
+  boundary|rastrigin|5         500000      4.01       42.0        712.8        4
+  boundary|rastrigin|5        1000000      4.01       84.0       1425.5        4
+  boundary|rastrigin|5        2000000      4.01      168.0       2850.9        4
+  boundary|rastrigin|5        4000000      4.01      335.9       5701.7        4
+  boundary|rastrigin|10         50000      6.73        6.7         85.4        4
+  boundary|rastrigin|10        200000      6.73       26.9        341.1        4
+  boundary|rastrigin|10        500000      6.73       70.5        895.2        4
+  boundary|rastrigin|10       1000000      6.73      141.0       1790.3        4
+  boundary|rastrigin|10       2000000      6.73      282.0       3580.4        4
+  boundary|rastrigin|10       4000000      6.73      564.0       7160.6        3
+  boundary|rastrigin|40         50000     21.48       21.5        202.8        4
+  boundary|rastrigin|40        200000     21.48       85.8        810.1        4
+  boundary|rastrigin|40        500000     21.48      225.2       2125.9        4
+  boundary|rastrigin|40       1000000     21.48      450.4       4251.4        4
+  boundary|rastrigin|40       2000000     21.48      900.8       8502.4        2
+  boundary|rastrigin|40       4000000     21.48     1801.5      17004.4        1
+  boundary|sphere|5             50000      2.28        2.3         67.2        4
+  boundary|sphere|5            200000      2.28        9.1        268.4        4
+  boundary|sphere|5            500000      2.28       23.9        704.4        4
+  boundary|sphere|5           1000000      2.28       47.8       1408.7        4
+  boundary|sphere|5           2000000      2.28       95.7       2817.4        4
+  boundary|sphere|5           4000000      2.28      191.3       5634.6        4
+  boundary|sphere|10            50000      3.64        3.6         86.8        4
+  boundary|sphere|10           200000      3.64       14.5        346.7        4
+  boundary|sphere|10           500000      3.64       38.2        909.9        4
+  boundary|sphere|10          1000000      3.64       76.3       1819.6        4
+  boundary|sphere|10          2000000      3.64      152.6       3639.1        4
+  boundary|sphere|10          4000000      3.64      305.3       7278.0        3
+  boundary|sphere|40            50000     12.60       12.6        193.2        4
+  boundary|sphere|40           200000     12.60       50.3        771.7        4
+  boundary|sphere|40           500000     12.60      132.1       2025.2        4
+  boundary|sphere|40          1000000     12.60      264.1       4050.1        4
+  boundary|sphere|40          2000000     12.60      528.2       8099.9        2
+  boundary|sphere|40          4000000     12.60     1056.3      16199.5        1
+  boundary|griewank|5           50000      3.72        3.7         67.9        4
+  boundary|griewank|5          200000      3.72       14.9        271.2        4
+  boundary|griewank|5          500000      3.72       39.0        711.8        4
+  boundary|griewank|5         1000000      3.72       78.0       1423.4        4
+  boundary|griewank|5         2000000      3.72      156.0       2846.7        4
+  boundary|griewank|5         4000000      3.72      312.1       5693.3        4
+  boundary|griewank|10          50000      5.90        5.9         86.2        4
+  boundary|griewank|10         200000      5.90       23.6        344.3        4
+  boundary|griewank|10         500000      5.90       61.8        903.6        4
+  boundary|griewank|10        1000000      5.90      123.7       1807.0        4
+  boundary|griewank|10        2000000      5.90      247.4       3613.9        4
+  boundary|griewank|10        4000000      5.90      494.7       7227.7        3
+  boundary|griewank|40          50000     16.94       16.9        202.5        4
+  boundary|griewank|40         200000     16.94       67.7        808.9        4
+  boundary|griewank|40         500000     16.94      177.6       2122.7        4
+  boundary|griewank|40        1000000     16.94      355.1       4245.1        4
+  boundary|griewank|40        2000000     16.94      710.3       8489.8        2
+  boundary|griewank|40        4000000     16.94     1420.5      16979.2        1
+  boundary|levy|5               50000      4.28        4.3         68.8        4
+  boundary|levy|5              200000      4.28       17.1        274.8        4
+  boundary|levy|5              500000      4.28       44.9        721.2        4
+  boundary|levy|5             1000000      4.28       89.8       1442.3        4
+  boundary|levy|5             2000000      4.28      179.5       2884.4        4
+  boundary|levy|5             4000000      4.28      359.0       5768.8        4
+  boundary|levy|10              50000      7.45        7.4         87.4        4
+  boundary|levy|10             200000      7.45       29.8        349.1        4
+  boundary|levy|10             500000      7.45       78.1        916.2        4
+  boundary|levy|10            1000000      7.45      156.2       1832.2        4
+  boundary|levy|10            2000000      7.45      312.3       3664.2        4
+  boundary|levy|10            4000000      7.45      624.6       7328.3        3
+  boundary|levy|40              50000     27.10       27.1        213.2        4
+  boundary|levy|40             200000     27.10      108.3        851.6        4
+  boundary|levy|40             500000     27.10      284.1       2234.9        4
+  boundary|levy|40            1000000     27.10      568.2       4469.4        4
+  boundary|levy|40            2000000     27.10     1136.3       8938.4        2
+  boundary|levy|40            4000000     27.10     2272.5      17876.4        1
+  boundary|rosenbrock|5         50000      3.07        3.1         68.7        4
+  boundary|rosenbrock|5        200000      3.07       12.2        274.4        4
+  boundary|rosenbrock|5        500000      3.07       32.1        720.2        4
+  boundary|rosenbrock|5       1000000      3.07       64.3       1440.2        4
+  boundary|rosenbrock|5       2000000      3.07      128.5       2880.2        4
+  boundary|rosenbrock|5       4000000      3.07      257.1       5760.4        4
+  boundary|rosenbrock|10        50000      4.97        5.0         87.6        4
+  boundary|rosenbrock|10       200000      4.97       19.9        349.9        4
+  boundary|rosenbrock|10       500000      4.97       52.1        918.3        4
+  boundary|rosenbrock|10      1000000      4.97      104.3       1836.4        4
+  boundary|rosenbrock|10      2000000      4.97      208.5       3672.6        4
+  boundary|rosenbrock|10      4000000      4.97      417.1       7345.1        3
+  boundary|rosenbrock|40        50000     14.37       14.4        201.4        4
+  boundary|rosenbrock|40       200000     14.37       57.4        804.5        4
+  boundary|rosenbrock|40       500000     14.37      150.6       2111.2        4
+  boundary|rosenbrock|40      1000000     14.37      301.2       4222.0        4
+  boundary|rosenbrock|40      2000000     14.37      602.3       8443.7        2
+  boundary|rosenbrock|40      4000000     14.37     1204.6      16887.0        1
+  tasks whose anchor-scaled prediction exceeds the budget: 0 (R1 refines this from the unit's own smaller sizes during the run)
+
+====================================================================================================
+S1  shard schedule (elapsed estimate under perfect scaling; overruns of up to 30% have been measured)
+====================================================================================================
+  K  1: largest shard     31182 s = 144.4% of 21600 s
+  K  2: largest shard     15595 s =  72.2% of 21600 s
+  K  3: largest shard     10418 s =  48.2% of 21600 s
+  K  4: largest shard      7809 s =  36.2% of 21600 s
+  K  5: largest shard      6265 s =  29.0% of 21600 s
+  K  6: largest shard      5209 s =  24.1% of 21600 s
+  K  7: largest shard      4474 s =  20.7% of 21600 s
+  K  8: largest shard      3930 s =  18.2% of 21600 s
+  K  9: largest shard      3489 s =  16.2% of 21600 s
+  K 10: largest shard      3152 s =  14.6% of 21600 s
+  K 11: largest shard      3087 s =  14.3% of 21600 s
+  K 12: largest shard      3087 s =  14.3% of 21600 s
+  K 13: largest shard      3087 s =  14.3% of 21600 s
+  K 14: largest shard      3087 s =  14.3% of 21600 s
+  K 15: largest shard      3087 s =  14.3% of 21600 s
+  K 16: largest shard      3087 s =  14.3% of 21600 s
+  at the target 10800 s: K = 3
+    shard 0: 84 tasks, 14 units, load 10418 s, TIMEOUT_S 11362 s, auto --stop-after 31238 s
+    shard 1: 90 tasks, 15 units, load 10400 s, TIMEOUT_S 10215 s, auto --stop-after 32385 s
+    shard 2: 78 tasks, 13 units, load 10365 s, TIMEOUT_S 9579 s, auto --stop-after 33021 s
+
+====================================================================================================
+jinfprobe.py plan done, exit 0  (nothing written)
+====================================================================================================
