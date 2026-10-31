@@ -1,0 +1,226 @@
+[{"stream_name":"stdout","time":1.034775109,"data":"kgrun runner: job jinfprobe-s0of3-a1\n"}
+,{"stream_name":"stdout","time":1.03484298,"data":"  python   3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.034849663,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.034854354,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.034858709,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.205747486,"data":"  listing  79 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.205830618,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/jinfprobe.py\n"}
+,{"stream_name":"stdout","time":1.205841185,"data":"  args     --mode run --costprobe runs/costprobe2-s0-kaggle-20261010-103952,runs/costprobe2-s1-kaggle-20261011-101343 --beta-table runs/calprec2-finalize-20261023-112503 --smoke runs/jinfprobe-smoke-a1-kaggle-20261031-180019 --shard 0 --nshards 3 --workers 4\n"}
+,{"stream_name":"stdout","time":4.096507944,"data":"  bundle   149edc43ac862e47: 78 files verified against kgrun-bundle-149edc43ac862e47.sha256\n"}
+,{"stream_name":"stdout","time":4.097484162,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":4.114612453,"data":"    data  costprobe2-s0-kaggle-20261010-103952  -\u003e  /tmp/kgrun-ship/costprobe2-s0-kaggle-20261010-103952   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.117591964,"data":"        costprobe2-20261010-045924-s0of2/costprobe2_objcheck.csv: 126 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.117753445,"data":"        costprobe2-20261010-045924-s0of2/costprobe2_params.csv: 7 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.121431455,"data":"        costprobe2-20261010-045924-s0of2/costprobe2_results.csv: 218 rows, 218 with end ok\n"}
+,{"stream_name":"stdout","time":4.121467331,"data":"        args: runs/costprobe2-s0-kaggle-20261010-103952 -\u003e /tmp/kgrun-ship/costprobe2-s0-kaggle-20261010-103952 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.126749986,"data":"    data  costprobe2-s1-kaggle-20261011-101343  -\u003e  /tmp/kgrun-ship/costprobe2-s1-kaggle-20261011-101343   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.127530598,"data":"        costprobe2-20261011-043521-s1of2/costprobe2_objcheck.csv: 126 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.127557358,"data":"        costprobe2-20261011-043521-s1of2/costprobe2_params.csv: 7 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.1301772979999996,"data":"        costprobe2-20261011-043521-s1of2/costprobe2_results.csv: 165 rows, 165 with end ok\n"}
+,{"stream_name":"stdout","time":4.130193285,"data":"        args: runs/costprobe2-s1-kaggle-20261011-101343 -\u003e /tmp/kgrun-ship/costprobe2-s1-kaggle-20261011-101343 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.133002423,"data":"    data  calprec2-finalize-20261023-112503  -\u003e  /tmp/kgrun-ship/calprec2-finalize-20261023-112503   1 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.137312426,"data":"        calprec2_beta.csv: 336 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.137328149,"data":"        args: runs/calprec2-finalize-20261023-112503 -\u003e /tmp/kgrun-ship/calprec2-finalize-20261023-112503 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.141442109,"data":"    data  jinfprobe-smoke-a1-kaggle-20261031-180019  -\u003e  /tmp/kgrun-ship/jinfprobe-smoke-a1-kaggle-20261031-180019   3 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.141841442,"data":"        jinfprobe-smoke-20261031-121956/jinfprobe_params.csv: 16 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.143347423,"data":"        jinfprobe-smoke-20261031-121956/jinfprobe_results.csv: 84 rows, 84 with end ok\n"}
+,{"stream_name":"stdout","time":4.143364015,"data":"        args: runs/jinfprobe-smoke-a1-kaggle-20261031-180019 -\u003e /tmp/kgrun-ship/jinfprobe-smoke-a1-kaggle-20261031-180019 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.143369942,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/jinfprobe.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --mode run --costprobe /tmp/kgrun-ship/costprobe2-s0-kaggle-20261010-103952,/tmp/kgrun-ship/costprobe2-s1-kaggle-20261011-101343 --beta-table /tmp/kgrun-ship/calprec2-finalize-20261023-112503 --smoke /tmp/kgrun-ship/jinfprobe-smoke-a1-kaggle-20261031-180019 --shard 0 --nshards 3 --workers 4\n"}
+,{"stream_name":"stdout","time":4.88636246,"data":"\n"}
+,{"stream_name":"stdout","time":4.886396068,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.886402554,"data":"CBO-GAP jinfprobe  (ledger N45 C5, N40 C6; rule 6)  mode run\n"}
+,{"stream_name":"stdout","time":4.886407825,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.886412588,"data":"  python   3.13.15\n"}
+,{"stream_name":"stdout","time":4.886417161,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":4.8921488570000005,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":4.892182922,"data":"  workers  4\n"}
+,{"stream_name":"stdout","time":4.893341047,"data":"  script   sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f\n"}
+,{"stream_name":"stdout","time":4.894361747,"data":"  calprec2.py sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a\n"}
+,{"stream_name":"stdout","time":4.89534917,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":4.896160061,"data":"  rerunlib.py sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430\n"}
+,{"stream_name":"stdout","time":4.896177851,"data":"  costprobe costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343\n"}
+,{"stream_name":"stdout","time":4.896183479,"data":"  beta table calprec2-finalize-20261023-112503\n"}
+,{"stream_name":"stdout","time":4.896188054,"data":"  units    42 (CONC mechanism d 2, 5, 10, 40; TAU8 boundary d 5, 10, 40; six objectives)\n"}
+,{"stream_name":"stdout","time":4.896231959,"data":"  beta     calprec2 fixed beta at (centred, 0.01); law centred; sigma 0.2; dt 0.01; T 1.0\n"}
+,{"stream_name":"stdout","time":4.896237839,"data":"  seeds    SeedSequence((20261031, kind, module index, objective index, d, J_inf)); kind 91 run, 92 smoke\n"}
+,{"stream_name":"stdout","time":4.896242459,"data":"  budget   24000 MB for concurrent tasks (R2)\n"}
+,{"stream_name":"stdout","time":4.896247176,"data":"  smoke    jinfprobe-smoke-a1-kaggle-20261031-180019\n"}
+,{"stream_name":"stdout","time":4.896252141,"data":"\n"}
+,{"stream_name":"stdout","time":4.896256696,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.896261352,"data":"G-FORK, G3\n"}
+,{"stream_name":"stdout","time":4.896265558,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.896270036,"data":"  G-FORK PASS  start method fork\n"}
+,{"stream_name":"stdout","time":4.897588246,"data":"  G3 PASS  mechanism, boundary match costprobe2.ARCHIVE_SHA256\n"}
+,{"stream_name":"stdout","time":4.897608874,"data":"\n"}
+,{"stream_name":"stdout","time":4.89761494,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.897620175,"data":"IN  inputs\n"}
+,{"stream_name":"stdout","time":4.897624763,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.9114221,"data":"  IN PASS  42 units, each with one costprobe2 anchor at J_inf 50000 and a calprec2 beta\n"}
+,{"stream_name":"stdout","time":4.911457098,"data":"\n"}
+,{"stream_name":"stdout","time":4.911462555,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.911468013,"data":"SM-IN  the smoke (S2 assigns the shards from it)\n"}
+,{"stream_name":"stdout","time":4.911473149,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.91430596,"data":"  SM-IN PASS  jinfprobe-smoke-a1-kaggle-20261031-180019: 84 rows, every unit at 50000, 200000; smoke script sha256 ff39978ef7b9290081db31f14287e053be0af3bdcafd28cf339f03d959d56124\n"}
+,{"stream_name":"stdout","time":4.922610632,"data":"  shard 0 of 3: 84 tasks, units boundary|rastrigin|10, boundary|rastrigin|5, boundary|sphere|10, boundary|sphere|40, boundary|sphere|5, mechanism|ackley|10, mechanism|ackley|2, mechanism|ackley|5, mechanism|griewank|40, mechanism|levy|40, mechanism|rosenbrock|10, mechanism|rosenbrock|2, mechanism|rosenbrock|40, mechanism|sphere|2\n"}
+,{"stream_name":"stdout","time":4.92264106,"data":"\n"}
+,{"stream_name":"stdout","time":4.922646447,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.922651616,"data":"T1, STOP, G-STOP\n"}
+,{"stream_name":"stdout","time":4.922656218,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.92266136,"data":"  TIMEOUT_S = 21712 s  (max(600, 5 x largest est 4342.5 s))\n"}
+,{"stream_name":"stdout","time":4.9226660859999996,"data":"  --stop-after 20888 s (auto) + TIMEOUT_S 21712 s = 42600 s   cap 43200 s\n"}
+,{"stream_name":"stdout","time":4.922690531,"data":"  G-STOP PASS\n"}
+,{"stream_name":"stdout","time":4.927167463,"data":"\n"}
+,{"stream_name":"stdout","time":4.927191609,"data":"  run dir  /kaggle/working/jinfprobe-run-20261031-132528-s0of3\n"}
+,{"stream_name":"stdout","time":4.9327299,"data":"\n"}
+,{"stream_name":"stdout","time":4.932757764,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.932763356,"data":"Tasks, in groups (J_inf, d)  (R1, R2)\n"}
+,{"stream_name":"stdout","time":4.9327683669999995,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.932859442,"data":"  group J_inf 50000 d 2: 3 task(s), largest predicted RSS 54.5 MB, workers 4\n"}
+,{"stream_name":"stdout","time":4.932877479,"data":"  [J50000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":6.762338617,"data":"  [J50000 d2     1/3    ] JP91|mechanism|rosenbrock|2|50000                            wall     1.604 s  RSS    41.9 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":6.96747784,"data":"  [J50000 d2     2/3    ] JP91|mechanism|sphere|2|50000                                wall     1.939 s  RSS    42.1 MB  elapsed       2 s\n"}
+,{"stream_name":"stdout","time":7.573065842,"data":"  [J50000 d2     3/3    ] JP91|mechanism|ackley|2|50000                                wall     2.601 s  RSS    42.1 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":7.573279504,"data":"  group J_inf 50000 d 5: 3 task(s), largest predicted RSS 68.0 MB, workers 4\n"}
+,{"stream_name":"stdout","time":7.573287971,"data":"  [J50000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":10.788090122,"data":"  [J50000 d5     1/3    ] JP91|boundary|rastrigin|5|50000                              wall     3.169 s  RSS    55.1 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":10.7927454,"data":"  [J50000 d5     2/3    ] JP91|boundary|sphere|5|50000                                 wall     3.011 s  RSS    55.0 MB  elapsed       3 s\n"}
+,{"stream_name":"stdout","time":11.999656366,"data":"  [J50000 d5     3/3    ] JP91|mechanism|ackley|5|50000                                wall     4.305 s  RSS    49.4 MB  elapsed       4 s\n"}
+,{"stream_name":"stdout","time":11.999957457,"data":"  group J_inf 50000 d 10: 4 task(s), largest predicted RSS 86.8 MB, workers 4\n"}
+,{"stream_name":"stdout","time":11.999969551,"data":"  [J50000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":16.822851553,"data":"  [J50000 d10     1/4    ] JP91|boundary|sphere|10|50000                                wall     4.678 s  RSS    73.3 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":17.629792770999998,"data":"  [J50000 d10     2/4    ] JP91|mechanism|rosenbrock|10|50000                           wall     5.453 s  RSS    71.2 MB  elapsed       6 s\n"}
+,{"stream_name":"stdout","time":19.236723868,"data":"  [J50000 d10     3/4    ] JP91|boundary|rastrigin|10|50000                             wall     7.081 s  RSS    74.3 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":19.441674917,"data":"  [J50000 d10     4/4    ] JP91|mechanism|ackley|10|50000                               wall     7.343 s  RSS    72.4 MB  elapsed       7 s\n"}
+,{"stream_name":"stdout","time":19.441933818,"data":"  group J_inf 50000 d 40: 4 task(s), largest predicted RSS 215.2 MB, workers 4\n"}
+,{"stream_name":"stdout","time":19.441945526,"data":"  [J50000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":33.085517095,"data":"  [J50000 d40     1/4    ] JP91|boundary|sphere|40|50000                                wall    13.577 s  RSS   195.6 MB  elapsed      14 s\n"}
+,{"stream_name":"stdout","time":35.695287793,"data":"  [J50000 d40     2/4    ] JP91|mechanism|rosenbrock|40|50000                           wall    16.109 s  RSS   193.4 MB  elapsed      16 s\n"}
+,{"stream_name":"stdout","time":38.306922801,"data":"  [J50000 d40     3/4    ] JP91|mechanism|griewank|40|50000                             wall    18.754 s  RSS   193.4 MB  elapsed      19 s\n"}
+,{"stream_name":"stdout","time":44.520060467,"data":"  [J50000 d40     4/4    ] JP91|mechanism|levy|40|50000                                 wall    25.030 s  RSS   198.8 MB  elapsed      25 s\n"}
+,{"stream_name":"stdout","time":44.520421605,"data":"  group J_inf 200000 d 2: 3 task(s), largest predicted RSS 168.2 MB, workers 4\n"}
+,{"stream_name":"stdout","time":44.520444276,"data":"  [J200000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":49.737535483,"data":"  [J200000 d2     1/3    ] JP91|mechanism|sphere|2|200000                               wall     5.129 s  RSS    66.7 MB  elapsed       5 s\n"}
+,{"stream_name":"stdout","time":52.34640606,"data":"  [J200000 d2     2/3    ] JP91|mechanism|rosenbrock|2|200000                           wall     7.733 s  RSS    66.6 MB  elapsed       8 s\n"}
+,{"stream_name":"stdout","time":54.754567851,"data":"  [J200000 d2     3/3    ] JP91|mechanism|ackley|2|200000                               wall    10.072 s  RSS    66.6 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":54.755026263,"data":"  group J_inf 200000 d 5: 3 task(s), largest predicted RSS 220.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":54.755048097,"data":"  [J200000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":64.77955717,"data":"  [J200000 d5     1/3    ] JP91|boundary|sphere|5|200000                                wall     9.879 s  RSS   118.6 MB  elapsed      10 s\n"}
+,{"stream_name":"stdout","time":67.989368623,"data":"  [J200000 d5     2/3    ] JP91|boundary|rastrigin|5|200000                             wall    13.177 s  RSS   119.3 MB  elapsed      13 s\n"}
+,{"stream_name":"stdout","time":70.999586073,"data":"  [J200000 d5     3/3    ] JP91|mechanism|ackley|5|200000                               wall    16.076 s  RSS   113.1 MB  elapsed      16 s\n"}
+,{"stream_name":"stdout","time":70.999998238,"data":"  group J_inf 200000 d 10: 4 task(s), largest predicted RSS 296.8 MB, workers 4\n"}
+,{"stream_name":"stdout","time":71.000023496,"data":"  [J200000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":88.655497109,"data":"  [J200000 d10     1/4    ] JP91|boundary|sphere|10|200000                               wall    17.624 s  RSS   194.1 MB  elapsed      18 s\n"}
+,{"stream_name":"stdout","time":93.068476752,"data":"  [J200000 d10     2/4    ] JP91|mechanism|rosenbrock|10|200000                          wall    22.008 s  RSS   184.9 MB  elapsed      22 s\n"}
+,{"stream_name":"stdout","time":97.880520027,"data":"  [J200000 d10     3/4    ] JP91|boundary|rastrigin|10|200000                            wall    26.845 s  RSS   195.5 MB  elapsed      27 s\n"}
+,{"stream_name":"stdout","time":99.087675921,"data":"  [J200000 d10     4/4    ] JP91|mechanism|ackley|10|200000                              wall    27.926 s  RSS   194.0 MB  elapsed      28 s\n"}
+,{"stream_name":"stdout","time":99.087985408,"data":"  group J_inf 200000 d 40: 4 task(s), largest predicted RSS 794.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":99.08799789,"data":"  [J200000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":163.046301754,"data":"  [J200000 d40     1/4    ] JP91|boundary|sphere|40|200000                               wall    63.885 s  RSS   528.0 MB  elapsed      64 s\n"}
+,{"stream_name":"stdout","time":183.084309515,"data":"  [J200000 d40     2/4    ] JP91|mechanism|rosenbrock|40|200000                          wall    83.962 s  RSS   519.9 MB  elapsed      84 s\n"}
+,{"stream_name":"stdout","time":187.895540471,"data":"  [J200000 d40     3/4    ] JP91|mechanism|griewank|40|200000                            wall    88.713 s  RSS   519.9 MB  elapsed      89 s\n"}
+,{"stream_name":"stdout","time":217.738432613,"data":"  [J200000 d40     4/4    ] JP91|mechanism|levy|40|200000                                wall   118.518 s  RSS   576.3 MB  elapsed     119 s\n"}
+,{"stream_name":"stdout","time":217.738745117,"data":"  group J_inf 500000 d 2: 3 task(s), largest predicted RSS 120.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":217.73875898,"data":"  [J500000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":233.77520587,"data":"  [J500000 d2     1/3    ] JP91|mechanism|rosenbrock|2|500000                           wall    15.963 s  RSS   102.8 MB  elapsed      16 s\n"}
+,{"stream_name":"stdout","time":236.383939708,"data":"  [J500000 d2     2/3    ] JP91|mechanism|sphere|2|500000                               wall    18.464 s  RSS   106.8 MB  elapsed      19 s\n"}
+,{"stream_name":"stdout","time":244.197400697,"data":"  [J500000 d2     3/3    ] JP91|mechanism|ackley|2|500000                               wall    26.325 s  RSS   106.5 MB  elapsed      26 s\n"}
+,{"stream_name":"stdout","time":244.197770368,"data":"  group J_inf 500000 d 5: 3 task(s), largest predicted RSS 258.4 MB, workers 4\n"}
+,{"stream_name":"stdout","time":244.197784289,"data":"  [J500000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":270.248769215,"data":"  [J500000 d5     1/3    ] JP91|boundary|sphere|5|500000                                wall    25.899 s  RSS   242.9 MB  elapsed      26 s\n"}
+,{"stream_name":"stdout","time":280.667420516,"data":"  [J500000 d5     2/3    ] JP91|boundary|rastrigin|5|500000                             wall    36.265 s  RSS   247.3 MB  elapsed      36 s\n"}
+,{"stream_name":"stdout","time":282.874916148,"data":"  [J500000 d5     3/3    ] JP91|mechanism|ackley|5|500000                               wall    38.504 s  RSS   193.3 MB  elapsed      39 s\n"}
+,{"stream_name":"stdout","time":282.87531525,"data":"  group J_inf 500000 d 10: 4 task(s), largest predicted RSS 458.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":282.875330909,"data":"  [J500000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":336.196933662,"data":"  [J500000 d10     1/4    ] JP91|boundary|sphere|10|500000                               wall    53.141 s  RSS   360.6 MB  elapsed      53 s\n"}
+,{"stream_name":"stdout","time":349.42423711,"data":"  [J500000 d10     2/4    ] JP91|mechanism|rosenbrock|10|500000                          wall    66.400 s  RSS   346.0 MB  elapsed      67 s\n"}
+,{"stream_name":"stdout","time":364.249621047,"data":"  [J500000 d10     3/4    ] JP91|boundary|rastrigin|10|500000                            wall    81.285 s  RSS   361.1 MB  elapsed      81 s\n"}
+,{"stream_name":"stdout","time":367.65871653,"data":"  [J500000 d10     4/4    ] JP91|mechanism|ackley|10|500000                              wall    84.589 s  RSS   346.9 MB  elapsed      85 s\n"}
+,{"stream_name":"stdout","time":367.659115072,"data":"  group J_inf 500000 d 40: 4 task(s), largest predicted RSS 1394.2 MB, workers 4\n"}
+,{"stream_name":"stdout","time":367.659128282,"data":"  [J500000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":527.842088053,"data":"  [J500000 d40     1/4    ] JP91|boundary|sphere|40|500000                               wall   160.017 s  RSS  1303.0 MB  elapsed     160 s\n"}
+,{"stream_name":"stdout","time":576.940557232,"data":"  [J500000 d40     2/4    ] JP91|mechanism|rosenbrock|40|500000                          wall   209.122 s  RSS  1268.5 MB  elapsed     209 s\n"}
+,{"stream_name":"stdout","time":592.165371538,"data":"  [J500000 d40     3/4    ] JP91|mechanism|griewank|40|500000                            wall   224.361 s  RSS  1269.6 MB  elapsed     225 s\n"}
+,{"stream_name":"stdout","time":676.270827597,"data":"  [J500000 d40     4/4    ] JP91|mechanism|levy|40|500000                                wall   308.512 s  RSS  1417.5 MB  elapsed     309 s\n"}
+,{"stream_name":"stdout","time":676.271175628,"data":"  group J_inf 1000000 d 2: 3 task(s), largest predicted RSS 171.6 MB, workers 4\n"}
+,{"stream_name":"stdout","time":676.271188121,"data":"  [J1000000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":704.524279326,"data":"  [J1000000 d2     1/3    ] JP91|mechanism|sphere|2|1000000                              wall    28.052 s  RSS   178.4 MB  elapsed      28 s\n"}
+,{"stream_name":"stdout","time":713.74177606,"data":"  [J1000000 d2     2/3    ] JP91|mechanism|rosenbrock|2|1000000                          wall    37.331 s  RSS   170.5 MB  elapsed      37 s\n"}
+,{"stream_name":"stdout","time":727.162840975,"data":"  [J1000000 d2     3/3    ] JP91|mechanism|ackley|2|1000000                              wall    50.838 s  RSS   178.2 MB  elapsed      51 s\n"}
+,{"stream_name":"stdout","time":727.163229218,"data":"  group J_inf 1000000 d 5: 3 task(s), largest predicted RSS 454.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":727.163238371,"data":"  [J1000000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":785.867391,"data":"  [J1000000 d5     1/3    ] JP91|boundary|sphere|5|1000000                               wall    58.527 s  RSS   387.5 MB  elapsed      59 s\n"}
+,{"stream_name":"stdout","time":806.701283057,"data":"  [J1000000 d5     2/3    ] JP91|boundary|rastrigin|5|1000000                            wall    79.391 s  RSS   389.4 MB  elapsed      80 s\n"}
+,{"stream_name":"stdout","time":818.121467337,"data":"  [J1000000 d5     3/3    ] JP91|mechanism|ackley|5|1000000                              wall    90.762 s  RSS   353.4 MB  elapsed      91 s\n"}
+,{"stream_name":"stdout","time":818.12200782,"data":"  group J_inf 1000000 d 10: 4 task(s), largest predicted RSS 629.6 MB, workers 4\n"}
+,{"stream_name":"stdout","time":818.122031505,"data":"  [J1000000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":922.956236901,"data":"  [J1000000 d10     1/4    ] JP91|boundary|sphere|10|1000000                              wall   104.786 s  RSS   689.7 MB  elapsed     105 s\n"}
+,{"stream_name":"stdout","time":948.812161878,"data":"  [J1000000 d10     2/4    ] JP91|mechanism|rosenbrock|10|1000000                         wall   130.596 s  RSS   661.7 MB  elapsed     131 s\n"}
+,{"stream_name":"stdout","time":977.054649377,"data":"  [J1000000 d10     3/4    ] JP91|boundary|rastrigin|10|1000000                           wall   158.745 s  RSS   688.4 MB  elapsed     159 s\n"}
+,{"stream_name":"stdout","time":982.867306765,"data":"  [J1000000 d10     4/4    ] JP91|mechanism|ackley|10|1000000                             wall   164.723 s  RSS   663.1 MB  elapsed     165 s\n"}
+,{"stream_name":"stdout","time":982.867809096,"data":"  group J_inf 1000000 d 40: 4 task(s), largest predicted RSS 2776.4 MB, workers 4\n"}
+,{"stream_name":"stdout","time":982.867836579,"data":"  [J1000000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":1310.654673608,"data":"  [J1000000 d40     1/4    ] JP91|boundary|sphere|40|1000000                              wall   327.736 s  RSS  2559.3 MB  elapsed     328 s\n"}
+,{"stream_name":"stdout","time":1404.229473989,"data":"  [J1000000 d40     2/4    ] JP91|mechanism|rosenbrock|40|1000000                         wall   421.233 s  RSS  2512.2 MB  elapsed     421 s\n"}
+,{"stream_name":"stdout","time":1433.277557225,"data":"  [J1000000 d40     3/4    ] JP91|mechanism|griewank|40|1000000                           wall   450.392 s  RSS  2530.7 MB  elapsed     450 s\n"}
+,{"stream_name":"stdout","time":1592.679158493,"data":"  [J1000000 d40     4/4    ] JP91|mechanism|levy|40|1000000                               wall   609.797 s  RSS  2803.0 MB  elapsed     610 s\n"}
+,{"stream_name":"stdout","time":1592.679690942,"data":"  group J_inf 2000000 d 2: 3 task(s), largest predicted RSS 321.6 MB, workers 4\n"}
+,{"stream_name":"stdout","time":1592.679748404,"data":"  [J2000000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":1653.585197735,"data":"  [J2000000 d2     1/3    ] JP91|mechanism|sphere|2|2000000                              wall    60.818 s  RSS   321.5 MB  elapsed      61 s\n"}
+,{"stream_name":"stdout","time":1665.207146983,"data":"  [J2000000 d2     2/3    ] JP91|mechanism|rosenbrock|2|2000000                          wall    72.395 s  RSS   306.1 MB  elapsed      73 s\n"}
+,{"stream_name":"stdout","time":1695.24936221,"data":"  [J2000000 d2     3/3    ] JP91|mechanism|ackley|2|2000000                              wall   102.436 s  RSS   321.5 MB  elapsed     103 s\n"}
+,{"stream_name":"stdout","time":1695.249818882,"data":"  group J_inf 2000000 d 5: 3 task(s), largest predicted RSS 676.7 MB, workers 4\n"}
+,{"stream_name":"stdout","time":1695.249837159,"data":"  [J2000000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":1807.856102883,"data":"  [J2000000 d5     1/3    ] JP91|boundary|sphere|5|2000000                               wall   112.494 s  RSS   753.9 MB  elapsed     113 s\n"}
+,{"stream_name":"stdout","time":1850.521477921,"data":"  [J2000000 d5     2/3    ] JP91|boundary|rastrigin|5|2000000                            wall   155.207 s  RSS   742.0 MB  elapsed     155 s\n"}
+,{"stream_name":"stdout","time":1876.559920208,"data":"  [J2000000 d5     3/3    ] JP91|mechanism|ackley|5|2000000                              wall   181.234 s  RSS   674.9 MB  elapsed     181 s\n"}
+,{"stream_name":"stdout","time":1876.560472565,"data":"  group J_inf 2000000 d 10: 4 task(s), largest predicted RSS 1347.9 MB, workers 4\n"}
+,{"stream_name":"stdout","time":1876.560495513,"data":"  [J2000000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":2084.825746192,"data":"  [J2000000 d10     1/4    ] JP91|boundary|sphere|10|2000000                              wall   208.060 s  RSS  1348.2 MB  elapsed     208 s\n"}
+,{"stream_name":"stdout","time":2133.723813726,"data":"  [J2000000 d10     2/4    ] JP91|mechanism|rosenbrock|10|2000000                         wall   257.002 s  RSS  1292.3 MB  elapsed     257 s\n"}
+,{"stream_name":"stdout","time":2195.810427107,"data":"  [J2000000 d10     3/4    ] JP91|boundary|rastrigin|10|2000000                           wall   319.077 s  RSS  1347.5 MB  elapsed     319 s\n"}
+,{"stream_name":"stdout","time":2201.623093518,"data":"  [J2000000 d10     4/4    ] JP91|mechanism|ackley|10|2000000                             wall   324.856 s  RSS  1277.5 MB  elapsed     325 s\n"}
+,{"stream_name":"stdout","time":2201.623692875,"data":"  group J_inf 2000000 d 40: 4 task(s), largest predicted RSS 5574.0 MB, workers 4\n"}
+,{"stream_name":"stdout","time":2201.623742918,"data":"  [J2000000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":2859.504199203,"data":"  [J2000000 d40     1/4    ] JP91|boundary|sphere|40|2000000                              wall   657.699 s  RSS  4856.3 MB  elapsed     658 s\n"}
+,{"stream_name":"stdout","time":3064.480963381,"data":"  [J2000000 d40     2/4    ] JP91|mechanism|rosenbrock|40|2000000                         wall   862.669 s  RSS  4777.5 MB  elapsed     863 s\n"}
+,{"stream_name":"stdout","time":3122.969398509,"data":"  [J2000000 d40     3/4    ] JP91|mechanism|griewank|40|2000000                           wall   921.135 s  RSS  4790.9 MB  elapsed     921 s\n"}
+,{"stream_name":"stdout","time":3469.814041249,"data":"  [J2000000 d40     4/4    ] JP91|mechanism|levy|40|2000000                               wall  1268.041 s  RSS  5336.6 MB  elapsed    1268 s\n"}
+,{"stream_name":"stdout","time":3469.814530697,"data":"  group J_inf 4000000 d 2: 3 task(s), largest predicted RSS 608.1 MB, workers 4\n"}
+,{"stream_name":"stdout","time":3469.814546303,"data":"  [J4000000 d2] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":3624.28416263,"data":"  [J4000000 d2     1/3    ] JP91|mechanism|rosenbrock|2|4000000                          wall   154.442 s  RSS   537.3 MB  elapsed     154 s\n"}
+,{"stream_name":"stdout","time":3627.89597218,"data":"  [J4000000 d2     2/3    ] JP91|mechanism|sphere|2|4000000                              wall   157.935 s  RSS   542.3 MB  elapsed     158 s\n"}
+,{"stream_name":"stdout","time":3690.180323571,"data":"  [J4000000 d2     3/3    ] JP91|mechanism|ackley|2|4000000                              wall   220.209 s  RSS   538.7 MB  elapsed     220 s\n"}
+,{"stream_name":"stdout","time":3690.180826511,"data":"  group J_inf 4000000 d 5: 3 task(s), largest predicted RSS 1486.7 MB, workers 4\n"}
+,{"stream_name":"stdout","time":3690.180844841,"data":"  [J4000000 d5] 3 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":3920.186086514,"data":"  [J4000000 d5     1/3    ] JP91|boundary|sphere|5|4000000                               wall   229.890 s  RSS  1449.8 MB  elapsed     230 s\n"}
+,{"stream_name":"stdout","time":4018.325813265,"data":"  [J4000000 d5     2/3    ] JP91|boundary|rastrigin|5|4000000                            wall   327.976 s  RSS  1461.2 MB  elapsed     328 s\n"}
+,{"stream_name":"stdout","time":4030.947390655,"data":"  [J4000000 d5     3/3    ] JP91|mechanism|ackley|5|4000000                              wall   340.578 s  RSS  1306.2 MB  elapsed     341 s\n"}
+,{"stream_name":"stdout","time":4030.948002069,"data":"  group J_inf 4000000 d 10: 4 task(s), largest predicted RSS 2665.7 MB, workers 4\n"}
+,{"stream_name":"stdout","time":4030.948019417,"data":"  [J4000000 d10] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":4447.284559624,"data":"  [J4000000 d10     1/4    ] JP91|boundary|sphere|10|4000000                              wall   416.133 s  RSS  2648.8 MB  elapsed     416 s\n"}
+,{"stream_name":"stdout","time":4548.073050708,"data":"  [J4000000 d10     2/4    ] JP91|mechanism|rosenbrock|10|4000000                         wall   517.063 s  RSS  2535.0 MB  elapsed     517 s\n"}
+,{"stream_name":"stdout","time":4668.038596314,"data":"  [J4000000 d10     3/4    ] JP91|boundary|rastrigin|10|4000000                           wall   636.950 s  RSS  2652.8 MB  elapsed     637 s\n"}
+,{"stream_name":"stdout","time":4674.853161286,"data":"  [J4000000 d10     4/4    ] JP91|mechanism|ackley|10|4000000                             wall   643.756 s  RSS  2548.4 MB  elapsed     644 s\n"}
+,{"stream_name":"stdout","time":4674.853772888,"data":"  group J_inf 4000000 d 40: 4 task(s), largest predicted RSS 10403.8 MB, workers 2\n"}
+,{"stream_name":"stdout","time":4674.853798243,"data":"  [J4000000 d40] 4 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":6015.95933429,"data":"  [J4000000 d40     1/4    ] JP91|mechanism|rosenbrock|40|4000000                         wall  1341.082 s  RSS  9356.2 MB  elapsed    1341 s\n"}
+,{"stream_name":"stdout","time":6806.277088878,"data":"  [J4000000 d40     2/4    ] JP91|mechanism|levy|40|4000000                               wall  2131.218 s  RSS 10470.2 MB  elapsed    2131 s\n"}
+,{"stream_name":"stdout","time":7349.252924931,"data":"  [J4000000 d40     3/4    ] JP91|mechanism|griewank|40|4000000                           wall  1333.097 s  RSS  9366.2 MB  elapsed    2674 s\n"}
+,{"stream_name":"stdout","time":7791.405462858,"data":"  [J4000000 d40     4/4    ] JP91|boundary|sphere|40|4000000                              wall   985.009 s  RSS  9481.4 MB  elapsed    3117 s\n"}
+,{"stream_name":"stdout","time":7791.405785126,"data":"\n"}
+,{"stream_name":"stdout","time":7791.405810764,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":7791.405818158,"data":"tasks run by this job: 84   task execution 7786 s\n"}
+,{"stream_name":"stdout","time":7791.405882311,"data":"largest per-task peak RSS 10470.2 MB\n"}
+,{"stream_name":"stdout","time":7791.40589854,"data":"not stopped\n"}
+,{"stream_name":"stdout","time":7791.405918617,"data":"errored or timed-out tasks: 0\n"}
+,{"stream_name":"stdout","time":7791.405922554,"data":"held back by R2: 0\n"}
+,{"stream_name":"stdout","time":7791.405925579,"data":"files  /kaggle/working/jinfprobe-run-20261031-132528-s0of3\n"}
+,{"stream_name":"stdout","time":7791.405928899,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":7791.459132164,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":7794.837710915,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7794.837749528,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7795.418997191,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7795.419030637,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7798.128929473,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7799.630511459,"data":"[NbConvertApp] Writing 311007 bytes to __results__.html\n"}
+]
