@@ -1,8 +1,12 @@
-# The rerun queue (scripts/rerunq.py; ledger K6). Every 15 minutes (at minutes
-# 7, 22, 37 and 52), one tick:
+# The rerun queue (scripts/rerunq.py; ledger K6). One tick:
 # read notes/rerun_queue.json, take at most one action, commit, push, exit.
 # Any failed tick disables this workflow, so nothing continues past a halt
 # until Rahul has read it and re-enabled the workflow by hand.
+# Three things start a tick: the job's own successor (the last step, when
+# the repository variable RERUNQ_SELF_SCHEDULE is "on"; ledger N45), GitHub's
+# schedule (a backstop: on this account it fires hours apart), and any
+# workflow_dispatch (cron-job.org's, which has started nothing since
+# 2026-10-23, or one by hand).
 
 name: rerun-queue
 
@@ -97,3 +101,46 @@ jobs:
       - name: Remove the Kaggle credentials
         if: always()
         run: rm -f "$HOME/.kaggle/kaggle.json" "$HOME/.kaggle/access_token"
+
+      # SELF-SCHEDULING (2026-11-01, ledger N45; the mechanism of horizon's
+      # loop, which has run on its own successors since 2026-10-24). The job
+      # starts its own successor with workflow_dispatch, which the job's
+      # GITHUB_TOKEN may do, so no external dispatcher is needed. Unlike
+      # horizon, it never runs after a failed or halting tick: success()
+      # excludes every nonzero tick exit (3 halt, 1 error), and the disable
+      # output excludes DONE. After the sleep it reads main's state again
+      # and the workflow's state, so a halt or a disable made during the
+      # sleep (by hand or through rerun-queue-admin) stops the chain. The
+      # schedule above stays as a backstop that restarts a broken chain; a
+      # run that arrives while one is in progress waits in the concurrency
+      # group, and GitHub cancels it when the successor is queued, so at most
+      # one tick runs and one waits.
+      # COST: the sleep keeps a runner busy, and this repository is private,
+      # so Actions minutes are billed for it (nearly every minute of the day
+      # while a queue runs). Hence the switch: the step runs only when the
+      # repository variable RERUNQ_SELF_SCHEDULE is "on" (Rahul's decision).
+      - name: Start the next tick
+        if: success() && steps.tick.outputs.disable != 'true' && vars.RERUNQ_SELF_SCHEDULE == 'on'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -u
+          next=$(python scripts/rerunq.py next-wake --min 60 --max 900)
+          echo "next-wake after the tick: $next"
+          secs=${next%% *}
+          if [ "$secs" = "none" ]; then echo "no successor: $next"; exit 0; fi
+          sleep "$secs"
+          git fetch -q origin main && git reset -q --hard origin/main
+          again=$(python scripts/rerunq.py next-wake --min 60 --max 900)
+          echo "next-wake after the sleep, on main's tip: $again"
+          if [ "${again%% *}" = "none" ]; then echo "no successor: $again"; exit 0; fi
+          wf=$(gh api "repos/${{ github.repository }}/actions/workflows/rerun-queue.yml" --jq .state)
+          if [ "$wf" != "active" ]; then echo "no successor: the workflow is $wf"; exit 0; fi
+          for i in 1 2 3; do
+            if gh workflow run rerun-queue.yml --repo "${{ github.repository }}" --ref main; then
+              echo "successor started after $secs s"; exit 0
+            fi
+            sleep 30
+          done
+          echo "::warning title=rerun queue::the successor could not be started; the schedule restarts the chain"
+          exit 1

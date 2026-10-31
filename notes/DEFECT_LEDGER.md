@@ -4829,6 +4829,63 @@ instruction of 2026-10-15.
     drill are that check, while Rahul can still watch); the F1 audit's
     memory at d 40 and 4000000 (the probe did not run the audit; it
     redraws the 4000000 x d start after the trajectory's arrays are freed).
+  DISPATCHER, COMPARED WITH HORIZON (Claude, 2026-11-01, Rahul's
+    instruction; read from GitHub with gh, no local clone):
+    - rahul-k-mishra/horizon is PUBLIC; this repository is PRIVATE.
+      horizon has one workflow, .github/workflows/horizon.yml
+      (horizon-loop, active): schedule "*/30 * * * *" and
+      workflow_dispatch; no repository_dispatch. Its last step ("Start
+      the next tick", if: always()) asks "loop.py next-wake --min 300 --max
+      1800" for a wait, sleeps that long inside the job and starts its own
+      successor with "gh workflow run horizon.yml" on the job's
+      GITHUB_TOKEN; "none" (halted, or nothing left) starts nothing.
+      Concurrency group horizon-loop, cancel-in-progress false.
+    - horizon's history (all 374 runs, 2026-10-24 to 2026-10-31):
+      workflow_dispatch 336 success, 1 cancelled, 1 in progress;
+      schedule 34 cancelled, 2 success. So GitHub's schedule fired 36
+      times in a week of "*/30" there too, and 34 of those runs were
+      cancelled while waiting in the concurrency group behind the chain.
+      Its successful dispatched runs last a median 1834 s (the sleep);
+      after the first evening, no gap between run starts above 2003 s.
+      The mechanism that fires reliably is the self-dispatch; the
+      schedule is a backstop that rarely fires.
+    - Ours (all 30 runs): 22 schedule, 8 workflow_dispatch, all 8 on
+      2026-10-23; cron-job.org's POSTs have started nothing since.
+    - Secrets: horizon references KAGGLE_USERNAME and KAGGLE_KEY (as
+      KAGGLE_API_TOKEN) and the job's GITHUB_TOKEN; it has no external
+      dispatcher and no personal access token. Ours references
+      KAGGLE_USERNAME, KAGGLE_KEY, KAGGLE_ACCESS_TOKEN and the job's
+      GITHUB_TOKEN, and depends on cron-job.org holding Rahul's
+      fine-grained token outside GitHub.
+    - Two differences that matter. (1) horizon starts its successor even
+      after a failed tick (if: always()), and counts crashes, halting
+      after 12; ours must not tick through a failure or a halt, so that
+      part is not adopted. (2) horizon's sleep is free because the
+      repository is public ("The use of standard GitHub-hosted runners
+      is free" for public repositories, GitHub billing docs). Here the
+      same chain keeps a runner busy almost all day and is billed against
+      the account's included private-repository allowance (GitHub Free
+      $12 a month, Pro $18, about 2000 and 3000 Linux minutes at $0.006
+      a minute; the plan of this account is not visible to the token
+      used here). That is Rahul's fact and his decision.
+    - ADOPTED (rerun-queue.yml, last step "Start the next tick"):
+      horizon's self-dispatch, behind a switch. It runs only if the tick
+      succeeded (exit 0), did not ask to be disabled (DONE), and the
+      repository variable RERUNQ_SELF_SCHEDULE is "on". It asks the new
+      read-only "rerunq.py next-wake --min 60 --max 900" (rule NW: HALTED
+      or DONE none; READY or LAUNCHING 60 s; RUNNING 900 s), sleeps,
+      resets to main's tip, asks again, checks the workflow is still
+      active, and dispatches its successor (three tries, then a warning;
+      the schedule restarts a broken chain). Unchanged: the concurrency
+      group, the self-disable step, the single-action tick, L1's push
+      handling, the halt. rerun-queue-admin now has its own concurrency
+      group (a newer queued run cancels a waiting one in the same group,
+      which the successor would do to a waiting admin run), and its
+      enable step also dispatches a first tick. Checked by Claude: YAML of
+      both workflows; next-wake on five synthetic states (READY 60,
+      LAUNCHING 60, RUNNING 900, HALTED none, DONE none), all as the
+      rule; Python 3.8 grammar. Not checkable here: a real chain on
+      GitHub; that is the first thing to watch after the load.
 : fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?

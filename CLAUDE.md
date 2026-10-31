@@ -323,6 +323,14 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     started by a workflow_dispatch POST that cron-job.org sends every 15
     minutes (amended 2026-10-23, Rahul's decision; ledger K6), and by
     GitHub's own schedule, which on this account fires only hours apart.
+    When the repository variable RERUNQ_SELF_SCHEDULE is "on", each tick
+    that exited 0 and did not ask to be disabled also starts its own
+    successor, after a wait set by "rerunq.py next-wake" (amended
+    2026-11-01, Rahul's instruction, after horizon's loop; ledger N45). A
+    failed or halting tick starts no successor, and the successor is not
+    dispatched if, after the wait, main's state is HALTED or DONE or the
+    workflow is disabled. The variable is Rahul's to set: in this private
+    repository the wait is billed Actions time.
     A second driver runs the same tick from the laptop (amended
     2026-10-23, Rahul's decision; ledger K6): the systemd user timer
     scripts/rerunq-tick.timer, every 15 minutes at minutes 2, 17, 32 and

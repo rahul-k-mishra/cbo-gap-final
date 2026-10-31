@@ -482,6 +482,20 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       prints ABSENT: next-attempt accepted, attempt 2. Had it printed
       RUNNING: refused, release with repoll.
 
+NW  NEXT WAKE (2026-11-01; ledger N45; Rahul's instruction to drive the
+    queue from GitHub alone, after horizon's loop). Subcommand "next-wake
+    --min A --max B", read-only: prints "<seconds> <reason>" or "none
+    <reason>", from the committed state alone. HALTED or DONE: none (no
+    successor is ever started for a halted or finished queue). READY or
+    LAUNCHING: A (act soon). RUNNING: B (a kernel is in flight; poll).
+    The workflow (rerun-queue.yml, "Start the next tick") calls it after a
+    tick that exited 0 and did not ask to be disabled, sleeps that long,
+    resets to main's tip, calls it again, checks that the workflow is still
+    enabled, and only then dispatches its successor. A tick that fails or
+    halts starts no successor. Worked example: a fetch leaves READY:
+    "60 READY"; a launch leaves RUNNING: "900 RUNNING"; a halt: "none
+    HALTED".
+
 EXIT CODES (tick)
   0  nothing to do; one action done; an anomaly recorded (L5); the lock
      lost before any Kaggle side effect (L1)
@@ -2002,6 +2016,19 @@ def load_definition(a):
     return 0
 
 
+def next_wake(a):
+    """NW. Reads only."""
+    s = load()
+    st = s["status"]
+    if st in ("HALTED", "DONE"):
+        print("none {}".format(st))
+    elif st == "RUNNING":
+        print("{} RUNNING {}".format(int(a.max), s["job"]))
+    else:
+        print("{} {}".format(int(a.min), st))
+    return 0
+
+
 def show(a):
     s = load()
     print("status   {}".format(s["status"]))
@@ -2174,6 +2201,9 @@ def main():
     t.add_argument("--run-id", required=True)
     sub.add_parser("show")
     sub.add_parser("verify")
+    nw = sub.add_parser("next-wake")
+    nw.add_argument("--min", type=int, default=60)
+    nw.add_argument("--max", type=int, default=900)
     ld = sub.add_parser("load")
     ld.add_argument("--definition", required=True)
     ld.add_argument("--note", required=True)
@@ -2191,6 +2221,10 @@ def main():
         return tick(a)
     if a.cmd == "show":
         return show(a)
+    if a.cmd == "next-wake":
+        if a.min < 1 or a.max < a.min:
+            raise SystemExit("next-wake: need 1 <= --min <= --max")
+        return next_wake(a)
     if a.cmd == "verify":
         return verify(a)
     if a.cmd == "load":

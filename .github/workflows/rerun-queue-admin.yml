@@ -7,7 +7,12 @@
 # state commits and pushes what rerunq.py wrote (the state file, and for
 # load the archived state), as Rahul would on the laptop. It decides
 # nothing: every rule (K1, LD, the release modes) is rerunq.py's own.
-# It shares the tick's concurrency group, so it never runs during a tick.
+# Its concurrency group is its own, not the tick's: GitHub cancels a run
+# waiting in a group when a newer run is queued in it, and the tick queues
+# its successor in the tick's group, which would cancel a waiting admin run.
+# A race with a tick is covered by the state file: the tick's L1 sees a
+# changed state and loses its lock, and this workflow pushes once, never
+# forced, and fails if main moved.
 
 name: rerun-queue-admin
 
@@ -50,7 +55,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: rerun-queue
+  group: rerun-queue-admin
   cancel-in-progress: false
 
 jobs:
@@ -150,11 +155,15 @@ jobs:
           # checkout; nothing is re-applied: run the subcommand again.
           git push origin HEAD:refs/heads/main
 
-      - name: Enable the rerun-queue workflow
+      # Enabling alone starts nothing until the schedule fires; the first
+      # tick is dispatched here, and its successors follow (RERUNQ_SELF_SCHEDULE).
+      - name: Enable the rerun-queue workflow and start a tick
         if: success() && inputs.enable_queue && (inputs.command == 'release' || inputs.command == 'load')
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow enable rerun-queue.yml --repo "${{ github.repository }}"
+        run: |
+          gh workflow enable rerun-queue.yml --repo "${{ github.repository }}"
+          gh workflow run rerun-queue.yml --repo "${{ github.repository }}" --ref main
 
       - name: Remove the Kaggle credentials
         if: always()
