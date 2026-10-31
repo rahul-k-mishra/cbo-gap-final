@@ -1087,16 +1087,22 @@
       "ledger": "N45"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 1,
   "attempt": 3,
   "resume_dirs": [
     "runs/c5-x-drill-a1-kaggle-20261101-042033",
     "runs/c5-x-drill-a2-kaggle-20261101-043921"
   ],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "c5-x-drill-a3",
+  "args": "--mode drill --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --stop-after 150.0",
+  "data_dirs": [
+    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
+    "runs/calprec2-finalize-20261023-112503",
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1234,6 +1240,15 @@
       "attempt": 3,
       "job": "",
       "note": "runs/c5-x-drill-a2-kaggle-20261101-043921: runner exit 5 (G-STOP), completed 4; next attempt resumes; now READY"
+    },
+    {
+      "at": "2026-11-01T04:40:48+05:30",
+      "run": "41251396989.1",
+      "event": "intent",
+      "item": "drill-c5",
+      "attempt": 3,
+      "job": "c5-x-drill-a3",
+      "note": "resume runs/c5-x-drill-a1-kaggle-20261101-042033,runs/c5-x-drill-a2-kaggle-20261101-043921"
     }
   ],
   "definition": {
