@@ -51,6 +51,34 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   code in the archive. It is the same kind of defect as ARC1 and ARC5, a
   Data Availability claim the deposit does not meet, and is recorded in
   full under "Newly found (2026-10-15)".
+- ARC8 (decision, 2026-11-01). THE REPOSITORY rahul-k-mishra/cbo-gap-final
+  IS PUBLIC FROM 2026-11-01, as is, its full git history included: the
+  ledger, the disclosure, the withdrawn results and the audit trail stay.
+  Rahul's reason: nothing is hidden, and the paper's data-availability
+  statement will point at it. (It also makes the queue's self-scheduling
+  free: standard GitHub-hosted runners cost nothing in a public
+  repository; N45, dispatcher.)
+  CREDENTIAL CHECK BEFORE THE FLIP (Claude, 2026-11-01; content was not
+  reviewed, by Rahul's instruction): every blob reachable from any ref
+  (1393 blobs, 354 commits, branch main only, no tags), every commit
+  message, and the working tree, scanned for GitHub tokens (classic and
+  fine-grained), Kaggle access tokens (KGAT_), a Kaggle key in JSON or in
+  an environment assignment, bearer headers, private keys, credentials
+  in URLs, password or secret assignments, AWS and Slack keys: no match.
+  The 25 distinct standalone 32-character hex strings (the shape of a
+  legacy Kaggle key) were each read in context: md5 sums of scripts and
+  of one archived CSV, one systemd invocation ID, the referee PDF's
+  document ID; none a key. No file ever committed has a credential-like
+  name (kaggle.json, access_token, .env, settings.local.json, keys). The
+  kgrun logs and fetched Kaggle folders name the secrets only as
+  ${{ secrets.* }}, environment variable names and file names; the five
+  kgrun logs holding Kaggle authentication tracebacks show network errors
+  (DNS, SSL) and no token. Public, and not credentials: the Kaggle
+  account name (ericsom, in kernel ids and logs), the author email in
+  commit metadata, local paths. Not scannable from here: GitHub Actions
+  run logs and artifacts, which also become public; the workflows print
+  only the credential files' modes, and GitHub masks registered secrets.
+  RESULT: no credential found; nothing to rotate.
 
 ## Referee points
 
