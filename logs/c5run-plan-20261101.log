@@ -1,0 +1,181 @@
+
+====================================================================================================
+CBO-GAP c5run  (ledger N45, C5: rows CONC-X and TAU8-X)  mode plan
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 3c6a569ffea662626f4a67ae8618a42c7db17cd6e2e033d9aa547bf1433cc959
+  jinfprobe.py sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  c5price.py sha256 10688bff2f0d846dea5060d8440e8966c18c9975c2eba4450025e022b85e9a24
+  calprec2.py sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  rerunlib.py sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430
+  mode     plan   shard 0 of 116
+  timing   jinfprobe-s0of3-a1-kaggle-20261031-210629,jinfprobe-s1of3-a1-kaggle-20261031-233459,jinfprobe-s2of3-a1-kaggle-20261101-015818
+  beta table calprec2-finalize-20261023-112503
+  rerun plan rerun-plan-20261023-112643
+  design   288 cells (CONC-X 144, TAU8-X 144), M 15, J_inf 4000000, J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,160000,320000,400000
+  dynamics archived one_realisation; sigma 0.2; dt 0.01; K 100; law per cell
+  seeds    SeedSequence((ENTROPY 20261016, kind, owner 21 CONC-X / 22 TAU8-X, rerunlib.coord_fields, rep)); kind 95 run, 96 bootstrap, 97 smoke, 98 drill
+  budget   24000 MB for concurrent tasks
+
+====================================================================================================
+IN  inputs
+====================================================================================================
+  read jinfprobe-s0of3-a1-kaggle-20261031-210629: shard 0 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s1of3-a1-kaggle-20261031-233459: shard 1 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s2of3-a1-kaggle-20261101-015818: shard 2 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  IN PASS  252 complete tasks, every unit at every ladder size
+  IN PASS  probe 42 units; calprec2 336 cells; rerun plan 288 CONC and TAU8 cells
+
+====================================================================================================
+B1  same beta as the 50000 cell (calprec2 against the rerun plan)
+====================================================================================================
+  B1 PASS  288 cells, every beta equal to the rerun plan's
+
+====================================================================================================
+W  workers per d (c5price PR)
+====================================================================================================
+  d  2: R_d 596.9 MB, workers 4, G-RSS flag above 6000 MB
+  d  5: R_d 1619.0 MB, workers 4, G-RSS flag above 6000 MB
+  d 10: R_d 2959.4 MB, workers 4, G-RSS flag above 6000 MB
+  d 40: R_d 10713.7 MB, workers 2, G-RSS flag above 12000 MB
+
+  tasks 4320 (4320 distinct keys, 288 distinct bootstrap keys)
+
+====================================================================================================
+S2  shards (c5price's rule; target 10800 s)
+====================================================================================================
+  smallest K at the target: 116
+  S2 PASS  (--nshards 116)
+    shard   0:  38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard   1:  38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard   2:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   3:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   4:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   5:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard   6:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   7:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   8:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard   9:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  10:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  11:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  12:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  13:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  14:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  15:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  16:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  17:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  18:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  19:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  20:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  21:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  22:  38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  23:  38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  24:  38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  25:  38 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  26:  38 tasks, load   10708 s, T1  10656 s, auto --stop-after  31944 s
+    shard  27:  38 tasks, load   10708 s, T1  10656 s, auto --stop-after  31944 s
+    shard  28:  38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  29:  38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  30:  38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  31:  38 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  32:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  33:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  34:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  35:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  36:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  37:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  38:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  39:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  40:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  41:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  42:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  43:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  44:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  45:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  46:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  47:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  48:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  49:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  50:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  51:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  52:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  53:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  54:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  55:  37 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  56:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  57:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  58:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  59:  37 tasks, load   10706 s, T1  10656 s, auto --stop-after  31944 s
+    shard  60:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  61:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  62:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  63:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  64:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  65:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  66:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  67:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  68:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  69:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  70:  38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  71:  38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  72:  38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  73:  38 tasks, load   10709 s, T1  10656 s, auto --stop-after  31944 s
+    shard  74:  39 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  75:  39 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  76:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  77:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  78:  38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  79:  38 tasks, load   10739 s, T1  10656 s, auto --stop-after  31944 s
+    shard  80:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  81:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  82:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  83:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  84:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  85:  37 tasks, load   10707 s, T1  10656 s, auto --stop-after  31944 s
+    shard  86:  38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  87:  38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  88:  38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  89:  38 tasks, load   10735 s, T1  10656 s, auto --stop-after  31944 s
+    shard  90:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  91:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  92:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  93:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  94:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  95:  37 tasks, load   10706 s, T1  10305 s, auto --stop-after  32295 s
+    shard  96:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard  97:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard  98:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard  99:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 100:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 101:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 102:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 103:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 104:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 105:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 106:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 107:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 108:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 109:  37 tasks, load   10708 s, T1  10305 s, auto --stop-after  32295 s
+    shard 110:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 111:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 112:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 113:  37 tasks, load   10707 s, T1  10305 s, auto --stop-after  32295 s
+    shard 114:  38 tasks, load   10739 s, T1  10305 s, auto --stop-after  32295 s
+    shard 115:  38 tasks, load   10739 s, T1  10305 s, auto --stop-after  32295 s
+
+====================================================================================================
+E2E  end-to-end estimate (S2 loads under perfect scaling + 1800 s per shard; not a measurement)
+====================================================================================================
+  1 kernel(s) in flight:   1451173 s =   16.8 days
+  2 kernel(s) in flight:    725587 s =    8.4 days
+  3 kernel(s) in flight:    487896 s =    5.6 days
+  4 kernel(s) in flight:    362855 s =    4.2 days
+  5 kernel(s) in flight:    300198 s =    3.5 days
+
+====================================================================================================
+c5run.py plan done, exit 0  (nothing written)
+====================================================================================================

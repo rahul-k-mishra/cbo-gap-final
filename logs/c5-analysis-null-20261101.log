@@ -1,0 +1,37 @@
+
+====================================================================================================
+CBO-GAP c5_analysis  (ledger N45; readings fixed 2026-11-01)  --  reads only, writes nothing
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-38-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 345b1d33342aa72668c4c2b3243b9eeb0c5d047cdba20e8e8bbb7e49b4bf57be
+  c5run.py sha256 3c6a569ffea662626f4a67ae8618a42c7db17cd6e2e033d9aa547bf1433cc959
+  windows  W-arch [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]  W-hi [5000, 10000, 20000, 40000, 80000, 160000, 320000, 400000]  W-ext [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 400000]
+  B 10000  null fixture levels [(0.02, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.3)]  NF 400  seeds SeedSequence((20261101, 99) + (level, cell, set))
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 400 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.068    0.060    0.062    0.060    0.061    0.076    0.072    0.072    0.083    0.072
+  s 0.05 e 0.10    0.060    0.050    0.072    0.048    0.061    0.015    0.072    0.072    0.095    0.080
+  s 0.10 e 0.20    0.058    0.058    0.083    0.080    0.061    0.061    0.087    0.083    0.120    0.107
+  s 0.20 e 0.30    0.037    0.055    0.037    0.055    0.030    0.076    0.050    0.077    0.072    0.072
+  bootstrap bR1b    largest over levels 0.087 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.083 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.120 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.107 (printed only; decides nothing)
+  NULL RATE R1b    largest over levels 0.068 (nominal 0.05): used, rate printed
+  NULL RATE R1c    largest over levels 0.060 (nominal 0.05): used, rate printed
+  NULL RATE R1d    largest over levels 0.083 (nominal 0.05): used, rate printed
+  NULL RATE D-ref  largest over levels 0.080 (nominal 0.05): used, rate printed
+  NULL RATE P-win  largest over levels 0.061 (nominal 0.05): used, rate printed
+  NULL RATE P-ref  largest over levels 0.076 (nominal 0.05): used, rate printed
+
+====================================================================================================
+c5_analysis.py --null-only done, exit 0  (nothing written)
+====================================================================================================
