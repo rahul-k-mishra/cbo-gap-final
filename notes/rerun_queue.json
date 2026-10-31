@@ -1087,19 +1087,15 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
+  "status": "READY",
   "index": 1,
-  "attempt": 1,
-  "resume_dirs": [],
-  "job": "c5-x-drill-a1",
-  "args": "--mode drill --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --stop-after 150.0",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
+  "attempt": 2,
+  "resume_dirs": [
+    "runs/c5-x-drill-a1-kaggle-20261101-042033"
   ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1116,6 +1112,20 @@
         "resume_dirs": [],
         "fetched_run": "41248632453.1",
         "fetched_at": "2026-11-01T04:02:43+05:30"
+      }
+    ],
+    "drill-c5": [
+      {
+        "attempt": 1,
+        "job": "c5-x-drill-a1",
+        "folder": "runs/c5-x-drill-a1-kaggle-20261101-042033",
+        "kaggle_status": "ERROR",
+        "runner_exit": 5,
+        "completed": 4,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "41249938636.1",
+        "fetched_at": "2026-11-01T04:20:34+05:30"
       }
     ]
   },
@@ -1173,6 +1183,15 @@
       "attempt": 1,
       "job": "c5-x-drill-a1",
       "note": "logs/kgrun-c5-x-drill-a1.log"
+    },
+    {
+      "at": "2026-11-01T04:20:34+05:30",
+      "run": "41249938636.1",
+      "event": "fetched",
+      "item": "drill-c5",
+      "attempt": 2,
+      "job": "",
+      "note": "runs/c5-x-drill-a1-kaggle-20261101-042033: runner exit 5 (G-STOP), completed 4; next attempt resumes; now READY"
     }
   ],
   "definition": {
