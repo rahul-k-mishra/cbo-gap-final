@@ -1087,13 +1087,19 @@
       "ledger": "N45"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 0,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "c5-x-smoke-a1",
+  "args": "--mode smoke --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4",
+  "data_dirs": [
+    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
+    "runs/calprec2-finalize-20261023-112503",
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -1107,6 +1113,15 @@
       "attempt": 1,
       "job": "",
       "note": "notes/queues/c5.json; previous state archived to notes/queue-archive/20261101-034534-sizetest-e1-done.json; N45: C5, smoke, drill, 116 shards"
+    },
+    {
+      "at": "2026-11-01T03:45:58+05:30",
+      "run": "41247372397.1",
+      "event": "intent",
+      "item": "smoke-c5",
+      "attempt": 1,
+      "job": "c5-x-smoke-a1",
+      "note": "resume none"
     }
   ],
   "definition": {
