@@ -225,6 +225,7 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   can fail the finite-window criterion. This is a statement about the
   prefactor, not about an admissible region. It still needs O1 (Ackley in
   A(0,0,0)) proved, since the three failing cells are all Ackley.
+  Source row decided 2026-10-31 (N45, "SOURCE ROW"); O1 closed 2026-10-31.
 - N2 (new, P). Conditions (6)-(7) are the wrong admissibility gate for
   Theorem 12; it needs a weak solution in C([0,T*], P_4), which GHV Theorem
   2.3 supplies for all f in A(s,l,l) with rho_0 in P_{2 v p_M}. Levy becomes
@@ -926,6 +927,26 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     run). At tau0 0.1 both objectives are adequate, sphere at 4M and ackley
     at 64M.
   OPEN for O3; O2 is recorded.
+  DECIDED (Claude, 2026-10-31, under Rahul's standing position of 2026-10-31: decide by what is best for the paper (correct, checkable, not overstated); run anything that lets it say something true it otherwise cannot; skip what only re-measures what is settled; nothing hidden): the 4G sphere
+  rung is NOT RUN; O3 is recorded as not established under its criteria
+  and superseded. Reasons:
+  - Sphere's tau(beta) is known in closed form (X1: 0.011213257 at this
+    beta), and the 1G median (0.0111832, relerr -0.0027) already agrees
+    with it. A 4G rung would test whether direct Monte Carlo is adequate
+    for a value that is not in doubt: more precision on a settled number.
+  - The rerun's calibration is calprec2's (64M and 256M ladders with C5m
+    and D1 labels per cell), not refscale's 1M betas. The objective
+    dependence of adequacy that O3 was to show is carried by calprec2's
+    labels, which the paper reports per row (CAL5).
+  - The text states refscale's result as it is: no adequate rung at
+    beta(0.01) for either objective; sphere's 1G rung passes C5 with its
+    median within -0.0027 of the closed form, and its D1 is untested
+    because no 4G rung was run. Refscale goes to the supplement as the
+    record that led to calprec2.
+  - The byte-identical folder runs/refscale-kaggle-20261010-101146 is
+    reported in the supplement's data note as a duplicate of 094820 whose
+    origin is not shown in any repository log.
+  CLOSED as a decision; text under N45.
 - N19 (new, calibration finding, both from N18's log). A 1,000,000-point
   calibration sample at nominal tau0 = 0.01 does not give tau(beta) = 0.01,
   and the direction of the error depends on the objective.
@@ -994,6 +1015,9 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
     unchanged, and the run's verdicts are read under them.
   - Recorded in refscale.py's docstring ("AMENDMENT (2026-10-10, ...)").
   OPEN until the follow-up run is fetched.
+  CLOSED 2026-10-31: the follow-up is not run (N18, DECIDED). The
+  amendment stays in refscale.py's docstring as a record; it was never
+  executed.
 - N22 (result, costprobe2 full run). The measured cost of every rerun row.
   Sources:
   - runs/costprobe2-s0-kaggle-20261010-103952 and
@@ -2450,6 +2474,21 @@ instruction of 2026-10-15.
     log of it is available. The lines quoted are identical in both copies
     of regime.py. Rahul to decide whether M3 is reported as is, with the
     property stated, or not at all.
+  - DECIDED (Claude, 2026-10-31, under Rahul's standing position of 2026-10-31: decide by what is best for the paper (correct, checkable, not overstated); run anything that lets it say something true it otherwise cannot; skip what only re-measures what is settled; nothing hidden): M3 IS
+    REPORTED, AS IS, in the supplement beside M1 and M2, with the property
+    stated: regime.fit_predict standardizes but takes no log of the
+    geometry features M3 adds (covtr, disp, fvar, dist0) and checks no
+    support, the form supplement S3 names as an analysis-design error. No
+    claim in the paper rests on M3, and its out-of-sample R^2 (0.6157) is
+    not read against M2's (0.6741) as evidence about geometry, because the
+    property may account for the difference. Reasons: leaving it out
+    would hide a computed result; reporting it without the property would
+    overstate it. A corrected refit (logs, support check) is NOT run: it
+    would be an analysis chosen after the result was seen, for a claim the
+    paper does not make (the geometry predictive law is withdrawn, and the
+    text already says nonlinear models and other descriptors are
+    untested), so it could only add an exploratory number to a question
+    the paper has closed.
   OPEN until the manuscript text that uses these numbers is written and
   verified by the rule-8 diff. The tally is recorded above.
 
@@ -4146,6 +4185,38 @@ instruction of 2026-10-15.
   can fail the finite-window criterion. This is a statement about the
   prefactor, not about an admissible region. It still needs O1 (Ackley in
   A(0,0,0)) proved, since the three failing cells are all Ackley.
+  SOURCE ROW DECIDED (Claude, 2026-10-31, under Rahul's standing position of 2026-10-31: decide by what is best for the paper (correct, checkable, not overstated); run anything that lets it say something true it otherwise cannot; skip what only re-measures what is settled; nothing hidden):
+  ONSET-R phase 1, the four baseline grid points r = 0.3, 0.35, 0.42 and
+  0.5, all 30 units. Reasons:
+  - GHV Theorem 2.6 has no parameter condition, so r plays no part in
+    whether a cell is inside its hypotheses; r = 0.75 was chosen in round
+    1 for FKR's 2 lambda > d sigma^2, the comparison N1 withdraws.
+    Choosing r = 0.75 now would select cells by the withdrawn claim's
+    history.
+  - ONSET-R runs calprec2's fixed beta (the paper's estimand), with M 48
+    realizations per cell against M 12 in RMAP-CAL and ONSET-CAL
+    (costprobe2 GRID), and its verdict rule was fixed before its runs
+    (N44).
+  - r <= 0.5 is also deep inside FKR's condition, so no reader can
+    attribute a failure there to the boundary.
+  - The others are worse. RMAP-CAL has no r = 0.75 cell (its grid is
+    0.5, 1.0, 1.5, 2.0, 3.0), so "the r = 0.75 cells of RMAP-CAL" do not
+    exist. ONSET-CAL's r = 0.75 cells share their calibration and cell
+    definition with ONSET-R's units at M 12, so they would be a
+    smaller-M count of the same units, and ONSET-CAL carries the d 80
+    caveat (Rahul, 2026-10-28).
+  - The count is read from the committed ONSET-R phase-1 output, not
+    computed here (rule 2), with the adequacy split (CAL5) beside it.
+  WHAT THE CLAIM STILL NEEDS: O1 makes the Ackley units (10 of 30:
+  isotropic and anisotropic, d 5 to 80) objective-verified. The Sphere and
+  Rastrigin units need O7's proofs (A(1,2,2)) before they count. Every
+  unit also needs O3 (the experiments' dynamics are GHV (1.1) and (2.10)
+  with unit drift, lambda = 1, and S(u) = sigma |u| I_d or sigma diag(u),
+  both globally Lipschitz: | sigma|u| - sigma|v| | <= sigma |u - v| and
+  ||diag(u - v)|| = max_i |u_i - v_i| <= |u - v|) and the initial law
+  with bounded moments of all orders (regimemap: standard normal). The
+  measured slope is of the Euler-Maruyama scheme at dt 0.01, not of the
+  SDE the theorem is about; the existing discretization sentences stay.
   ONSET-R (added 2026-10-30): the twenty-one-row analysis is in (N44,
   CLOSED). Its manuscript consequences (38, 602-620, 628, 707, 722) join
   this pass; listed in N44.
@@ -4164,6 +4235,57 @@ instruction of 2026-10-15.
     on the threshold: at 0.05, two anisotropic Ackley intervals lie below
     1. Below r = 0.5 the slope is not the J^-1 slope in most units, so the
     crossing locates a further departure, not the start of one."
+  PROPOSED ONSET PASSAGE WITH N43's LIMITATION (Claude, 2026-10-31, at
+  Rahul's instruction; proposed text, not applied; it replaces the
+  proposed onset text above in the pass. Numbers from N39, N42, N43 and
+  runs/rerun-analysis-20261030-144722/analysis_onsetr.csv as recorded
+  here; the bracketed count is read from the twenty-one-row analysis's
+  adequacy split before the pass):
+    "Round 1 located the onset of degradation along r with a free
+    breakpoint and reported that it could not be resolved from r = 1,
+    with nine of ten bootstrap intervals containing it. That does not
+    hold on the rerun: with realizations resampled within cells, six of
+    ten intervals contain r = 1, in the probe-calibrated and in the
+    calibrated design alike. The rerun changed both the realizations and
+    the bootstrap unit, and we do not assign the difference to either.
+    The breakpoint estimator also cannot tell the start of a rise from
+    its end, so we show its curves and point bends as exploratory and
+    give no interval for them.
+    In its place we estimate a different quantity. On a 17-point grid
+    from r = 0.3 to 4.8, at tau_0 = 0.1 with 48 realizations per cell
+    and beta fixed by calibration, we estimate for each of 30 units the
+    smallest r beyond which the fitted slope stays at least 0.10 above
+    the unit's own slope at r <= 0.5. That threshold and the verdict rule
+    were fixed before the runs. Where a resampled curve has no crossing
+    on the grid, the interval end is reported as a bound beyond 4.8, not
+    as a value. For 26 units the 95% interval of this crossing lies above
+    r = 1, the boundary of the condition 2 lambda > d sigma^2 of [FKR,
+    Theorem 3.7] for isotropic diffusion and 2 lambda > sigma^2 of
+    [dissertation, Theorem 3.6] for anisotropic diffusion; none lies
+    below. Neither theorem owns the J^-1 exponent, so r = 1 is a landmark
+    here, not a threshold of the rate. Three units, all anisotropic
+    Ackley, are not distinguishable from 1. One, isotropic Rastrigin at
+    d = 10, shows no crossing up to r = 4.8. No multiplicity correction is
+    applied. The anisotropic verdicts depend on the threshold: at 0.05,
+    two anisotropic Ackley intervals lie below 1. Table [onsetr] shows all
+    three thresholds, 0.05, 0.10 and 0.20, with verdicts at 0.10 only.
+    [n] of the 15 calibrated betas are marked: calibration found no
+    sufficient level for them.
+    Below r = 0.5 the slope is not the J^-1 slope in most units, so the
+    crossing locates a further departure, not the start of one, and it
+    is not a corrected breakpoint. We therefore cannot say, with an
+    interval, where along r the slope begins to depart; we can say only
+    where a sustained excess of 0.10 over the small-r slope is first
+    reached. No trend of the crossing across d was specified or assessed.
+    The window W_ge is empty by construction at tau_0 = 0.1, since J
+    tau_0 >= 1 for every J of the grid, so no W_ge sensitivity is
+    reported."
+  Reasons for its form: N43's limitation sentence is kept verbatim in
+  substance and placed after the crossing, so the reader meets what the
+  crossing is before what it is not; round 1's withdrawal names both
+  changes and assigns no cause (N43 decision); "the boundary" is named
+  with its owner and N1's point (N45); the interval rule (N44 hybrid) and
+  the three deltas (2026-10-30 decision) are stated.
   Reason: it replaces Rahul's phrasing "degradation begins above the
   boundary at 26 of 30 units", which overstates in three ways:
   - "begins" is wrong: r_delta is where a sustained excess of delta is
@@ -4304,6 +4426,47 @@ instruction of 2026-10-15.
   design. sizetest's plan step prices only the d 40 affected cells'
   larger-reference rerun, not the window extension (sizetest.py 559 to
   591).
+  COST APPROVED (Rahul, 2026-10-31). DECIDED (Claude, 2026-10-31, under
+  Rahul's standing position of 2026-10-31: decide by what is best for the paper (correct, checkable, not overstated); run anything that lets it say something true it otherwise cannot; skip what only re-measures what is settled; nothing hidden), C5 AND C6:
+  - C5, THE WINDOW EXTENSION, IS NEEDED. The paper reports the tau_0
+    0.01 departure from -1 as a measured property of the finite window
+    (J 10 to 5000). Whether it persists, shrinks or reverses at larger J
+    is the referee's first question and the one the paper cannot answer
+    from what it has. Only a run at larger J can, and it changes no
+    estimand (same fixed-beta algorithm, same beta).
+  - C6, AS STATED ("larger references bring the runs to target"), IS NOT
+    WORTH A SEPARATE RERUN. At t = 0 that is what sizetest E1 measured
+    (48 fresh draws per size up to 4M); a trajectory rerun would measure
+    the same starting quantity again with 15 draws. What is worth having
+    is whether the affected cells' SLOPES depend on the reference size:
+    if they do, the J_inf 50000 slopes in those cells carry a reference
+    effect the paper must report; if no change is found, the paper can
+    say that, without equivalence (rule 10). That question is answered
+    by C5's own runs if C5 includes the affected d 40 cells at J_inf up
+    to their J_needed (4000000 at most) and refits the archived window J
+    10 to 5000 there as a second pre-specified reading. So C6 is folded
+    into C5's design, not dropped: one run, two readings, both fixed
+    before it.
+  - Neither design is written yet. Rule 6: a probe of wall and peak RSS
+    at each candidate J_inf comes first. scripts/jinfprobe.py written
+    2026-10-31: the 42 CONC and TAU8 units (mechanism d 2, 5, 10, 40;
+    boundary d 5, 10, 40; six objectives), one coupled realization each
+    at J_inf 50000, 200000, 500000, 1000000, 2000000, 4000000 with the J
+    window extended to J_inf / 10, calprec2's beta at (centred, 0.01),
+    the archived one_realisation called unmodified; R2 concurrency guard
+    against a 24000 MB budget; units kept whole per shard so the RSS
+    prediction uses each unit's own smaller sizes; resumable (rule 17).
+    Plan mode prices the schedule from costprobe2's Kaggle walls (laptop,
+    writes nothing). Pre-run checks run by Claude: Python 3.8 grammar;
+    input contact on the committed costprobe2 folders and beta table (42
+    units with one anchor and one beta each, 252 tasks, 252 distinct
+    keys; counts only); synthetic fixture (fake anchors and betas, ladder
+    patched to 500, 2000, 5000, the real archived dynamics): plan exit 0,
+    smoke SMOKE PASS, two shards exit 0, stop exit 5, resume skips
+    exactly the completed rows, resume with a different stop-after,
+    into the wrong shard, folders from different script hashes, smoke
+    mixed with run, a folder twice, G-STOP, out-of-range shard, missing
+    input: exit 2; guard holds back groups, exit 6; report exit 0.
   PRIMARY-TEXT CHECK (Claude, 2026-10-31; ~/cbo-refs: fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
@@ -4459,6 +4622,58 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
 
 - O1. Ackley in A(0,0,0): L_f = (4 + 2 pi e)/sqrt d; 0 <= f <= 20 + e;
   unique minimizer at 0.
+  CLOSED 2026-10-31 (Claude; proof against GHV arXiv 2312.07373v4,
+  Assumption H, p. 7; the Ackley of every archived module, e.g.
+  zenodo-v1/mechanism.py f_ackley: f(x) = -20 exp(-0.2 sqrt(|x|^2 / d))
+  - exp((1/d) sum_i cos(2 pi x_i)) + 20 + e, x in R^d, d >= 1).
+  - What A(0,0,0) requires (v4 p. 7). (H1) with s = 0: f: R^d -> R
+    bounded below by f* = inf f, and |f(x) - f(y)| <= L_f (1 + |x| +
+    |y|)^0 |x - y| = L_f |x - y| for some L_f > 0: global Lipschitz
+    continuity (the base 1 + |x| + |y| >= 1, so the power 0 is 1). (H2)
+    with u = l = 0 (u >= l >= 0 holds): constants c_l, C_l, c_u, C_u > 0
+    with f(x) - f* <= c_u |x|^0 + C_u and f(x) - f* >= c_l |x|^0 - C_l for
+    all x. v4 does not say how |x|^0 is read at x = 0; the constants below
+    make both inequalities hold whether |0|^0 is read as 1 or as 0.
+    Remark 2.1: "The case l = u = 0 corresponds to bounded f."
+  - No obstruction: Ackley is bounded and globally Lipschitz.
+  - Write t = |x| / sqrt d (since sqrt(|x|^2 / d) = |x| / sqrt d) and h(x)
+    = (1/d) sum_i cos(2 pi x_i), so h(x) in [-1, 1] and
+    f(x) = 20 (1 - e^{-0.2 t}) + (e - e^{h(x)}).
+  - Lower bound and f*. e^{-0.2 t} <= 1 for t >= 0, so the first term is
+    >= 0; h <= 1, so the second is >= 0. Hence f >= 0. At x = 0: t = 0
+    and h = 1, so f(0) = 0. So f* = inf f = 0, attained at 0. If f(x) =
+    0, both terms are 0; the first is 0 only if t = 0, i.e. x = 0. The
+    minimizer is unique.
+  - Upper bound. 1 - e^{-0.2 t} < 1 and e^{h} >= e^{-1}, so f(x) < 20 + e
+    - e^{-1} for every x.
+  - Lipschitz, first term. phi(t) = -20 e^{-0.2 t} on [0, inf) has phi'(t)
+    = 4 e^{-0.2 t} in (0, 4]. By the mean value theorem |phi(t) - phi(t')|
+    <= 4 |t - t'|. By the reverse triangle inequality ||x| - |y|| <= |x -
+    y|, so |t - t'| <= |x - y| / sqrt d. The term changes by at most 4 |x
+    - y| / sqrt d.
+  - Lipschitz, second term. For a, b <= 1 the mean value theorem gives
+    |e^a - e^b| = e^xi |a - b| with xi between a and b, so <= e |a - b|.
+    |cos a - cos b| <= |a - b| (mean value theorem, |sin| <= 1), so |h(x)
+    - h(y)| <= (1/d) sum_i 2 pi |x_i - y_i| <= (2 pi / d) sqrt d |x - y|
+    (Cauchy-Schwarz: sum_i |z_i| <= sqrt d |z|) = 2 pi |x - y| / sqrt d.
+    The term changes by at most 2 pi e |x - y| / sqrt d.
+  - The constants 20 and e cancel in f(x) - f(y). By the triangle
+    inequality, |f(x) - f(y)| <= L_f |x - y| with L_f = (4 + 2 pi e) /
+    sqrt d > 0.
+  - CONSTANTS for Table 1 (O7): s = 0, l = u = 0; L_f = (4 + 2 pi e) /
+    sqrt d; f* = 0, attained only at 0; (2.2a) with c_u = 1, C_u = 20 + e
+    - e^{-1} (since c_u |x|^0 >= 0 under either reading, the right side is
+    >= C_u > f(x) - f*); (2.2b) with c_l = C_l = 1 (the right side |x|^0 -
+    1 is <= 0 <= f(x) - f* under either reading). Any c_u > 0 and any C_l
+    >= c_l > 0 also work; these are the choices recorded.
+  - Consequences, from v4 (pp. 8, 10): l <= s + 1 holds (0 <= 1), so
+    Theorem 2.3 applies with p >= 2 v p_M(0, 0) = 2 v 2 = 2 ((2.3): p_M =
+    s + 2 when l = 0), and Theorem 2.6 applies for rho_0 with bounded
+    moments of all orders (every Gaussian law of the experiments). Ackley
+    is also in A(s, 0, 0) for every s >= 0, since (1 + |x| + |y|)^s >= 1;
+    s = 0 is the smallest and is what Table 1 states.
+  - What O1 does not settle: that the experiments' dynamics are GHV's
+    (O3), and the existence class needed for FKR (O2, O4).
 - O2. FKR A1-A2 with constants: on ||v|| <= R0, U = 0.2 R0/sqrt d,
   E(v) >= eta1 ||v|| with eta1 = 4(1 - e^-U)/(U sqrt d) (nu = 1); far-field
   E(v) > 20(1 - e^-U) =: E_inf for ||v|| > R0. Anisotropic (nu <= 1/2,
