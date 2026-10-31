@@ -1087,23 +1087,32 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
-  "index": 0,
+  "status": "READY",
+  "index": 1,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "c5-x-smoke-a1",
-  "args": "--mode smoke --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
-  "attempts": {},
+  "attempts": {
+    "smoke-c5": [
+      {
+        "attempt": 1,
+        "job": "c5-x-smoke-a1",
+        "folder": "runs/c5-x-smoke-a1-kaggle-20261101-040241",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 4,
+        "d_smoke": "PASS",
+        "resume_dirs": [],
+        "fetched_run": "41248632453.1",
+        "fetched_at": "2026-11-01T04:02:43+05:30"
+      }
+    ]
+  },
   "history": [
     {
       "at": "2026-11-01T03:45:34+05:30",
@@ -1131,6 +1140,15 @@
       "attempt": 1,
       "job": "c5-x-smoke-a1",
       "note": "logs/kgrun-c5-x-smoke-a1.log"
+    },
+    {
+      "at": "2026-11-01T04:02:43+05:30",
+      "run": "41248632453.1",
+      "event": "fetched",
+      "item": "drill-c5",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/c5-x-smoke-a1-kaggle-20261101-040241: runner exit 0, D-SMOKE PASS; now READY"
     }
   ],
   "definition": {
