@@ -287,6 +287,14 @@ PDF diff, run folder, log). Nobody closes an item by asserting it is done.
   15) with the content the text gives them; the list of GHV statements
   and their v4 places is in N45. The FKR half (every [3, x.y] against the
   SIAM PDF, and the c^-2 claim) stays OPEN.
+  CORRECTION 2026-10-31 (Claude): the sentence above is wrong. The FKR
+  half was already closed by the UPDATE 2026-10-30 below ("SIOPT
+  COMPARED"; "N3 is CLOSED on numbering"), which also read the c^-2
+  factor in SIOPT (4.30)/(4.31), two powers of c, as in v6. N3 is closed
+  in both halves. Still unchecked and carried as a proof obligation, not
+  under N3: the step from c to (2 lambda - d sigma^2) behind tex 211's
+  "(2 lambda - d sigma^2)^-2" (the definition of c in the proof of
+  Theorem 3.7).
   RE-MAPPING 2026-10-29 (Rahul's request; by content, from the v6 text,
   extracted with pdftotext; formulas should be eyeballed in the PDF).
   Old reference -> v6 result -> verdict.
@@ -3093,6 +3101,62 @@ instruction of 2026-10-15.
     manuscript text has been written for N40; the text enters once, in
     the rule 8 editing pass, under this rule. The P3 result is reported
     as "no excess of differences found", never as agreement (rule 10).
+  - AGREED TEXT FOR THE CALIBRATION MISS (Rahul, 2026-10-31). Every
+    number from logs/h1null-20261031.log (P3, P4) and
+    logs/sizetest-analyse-20261031.log. The sentence, the three
+    qualifications, the limitation and the five exclusions are one unit:
+    none of them is dropped or softened in the editing pass.
+    - SENTENCE: "In an exploratory, post hoc analysis, fresh
+      50000-particle initial ensembles drawn with the calibration
+      sampler and weighed at each cell's run beta gave a median ESS
+      fraction more than 5% from its large-sample value in 39 of the 56
+      cells whose run missed the target by more than 5%, and in 6 of the
+      53 d = 40 cells whose run met it. Of those 39, the median came
+      within 5% of the large-sample value at 2x10^5 particles in 13
+      cells, at 10^6 in 12 and at 4x10^6 in 5; in the remaining 9, all
+      cells where the calibration itself was not adequate, it had not by
+      4x10^6. A permutation test of each cell's 15 run reference ratios
+      against 48 fresh draws rejected at the 5% level in 3 of the 53
+      cells that met the target and 6 of the 56 that missed it, which is
+      no more than chance would give at that level. The pre-specified
+      consistency check fails at a comparable rate in either group
+      whether or not the run differs from the sampler, so its failures
+      are not reported as findings."
+    - QUALIFICATION 1, THE YARDSTICKS DIFFER. "Missed" is the run median
+      against 1 (the target); "more than 5% from its large-sample value"
+      is the E1 median against ratio_ref (calprec2's large-sample
+      fraction over the target). They coincide only where ratio_ref is
+      near 1. They come apart in the 18 not-adequate cells among the 39,
+      where part of the miss is calprec2's beta missing the target even
+      at large N, which is not a size effect.
+    - QUALIFICATION 2, THE GROUPS ARE NOT MATCHED. The 53 controls are d
+      40 only; the 56 affected cells include d 5 and d 10 and lean to
+      tight tau_0. The 39-of-56 against 6-of-53 contrast describes these
+      cells; it is not a controlled comparison.
+    - QUALIFICATION 3, THE 9 "NONE" CELLS. They are off against a
+      ratio_ref that is itself not converged (calprec2 "not adequate":
+      C5m or D1 failed at 64M or 256M). In several the 4M median is near
+      1 while ratio_ref is well below it (CONC mechanism ackley 40
+      centred 0.01: 0.9827 against 0.9032; TAU8 boundary ackley 10 0.02:
+      1.0079 against 0.8696). Their "none" is about calprec2's reference,
+      not about size. No size statement is made for them; their miss is
+      reported as unexplained.
+    - STATED LIMITATION. P3 compares 15 values against 48 where the
+      ratio's distribution is most skewed (tight tau_0), and its power
+      there was not measured. "No excess of differences found" is never
+      written as "the references agree" or any equivalent (rule 10).
+    - THE TEXT CANNOT CLAIM:
+      1. that the run's misses are caused by reference size: it shows a
+         finite-size effect in the sampler, where the misses fall, and no
+         excess of run-against-sampler differences, which is not
+         agreement;
+      2. that larger references would bring the runs to target, or change
+         any trajectory result: the rerun at J_needed has not been run;
+      3. any explanation of the 17 affected cells whose miss fresh draws
+         at 50000 do not reproduce;
+      4. any size statement about the 9 not-adequate "none" cells;
+      5. confirmatory status, or a matched comparison between affected
+         and control cells; nor may ELSEWHERE appear as a class.
 
 - N41 (scope proposal, 2026-10-25; Rahul's instruction to calibrate the
   diffusion rows, "a diffusion comparison on probe beta hands the
