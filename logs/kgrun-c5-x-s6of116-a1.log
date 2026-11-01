@@ -1,0 +1,388 @@
+==============================================================================
+kgrun  action launch  job c5-x-s6of116-a1  dataset ericsom/cbo-gap-archive
+  repository /home/runner/work/cbo-gap-final/cbo-gap-final
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-bundle
+  ship data   jinfprobe-s0of3-a1-kaggle-20261031-210629   4 files, manifest verified, tracked and clean in git
+  ship data   jinfprobe-s1of3-a1-kaggle-20261031-233459   4 files, manifest verified, tracked and clean in git
+  ship data   jinfprobe-s2of3-a1-kaggle-20261101-015818   4 files, manifest verified, tracked and clean in git
+  ship data   calprec2-finalize-20261023-112503   2 files, manifest verified, tracked and clean in git
+  ship data   rerun-plan-20261023-112643   5 files, manifest verified, tracked and clean in git
+  bundle id 681ac0f4987f6998  (kgrun-bundle-681ac0f4987f6998.sha256, 84 files listed)
+  26 archive files + 38 round-2 scripts + 5 shipped folder(s); bundle 86 files, 3.6 MB
+  dataset id ericsom/cbo-gap-archive
+VERSION DATASET
+  $ kaggle datasets version -p /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-bundle -m kgrun c5-x-s6of116-a1 2026-11-02T01:14:31 -r skip
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Starting upload for file kgrun-ship-000-0003-jinfprobe_results.csv
+  0%|          | 0.00/70.2k [00:00<?, ?B/s]100%|██████████| 70.2k/70.2k [00:00<00:00, 90.1kB/s]
+Upload successful: kgrun-ship-000-0003-jinfprobe_results.csv (70KB)
+Starting upload for file partm.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s]100%|██████████| 17.2k/17.2k [00:00<00:00, 26.8kB/s]
+Upload successful: partm.py (17KB)
+Starting upload for file finitej.py
+  0%|          | 0.00/9.66k [00:00<?, ?B/s]100%|██████████| 9.66k/9.66k [00:00<00:00, 15.6kB/s]
+Upload successful: finitej.py (10KB)
+Starting upload for file kgrun-ship-004-0003-rerun_plan.csv
+  0%|          | 0.00/635k [00:00<?, ?B/s]100%|██████████| 635k/635k [00:00<00:00, 977kB/s]
+Upload successful: kgrun-ship-004-0003-rerun_plan.csv (635KB)
+Starting upload for file rerunlib.py
+  0%|          | 0.00/43.4k [00:00<?, ?B/s]100%|██████████| 43.4k/43.4k [00:00<00:00, 71.0kB/s]
+Upload successful: rerunlib.py (43KB)
+Starting upload for file cbopaths.py
+  0%|          | 0.00/3.36k [00:00<?, ?B/s]100%|██████████| 3.36k/3.36k [00:00<00:00, 5.25kB/s]
+Upload successful: cbopaths.py (3KB)
+Starting upload for file kgrun-bundle-681ac0f4987f6998.sha256
+  0%|          | 0.00/6.95k [00:00<?, ?B/s]100%|██████████| 6.95k/6.95k [00:00<00:00, 11.4kB/s]
+Upload successful: kgrun-bundle-681ac0f4987f6998.sha256 (7KB)
+Starting upload for file crossed.py
+  0%|          | 0.00/22.8k [00:00<?, ?B/s]100%|██████████| 22.8k/22.8k [00:00<00:00, 37.8kB/s]
+Upload successful: crossed.py (23KB)
+Starting upload for file m5_gapwidth.py
+  0%|          | 0.00/12.3k [00:00<?, ?B/s]100%|██████████| 12.3k/12.3k [00:00<00:00, 19.7kB/s]
+Upload successful: m5_gapwidth.py (12KB)
+Starting upload for file measlib.py
+  0%|          | 0.00/12.0k [00:00<?, ?B/s]100%|██████████| 12.0k/12.0k [00:00<00:00, 19.7kB/s]
+Upload successful: measlib.py (12KB)
+Starting upload for file m3_bootmc.py
+  0%|          | 0.00/9.99k [00:00<?, ?B/s]100%|██████████| 9.99k/9.99k [00:00<00:00, 16.3kB/s]
+Upload successful: m3_bootmc.py (10KB)
+Starting upload for file rmapj_real.csv
+  0%|          | 0.00/371k [00:00<?, ?B/s]100%|██████████| 371k/371k [00:00<00:00, 583kB/s]
+Upload successful: rmapj_real.csv (371KB)
+Starting upload for file kgrun-ship-000-0000-sha256.txt
+  0%|          | 0.00/340 [00:00<?, ?B/s]100%|██████████| 340/340 [00:00<00:00, 549B/s]
+Upload successful: kgrun-ship-000-0000-sha256.txt (340B)
+Starting upload for file control.py
+  0%|          | 0.00/22.1k [00:00<?, ?B/s]100%|██████████| 22.1k/22.1k [00:00<00:00, 34.6kB/s]
+Upload successful: control.py (22KB)
+Starting upload for file onsetr_rehearsal.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 22.9kB/s]
+Upload successful: onsetr_rehearsal.py (15KB)
+Starting upload for file onsetdiag.py
+  0%|          | 0.00/24.5k [00:00<?, ?B/s]100%|██████████| 24.5k/24.5k [00:00<00:00, 37.5kB/s]
+Upload successful: onsetdiag.py (24KB)
+Starting upload for file c5_analysis.py
+  0%|          | 0.00/29.4k [00:00<?, ?B/s]100%|██████████| 29.4k/29.4k [00:00<00:00, 46.6kB/s]
+Upload successful: c5_analysis.py (29KB)
+Starting upload for file mkfig4.py
+  0%|          | 0.00/2.17k [00:00<?, ?B/s]100%|██████████| 2.17k/2.17k [00:00<00:00, 3.62kB/s]
+Upload successful: mkfig4.py (2KB)
+Starting upload for file kgrun-ship-003-0001-calprec2_beta.csv
+  0%|          | 0.00/135k [00:00<?, ?B/s]100%|██████████| 135k/135k [00:00<00:00, 219kB/s]
+Upload successful: kgrun-ship-003-0001-calprec2_beta.csv (135KB)
+Starting upload for file kgrun-ship-002-0000-sha256.txt
+  0%|          | 0.00/340 [00:00<?, ?B/s]100%|██████████| 340/340 [00:00<00:00, 528B/s]
+Upload successful: kgrun-ship-002-0000-sha256.txt (340B)
+Starting upload for file regime.py
+  0%|          | 0.00/25.8k [00:00<?, ?B/s]100%|██████████| 25.8k/25.8k [00:00<00:00, 41.7kB/s]
+Upload successful: regime.py (26KB)
+Starting upload for file rerun_analysis.py
+  0%|          | 0.00/107k [00:00<?, ?B/s]100%|██████████| 107k/107k [00:00<00:00, 176kB/s]
+Upload successful: rerun_analysis.py (107KB)
+Starting upload for file c6.py
+  0%|          | 0.00/11.2k [00:00<?, ?B/s]100%|██████████| 11.2k/11.2k [00:00<00:00, 15.6kB/s]
+Upload successful: c6.py (11KB)
+Starting upload for file h1null.py
+  0%|          | 0.00/30.2k [00:00<?, ?B/s]100%|██████████| 30.2k/30.2k [00:00<00:00, 49.9kB/s]
+Upload successful: h1null.py (30KB)
+Starting upload for file detcheck.py
+  0%|          | 0.00/15.2k [00:00<?, ?B/s]100%|██████████| 15.2k/15.2k [00:00<00:00, 24.5kB/s]
+Upload successful: detcheck.py (15KB)
+Starting upload for file kgrun-ship-001-0001-cbo-jinfprobe-s1of3-a1.log
+  0%|          | 0.00/34.7k [00:00<?, ?B/s]100%|██████████| 34.7k/34.7k [00:00<00:00, 56.2kB/s]
+Upload successful: kgrun-ship-001-0001-cbo-jinfprobe-s1of3-a1.log (35KB)
+Starting upload for file kgrun-ship-index.json
+  0%|          | 0.00/2.73k [00:00<?, ?B/s]100%|██████████| 2.73k/2.73k [00:00<00:00, 4.58kB/s]
+Upload successful: kgrun-ship-index.json (3KB)
+Starting upload for file kgrun-ship-001-0002-jinfprobe_params.csv
+  0%|          | 0.00/706 [00:00<?, ?B/s]100%|██████████| 706/706 [00:00<00:00, 1.12kB/s]
+Upload successful: kgrun-ship-001-0002-jinfprobe_params.csv (706B)
+Starting upload for file kgrun-ship-002-0001-cbo-jinfprobe-s2of3-a1.log
+  0%|          | 0.00/34.7k [00:00<?, ?B/s]100%|██████████| 34.7k/34.7k [00:00<00:00, 56.8kB/s]
+Upload successful: kgrun-ship-002-0001-cbo-jinfprobe-s2of3-a1.log (35KB)
+Starting upload for file adapt0.py
+  0%|          | 0.00/17.3k [00:00<?, ?B/s]100%|██████████| 17.3k/17.3k [00:00<00:00, 28.7kB/s]
+Upload successful: adapt0.py (17KB)
+Starting upload for file c5run.py
+  0%|          | 0.00/32.0k [00:00<?, ?B/s]100%|██████████| 32.0k/32.0k [00:00<00:00, 51.8kB/s]
+Upload successful: c5run.py (32KB)
+Starting upload for file ess_panel.py
+  0%|          | 0.00/17.2k [00:00<?, ?B/s]100%|██████████| 17.2k/17.2k [00:00<00:00, 27.2kB/s]
+Upload successful: ess_panel.py (17KB)
+Starting upload for file m6_hetero.py
+  0%|          | 0.00/14.2k [00:00<?, ?B/s]100%|██████████| 14.2k/14.2k [00:00<00:00, 23.2kB/s]
+Upload successful: m6_hetero.py (14KB)
+Starting upload for file sigma.py
+  0%|          | 0.00/20.2k [00:00<?, ?B/s]100%|██████████| 20.2k/20.2k [00:00<00:00, 33.0kB/s]
+Upload successful: sigma.py (20KB)
+Starting upload for file ess_extend.py
+  0%|          | 0.00/13.6k [00:00<?, ?B/s]100%|██████████| 13.6k/13.6k [00:00<00:00, 20.7kB/s]
+Upload successful: ess_extend.py (14KB)
+Starting upload for file mkfig2.py
+  0%|          | 0.00/1.78k [00:00<?, ?B/s]100%|██████████| 1.78k/1.78k [00:00<00:00, 2.57kB/s]
+Upload successful: mkfig2.py (2KB)
+Starting upload for file calprec2_hashaudit.py
+  0%|          | 0.00/20.8k [00:00<?, ?B/s]100%|██████████| 20.8k/20.8k [00:00<00:00, 35.2kB/s]
+Upload successful: calprec2_hashaudit.py (21KB)
+Starting upload for file m4_slopese.py
+  0%|          | 0.00/11.5k [00:00<?, ?B/s]100%|██████████| 11.5k/11.5k [00:00<00:00, 18.4kB/s]
+Upload successful: m4_slopese.py (11KB)
+Starting upload for file refratio2.py
+  0%|          | 0.00/18.0k [00:00<?, ?B/s]100%|██████████| 18.0k/18.0k [00:00<00:00, 24.9kB/s]
+Upload successful: refratio2.py (18KB)
+Starting upload for file m2_window.py
+  0%|          | 0.00/14.6k [00:00<?, ?B/s]100%|██████████| 14.6k/14.6k [00:00<00:00, 23.9kB/s]
+Upload successful: m2_window.py (15KB)
+Starting upload for file kgrun-ship-004-0000-sha256.txt
+  0%|          | 0.00/349 [00:00<?, ?B/s]100%|██████████| 349/349 [00:00<00:00, 560B/s]
+Upload successful: kgrun-ship-004-0000-sha256.txt (349B)
+Starting upload for file audit.py
+  0%|          | 0.00/18.4k [00:00<?, ?B/s]100%|██████████| 18.4k/18.4k [00:00<00:00, 29.5kB/s]
+Upload successful: audit.py (18KB)
+Starting upload for file ess_surface.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s]100%|██████████| 16.2k/16.2k [00:00<00:00, 27.2kB/s]
+Upload successful: ess_surface.py (16KB)
+Starting upload for file kgrun-ship-002-0002-jinfprobe_params.csv
+  0%|          | 0.00/707 [00:00<?, ?B/s]100%|██████████| 707/707 [00:00<00:00, 1.13kB/s]
+Upload successful: kgrun-ship-002-0002-jinfprobe_params.csv (707B)
+Starting upload for file kgrun-ship-001-0000-sha256.txt
+  0%|          | 0.00/340 [00:00<?, ?B/s]100%|██████████| 340/340 [00:00<00:00, 552B/s]
+Upload successful: kgrun-ship-001-0000-sha256.txt (340B)
+Starting upload for file mechanism.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 31.3kB/s]
+Upload successful: mechanism.py (20KB)
+Starting upload for file onsetclass.py
+  0%|          | 0.00/18.1k [00:00<?, ?B/s]100%|██████████| 18.1k/18.1k [00:00<00:00, 29.4kB/s]
+Upload successful: onsetclass.py (18KB)
+Starting upload for file law.py
+  0%|          | 0.00/34.3k [00:00<?, ?B/s]100%|██████████| 34.3k/34.3k [00:00<00:00, 55.1kB/s]
+Upload successful: law.py (34KB)
+Starting upload for file boundary.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 28.5kB/s]
+Upload successful: boundary.py (20KB)
+Starting upload for file sizetest.py
+  0%|          | 0.00/65.4k [00:00<?, ?B/s]100%|██████████| 65.4k/65.4k [00:00<00:00, 108kB/s]
+Upload successful: sizetest.py (65KB)
+Starting upload for file memprobe.py
+  0%|          | 0.00/12.2k [00:00<?, ?B/s]100%|██████████| 12.2k/12.2k [00:00<00:00, 18.8kB/s]
+Upload successful: memprobe.py (12KB)
+Starting upload for file rmapj.py
+  0%|          | 0.00/11.4k [00:00<?, ?B/s]100%|██████████| 11.4k/11.4k [00:00<00:00, 18.3kB/s]
+Upload successful: rmapj.py (11KB)
+Starting upload for file calprec2.py
+  0%|          | 0.00/72.9k [00:00<?, ?B/s]100%|██████████| 72.9k/72.9k [00:00<00:00, 118kB/s]
+Upload successful: calprec2.py (73KB)
+Starting upload for file jinfprobe.py
+  0%|          | 0.00/47.1k [00:00<?, ?B/s]100%|██████████| 47.1k/47.1k [00:00<00:00, 78.2kB/s]
+Upload successful: jinfprobe.py (47KB)
+Starting upload for file rerun_tally.py
+  0%|          | 0.00/12.1k [00:00<?, ?B/s]100%|██████████| 12.1k/12.1k [00:00<00:00, 19.9kB/s]
+Upload successful: rerun_tally.py (12KB)
+Starting upload for file c5price.py
+  0%|          | 0.00/14.0k [00:00<?, ?B/s]100%|██████████| 14.0k/14.0k [00:00<00:00, 23.0kB/s]
+Upload successful: c5price.py (14KB)
+Starting upload for file mkfig5.py
+  0%|          | 0.00/2.33k [00:00<?, ?B/s]100%|██████████| 2.33k/2.33k [00:00<00:00, 3.96kB/s]
+Upload successful: mkfig5.py (2KB)
+Starting upload for file cliff.py
+  0%|          | 0.00/20.7k [00:00<?, ?B/s]100%|██████████| 20.7k/20.7k [00:00<00:00, 33.5kB/s]
+Upload successful: cliff.py (21KB)
+Starting upload for file exactcal.py
+  0%|          | 0.00/16.2k [00:00<?, ?B/s]100%|██████████| 16.2k/16.2k [00:00<00:00, 25.2kB/s]
+Upload successful: exactcal.py (16KB)
+Starting upload for file verify.py
+  0%|          | 0.00/15.3k [00:00<?, ?B/s]100%|██████████| 15.3k/15.3k [00:00<00:00, 24.5kB/s]
+Upload successful: verify.py (15KB)
+Starting upload for file depositcheck.py
+  0%|          | 0.00/34.6k [00:00<?, ?B/s]100%|██████████| 34.6k/34.6k [00:00<00:00, 58.3kB/s]
+Upload successful: depositcheck.py (35KB)
+Starting upload for file refscale.py
+  0%|          | 0.00/35.1k [00:00<?, ?B/s]100%|██████████| 35.1k/35.1k [00:00<00:00, 56.7kB/s]
+Upload successful: refscale.py (35KB)
+Starting upload for file rerun.py
+  0%|          | 0.00/54.0k [00:00<?, ?B/s]100%|██████████| 54.0k/54.0k [00:00<00:00, 87.4kB/s]
+Upload successful: rerun.py (54KB)
+Starting upload for file kgrun-ship-000-0002-jinfprobe_params.csv
+  0%|          | 0.00/707 [00:00<?, ?B/s]100%|██████████| 707/707 [00:00<00:00, 1.13kB/s]
+Upload successful: kgrun-ship-000-0002-jinfprobe_params.csv (707B)
+Starting upload for file kgrun-ship-000-0001-cbo-jinfprobe-s0of3-a1.log
+  0%|          | 0.00/34.7k [00:00<?, ?B/s]100%|██████████| 34.7k/34.7k [00:00<00:00, 57.2kB/s]
+Upload successful: kgrun-ship-000-0001-cbo-jinfprobe-s0of3-a1.log (35KB)
+Starting upload for file perjcal.py
+  0%|          | 0.00/12.6k [00:00<?, ?B/s]100%|██████████| 12.6k/12.6k [00:00<00:00, 19.5kB/s]
+Upload successful: perjcal.py (13KB)
+Starting upload for file kgrun-ship-004-0004-rerun_plan_params.csv
+  0%|          | 0.00/744 [00:00<?, ?B/s]100%|██████████| 744/744 [00:00<00:00, 1.12kB/s]
+Upload successful: kgrun-ship-004-0004-rerun_plan_params.csv (744B)
+Starting upload for file visibility.py
+  0%|          | 0.00/20.5k [00:00<?, ?B/s]100%|██████████| 20.5k/20.5k [00:00<00:00, 33.5kB/s]
+Upload successful: visibility.py (20KB)
+Starting upload for file kgrun-ship-001-0003-jinfprobe_results.csv
+  0%|          | 0.00/71.1k [00:00<?, ?B/s]100%|██████████| 71.1k/71.1k [00:00<00:00, 106kB/s]
+Upload successful: kgrun-ship-001-0003-jinfprobe_results.csv (71KB)
+Starting upload for file perjcalprobe.py
+  0%|          | 0.00/29.2k [00:00<?, ?B/s]100%|██████████| 29.2k/29.2k [00:00<00:00, 48.8kB/s]
+Upload successful: perjcalprobe.py (29KB)
+Starting upload for file regimemap.py
+  0%|          | 0.00/27.2k [00:00<?, ?B/s]100%|██████████| 27.2k/27.2k [00:00<00:00, 41.6kB/s]
+Upload successful: regimemap.py (27KB)
+Starting upload for file kgrun-ship-002-0003-jinfprobe_results.csv
+  0%|          | 0.00/69.9k [00:00<?, ?B/s]100%|██████████| 69.9k/69.9k [00:00<00:00, 115kB/s]
+Upload successful: kgrun-ship-002-0003-jinfprobe_results.csv (70KB)
+Starting upload for file kgrun-ship-004-0001-rerun_archive_check.csv
+  0%|          | 0.00/351k [00:00<?, ?B/s]100%|██████████| 351k/351k [00:00<00:00, 527kB/s]
+Upload successful: kgrun-ship-004-0001-rerun_archive_check.csv (351KB)
+Starting upload for file calprec.py
+  0%|          | 0.00/19.8k [00:00<?, ?B/s]100%|██████████| 19.8k/19.8k [00:00<00:00, 33.2kB/s]
+Upload successful: calprec.py (20KB)
+Starting upload for file m7_pairing.py
+  0%|          | 0.00/19.7k [00:00<?, ?B/s]100%|██████████| 19.7k/19.7k [00:00<00:00, 32.6kB/s]
+Upload successful: m7_pairing.py (20KB)
+Starting upload for file n30_reconstruct.py
+  0%|          | 0.00/36.5k [00:00<?, ?B/s]100%|██████████| 36.5k/36.5k [00:00<00:00, 59.2kB/s]
+Upload successful: n30_reconstruct.py (36KB)
+Starting upload for file kgrun-ship-003-0000-sha256.txt
+  0%|          | 0.00/84.0 [00:00<?, ?B/s]100%|██████████| 84.0/84.0 [00:00<00:00, 129B/s]
+Upload successful: kgrun-ship-003-0000-sha256.txt (84B)
+Starting upload for file exactcal_real.csv
+  0%|          | 0.00/413k [00:00<?, ?B/s]100%|██████████| 413k/413k [00:00<00:00, 656kB/s]
+Upload successful: exactcal_real.csv (413KB)
+Starting upload for file costprobe.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 16.7kB/s]
+Upload successful: costprobe.py (11KB)
+Starting upload for file manifest.py
+  0%|          | 0.00/8.29k [00:00<?, ?B/s]100%|██████████| 8.29k/8.29k [00:00<00:00, 13.7kB/s]
+Upload successful: manifest.py (8KB)
+Starting upload for file kgrun-ship-004-0002-rerun_onset_control.csv
+  0%|          | 0.00/1.91k [00:00<?, ?B/s]100%|██████████| 1.91k/1.91k [00:00<00:00, 3.15kB/s]
+Upload successful: kgrun-ship-004-0002-rerun_onset_control.csv (2KB)
+Starting upload for file refratio.py
+  0%|          | 0.00/16.9k [00:00<?, ?B/s]100%|██████████| 16.9k/16.9k [00:00<00:00, 28.1kB/s]
+Upload successful: refratio.py (17KB)
+Starting upload for file costprobe2.py
+  0%|          | 0.00/75.2k [00:00<?, ?B/s]100%|██████████| 75.2k/75.2k [00:00<00:00, 123kB/s]
+Upload successful: costprobe2.py (75KB)
+Starting upload for file m1_estimands.py
+  0%|          | 0.00/10.8k [00:00<?, ?B/s]100%|██████████| 10.8k/10.8k [00:00<00:00, 17.1kB/s]
+Upload successful: m1_estimands.py (11KB)
+Starting upload for file reboot.py
+  0%|          | 0.00/12.8k [00:00<?, ?B/s]100%|██████████| 12.8k/12.8k [00:00<00:00, 20.4kB/s]
+Upload successful: reboot.py (13KB)
+Dataset version is being created. Please check progress at https://www.kaggle.com/datasets/ericsom/cbo-gap-archive
+WAIT FOR DATASET READY  ericsom/cbo-gap-archive  (every 30 s, timeout 1800 s)
+  $ kaggle datasets status ericsom/cbo-gap-archive
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+ready
+  1 s: status 'ready'
+WAIT FOR THIS BUNDLE  ericsom/cbo-gap-archive lists kgrun-bundle-681ac0f4987f6998.sha256  (every 30 s, timeout 1800 s)
+  $ kaggle datasets files ericsom/cbo-gap-archive --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                              size  creationDate                
+----------------------------------------------  ------  --------------------------  
+adapt0.py                                        17717  2026-11-01 16:22:55.206000  
+audit.py                                         18819  2026-11-01 16:22:55.393000  
+boundary.py                                      20168  2026-11-01 16:22:55.535000  
+c5_analysis.py                                   30136  2026-11-01 16:22:55.367000  
+c5price.py                                       14370  2026-11-01 16:22:55.404000  
+c5run.py                                         32717  2026-11-01 16:22:55.449000  
+c6.py                                            11509  2026-11-01 16:22:55.466000  
+calprec.py                                       20285  2026-11-01 16:22:55.462000  
+calprec2.py                                      74692  2026-11-01 16:22:55.466000  
+calprec2_hashaudit.py                            21288  2026-11-01 16:22:55.485000  
+cbopaths.py                                       3445  2026-11-01 16:22:55.435000  
+cliff.py                                         21241  2026-11-01 16:22:55.573000  
+control.py                                       22663  2026-11-01 16:22:55.532000  
+costprobe.py                                     11037  2026-11-01 16:22:55.567000  
+costprobe2.py                                    77006  2026-11-01 16:22:55.556000  
+crossed.py                                       23357  2026-11-01 16:22:55.535000  
+depositcheck.py                                  35473  2026-11-01 16:22:55.597000  
+detcheck.py                                      15562  2026-11-01 16:22:55.493000  
+ess_extend.py                                    13945  2026-11-01 16:22:55.589000  
+ess_panel.py                                     17625  2026-11-01 16:22:55.621000  
+ess_surface.py                                   16586  2026-11-01 16:22:55.625000  
+exactcal.py                                      16596  2026-11-01 16:22:55.609000  
+exactcal_real.csv                               423255  2026-11-01 16:22:55.790000  
+finitej.py                                        9895  2026-11-01 16:22:55.657000  
+h1null.py                                        30928  2026-11-01 16:22:55.595000  
+jinfprobe.py                                     48220  2026-11-01 16:22:55.650000  
+kgrun-bundle-681ac0f4987f6998.sha256              7113  2026-11-01 16:22:55.597000  
+kgrun-ship-000-0000-sha256.txt                     340  2026-11-01 16:22:55.699000  
+kgrun-ship-000-0001-cbo-jinfprobe-s0of3-a1.log   35564  2026-11-01 16:22:55.604000  
+kgrun-ship-000-0002-jinfprobe_params.csv           707  2026-11-01 16:22:55.794000  
+kgrun-ship-000-0003-jinfprobe_results.csv        71936  2026-11-01 16:22:55.836000  
+kgrun-ship-001-0000-sha256.txt                     340  2026-11-01 16:22:55.307000  
+kgrun-ship-001-0001-cbo-jinfprobe-s1of3-a1.log   35546  2026-11-01 16:22:55.686000  
+kgrun-ship-001-0002-jinfprobe_params.csv           706  2026-11-01 16:22:56.105000  
+kgrun-ship-001-0003-jinfprobe_results.csv        72808  2026-11-01 16:22:56.024000  
+kgrun-ship-002-0000-sha256.txt                     340  2026-11-01 16:22:55.668000  
+kgrun-ship-002-0001-cbo-jinfprobe-s2of3-a1.log   35546  2026-11-01 16:22:55.688000  
+kgrun-ship-002-0002-jinfprobe_params.csv           707  2026-11-01 16:22:55.984000  
+kgrun-ship-002-0003-jinfprobe_results.csv        71539  2026-11-01 16:22:55.983000  
+kgrun-ship-003-0000-sha256.txt                      84  2026-11-01 16:22:55.690000  
+kgrun-ship-003-0001-calprec2_beta.csv           137943  2026-11-01 16:22:55.982000  
+kgrun-ship-004-0000-sha256.txt                     349  2026-11-01 16:22:55.740000  
+kgrun-ship-004-0001-rerun_archive_check.csv     359499  2026-11-01 16:22:56.071000  
+kgrun-ship-004-0002-rerun_onset_control.csv       1953  2026-11-01 16:22:56.291000  
+kgrun-ship-004-0003-rerun_plan.csv              650280  2026-11-01 16:22:56.431000  
+kgrun-ship-004-0004-rerun_plan_params.csv          744  2026-11-01 16:22:56.324000  
+kgrun-ship-index.json                             2794  2026-11-01 16:22:55.270000  
+law.py                                           35107  2026-11-01 16:22:55.739000  
+m1_estimands.py                                  11063  2026-11-01 16:22:55.660000  
+m2_window.py                                     14916  2026-11-01 16:22:55.511000  
+m3_bootmc.py                                     10228  2026-11-01 16:22:55.879000  
+m4_slopese.py                                    11750  2026-11-01 16:22:55.657000  
+m5_gapwidth.py                                   12581  2026-11-01 16:22:55.706000  
+m6_hetero.py                                     14514  2026-11-01 16:22:55.206000  
+m7_pairing.py                                    20201  2026-11-01 16:22:55.702000  
+manifest.py                                       8492  2026-11-01 16:22:55.775000  
+measlib.py                                       12338  2026-11-01 16:22:55.772000  
+mechanism.py                                     20139  2026-11-01 16:22:55.518000  
+memprobe.py                                      12538  2026-11-01 16:22:55.730000  
+mkfig2.py                                         1825  2026-11-01 16:22:55.869000  
+mkfig4.py                                         2223  2026-11-01 16:22:55.719000  
+mkfig5.py                                         2391  2026-11-01 16:22:55.732000  
+n30_reconstruct.py                               37371  2026-11-01 16:22:55.218000  
+onsetclass.py                                    18579  2026-11-01 16:22:55.363000  
+onsetdiag.py                                     25052  2026-11-01 16:22:55.557000  
+onsetr_rehearsal.py                              15524  2026-11-01 16:22:55.588000  
+partm.py                                         17573  2026-11-01 16:22:55.761000  
+perjcal.py                                       12877  2026-11-01 16:22:55.830000  
+perjcalprobe.py                                  29928  2026-11-01 16:22:55.767000  
+reboot.py                                        13085  2026-11-01 16:22:55.350000  
+refratio.py                                      17319  2026-11-01 16:22:55.389000  
+refratio2.py                                     18430  2026-11-01 16:22:55.352000  
+refscale.py                                      35973  2026-11-01 16:22:55.454000  
+regime.py                                        26398  2026-11-01 16:22:55.802000  
+regimemap.py                                     27824  2026-11-01 16:22:55.790000  
+rerun.py                                         55270  2026-11-01 16:22:55.770000  
+rerun_analysis.py                               109437  2026-11-01 16:22:55.807000  
+rerun_tally.py                                   12415  2026-11-01 16:22:55.749000  
+rerunlib.py                                      44427  2026-11-01 16:22:55.824000  
+rmapj.py                                         11680  2026-11-01 16:22:55.794000  
+rmapj_real.csv                                  379782  2026-11-01 16:22:56.365000  
+sigma.py                                         20661  2026-11-01 16:22:55.777000  
+sizetest.py                                      66953  2026-11-01 16:22:55.783000  
+verify.py                                        15711  2026-11-01 16:22:55.894000  
+visibility.py                                    20942  2026-11-01 16:22:55.864000
+  1 s: kgrun-bundle-681ac0f4987f6998.sha256 listed
+GENERATE KERNEL  ericsom/cbo-c5-x-s6of116-a1
+  wrote /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+  runner requires bundle 681ac0f4987f6998 in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: c5run.py --archive <found path> --outdir /kaggle/working --mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 6 --nshards 116
+  runner will rebuild jinfprobe-s0of3-a1-kaggle-20261031-210629 under /tmp/kgrun-ship and replace runs/jinfprobe-s0of3-a1-kaggle-20261031-210629 in the args
+  runner will rebuild jinfprobe-s1of3-a1-kaggle-20261031-233459 under /tmp/kgrun-ship and replace runs/jinfprobe-s1of3-a1-kaggle-20261031-233459 in the args
+  runner will rebuild jinfprobe-s2of3-a1-kaggle-20261101-015818 under /tmp/kgrun-ship and replace runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 in the args
+  runner will rebuild calprec2-finalize-20261023-112503 under /tmp/kgrun-ship and replace runs/calprec2-finalize-20261023-112503 in the args
+  runner will rebuild rerun-plan-20261023-112643 under /tmp/kgrun-ship and replace runs/rerun-plan-20261023-112643 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/ericsom/cbo-c5-x-s6of116-a1
+LAUNCHED ericsom/cbo-c5-x-s6of116-a1; not polled, not fetched. Check it with:
+  python scripts/kgrun.py status --job c5-x-s6of116-a1
+==============================================================================
