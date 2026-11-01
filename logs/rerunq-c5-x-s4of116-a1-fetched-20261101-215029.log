@@ -1,0 +1,45 @@
+==============================================================================
+rerunq tick  run 41325796064.1  2026-11-01T21:50:26+05:30
+  python 3.12.15
+  state file notes/rerun_queue.json
+  state RUNNING  item 6  attempt 1  job c5-x-s4of116-a1
+  definition notes/queues/c5.json (sha256 0cb9093d8768cd22afed560aadf3ca69e1089fc8ab0b77438c887236955bfeeb)
+  profile c5 [c5]  timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629, runs/jinfprobe-s1of3-a1-kaggle-20261031-233459, runs/jinfprobe-s2of3-a1-kaggle-20261101-015818  beta table runs/calprec2-finalize-20261023-112503  rerun plan runs/rerun-plan-20261023-112643  drill stop-after 150.0  workers 4
+    expect python 3.13.15 numpy 2.1.3; c5run_sha256 3c6a569f; jinfprobe_sha256 7b9d6e7f; c5price_sha256 10688bff; calprec2_sha256 3947d7ba; costprobe2_sha256 ea5cb2e1; rerunlib_sha256 31f4b360
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+POLL  c5-x-s4of116-a1
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job c5-x-s4of116-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job c5-x-s4of116-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-c5-x-s4of116-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-c5-x-s4of116-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-c5-x-s4of116-a1: COMPLETE  (judged: ericsom/cbo-c5-x-s4of116-a1 has status "KernelWorkerStatus.COMPLETE")
+FETCH  c5-x-s4of116-a1 (kaggle status COMPLETE)
+  $ /opt/hostedtoolcache/Python/3.12.15/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py fetch --job c5-x-s4of116-a1 --user ericsom
+  kgrun exit code 0  (console: logs/kgrun-c5-x-s4of116-a1-fetch.log)
+    | ==============================================================================
+    | kgrun  action fetch  job c5-x-s4of116-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    | FETCH OUTPUT into /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027
+    |   $ kaggle kernels output ericsom/cbo-c5-x-s4of116-a1 -p /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027/c5run-run-20261101-130043-s4of116/c5run_params.csv
+    | Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027/c5run-run-20261101-130043-s4of116/c5run_real.csv
+    | Kernel log downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027/cbo-c5-x-s4of116-a1.log 
+    |   3 files, manifest written to sha256.txt
+    |     cc176e37e5ef868427e403a582b58754de4a6f99a3c3c1e76ea330085692112b  c5run-run-20261101-130043-s4of116/c5run_params.csv
+    |     b367231dac20fa6a53a58a2b6003f6ac4050e8ae096df6a9544aec38dfca9c6a  c5run-run-20261101-130043-s4of116/c5run_real.csv
+    |     857c9e68f9100b722038b92e22b39b2689c6477859dc12b55bd6dc589b2a6319  cbo-c5-x-s4of116-a1.log
+    | ==============================================================================
+  runs/c5-x-s4of116-a1-kaggle-20261101-215027: manifest verified, 3 files
+  runner exit 0  python 3.13.15  numpy 2.1.3  mode run  run dir /kaggle/working/c5run-run-20261101-130043-s4of116  D-SMOKE None  completed 37
+  F2X: 37 rows end ok; runner 'tasks run by this job' 37, errored 0, F1 failures 0, complete (37, 37)
+  runner exit 0; state now READY
