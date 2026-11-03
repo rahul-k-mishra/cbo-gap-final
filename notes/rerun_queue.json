@@ -14,7 +14,7 @@
       "rerun_plan": "runs/rerun-plan-20261023-112643",
       "drill_stop_after": 150.0,
       "expect": {
-        "python": "3.13.15",
+        "python": "3.13.18",
         "numpy": "2.1.3",
         "c5run_sha256": "3c6a569ffea662626f4a67ae8618a42c7db17cd6e2e033d9aa547bf1433cc959",
         "jinfprobe_sha256": "7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f",
@@ -1853,6 +1853,15 @@
       "attempt": 1,
       "job": "c5-x-s13of116-a1",
       "note": "R1: header of runs/c5-x-s13of116-a1-kaggle-20261103-061045: python 3.13.18, expected 3.13.15"
+    },
+    {
+      "at": "2026-11-03T19:30:03+05:30",
+      "run": "manual",
+      "event": "set-python",
+      "item": "c5-s13of116",
+      "attempt": 1,
+      "job": "c5-x-s13of116-a1",
+      "note": "profile c5 expect python 3.13.15 -> 3.13.18; bitcmp logs/c5bitcmp-s12-py31318-20261103.log sha256 df1b97c59538e24d29f66d61f64857949987d8adc2979cbbc2c911792fad4335; detcheck runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log sha256 afe3b0ee8a8344ce15d44f5a00855023010cdd2c4533c518005fb8878c93eae9; N45 IMAGE SPLIT: c5bitcmp IDENTICAL 37/37, detcheck PASS on 3.13.18"
     }
   ],
   "definition": {
