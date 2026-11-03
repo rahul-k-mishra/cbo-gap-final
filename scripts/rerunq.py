@@ -531,6 +531,11 @@ SUBCOMMANDS
                      next-item" after a halt that came after the fetch, so
                      that the checks the halt pre-empted are not skipped
                      (ledger K6, arch-s0of4 a1: R1 halted before F2)
+  set-python --to VERSION --bitcmp LOG --detcheck LOG --note TEXT
+                     while HALTED by R1 on the Python version alone: move
+                     the expected Python of the current item's profile to
+                     VERSION, and nothing else (SP below); Rahul commits
+                     and pushes, runs verify, then releases next-item
   load --definition notes/queues/<name>.json --note TEXT
                      only when DONE: archive the state and start the queue
                      the definition describes (LD); Rahul commits and
@@ -553,6 +558,53 @@ SUBCOMMANDS
                   without an accepted kernel check (K1); the check comes
                   from "check" or from --checked-by-hand STATUS
     next-item     READY at the next item, attempt 1
+
+SP  SET-PYTHON (ledger N45, C5 IMAGE SPLIT; written 2026-11-03 after the
+    IDENTICAL verdict, at Rahul's instruction: "Only the expected value
+    changes, never the rule that it must match exactly"). R1 is unchanged:
+    python must equal expect["python"] exactly, and so must numpy and every
+    pinned hash. set-python changes the one value expect["python"] of the
+    current item's profile, and only when ALL of these hold (each failure
+    is named, the state is not written, exit 2):
+    SP1 HALT. status HALTED, and halt_reason is EXACTLY
+        "R1: header of <F>: python <VERSION>, expected <OLD>"
+        with <F> the folder of the current item's last recorded attempt
+        and <OLD> the profile's expect["python"]. Any other R1 problem in
+        the same halt (numpy, a hash, a name) makes the string differ, so
+        set-python is refused: a NumPy change has no subcommand.
+    SP2 BITWISE EVIDENCE. --bitcmp is a log under logs/, committed and
+        unmodified (git ls-files and git status), written by the committed
+        scripts/c5bitcmp.py (its printed script sha256 equals the file's),
+        with: "ref" a folder the queue fetched and accepted for an earlier
+        item of this profile (an attempt record with runner_exit 0); "new"
+        a committed folder whose sha256.txt verifies; "params PASS ...
+        ref python <OLD>  new python <VERSION>  numpy <expect numpy>";
+        "rows PASS"; "SUMMARY  N tids compared, N identical, 0 differing"
+        with N >= 1; and "VERDICT  IDENTICAL  (exit 0)".
+    SP3 RULE 16. --detcheck is a kernel log inside a committed run folder
+        whose sha256.txt verifies; every "python" header line in it names
+        <VERSION>; it holds "VERDICT   D1+D2: PASS   D3: PASS   OVERALL:
+        PASS"; and ENVIRONMENT.md, committed and unmodified, has a line
+        ending "OVERALL: PASS -- see <that log>".
+    SP4 WRITE. expect["python"] = <VERSION>; status stays HALTED and the
+        halt reason is kept, so the next steps are verify (R1 now passes
+        if and only if the header names <VERSION>; F2 runs) and release
+        --mode next-item. History event "set-python" records OLD ->
+        VERSION, both log paths with their sha256, and the note.
+    IF THE IMAGE CHANGES AGAIN: R1 halts exactly as at s13 ("python
+    3.13.19, expected 3.13.18"). set-python then needs a NEW bitwise log
+    whose ref python is 3.13.18 and new python is 3.13.19, and a detcheck
+    on 3.13.19 recorded in ENVIRONMENT.md. No earlier evidence can satisfy
+    SP1 to SP3 for a different pair of versions, so nothing drifts.
+    Worked example (s13): halt "R1: header of runs/c5-x-s13of116-a1-
+    kaggle-20261103-061045: python 3.13.18, expected 3.13.15"; --to
+    3.13.18; --bitcmp logs/c5bitcmp-s12-py31318-20261103.log (ref
+    runs/c5-x-s12of116-a1-kaggle-20261103-023156, accepted shard 12;
+    "37 identical, 0 differing"); --detcheck runs/detcheck-py31318-kaggle-
+    20261103-143512/cbo-detcheck-py31318.log: pass; expect python
+    3.13.15 -> 3.13.18. With --to 3.13.19 the same call fails SP1, SP2
+    and SP3. NULL RATE: deterministic string, hash and git checks; none
+    fires by chance.
 
 Python 3.8 to 3.11 syntax. Standard library only, plus scripts/manifest.py.
 No trajectory is evolved here, so the Pool, --workers and RSS items of
@@ -2087,6 +2139,120 @@ def verify(a):
     return 0 if not probs else 3
 
 
+def committed_unmodified(rel):
+    """None when rel is tracked by git and unchanged against HEAD, else the reason."""
+    rc, _ = git(["ls-files", "--error-unmatch", "--", rel], check=False)
+    if rc != 0:
+        return "{} is not committed".format(rel)
+    rc, out = git(["status", "--porcelain", "--", rel], check=False)
+    if rc != 0 or out:
+        return "{} differs from the committed file".format(rel)
+    return None
+
+
+def set_python_problems(s, new, bitcmp, detcheck):
+    """SP1 to SP3: [] when set-python may write, else every reason it may not."""
+    probs = []
+    if s.get("status") != "HALTED":
+        return ["SP1: status is {}, not HALTED".format(s.get("status"))]
+    item = s["queue"][s["index"]]
+    prof = profile_of(s, item)
+    old, npy = prof["expect"]["python"], prof["expect"]["numpy"]
+    if not re.match(r"^\d+\.\d+\.\d+$", new or ""):
+        probs.append("SP1: --to {!r} is not a version like 3.13.18".format(new))
+    if new == old:
+        probs.append("SP1: --to equals the expected python {}".format(old))
+    recs = s["attempts"].get(item["id"], [])
+    if not recs or recs[-1]["attempt"] != s["attempt"]:
+        probs.append("SP1: no recorded attempt folder for {} attempt {}".format(item["id"], s["attempt"]))
+    else:
+        want = "R1: header of {}: python {}, expected {}".format(recs[-1]["folder"], new, old)
+        if s.get("halt_reason") != want:
+            probs.append("SP1: halt reason is {!r}, not {!r}".format(s.get("halt_reason"), want))
+    # SP2
+    if not bitcmp.startswith("logs/"):
+        probs.append("SP2: --bitcmp must be a log under logs/")
+    why = committed_unmodified(bitcmp)
+    if why:
+        probs.append("SP2: " + why)
+    else:
+        text = open(os.path.join(ROOT, bitcmp), encoding="utf-8").read()
+        m = re.search(r"^  script   sha256 ([0-9a-f]{64})$", text, re.M)
+        if not m or m.group(1) != sha256_of(os.path.join(SCRIPTS, "c5bitcmp.py")):
+            probs.append("SP2: the log's c5bitcmp.py sha256 is not the committed script's")
+        if not re.search(r"^CBO-GAP c5bitcmp ", text, re.M):
+            probs.append("SP2: not a c5bitcmp log")
+        mr = re.search(r"^  ref      (\S+)$", text, re.M)
+        mn = re.search(r"^  new      (\S+)$", text, re.M)
+        accepted = set(r["folder"] for it in s["queue"][:s["index"]] if it["profile"] == item["profile"]
+                       for r in s["attempts"].get(it["id"], []) if r.get("runner_exit") == 0)
+        if not mr or mr.group(1).rstrip("/") not in accepted:
+            probs.append("SP2: ref is not a folder the queue accepted for an earlier item of this profile")
+        if not mn:
+            probs.append("SP2: no new folder in the log")
+        else:
+            why = committed_unmodified(mn.group(1).rstrip("/") + "/sha256.txt") or folder_ok(mn.group(1).rstrip("/"))
+            if why:
+                probs.append("SP2: new folder: " + why)
+        if not re.search(r"^  params PASS  equal on every key but python: ref python {}  new python {}  "
+                         r"numpy {}$".format(re.escape(old), re.escape(new), re.escape(npy)), text, re.M):
+            probs.append("SP2: no 'params PASS' line with ref python {}, new python {}, numpy {}".format(old, new, npy))
+        if not re.search(r"^  rows PASS ", text, re.M):
+            probs.append("SP2: no 'rows PASS' line")
+        ms = re.search(r"^SUMMARY  (\d+) tids compared, (\d+) identical, 0 differing$", text, re.M)
+        if not ms or ms.group(1) != ms.group(2) or int(ms.group(1)) < 1:
+            probs.append("SP2: no SUMMARY with every tid identical and none differing")
+        if not re.search(r"^VERDICT  IDENTICAL  \(exit 0\)$", text, re.M):
+            probs.append("SP2: no 'VERDICT  IDENTICAL  (exit 0)'")
+    # SP3
+    run = os.path.dirname(detcheck)
+    if not detcheck.startswith("runs/") or not run or run == "runs":
+        probs.append("SP3: --detcheck must be a log inside a run folder under runs/")
+    else:
+        why = committed_unmodified(detcheck) or committed_unmodified(run + "/sha256.txt") or folder_ok(run)
+        if why:
+            probs.append("SP3: " + why)
+        else:
+            text = open(os.path.join(ROOT, detcheck), encoding="utf-8").read()
+            pys = re.findall(r"  python   (\S+) ", text)
+            if not pys or any(x != new for x in pys):
+                probs.append("SP3: python header(s) {} in the detcheck log, expected {}".format(sorted(set(pys)), new))
+            if "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS" not in text:
+                probs.append("SP3: no OVERALL PASS verdict in the detcheck log")
+        why = committed_unmodified("ENVIRONMENT.md")
+        if why:
+            probs.append("SP3: " + why)
+        else:
+            env = open(os.path.join(ROOT, "ENVIRONMENT.md"), encoding="utf-8").read().splitlines()
+            if not any(x.rstrip().endswith("OVERALL: PASS -- see " + detcheck) for x in env):
+                probs.append("SP3: ENVIRONMENT.md has no 'OVERALL: PASS -- see {}' line".format(detcheck))
+    return probs
+
+
+def set_python(a):
+    """SP: move expect["python"] of the current item's profile, under SP1 to SP3 (docstring)."""
+    s = load()
+    probs = set_python_problems(s, a.to, a.bitcmp, a.detcheck)
+    for x in probs:
+        print("  REFUSED " + x)
+    if probs:
+        print("set-python refused; nothing written")
+        return 2
+    item = s["queue"][s["index"]]
+    prof = profile_of(s, item)
+    old = prof["expect"]["python"]
+    prof["expect"]["python"] = a.to
+    history(s, "manual", "set-python", "profile {} expect python {} -> {}; bitcmp {} sha256 {}; detcheck {} "
+            "sha256 {}; {}".format(item["profile"], old, a.to, a.bitcmp, sha256_of(os.path.join(ROOT, a.bitcmp)),
+                                   a.detcheck, sha256_of(os.path.join(ROOT, a.detcheck)), a.note))
+    validate(s)
+    write_state(s)
+    show(a)
+    print("\nwritten: {}. expect python {} -> {}; status still HALTED. Commit and push it, run verify, then "
+          "release --mode next-item.".format(STATE_REL, old, a.to))
+    return 0
+
+
 def halted_job(s):
     """K1: the job a halt leaves: the recorded one, else the current item and attempt's name."""
     return s["job"] or job_spec(s)[0]
@@ -2211,6 +2377,11 @@ def main():
     h.add_argument("--note", required=True)
     c = sub.add_parser("check")
     c.add_argument("--note", required=True)
+    sp = sub.add_parser("set-python")
+    sp.add_argument("--to", required=True)
+    sp.add_argument("--bitcmp", required=True)
+    sp.add_argument("--detcheck", required=True)
+    sp.add_argument("--note", required=True)
     r = sub.add_parser("release")
     r.add_argument("--mode", required=True, choices=["start", "repoll", "next-attempt", "next-item"])
     r.add_argument("--note", required=True)
@@ -2229,6 +2400,8 @@ def main():
         return verify(a)
     if a.cmd == "load":
         return load_definition(a)
+    if a.cmd == "set-python":
+        return set_python(a)
     if a.cmd in ("halt", "check", "release"):
         return manual(a)
     p.print_help()

@@ -5017,7 +5017,68 @@ instruction of 2026-10-15.
     e1b2e8507ee927ac). It differs from the queue's 681ac0f4987f6998
     because scripts/c5bitcmp.py was added; c5bitcmp's P0(c) checks that
     c5run.py and its modules hash as in shard 12's params.
-  OPEN until the c5bitcmp log is in.
+  RESULT (logs/c5bitcmp-s12-py31318-20261103.log, run by Rahul on the
+  laptop, python 3.12.3, numpy 2.5.3, workers 2, c5bitcmp.py sha256
+  f2640a24...7852; committed unchanged in dfb7537 because it was still
+  untracked; the recheck folder runs/c5-x-s12of116-bitchk-a1-kaggle-
+  20261103-181354 committed by Rahul in a75f4cf):
+    P0: both manifests PASS (3 files each); "params PASS  equal on every
+    key but python: ref python 3.13.15  new python 3.13.18  numpy 2.1.3";
+    "rows PASS  37 tids in each, all end ok, no repeats, same set"; 30
+    columns compared (every column but env, wall_s, rss_mb, rss_flag,
+    including E_json, extras_json, le0, le_redraw, the audit, seed_key).
+    B: 37 SAME. "SUMMARY  37 tids compared, 37 identical, 0 differing";
+    "VERDICT  IDENTICAL  (exit 0)". The 37 tids cover CONC-X d 2, 5, 10,
+    40 and TAU8-X d 5, 10, 40, objectives ackley, rastrigin, sphere,
+    griewank, levy, rosenbrock.
+  BRANCH TAKEN: IDENTICAL with detcheck PASS on 3.13.18, as fixed above
+  before either result. Shards 0 to 13 stand; shard 13's folder (fetched
+  and committed by the halting tick, runner exit 0, 37 rows ok) is
+  accepted after verify re-runs R1 and F2 on it under the moved
+  expectation; the queue continues at shard 14.
+  CORRECTION to the split as Rahul stated it (2026-11-03: "shards 0 to 13
+  on python 3.13.15 and shards 14 to 115 on 3.13.18"): shard 13 ran on
+  3.13.18; its header is the one R1 halted on. From the headers: smoke,
+  drill and shards 0 to 12 on 3.13.15 (build "main, Aug 6 2026"); shard
+  13 on 3.13.18 ("main, Oct 26 2026"); NumPy 2.1.3 in all. Shards 14 to
+  115 will be 3.13.18 only if Kaggle does not change the image again; if
+  it does, R1 halts and the split gets a third segment.
+  SET-PYTHON (scripts/rerunq.py, rule SP in its docstring; Claude,
+  2026-11-03, at Rahul's instruction). Moves only expect["python"] of the
+  halted item's profile; R1's exact match is untouched. Refused unless:
+  SP1 the halt reason is exactly "R1: header of <the item's folder>:
+  python <new>, expected <old>" (any numpy or hash problem in the same
+  halt refuses it; a NumPy change has no subcommand); SP2 a committed,
+  unmodified c5bitcmp log from the committed script, with ref a folder
+  the queue accepted earlier in this profile, new a committed folder
+  that verifies, ref python <old>, new python <new>, numpy equal to the
+  expectation, every tid identical and VERDICT IDENTICAL; SP3 a committed
+  detcheck kernel log whose python headers all name <new>, OVERALL PASS,
+  and an ENVIRONMENT.md line pointing at it. The state stays HALTED;
+  verify then release next-item follow. Checked by Claude on the real
+  committed logs with a hand-built state (values read from the state by
+  the Read tool; nothing written): the s13 case passes; --to 3.13.19,
+  an added numpy problem, a later 3.13.18 -> 3.13.19 halt with today's
+  evidence, a ref the queue never accepted, a non-HALTED state and the
+  3.13.15 detcheck log are each refused with the reason named. If the
+  image changes again the queue halts exactly as at s13, and only new
+  evidence for that pair of versions can move it. Wired into
+  rerun-queue-admin.yml (command set-python, inputs python_to and
+  evidence) and CLAUDE.md rule 22.
+  FOR THE PAPER (Methods, where C5 is described; the supplement carries
+  the log paths). Proposed text, numbers from the logs above:
+    "The C5 shards ran on Kaggle's CPU image, whose Python moved from
+    3.13.15 to 3.13.18 between shards 12 and 13; NumPy was 2.1.3
+    throughout. Shards 0 to 12 ran under 3.13.15 and shards 13 to 115
+    under 3.13.18. Our determinism check against the archived results
+    passed under both versions, and shard 12, rerun in full under 3.13.18,
+    reproduced all 37 of its realizations bit for bit in every recorded
+    quantity except run time and memory, across all four dimensions, both
+    rows and all six objectives. We therefore pool the shards."
+  It claims identity on the rerun shard and pooling, not identity on
+  every shard (rule 10). The ranges "13 to 115" are confirmed only when
+  C5 finishes without another R1 halt.
+  CLOSED 2026-11-03 for the image split; the queue release is Rahul's.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page

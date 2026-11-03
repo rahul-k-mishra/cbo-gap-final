@@ -46,7 +46,8 @@ experiment. Everything in this file is non-negotiable.
     .github/workflows/rerun-queue.yml   the rerun queue's tick, dispatched every
                                    15 minutes from cron-job.org (rule 22)
     .github/workflows/rerun-queue-admin.yml   the queue's manual subcommands
-                                   (show, verify, check, release, halt, load),
+                                   (show, verify, check, release, halt, load,
+                                   set-python),
                                    run by hand from GitHub (rule 22)
     .github/workflows/rerun-queue-notify-test.yml   a hand-run test of
                                    the queue's alert issue (rule 22)
@@ -362,11 +363,19 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       Rahul has read the halt reason, released the state, checked the
       laptop clone for unpushed commits, and re-enabled both drivers.
       The laptop timer is optional: the workflow alone runs the queue.
-      check, verify, release, halt and load can be run by Rahul either on
-      the laptop or through .github/workflows/rerun-queue-admin.yml, which
+      check, verify, release, halt, load and set-python can be run by
+      Rahul either on the laptop or through
+      .github/workflows/rerun-queue-admin.yml, which
       runs the same rerunq.py subcommand and commits what it wrote; a
       Claude session never triggers it (amended 2026-11-01, Rahul's
       instruction that C5 run with no laptop involvement; ledger N45).
+      set-python moves only the expected Python version of the halted
+      item's profile, after an R1 halt on that version alone, and only
+      with a committed bitwise comparison (c5bitcmp, IDENTICAL) and a
+      detcheck pass on the new version recorded in ENVIRONMENT.md; R1's
+      exact match is unchanged, so the next image change halts the same
+      way (amended 2026-11-03, Rahul's instruction; ledger N45, C5 IMAGE
+      SPLIT).
       A failed tick, and a tick that finds the queue DONE, also opens a
       GitHub issue labelled rerunq-alert, assigned to and mentioning
       Rahul, or comments on the one already open

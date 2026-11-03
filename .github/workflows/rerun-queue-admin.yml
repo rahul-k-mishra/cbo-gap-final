@@ -3,8 +3,8 @@
 # involvement). Started only by hand: Actions > rerun-queue-admin > Run
 # workflow, or "gh workflow run rerun-queue-admin.yml -f command=...".
 # It runs exactly one of scripts/rerunq.py show, verify, check, release,
-# halt or load, with the inputs given, and for the four that change the
-# state commits and pushes what rerunq.py wrote (the state file, and for
+# halt, load or set-python (N45, 2026-11-03), with the inputs given, and
+# for the five that change the state commits and pushes what rerunq.py wrote (the state file, and for
 # load the archived state), as Rahul would on the laptop. It decides
 # nothing: every rule (K1, LD, the release modes) is rerunq.py's own.
 # Its concurrency group is its own, not the tick's: GitHub cancels a run
@@ -23,7 +23,7 @@ on:
         description: "rerunq.py subcommand"
         required: true
         type: choice
-        options: [show, verify, check, release, halt, load]
+        options: [show, verify, check, release, halt, load, set-python]
       mode:
         description: "release only: start, repoll, next-attempt or next-item"
         required: false
@@ -38,6 +38,14 @@ on:
         options: [none, COMPLETE, ERROR, CANCEL_ACKNOWLEDGED, ABSENT]
       definition:
         description: "load only: a committed definition, e.g. notes/queues/c5.json"
+        required: false
+        default: ""
+      python_to:
+        description: "set-python only: the Python version the halt reported, e.g. 3.13.18"
+        required: false
+        default: ""
+      evidence:
+        description: "set-python only: BITCMP_LOG,DETCHECK_LOG (committed paths, comma-separated)"
         required: false
         default: ""
       note:
@@ -119,6 +127,8 @@ jobs:
           HAND: ${{ inputs.checked_by_hand }}
           DEF: ${{ inputs.definition }}
           NOTE: ${{ inputs.note }}
+          PYTO: ${{ inputs.python_to }}
+          EVID: ${{ inputs.evidence }}
         run: |
           set -eu
           case "$CMD" in
@@ -135,6 +145,12 @@ jobs:
               else
                 python scripts/rerunq.py release --mode "$MODE" --note "$NOTE"
               fi ;;
+            set-python)
+              test -n "$NOTE" || { echo "a note is required for set-python"; exit 2; }
+              test -n "$PYTO" || { echo "set-python needs python_to"; exit 2; }
+              BIT="${EVID%%,*}"; DET="${EVID#*,}"
+              test -n "$BIT" && test -n "$DET" && test "$BIT" != "$EVID" || { echo "evidence must be BITCMP_LOG,DETCHECK_LOG"; exit 2; }
+              python scripts/rerunq.py set-python --to "$PYTO" --bitcmp "$BIT" --detcheck "$DET" --note "$NOTE" ;;
             load)
               test -n "$NOTE" || { echo "a note is required for load"; exit 2; }
               test -n "$DEF" || { echo "load needs a definition"; exit 2; }
@@ -142,7 +158,7 @@ jobs:
           esac
 
       - name: Commit and push what rerunq.py wrote
-        if: inputs.command == 'check' || inputs.command == 'release' || inputs.command == 'halt' || inputs.command == 'load'
+        if: inputs.command == 'check' || inputs.command == 'release' || inputs.command == 'halt' || inputs.command == 'load' || inputs.command == 'set-python'
         env:
           CMD: ${{ inputs.command }}
           MODE: ${{ inputs.mode }}
