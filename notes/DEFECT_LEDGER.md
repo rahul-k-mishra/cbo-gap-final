@@ -5395,6 +5395,9 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
   E(v) >= eta1 ||v|| with eta1 = 4(1 - e^-U)/(U sqrt d) (nu = 1); far-field
   E(v) > 20(1 - e^-U) =: E_inf for ||v|| > R0. Anisotropic (nu <= 1/2,
   l-infinity balls): ||v||_inf <= (R0/eta1)^{1/2} E^{1/2}.
+  CLOSED 2026-11-03 (Claude): the l2 constants hold as written. The
+  anisotropic line is superseded: the l-infinity A2 is proved with nu = 1
+  against the dissertation's Assumption 3.5 (O7, second part, ACKLEY).
 - O3. Equation matching: GHV (1.1)/(2.5) with unit drift and S equals FKR
   (8)/(9) with lambda = 1 and sigma = sqrt(2 theta); every experiment uses
   lambda = 1; state the restriction.
@@ -5550,7 +5553,192 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
     (e) |v|_inf <= |v|_2: the same nu, eta, R0 and E_inf (|v|_inf > 1
         gives |v|_2 > 1).
     (f) yes; (g) yes.
-  - STILL TO DO in O7, rows in the order of most work left: Rosenbrock
+  PROGRESS 2026-11-03, second part (Claude; Rahul's order: Rosenbrock,
+  Levy, Ackley's A2, Schwefel, the synthetic family). Notation as in
+  the first part; |.| is the l2 norm unless marked inf.
+  - SCHWEFEL: ROWS REMOVED (Rahul's rule: no experiment uses it, so the
+    rows come out). Searched zenodo-v1, round1-zip, scripts/, runs/ and
+    manuscript/ for "schwefel" (case-insensitive). Hits: the manuscript
+    (Table 1 rows tex 127-128, Proposition 3 in Subsection
+    sec:schwefel, tex 187-191), zenodo-v1/sn-article.tex, and
+    verify.py's CHECK 4 (zenodo-v1 and round1-zip copies). CHECK 4
+    evaluates f at points where every sine term is +1 to confirm the
+    proposition; it evolves no dynamics. No dynamics script, no run
+    folder and no round-2 script uses Schwefel. Consequences for the
+    editing pass: delete both table rows and Subsection sec:schwefel
+    with its Proposition 3 (renumbering what follows); the caption's
+    "seven standard benchmarks" becomes "the six named benchmarks
+    used here"; "Proposition 3 (Schwefel)" leaves "Checked and found
+    sound". The archived verify.py stays as deposited (rule 1).
+  - ROSENBROCK, f(x) = sum_{i=1}^{d-1} [100 (x_{i+1} - x_i^2)^2 + (1 -
+    x_i)^2], d >= 2 (f_rosenbrock). f >= 0. f = 0 forces x_i = 1 for i
+    <= d - 1 (the (1 - x_i)^2 terms), then x_d = x_{d-1}^2 = 1. So f* =
+    0, attained only at x* = 1 (all ones).
+    Manuscript Proposition 2 (prop:rosen) was re-read line by line and
+    holds: the l <= 1 curve, the l >= 1 case analysis (M < 8; k = 1;
+    k >= 2 with both branches, including (sqrt(0.95 M) - 1)^2 >=
+    (sqrt(0.95 M)/2)^2 for M >= 4/0.95), s = 3 and u = 4. It gives
+    c_l = 1/(8 sqrt d), C_l = 1 but leaves L_f, c_u and C_u as "C". These
+    are added here:
+    (a) GRADIENT. dE/dx_j = -400 x_j (x_{j+1} - x_j^2) - 2(1 - x_j)
+        [j <= d - 1] + 200 (x_j - x_{j-1}^2) [j >= 2]. Write r = |z|. The
+        first part, as a vector A, has |A_j| <= 400(|z_j z_{j+1}| +
+        |z_j|^3). Since sum_j z_j^2 z_{j+1}^2 <= (sum z_j^2)(sum z_{j+1}^2)
+        <= r^4 and sum z_j^6 <= r^6, |A| <= 400 (r^2 + r^3). The second
+        part has |B| <= 2(sqrt(d - 1) + r). The third has |C| <= 200 (r +
+        r^2), because (sum z^4)^(1/2) <= r^2. So |grad f(z)| <= 400 r^3 +
+        600 r^2 + 202 r + 2 sqrt d <= (400 + 2 sqrt d)(1 + r)^3; compare
+        coefficients against (1 + r)^3 = 1 + 3r + 3r^2 + r^3. By the mean
+        value theorem, with z on [x, y] and |z| <= max(|x|, |y|) <= |x| +
+        |y|: (2.1) with s = 3, L_f = 400 + 2 sqrt d.
+        s = 3 is least: f(t e1) = 100 t^4 + (1 - t)^2 + (d - 2), so
+        f((t + 1) e1) - f(t e1) = 100((t + 1)^4 - t^4) + 2t - 1 >= 400 t^3
+        - 1, against L_f (2t + 2)^s.
+        UPPER, using (a + b)^2 <= 2a^2 + 2b^2, sum x_{i+1}^2 <= |x|^2 and
+        sum x_i^4 <= |x|^4: f <= 200 |x|^2 + 200 |x|^4 + 2(d - 1) + 2|x|^2
+        = 200 |x|^4 + 202 |x|^2 + 2(d - 1). With |x|^2 <= (1 + |x|^4)/2
+        this is <= 301 |x|^4 + 2d + 99. So (2.2a) holds with u = 4, c_u =
+        301, C_u = 2d + 99. u = 4 is least, since f(t e1) >= 100 t^4 with
+        |t e1| = t.
+        LOWER: (2.2b) with l = 1, c_l = 1/(8 sqrt d), C_l = 1
+        (Proposition 2). No l > 1 holds: on x_i = t^(2^(i-1)), t > 1,
+        the coupling terms vanish and each (1 - t^(2^(i-1)))^2 <=
+        t^(2^i) <= t^(2^(d-1)) <= |x|, so f <= (d - 1)|x| there.
+        So f is in A(3, 1, 4). Every admissible pair has l <= 1 < 4 <= u,
+        so f is in no A(s, l, l): GHV Theorems 2.3 and 2.6 do not apply.
+        v4 Subsection 5.2 sketches the case u > l > 0 up to a finite T <
+        T+, without a stated theorem; mention it, do not rely on it.
+    (b) (19) fails (s = 3 is least, and (19) implies (2.1) with s = 1).
+        (20) fails (f(t e1) >= 100 t^4). FKR Theorem 3.2 does not apply.
+    (c) No (l != u).
+    (d) A2 in l2, proved. Write y = x - 1, S = sum_{i<d} y_i^2 and D =
+        |x_d - x_{d-1}^2| = |y_d - 2 y_{d-1} - y_{d-1}^2|. Dropping the
+        other coupling terms, f >= S + 100 D^2. If |y_{d-1}| <= 1, then
+        y_{d-1}^2 <= |y_{d-1}|, so |y_d| <= D + 2|y_{d-1}| + y_{d-1}^2 <= D
+        + 3|y_{d-1}|, hence y_d^2 <= 2D^2 + 18 y_{d-1}^2 <= 2D^2 + 18 S,
+        and |y|^2 = S + y_d^2 <= 19 S + 2 D^2 <= 19 (S + 100 D^2) <= 19 f.
+        On B_1(x*) every |y_i| <= 1, so (24) holds with nu = 1/2, eta =
+        19^(-1/2), R0 = 1. For (25), take |y| > 1. If |y_{d-1}| > 1 then f
+        >= y_{d-1}^2 > 1. Otherwise the display gives f >= |y|^2 / 19 >
+        1/19. So E_inf = 1/19.
+    (e) A2 in l-infinity: on B^inf_1(x*), |y_{d-1}| <= 1 and |y|_inf <=
+        |y| <= (19 f)^(1/2), so (3.26) holds with nu = 1/2, eta =
+        19^(-1/2), R0 = 1. Outside it: if |y_{d-1}| > 1 then f > 1; else
+        f >= |y|^2 / 19 >= |y|_inf^2 / 19 > 1/19. E_inf = 1/19.
+    (f) A1-A2 hold, but no theorem supplies the weak solution in
+        C([0,T*], P4) that Theorem 3.7 assumes. Label "not established
+        (no existence theorem)", not "fails". (g) No.
+  - LEVY (f_levy): w_i = 1 + (x_i - 1)/4, u_i = w_i - 1 = (x_i - 1)/4,
+    f = sin^2(pi w_1) + sum_{i<d} u_i^2 (1 + 10 sin^2(pi w_i + 1)) +
+    u_d^2 (1 + sin^2(2 pi w_d)), d >= 2. Every term is >= 0, and each
+    u_i^2 has a multiplier >= 1, so f >= |u|^2 = |x - 1|^2 / 16. At x =
+    1 (w = 1), sin^2(pi) = 0 and all u_i = 0. So f* = 0, attained only
+    at x* = 1.
+    The manuscript's proposition (Levy in A(2, 2, 2), not in A(1, ., .))
+    was re-read. Its idea is right, but its "Growth is quadratic above
+    and below after the affine change of variable" leaves (2.2) without
+    constants. Written out:
+    (a) GRADIENT in w. d/dw sin^2(pi w) = pi sin(2 pi w), at most pi.
+        For g(w) = (w - 1)^2 (1 + 10 sin^2(pi w + 1)): g'(w) = 2(w - 1)(1
+        + 10 sin^2(pi w + 1)) + 10 pi (w - 1)^2 sin(2 pi w + 2), so |g'|
+        <= 22|u| + 10 pi u^2. For h(w) = (w - 1)^2 (1 + sin^2(2 pi w)):
+        h' = 2(w - 1)(1 + sin^2(2 pi w)) + 2 pi (w - 1)^2 sin(4 pi w), so
+        |h'| <= 4|u| + 2 pi u^2. Hence |grad_w f| <= pi + 22|u| + 10 pi
+        |u|^2, using (sum u_i^4)^(1/2) <= |u|^2. And grad_x f = (1/4)
+        grad_w f. With |u| <= (|x| + sqrt d)/4 and |x| + sqrt d <= sqrt d
+        (1 + |x|): |grad_x f(z)| <= (1/4)[pi + (11 sqrt d / 2)(1 + |z|) +
+        (5 pi d / 8)(1 + |z|)^2] <= (pi/4 + 11 sqrt d / 8 + 5 pi d / 32)(1
+        + |z|)^2. The mean value theorem gives (2.1) with s = 2, L_f = pi/4
+        + 11 sqrt d / 8 + 5 pi d / 32.
+        s = 2 is least. Take x = (x_1, 1, ..., 1), so only sin^2(pi w_1)
+        and g(w_1) depend on x_1. Where sin(2 pi w_1 + 2) = 1 we have
+        sin(pi w_1 + 1) = cos(pi w_1 + 1) = +-1/sqrt 2, so sin^2 = 1/2 and
+        g' = 12 u_1 + 10 pi u_1^2. Then |df/dx_1| >= (1/4)(10 pi u_1^2 -
+        12|u_1| - pi). Such w_1 exist with |u_1| -> inf (2 pi w_1 + 2 =
+        pi/2 + 2 pi k). (2.1) with exponent s implies, letting y -> x
+        along e1, |df/dx_1 (x)| <= L_f (1 + 2|x|)^s with |x| <= |x_1| +
+        sqrt(d - 1); for s < 2 this fails as |x_1| -> inf.
+        UPPER: f <= 1 + 11 |u|^2 = 1 + (11/16)|x - 1|^2 <= 1 + (11/16)(2
+        |x|^2 + 2d), so (2.2a) holds with u = 2, c_u = 11/8, C_u = 1 + 11d/8.
+        LOWER: |x|^2 <= 2|x - 1|^2 + 2d, so f >= |x - 1|^2 / 16 >= |x|^2 /
+        32 - d/16: (2.2b) with l = 2, c_l = 1/32, C_l = d/16. A(2, 2, 2),
+        l = 2 <= s + 1 = 3.
+    (b) (19) fails (s = 2 is least). (20) holds with C2 = 1 + 11d/8, and
+        (21) with C3 = 1/64, C4 = 2 sqrt d (|x|^2/32 - d/16 >= |x|^2/64
+        when |x|^2 >= 4d). Theorem 3.2 does not apply, because of (19).
+    (c) p_M(2, 2) = 1, p >= 2: Theorem 2.3 applies (p = 4 for Gaussian
+        rho_0).
+    (d) |x - 1| <= 4 f^(1/2) = f^(1/2) / (1/4): (24) with nu = 1/2, eta
+        = 1/4, for every x. R0 = 1, E_inf = 1/16: |x - 1| > 1 gives f >=
+        |x - 1|^2 / 16 > 1/16.
+    (e) |x - 1|_inf <= |x - 1|: the same nu, eta, R0 and E_inf.
+    (f) Yes, with the weak solution from (c), subject to O3 and O4
+        (equation and solution-sense matching, isotropic arm, H = 1).
+        (g) Yes.
+  - ACKLEY, A2 (this is O2; O1 has the class, A(0, 0, 0), L_f = (4 + 2
+    pi e)/sqrt d). Write t = |x|/sqrt d and f = 20(1 - e^{-0.2 t}) + (e -
+    e^{h(x)}), both terms >= 0. phi(z) = 1 - e^{-z} is concave with
+    phi(0) = 0, so phi(z) >= (z/U) phi(U) for z in [0, U].
+    (d) l2, for any R0 > 0: put U = 0.2 R0 / sqrt d. On B_R0(0), 0.2 t
+        <= U, so f >= 20 (0.2 t / U) phi(U) = eta_1 |x| with eta_1 = 4(1 -
+        e^{-U}) / (U sqrt d). That is (24) with nu = 1, eta = eta_1. For
+        |x| > R0, 0.2 t > U, so f >= 20 phi(0.2 t) > 20 phi(U): (25)
+        with E_inf = 20 (1 - e^{-U}). These are the values O2 recorded.
+        No R0 = inf is possible, because f is bounded.
+    (e) l-infinity, for any R0 > 0. On B^inf_R0(0), |x| <= sqrt d R0, so
+        0.2 t <= 0.2 R0 =: U'. Then f >= 4(1 - e^{-U'}) |x| / (U' sqrt d)
+        >= 20 (1 - e^{-0.2 R0}) |x|_inf / (R0 sqrt d): (3.26) with nu = 1,
+        eta = 20 (1 - e^{-0.2 R0}) / (R0 sqrt d). Outside it, |x| >=
+        |x|_inf > R0, so f > 20 (1 - e^{-0.2 R0 / sqrt d}) =: E_inf.
+        SUPERSEDED in O2: "Anisotropic (nu <= 1/2, l-infinity balls):
+        ||v||_inf <= (R0/eta1)^{1/2} E^{1/2}" rested on the conference
+        paper's nu <= 1/2, which R2's update showed is not the
+        dissertation's condition (nu in (0, inf)). nu = 1 is used in both
+        norms.
+    (b) (19) fails: with w = 0, (19) needs f(v) <= C1 |v|^2, but f(v) >=
+        eta_1 |v| near 0 (R1). sup f < inf holds; Theorem 3.2 does not
+        apply because of (19). (c) p_M(0, 0) = 2, p >= 2: Theorem 2.3
+        applies (p = 4). (f) Yes, subject to O3 and O4. (g) Yes.
+    For the table, a value of R0 must be chosen and stated. Suggested: R0
+    = sqrt d (so U = 0.2), giving eta_1 = 20 (1 - e^{-0.2}) / sqrt d and
+    E_inf = 20 (1 - e^{-0.2}) in l2. Any R0 > 0 is valid.
+  - SYNTHETIC FAMILY (10) (N15), as archived: zenodo-v1/law.py
+    make_synth and regime.py make_synth, a = kappa ** (arange(d) /
+    max(d - 1, 1)), i.e. a_i = kappa^((i-1)/(d-1)), f = sum a_i x_i^2 +
+    rho sum (1 - cos(omega x_i)). Grids: kappa in {1, 100}, rho in {0, 5,
+    20}, omega in {1, 3, 7} (law.py) or {1, 3} (regime.py). For kappa >=
+    1 the a_i lie in [1, kappa] (a_1 = 1, a_d = kappa). With rho >= 0, f
+    >= |x|^2 > 0 for x != 0 and f(0) = 0: f* = 0 at x* = 0 only.
+    (b) Quadratic part: |sum a_i (v_i - w_i)(v_i + w_i)| <= kappa |v + w|
+        |v - w|. Cosine part: Rastrigin's inequality with a = omega v_i, b
+        = omega w_i gives |cos(omega v_i) - cos(omega w_i)| <= omega^2 |v_i
+        + w_i| |v_i - w_i| / 2; summed, with factor rho and Cauchy-
+        Schwarz, at most (rho omega^2 / 2)|v + w||v - w|. (19) with C1 =
+        kappa + rho omega^2 / 2. This is the argument N15 asks to be
+        written; it needs no derivative. (20): f <= kappa |x|^2 + 2 rho d
+        <= max(kappa, 2 rho d)(1 + |x|^2). (21): f >= |x|^2; C3 = 1, C4 =
+        1. Theorem 3.2 applies.
+    (a) s = 1, L_f = kappa + rho omega^2 / 2. s = 1 is least: along e1,
+        a_1 = 1 and the cosine terms differ by at most 2 rho, so the
+        difference grows like 2t. (2.2a): u = 2, c_u = kappa, C_u = 2 rho d
+        + 1. (2.2b): l = 2, c_l = 1, C_l = 1. A(1, 2, 2).
+    (c) p_M = 1: Theorem 2.3 applies.
+    (d) |x| <= f^(1/2): nu = 1/2, eta = 1, every x. R0 = 1, E_inf = 1.
+    (e) The same in l-infinity. (f) Yes. (g) Yes.
+    All constants hold for every setting of the archived grids (kappa
+    >= 1, rho >= 0, omega > 0, d >= 2).
+  - O2 is CLOSED by the Ackley paragraph above. N15 is answered by the
+    synthetic paragraph; it closes when the text is written.
+  - STILL TO DO in O7 after this part: write the table (columns (a) to
+    (g) above; the chosen Ackley R0 stated), its caption, and the
+    paragraph that says the (f) column for Levy and Ackley rests on O3
+    and O4. O3 is still open: isotropic arm and H = 1 hold, the
+    anisotropic arm goes through the dissertation's Theorem 3.6 with
+    existence from GHV Theorem 2.3, any globally Lipschitz S. Then the
+    agreement checks of rule 8 against the abstract and the
+    conclusions. The ROWS above are complete.
+  - SUPERSEDED (kept as the record of the first part's plan): STILL TO DO
+    in O7, rows in the order of most work left: Rosenbrock
     (manuscript Proposition 2's A(3, 1, 4) to be re-proved; A2 in both
     norms; GHV v4 Subsection 5.2 sketch for l < u, mentioned, not relied
     on; existence unproven, so (f) "not established" and (g) "no");
