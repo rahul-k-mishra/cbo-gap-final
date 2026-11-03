@@ -20,6 +20,9 @@
 #   KIND  failure  a tick exited nonzero (halt 3, error 1, or found HALTED)
 #         done     the tick asked to disable because the queue is DONE
 #         test     a hand-run test (rerun-queue-notify-test.yml)
+#         watchdog the watchdog found a silent stop (rerunqwatch.py; the
+#                  title is WD_TITLE, the findings are the file WD_BODY)
+#         watchdog-error  the watchdog itself failed (ledger K6, WATCHDOG)
 # Environment: GH_TOKEN (issues: write), GITHUB_REPOSITORY, OWNER.
 #
 # One open alert at a time: if an open issue labelled rerunq-alert exists,
@@ -47,6 +50,8 @@ case "$kind" in
     esac ;;
   done) title="rerun queue: DONE" ;;
   test) title="rerun queue: notification test (nothing is wrong)" ;;
+  watchdog) title="${WD_TITLE:-rerun queue watchdog: a silent stop}" ;;
+  watchdog-error) title="rerun queue watchdog: the watchdog itself failed; read the run" ;;
   *) echo "unknown KIND $kind"; exit 2 ;;
 esac
 title="${title:0:240}"
@@ -59,6 +64,12 @@ body=$(mktemp)
   echo "Run: ${run_url}"
   echo "HEAD of the run's tree: ${head_line}"
   echo
+  if [ "$kind" = "watchdog" ] && [ -n "${WD_BODY:-}" ] && [ -f "${WD_BODY}" ]; then
+    cat "${WD_BODY}"
+    echo "The watchdog changed nothing: the workflow, the state and the"
+    echo "chain are as it found them."
+    echo
+  fi
   echo "This is a report only. Nothing was changed by it. For a failure the"
   echo "workflow has already disabled itself (rule 22). Read the halt reason,"
   echo "release by hand, check the laptop clone for unpushed commits, re-enable."

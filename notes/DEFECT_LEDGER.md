@@ -6200,6 +6200,104 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
     experiment uses Schwefel is to be checked before the rows are
     kept); the synthetic family (N15). Then the table itself, its
     caption, and the agreement checks of rule 8.
+  TABLE 1, PROPOSED TEXT (Claude, 2026-11-03, Rahul's instruction: "build
+  Table 1 ... Record it as proposed text, not applied. The single editing
+  pass still comes later."). NOT APPLIED to manuscript/sn-article.tex.
+  Every entry is copied from the rows above (first and second part) and
+  from O1, O2, O3, O4, O8; no number from any run enters it.
+  - ROW COUNT. Seven rows: the six named benchmarks used here and the
+    synthetic family (eq:synth). Rahul's message says "all eight rows";
+    the submitted table had eight (six named plus the two Schwefel
+    rows), and with Schwefel removed seven remain. Nothing is missing.
+  - TWO ENTRIES NOT WRITTEN OUT ABOVE, derived here so the table rests on
+    nothing unrecorded:
+    (i) Ackley (20): by O1, f - f* < 20 + e - e^{-1} <= (20 + e -
+        e^{-1})(1 + |v|^2), so (20) holds with C2 = 20 + e - e^{-1}; the
+        far-field branch is sup E < inf (O1 upper bound), so C3, C4 are
+        not needed.
+    (ii) Rosenbrock far field: sup f = inf (f(t e1) >= 100 t^4). If (21)
+        held, then with f >= 0, f - f* >= C3 |x|^2 - C3 C4^2 for all x,
+        which is (2.2b) with l = 2, contradicting "No l > 1 holds" above.
+        So neither branch holds: "no".
+  - ACKLEY R0. R0 = sqrt d in both norms, a presentation choice (any R0 >
+    0 is valid, second part above). l2 (U = 0.2): nu = 1, eta = 20 (1 -
+    e^{-0.2}) / sqrt d, E_inf = 20 (1 - e^{-0.2}). l-infinity, from eta
+    = 20 (1 - e^{-0.2 R0}) / (R0 sqrt d) and E_inf = 20 (1 - e^{-0.2 R0 /
+    sqrt d}) at R0 = sqrt d: eta = 20 (1 - e^{-0.2 sqrt d}) / d, E_inf =
+    20 (1 - e^{-0.2}). The two balls differ (B^inf_{sqrt d} contains
+    B_{sqrt d}); the caption says so by naming the norm per column.
+  - NEW CITATION: Riedl's dissertation (R2 UPDATE) is not in the
+    reference list; the text below cites it as riedl2024, an entry to be
+    added in the editing pass: K. Riedl, Mathematical Foundations of
+    Interacting Multi-Particle Systems for Optimization, doctoral
+    dissertation, Technical University of Munich, 2024.
+  - PROOFS. The rows' proofs go to the supplement (a new section; its
+    number is fixed in the editing pass, written S? below). Subsections
+    sec:levy and sec:rosen stay in the body; sec:schwefel goes (second
+    part above). The Levy proposition's proof gets the constants of the
+    LEVY row; Proposition 2 gets L_f, c_u, C_u of the ROSENBROCK row.
+  - TABLE (LaTeX, replaces lines 109-125 of the current source). A
+    sidewaystable (sn-jnl loads rotating): upright it is 212 pt too wide.
+    Compiled by Claude in a scratch copy with sn-jnl.cls: no error, no
+    overfull box (width to be re-checked in the real document, rule 8):
+
+\begin{sidewaystable}
+\caption{Hypotheses of the cited results, objective by objective. Panel (a): verdicts; panel (b): the constants that prove them (proofs in Supplement~S?). Rows are the six named benchmarks used in this paper and the synthetic family \eqref{eq:synth} for every $\kappa\ge1$, $\rho\ge0$, $\omega>0$; Schwefel's function is used in no experiment and is not listed. Class: the least $s$, and the $\ell$, $u$ of Definition~\ref{def:AH}. \eqref{eq:F19}, \eqref{eq:F20}, far field: the hypothesis of \cite[Theorem 3.2]{fkr2024} (far field: $\sup\mathcal E<\infty$ or the quadratic lower bound with $C_3$, $C_4$). A1--A2: \cite[Definition 3.5]{fkr2024} in $\ell^2$ and \cite[Assumption 3.5]{riedl2024} in $\ell^\infty$. The last two columns say only whether the objective meets the hypotheses on $f$ of the theorem named: \cite[Theorem 3.7]{fkr2024} (isotropic diffusion) and \cite[Theorem 3.6]{riedl2024} (anisotropic) also require $2\lambda>d\sigma^2$, respectively $2\lambda>\sigma^2$, a property of the cell and not of the objective, and they own no exponent in $J$; \cite[Theorem 2.6]{ghv2025}, the only cited result that bounds the quantity we measure, has no parameter condition. Every column concerns the continuous-time dynamics with an exact mean-field reference, not the discrete scheme at $\Delta t=0.01$ with a finite reference ensemble that produced every number in this paper (Section~\ref{sec2}). For Ackley any $R_0>0$ gives A2; $R_0=\sqrt d$ is a presentation choice.}\label{tab:class}
+\footnotesize
+\begin{tabular}{@{}lccccccccc@{}}
+\multicolumn{10}{@{}l}{(a) Verdicts}\\
+\toprule
+Objective & $x^\star$ & Class & \eqref{eq:F19} & \eqref{eq:F20} & far field & \cite[Th.\,3.2]{fkr2024} & \cite[Th.\,2.3]{ghv2025} & \cite[Th.\,3.7]{fkr2024}, \cite[Th.\,3.6]{riedl2024} & \cite[Th.\,2.6]{ghv2025}\\
+\midrule
+Sphere & $0$ & $\mathcal A(1,2,2)$ & yes & yes & $C_3,C_4$ & yes & yes & yes & yes\\
+Rastrigin & $0$ & $\mathcal A(1,2,2)$ & yes & yes & $C_3,C_4$ & yes & yes & yes & yes\\
+Griewank & $0$ & $\mathcal A(1,2,2)$ & yes & yes & $C_3,C_4$ & yes & yes & yes & yes\\
+Family \eqref{eq:synth} & $0$ & $\mathcal A(1,2,2)$ & yes & yes & $C_3,C_4$ & yes & yes & yes & yes\\
+Levy & $\mathbf 1$ & $\mathcal A(2,2,2)$ & no & yes & $C_3,C_4$ & no & yes & yes$^{a}$ & yes\\
+Ackley & $0$ & $\mathcal A(0,0,0)$ & no & yes & $\sup\mathcal E<\infty$ & no & yes & yes$^{a}$ & yes\\
+Rosenbrock & $\mathbf 1$ & $\mathcal A(3,1,4)$ & no & no & no & no & no, $\ell\ne u$ & not established$^{b}$ & no\\
+\botrule
+\end{tabular}
+
+\medskip
+\begin{tabular}{@{}lllll@{}}
+\multicolumn{5}{@{}l}{(b) Constants}\\
+\toprule
+Objective & $L_f$ & $(c_u,C_u)$; $(c_\ell,C_\ell)$ & $C_1$; $C_2$; $C_3$, $C_4$ & A2 in $\ell^2$ and $\ell^\infty$: $\nu$, $\eta$, $R_0$, $\mathcal E_\infty$\\
+\midrule
+Sphere & $1$ & $(1,1)$; $(1,1)$ & $1$; $1$; $1$, $1$ & $\tfrac12$, $1$, $1$, $1$\\
+Rastrigin & $1+20\pi^2$ & $(1,20d)$; $(1,1)$ & $1+20\pi^2$; $20d$; $1$, $1$ & $\tfrac12$, $1$, $1$, $1$\\
+Griewank & $\tfrac1{4000}+\tfrac12$ & $(\tfrac1{4000},2)$; $(\tfrac1{4000},1)$ & $\tfrac1{4000}+\tfrac12$; $2$; $\tfrac1{4000}$, $1$ & $\tfrac12$, $4000^{-1/2}$, $1$, $\tfrac1{4000}$\\
+Family \eqref{eq:synth} & $\kappa+\tfrac12\rho\omega^2$ & $(\kappa,2\rho d+1)$; $(1,1)$ & $\kappa+\tfrac12\rho\omega^2$; $\max(\kappa,2\rho d)$; $1$, $1$ & $\tfrac12$, $1$, $1$, $1$\\
+Levy & $\tfrac\pi4+\tfrac{11\sqrt d}8+\tfrac{5\pi d}{32}$ & $(\tfrac{11}8,1+\tfrac{11d}8)$; $(\tfrac1{32},\tfrac d{16})$ & ---; $1+\tfrac{11d}8$; $\tfrac1{64}$, $2\sqrt d$ & $\tfrac12$, $\tfrac14$, $1$, $\tfrac1{16}$\\
+Ackley & $\frac{4+2\pi e}{\sqrt d}$ & $(1,20+e-e^{-1})$; $(1,1)$ & ---; $20+e-e^{-1}$; --- & $1$, $\frac{20(1-e^{-0.2})}{\sqrt d}$, $\sqrt d$, $20(1-e^{-0.2})$ in $\ell^2$$^{c}$\\
+Rosenbrock & $400+2\sqrt d$ & $(301,2d+99)$; $(\frac1{8\sqrt d},1)$ & --- & $\tfrac12$, $19^{-1/2}$, $1$, $\tfrac1{19}$\\
+\botrule
+\end{tabular}
+
+\smallskip
+{\footnotesize $^{a}$The weak solution that \cite[Theorem 3.7]{fkr2024} and \cite[Theorem 3.6]{riedl2024} assume is supplied by \cite[Theorem 2.3]{ghv2025} with $p=4$, not by \cite[Theorem 3.2]{fkr2024}. $^{b}$A1--A2 hold, but no cited theorem supplies the weak solution these theorems assume. $^{c}$In $\ell^\infty$, with the same $R_0=\sqrt d$: $\nu=1$, $\eta=20(1-e^{-0.2\sqrt d})/d$, $\mathcal E_\infty=20(1-e^{-0.2})$; the $\ell^\infty$ ball of radius $\sqrt d$ contains the $\ell^2$ ball. In every other row the $\ell^2$ constants hold in $\ell^\infty$ unchanged. For anisotropic diffusion the weak solution comes from \cite[Theorem 2.3]{ghv2025} in every row. Levy and Rosenbrock with $d\ge2$. ---: not needed, the condition it belongs to fails or the other branch holds.}
+\end{sidewaystable}
+
+  - PARAGRAPH (after the table, in Section 3; it states R5, R6 and R3 and
+    the O4 route; "and no cited result bounds the effect of either
+    substitution" stands until C5 and DTREF report, N46):
+
+"Every column of Table~\ref{tab:class} concerns results about the continuous-time dynamics. The mean-field equations of \cite[(7)--(8)]{fkr2024}, of \cite[(3.2)--(3.3)]{riedl2024} and of \cite[(1.3), (2.5)]{ghv2025} are one equation for each diffusion type once $\lambda=1$, $H\equiv1$ and $\sigma=\sqrt{2\theta}$; \cite{fkr2024} has no anisotropic form, so for anisotropic diffusion the relevant results are \cite[Theorem 3.6]{riedl2024} and \cite{ghv2025}. For Levy and Ackley, which fail \eqref{eq:F19}, \cite[Theorem 2.3]{ghv2025} with $p=4$ gives $\rho\in C([0,T],\mathcal P_4)$ satisfying the Fokker--Planck equation, and this is a weak solution in the sense of \cite[Definition 3.1]{fkr2024}: the test functions and the identity are the same, and continuity in $\mathcal P_4$ gives the initial condition (Supplement~S?). \cite[Theorem 3.7]{fkr2024} is stated for any such solution, so uniqueness is not needed. None of this is a result about the computation. Every number in this paper comes from the explicit Euler--Maruyama scheme that \cite[(1)]{fkr2024} and \cite[(2.2)]{riedl2024} define as the method, with $\lambda=1$, no cutoff and step $\Delta t=0.01$, and the supremum over $[0,T]$ in \eqref{eq:est} is a maximum over the grid points. And \cite[Theorem 2.6]{ghv2025} couples each particle to an independent McKean--Vlasov particle with the same initial point and Brownian motion, whereas we couple it to the corresponding particle of a reference ensemble of $J_\infty$ particles driven by the same initial points and increments, a proxy whose effect Section~\ref{sec:refbias} examines. A `yes' in the table therefore says that the objective meets the hypotheses on $f$ of a theorem about the continuous-time mean-field limit of the algorithm we run, not that the theorem covers the numbers we report. The one cited statement about the discrete scheme, \cite[Theorem 3.8]{fkr2024}, does not close the gap: at a fixed step size its discretisation term grows linearly in the number of particles, so its bound does not tend to zero as $J$ grows and gives no $J^{-1}$ rate for the scheme that is actually run. Whether the scheme's coupled error decays like $J^{-1}$ at $\Delta t=0.01$ is therefore an empirical question, and no cited result bounds the effect of either substitution."
+
+  - WHAT ELSE THE EDITING PASS MUST CHANGE WITH IT (rule 8 agreement):
+    Section 3's opening sentence and the caption's "seven standard
+    benchmarks" go; tex 297's "four assumption classes ... named
+    benchmarks in Table tab:class" still holds (A(1,2,2), A(2,2,2),
+    A(0,0,0), A(3,1,4)); the abstract's and Section 2's statements
+    about which theorem covers which objective are checked against
+    panel (a), in particular every place that still says Ackley
+    satisfies (19) (R1); the setting paragraph tex 87 ("the
+    Euler--Maruyama scheme of [fkr2024]") and tex 290 (the GHV Table 1
+    parameters, already a finding in N45) are made consistent with the
+    paragraph above; riedl2024 is added to the bibliography.
+  - STATUS: text proposed. O7 closes when it is applied and the rule 8
+    diff is reported.
   OPEN.
 - O8. State that FKR Proposition 16 requires Theorem 6's hypotheses, so for
   Ackley and Levy the J^-1 rate is sourced from GHV Theorem 2.6 (q >= 6 for
@@ -7010,6 +7108,54 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
     same "private repository" sentence. It is left as written, as a
     dated record, and this entry supersedes it.
   CLOSED 2026-11-03.
+  WATCHDOG (Claude, 2026-11-03; Rahul's instruction after the restart at
+  shard 14: "Write the watchdog for the two silent failure modes ... it
+  only reports, it never touches the queue, and it must not fire while
+  the queue is legitimately DONE or deliberately halted. Say what it
+  costs and what it cannot catch.").
+  - What was written. scripts/rerunqwatch.py (rules Q, W1, W2, W3, once
+    per event, ERROR, NULL RATE and what it cannot catch, each with a
+    worked example, in its docstring). Q: HALTED or DONE, silent. W1: a
+    rerun-queue run in the last 72 h, cancelled or timed_out, whose job
+    ran >= 85 min (the job's own times, so a run waiting in the
+    concurrency group is not counted). W2: the workflow not active while
+    the queue is READY, LAUNCHING or RUNNING, or no live tick started
+    for more than 120 min. W3: no history entry for more than 14 h (the
+    12 h Kaggle cap plus 2 h). Each finding carries a key written into
+    the issue text, and a key already in any rerunq-alert issue or
+    comment is not reported again. Reads the state through rerunq.load()
+    and GitHub through gh api GET calls only.
+    .github/workflows/rerun-queue-watchdog.yml: schedule "41 * * * *"
+    and workflow_dispatch; permissions contents read, actions read,
+    issues write (the token cannot push, enable, disable or dispatch);
+    timeout 10 min; its own concurrency group. A finding runs
+    rerunq-notify.sh watchdog; a crash of the watchdog runs
+    rerunq-notify.sh watchdog-error. Both with continue-on-error.
+    scripts/rerunq-notify.sh: two new KINDs, watchdog (title WD_TITLE,
+    the findings file WD_BODY in the body) and watchdog-error. failure,
+    done and test are unchanged.
+  - Checked by Claude: 14 synthetic cases of the decision function
+    (scratchpad wdfx.py), all as specified: healthy, HALTED and DONE
+    silent even with the workflow disabled and the state 3 days old;
+    W1 on a 90-min cancelled job and on timed_out; no W1 on a 2-s
+    cancelled job or a job that never started; W2 at 150 min and not at
+    90; short-cancelled runs not live; an in-progress run live; no runs
+    at all; workflow disabled while RUNNING; a failed tick that did not
+    halt; W3 at 14.5 h and not at 13.5 h. Input contact with the real
+    API, state replaced by a synthetic RUNNING one (no Claude command
+    reads the queue state): workflow active, 220 runs in 72 h read
+    across pages, 8 cancelled runs whose jobs never started (the
+    concurrency group's cancellations, as the docstring predicts) and
+    none counted as W1, newest live run in progress, verdict OK; the
+    alert issue texts read (2). bash -n on the notify script; the
+    workflow parses as YAML. Not checkable here: GitHub's schedule
+    cadence for this workflow, and the email.
+  - COST: a public repository's standard runners are not billed. Each
+    run is one checkout, Python setup and 3 to 5 API calls, under a
+    minute; at most 24 runs a day.
+  STATUS: written, not yet run on GitHub. CLOSED when Rahul has run it
+  once by hand (gh workflow run rerun-queue-watchdog.yml) and it printed
+  a verdict.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
   rerun-smoke-arch-a1, launched by the queue (commit ea5e6a1,
   logs/kgrun-rerun-smoke-arch-a1.log), stopped on Kaggle with "kgrun

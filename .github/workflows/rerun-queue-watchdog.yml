@@ -1,0 +1,67 @@
+# The rerun queue's watchdog (scripts/rerunqwatch.py; ledger K6, WATCHDOG;
+# 2026-11-03, Rahul's instruction). It REPORTS ONLY: it reads main's queue
+# state and the runs of rerun-queue.yml, and opens or comments on a
+# rerunq-alert issue (scripts/rerunq-notify.sh) when a tick was cancelled
+# on its timeout, the chain has stopped without a halt, or the state has
+# not changed for 14 h. Silent while the queue is HALTED or DONE.
+# The token below cannot push, enable, disable or dispatch anything.
+# Started by GitHub's schedule (hourly as written; on this account it may
+# fire hours apart) or by hand: gh workflow run rerun-queue-watchdog.yml
+
+name: rerun-queue-watchdog
+
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: rerun-queue-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Kolkata
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Python 3.12, as on the laptop
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Look (reads only)
+        id: wd
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/rerunqwatch.py --repo "${{ github.repository }}"
+
+      - name: Report a silent stop (issue)
+        if: steps.wd.outputs.alert == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          WD_TITLE: ${{ steps.wd.outputs.title }}
+          WD_BODY: scratch-rerunqwatch/alert.md
+        run: bash scripts/rerunq-notify.sh watchdog "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Report that the watchdog itself failed (issue)
+        if: failure()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+        run: bash scripts/rerunq-notify.sh watchdog-error "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

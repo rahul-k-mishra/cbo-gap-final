@@ -51,6 +51,11 @@ experiment. Everything in this file is non-negotiable.
                                    run by hand from GitHub (rule 22)
     .github/workflows/rerun-queue-notify-test.yml   a hand-run test of
                                    the queue's alert issue (rule 22)
+    .github/workflows/rerun-queue-watchdog.yml   the queue's watchdog,
+                                   hourly on GitHub's schedule; reports
+                                   a timed-out tick, a stopped chain or
+                                   a stuck state; reads only (rule 22)
+    scripts/rerunqwatch.py         the watchdog's decision rules
     scripts/rerunq-notify.sh       the queue's alert: opens or comments on
                                    an issue after a failed or DONE tick;
                                    reports only (rule 22)
@@ -384,6 +389,15 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       repository. .github/workflows/rerun-queue-notify-test.yml tests it
       by hand (amended 2026-11-03, Rahul's instruction after a halt went
       unseen for eight hours; ledger K6, NOTIFY).
+      .github/workflows/rerun-queue-watchdog.yml runs
+      scripts/rerunqwatch.py on GitHub's schedule and reports, through
+      the same issue, the stops a failed tick cannot report: a tick
+      cancelled on its timeout, a chain that stopped without a halt, a
+      state unchanged for 14 h. It is silent while the state is HALTED or
+      DONE, its token cannot push, enable, disable or dispatch, and it
+      changes nothing. To pause the queue, use halt, not a disable: a
+      disabled workflow with the queue not HALTED is reported (amended
+      2026-11-03, Rahul's instruction; ledger K6, WATCHDOG).
     - The queue covers the items of the definition loaded into
       notes/rerun_queue.json: a committed file under notes/queues/, started
       by "rerunq.py load", which is refused unless the current state is DONE
