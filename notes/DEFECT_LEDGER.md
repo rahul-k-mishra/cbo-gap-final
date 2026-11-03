@@ -5100,6 +5100,90 @@ instruction of 2026-10-15.
     checked for these cells, or the three citations get checked.
   CLOSED for 52, 648 and 694 as text decisions; the manuscript edit is
   made in the single editing pass under rule 8. TEX 450 OPEN.
+  DECIDED (Rahul, 2026-11-03), CARRILLO CITATION: cite arXiv 1602.00220
+  by its own numbering, as for GHV, "since the numbering I cite must be
+  numbering I checked".
+  - Version read: ~/cbo-refs/carrillo2018-1602.00220.pdf, downloaded by
+    Claude 2026-11-03 from arxiv.org/pdf/1602.00220 at Rahul's
+    instruction. First page "arXiv:1602.00220v5 [math.AP] 7 Feb 2018",
+    20 pages, sha256
+    d47c87806608e7e8e07716911d9d89d2eef1213088fbb0309e98e8d03549707d.
+    Its title reads "An analytical framework for a consensus-based
+    global optimization method" (with "a"); the bibitem's journal title
+    has no "a". The M3AS numbering is unchecked.
+  - Reference entry, to write in the manuscript pass (main tex 736-737,
+    supplement 81-82): Carrillo, Choi, Totzeck, Tse, "An analytical
+    framework for a consensus-based global optimization method",
+    arXiv:1602.00220v5 (2018), the version whose numbering is cited;
+    published in Math. Models Methods Appl. Sci. 28(6), 1037-1066, DOI
+    10.1142/S0218202518500276, whose numbering was not checked.
+  - THE THREE CITED RESULTS, against v5:
+    - Lemma 3.3 (p. 9). Hypotheses: Assumption 3.1 ((A1): |f(x) -
+      f(y)| <= L_f (|x| + |y|)|x - y| and f - f_ <= c_u (1 + |x|^2)) and
+      (A2) (f(x) - f_ >= c_l |x|^2 for |x| >= M). Statement (11):
+      int |x|^2 d eta^alpha <= b1 + b2 int |x|^2 d mu, with eta^alpha =
+      omega_f^alpha mu / ||omega_f^alpha||_{L1(mu)}, b1 = M^2 + b2, b2 =
+      2 (c_u / c_l)(1 + 1/(alpha c_l M^2)). So b2 decreases in alpha.
+      EXISTS; content as the text uses it, with one correction (tex 201
+      below).
+    - Remark 3.1 (p. 10): "Observe that the estimate (11) provided in
+      Lemma 3.3 does not blow up as alpha -> inf, in contrast to estimate
+      (8) used in the proof of the bounded case. In fact, the constant b2
+      may be chosen to be independent of alpha for alpha >= 1." EXISTS;
+      tex 201's paraphrase is accurate.
+    - Remark 4.1 (p. 12): "If f were bounded, then an obvious way to
+      obtain concentration is to use the estimate ||omega_f^alpha||_{L1
+      (rho_t)} >= e^{-alpha fbar} to obtain d/dt V(rho_t) <= -(2 lambda -
+      d sigma^2 e^{alpha(fbar - f_)}) V(rho_t). However, since fbar > f_,
+      we have that e^{alpha(fbar - f_)} -> inf as alpha -> inf, and we
+      would have to choose lambda >> 1 sufficiently large in order to
+      obtain concentration." EXISTS, but it is about the concentration
+      (variance) estimate, not about a moment bound.
+    - The bounded-case moment bound itself is (8), in Step 3 of the proof
+      of Theorem 3.1 (p. 7): |u_t|^2 = tau^2 |m_f[rho_t]|^2 <= tau^2
+      e^{alpha(fbar - f_)} int |x|^2 d rho_t.
+  - TEX 201, three corrections:
+    (1) "[Lemma 3.3] bounds the second moment of the weighted mean by b1 +
+        b2 int |x|^2 d rho": Lemma 3.3 bounds the second moment of the
+        weighted MEASURE eta^alpha. The bound on |m_f[rho]|^2 follows
+        from it by Jensen, as (10) in the proof of Theorem 3.2 uses it.
+        Write: "bounds the second moment of the weighted measure, and
+        with it |m_f[rho]|^2, by b1 + b2 int |x|^2 d rho".
+    (2) "For bounded f the corresponding bound carries exp(alpha(sup f -
+        inf f)), and [Remark 4.1] observes it diverges": the
+        corresponding bound is (8) in the proof of Theorem 3.1, which
+        Remark 3.1 contrasts with (11). Remark 4.1 notes the divergence
+        of the same factor in the concentration estimate. Write: "For
+        bounded f the corresponding bound, (8) in the proof of
+        \cite[Theorem 3.1]{carrillo2018}, carries exp(alpha(sup f - inf
+        f)), and \cite[Remark 4.1]{carrillo2018} notes that this factor
+        diverges as alpha -> inf in the corresponding concentration
+        estimate."
+    (3) Typo found while reading: "... observes it diverges. the moment
+        condition of \cite[Assumption H]{ghv2025} ..." starts a sentence
+        in lower case.
+  - SUPPLEMENT 29: "The constants b1, b2 of [Lemma 3.3] enter the
+    fourth-moment estimate ... records them as b1 = 0, b2 =
+    exp(alpha(sup E - E_)) when E is bounded and as b1 = C4^2 + b2, b2 =
+    2(C2/C3)(1 + 1/(alpha C3 C4^2)) when E satisfies the coercivity
+    condition." The coercive values are Lemma 3.3's under M -> C4, c_u ->
+    C2, c_l -> C3: b1 = M^2 + b2 becomes C4^2 + b2, and b2 = 2(c_u/c_l)
+    (1 + 1/(alpha c_l M^2)) becomes 2(C2/C3)(1 + 1/(alpha C3 C4^2)).
+    These match. Lemma 3.3 has no bounded case: the bounded value comes
+    from (8). Write: "The constants b1, b2 of \cite[Lemma 3.3]
+    {carrillo2018}, and for bounded objectives the factor of (8) in the
+    proof of \cite[Theorem 3.1]{carrillo2018}, enter ...". (The FKR
+    side of that sentence, the v6 appendix, is N3's.)
+  - TEX 50 ("given an analytical framework by Carrillo, Choi, Totzeck and
+    Tse"): no numbering; holds.
+  - SWAP LIST, every statement that carries arXiv v5 numbering, for a
+    later move to the M3AS version: main tex 201, Lemma 3.3, Remark
+    3.1, Remark 4.1, Theorem 3.1, and the bare equation (8) (also (10)
+    and (11) if the correction names them); supplement 29, Lemma 3.3,
+    Theorem 3.1 and (8); both bibitems. Nothing else cites carrillo2018
+    (grep of manuscript/*.tex: main 50, 201, 736; supplement 29, 81).
+  CLOSED 2026-11-03 as text decisions; the edit is made in the single
+  editing pass under rule 8.
 : fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
