@@ -1087,21 +1087,15 @@
       "ledger": "N45"
     }
   ],
-  "status": "HALTED",
-  "index": 15,
+  "status": "READY",
+  "index": 16,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "c5-x-s13of116-a1",
-  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 13 --nshards 116",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
-  "halt_reason": "R1: header of runs/c5-x-s13of116-a1-kaggle-20261103-061045: python 3.13.18, expected 3.13.15",
+  "halt_reason": "",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -1862,6 +1856,15 @@
       "attempt": 1,
       "job": "c5-x-s13of116-a1",
       "note": "profile c5 expect python 3.13.15 -> 3.13.18; bitcmp logs/c5bitcmp-s12-py31318-20261103.log sha256 df1b97c59538e24d29f66d61f64857949987d8adc2979cbbc2c911792fad4335; detcheck runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log sha256 afe3b0ee8a8344ce15d44f5a00855023010cdd2c4533c518005fb8878c93eae9; N45 IMAGE SPLIT: c5bitcmp IDENTICAL 37/37, detcheck PASS on 3.13.18"
+    },
+    {
+      "at": "2026-11-03T19:32:50+05:30",
+      "run": "manual",
+      "event": "release-next-item",
+      "item": "c5-s14of116",
+      "attempt": 1,
+      "job": "",
+      "note": "N45: shard 13 verified under 3.13.18; continue at shard 14"
     }
   ],
   "definition": {
