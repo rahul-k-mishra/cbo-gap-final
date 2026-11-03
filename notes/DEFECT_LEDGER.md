@@ -5018,6 +5018,88 @@ instruction of 2026-10-15.
     because scripts/c5bitcmp.py was added; c5bitcmp's P0(c) checks that
     c5run.py and its modules hash as in shard 12's params.
   OPEN until the c5bitcmp log is in.
+  GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
+  ghkv2025 items against the text).
+  - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
+    "arXiv:2505.08669v2 [math.PR] 19 Feb 2026", 36 pages, sha256
+    ad675b04ad9b92767c60e3c0d8d4acb8ffaf594aac880a4e810d5c1e6243e6a9.
+    The bibitem names no version; it must read "arXiv:2505.08669v2
+    (2026)". Every statement below is from v2. Formula (2.2) was read
+    from the rendered page 6, because the text layer garbles it.
+  - What the paper proves (v2 Section 1, p. 3; Section 2.1, p. 6).
+    Dynamics (1.1)/(2.1): drift -(X - M_alpha), so unit drift (lambda
+    = 1), and noise sigma S(X - M_alpha) with S(x) = |x| I_d
+    (isotropic) or diag(x) (anisotropic); tau(S) = d or 1 (1.2).
+    Assumption 1: "f is bounded from below and above: f_ <= f(x) <=
+    fbar". Assumption 2: "f is globally Lipschitz". Theorem 2.1:
+    rho_0 with finite moments of all orders, Assumptions 1 and 2, and
+    sigma in [0, sigma~) with
+        sigma~ := sqrt 2 / sqrt( 6 + 3 tau(S) (1 + e^{(alpha/2)(fbar -
+        f_)}) )    (2.2);
+    then for all t >= 0 and J >= 1, E|X_t^j - Xbar_t^j|^2 <= C_MFL / J.
+    Remark 2.2: "For anisotropic noise, the constant C_MFL does not
+    depend on the dimension d, while it does for isotropic noise."
+  - Two facts that follow from the text alone, with no data:
+    (i) sigma~^2 = 2 / (6 + 3 tau (1 + e^{(alpha/2)(fbar - f_)})) < 2/6
+        = 1/3 for every f, alpha > 0 and noise type, because the second
+        term of the denominator is positive. So Theorem 2.1 never
+        covers sigma^2 >= 1/3.
+    (ii) The bound is on E|X_t - Xbar_t|^2 at each fixed t (the sup over
+        t is outside the expectation). The estimator here is the mean of
+        sup_t of the squared error, which is the stronger quantity (N1's
+        reading of FKR (32), the same order of sup and E).
+  - TEX 648 (severity, anisotropic flat in d, "qualitatively compatible
+    with the dimension-independent anisotropic prefactor reported in
+    [ghkv2025]"). The experiment is regimemap.py's EXP-ONSET grid,
+    objectives ackley, rastrigin and sphere (zenodo-v1/rmapj.py line
+    87, OBJS; table caption "mean over three objectives"), with sigma =
+    sqrt(2 lambda r / tau) and lambda = 1 (zenodo-v1/regimemap.py
+    sigma_of, line 162). For anisotropic diffusion sigma^2 = 2r, and the
+    grid's smallest r is 0.75 (tex 599), so sigma^2 >= 3/2 > 1/3. By
+    (i), every anisotropic cell is outside Theorem 2.1 whatever the
+    objective. Rastrigin and sphere are also unbounded, so Assumption 1
+    fails for two of the three objectives. The theorem therefore says
+    nothing about any cell of this comparison, and "qualitatively
+    compatible" draws a link the text has no right to.
+    DECIDED: the sentence is replaced by "The dimension-independent
+    anisotropic prefactor of \cite{ghkv2025} is proved for bounded,
+    globally Lipschitz objectives and for noise below the threshold
+    (2.2) of that paper, which is below $\sigma^2=1/3$ for every
+    objective; every anisotropic cell here has $\sigma^2=2r\ge3/2$, and
+    two of the three objectives are unbounded, so that result does not
+    apply and no comparison is drawn." The numbers 1/3 and 3/2 are
+    derived from the definitions, not computed from data.
+  - TEX 694 (Limitations: "The comparison with [ghkv2025] is between a
+    finite-run fitted exponent and a bound prefactor, which are different
+    objects"). With 648 changed there is no comparison left to qualify.
+    DECIDED: replaced by "The uniform-in-time result of
+    \cite{ghkv2025} is not applicable to the severity experiment
+    (Section~\ref{sec:onset}); it is cited for context only."
+  - TEX 52 (related work: "proved uniform-in-time propagation of chaos
+    with a prefactor depending explicitly on the problem parameters and
+    report that for anisotropic noise this prefactor does not depend on
+    the dimension"). Both halves hold: the abstract (p. 1) says "a
+    prefactor that depends explicitly on the parameters of the
+    problem. Notably, in the case of CBO with anisotropic noise, this
+    prefactor is independent of the problem dimension", and Remark 2.2
+    states it. "report" understates a proved remark but is not wrong.
+    DECIDED: keep, and add the scope, since the paper relies on the
+    reader knowing it later: "... does not depend on the dimension, for
+    bounded, globally Lipschitz objectives and noise below an explicit
+    threshold".
+  - FOUND WHILE CHECKING, not in Rahul's list: TEX 450 (horizon) cites
+    [hk2025, bez2026, ghkv2025] for "a horizon-independent observable
+    exponent is not surprising". For ghkv2025, (2.2) with isotropic
+    sigma = 1/5 needs tau (1 + e^{(alpha/2)(fbar - f_)}) < 44/3. Since 1
+    + e^{x} > 2 for x > 0, this fails for every alpha > 0 once d >= 8;
+    for d <= 7 it depends on alpha and fbar - f_. Whether those 24 cells
+    meet Assumption 1 and the sigma bound has not been checked: it
+    needs their d, objectives and alpha from the archive. hk2025 and
+    bez2026 are not in ~/cbo-refs and have not been read. OPEN: the
+    sentence either names the hypotheses and states that they are not
+    checked for these cells, or the three citations get checked.
+  CLOSED for 52, 648 and 694 as text decisions; the manuscript edit is
+  made in the single editing pass under rule 8. TEX 450 OPEN.
 : fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
@@ -6192,6 +6274,21 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
     issue the bot opens. rerun-queue-notify-test.yml exists to check
     exactly that.
   OPEN until the test issue's email is seen.
+  - Test (Rahul, 2026-11-03): "The alert test passed: issue #1 opened,
+    labelled, assigned." GitHub shows issue #1, "rerun queue:
+    notification test (nothing is wrong)", author app/github-actions,
+    label rerunq-alert, assignee rahul-k-mishra, created
+    2026-11-03T09:36:14Z, now closed.
+  - Cost of self-scheduling, corrected (Rahul's decision, 2026-11-03):
+    the repository is PUBLIC (gh repo view: visibility PUBLIC), so
+    standard GitHub-hosted runners are not billed. CLAUDE.md rule 22 and
+    the rerun-queue.yml comment called it private and the wait billed;
+    both are corrected. RERUNQ_SELF_SCHEDULE stays "on" (the repository
+    variable reads "on"), and cost is no longer a reason to switch it
+    off. notes/RERUNQ_REVIEW.md (the 2026-10-23 review, line 165) has the
+    same "private repository" sentence. It is left as written, as a
+    dated record, and this entry supersedes it.
+  CLOSED 2026-11-03.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
   rerun-smoke-arch-a1, launched by the queue (commit ea5e6a1,
   logs/kgrun-rerun-smoke-arch-a1.log), stopped on Kaggle with "kgrun

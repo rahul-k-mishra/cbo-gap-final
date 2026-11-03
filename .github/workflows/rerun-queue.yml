@@ -133,10 +133,12 @@ jobs:
       # run that arrives while one is in progress waits in the concurrency
       # group, and GitHub cancels it when the successor is queued, so at most
       # one tick runs and one waits.
-      # COST: the sleep keeps a runner busy, and this repository is private,
-      # so Actions minutes are billed for it (nearly every minute of the day
-      # while a queue runs). Hence the switch: the step runs only when the
-      # repository variable RERUNQ_SELF_SCHEDULE is "on" (Rahul's decision).
+      # COST: the sleep keeps a runner busy. The repository is public, so
+      # standard GitHub-hosted runners are not billed (corrected 2026-11-03;
+      # this comment used to call it private and billed). The step still
+      # runs only when the repository variable RERUNQ_SELF_SCHEDULE is "on";
+      # it stays on, and cost is no reason to switch it off (Rahul's
+      # decision, ledger K6, NOTIFY).
       - name: Start the next tick
         if: success() && steps.tick.outputs.disable != 'true' && vars.RERUNQ_SELF_SCHEDULE == 'on'
         env:

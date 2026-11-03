@@ -334,8 +334,11 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     2026-11-01, Rahul's instruction, after horizon's loop; ledger N45). A
     failed or halting tick starts no successor, and the successor is not
     dispatched if, after the wait, main's state is HALTED or DONE or the
-    workflow is disabled. The variable is Rahul's to set: in this private
-    repository the wait is billed Actions time.
+    workflow is disabled. The variable is Rahul's to set. It stays "on":
+    the repository is public, so standard GitHub-hosted runners are not
+    billed and cost is no reason to switch it off (amended 2026-11-03,
+    Rahul's decision; ledger K6, NOTIFY; the earlier text called the
+    repository private and the wait billed).
     A second driver runs the same tick from the laptop (amended
     2026-10-23, Rahul's decision; ledger K6): the systemd user timer
     scripts/rerunq-tick.timer, every 15 minutes at minutes 2, 17, 32 and
