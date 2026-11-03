@@ -1,0 +1,40 @@
+# Test of the rerun queue's halt notification (ledger K6, NOTIFY,
+# 2026-11-03). Started only by hand: Actions > rerun-queue-notify-test >
+# Run workflow, or "gh workflow run rerun-queue-notify-test.yml". It runs
+# scripts/rerunq-notify.sh test, which opens (or comments on) an issue
+# labelled rerunq-alert, assigned to and mentioning the owner. It touches no
+# Kaggle credential, takes no queue action and writes nothing to the
+# repository. Pass: an email for the issue arrives. Then close the issue.
+
+name: rerun-queue-notify-test
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Kolkata
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Python 3.12, as on the laptop
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Send a test alert
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+        run: bash scripts/rerunq-notify.sh test "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

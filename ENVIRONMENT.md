@@ -58,6 +58,40 @@ Measured in that run (4-worker pass, each realization in its own worker):
   pass 2: 1 worker, for D3   wall 46.4 s
 ```
 
+## Kaggle CPU session, Python 3.13.18 image, recorded 2026-11-03
+
+Kaggle moved its image from Python 3.13.15 to 3.13.18 between C5 shards 12
+and 13 (ledger N45, C5 IMAGE SPLIT). Rule 16 was re-run on the new image.
+From runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log
+(kgrun console: logs/kgrun-detcheck-py31318.log), copied from the runner
+and detcheck headers:
+
+```
+  python   3.13.18 (main, Oct 26 2026, 15:28:15) [GCC 13.3.0]
+  numpy    2.1.3
+  platform Linux-6.18.55+-x86_64-with-glibc2.39   machine x86_64   cpus 4
+  workers  4   tasks R1,R2,R3
+  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive
+  found by candidate 2, /kaggle/input/datasets/<user>/<dataset>
+```
+
+Determinism gate (scripts/detcheck.py, D1-D3), archive /kaggle/input/datasets/ericsom/cbo-gap-archive, tasks R1,R2,R3: VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS -- see runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log
+
+The five archive hashes printed are the same as in the 3.13.15 run. By
+diff of the two kernel logs (from "pass 1" to the VERDICT line) and of the
+two detcheck_results.csv files, every computed value of R1, R2 and R3
+(beta, achieved fraction, log-ESS, slope, every E_J, X0[0,:3]) is the same
+string under 3.13.18 as under 3.13.15. Only wall times and peak RSS
+differ:
+
+```
+  pass 1: 4 worker(s)   wall 33.1 s
+  R1  wall 3.2 s    peak RSS of its worker 42 MB
+  R2  wall 17.3 s   peak RSS of its worker 190 MB
+  R3  wall 32.8 s   peak RSS of its worker 325 MB
+  pass 2: 1 worker, for D3   wall 50.9 s
+```
+
 ## Round-1 Windows 7 machine, as recorded in round1-zip (2026-10-15)
 
 round1-zip/ is a second read-only source beside zenodo-v1/. It is a round-1

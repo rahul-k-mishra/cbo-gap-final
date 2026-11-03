@@ -48,6 +48,11 @@ experiment. Everything in this file is non-negotiable.
     .github/workflows/rerun-queue-admin.yml   the queue's manual subcommands
                                    (show, verify, check, release, halt, load),
                                    run by hand from GitHub (rule 22)
+    .github/workflows/rerun-queue-notify-test.yml   a hand-run test of
+                                   the queue's alert issue (rule 22)
+    scripts/rerunq-notify.sh       the queue's alert: opens or comments on
+                                   an issue after a failed or DONE tick;
+                                   reports only (rule 22)
     scripts/rerunq-tick.{service,timer}, scripts/rerunq-stop.service
                                    the laptop driver of the same tick, a
                                    systemd user timer in ~/cbo-gap-queue
@@ -359,6 +364,14 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       runs the same rerunq.py subcommand and commits what it wrote; a
       Claude session never triggers it (amended 2026-11-01, Rahul's
       instruction that C5 run with no laptop involvement; ledger N45).
+      A failed tick, and a tick that finds the queue DONE, also opens a
+      GitHub issue labelled rerunq-alert, assigned to and mentioning
+      Rahul, or comments on the one already open
+      (scripts/rerunq-notify.sh). It only reports: it runs after the
+      disable, with continue-on-error, and writes nothing to the
+      repository. .github/workflows/rerun-queue-notify-test.yml tests it
+      by hand (amended 2026-11-03, Rahul's instruction after a halt went
+      unseen for eight hours; ledger K6, NOTIFY).
     - The queue covers the items of the definition loaded into
       notes/rerun_queue.json: a committed file under notes/queues/, started
       by "rerunq.py load", which is refused unless the current state is DONE

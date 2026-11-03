@@ -4997,7 +4997,27 @@ instruction of 2026-10-15.
   - Not data. The recheck's rows repeat shard 12's keys.
     c5_analysis.py's A0 ("task complete in two folders") refuses the
     recheck folder if it is ever passed in. It is never passed in.
-  OPEN until both logs are in.
+  - detcheck on 3.13.18 (job detcheck-py31318, run by Rahul 2026-11-03):
+    "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS"
+    (runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log;
+    header python 3.13.18 (main, Oct 26 2026), numpy 2.1.3, platform
+    Linux-6.18.55+, workers 4). The new image is gated under rule 16;
+    recorded in ENVIRONMENT.md. Beyond the verdict, a diff of this log
+    against runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log (from
+    "pass 1" to the VERDICT line) and of the two detcheck_results.csv
+    files shows every computed value of R1, R2 and R3 (beta, achieved
+    fraction, log-ESS, slope, every E_J, X0[0,:3]) as the same string
+    under both Pythons. Only wall times and peak RSS differ. This is
+    supporting evidence, not the C5 test: detcheck runs the archived
+    exactcal and rmapj paths, and C5 runs the mechanism and boundary
+    one_realisation through costprobe2.MODS. It also crosses sessions
+    and host kernels (6.18.48 on 2026-10-09, 6.18.55 now).
+  - Shard 12 recheck launched by Rahul as ericsom/cbo-c5-x-s12of116-bitchk-a1
+    (logs/kgrun-c5-x-s12of116-bitchk-a1.log, kernel version 1, bundle
+    e1b2e8507ee927ac). It differs from the queue's 681ac0f4987f6998
+    because scripts/c5bitcmp.py was added; c5bitcmp's P0(c) checks that
+    c5run.py and its modules hash as in shard 12's params.
+  OPEN until the c5bitcmp log is in.
 : fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
@@ -5315,6 +5335,11 @@ read-only directory (logs/detcheck-v2-full-separate.log); recorded in
 ENVIRONMENT.md. Kaggle: PASS, tasks R1,R2,R3, workers 4, NumPy 2.1.3
 (runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log); recorded in
 ENVIRONMENT.md (G2 closed).
+Status (2026-11-03). Kaggle, Python 3.13.18 image (NumPy 2.1.3): PASS,
+tasks R1,R2,R3, workers 4
+(runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log);
+recorded in ENVIRONMENT.md. Every computed value is the same string as in
+the 3.13.15 run (N45, C5 IMAGE SPLIT).
 
 ## Repository defects
 
@@ -5963,6 +5988,66 @@ ENVIRONMENT.md (G2 closed).
   CLOSED 2026-10-25 by the commit that adds this paragraph; the
   artefacts are the run folders and logs named above, the last of them
   committed in 17e0598.
+  NOTIFY (Claude, 2026-11-03; Rahul's instruction: the
+  c5-x-s13of116-a1 halt at 06:10 went unseen until 14:00).
+  - Why no email arrived (read from the GitHub API, run 41554516690, the
+    halting tick): event workflow_dispatch, actor and triggering_actor
+    github-actions[bot], conclusion failure. The run did fail. GitHub
+    sends the Actions "run completed" email to the user who triggered the
+    run. Since self-scheduling, every tick is started by its predecessor
+    through GITHUB_TOKEN, so the triggering user is the bot and the email
+    goes to nobody. The eight runs before it show the same. (On the
+    schedule event GitHub mails whoever last edited the cron line; the
+    schedule fires hours apart here, so that path cannot be relied on
+    either.)
+  - Options considered. (a) Actions failure email: does not reach anyone
+    in this setup, as above. (b) A GitHub issue opened by the tick: needs
+    only issues: write on the job token; assigning the owner and
+    @-mentioning them makes it a "participating" notification, which
+    GitHub emails by default, and the GitHub mobile app pushes it too.
+    (c) Mail through an SMTP secret or an outside service: a new
+    credential and a new party, for nothing (b) lacks. (d) Repository
+    watching (Custom > Issues) without a mention: depends on a setting
+    that can be off. Chosen: (b), with the mention and assignment, so it
+    does not rely on (d).
+  - What was written. scripts/rerunq-notify.sh (KIND failure, done or
+    test): reads the checked-out tree only (git log -1, "rerunq.py show",
+    which reads only); opens an issue labelled rerunq-alert, assigned to
+    the repository owner, whose body begins with the @-mention, the run
+    URL, HEAD's subject and the show output. The title is HEAD's subject
+    when that is a "rerun queue: HALTED" commit. While an alert issue is
+    open, later alerts are added to it as comments, so a halt followed by
+    the other driver's exit-3 tick gives one issue, not two.
+    rerun-queue.yml: issues: write added to the permissions, and one
+    step, "Report a failed tick or a finished queue (issue)", after the
+    disable and the credential removal, if always() && (failure() ||
+    disable output true), continue-on-error. KIND is failure when
+    job.status is failure, else done.
+    rerun-queue-notify-test.yml: workflow_dispatch only; contents read,
+    issues write; runs the script with KIND test. No Kaggle secret, no
+    queue action.
+  - What it does not change. The tick step, its exit codes, the disable
+    step and the successor step are as before. The successor's if needs
+    success(), which a failed tick never has. On a DONE tick the new step
+    runs between the credential removal and the successor step, which is
+    skipped on DONE (disable output true). continue-on-error keeps the
+    job's conclusion whatever the notifier does. The notifier writes
+    nothing to the repository.
+  - Not covered. A halt on the laptop timer alone, with the workflow
+    disabled, reports nothing until the workflow's next tick (exit 3,
+    failure, then the issue). A tick that never starts (GitHub outage,
+    the self-schedule chain broken and the schedule late) reports
+    nothing: this alerts on a failure, not on silence.
+  - Checked by Claude: bash -n; both workflows parse as YAML. The script
+    ran end to end with stub gh and python as shell functions:
+    failure (no alert open: issue created with label and assignee),
+    failure again, done and test (each a comment on the open alert), an
+    unknown KIND (exit 2). In a scratch git repository whose HEAD subject
+    was a "rerun queue: HALTED at ..." line, the issue title was that
+    subject. Not checkable here: that GitHub emails the owner for an
+    issue the bot opens. rerun-queue-notify-test.yml exists to check
+    exactly that.
+  OPEN until the test issue's email is seen.
 - K7 (Kaggle, dataset version race in kgrun launch; 2026-10-23). The smoke
   rerun-smoke-arch-a1, launched by the queue (commit ea5e6a1,
   logs/kgrun-rerun-smoke-arch-a1.log), stopped on Kaggle with "kgrun

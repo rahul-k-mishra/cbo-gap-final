@@ -20,6 +20,7 @@ on:
 permissions:
   contents: write
   actions: write
+  issues: write   # rerunq-notify.sh only (ledger K6, NOTIFY)
 
 concurrency:
   group: rerun-queue
@@ -101,6 +102,23 @@ jobs:
       - name: Remove the Kaggle credentials
         if: always()
         run: rm -f "$HOME/.kaggle/kaggle.json" "$HOME/.kaggle/access_token"
+
+      # NOTIFY (2026-11-03, ledger K6; Rahul's instruction after the s13 halt
+      # went unseen for eight hours). Reports only: opens or comments on a
+      # GitHub issue assigned to and mentioning the owner, which GitHub
+      # emails by default. The Actions failure email does not reach anyone,
+      # because these runs are started by github-actions[bot]. Runs after
+      # the disable and the credential removal; continue-on-error, so it
+      # cannot change the job's conclusion, the successor step (which needs
+      # success() and is skipped on these runs anyway) or the halt.
+      - name: Report a failed tick or a finished queue (issue)
+        if: always() && (failure() || steps.tick.outputs.disable == 'true')
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          KIND: ${{ job.status == 'failure' && 'failure' || 'done' }}
+        run: bash scripts/rerunq-notify.sh "$KIND" "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       # SELF-SCHEDULING (2026-11-01, ledger N45; the mechanism of horizon's
       # loop, which has run on its own successors since 2026-10-24). The job
