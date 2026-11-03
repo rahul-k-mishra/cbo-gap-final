@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
+  "status": "HALTED",
   "index": 15,
   "attempt": 1,
   "resume_dirs": [],
@@ -1101,7 +1101,7 @@
     "runs/rerun-plan-20261023-112643"
   ],
   "anomaly": null,
-  "halt_reason": "",
+  "halt_reason": "R1: header of runs/c5-x-s13of116-a1-kaggle-20261103-061045: python 3.13.18, expected 3.13.15",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -1341,6 +1341,20 @@
         "resume_dirs": [],
         "fetched_run": "41524475794.1",
         "fetched_at": "2026-11-03T02:31:58+05:30"
+      }
+    ],
+    "c5-s13of116": [
+      {
+        "attempt": 1,
+        "job": "c5-x-s13of116-a1",
+        "folder": "runs/c5-x-s13of116-a1-kaggle-20261103-061045",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 37,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "41554516690.1",
+        "fetched_at": "2026-11-03T06:10:46+05:30"
       }
     ]
   },
@@ -1830,6 +1844,15 @@
       "attempt": 1,
       "job": "c5-x-s13of116-a1",
       "note": "logs/kgrun-c5-x-s13of116-a1.log"
+    },
+    {
+      "at": "2026-11-03T06:10:46+05:30",
+      "run": "41554516690.1",
+      "event": "halt",
+      "item": "c5-s13of116",
+      "attempt": 1,
+      "job": "c5-x-s13of116-a1",
+      "note": "R1: header of runs/c5-x-s13of116-a1-kaggle-20261103-061045: python 3.13.18, expected 3.13.15"
     }
   ],
   "definition": {
