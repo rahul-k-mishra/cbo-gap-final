@@ -5401,9 +5401,197 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
 - O3. Equation matching: GHV (1.1)/(2.5) with unit drift and S equals FKR
   (8)/(9) with lambda = 1 and sigma = sqrt(2 theta); every experiment uses
   lambda = 1; state the restriction.
+  WORKED OUT 2026-11-03 (Claude, at Rahul's instruction; every equation read
+  from the PDFs in ~/cbo-refs, rendered pages where the text layer is
+  damaged; every code line read from zenodo-v1 and scripts/).
+  - WHAT THE CODE RUNS. Every dynamics module in zenodo-v1 (ess_surface,
+    visibility, mechanism, control, boundary, regime, law, sigma,
+    crossed, cliff, regimemap, exactcal, ess_panel, ess_extend; rmapj
+    imports regimemap) performs, for k = 0, ..., K-1, with dW ~
+    N(0, dt I_d) drawn once per step for all J_inf particles:
+      m = sum_i X_i w_i / sum_i w_i,  w_i = exp(-beta (f(X_i) - min_j
+          f(X_j)))   [shift by the current minimum: a common factor,
+          which cancels in the ratio]
+      X <- X - lam dt (X - m) + sigma |X - m|_2 dW     (isotropic)
+      X <- X - lam dt (X - m) + sigma (X - m) * dW     (anisotropic,
+          componentwise, i.e. sigma diag(X - m) dW)
+    (mechanism.py lines 228-241; boundary.py 189-201; regimemap.py step,
+    209-225; the other modules' update lines are the same in form). The
+    J-ensemble is X0[:J], the first J initial points of the J_inf
+    ensemble, and is driven by dW[:J], the same increments. Its
+    consensus point is computed from the J-ensemble alone. The recorded
+    error is mean_j max_{k=1..K} |X^J_{j,k} - X^{J_inf}_{j,k}|^2: a
+    running maximum of the squared distance over the time grid, averaged
+    over the J particles.
+    No module has a cutoff H. The weight is exp(-beta f). beta is fixed
+    within a run (perjcal varies beta with J and is already labelled a
+    different estimand).
+    lambda = 1 IN EVERY EXPERIMENT. mechanism, boundary, control,
+    visibility, regime, law, ess_panel and ess_extend have unit drift in
+    the code ("- dt * dref"). ess_surface and ess_extend set lam = 1.0;
+    exactcal sets lam = 1.0 (line 246) and rmapj sets lam = 1.0 (line
+    116). regimemap, cliff, crossed and sigma take --lam, default 1.0. No
+    archived CSV records lam, but round 2 confirms it indirectly:
+    rerunlib computes sigma = sigma_of(diff, d, r, LAM) with LAM = 1.0
+    (rerunlib.py line 184, sigma_for line 430), and rerun_archive_check
+    matched the archived sigma at the archived r, to six significant
+    figures, for every applicable row: SIGMA 288, ANISO 288, RMAP 240,
+    CLIFF 144, ONSET 180 "ok"
+    (runs/rerun-plan-20261023-112643/rerun_archive_check.csv). Since
+    sigma = sqrt(2 lam r / tau), a lam other than 1 would have shown.
+    Round 2 (rerunlib DT, LAM = 0.01, 1.0; C5 through costprobe2.MODS,
+    mechanism and boundary) is lambda = 1 by code.
+    dt = 0.01 in every experiment (T = K dt; T = 0.5, 1, 2 in the horizon
+    row).
+  - THE SCHEMES THE PAPERS DEFINE (discrete time).
+    FKR v6 (1)-(2) (p. 2) = SIOPT (1.1)-(1.2) (p. 2974):
+      V^i_{(k+1)dt} - V^i_{k dt} = -dt lambda (V^i - v_alpha(rho^N))
+      H(E(V^i) - E(v_alpha)) + sigma |V^i - v_alpha(rho^N)|_2 B^i_{k dt},
+      B ~ N(0, dt I_d) i.i.d.; v_alpha by (5) = SIOPT (1.5) (p. 2975),
+      weights exp(-alpha E).
+      v6 calls (1) "a simple Euler-Maruyama time discretization" of (3).
+    Dissertation (2.2) (printed p. 8; PDF p. 26): X^i_k = X^i_{k-1} - dt
+      lambda (X^i_{k-1} - x_alpha(rho^N_{k-1})) + sigma D(X^i_{k-1} -
+      x_alpha(rho^N_{k-1})) B^i_k, B ~ N(0, dt Id), with (2.5) (printed
+      p. 9): D(.) = |.|_2 Id (isotropic) or diag(.) (anisotropic). No H.
+    MATCH WITH THE CODE: EXACT, with H = 1, alpha = beta, lambda = 1 and
+    the same sigma, for both arms: isotropic against FKR (1) and the
+    dissertation's (2.2) with D = |.|_2 Id; anisotropic against the
+    dissertation's (2.2) with D = diag. FKR v6 has no anisotropic
+    scheme.
+  - THE CONTINUOUS-TIME EQUATIONS THE THEOREMS ARE ABOUT.
+    FKR v6 (3)-(4) (p. 3) = SIOPT (1.3)-(1.4) (p. 2974), the particle SDE;
+    v6 (7) (p. 4) = SIOPT (1.7) (p. 2976), the mean-field SDE, with H = 1:
+      dV_t = -lambda (V_t - v_alpha(rho_t)) dt + sigma |V_t -
+      v_alpha(rho_t)|_2 dB_t, rho_t = Law(V_t);
+    v6 (8) = SIOPT (1.8) (p. 2976), with H = 1:
+      d_t rho = lambda div((v - v_alpha(rho)) rho) + (sigma^2 / 2)
+      Delta(|v - v_alpha(rho)|_2^2 rho).
+    Dissertation (3.2) (printed p. 21; PDF p. 39): dX_t = -lambda (X_t -
+      x_alpha(rho_t)) dt + sigma D(X_t - x_alpha(rho_t)) dB_t;
+    (3.3): d_t rho = lambda div((x - x_alpha(rho)) rho) + (sigma^2 / 2)
+      sum_k d_kk (D(x - x_alpha(rho))^2_kk rho).
+    GHV v4 (1.1) (p. 2), particles, and (1.3) (p. 3), mean field: dX =
+      -(X - M_beta(rho)) dt + S(X - M_beta(rho)) dW, with unit drift ("we
+      choose to omit it"), S(u) = sqrt(2 theta)|u| I_d or sqrt(2 theta)
+      diag(u) (p. 2), and M_beta with weights e^{-beta f} (1.2).
+      (2.5) (p. 8): d_t rho = div((x - M_beta(rho)) rho) + (1/2) div div
+      (D(rho, x) rho), D = S S^T.
+    Term by term, with lambda = 1 and sigma = sqrt(2 theta):
+    - Drift: -(X - M) in all three. EXACT given lambda = 1. FKR and the
+      dissertation carry lambda; GHV has none (it says a drift
+      coefficient can be removed by rescaling time).
+    - Isotropic noise: sigma |u|_2 dB (FKR) = sigma D(u) dB with D = |.|
+      Id (dissertation) = S(u) dW with S = sqrt(2 theta)|u| I (GHV).
+      Diffusion term: D = S S^T = sigma^2 |u|^2 I, so (1/2) div div(D rho)
+      = (sigma^2/2) Delta(|x - M|^2 rho) = FKR (8)'s. EXACT.
+    - Anisotropic noise: S(u) = sigma diag(u), D = sigma^2 diag(u)^2, so
+      (1/2) div div(D rho) = (sigma^2/2) sum_k d_kk((x - M)_k^2 rho) =
+      the dissertation's (3.3). EXACT. FKR v6 (7)/(8) have no
+      anisotropic form: the anisotropic arm matches FKR in no equation.
+    - Weighted mean: v_alpha (FKR (5)), x_alpha (dissertation (2.3)) and
+      M_beta (GHV (1.2)) are the same functional with alpha = beta.
+      EXACT.
+    - H: FKR with H = 1. EXACT; no experiment uses a cutoff.
+    - S globally Lipschitz (GHV's standing hypothesis): |u| I and diag(u)
+      are. Holds.
+  - RESTRICTIONS, AND WHO SATISFIES THEM.
+    (R1) lambda = 1. Every experiment (above).
+    (R2) H = 1. Every experiment.
+    (R3) Isotropic noise for any FKR statement. Isotropic cells only. The
+         anisotropic cells (rows SIGMA, ANISO, RMAP, CLIFF, ONSET and
+         BETA-ANI, modules sigma, crossed, regimemap, cliff and
+         ess_surface) fall under the dissertation's Theorem 3.6 and GHV,
+         never under FKR's Theorem 3.7 or Proposition 3.11.
+    (R4) Initial law with the moments the theorems ask for: P4 (FKR 3.2,
+         3.7; dissertation 3.6), P_p (GHV 2.3), all moments (GHV 2.6), and
+         full support for v* in supp(rho_0). Every initial law in the
+         archive is Gaussian or a finite Gaussian mixture (mechanism.py
+         draw_initial: centred, offset with 10% near x*). Holds.
+    (R5) CONTINUOUS TIME. Every theorem used (FKR 3.2, 3.7, 3.11;
+         dissertation 3.6; GHV 2.3, 2.6) is about the SDEs and PDEs
+         above. NO EXPERIMENT SATISFIES THIS: all run the explicit
+         Euler-Maruyama scheme at dt = 0.01, and the error is a maximum
+         over the grid k dt, not a sup over [0, T]. This is not a
+         restriction under which the match holds. It is a mismatch, and
+         the text must say so: the algorithm run is exactly the scheme FKR
+         (1) and the dissertation's (2.2) define as the method, and the
+         theorems are about its continuous-time limit. No cited result
+         bounds how dt affects the J-dependence of the coupled error.
+         FKR Theorem 3.8 is the only cited statement about scheme (1).
+         It brings dt in through a term 6 C_NA (dt)^{2m} (m = 1/2 for
+         Euler-Maruyama), for a different quantity (convergence of the
+         empirical mean to v* in probability), and does not give the J
+         exponent of the discrete scheme. I do not know a result in the
+         papers in hand that does.
+    (R6) THE REFERENCE. GHV Theorem 2.6 compares X^(j) from (2.8) with
+         Xbar^(j) from (2.9): i.i.d. McKean-Vlasov particles with the
+         same initial points and Brownian motions (synchronous coupling).
+         The code reproduces that coupling exactly (same X0[:J], same
+         dW[:J]), but Xbar is replaced by particle j of a J_inf-particle
+         system (50000; 4000000 in C5). NO EXPERIMENT SATISFIES THIS
+         EXACTLY. It is a mismatch in the estimand, already disclosed as
+         a proxy (tex 694, Section sec:refbias).
+  - VERDICT. The ALGORITHM matches: the code is FKR's scheme (1) and the
+    dissertation's scheme (2.2), exactly, with lambda = 1 and H = 1. The
+    PAPERS' CONTINUOUS-TIME EQUATIONS match one another: FKR (7)/(8), the dissertation's
+    (3.2)/(3.3) and GHV (1.3)/(2.5) are one equation for each arm, given
+    lambda = 1 and sigma = sqrt(2 theta), with the anisotropic arm absent
+    from FKR. The THEOREMS DO NOT COVER WHAT WAS RUN in two respects that
+    no experiment satisfies: (R5) the time discretisation and (R6) the
+    finite reference. So the theory column of Table 1 is about the same
+    algorithm's continuous-time mean-field limit, not about the discrete
+    scheme at dt = 0.01 that produced every number. It is not a different
+    algorithm, but neither is it a theorem about the computation. The
+    table caption and Section 2 must say exactly that, and must not call
+    any column "covered" without it.
+  CLOSED 2026-11-03 as an analysis; the disclosure text (R5, R6, and R3's
+  split of the arms between FKR and the dissertation and GHV) is written
+  in the editing pass.
 - O4. Weak-solution sense: GHV (4.9) test class = FKR Definition 5; initial
   condition from continuity in P_p; test-function extension via FKR Remark 7
   using P_4 regularity.
+  WORKED OUT 2026-11-03 (Claude).
+  - FKR v6 Definition 3.1 (p. 11) = SIOPT Definition 3.1: rho in C([0,
+    T], P(R^d)) is a weak solution of (8) if, for all phi in C_c^inf and
+    all t in (0, T), (18) holds: d/dt int phi d rho_t = -lambda int H(.)
+    <v - v_alpha, grad phi> d rho_t + (sigma^2/2) int |v - v_alpha|^2
+    Delta phi d rho_t; "and lim_{t -> 0} rho_t = rho_0 pointwise".
+  - GHV v4 (4.8)-(4.9) (Step 5 of the proof for CBS, carried to CBO by
+    Remark 4.3): for phi smooth with compact support, E phi(Y_t) - E
+    phi(Y_r) = E int_r^t L_u phi(Y_u) du (Ito), and so d/dt int phi d
+    rho_t = int L_t phi d rho_t (4.9). For CBO, L_t phi = -(x - M) . grad
+    phi + (1/2) D : D^2 phi with D = S S^T; isotropically (1/2) sigma^2
+    |x - M|^2 Delta phi. GHV calls Step 5 "a formal derivation". The
+    step it leaves out is short: u -> int L_u phi d rho_u is continuous
+    (L_u phi is bounded and continuous in x for compactly supported phi,
+    and u -> M_beta(rho_u) is continuous by Theorem 2.3), so the
+    integrated identity (4.8) gives the derivative for every t by the
+    fundamental theorem of calculus.
+  - Test class: C_c^inf in both. SAME.
+  - Identity: (4.9) with lambda = 1, H = 1, sigma^2 = 2 theta is (18)
+    term by term (O3). SAME.
+  - Initial condition: Theorem 2.3 gives rho in C([0, T], P_p), so
+    W_p(rho_t, rho_0) -> 0, hence int phi d rho_t -> int phi d rho_0 for
+    every bounded continuous phi. FKR does not define "pointwise". Its
+    own Theorem 3.2 asserts Definition 3.1 from exactly this regularity
+    (rho in C([0,T], P4), from Carrillo et al.'s theorems), so whatever
+    FKR means by it, a C([0,T], P4) solution meets it in FKR's own
+    usage. Taking p = 4 in GHV 2.3 (allowed when 4 >= 2 v p_M: Ackley
+    p_M = 2, Levy p_M = 1) gives the class FKR Theorem 3.7 asks for.
+  - Test-function extension: FKR Remark 3.3 (p. 11) extends (18) to C_*^2
+    for any weak solution in C([0, T], P4), so it applies to GHV's
+    solution too.
+  - Uniqueness is not needed: Theorem 3.7 is stated for any weak solution
+    in C([0,T*], P4) (O5).
+  - Anisotropic arm: the dissertation's Definition 3.1 (printed p. 21)
+    has the same form for (3.3), and Theorem 3.6 / Remark 3.7 apply to
+    any weak solution in C([0, T*], P4). GHV 2.3 with S = sigma diag
+    supplies one, by the same argument.
+  CLOSED 2026-11-03. Consequence: for Levy and Ackley (FKR Theorem 3.2
+  inapplicable), FKR Theorem 3.7 and the dissertation's Theorem 3.6 are
+  applicable through GHV Theorem 2.3, for the CONTINUOUS-TIME dynamics
+  only (O3, R5).
 - O5. Theorem 12 is stated for any weak solution; uniqueness not needed; say so.
 - O6. Verify Theorem 2.3's numbering and wording in ESAIM COCV 31, Paper 74.
   CLOSED 2026-10-31 against arXiv 2312.07373v4, the version cited by
