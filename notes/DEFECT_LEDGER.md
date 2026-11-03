@@ -5321,6 +5321,131 @@ instruction of 2026-10-15.
     [0.0059,0.2265]).
   OPEN.
 
+- N46 (decision, framing; 2026-11-03; Rahul's question after O3 R5 and R6:
+  does the discretisation weaken the central claim, is there a check that
+  bounds the dt effect, what must the abstract say). Decided by Claude
+  under Rahul's standing rule; reasons below.
+  SOURCE TEXT. FKR v6 Theorem 3.8 (p. 18) and its proof (33): the
+  implementable scheme (1) is covered by a decomposition whose first term,
+  E|(1/N) sum_i (V^i_{K dt} - V^i_T)|^2, is bounded by C_NA (dt)^{2m}
+  "by applying classical convergence results for numerical schemes for
+  SDEs [55]", m = 1/2 for Euler-Maruyama, and "C_NA ... depends linearly
+  on the dimension d and the number of particles N". The J^-1 enters only
+  through the separate term 3 C_MFA N^-1 (Proposition 3.11), which is
+  about the continuous-time particle system. So the guarantee the
+  abstract's first sentence names says nothing about the J exponent of
+  the discrete scheme at fixed dt; at fixed dt its own bound does not
+  even decrease in N. (This refines O3 R5's wording "a different
+  quantity": the quantity is the same kind, the J-dependence of the
+  discretisation term is not J^-1.)
+  (1) CENTRAL CLAIM. Decided: R5 is the condition of any numerical study
+  for the paper's DESCRIPTIVE results, and it is NOT orthogonal to its
+  COMPARISONS WITH THEORY.
+  - Descriptive results (fitted slopes of the implementable algorithm and
+    how they move with d, tau_0, r, diffusion) are statements about the
+    scheme at dt 0.01 on [0, 1]. They are true as such, and the abstract
+    already frames the question as "the slope fitted to a finite run" of
+    "the implementable algorithm". Discretisation does not undercut them.
+  - Comparisons with theory do depend on it: reading a slope near -1 as
+    the theorem's J^-1 being visible; locating the onset relative to
+    r = d sigma^2/(2 lambda) = 1 (Result 3); "the region in which the
+    theorem applies" (Result 4). Each compares a dt = 0.01 measurement
+    with a dt -> 0 statement. No cited result connects them (above).
+  - Size, heuristic only (Claude's algebra, not for the manuscript): for
+    the isotropic step with the mean frozen, Y' = (1 - dt) Y + sigma |Y|
+    dW gives E|Y'|^2 = ((1 - dt)^2 + d sigma^2 dt) E|Y|^2, which contracts
+    iff d sigma^2 < 2 - dt, i.e. r < 1 - dt/2. The scheme's own boundary
+    in this toy model moves by dt/2 in r, far below the onset grid's
+    spacing. It says nothing about the fitted exponent away from the
+    boundary, which only a measurement settles.
+  - So it weakens the claim only where the paper attributes a measured
+    feature to the mean-field dynamics, and without a refinement check the
+    paper cannot exclude the scheme as the cause of any departure from
+    J^-1 that it reports.
+  (2) REFINEMENT CHECK (DTREF). Decided: worth running. It lets the paper
+  say something true it otherwise cannot: that the reported slopes, and
+  the reported contrasts between them, are stable within a stated margin
+  under halving and quartering the step (or that they are not, which is
+  reported). Without it the paper can only say the slopes are of the
+  dt = 0.01 scheme and that the effect of dt is unbounded. It does not
+  turn any measurement into a continuous-time statement; no finite dt
+  does. Design, fixed here before any code:
+  - STEPS dt 0.01, 0.005, 0.0025, T 1.0 unchanged, K 100, 200, 400
+    (rerunlib K_of = round(T/DT)). Not 0.002: 0.01/0.002 = 5 and
+    0.005/0.002 = 2.5, so the three levels cannot share one Brownian path.
+    Powers of two can.
+  - PAIRING: same seed, same X0 (draw_initial runs first), and the SAME
+    Brownian path at every level, by Brownian-bridge refinement of the
+    archived increments: the coarse increment Z_k sqrt(dt) is split as
+    (Z_k + U_k) sqrt(dt/2)/sqrt(2) and (Z_k - U_k) sqrt(dt/2)/sqrt(2), U_k
+    from an independent stream keyed by the task key; quartering applies
+    the split again. The archived one_realisation is called unchanged
+    (rule 4); only the generator it builds is wrapped, so the dt 0.01
+    level is a pass-through. Checks before any shard: (a) at dt 0.01 the
+    wrapped call reproduces the committed rerun rows string for string;
+    (b) le0, which depends only on X0, is identical at all three levels;
+    (c) the pair sums of the refined increments equal the coarse ones to
+    rounding. If the wrapper cannot be made to pass (a) to (c) for a
+    module, that module falls back to independent noise with the same
+    X0, and its criterion widens accordingly; this is reported.
+  - ESTIMAND per realization: Delta_i = gamma_i(dt') - gamma_i(0.01), the
+    archived fit window, per cell; and the same difference for every
+    contrast the abstract or Table 1 quotes (d-contrast, severity
+    gamma(3) - gamma(1), the interaction).
+  - CRITERION (equivalence, rule 10: a non-significant difference is never
+    called equivalence): STABLE if the 95% paired bootstrap interval of
+    the cell mean Delta lies inside (-delta, +delta); SHIFTED if it lies
+    entirely outside [-delta, +delta]; otherwise UNRESOLVED. delta = 0.01
+    for cell slopes and contrasts: a third of the smallest resolved effect
+    the abstract reports (+0.0305, the full-grid interaction), so a shift
+    within delta in two slopes of opposite sign cannot by itself create or
+    remove that effect. Worked example: Delta interval [-0.004, +0.007] is
+    STABLE; [+0.013, +0.021] SHIFTED; [-0.002, +0.015] UNRESOLVED.
+    NULL RATE: under any true |Delta| >= delta, STABLE fires with
+    probability at most 0.025 per cell (one-sided coverage of a 95%
+    interval at the nearer bound; by construction, asymptotically in M).
+    Counts per row, no family-wise claim. A null fixture (synthetic E with
+    no dt effect, and one with a planted shift of 2 delta) runs through
+    the whole script before use.
+  - SCOPE: every row whose slopes the abstract or Table 1 quotes, every
+    cell, the archived M; not a subset (cost never decides). Rows priced
+    now from logged dt 0.01 walls: CONC, TAU8, SIGMA, ANISO 99616 s summed
+    measured unit wall (N38, logs/rerun-schedule-cal-20261023-1332.log);
+    ONSET-R 383344 s (Rahul's sum of the ten shard lines,
+    logs/rerun-schedule-onsetr-20261028-2130.log). Per-task wall is
+    proportional to K (each step is the same work; draw_initial and beta
+    are per task and independent of dt), so dt 0.005 costs 2x and
+    0.0025 costs 4x the dt 0.01 wall; dt 0.01 is not rerun beyond check
+    (a). Planning arithmetic by Claude on those logged inputs, not a
+    measurement: 6 x 482960 = 2897760 task-seconds for these five rows,
+    against C5's 3091579 (logs/c5price-20261101.log). The other rows the
+    abstract draws on are priced by the scheduler from costprobe2 walls,
+    which replaces this figure before launch, as for every previous set.
+  - MEMORY: array sizes do not depend on K except the per-step lists of
+    length K (les, qv); the wrapper adds one (J_inf, d) float array. The
+    smoke measures per-worker peak RSS before any shard (rule 6).
+  - ORDER: after C5. C5 settles R6 (the reference size) for CONC and
+    TAU8; DTREF settles R5 at J_inf 50000. The dt by J_inf interaction is
+    not measured; the text says so.
+  (3) ABSTRACT. Decided: the estimand goes in the abstract, in one
+  sentence after the realization count, not in a limitations section.
+  Proposed text (not applied; numbers from rerunlib DT and JINF):
+    "Every slope is fitted to the coupled error of the explicit
+    Euler-Maruyama scheme with step 0.01 on [0, 1], measured against a
+    reference ensemble of $5\times10^4$ particles that stands in for the
+    mean-field limit; the cited theorems concern the continuous-time
+    dynamics and an exact mean-field reference."
+  After DTREF and C5 the clause that follows states what they measured
+  (stable within delta, or not; reference effect, or not). Until then it
+  reads "and no cited result bounds the effect of either substitution".
+  The last sentence of the abstract ("not tests of ... the cited
+  asymptotic convergence theorems") stays; it is now true for a second
+  reason, which Section 2 states. Result 3's "boundary r = 1" and Result
+  4's "region in which the theorem applies" get "of the continuous-time
+  dynamics" in the body and in the abstract if space allows; the rule 8
+  agreement check covers it.
+  STATUS: framing DECIDED; DTREF script not written; OPEN.
+
 ## Checked and found sound
 
 Theorem 4 (seven steps) and Corollary 5; Lemma 6; Proposition 1 (Levy);
@@ -5524,6 +5649,7 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
          empirical mean to v* in probability), and does not give the J
          exponent of the discrete scheme. I do not know a result in the
          papers in hand that does.
+         Framing, the refinement check and the abstract: N46.
     (R6) THE REFERENCE. GHV Theorem 2.6 compares X^(j) from (2.8) with
          Xbar^(j) from (2.9): i.i.d. McKean-Vlasov particles with the
          same initial points and Brownian motions (synchronous coupling).
