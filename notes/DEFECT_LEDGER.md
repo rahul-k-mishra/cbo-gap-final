@@ -5385,9 +5385,10 @@ instruction of 2026-10-15.
     wrapped call reproduces the committed rerun rows string for string;
     (b) le0, which depends only on X0, is identical at all three levels;
     (c) the pair sums of the refined increments equal the coarse ones to
-    rounding. If the wrapper cannot be made to pass (a) to (c) for a
-    module, that module falls back to independent noise with the same
-    X0, and its criterion widens accordingly; this is reported.
+    rounding. [The fallback first written here, independent noise for a
+    module that fails, is WITHDRAWN (Rahul, 2026-11-03: "If a module
+    cannot pass it, say which and do not quietly fall back"). See
+    APPROVAL below.]
   - ESTIMAND per realization: Delta_i = gamma_i(dt') - gamma_i(0.01), the
     archived fit window, per cell; and the same difference for every
     contrast the abstract or Table 1 quotes (d-contrast, severity
@@ -5444,7 +5445,80 @@ instruction of 2026-10-15.
   4's "region in which the theorem applies" get "of the continuous-time
   dynamics" in the body and in the abstract if space allows; the rule 8
   agreement check covers it.
-  STATUS: framing DECIDED; DTREF script not written; OPEN.
+  APPROVAL (Rahul, 2026-11-03). The design above is approved as recorded:
+  dt 0.01, 0.005, 0.0025; one Brownian path by bridge refinement; the
+  archived one_realisation called unchanged with only its generator
+  wrapped; the equivalence criterion at delta 0.01 with STABLE, SHIFTED,
+  UNRESOLVED and its null rate; every row the abstract quotes, every
+  cell, the archived M. The three pre-shard checks are the gate, and
+  (a), dt 0.01 reproducing the committed rows string for string, is the
+  decisive one: it shows the wrapper changes nothing. NO FALLBACK: a
+  module that fails is named, and the rows that use it are not run under
+  DTREF until it passes. The abstract sentence under (3) is approved as
+  proposed text, with "and no cited result bounds the effect of either
+  substitution" standing until C5 and DTREF report. Nothing launches
+  until C5 is done.
+  FKR'S DISCRETISATION CONSTANT (recorded at Rahul's instruction; it goes
+  in the text that explains why the comparison needs DTREF). FKR v6
+  Theorem 3.8 (p. 18): "C_NA > 0 depends linearly on the dimension d and
+  the number of particles N". In the proof's decomposition (33) the
+  discretisation term is bounded by C_NA (dt)^{2m}, m = 1/2 for
+  Euler-Maruyama, and enters the probability bound as 6 C_NA (dt)^{2m}.
+  So at fixed dt this term does not decrease in J: it grows linearly in
+  J. The J^-1 is in the separate term 3 C_MFA N^-1. Precision, checked
+  against the text: Rahul's wording "at fixed dt its bound does not
+  decrease in J at all" is exact for the discretisation term. For the
+  whole bound it is slightly too strong: the sum 3 C_MFA / J + 6 C_NA(J)
+  (dt)^{2m} can decrease in J while the first term dominates, and grows
+  without limit afterwards. The text should say: "at a fixed step size
+  the discretisation term of [FKR, Theorem 3.8] grows linearly in the
+  number of particles, so the theorem's bound does not tend to zero as J
+  grows and gives no J^-1 rate for the scheme that is actually run;
+  whether the scheme's coupled error decays like J^-1 at dt = 0.01 is
+  therefore an empirical question, which DTREF addresses for the step
+  size". This replaces O3 R5's "a different quantity" wherever the text
+  explains the need for DTREF.
+  SCRIPT (Claude, 2026-11-03): scripts/dtref.py, modes plan (laptop,
+  writes nothing), gate and run (Kaggle). Its docstring fixes G-SRC, the
+  gate (A1 wrapped dt 0.01 = plain dt 0.01; A2 wrapped = the committed
+  row; A3 plain = committed, a diagnostic that tells IMAGE from WRAPPER;
+  B same X0 hash, coarse-path hash, initial call count and le0 at all
+  levels; C bridge counts and bridge_err <= 1e-12; an RSS task per
+  module at dt 0.0025), the run (refused without a gate folder that
+  passed on the same python, numpy and script hash for every module of
+  --rows; --rows explicit), shards, resume (rule 17) and the
+  pre-registered analysis with B-RUN. The P0 call makes A1 independent
+  of the image, so if C5's shard-12 bitwise check comes back DIFFERENT,
+  A2 fails as IMAGE and the gate says so instead of blaming the wrapper.
+  Checks run by Claude before handing over (no project number computed;
+  fixture values synthetic):
+  - G-SRC on the archive: the eleven modules the 21 rows use PASS;
+    exactcal (no rerun row) FAILS, as it should (its dW line differs).
+  - Input contact: plan rerun-plan-20261028-212945 (2289 cells), the two
+    costprobe2 timing folders (331 units), 60972 trajectory tasks over
+    21 rows, 39 gate groups, all 39 gate trajectories found once in the
+    18 committed rerun folders, whose header equals rerun.REAL_COLS; the
+    plan-derived columns of every gate row (beta, sigma, owner, rows,
+    keys, K, ...) equal the committed strings, so A2 compares only what
+    the dynamics compute.
+  - Synthetic fixture (scratchpad, J_inf 400, M 3, one cell per module,
+    fake committed folder from the plain call): PASS path, GATE PASS,
+    eleven modules; W1 and W2 rows show 200 and 400 fine steps from 100
+    coarse draws and bridge_err at rounding level; mechanism mix-0.1
+    passes three initial calls through. Planted faults: one ulp in a
+    committed E -> A2 FAIL, diagnosed IMAGE, GATE FAIL exit 3; one ulp
+    in W0's first increment -> A1 and A2 FAIL, diagnosed WRAPPER, in all
+    eleven modules, exit 3; a bridge constant off by 1e-9 -> C FAIL in
+    all eleven, exit 3. Run with a passing gate: 33 tasks, exit 0; run
+    without a gate: exit 2; resume: 33 read and skipped, exit 0; resume
+    with a different worker count: exit 2 (rule 17); plan: exit 0.
+  REMAINING before any DTREF job: (1) C5 done; (2) the scope list (rows
+  the round-2 abstract quotes) fixed in a committed queue definition;
+  (3) rerunq.py taught dtref as an item type (schema change; Rahul's
+  approval) or kgrun by hand; (4) dtref_analysis.py written, with its
+  null fixtures run, before the first shard; (5) the gate on Kaggle,
+  PASS.
+  STATUS: framing DECIDED and APPROVED; script written; OPEN.
 
 ## Checked and found sound
 
