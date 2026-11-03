@@ -4914,6 +4914,90 @@ instruction of 2026-10-15.
       LAUNCHING 60, RUNNING 900, HALTED none, DONE none), all as the
       rule; Python 3.8 grammar. Not checkable here: a real chain on
       GitHub; that is the first thing to watch after the load.
+  C5 IMAGE SPLIT (Claude, 2026-11-03, under Rahul's standing position;
+  his questions of 2026-11-03; nothing below has run yet).
+  - What happened. Halt commit a5dffaa: item 15, c5-x-s13of116-a1, runner
+    exit 0, folder runs/c5-x-s13of116-a1-kaggle-20261103-061045 committed
+    (37 rows, every one ending ok, read by c5bitcmp.py's reader on the
+    committed file). Its header: python 3.13.18 (build "main, Oct 26
+    2026"), numpy 2.1.3, platform Linux-6.18.55+. Smoke, drill and shards
+    0 to 12: python 3.13.15 (build "main, Aug 6 2026"), numpy 2.1.3; the
+    env column of every row says the same. R1 halted as specified, so F2
+    has not yet been run on shard 13. The header check is not relaxed.
+  - Rule 16, as written: "detcheck.py must pass D1 to D3 on Kaggle before
+    any Kaggle number is compared with an archived one". It names no
+    version. The pass recorded in ENVIRONMENT.md was under 3.13.15 and
+    2.1.3. This project reads a Python or NumPy change as a new image
+    (K5: "rule 16 then needs detcheck on the new image"; rerunq.py R1
+    worked example). On that reading 3.13.18 is ungated: running on it is
+    not a breach, but none of its numbers is compared with an archived
+    number until detcheck passes on it. C5's own comparisons (with the
+    50000 rerun and between shards) are Kaggle against Kaggle, which rule
+    16 does not cover. The bitwise check below does.
+  - What differs. CPython changelog for 3.13.16 to 3.13.18
+    (docs.python.org/3.13/whatsnew/changelog.html, read 2026-11-03 through
+    a summarising fetch, not line by line): gh-158446 (formatting a float
+    with a precision near INT_MAX now raises), gh-155526 (abs(nanj)
+    spurious OverflowError), gh-156196 (failed PyMemberDef assignment),
+    gh-159015 (a test_math skip condition). None touches IEEE arithmetic,
+    repr at ordinary precision, the math module's functions or sum. The
+    trajectories are NumPy, which is 2.1.3 in both. Not known: whether the
+    NumPy binary is byte-identical between the two images, and which CPU
+    each session ran on. NumPy picks SIMD kernels at run time by CPU, and
+    no header prints the CPU. Also recorded: the host kernel already
+    differed between the detcheck session (6.18.48) and the C5 shards
+    (6.18.55). R1 does not check it, and user-space float results do not
+    depend on it.
+  - DECIDED (Claude, under the standing position: settle it by
+    measurement, not by assuming either way). Neither "accept and
+    continue" nor "discard and rerun" is chosen on assumption. Two Kaggle
+    jobs, launched by Rahul by hand while both drivers are disabled
+    (rule 22):
+    (1) c5-x-s12of116-bitchk-a1: c5run.py --mode run --shard 12 --nshards
+        116, same arguments and data folders as the queue gave shard 12,
+        no resume, on the current image. scripts/c5bitcmp.py (written
+        2026-11-03; rules P0, B, M and outcomes in its docstring, fixed
+        before execution) compares it bit for bit with
+        runs/c5-x-s12of116-a1-kaggle-20261103-023156. Shard 12 covers all
+        four d, both rows and all six objectives. About 3.2 hours
+        (shard 0's kernel log ends at 11396 s).
+    (2) detcheck-py31318: detcheck.py on the current image (rule 16).
+    Outcomes, fixed now:
+    IDENTICAL and detcheck PASS: shards 0 to 13 stand. The queue continues
+        from shard 14 on 3.13.18 once its expected Python is moved by a
+        recorded decision. rerunq.py has no subcommand for that today
+        ("load" is refused unless DONE); it is written after the verdict,
+        gated on this log, and changes only the expected value, never the
+        rule that it must match exactly. The paper states the split and
+        cites the check. The next image change halts again and is settled
+        the same way.
+    DIFFERENT: shards 0 to 12 are re-run on the image the rest of C5 runs
+        on, so that every C5 number comes from one image, and M goes in
+        the supplement. Pinning then becomes necessary, because roughly
+        100 shards (about two weeks) remain and another upgrade would split
+        the set again. The cause (Python or host CPU) is not needed for
+        that decision.
+    detcheck FAIL: recorded in ENVIRONMENT.md as a fail. No 3.13.18
+        number is compared with an archived one. C5 continues only within
+        platform, under the verdict above.
+  - Options and their cost, as weighed. Accept without a check: costs
+    nothing, but the paper would claim the split is immaterial with
+    nothing behind the claim. Rejected. Discard and rerun shards 0 to 12
+    on 3.13.18: about 13 x 3.2 hours of Kaggle plus queue latency (about
+    two days); it buys nothing if the bits are identical, and it does not
+    protect against the next upgrade. Pin the image: the kaggle 2.2.4
+    client sends a docker_image field from kernel-metadata.json
+    (kagglesdk kernels_api_service.py: "must be one of the
+    Kaggle-provided, known images ... gcr.io/kaggle-images/python@sha256:
+    ..."). kgrun.py does not set it. Not known: whether Kaggle reports the
+    digest a past kernel ran on, and whether it still accepts an older
+    digest. One "kaggle kernels pull -m" of shard 12's kernel, then one
+    short pushed job, would settle that. Not pursued unless the verdict is
+    DIFFERENT.
+  - Not data. The recheck's rows repeat shard 12's keys.
+    c5_analysis.py's A0 ("task complete in two folders") refuses the
+    recheck folder if it is ever passed in. It is never passed in.
+  OPEN until both logs are in.
 : fkr2024-siopt.pdf,
   2103.15130v6.pdf, 2312.07373v4.pdf): does either cited theorem state
   how its constant depends on beta (FKR's alpha) in a quotable form?
