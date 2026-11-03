@@ -5254,6 +5254,150 @@ With p = 4 and Gaussian rho_0 this is the standing hypothesis of FKR Theorem
   Levy (fails (6); GHV 2.3 with p_M = 1; A2 global from
   f >= ||x - 1||^2/16, nu = 1/2, eta = 1/4); synthetic family (N15);
   Rosenbrock (A2 holds, existence unproven, label accordingly).
+  PROGRESS 2026-11-03 (Claude; three rows proved; nothing here depends on
+  C5). Sources read for this entry, by pdftotext of Rahul's copies in
+  ~/cbo-refs: FKR arXiv v6 (2103.15130v6.pdf; numbers equal SIOPT's for
+  every result cited, N3), GHV arXiv v4 (2312.07373v4.pdf, the cited
+  version, N45 GHV CITATION) and Riedl's dissertation
+  (riedl-dissertation.pdf). Objectives as archived:
+  zenodo-v1/boundary.py lines 111-145 and mechanism.py lines 127 on,
+  identical formulas. C5 runs them through costprobe2.MODS, which
+  hash-checks against the archive.
+  - COLUMNS of the rebuilt table (N2), each defined by its source:
+    (a) GHV class A(s, l, u), v4 Assumption H (p. 7): (H1) f bounded
+        below by f* = inf f and |f(x) - f(y)| <= L_f (1 + |x| + |y|)^s
+        |x - y| (2.1), L_f > 0, s >= 0; (H2) constants c_l, C_l, c_u, C_u
+        > 0, u >= l >= 0, with f - f* <= c_u |x|^u + C_u (2.2a) and f -
+        f* >= c_l |x|^l - C_l (2.2b). Remark 2.1: A(s, l, u) is empty for
+        l > s + 1. The table gives the least s for which (2.1) holds.
+    (b) FKR existence, v6 Theorem 3.2 (p. 11; H = 1, rho_0 in P4): (19)
+        |E(v) - E(w)| <= C1 (||v|| + ||w||) ||v - w||; (20) E(v) - E_ <=
+        C2 (1 + ||v||^2); and either sup E < inf or (21) E(v) - E_ >= C3
+        ||v||^2 for ||v|| >= C4. Conclusion: law in C([0,T], P4), weak
+        solution of (8).
+    (c) GHV existence, v4 Theorem 2.3 (p. 8): f in A(s, l, l), l <= s +
+        1, rho_0 in P_p, p >= 2 v p_M(s, l), with p_M = s + 2 if l = 0
+        and 1 if l > 0 ((2.3), p. 8). Conclusion: rho in C([0,T], P_p),
+        Fokker-Planck (2.5). Gaussian rho_0 is in every P_p, so p = 4 can
+        always be chosen when 4 >= p_M.
+    (d) A2 in l2, v6 Definition 3.5 (p. 13): A1, a minimiser v* with
+        E(v*) = inf E =: E_; A2, E_inf, R0, eta > 0 and nu in (0, inf)
+        with ||v - v*||_2 <= (E(v) - E_)^nu / eta on B_R0(v*) (24) and
+        E(v) - E_ > E_inf outside B_R0(v*) (25).
+    (e) A2 in l-infinity, dissertation Assumption 3.5 (p. 29): the same
+        with ||x - x*||_inf and l-infinity balls B^inf_R0(x*), (3.26)-
+        (3.27); nu in (0, inf). (R2's update: not the conference paper's
+        nu <= 1/2.)
+    (f) FKR Theorem 3.7 applicable (v6 p. 14): E continuous with A1-A2,
+        rho_0 in P4 with v* in supp(rho_0), 2 lambda > d sigma^2, and a
+        weak solution in C([0,T*], P4) of (8), which (b) or (c) must
+        supply. The parameter condition belongs to the cell, not to the
+        objective, so the table records only the objective's part.
+    (g) GHV Theorem 2.6 applicable (v4 p. 10): f in A(s, l, l), l <= s +
+        1, rho_0 with bounded moments of all orders.
+    Finite R0 and E_inf are given everywhere, so the rows do not lean on
+    v6's convention "whenever (24) holds globally, we take R0 = inf"
+    (p. 14). The dissertation's text for that convention was not looked
+    for.
+  - SPHERE, f(x) = |x|^2 (boundary.py f_sphere). f* = 0, attained only at
+    x* = 0 (f(x) > 0 for x != 0).
+    (b) f(v) - f(w) = <v - w, v + w>, so |f(v) - f(w)| <= |v + w| |v - w|
+        (Cauchy-Schwarz) <= (|v| + |w|) |v - w| (triangle inequality): (19)
+        with C1 = 1. f - f* = |v|^2 <= 1 + |v|^2: (20) with C2 = 1. f -
+        f* = |v|^2 for every v: (21) with C3 = 1, C4 = 1. Theorem 3.2
+        applies.
+    (a) |v| + |w| <= 1 + |v| + |w|, so (2.1) holds with s = 1, L_f = 1.
+        No s < 1 works: for v = t e1 and w = (t + 1) e1, t > 0, |f(w) -
+        f(v)| = 2t + 1, while L_f (1 + |v| + |w|)^s |v - w| = L_f (2t +
+        2)^s; the ratio (2t + 1) / (L_f (2t + 2)^s) is unbounded as t ->
+        inf when s < 1. (2.2a) with u = 2, c_u = 1, C_u = 1 (|x|^2 <=
+        |x|^2 + 1); (2.2b) with l = 2, c_l = 1, C_l = 1 (|x|^2 >= |x|^2 -
+        1). So f is in A(1, 2, 2), and l = 2 <= s + 1 = 2.
+    (c) p_M(1, 2) = 1 (l > 0), so p >= 2: Theorem 2.3 applies.
+    (d) |v - v*|_2 = |v| = f(v)^(1/2): (24) with nu = 1/2, eta = 1, for
+        every v. With R0 = 1 and E_inf = 1: if |v| > 1 then f(v) = |v|^2 >
+        1, which is (25).
+    (e) |v|_inf <= |v|_2 = f(v)^(1/2): (3.26) with nu = 1/2, eta = 1, for
+        every v. With R0 = 1, E_inf = 1: if |v|_inf > 1 then f(v) = |v|_2^2
+        >= |v|_inf^2 > 1, which is (3.27).
+    (f) yes: A1 (v* = 0) and A2 by (d); (b) supplies the weak solution
+        for rho_0 in P4. (g) yes.
+  - RASTRIGIN, f(x) = sum_i [x_i^2 + 10 (1 - cos 2 pi x_i)] (f_rastrigin)
+    = |x|^2 + 10 sum_i (1 - cos 2 pi x_i). Each 1 - cos is in [0, 2], so
+    |x|^2 <= f(x) <= |x|^2 + 20 d. f* = 0, attained only at x* = 0
+    (f(x) >= |x|^2 > 0 for x != 0, f(0) = 0).
+    (b) Quadratic part as for Sphere: at most (|v| + |w|) |v - w|.
+        Cosine part. For real a, b: cos a - cos b = -2 sin((a + b)/2)
+        sin((a - b)/2), and |sin z| <= |z|, so |cos a - cos b| <= 2 (|a +
+        b| / 2)(|a - b| / 2) = |a + b| |a - b| / 2. With a = 2 pi v_i, b =
+        2 pi w_i: |cos 2 pi v_i - cos 2 pi w_i| <= (2 pi)^2 |v_i + w_i|
+        |v_i - w_i| / 2 = 2 pi^2 |v_i + w_i| |v_i - w_i|. Summing with the
+        factor 10 and Cauchy-Schwarz: at most 20 pi^2 |v + w| |v - w| <=
+        20 pi^2 (|v| + |w|) |v - w|. Together: (19) with C1 = 1 + 20 pi^2.
+        (20): f - f* <= |v|^2 + 20 d <= 20 d (1 + |v|^2), since 20 d >= 1
+        for d >= 1; C2 = 20 d. (21): f - f* >= |v|^2 for every v; C3 = 1,
+        C4 = 1. Theorem 3.2 applies.
+        The plan above lists C1 = 2 + 40 pi^2, with no derivation
+        recorded. Any constant at least 1 + 20 pi^2 is valid, so it is
+        not wrong, but 1 + 20 pi^2 is the one proved here and is the
+        one the table should give.
+    (a) (2.1) with s = 1, L_f = 1 + 20 pi^2, as for Sphere. No s < 1: for
+        v = t e1, w = (t + 1) e1, the cosine terms are equal (period 1), so
+        |f(w) - f(v)| = 2t + 1 and the Sphere argument applies. (2.2a): u
+        = 2, c_u = 1, C_u = 20 d. (2.2b): l = 2, c_l = 1, C_l = 1. A(1, 2,
+        2), l <= s + 1.
+    (c) p_M = 1, p >= 2: Theorem 2.3 applies.
+    (d) |v|_2 <= f(v)^(1/2): nu = 1/2, eta = 1, every v. R0 = 1, E_inf =
+        1: |v| > 1 gives f(v) >= |v|^2 > 1.
+    (e) |v|_inf <= |v|_2 <= f(v)^(1/2): nu = 1/2, eta = 1, every v. R0 =
+        1, E_inf = 1: |v|_inf > 1 gives f(v) >= |v|_2^2 >= |v|_inf^2 > 1.
+    (f) yes; (g) yes.
+  - GRIEWANK, f(x) = |x|^2 / 4000 - prod_i cos(x_i / sqrt i) + 1
+    (f_griewank, i = 1..d). |prod_i cos(.)| <= 1, so |x|^2 / 4000 <= f(x)
+    <= |x|^2 / 4000 + 2. f* = 0, attained only at x* = 0 (f(x) >= |x|^2 /
+    4000 > 0 for x != 0; f(0) = 0 - 1 + 1 = 0).
+    (b) Quadratic part: at most (|v| + |w|) |v - w| / 4000. Product part.
+        With a_i = v_i / sqrt i, b_i = w_i / sqrt i, write P_k = prod_{i
+        <= k} cos b_i prod_{i > k} cos a_i, so P_0 = prod cos a_i and P_d
+        = prod cos b_i; then prod cos a_i - prod cos b_i = sum_{k=1..d}
+        (P_{k-1} - P_k), and P_{k-1} - P_k = (cos a_k - cos b_k) times a
+        product of cosines of modulus at most 1. Hence |prod cos a_i -
+        prod cos b_i| <= sum_k |cos a_k - cos b_k| <= sum_k |a_k + b_k|
+        |a_k - b_k| / 2 (Rastrigin's inequality) = sum_k |v_k + w_k| |v_k
+        - w_k| / (2k) <= (1/2) sum_k |v_k + w_k| |v_k - w_k| <= (1/2) |v +
+        w| |v - w| (Cauchy-Schwarz) <= (1/2)(|v| + |w|) |v - w|. (19) with
+        C1 = 1/4000 + 1/2. (20): f - f* <= |v|^2 / 4000 + 2 <= 2 (1 +
+        |v|^2); C2 = 2. (21): f - f* >= |v|^2 / 4000 for every v; C3 =
+        1/4000, C4 = 1. Theorem 3.2 applies.
+        The plan lists C1 = 1 + 1/2000 (larger, also valid; not
+        derived); the table should give 1/4000 + 1/2.
+    (a) (2.1) with s = 1, L_f = 1/4000 + 1/2. No s < 1: for v = t e1, w =
+        (t + 1) e1, |f(w) - f(v)| >= (2t + 1) / 4000 - 2 (the product
+        terms differ by at most 2), which grows linearly in t, while
+        (1 + |v| + |w|)^s |v - w| = (2t + 2)^s. (2.2a): u = 2, c_u =
+        1/4000, C_u = 2. (2.2b): l = 2, c_l = 1/4000, C_l = 1. A(1, 2, 2),
+        l <= s + 1.
+    (c) p_M = 1, p >= 2: Theorem 2.3 applies.
+    (d) |v|_2 <= (4000 f(v))^(1/2) = f(v)^(1/2) / 4000^(-1/2): nu = 1/2,
+        eta = 4000^(-1/2), every v. R0 = 1, E_inf = 1/4000: |v| > 1 gives
+        f(v) >= |v|^2 / 4000 > 1/4000.
+    (e) |v|_inf <= |v|_2: the same nu, eta, R0 and E_inf (|v|_inf > 1
+        gives |v|_2 > 1).
+    (f) yes; (g) yes.
+  - STILL TO DO in O7, rows in the order of most work left: Rosenbrock
+    (manuscript Proposition 2's A(3, 1, 4) to be re-proved; A2 in both
+    norms; GHV v4 Subsection 5.2 sketch for l < u, mentioned, not relied
+    on; existence unproven, so (f) "not established" and (g) "no");
+    Levy (the manuscript's proposition that it fails (19), re-proved
+    from the archived formula; A(2, 2, 2) with s minimal; A2 from f >=
+    |x - 1|^2 / 16, which the archived formula gives because each
+    (w_i - 1)^2 factor carries a multiplier >= 1 and w_i - 1 = (x_i -
+    1)/4; to be written out); Ackley (class done in O1; A2 constants
+    are O2); the two Schwefel rows (whether any archived or round-2
+    experiment uses Schwefel is to be checked before the rows are
+    kept); the synthetic family (N15). Then the table itself, its
+    caption, and the agreement checks of rule 8.
+  OPEN.
 - O8. State that FKR Proposition 16 requires Theorem 6's hypotheses, so for
   Ackley and Levy the J^-1 rate is sourced from GHV Theorem 2.6 (q >= 6 for
   the exponent 1/2 at p = 2; Gaussian rho_0 qualifies), and that neither
