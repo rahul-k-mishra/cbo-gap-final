@@ -1,0 +1,160 @@
+[{"stream_name":"stdout","time":1.098450852,"data":"kgrun runner: job c5-x-s22of116-a1\n"}
+,{"stream_name":"stdout","time":1.098503942,"data":"  python   3.13.18 (main, Oct 26 2026, 15:28:15) [GCC 13.3.0]\n"}
+,{"stream_name":"stdout","time":1.098508752,"data":"  dataset  ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.098567722,"data":"  archive  /kaggle/input/datasets/ericsom/cbo-gap-archive\n"}
+,{"stream_name":"stdout","time":1.098591842,"data":"  found by candidate 2, /kaggle/input/datasets/\u003cuser\u003e/\u003cdataset\u003e\n"}
+,{"stream_name":"stdout","time":1.390989394,"data":"  listing  88 files in the mounted dataset\n"}
+,{"stream_name":"stdout","time":1.391022934,"data":"  script   /kaggle/input/datasets/ericsom/cbo-gap-archive/c5run.py\n"}
+,{"stream_name":"stdout","time":1.391028074,"data":"  args     --mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 22 --nshards 116\n"}
+,{"stream_name":"stdout","time":4.018529888,"data":"  bundle   40f9ec17f6037595: 87 files verified against kgrun-bundle-40f9ec17f6037595.sha256\n"}
+,{"stream_name":"stdout","time":4.019577708,"data":"  shipped folders (rebuilt under /tmp/kgrun-ship, verified against sha256.txt):\n"}
+,{"stream_name":"stdout","time":4.037327279,"data":"    data  jinfprobe-s0of3-a1-kaggle-20261031-210629  -\u003e  /tmp/kgrun-ship/jinfprobe-s0of3-a1-kaggle-20261031-210629   3 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.040662,"data":"        jinfprobe-run-20261031-132528-s0of3/jinfprobe_params.csv: 17 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.04259385,"data":"        jinfprobe-run-20261031-132528-s0of3/jinfprobe_results.csv: 84 rows, 84 with end ok\n"}
+,{"stream_name":"stdout","time":4.0426154,"data":"        args: runs/jinfprobe-s0of3-a1-kaggle-20261031-210629 -\u003e /tmp/kgrun-ship/jinfprobe-s0of3-a1-kaggle-20261031-210629 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.0476512,"data":"    data  jinfprobe-s1of3-a1-kaggle-20261031-233459  -\u003e  /tmp/kgrun-ship/jinfprobe-s1of3-a1-kaggle-20261031-233459   3 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.04789362,"data":"        jinfprobe-run-20261031-154346-s1of3/jinfprobe_params.csv: 17 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.04926145,"data":"        jinfprobe-run-20261031-154346-s1of3/jinfprobe_results.csv: 84 rows, 84 with end ok\n"}
+,{"stream_name":"stdout","time":4.04927926,"data":"        args: runs/jinfprobe-s1of3-a1-kaggle-20261031-233459 -\u003e /tmp/kgrun-ship/jinfprobe-s1of3-a1-kaggle-20261031-233459 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.054331281,"data":"    data  jinfprobe-s2of3-a1-kaggle-20261101-015818  -\u003e  /tmp/kgrun-ship/jinfprobe-s2of3-a1-kaggle-20261101-015818   3 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.05454148,"data":"        jinfprobe-run-20261031-182214-s2of3/jinfprobe_params.csv: 17 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.055821491,"data":"        jinfprobe-run-20261031-182214-s2of3/jinfprobe_results.csv: 84 rows, 84 with end ok\n"}
+,{"stream_name":"stdout","time":4.055838121,"data":"        args: runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 -\u003e /tmp/kgrun-ship/jinfprobe-s2of3-a1-kaggle-20261101-015818 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.058062311,"data":"    data  calprec2-finalize-20261023-112503  -\u003e  /tmp/kgrun-ship/calprec2-finalize-20261023-112503   1 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.060995921,"data":"        calprec2_beta.csv: 336 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.061044311,"data":"        args: runs/calprec2-finalize-20261023-112503 -\u003e /tmp/kgrun-ship/calprec2-finalize-20261023-112503 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.068118001,"data":"    data  rerun-plan-20261023-112643  -\u003e  /tmp/kgrun-ship/rerun-plan-20261023-112643   4 files, manifest PASS\n"}
+,{"stream_name":"stdout","time":4.082915773,"data":"        rerun_archive_check.csv: 2322 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.083430463,"data":"        rerun_onset_control.csv: 10 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.096487604,"data":"        rerun_plan.csv: 1752 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.098026974,"data":"        rerun_plan_params.csv: 22 rows, 0 with end ok\n"}
+,{"stream_name":"stdout","time":4.098056324,"data":"        args: runs/rerun-plan-20261023-112643 -\u003e /tmp/kgrun-ship/rerun-plan-20261023-112643 (1 occurrence(s))\n"}
+,{"stream_name":"stdout","time":4.098062164,"data":"  command  /usr/bin/python3 /kaggle/input/datasets/ericsom/cbo-gap-archive/c5run.py --archive /kaggle/input/datasets/ericsom/cbo-gap-archive --outdir /kaggle/working --mode run --timing /tmp/kgrun-ship/jinfprobe-s0of3-a1-kaggle-20261031-210629,/tmp/kgrun-ship/jinfprobe-s1of3-a1-kaggle-20261031-233459,/tmp/kgrun-ship/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table /tmp/kgrun-ship/calprec2-finalize-20261023-112503 --rerun-plan /tmp/kgrun-ship/rerun-plan-20261023-112643 --workers 4 --shard 22 --nshards 116\n"}
+,{"stream_name":"stdout","time":4.751147202,"data":"\n"}
+,{"stream_name":"stdout","time":4.751182912,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.751199322,"data":"CBO-GAP c5run  (ledger N45, C5: rows CONC-X and TAU8-X)  mode run\n"}
+,{"stream_name":"stdout","time":4.751202602,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.751205612,"data":"  python   3.13.18\n"}
+,{"stream_name":"stdout","time":4.751209212,"data":"  numpy    2.1.3\n"}
+,{"stream_name":"stdout","time":4.756751072,"data":"  platform Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":4.756776432,"data":"  workers  4\n"}
+,{"stream_name":"stdout","time":4.757726612,"data":"  script   sha256 3c6a569ffea662626f4a67ae8618a42c7db17cd6e2e033d9aa547bf1433cc959\n"}
+,{"stream_name":"stdout","time":4.758259232,"data":"  jinfprobe.py sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f\n"}
+,{"stream_name":"stdout","time":4.758662462,"data":"  c5price.py sha256 10688bff2f0d846dea5060d8440e8966c18c9975c2eba4450025e022b85e9a24\n"}
+,{"stream_name":"stdout","time":4.759154523,"data":"  calprec2.py sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a\n"}
+,{"stream_name":"stdout","time":4.759726033,"data":"  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b\n"}
+,{"stream_name":"stdout","time":4.760290413,"data":"  rerunlib.py sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430\n"}
+,{"stream_name":"stdout","time":4.760304303,"data":"  mode     run   shard 22 of 116\n"}
+,{"stream_name":"stdout","time":4.760308403,"data":"  timing   jinfprobe-s0of3-a1-kaggle-20261031-210629,jinfprobe-s1of3-a1-kaggle-20261031-233459,jinfprobe-s2of3-a1-kaggle-20261101-015818\n"}
+,{"stream_name":"stdout","time":4.760311873,"data":"  beta table calprec2-finalize-20261023-112503\n"}
+,{"stream_name":"stdout","time":4.7603148730000004,"data":"  rerun plan rerun-plan-20261023-112643\n"}
+,{"stream_name":"stdout","time":4.760317833,"data":"  design   288 cells (CONC-X 144, TAU8-X 144), M 15, J_inf 4000000, J 10,20,40,80,160,320,640,1280,2560,5000,10000,20000,40000,80000,160000,320000,400000\n"}
+,{"stream_name":"stdout","time":4.760336943,"data":"  dynamics archived one_realisation; sigma 0.2; dt 0.01; K 100; law per cell\n"}
+,{"stream_name":"stdout","time":4.760341283,"data":"  seeds    SeedSequence((ENTROPY 20261016, kind, owner 21 CONC-X / 22 TAU8-X, rerunlib.coord_fields, rep)); kind 95 run, 96 bootstrap, 97 smoke, 98 drill\n"}
+,{"stream_name":"stdout","time":4.760344633,"data":"  budget   24000 MB for concurrent tasks\n"}
+,{"stream_name":"stdout","time":4.760347613,"data":"\n"}
+,{"stream_name":"stdout","time":4.760350353,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.760353723,"data":"G-FORK, G3\n"}
+,{"stream_name":"stdout","time":4.760356483,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.760390363,"data":"  G-FORK PASS  start method fork\n"}
+,{"stream_name":"stdout","time":4.761383153,"data":"  G3 PASS  mechanism, boundary match costprobe2.ARCHIVE_SHA256\n"}
+,{"stream_name":"stdout","time":4.761396083,"data":"\n"}
+,{"stream_name":"stdout","time":4.761400293,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.761404073,"data":"IN  inputs\n"}
+,{"stream_name":"stdout","time":4.761407133,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.762981333,"data":"  read jinfprobe-s0of3-a1-kaggle-20261031-210629: shard 0 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f\n"}
+,{"stream_name":"stdout","time":4.764353893,"data":"  read jinfprobe-s1of3-a1-kaggle-20261031-233459: shard 1 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f\n"}
+,{"stream_name":"stdout","time":4.7657176230000005,"data":"  read jinfprobe-s2of3-a1-kaggle-20261101-015818: shard 2 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f\n"}
+,{"stream_name":"stdout","time":4.765912953,"data":"  IN PASS  252 complete tasks, every unit at every ladder size\n"}
+,{"stream_name":"stdout","time":4.782149274,"data":"  IN PASS  probe 42 units; calprec2 336 cells; rerun plan 288 CONC and TAU8 cells\n"}
+,{"stream_name":"stdout","time":4.782176704,"data":"\n"}
+,{"stream_name":"stdout","time":4.782180634,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.782183864,"data":"B1  same beta as the 50000 cell (calprec2 against the rerun plan)\n"}
+,{"stream_name":"stdout","time":4.782186694,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.783215334,"data":"  B1 PASS  288 cells, every beta equal to the rerun plan's\n"}
+,{"stream_name":"stdout","time":4.784686834,"data":"\n"}
+,{"stream_name":"stdout","time":4.7846977840000005,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.784701574,"data":"W  workers per d (c5price PR)\n"}
+,{"stream_name":"stdout","time":4.784704454,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.784707394,"data":"  d  2: R_d 596.9 MB, workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":4.784722835,"data":"  d  5: R_d 1619.0 MB, workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":4.784726015,"data":"  d 10: R_d 2959.4 MB, workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":4.784729144,"data":"  d 40: R_d 10713.7 MB, workers 2, G-RSS flag above 12000 MB\n"}
+,{"stream_name":"stdout","time":4.825009167,"data":"  shard 22 of 116: 38 tasks, S2 load 10707 s\n"}
+,{"stream_name":"stdout","time":4.825037407,"data":"\n"}
+,{"stream_name":"stdout","time":4.825040418,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.825042667,"data":"T1, STOP, G-STOP\n"}
+,{"stream_name":"stdout","time":4.825044567,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.825046587,"data":"  TIMEOUT_S = 10656 s  (max(600, 5 x largest measured wall 2131.2 s))\n"}
+,{"stream_name":"stdout","time":4.825048447,"data":"  --stop-after 31944 s (auto) + TIMEOUT_S 10656 s = 42600 s   cap 43200 s\n"}
+,{"stream_name":"stdout","time":4.825050378,"data":"  G-STOP PASS\n"}
+,{"stream_name":"stdout","time":4.829918298,"data":"\n"}
+,{"stream_name":"stdout","time":4.829942088,"data":"  run dir  /kaggle/working/c5run-run-20261104-175554-s22of116\n"}
+,{"stream_name":"stdout","time":4.836627398,"data":"\n"}
+,{"stream_name":"stdout","time":4.836675188,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.836680178,"data":"Tasks, in groups by d  (W)\n"}
+,{"stream_name":"stdout","time":4.836683528,"data":"====================================================================================================\n"}
+,{"stream_name":"stdout","time":4.836686858,"data":"  group d 2: 5 task(s), workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":4.836690218,"data":"  [d2] 5 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":95.427542015,"data":"  [d2     1/5    ] CONC-X|20261016-95-21-2-5-2-0-500000-0-0-0-4000000-1000000-0 wall    90.552 s  RSS   540.6 MB  elapsed      91 s\n"}
+,{"stream_name":"stdout","time":105.057619408,"data":"  [d2     2/5    ] CONC-X|20261016-95-21-2-2-2-0-10000-0-0-0-4000000-1000000-0- wall   100.048 s  RSS   540.6 MB  elapsed     100 s\n"}
+,{"stream_name":"stdout","time":143.72483382,"data":"  [d2     3/5    ] CONC-X|20261016-95-21-2-4-2-0-10000-0-0-0-4000000-1000000-0- wall   138.803 s  RSS   601.4 MB  elapsed     139 s\n"}
+,{"stream_name":"stdout","time":150.339695838,"data":"  [d2     4/5    ] CONC-X|20261016-95-21-2-0-2-2-100000-0-0-0-4000000-1000000-0 wall   145.283 s  RSS   541.6 MB  elapsed     146 s\n"}
+,{"stream_name":"stdout","time":206.61033453,"data":"  [d2     5/5    ] CONC-X|20261016-95-21-2-3-2-0-10000-0-0-0-4000000-1000000-0- wall   111.067 s  RSS   539.1 MB  elapsed     202 s\n"}
+,{"stream_name":"stdout","time":206.612501691,"data":"  group d 5: 10 task(s), workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":206.612549471,"data":"  [d5] 10 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":439.649920298,"data":"  [d5     1/10   ] TAU8-X|20261016-95-22-4-0-5-0-200000-0-0-0-4000000-1000000-0 wall   232.880 s  RSS  1534.4 MB  elapsed     233 s\n"}
+,{"stream_name":"stdout","time":449.878247258,"data":"  [d5     2/10   ] CONC-X|20261016-95-21-2-0-5-2-100000-0-0-0-4000000-1000000-0 wall   243.236 s  RSS  1317.3 MB  elapsed     243 s\n"}
+,{"stream_name":"stdout","time":455.899493575,"data":"  [d5     3/10   ] TAU8-X|20261016-95-22-4-4-5-0-30000-0-0-0-4000000-1000000-0- wall   249.241 s  RSS  1653.1 MB  elapsed     249 s\n"}
+,{"stream_name":"stdout","time":474.142319178,"data":"  [d5     4/10   ] CONC-X|20261016-95-21-2-4-5-0-500000-0-0-0-4000000-1000000-0 wall   267.353 s  RSS  1405.3 MB  elapsed     268 s\n"}
+,{"stream_name":"stdout","time":634.845785897,"data":"  [d5     5/10   ] CONC-X|20261016-95-21-2-5-5-0-10000-0-0-0-4000000-1000000-0- wall   178.743 s  RSS  1313.7 MB  elapsed     428 s\n"}
+,{"stream_name":"stdout","time":646.275114014,"data":"  [d5     6/10   ] TAU8-X|20261016-95-22-4-3-5-0-200000-0-0-0-4000000-1000000-0 wall   196.205 s  RSS  1455.7 MB  elapsed     440 s\n"}
+,{"stream_name":"stdout","time":653.096379465,"data":"  [d5     7/10   ] CONC-X|20261016-95-21-2-5-5-2-500000-0-0-0-4000000-1000000-0 wall   178.800 s  RSS  1316.6 MB  elapsed     446 s\n"}
+,{"stream_name":"stdout","time":657.507958213,"data":"  [d5     8/10   ] TAU8-X|20261016-95-22-4-1-5-0-200000-0-0-0-4000000-1000000-0 wall   217.661 s  RSS  1457.4 MB  elapsed     451 s\n"}
+,{"stream_name":"stdout","time":746.222819226,"data":"  [d5     9/10   ] TAU8-X|20261016-95-22-4-2-5-0-20000-0-0-0-4000000-1000000-0- wall   111.186 s  RSS  1458.4 MB  elapsed     540 s\n"}
+,{"stream_name":"stdout","time":754.638382553,"data":"  [d5    10/10   ] TAU8-X|20261016-95-22-4-2-5-0-70000-0-0-0-4000000-1000000-0- wall   108.344 s  RSS  1458.4 MB  elapsed     548 s\n"}
+,{"stream_name":"stdout","time":754.638689053,"data":"  group d 10: 13 task(s), workers 4, G-RSS flag above 6000 MB\n"}
+,{"stream_name":"stdout","time":754.638702623,"data":"  [d10] 13 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":1196.079664307,"data":"  [d10     1/13   ] TAU8-X|20261016-95-22-4-4-10-0-20000-0-0-0-4000000-1000000-0 wall   441.403 s  RSS  2947.5 MB  elapsed     441 s\n"}
+,{"stream_name":"stdout","time":1204.508840864,"data":"  [d10     2/13   ] TAU8-X|20261016-95-22-4-4-10-0-10000-0-0-0-4000000-1000000-0 wall   449.741 s  RSS  2947.5 MB  elapsed     450 s\n"}
+,{"stream_name":"stdout","time":1204.514950954,"data":"  [d10     3/13   ] TAU8-X|20261016-95-22-4-4-10-0-70000-0-0-0-4000000-1000000-0 wall   449.784 s  RSS  2947.7 MB  elapsed     450 s\n"}
+,{"stream_name":"stdout","time":1212.94719447,"data":"  [d10     4/13   ] CONC-X|20261016-95-21-2-4-10-2-100000-0-0-0-4000000-1000000- wall   458.220 s  RSS  2743.2 MB  elapsed     458 s\n"}
+,{"stream_name":"stdout","time":1524.737293011,"data":"  [d10     5/13   ] TAU8-X|20261016-95-22-4-3-10-0-20000-0-0-0-4000000-1000000-0 wall   311.627 s  RSS  2661.5 MB  elapsed     770 s\n"}
+,{"stream_name":"stdout","time":1580.649909192,"data":"  [d10     6/13   ] TAU8-X|20261016-95-22-4-1-10-0-30000-0-0-0-4000000-1000000-0 wall   375.994 s  RSS  2657.2 MB  elapsed     826 s\n"}
+,{"stream_name":"stdout","time":1586.27173025,"data":"  [d10     7/13   ] TAU8-X|20261016-95-22-4-0-10-0-30000-0-0-0-4000000-1000000-0 wall   381.591 s  RSS  2680.2 MB  elapsed     832 s\n"}
+,{"stream_name":"stdout","time":1587.083513077,"data":"  [d10     8/13   ] CONC-X|20261016-95-21-2-1-10-2-500000-0-0-0-4000000-1000000- wall   390.873 s  RSS  2548.4 MB  elapsed     832 s\n"}
+,{"stream_name":"stdout","time":1809.330629593,"data":"  [d10     9/13   ] TAU8-X|20261016-95-22-4-5-10-0-20000-0-0-0-4000000-1000000-0 wall   284.481 s  RSS  2653.1 MB  elapsed    1055 s\n"}
+,{"stream_name":"stdout","time":1809.740616484,"data":"  [d10    10/13   ] TAU8-X|20261016-95-22-4-2-10-0-50000-0-0-0-4000000-1000000-0 wall   222.625 s  RSS  2668.6 MB  elapsed    1055 s\n"}
+,{"stream_name":"stdout","time":1869.847203825,"data":"  [d10    11/13   ] CONC-X|20261016-95-21-2-5-10-0-10000-0-0-0-4000000-1000000-0 wall   283.401 s  RSS  2533.4 MB  elapsed    1115 s\n"}
+,{"stream_name":"stdout","time":1890.880143676,"data":"  [d10    12/13   ] CONC-X|20261016-95-21-2-3-10-0-10000-0-0-0-4000000-1000000-0 wall   310.182 s  RSS  2553.8 MB  elapsed    1136 s\n"}
+,{"stream_name":"stdout","time":1990.407963282,"data":"  [d10    13/13   ] CONC-X|20261016-95-21-2-2-10-2-500000-0-0-0-4000000-1000000- wall   180.979 s  RSS  2560.1 MB  elapsed    1236 s\n"}
+,{"stream_name":"stdout","time":1990.410332312,"data":"  group d 40: 10 task(s), workers 2, G-RSS flag above 12000 MB\n"}
+,{"stream_name":"stdout","time":1990.410351122,"data":"  [d40] 10 task(s) to run, 0 already in the resumed folders\n"}
+,{"stream_name":"stdout","time":3133.293177256,"data":"  [d40     1/10   ] TAU8-X|20261016-95-22-4-4-40-0-70000-0-0-0-4000000-1000000-0 wall  1142.745 s  RSS 10726.8 MB  elapsed    1143 s\n"}
+,{"stream_name":"stdout","time":3141.510757059,"data":"  [d40     2/10   ] CONC-X|20261016-95-21-2-4-40-0-100000-0-0-0-4000000-1000000- wall  1150.928 s  RSS 10469.4 MB  elapsed    1151 s\n"}
+,{"stream_name":"stdout","time":4158.587875828,"data":"  [d40     3/10   ] TAU8-X|20261016-95-22-4-1-40-0-10000-0-0-0-4000000-1000000-0 wall  1025.238 s  RSS  9466.1 MB  elapsed    2168 s\n"}
+,{"stream_name":"stdout","time":4166.411419078,"data":"  [d40     4/10   ] TAU8-X|20261016-95-22-4-1-40-0-200000-0-0-0-4000000-1000000- wall  1024.861 s  RSS  9466.3 MB  elapsed    2176 s\n"}
+,{"stream_name":"stdout","time":5129.823593209,"data":"  [d40     5/10   ] CONC-X|20261016-95-21-2-0-40-0-100000-0-0-0-4000000-1000000- wall   971.097 s  RSS  9355.7 MB  elapsed    3139 s\n"}
+,{"stream_name":"stdout","time":5163.677431082,"data":"  [d40     6/10   ] CONC-X|20261016-95-21-2-0-40-2-500000-0-0-0-4000000-1000000- wall   997.066 s  RSS  9364.3 MB  elapsed    3173 s\n"}
+,{"stream_name":"stdout","time":5834.957078249,"data":"  [d40     7/10   ] CONC-X|20261016-95-21-2-5-40-2-10000-0-0-0-4000000-1000000-0 wall   704.947 s  RSS  9391.7 MB  elapsed    3845 s\n"}
+,{"stream_name":"stdout","time":5972.138196798,"data":"  [d40     8/10   ] CONC-X|20261016-95-21-2-3-40-2-500000-0-0-0-4000000-1000000- wall   808.437 s  RSS  9361.2 MB  elapsed    3982 s\n"}
+,{"stream_name":"stdout","time":6484.598201603,"data":"  [d40     9/10   ] TAU8-X|20261016-95-22-4-2-40-0-200000-0-0-0-4000000-1000000- wall   512.372 s  RSS  9466.3 MB  elapsed    4494 s\n"}
+,{"stream_name":"stdout","time":6609.746968224,"data":"  [d40    10/10   ] TAU8-X|20261016-95-22-4-3-40-0-200000-0-0-0-4000000-1000000- wall   774.762 s  RSS  9472.2 MB  elapsed    4619 s\n"}
+,{"stream_name":"stdout","time":6609.747110534,"data":"\n"}
+,{"stream_name":"stdout","time":6609.747125934,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":6609.747131534,"data":"tasks run by this job: 38   task execution 6605 s\n"}
+,{"stream_name":"stdout","time":6609.747135754,"data":"complete rows, this job and resumed: 38 of 38\n"}
+,{"stream_name":"stdout","time":6609.747179964,"data":"largest per-task peak RSS 10726.8 MB; G-RSS flags 0\n"}
+,{"stream_name":"stdout","time":6609.747193664,"data":"F1 failures: 0\n"}
+,{"stream_name":"stdout","time":6609.747199104,"data":"not stopped: every task ran\n"}
+,{"stream_name":"stdout","time":6609.747203774,"data":"errored or timed-out tasks: 0\n"}
+,{"stream_name":"stdout","time":6609.747208444,"data":"files  /kaggle/working/c5run-run-20261104-175554-s22of116\n"}
+,{"stream_name":"stdout","time":6609.747213344,"data":"================================================================================================\n"}
+,{"stream_name":"stdout","time":6609.789800783,"data":"kgrun runner: exit code 0\n"}
+,{"stream_name":"stderr","time":6612.411613346,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":6612.411662336,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":6612.863582223,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":6612.863621573,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":6615.100285658,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":6616.30473377,"data":"[NbConvertApp] Writing 311262 bytes to __results__.html\n"}
+]
