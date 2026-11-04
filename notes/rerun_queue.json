@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "RUNNING",
   "index": 26,
   "attempt": 1,
   "resume_dirs": [],
@@ -2290,6 +2290,15 @@
       "attempt": 1,
       "job": "c5-x-s24of116-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-11-05T05:10:37+05:30",
+      "run": "41935338217.1",
+      "event": "launched",
+      "item": "c5-s24of116",
+      "attempt": 1,
+      "job": "c5-x-s24of116-a1",
+      "note": "logs/kgrun-c5-x-s24of116-a1.log"
     }
   ],
   "definition": {
