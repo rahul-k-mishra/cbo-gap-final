@@ -1087,13 +1087,19 @@
       "ledger": "N45"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 52,
   "attempt": 2,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "c5-x-s50of116-a2",
+  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 50 --nshards 116",
+  "data_dirs": [
+    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
+    "runs/calprec2-finalize-20261023-112503",
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -3377,6 +3383,15 @@
       "attempt": 2,
       "job": "",
       "note": "kaggle kernels status at 19:50 IST, 45 min after the halt: cbo-c5-x-s50of116-a1 denied (kernels.get), never created; kgrun log shows 400 on CreateDatasetVersion during the dataset upload, before the kernel push (K7). Relaunch as attempt 2"
+    },
+    {
+      "at": "2026-11-08T19:47:50+05:30",
+      "run": "42489081548.1",
+      "event": "intent",
+      "item": "c5-s50of116",
+      "attempt": 2,
+      "job": "c5-x-s50of116-a2",
+      "note": "resume none"
     }
   ],
   "definition": {
