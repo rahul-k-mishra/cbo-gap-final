@@ -7592,6 +7592,100 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
     first reading is consistent with this and is not shown shard by
     shard. The evidence statement is unchanged: the kernel log's
     bundle verification line, not the wait, shows what code ran.
+  - CORRECTION OF THE MEASUREMENT'S FIRST READING (2026-11-08; Rahul's
+    account of his own error, recorded at his instruction). The first
+    reading of logs/kaggle-dataset-version-pin-20261108.log concluded
+    that Kaggle ignores the version number. That reading was wrong, and
+    it was not a property of the log.
+    - Cause, as Rahul found it: he cut the version 1 listing out with a
+      sed range starting at the text "== files version 1". The status
+      command prints its JSON with no trailing newline, so the echo
+      "== files version 142" never starts a line; it sits at the end of
+      line 3. The range pattern was not anchored, and "== files version
+      1" is a prefix of "== files version 142", so the range began at
+      line 3. What he read as version 1 was version 142's block (lines 3
+      to 94), which holds the identity file at line 35. Version 1's
+      block is lines 95 to 130 and holds no kgrun-bundle file. "grep -n"
+      on the log confirms both.
+    - The paragraph above guessed a different route to the same mistake
+      (a search for lines starting "=="). The missing newline is the
+      common cause; the unanchored sed range is the actual one.
+    - Commit 02cab62. Its message, "K9: version-pin measurement — Kaggle
+      ignores the version number in datasets files", states the opposite
+      of what the log it commits shows. Do not trust it. It records the
+      conclusion of the misread range, not the content of the file. Under
+      CLAUDE.md rule 2 a result comes from the log, never from a commit
+      message. The commit is pushed and history is never rewritten, so
+      the message stays in "git log" with no mark on it. This entry is
+      where the correction lives. A reader who meets 02cab62 in the
+      history should read the log, lines 3 to 94 and 95 to 130, and
+      this paragraph.
+    - Lesson for any later reading of a log built from several commands
+      in one group: a command whose output lacks a final newline joins
+      the next echo onto its last line. Cut blocks by line number from
+      "grep -n", or anchor the pattern and check that every expected
+      header was found.
+  - SHARD 51: WHAT ITS LAUNCH LOG MUST SHOW (written 2026-11-08, before
+    the launch). c5-x-s51of116-a1 is the first launch to run the reuse
+    check against Kaggle, in shadow. Rahul turns the mode on after
+    reading that log, in a commit naming it and the measurement log.
+    The log is logs/kgrun-c5-x-s51of116-a1.log. The tick log shows only
+    its last 25 lines, so read the kgrun log itself. Expected, if nothing
+    bundled has changed since s50: bundle id 40f9ec17f6037595 and a
+    current version of 142 (a2's), or higher if any version was created
+    since. The criteria, all on that one log:
+    S1  "bundle id <B>" under ASSEMBLE BUNDLE, and "DATASET REUSE CHECK
+        bundle <B>  (mode shadow; ledger K9)" with the same <B>.
+    S2  After "$ kaggle datasets status ericsom/cbo-gap-archive --format
+        json", kaggle's own output holds one JSON line with "status":
+        "ready" and "current_version_number": N, and the next kgrun line
+        is "C1: status ready, current version N" with the same N.
+    S3  The listing command is "$ kaggle datasets files
+        ericsom/cbo-gap-archive/N --page-size 200" with that N. Its table
+        has the row count that "C2: version N lists M file(s)" prints,
+        and its one kgrun-bundle row is kgrun-bundle-<B>.sha256. If N is
+        142, every creation date in it is 2026-11-08 14:19 UTC, as in
+        the measurement log.
+    S4  "C3: ..." and "C4: version N lists exactly the M names this
+        launch would upload", with M one less than the "bundle ... files"
+        count printed under ASSEMBLE BUNDLE (dataset-metadata.json is
+        not uploaded): 88 for a bundle of 89.
+    S5  A second status output with the same N, "C5: status again ready,
+        current version still N", "verdict: PASS, version N holds
+        exactly this bundle's M files", and exactly one line "DATASET
+        PATH: UPLOADED NEW VERSION  bundle <B>  because: the reuse check
+        passed (...) but REUSE_MODE is 'shadow' ...". Then VERSION
+        DATASET and the rest of the old path, as before.
+    Decision rule:
+    - S1 to S5 all hold: the check read Kaggle's real answers as the
+      fixtures and the measurement predict, and passed where it should.
+      Turning the mode on is supported.
+    - Honest refusal: the verdict is REFUSED, and the kaggle output
+      printed just above the refusing rule shows what the reason says.
+      Examples: C3 with a different id, where the bundle id line shows
+      that <B> changed because a bundled script changed (correct: the
+      current version does not hold this bundle); C5 with N moving,
+      with two status outputs that differ; C1 with a status that is not
+      ready. This is not a defect, but the pass path has still not been
+      seen on real responses: wait for a launch that passes before
+      turning the mode on.
+    - Misreading (a defect of the check; do not turn the mode on): the
+      verdict contradicts the output printed above it. Examples: "C1:
+      status printed 0 JSON line(s)" with a JSON line visible; "C2: no
+      single 'name ... ----' table header" with the table visible; "C2:
+      listing reports ..." quoting a file name or the outdated-version
+      warning; C4 naming as missing or extra a file that appears on both
+      sides; "the check raised <exception>" (a fault of the code, not
+      Kaggle's answer).
+    - False pass (the dangerous direction): verdict PASS while the table
+      shown lacks kgrun-bundle-<B>.sha256, or the listing asked for a
+      version other than C1's N, or the row count differs from M. Do not
+      turn the mode on; this would be a defect in C2 to C4.
+    In every case the upload runs, so s51 itself is unaffected; a pass
+    in shadow changes nothing on Kaggle. The kernel log's "bundle   <B>:
+    87 files verified" line, read under R1 at the fetch, remains what
+    shows the code s51 ran.
   STATUS: the halt is resolved by the a2 launch; the version-pin
   measurement is in and passes. OPEN until c5-x-s50of116-a2 is fetched
-  by the queue with no R1 or R2 halt, and until Rahul decides the mode.
+  by the queue with no R1 or R2 halt, and until the mode is decided on
+  the s51 launch log under S1 to S5.
