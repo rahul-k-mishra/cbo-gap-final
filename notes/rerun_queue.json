@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "HALTED",
   "index": 52,
   "attempt": 1,
   "resume_dirs": [],
@@ -1101,7 +1101,7 @@
     "runs/rerun-plan-20261023-112643"
   ],
   "anomaly": null,
-  "halt_reason": "",
+  "halt_reason": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -3356,6 +3356,15 @@
       "attempt": 1,
       "job": "c5-x-s50of116-a1",
       "note": "resume none"
+    },
+    {
+      "at": "2026-11-08T19:03:55+05:30",
+      "run": "42485462617.1",
+      "event": "halt",
+      "item": "c5-s50of116",
+      "attempt": 1,
+      "job": "c5-x-s50of116-a1",
+      "note": "kgrun launch exit 1; whether the kernel was pushed is not known: check kgrun status by hand before any release"
     }
   ],
   "definition": {
