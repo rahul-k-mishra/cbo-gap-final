@@ -311,6 +311,35 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       status "KernelWorkerStatus.RUNNING"': RUNNING, adopted. Had it printed
       ABSENT (L4): HALT.
 
+  L2N A LAUNCH THAT STOPPED BEFORE THE PUSH (2026-11-08; ledger K9). Step
+      (3) of L2 exiting non-zero is always a HALT. The halt reason says
+      "NOT PUSHED" only when all three hold: kgrun exited 10, its log
+      holds kgrun's line 'NOT PUSHED: kgrun launch stopped before it ran
+      "kaggle kernels push"', and its log holds no line starting "PUSH
+      KERNEL" (kgrun prints that line just before it runs the push).
+      kgrun exits 10 only when its own process never ran "kaggle kernels
+      push" (kgrun.py docstring, LAUNCH STOPPED BEFORE THE PUSH). The
+      reason then also names the last kaggle command kgrun ran and the
+      line kgrun printed as the cause, followed by the last line containing
+      "error" among the nine lines before it, if any. Any other non-zero exit, or exit 10
+      with the log disagreeing, keeps the reason "whether the kernel was
+      pushed is not known".
+      This changes the halt's text only. It is still a HALT, the kernel
+      check stays null, and K1 refuses next-attempt until a check is
+      recorded exactly as before: the NOT PUSHED reason says what this
+      launch did, while K1's check asks Kaggle what exists.
+      Worked example: logs/kgrun-c5-x-s50of116-a1.log ends '400 Client
+      Error: Bad Request for url: https://api.kaggle.com/v1/datasets.
+      DatasetApiService/CreateDatasetVersion' and 'command failed with
+      code 1', with no PUSH KERNEL line. With kgrun's exit 10 and its NOT
+      PUSHED line the reason reads 'kgrun launch exit 10, NOT PUSHED:
+      kgrun stopped at "kaggle datasets version" and never ran kaggle
+      kernels push for ericsom/cbo-c5-x-s50of116-a1 (cause: command
+      failed with code 1; before it: 400 Client Error: Bad Request for
+      url: ...CreateDatasetVersion); K1 still requires a kernel check
+      before next-attempt (L2N)'. The same log with exit 1 (kgrun before K9):
+      "whether the kernel was pushed is not known".
+
   L3  KERNEL NAMES ARE NEVER REUSED. In step (1) of L2, any recognised
       status (the kernel exists) is a HALT; also a HALT: any committed
       folder runs/<job>-kaggle-* already present.
@@ -632,6 +661,8 @@ SCRIPTS = os.path.join(ROOT, "scripts")
 STATE_REL = "notes/rerun_queue.json"
 STATE = os.path.join(ROOT, STATE_REL)
 KGRUN = os.path.join(SCRIPTS, "kgrun.py")
+KGRUN_NOT_PUSHED = 10                          # kgrun.py NOT_PUSHED_EXIT (L2N; ledger K9)
+KGRUN_NOT_PUSHED_LINE = 'NOT PUSHED: kgrun launch stopped before it ran "kaggle kernels push"'
 RESCUE = os.path.join(ROOT, "scratch-rerunq")
 STATUSES = ("READY", "LAUNCHING", "RUNNING", "HALTED", "DONE")
 WAIT = ("QUEUED", "RUNNING", "NEW_SCRIPT", "CANCEL_REQUESTED")
@@ -1186,8 +1217,7 @@ def do_launch(ctx):
         argv += ["--resume-dirs", ",".join(s["resume_dirs"])]
     rc, _ = kgrun(argv, logrel)
     if rc != 0:
-        raise Halt("kgrun launch exit {}; whether the kernel was pushed is not known: check "
-                   "kgrun status by hand before any release".format(rc), [logrel])
+        raise Halt(launch_failure(rc, logrel, "{}/cbo-{}".format(s["kaggle_user"], job)), [logrel])
     s["status"] = "RUNNING"
     history(s, ctx.run, "launched", logrel)
     rel = driver_log(job, "launched")
@@ -1198,6 +1228,37 @@ def do_launch(ctx):
               "LAUNCHING, which the next tick adopts (L2)".format(job, r))
         return 3
     return 0
+
+
+def launch_failure(rc, logrel, kid):
+    """L2N: the halt reason for a kgrun launch that exited rc != 0 (ledger K9).
+
+    "NOT PUSHED" only when rc is 10, the log holds kgrun's NOT PUSHED line
+    and the log holds no line starting "PUSH KERNEL"; otherwise the reason
+    says it is not known whether the kernel was pushed. The halt itself
+    and K1 are the same either way."""
+    unknown = ("kgrun launch exit {}; whether the kernel was pushed is not known: check kgrun status by "
+               "hand before any release".format(rc))
+    if rc != KGRUN_NOT_PUSHED:
+        return unknown
+    with open(os.path.join(ROOT, logrel), errors="replace") as fh:
+        lines = [ln.strip() for ln in fh.read().splitlines()]
+    pushed = any(ln.startswith("PUSH KERNEL") for ln in lines)
+    if KGRUN_NOT_PUSHED_LINE not in lines or pushed:
+        return unknown + " (exit 10, but the log {} the NOT PUSHED line{})".format(
+            "holds" if KGRUN_NOT_PUSHED_LINE in lines else "lacks",
+            " and a PUSH KERNEL line" if pushed else "")
+    at = lines.index(KGRUN_NOT_PUSHED_LINE)
+    cause = lines[at - 1] if at > 0 else "(no cause printed)"
+    errs = [ln for ln in lines[max(0, at - 10):at - 1] if "error" in ln.lower()]
+    if errs:
+        cause = "{}; before it: {}".format(cause, errs[-1])
+    step = "(no kaggle command run)"
+    for ln in lines[:at]:
+        if ln.startswith("$ kaggle "):
+            step = " ".join(ln[2:].split()[:3])
+    return ("kgrun launch exit 10, NOT PUSHED: kgrun stopped at \"{}\" and never ran kaggle kernels push for {} "
+            "(cause: {}); K1 still requires a kernel check before next-attempt (L2N)".format(step, kid, cause))
 
 
 def do_recover(ctx):

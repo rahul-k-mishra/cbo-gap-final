@@ -7303,3 +7303,128 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
     incomplete; expected 41 cells" and "runner exit 0; state now DONE".
     The tick halts on any R1F problem, so none was found.
   CLOSED 2026-10-26.
+
+- K9 (Kaggle, launch refused at CreateDatasetVersion; halt of
+  c5-x-s50of116-a1; 2026-11-08). The queue halted at item 52
+  (c5-s50of116), attempt 1: "kgrun launch exit 1; whether the kernel was
+  pushed is not known: check kgrun status by hand before any release"
+  (commit fc4acc2, 19:03:55 IST; tick run 42485462617.1;
+  logs/rerunq-c5-x-s50of116-a1-halt-20261108-190355.log).
+  - What the launch did, from logs/kgrun-c5-x-s50of116-a1.log. Git guard
+    passed; the bundle was built as for every shard since s15 (bundle id
+    40f9ec17f6037595, 89 files, 3.7 MB, the same five shipped folders).
+    "kaggle datasets version" ran; the log holds 88 "Starting upload" and
+    88 "Upload successful" lines (every bundle file but
+    dataset-metadata.json, which is not uploaded). Then:
+      400 Client Error: Bad Request for url:
+      https://api.kaggle.com/v1/datasets.DatasetApiService/CreateDatasetVersion
+      command failed with code 1
+    That is the end of the log. There is no "Dataset version is being
+    created", no WAIT FOR DATASET READY, no WAIT FOR THIS BUNDLE, no
+    GENERATE KERNEL and no PUSH KERNEL line. In kgrun.py's launch order
+    the push comes after all of those, and run_cmd's SystemExit in
+    dataset_version ends the process. So this launch never ran "kaggle
+    kernels push".
+  - Kernel check (Rahul): "kaggle kernels status" for
+    ericsom/cbo-c5-x-s50of116-a1 returned the kernels.get denial, 45
+    minutes after the halt. Released next-attempt with --checked-by-hand
+    ABSENT through rerun-queue-admin (run 42489051852, commit e1ca058,
+    19:47:31 IST). K1 refused his first release because no check was on
+    record; that refusal was correct and is unchanged. Alert issue #2
+    was opened, emailed and closed (Rahul). This is the first real halt
+    the NOTIFY path (K6) reported.
+  - Attempt 2 (tick run 42489081548.1;
+    logs/rerunq-c5-x-s50of116-a2-launched-20261108-194903.log,
+    logs/kgrun-c5-x-s50of116-a2.log; commit 389e60b). L3 found
+    ericsom/cbo-c5-x-s50of116-a2 absent (control calprec2-long-s25of26-a1
+    COMPLETE). The same bundle, id 40f9ec17f6037595, was versioned:
+    "Dataset version is being created", ready at 0 s,
+    kgrun-bundle-40f9ec17f6037595.sha256 listed at 1 s, "Kernel version 1
+    successfully pushed". State RUNNING.
+  - Not K7 recurring. K7 was a version that was created and a kernel
+    that was pushed and mounted the previous version; the runner caught
+    it on Kaggle (exit 2). Here no version was created by this call
+    (Kaggle refused the request that creates it) and nothing after it
+    ran: no wait, no runner, no push. K7's guards come after this point
+    and were never reached. It is a new failure: the dataset-version
+    request itself refused with HTTP 400.
+  - Cause of the 400: not known. The kaggle 2.2.4 CLI printed the status
+    and URL only, no response body. The same bytes (bundle id
+    40f9ec17f6037595) were versioned without error by every launch from
+    s15 to s49 and by a2 44 minutes later, so the content alone does not
+    explain it. The previous version request (s49, note time 17:12:50
+    IST) was 1 h 50 min earlier, so it was not a burst of requests.
+    Nothing in the repository tells a transient server error from a rate
+    limit or a rule about identical versions. Not established; it would
+    take Kaggle's response body, which this CLI version does not print.
+  - Found while reading the c5 launch logs for this entry (record, not a
+    defect of any result). Since s15 every c5 shard has built the same
+    bundle id, 40f9ec17f6037595 (s0 to s13: 681ac0f4987f6998; s14:
+    841c2016eea09f30; the s12 bit check: e1b2e8507ee927ac). WAIT FOR
+    THIS BUNDLE waited 31 s (s0), 4 s (the s12 bit check), 31 s (s14)
+    and 32 s (s15) when the id differed from the previous launch's, and
+    0 to 1 s at every c5 launch that repeated it. In the four repeating
+    launches checked, the listed kgrun-bundle-40f9ec17f6037595.sha256
+    carries the creation time of the previous shard's upload, not this
+    one's: s16 (note 2026-11-04 02:30:55 IST) lists 2026-11-03 17:30:09
+    UTC = 23:00 IST, s15's (note 22:58:38 IST); s48 (13:50:24 IST) lists
+    05:13:42 UTC = 10:43 IST, s47's (10:42:35); s49 (17:12:50) lists
+    08:21:35 UTC = 13:51 IST, s48's; a2 (19:47:51) lists 11:43:58 UTC =
+    17:13 IST, s49's. So when the id
+    repeats, K7's wait is satisfied by the previous version and does not
+    show that this launch's version was served. K7 said this case is
+    harmless: equal id means equal bytes, and the runner verifies every
+    file against the identity file before the script starts. The kernel
+    logs' "bundle 40f9ec17f6037595: N files verified" lines are what
+    establish the code each shard ran, not the wait. This reading
+    depends on "creationDate" in "kaggle datasets files" meaning the
+    upload time of that file; that is consistent with every launch
+    above and is not documented anywhere in the repository.
+  - Fix (scripts/kgrun.py docstring LAUNCH STOPPED BEFORE THE PUSH;
+    scripts/rerunq.py rule L2N). The question "was the kernel pushed?"
+    can be answered by the launch itself for a stop before the push,
+    because kgrun runs the push last and nothing else in launch creates
+    a kernel. push() now records that it has started immediately before
+    it runs "kaggle kernels push". A launch that stops while the record
+    is unset (any SystemExit or exception: refusal, failed kaggle
+    command, timeout, crash) prints the cause, the line 'NOT PUSHED:
+    kgrun launch stopped before it ran "kaggle kernels push"', and exits
+    10. A stop after the record is set keeps its old exit code, because
+    a failed push may still have created the kernel. rerunq's halt
+    reason says NOT PUSHED, names the kaggle step and the cause, only
+    when kgrun exited 10, the log has the NOT PUSHED line, and the log
+    has no PUSH KERNEL line; otherwise the old "not known" reason. For
+    this halt the reason would have read 'kgrun launch exit 10, NOT
+    PUSHED: kgrun stopped at "kaggle datasets version" and never ran
+    kaggle kernels push for ericsom/cbo-c5-x-s50of116-a1 (cause: command
+    failed with code 1; before it: 400 Client Error: ...
+    CreateDatasetVersion); K1 still requires a kernel check before
+    next-attempt (L2N)'. K8's halt (refused before the banner) would
+    also have carried NOT PUSHED.
+  - Not changed: the halt, the null kernel check after it, K1's refusal
+    without a recorded check, the 30-minute ABSENT gap, L2, L3. NOT
+    PUSHED states what this process did; K1's check asks Kaggle what
+    exists, and covers a kernel created by anything else. Neither
+    kgrun.py nor rerunq.py is in the bundle or in a P1 pin, so the
+    bundle id and the c5 pins are unchanged.
+  - Checks made (Claude, 2026-11-08; no Kaggle command, synthetic
+    stubs). kgrun.entry() with the git guard, bundle, dataset version,
+    waits, runner generation and push replaced by stubs: a refusal by
+    the git guard, a dataset-version failure, a bundle-wait timeout and
+    an uncaught RuntimeError before the push each exit 10 with the NOT
+    PUSHED line; a failing push keeps "command failed with code 1"
+    (exit 1); a success returns normally; status and run failures keep
+    exit 1. The real push() sets the record before calling run_cmd.
+    rerunq.launch_failure on the committed a1 log: exit 1 gives the old
+    reason; exit 10 without the NOT PUSHED line gives the old reason
+    with "(exit 10, but the log lacks the NOT PUSHED line)"; the a1 log
+    with the NOT PUSHED lines appended and exit 10 gives the reason
+    quoted above; the a2 log with them appended (it holds PUSH KERNEL)
+    gives the old reason. Both files parse as Python 3.8.
+  - Not yet exercised: exit 10 from a real launch on Actions. The first
+    pre-push failure after this commit is that test.
+  - Decision not taken here (Rahul's question; see the reply of
+    2026-11-08): skip "kaggle datasets version" when the dataset's
+    current version already holds this bundle id. Not written.
+  STATUS: the halt is resolved by the a2 launch. OPEN until
+  c5-x-s50of116-a2 is fetched by the queue with no R1 or R2 halt.
