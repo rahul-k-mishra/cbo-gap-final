@@ -7534,6 +7534,64 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
       passing check called push only; a stale listing, and shadow mode,
       called version, ready wait, bundle wait, then push. The exit-10
       fixtures above pass unchanged.
-  STATUS: the halt is resolved by the a2 launch. OPEN until
-  c5-x-s50of116-a2 is fetched by the queue with no R1 or R2 halt, and
-  until the version-pin measurement is committed and the mode decided.
+  - VERSION-PIN MEASUREMENT (Rahul, laptop, kaggle 2.2.4; log
+    logs/kaggle-dataset-version-pin-20261108.log, committed in 02cab62).
+    Result: Kaggle HONOURS the version number. "kaggle datasets files
+    ericsom/cbo-gap-archive/N" lists version N. The test set above
+    passes.
+    - Status: {"status": "ready", "current_version_number": 142}, the
+      same at the start and the end of the log.
+    - Version 142 (log lines 4 to 94): 88 names; one identity file,
+      kgrun-bundle-40f9ec17f6037595.sha256 (line 35); every creation
+      date 2026-11-08 14:19 UTC (19:49 IST), the upload of
+      c5-x-s50of116-a2 (note 19:47:51 IST). Its names are exactly
+      those of the listing in logs/kgrun-c5-x-s50of116-a2.log.
+    - Version 1 (lines 96 to 129): 31 names; no kgrun-bundle file; every
+      creation date 2026-10-09 03:56 UTC. Four files that both versions
+      hold have different sizes: calprec.py 20026 (v1) against 20285
+      (v142), cbopaths.py 3350 against 3445, costprobe.py 10778 against
+      11037, detcheck.py 15297 against 15562. A listing that ignored the
+      number would have shown version 142's files, sizes and dates.
+    - The commit message of 02cab62, "Kaggle ignores the version number
+      in datasets files", states the opposite of what the log it commits
+      shows. The log is the record; the pushed commit is not rewritten.
+      The misreading has a visible cause in the log: "kaggle datasets
+      status --format json" prints its JSON with no newline, so the echo
+      "== files version 142" is joined onto the end of line 3. A search
+      for lines starting "==" finds only "files version 1" and "status
+      again", and the one identity line (35) then looks as if it is in
+      no block or in version 1's. It is in version 142's.
+    - kgrun's parsers on the real output (Claude, 2026-11-08; the CLI's
+      own text, without the echo lines): parse_status_json gives
+      ("ready", 142) for both status calls; parse_files_table reads
+      version 142 as 88 names with no refusal and identity file
+      kgrun-bundle-40f9ec17f6037595.sha256, and version 1 as 31 names
+      with none. C3 would refuse version 1; it would pass version 142
+      for bundle 40f9ec17f6037595. C4 against a real local bundle is
+      not run here (that needs build_bundle); version 142's names equal
+      a2's listing, which a2's bundle uploaded.
+    - Condition met. C2 as written lists the current version by number,
+      and the measurement shows the number is honoured. Nothing in
+      C1 to C5 was changed.
+    - Mode: REUSE_MODE stays "shadow", by Rahul's instruction of
+      2026-11-08 (given while the log was read as a failure). The
+      condition he set for the skip is met; turning it "on" is his
+      decision, a one-line commit naming this log.
+    - Still not established, as stated in DATASET REUSE: whether
+      current_version_number counts a version still being processed, and
+      which version a kernel pushed at that moment mounts. The runner's
+      bundle check covers both.
+  - BUNDLE WAIT, settled for a2 by the same log. Version 142, a2's
+    upload, carries creation dates of 14:19 UTC. a2's bundle wait
+    listing, taken after that upload (logs/kgrun-c5-x-s50of116-a2.log,
+    listed after 1 s), showed 11:43:58 UTC, the dates of s49's upload. So
+    Kaggle gave a2's identical bytes new creation dates, and the
+    unpinned listing a2's wait read was the previous version, s49's.
+    The alternative raised in the correction above (Kaggle keeping the
+    old dates for identical bytes) is refuted for a2. For s16 to s49 the
+    first reading is consistent with this and is not shown shard by
+    shard. The evidence statement is unchanged: the kernel log's
+    bundle verification line, not the wait, shows what code ran.
+  STATUS: the halt is resolved by the a2 launch; the version-pin
+  measurement is in and passes. OPEN until c5-x-s50of116-a2 is fetched
+  by the queue with no R1 or R2 halt, and until Rahul decides the mode.
