@@ -7380,6 +7380,35 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
     depends on "creationDate" in "kaggle datasets files" meaning the
     upload time of that file; that is consistent with every launch
     above and is not documented anywhere in the repository.
+    (Corrected below under BUNDLE WAIT: "satisfied by the previous
+    version" is not established; the text above is kept as first
+    written.)
+  - BUNDLE WAIT (2026-11-08, Rahul's instruction to state it plainly).
+    For c5 shards s16 to s49 and s50 attempt 2, WAIT FOR THIS BUNDLE in
+    the launch log is NOT evidence of what code the kernel ran. Those
+    launches built the same bundle id as the launch before them, so the
+    wait looked for a name that the previous version already held, and it
+    could not tell this launch's version from the previous one. Its
+    "listed" line after 0 to 1 s proves nothing about which version was
+    served or mounted.
+    The evidence of what code each shard ran is the runner's line in the
+    kernel log, printed after it hashed every mounted file against the
+    identity file and before the script started:
+      bundle   40f9ec17f6037595: 87 files verified against
+      kgrun-bundle-40f9ec17f6037595.sha256
+    Checked (Claude, 2026-11-08, grep of the committed run folders): all
+    50 fetched c5 shard folders (runs/c5-x-s<k>of116-a1-kaggle-*, k = 0
+    to 49) hold such a line in their kernel log: 35 (s15 to s49) for
+    40f9ec17f6037595 with 87 files, 14 (s0 to s13) for 681ac0f4987f6998
+    with 84, and 1 (s14) for 841c2016eea09f30 with 86. s50's a2 folder
+    is not yet fetched; its line is to be read under R1 when it is.
+    Correction to the paragraph above: it read the creation dates as
+    showing that the wait was satisfied by the previous shard's upload.
+    The dates are equally consistent with Kaggle keeping a file's
+    original creation date when a new version uploads identical bytes.
+    Nothing in the repository tells the two apart. What is established
+    is the weaker statement that matters: when the id repeats, the wait
+    cannot distinguish the versions, whichever one it saw.
   - Fix (scripts/kgrun.py docstring LAUNCH STOPPED BEFORE THE PUSH;
     scripts/rerunq.py rule L2N). The question "was the kernel pushed?"
     can be answered by the launch itself for a stop before the push,
@@ -7426,5 +7455,85 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
   - Decision not taken here (Rahul's question; see the reply of
     2026-11-08): skip "kaggle datasets version" when the dataset's
     current version already holds this bundle id. Not written.
+    (Superseded the same day: DATASET REUSE below.)
+  - DATASET REUSE (2026-11-08; Rahul's decision, on two conditions: the
+    skip must verify the identity file in the CURRENT version and refuse
+    when it cannot tell current from stale; the launch log must state
+    which path it took, why, and the bundle id). Written in
+    scripts/kgrun.py, docstring DATASET REUSE, rules C1 to C5;
+    "launch" without --first only.
+    - Current against stale. The unpinned "kaggle datasets files
+      <dataset>" listing that K7's wait reads cannot tell current from
+      stale; K7 measured it lagging a new version. The skip does not use
+      it. From the installed kaggle 2.2.4 source (.venv,
+      kaggle/api/kaggle_api_extended.py; read, not run):
+      dataset_status with --format json prints "status" and
+      "current_version_number", the second from the GetDataset API; and
+      dataset_list_files parses "<owner>/<slug>/<N>" and sends N as
+      dataset_version_number. So the skip asks for the current version
+      number N (C1), lists version N by number (C2), requires exactly
+      this id's identity file there (C3) and exactly this bundle's file
+      names (C4), and asks for N again (C5). A stale version N fails C3
+      or C4; a version created during the check fails C5.
+    - What remains open, stated in the docstring: whether N already
+      counts a version still being processed, and which version a kernel
+      pushed now mounts. Under rule 22 nobody creates versions by hand,
+      so the first needs a second writer that does not exist. Either way
+      the runner's bundle check stops a kernel on a version without this
+      id with exit 2 before the script starts: a wasted attempt, never
+      other code.
+    - Log. Every launch without --first prints "DATASET REUSE CHECK
+      bundle <id> (mode ...)", one line per rule passed, "verdict: PASS,
+      ..." or "verdict: REFUSED, C<k>: ...", and then exactly one of
+      "DATASET PATH: SKIPPED UPLOAD  bundle <id> already in the current
+      dataset version (version N holds exactly this bundle's M files)
+      ..." or "DATASET PATH: UPLOADED NEW VERSION  bundle <id>  because:
+      ...". --first prints "UPLOADED NEW VERSION ... because: --first
+      creates the dataset".
+    - Mode. REUSE_MODE is "shadow": the check runs and prints its
+      verdict, and the upload runs as before. Two facts are read from
+      source, not measured: what kaggle 2.2.4 prints for "datasets status
+      --format json" on this account, and whether the server honours
+      the version number in "datasets files <dataset>/N". The second
+      matters most: if the server ignored N, C2 would read the latest
+      listing and the skip would rest on the unpinned listing after all.
+      The test: list version 1, which predates the identity files (K7,
+      2026-10-23; the dataset was created 2026-10-09). If the pin is
+      honoured, version 1 lists no kgrun-bundle-*.sha256; if it is
+      ignored, it lists kgrun-bundle-40f9ec17f6037595.sha256. Mode "on"
+      is a later commit, made only after Rahul's measurement log is
+      committed and shows both facts; until then shadow-mode launch logs
+      record the check's live verdict on Actions.
+    - Cost: three read-only kaggle calls per launch. A failure of any of
+      them is a refusal, so the launch uploads; the check cannot stop a
+      launch.
+    - Checks made (Claude, 2026-11-08; no Kaggle command: in every test
+      run_cmd was replaced, by a scripted fake or by one that raises).
+      (1) Python 3.8 parse of kgrun.py and rerunq.py. (2) Input contact:
+      parse_files_table on the last "kaggle datasets files" output of
+      every committed c5 launch log (52 listings; s50 a1 has none). It
+      read every one: 36 with 88 names and the one identity file
+      kgrun-bundle-40f9ec17f6037595.sha256, 14 with 85 names and
+      681ac0f4987f6998, 1 with 87 and 841c2016eea09f30, 1 with 86 and
+      e1b2e8507ee927ac. For the three ids whose identity-file count a
+      kernel log prints (87, 84, 86 files verified), the listed count is
+      that count plus the identity file itself, which is what C4 needs. No listed name contains
+      "error" or "usage", which C2 treats as an error line. (3) Fixtures
+      of dataset_step (bundle id 40f9ec17f6037595): pass in "shadow"
+      uploads with "the reuse check passed ... but REUSE_MODE is
+      'shadow'"; pass in "on" skips, with no version, ready or bundle
+      wait; STALE (version 61 lists kgrun-bundle-681ac0f4987f6998.sha256)
+      refuses at C3 and uploads; two identity files, C3; a missing name
+      and an extra name, C4; version 61 then 62, C5; status "pending",
+      plain "ready" without JSON, and version 0, C1; a paged listing and
+      a 400 line, C2; the check raising FileNotFoundError: refused and
+      uploaded. Each printed one DATASET PATH line naming the id. The
+      listing was always requested as "u/ds/61", the number C1 returned.
+      (4) Null fixtures: kaggle printing nothing refuses at C1; "No files
+      found" refuses at C2. Through main() with launch: mode "on" with a
+      passing check called push only; a stale listing, and shadow mode,
+      called version, ready wait, bundle wait, then push. The exit-10
+      fixtures above pass unchanged.
   STATUS: the halt is resolved by the a2 launch. OPEN until
-  c5-x-s50of116-a2 is fetched by the queue with no R1 or R2 halt.
+  c5-x-s50of116-a2 is fetched by the queue with no R1 or R2 halt, and
+  until the version-pin measurement is committed and the mode decided.
