@@ -1108,7 +1108,13 @@
     "at": "2026-11-12T01:20:53+05:30"
   },
   "halt_reason": "the same anomaly twice for c5-x-s73of116-a1 (status-unknown): first denied, and the control calprec2-long-s25of26-a1 was denied too: Cannot access kernel 'ericsom/cbo-calprec2-long-s25of26-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug \u2014 use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private. in run 43090925877.1, now denied, and the control calprec2-long-s25of26-a1 was denied too: Cannot access kernel 'ericsom/cbo-calprec2-long-s25of26-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug \u2014 use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private.",
-  "kernel_check": null,
+  "kernel_check": {
+    "job": "c5-x-s73of116-a1",
+    "class": "FINISHED",
+    "status": "COMPLETE",
+    "at": "2026-11-12T10:09:33+05:30",
+    "by": "kgrun status"
+  },
   "attempts": {
     "smoke-c5": [
       {
@@ -4368,6 +4374,15 @@
       "attempt": 1,
       "job": "c5-x-s73of116-a1",
       "note": "the same anomaly twice for c5-x-s73of116-a1 (status-unknown): first denied, and the control calprec2-long-s25of26-a1 was denied too: Cannot access kernel 'ericsom/cbo-calprec2-long-s25of26-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug \u2014 use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private. in run 43090925877.1, now denied, and the control calprec2-long-s25of26-a1 was denied too: Cannot access kernel 'ericsom/cbo-calprec2-long-s25of26-a1' (Permission 'kernels.get' was denied). The most likely cause is a wrong kernel slug. The benchmark_task_slug returned by get_benchmark_leaderboard differs from the actual kernel slug \u2014 use the slug from the notebook URL (kaggle.com/code/owner/KERNEL-SLUG), not from the leaderboard. It can also occur if the notebook is private."
+    },
+    {
+      "at": "2026-11-12T10:09:33+05:30",
+      "run": "manual",
+      "event": "kernel-check",
+      "item": "c5-s73of116",
+      "attempt": 1,
+      "job": "c5-x-s73of116-a1",
+      "note": "c5-x-s73of116-a1 COMPLETE (FINISHED): K10: first OAuth check from Actions"
     }
   ],
   "definition": {
