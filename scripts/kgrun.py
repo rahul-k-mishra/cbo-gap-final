@@ -32,8 +32,12 @@ the notebook in the Kaggle web editor: the next push overwrites it.
 
 WHAT IT DOES NOT DO
   It does not read, print or transmit your Kaggle credentials; the kaggle CLI
-  reads ~/.kaggle/access_token and ~/.kaggle/kaggle.json itself (the token
-  file is what authenticates; ledger K6). It does not write to zenodo-v1. It does
+  reads ~/.kaggle/credentials.json itself, the OAuth file written by "kaggle
+  auth login", and refreshes its access token on its own (ledger K10,
+  2026-11-12; until then ~/.kaggle/access_token, ledger K6). access_token and
+  kaggle.json must be absent: the CLI uses either before credentials.json,
+  and a dead KGAT_ token in access_token is what halted c5-x-s73of116-a1.
+  It does not write to zenodo-v1. It does
   not overwrite an existing run folder.
 
 RESUMPTION ON KAGGLE (ledger K5, closed 2026-10-11)

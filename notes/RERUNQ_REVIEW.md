@@ -38,7 +38,7 @@
 | Halt on manifest mismatch | verify_manifest, F1 | ok |
 | Halt on kgrun exit other than 0 | launch, fetch: HALT. status: HALT (fixed in this pass, Q3) | ok |
 | Same shard failing twice the same way | L5 | see "Interpretation" below |
-| Secrets as KAGGLE_USERNAME, KAGGLE_KEY, KAGGLE_ACCESS_TOKEN (added 2026-10-23, K6); written to ~/.kaggle/kaggle.json and ~/.kaggle/access_token; never logged | workflow step 4 | ok: written by Python from the environment with umask 077, O_EXCL, mode 600; only file name and mode are printed; GitHub also masks secret values in logs; both files removed in the last step |
+| Secret KAGGLE_OAUTH_CREDENTIALS (2026-11-12, K10; replaced KAGGLE_USERNAME, KAGGLE_KEY, KAGGLE_ACCESS_TOKEN of K6): a credentials.json from a kaggle auth login made for Actions alone; written to ~/.kaggle/credentials.json; never logged | workflow step 4, scripts/rerunq-creds.sh | ok: written by Python from the environment with umask 077, O_EXCL, mode 600; refresh token, username and scopes only, no access token; refuses (CRED6, CRED7) when access_token, kaggle.json or KAGGLE_API_TOKEN, KAGGLE_USERNAME, KAGGLE_KEY are present, since the CLI uses those first; prints only mode, username, scopes and whether the refresh token starts KGRT_; GitHub also masks secret values in logs; the file is removed in the last step |
 | Commits with the built-in GITHUB_TOKEN | actions/checkout persists it; permissions contents: write | ok |
 
 ### Walk 1: can two invocations launch the same job?

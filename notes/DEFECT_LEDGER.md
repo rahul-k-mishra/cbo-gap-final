@@ -7689,3 +7689,146 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
   measurement is in and passes. OPEN until c5-x-s50of116-a2 is fetched
   by the queue with no R1 or R2 halt, and until the mode is decided on
   the s51 launch log under S1 to S5.
+
+- K10 (Kaggle authentication; the cause of the halt of c5-x-s73of116-a1;
+  2026-11-12). The queue halted at item 75 (c5-s73of116), attempt 1: "the
+  same anomaly twice for c5-x-s73of116-a1 (status-unknown): first denied,
+  and the control calprec2-long-s25of26-a1 was denied too" (commit
+  c6a8470, 01:36:21 IST; tick run 43093288463.1;
+  logs/rerunq-c5-x-s73of116-a1-halt-20261112-013621.log).
+  - What the logs show. The launch tick (run 43085897042.1;
+    logs/rerunq-c5-x-s73of116-a1-launched-20261112-005001.log, commit
+    bf6f4c7) ended with "Kernel version 1 successfully pushed" for
+    ericsom/cbo-c5-x-s73of116-a1. The next tick (run 43090925877.1,
+    01:20:51 IST; logs/rerunq-c5-x-s73of116-a1-anomaly-20261112-012053.log,
+    commit ca24c8e) got "Permission 'kernels.get' was denied" for the
+    shard and for the L4 control; the tick after it got the same and
+    halted. Every call authenticated through ~/.kaggle/access_token,
+    written from the secret KAGGLE_ACCESS_TOKEN (a KGAT_ token, K6). So
+    that token was accepted for a push before 00:50:01 IST and refused
+    about 30 minutes later. Why it stopped (expiry, revocation or a
+    change at Kaggle) is not known; nothing in the repository records the
+    token's lifetime.
+  - Cause, found by Rahul on the laptop on 2026-11-12 (reported by him;
+    no console log of it is stored under logs/). With the old
+    ~/.kaggle/access_token (a KGAT_ token) present, every "kaggle kernels
+    status" was refused with the kernels.get denial, the control
+    included. With access_token and kaggle.json moved aside, leaving only
+    ~/.kaggle/credentials.json written by "kaggle auth login", the same
+    commands worked at once: ericsom/cbo-c5-x-s73of116-a1 COMPLETE, and
+    the control COMPLETE. So the shard's kernel ran to completion and
+    needs only fetching; the halt is a credential failure, not a failure
+    of the shard. credentials.json holds refresh_token (KGRT_...),
+    access_token (CfDJ8..., not KGAT_), access_token_expiration,
+    username and scopes ['resources.admin:*'] (Rahul's description; the
+    file is denied to Claude).
+  - Mechanism, read by Claude from the installed source (kaggle 2.2.4,
+    kagglesdk 0.1.37, as in requirements.lock, so the same on the
+    runner). KaggleApi.authenticate takes the first of: (1) an access
+    token from KAGGLE_API_TOKEN, ~/.kaggle/access_token or
+    access_token.txt, if Kaggle's introspection names a user; (2) a
+    legacy key, username and key from ~/.kaggle/kaggle.json or from the
+    variables KAGGLE_USERNAME and KAGGLE_KEY; (3) the OAuth file
+    ~/.kaggle/credentials.json. A dead token in access_token or a refused
+    legacy key therefore hides a working credentials.json. This also fits
+    K6 (2026-10-23): kaggle.json alone was refused, because the legacy
+    key is used whenever it is present and Kaggle refuses it.
+  - Refresh-token rotation (Rahul's question: would a refresh token
+    shared by Actions and the laptop be rotated on use, so that each
+    invalidates the other?). From the source: the refresh sends the
+    refresh token to GenerateAccessToken and gets back a
+    GenerateAccessTokenResponse whose only fields are token, expires_in,
+    user_name and user_id; KaggleCredentials.save writes the same refresh
+    token back with the new access token (default lifetime 12 h). There
+    is no field through which a new refresh token could arrive, so this
+    client does not rotate it, and a server that revoked a refresh token
+    on use would leave every client of this version without a credential
+    after its first refresh. Rahul's Windows machine has refreshed
+    unattended since August (his report; its kaggle version is not
+    recorded). So rotation on use does not happen as far as this
+    evidence goes. Not known: whether Kaggle limits the live access
+    tokens of one refresh token, whether a refresh token expires, and
+    whether a new "kaggle auth login" revokes older refresh tokens of the
+    account. Sharing still couples the two machines through revocation:
+    "kaggle auth revoke" on one, or a revocation at Kaggle, stops both.
+    Decision: Actions gets its own login, made on the laptop with
+    "kaggle auth login --no-launch-browser" under a scratch HOME. That
+    flow prints a URL, the sign-in is done in any browser, and the code
+    shown is pasted back; the runner never needs a browser, because it
+    only ever refreshes. The laptop's own credentials.json is not
+    copied anywhere.
+  - Fix (Rahul's decision, 2026-11-12; code by Claude):
+    - Secret KAGGLE_OAUTH_CREDENTIALS: the credentials.json of the
+      Actions login. KAGGLE_USERNAME, KAGGLE_KEY and KAGGLE_ACCESS_TOKEN
+      are deleted (by Rahul).
+    - scripts/rerunq-creds.sh (shell, not .py, so that kgrun does not
+      ship it and the bundle id is unchanged) writes
+      ~/.kaggle/credentials.json from the secret with umask 077, O_EXCL,
+      mode 600: refresh token, username and scopes only, access token
+      and expiration empty, so every job refreshes from the refresh token
+      and a dead one shows on the job's first Kaggle call. Named exits
+      CRED1 to CRED8 (docstring, each with an example): missing secret,
+      not a JSON object, no refresh token, a KGAT_ token in its place,
+      username not ericsom, access_token, access_token.txt, kaggle.json or
+      credentials.json already present, KAGGLE_API_TOKEN, KAGGLE_USERNAME
+      or KAGGLE_KEY set, scopes not a list of strings. No token is
+      printed.
+    - .github/workflows/rerun-queue.yml and rerun-queue-admin.yml: the
+      credentials step calls it; nothing writes access_token or
+      kaggle.json any more; the last step removes credentials.json.
+    - CLAUDE.md rule 14, the kgrun.py and rerunq.py docstrings and
+      notes/RERUNQ_REVIEW.md updated to match. Neither kgrun.py nor
+      rerunq.py is shipped, so the bundle id is unchanged.
+  - Pre-run checks, as run by Claude (2026-11-12; fake tokens, a scratch
+    HOME, no network, nothing of the project's data):
+    - (1) Input read from its writer: the secret's format is the file
+      KaggleCredentials.save writes (keys access_token,
+      access_token_expiration, refresh_token, scopes, username), and the
+      output is read by KaggleCredentials.load.
+    - (2) Every failure is a named exit 2, never a traceback: CRED1
+      (empty, and unset), CRED2 (a JSON list, and a bare token), CRED3,
+      CRED4, CRED5, CRED6 (kaggle.json, access_token, and a second run
+      over its own credentials.json), CRED7 (KAGGLE_KEY), CRED8, and
+      the usage line without an argument. The printed lines hold no token.
+    - (3) Contact with the real reader: a secret written by the installed
+      KaggleCredentials.save, passed through rerunq-creds.sh, then
+      KaggleApi.authenticate with the refresh and the introspection
+      stubbed, one process per case with HOME set before import. Alone:
+      method OAUTH, one refresh, refresh token unchanged after save,
+      fresh access token saved. With a kaggle.json added: LEGACY_API_KEY.
+      With KAGGLE_USERNAME and KAGGLE_KEY set: LEGACY_API_KEY. With an
+      access_token added: ACCESS_TOKEN. That is the precedence above, and
+      the reason for CRED6 and CRED7. (A first attempt that changed HOME
+      after import was wrong, because the CLI fixes its config directory
+      on import; it is not used.)
+    - (4) Synthetic end to end: the pass fixture writes mode 600 in a
+      directory of mode 700, holding the refresh token, username and
+      scopes and empty access_token and access_token_expiration; a
+      secret without scopes and with a prefix other than KGRT_ passes
+      with scopes [] and "prefix KGRT_: no". The embedded Python parses
+      under the 3.8 grammar; both workflows parse as YAML; bash -n passes.
+  - Found while reading the source (record, not fixed; it does not touch
+    Actions). kagglesdk 0.1.37 KaggleCredentials.access_token_has_expired
+    returns true only when the expiration is more than 30 minutes in the
+    past, so a stored access token is sent for up to 30 minutes after it
+    expires. Actions is not exposed: every job starts with no access
+    token. The laptop timer (~/cbo-gap-queue) and kgrun by hand are: a
+    call in that window may be refused. Whether Kaggle accepts a
+    just-expired token is not known; a refused call there would show as
+    a kgrun failure, not as a kernels.get denial with a working control.
+  - Confirmation on Actions, pre-specified: Rahul runs rerun-queue-admin
+    with command check. Its credentials step must print
+    "credentials.json written, mode 600; username ericsom;
+    refresh_token prefix KGRT_: yes", and the kgrun status it runs for
+    c5-x-s73of116-a1 must report COMPLETE, as on the laptop.
+    - COMPLETE: Actions authenticates; release --mode repoll is then
+      Rahul's to run, and the next tick fetches the shard.
+    - A CRED line: the secret is wrong in the way the line names; fix the
+      secret, nothing else.
+    - "Invalid credentials!" or the CLI's authentication help: Kaggle
+      refused the refresh token on Actions; the dedicated login is the
+      thing to examine, not the workflow.
+    - The kernels.get denial again with no authentication message: a
+      cause other than the one above; stop and read the log.
+  STATUS: OPEN until the check above shows COMPLETE on Actions and
+  c5-x-s73of116-a1 is fetched by the queue with no R1 or R2 halt.
