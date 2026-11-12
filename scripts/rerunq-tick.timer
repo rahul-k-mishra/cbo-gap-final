@@ -1,6 +1,8 @@
 # Every 15 minutes at minutes 2, 17, 32 and 47: off the workflow's 7, 22, 37, 52,
 # so the laptop and a scheduled Actions tick rarely overlap (the state file is the
 # lock either way; ledger K6). Persistent=true runs one missed tick after a wake.
+# Each firing runs the gate first (rerunq-tick.service, ledger K11): while the
+# Actions chain is alive the tick is skipped, so this is a fallback driver.
 
 [Unit]
 Description=CBO-GAP rerun queue tick every 15 minutes (ledger K6)

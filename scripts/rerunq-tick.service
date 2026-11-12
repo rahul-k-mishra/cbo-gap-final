@@ -3,9 +3,22 @@
 # rerunq-tick.timer. The tick, its decision rules and its exit codes are those of
 # scripts/rerunq.py; this file only supplies the clone, the PATH and the guards.
 #
+# Since 2026-11-12 (ledger K11, Rahul's decision) the timer is a FALLBACK: it
+# ticks only when the GitHub Actions chain has gone quiet, so that the two
+# drivers do not tick together (a tick that meets the other driver's LAUNCHING
+# halts the queue, L2; K11 has the measurement).
+#
 # Guards, in order:
 #   ExecCondition  git fetch fails (no network after a wake, GitHub unreachable):
 #                  the tick is SKIPPED, not failed, and the timer keeps running.
+#   ExecCondition  scripts/rerunq-laptop-gate.sh, taken from origin/main (the
+#                  clone's tree is reset only after the conditions, so it may be
+#                  stale), copied to the runtime directory and run there. It
+#                  skips (exit 1) while the chain is alive or GitHub cannot be
+#                  read, refreshes the Kaggle access token when it expires
+#                  within 35 minutes, and FAILS (exit 255, OnFailure below)
+#                  when the Kaggle credentials are not usable. Its docstring
+#                  has the rules G0 to G6 and T0 to T3.
 #   ExecStartPre   the clone is reset to origin/main. This runs only after a tick
 #                  that exited 0, because any other exit disables the timer
 #                  (OnFailure). After exit 0 a local commit can only be a stale one
@@ -20,7 +33,7 @@
 # (requirements.lock), which is why PATH names it.
 
 [Unit]
-Description=CBO-GAP rerun queue: one tick from ~/cbo-gap-queue (ledger K6)
+Description=CBO-GAP rerun queue: one fallback tick from ~/cbo-gap-queue (ledger K6, K11)
 OnFailure=rerunq-stop.service
 
 [Service]
@@ -30,6 +43,7 @@ Environment=PATH=%h/Research/cbo-gap-final/.venv/bin:/usr/local/bin:/usr/bin:/bi
 Environment=PYTHONDONTWRITEBYTECODE=1
 Environment=TZ=Asia/Kolkata
 ExecCondition=/usr/bin/git -C %h/cbo-gap-queue fetch -q origin main
+ExecCondition=/bin/sh -c '/usr/bin/git -C %h/cbo-gap-queue show origin/main:scripts/rerunq-laptop-gate.sh > %t/rerunq-laptop-gate.sh && exec /bin/bash %t/rerunq-laptop-gate.sh gate'
 ExecStartPre=/usr/bin/git -C %h/cbo-gap-queue checkout -q main
 ExecStartPre=/usr/bin/git -C %h/cbo-gap-queue reset -q --hard origin/main
 ExecStart=/bin/sh -c 'exec python scripts/rerunq.py tick --run-id "laptop.$(date -u +%%Y%%m%%dT%%H%%M%%SZ)"'

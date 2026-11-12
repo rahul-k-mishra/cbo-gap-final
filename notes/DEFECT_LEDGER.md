@@ -7832,3 +7832,168 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
       cause other than the one above; stop and read the log.
   STATUS: OPEN until the check above shows COMPLETE on Actions and
   c5-x-s73of116-a1 is fetched by the queue with no R1 or R2 halt.
+  - Confirmed on Actions (2026-11-12). rerun-queue-admin check, run
+    43156208472 (commit 64176f9, note "K10: first OAuth check from
+    Actions"): the credentials step printed "credentials.json written,
+    mode 600; username ericsom; refresh_token prefix KGRT_: yes; ...", and
+    the check printed 'ericsom/cbo-c5-x-s73of116-a1 has status
+    "KernelWorkerStatus.COMPLETE"', judged COMPLETE. Rahul then released
+    with repoll (run 43156399991, commit bacf3e3). The next tick fetched
+    the shard (commit 1a780ea;
+    logs/rerunq-c5-x-s73of116-a1-fetched-20261112-101146.log: "runner
+    exit 0 python 3.13.18 numpy 2.1.3 ... completed 38", "F2X: 38 rows
+    end ok; ... errored 0, F1 failures 0, complete (38, 38)", "runner
+    exit 0; state now READY"), and the one after it launched
+    c5-x-s74of116-a1 (commits 1d97885, c974721). Rahul's three secret
+    steps and the laptop login check were done by him; their console
+    output is not stored under logs/.
+  CLOSED 2026-11-12.
+
+- K11 (the laptop timer returns as a fallback driver, gated on the Actions
+  chain; decision, 2026-11-12). Rahul's request: the laptop is on all the
+  time, and if GitHub stalls or stops dispatching, the laptop timer should
+  keep the queue moving. Two questions first: which Kaggle credential the
+  timer's tick would use, and what two live drivers do to each other now
+  that the workflow dispatches its own successor (N45). Rahul's
+  instruction: if running both is a bad idea, say so.
+  - Credential (read by Claude 2026-11-12, without opening ~/.kaggle,
+    which is denied). The installed units in ~/.config/systemd/user are
+    identical to the repository's (diff silent), with no drop-ins. The
+    service runs under the user manager, whose environment has
+    HOME=/home/rahul and no KAGGLE_ variable; the unit sets PATH to the
+    main working copy's .venv first, so the CLI is kaggle 2.2.4 from
+    requirements.lock. It therefore does not "inherit the interactive
+    login" as a session; it reads the same files, ~/.kaggle, under the
+    precedence of K10: access_token, then kaggle.json or KAGGLE_USERNAME
+    and KAGGLE_KEY, then credentials.json. With access_token and
+    kaggle.json moved aside, as Rahul did for K10, it uses the same
+    credentials.json as the interactive shell. Nothing in the clone
+    ~/cbo-gap-queue holds a credential. Two exposures remain: (a) if
+    access_token or kaggle.json comes back, the timer silently switches
+    to it; (b) the expiry fault recorded in K10 (kagglesdk sends a stored
+    access token for up to 30 minutes after it expires) applies to the
+    laptop, where the file keeps its access token between ticks. What a
+    Kaggle call with a just-expired token returns is not known; if it is
+    refused, kgrun status gives UNKNOWN, and two such ticks in a row
+    halt the queue (L5). The gate below handles both (T1, T3).
+  - Other facts of the laptop side. The clone is clean, no commit ahead
+    of origin/main, many behind; each tick resets it to origin/main, so
+    nothing needs changing in it. Pushes use gh's credential helper with
+    the token in the desktop keyring; the timer pushed 115 commits that
+    way in October. loginctl reports Linger=no: the user manager, and so
+    the timer, runs only while Rahul has a session logged in. A locked
+    screen is a session; a reboot without a login is not. Enabling
+    linger would run the timer without a login, but the keyring would
+    then be locked, so gh fails, and the gate skips (G0). Linger is
+    therefore of no use here, and the fallback lives only while he is
+    logged in.
+  - Contention when both drivers tick freely, from rerunq.py (L1, L2, L4,
+    L5, do_fetch, publish), by what the two ticks read on main:
+    - READY: both find the next kernel ABSENT and race the LAUNCHING
+      push. The loser's push is rejected, the state differs, the lock is
+      lost before any Kaggle side effect: exit 0, nothing launched. One
+      wasted tick and two extra status calls.
+    - RUNNING, kernel still running: neither commits. Harmless.
+    - RUNNING, kernel finished: both fetch into their own checkouts.
+      The loser's publish returns "lost", and do_fetch returns 3 for
+      anything but "ok". The state on main is the winner's and is right,
+      but the losing driver disables itself: the workflow (with an alert
+      issue) or the laptop timer (with no alert at all). The window is
+      the length of a fetch tick.
+    - LAUNCHING, the other driver's kgrun launch still running. L2 takes
+      LAUNCHING to mean a tick that died. kgrun status says ABSENT until
+      the push, which comes at the end of the launch, so the tick
+      HALTs and wins the push, because main still holds the state it
+      read. The launching tick then loses its RUNNING push and exits 3.
+      Result: a HALTED queue with a kernel running, both drivers
+      disabled, the launch's kgrun log not committed (it stays in that
+      driver's checkout or rescue artifact). Recovery is check, then
+      release with repoll. If the status call comes after the push, the
+      tick adopts instead; the launcher still exits 3 and its log is
+      lost. The window is the time main reads LAUNCHING, e.g. for s73
+      from b91ba1b (00:48:26 IST) to bf6f4c7 (00:50:01 IST).
+    - No case launches a kernel twice: only one tick gets past
+      LAUNCHING (L1), L3 refuses a name in use, and K1 refuses a new
+      attempt while the kernel runs. No case corrupts the committed
+      record. The cost is spurious halts and drivers that switch
+      themselves off. How often with two free-running drivers was not
+      measured by a logged run, and does not change the decision.
+  - Decision (Claude, under Rahul's standing rule; Rahul's request for a
+    fallback). Two free-running drivers: rejected, for the LAUNCHING and
+    fetch cases above. Laptop timer as a fallback that ticks only when
+    the chain has gone quiet: adopted. How it knows, from GitHub's API,
+    read with gh: a live chain always has an unfinished run, because
+    each run dispatches its successor before its own last step ends.
+    Seen live on 2026-11-12: run 43156585422 was created at
+    04:42:50Z, and its predecessor 43156440230 was last updated at
+    04:42:54Z. The job's timeout of 90 minutes covers the sleep.
+    - scripts/rerunq-laptop-gate.sh, an ExecCondition of
+      rerunq-tick.service after the git fetch. Rules in its docstring,
+      each with an example: G0 GitHub unreadable: skip. G1 workflow not
+      active: act, since no Actions tick can start; a halt then reaches
+      the laptop tick, which exits 3 and disables the timer, as before.
+      G2 a run in progress under 95 minutes (the timeout plus 5): skip.
+      G3 a run queued, waiting, pending or requested under 30 minutes:
+      skip. G4 unfinished runs, all past those limits: act (a stall). G5
+      nothing unfinished, the last run ended under 20 minutes ago: skip.
+      G6 nothing unfinished for 20 minutes or more, or no runs: act. On
+      act: T1 access_token, access_token.txt, kaggle.json or
+      KAGGLE_API_TOKEN, KAGGLE_USERNAME, KAGGLE_KEY present: fail (the
+      timer disables itself). T2 no usable credentials.json: fail. T3
+      access token empty, without expiration, or expiring within 35
+      minutes: refresh through the CLI's own
+      KaggleCredentials.refresh_access_token; HTTP 401 fail, any other
+      error skip. T0 otherwise run. Exit codes: 0 run, 1 skip (systemd
+      does not count it as a failure), 255 fail (OnFailure disables the
+      timer). No token is printed.
+    - The service takes the gate from origin/main (git show into the
+      runtime directory), because systemd runs every ExecCondition
+      before the ExecStartPre reset, and the clone's tree can be stale.
+      If git show fails, the condition exits 128: skip, never run.
+    - It is a shell file, not .py, so kgrun does not ship it and the
+      bundle id is unchanged.
+    - CLAUDE.md rule 22 and the layout, the service and the timer
+      comments updated. rerunq.py is unchanged.
+  - What the gate does not cover. The workflow has no gate. If the chain
+    resumes while a laptop tick is launching (GitHub's schedule
+    backstop, a stalled run that starts at last, or a release with
+    enable_queue), the LAUNCHING case can still happen. It needs the
+    restart to fall inside one launch's window. Also not changed:
+    do_fetch's exit 3 on a lost fetch push, and L2's reading of every
+    LAUNCHING as a dead tick. A grace period for a recent LAUNCHING
+    would close the residual inside rerunq.py itself. It is not made
+    here, because it changes L2 mid-queue; it is recorded as the option.
+  - Pre-run checks, as run by Claude (2026-11-12):
+    - (1) Inputs from their writers: the run and workflow fields (id,
+      status, created_at, run_started_at, updated_at; state) read from
+      GitHub's live API by the gate's github mode; credentials.json read
+      by KaggleCredentials.load and written back by its save.
+    - (2) Every outcome is a named line and one of exits 0, 1, 255: an
+      unknown mode prints the usage and exits 255; any exception in the
+      gate prints "GATE ERROR" and exits 255.
+    - (3) Contact with real inputs: github mode against the live API
+      printed "G2: run 43156585422 in progress for 9.5 min (< 95); the
+      chain is alive: skip", exit 1, while that run was in progress. The
+      condition chain with the gate absent from origin/main (before this
+      commit) exited 128, a skip. systemd-analyze --user verify passes on
+      the service and the timer. The token half was not run on the real
+      ~/.kaggle (denied to Claude); Rahul runs token mode (below).
+    - (4) Synthetic: selftest, 24 cases, 0 failed. Twelve G cases, with
+      both sides of each limit (94 and 100 min, 29 and 41 min, 19.9 and
+      20 min). Twelve T cases in a scratch HOME with the refresh
+      stubbed: T1 three ways, T2 two ways, T0, T3 refreshed four ways
+      (the file then keeps its refresh token and holds the new access
+      token), T3 401 fail, T3 offline skip; no printed line holds a
+      token. The embedded Python parses under the 3.8 grammar; bash -n
+      passes.
+  - Install, pre-specified (Rahul): the units copied to
+    ~/.config/systemd/user, daemon-reload. Token mode prints T0 or T3,
+    exit 0. One start of the service by hand while the chain is alive
+    must end with the condition unmet and the journal line G2 or G3;
+    nothing is committed by the laptop. Then the timer is enabled.
+    Anything else (a T1 or T2 line, "GATE ERROR", a laptop commit while
+    the chain is alive): do not enable; paste the journal.
+  STATUS: OPEN until the install checks above pass. The act path (G1,
+  G4, G6 followed by a laptop tick) has been run on fixtures only. It
+  will first run on a real stall, and the laptop commits that follow it
+  are where to read it.

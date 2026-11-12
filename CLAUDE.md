@@ -61,8 +61,14 @@ experiment. Everything in this file is non-negotiable.
                                    reports only (rule 22)
     scripts/rerunq-tick.{service,timer}, scripts/rerunq-stop.service
                                    the laptop driver of the same tick, a
-                                   systemd user timer in ~/cbo-gap-queue
-                                   (rule 22)
+                                   systemd user timer in ~/cbo-gap-queue;
+                                   a fallback since 2026-11-12 (rule 22)
+    scripts/rerunq-laptop-gate.sh  the laptop timer's gate: ticks only when
+                                   the Actions chain is quiet; keeps the
+                                   Kaggle access token fresh (rule 22, K11)
+    scripts/rerunq-creds.sh        writes ~/.kaggle/credentials.json on the
+                                   runner from KAGGLE_OAUTH_CREDENTIALS
+                                   (rule 14, K10)
     notes/rerun_queue.json         the rerun queue's state; written only by
                                    scripts/rerunq.py (rule 22)
     notes/queues/                  queue definitions, committed before
@@ -352,8 +358,15 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     2026-10-23, Rahul's decision; ledger K6): the systemd user timer
     scripts/rerunq-tick.timer, every 15 minutes at minutes 2, 17, 32 and
     47, in the separate clone ~/cbo-gap-queue, which nobody edits by hand.
-    The drivers share no lock but the committed state file (L1); both may
-    run at once. Each tick takes at most one action (launch, poll, or
+    The drivers share no lock but the committed state file (L1). Since
+    2026-11-12 the laptop timer is a fallback (Rahul's decision; ledger
+    K11): before each tick, scripts/rerunq-laptop-gate.sh skips it while
+    the workflow's chain is alive (a run unfinished and within its time
+    limit, or one finished less than 20 minutes ago), and refreshes the
+    laptop's Kaggle access token. Two drivers ticking freely is not
+    allowed: a tick that meets the other driver's LAUNCHING, while that
+    driver's kgrun launch is still running, halts the queue (L2; K11).
+    Each tick takes at most one action (launch, poll, or
     fetch and commit) through kgrun.py, under the decision rules in
     rerunq.py's docstring, and commits as github-actions[bot] (workflow)
     or as "Rahul Kumar Mishra (rerunq laptop timer)" (laptop).
