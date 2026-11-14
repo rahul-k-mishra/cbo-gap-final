@@ -1087,27 +1087,15 @@
       "ledger": "N45"
     }
   ],
-  "status": "HALTED",
+  "status": "READY",
   "index": 93,
-  "attempt": 1,
+  "attempt": 2,
   "resume_dirs": [],
-  "job": "c5-x-s91of116-a1",
-  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 91 --nshards 116",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
-  "anomaly": {
-    "job": "c5-x-s91of116-a1",
-    "kind": "status-unknown",
-    "detail": "no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
-    "run": "43596528057.1",
-    "at": "2026-11-14T18:17:45+05:30"
-  },
-  "halt_reason": "the same anomaly twice for c5-x-s91of116-a1 (status-unknown): first no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus in run 43596528057.1, now no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
+  "job": "",
+  "args": "",
+  "data_dirs": [],
+  "anomaly": null,
+  "halt_reason": "",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -5142,6 +5130,24 @@
       "attempt": 1,
       "job": "c5-x-s91of116-a1",
       "note": "the same anomaly twice for c5-x-s91of116-a1 (status-unknown): first no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus in run 43596528057.1, now no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus"
+    },
+    {
+      "at": "2026-11-14T23:42:48+05:30",
+      "run": "manual",
+      "event": "kernel-check",
+      "item": "c5-s91of116",
+      "attempt": 1,
+      "job": "c5-x-s91of116-a1",
+      "note": "c5-x-s91of116-a1 ABSENT by hand: K12: a1 never ran (push refused at 5-session cap, kgrun exit 0); GetKernel 403, GetKernelSessionStatus 404 at 22:39 IST; s90 COMPLETE on same credential"
+    },
+    {
+      "at": "2026-11-14T23:42:48+05:30",
+      "run": "manual",
+      "event": "release-next-attempt",
+      "item": "c5-s91of116",
+      "attempt": 2,
+      "job": "",
+      "note": "K12: a1 never ran (push refused at 5-session cap, kgrun exit 0); GetKernel 403, GetKernelSessionStatus 404 at 22:39 IST; s90 COMPLETE on same credential"
     }
   ],
   "definition": {
