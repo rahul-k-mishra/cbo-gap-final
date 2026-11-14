@@ -1,0 +1,68 @@
+==============================================================================
+rerunq tick  run 43632437837.1  2026-11-15T01:00:34+05:30
+  python 3.12.16
+  state file notes/rerun_queue.json
+  state READY  item 93  attempt 2  job -
+  definition notes/queues/c5.json (sha256 0cb9093d8768cd22afed560aadf3ca69e1089fc8ab0b77438c887236955bfeeb)
+  profile c5 [c5]  timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629, runs/jinfprobe-s1of3-a1-kaggle-20261031-233459, runs/jinfprobe-s2of3-a1-kaggle-20261101-015818  beta table runs/calprec2-finalize-20261023-112503  rerun plan runs/rerun-plan-20261023-112643  drill stop-after 150.0  workers 4
+    expect python 3.13.18 numpy 2.1.3; c5run_sha256 3c6a569f; jinfprobe_sha256 7b9d6e7f; c5price_sha256 10688bff; calprec2_sha256 3947d7ba; costprobe2_sha256 ea5cb2e1; rerunlib_sha256 31f4b360
+  kaggle user ericsom  max attempts 5  max file 50 MB
+  L4 control kernel ericsom/cbo-calprec2-long-s25of26-a1  K1 ABSENT gap 30 min
+==============================================================================
+LAUNCH  item 93 (c5-s91of116), attempt 2, job c5-x-s91of116-a2  [c5 profile c5]  retry 6 after 5 capacity refusal(s) (CW)
+  P1 code pin: c5run.py, jinfprobe.py, c5price.py, calprec2.py, costprobe2.py, rerunlib.py as pinned
+  L3 (CW): launch logs on disk are exactly those of the 5 capacity refusal(s): logs/kgrun-c5-x-s91of116-a2-try2.log, logs/kgrun-c5-x-s91of116-a2-try3.log, logs/kgrun-c5-x-s91of116-a2-try4.log, logs/kgrun-c5-x-s91of116-a2-try5.log, logs/kgrun-c5-x-s91of116-a2.log
+  $ /opt/hostedtoolcache/Python/3.12.16/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job c5-x-s91of116-a2 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job c5-x-s91of116-a2  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-c5-x-s91of116-a2
+    | 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ==============================================================================
+  kaggle status of ericsom/cbo-c5-x-s91of116-a2: no status line  (judged: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus)
+  no session for a name refused for capacity (CW): control status of calprec2-long-s25of26-a1 (L4)
+  $ /opt/hostedtoolcache/Python/3.12.16/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py status --job calprec2-long-s25of26-a1 --user ericsom
+  kgrun exit code 0
+    | ==============================================================================
+    | kgrun  action status  job calprec2-long-s25of26-a1  dataset ericsom/cbo-gap-archive
+    |   repository /home/runner/work/cbo-gap-final/cbo-gap-final
+    | ==============================================================================
+    |   $ kaggle kernels status ericsom/cbo-calprec2-long-s25of26-a1
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE"
+    | ==============================================================================
+  kaggle status of ericsom/cbo-calprec2-long-s25of26-a1: COMPLETE  (judged: ericsom/cbo-calprec2-long-s25of26-a1 has status "KernelWorkerStatus.COMPLETE")
+  L3: kernel absent on Kaggle, no session under a name refused for capacity (no session (404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus) after a capacity refusal (CW); control calprec2-long-s25of26-a1 COMPLETE)
+  push 1 of 3: accepted
+  $ /opt/hostedtoolcache/Python/3.12.16/x64/bin/python /home/runner/work/cbo-gap-final/cbo-gap-final/scripts/kgrun.py launch --job c5-x-s91of116-a2 --user ericsom --script c5run.py --data-dirs runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818,runs/calprec2-finalize-20261023-112503,runs/rerun-plan-20261023-112643 --args=--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 91 --nshards 116
+  kgrun exit code 11  (console: logs/kgrun-c5-x-s91of116-a2-try6.log)
+    |   $ kaggle datasets status ericsom/cbo-gap-archive --format json
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | {"status": "ready", "current_version_number": 183}
+    |   C5: status again ready, current version still 183
+    |   verdict: PASS, version 183 holds exactly this bundle's 88 files
+    | DATASET PATH: SKIPPED UPLOAD  bundle 40f9ec17f6037595 already in the current dataset version (version 183 holds exactly this bundle's 88 files); no new version created, no wait; the runner verifies bundle 40f9ec17f6037595 before the script starts
+    | GENERATE KERNEL  ericsom/cbo-c5-x-s91of116-a2
+    |   wrote /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+    |   runner requires bundle 40f9ec17f6037595 in the mounted dataset, every file hashing as listed
+    |   private True  internet False  gpu False
+    |   runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+    |   runner will call: c5run.py --archive <found path> --outdir /kaggle/working --mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 91 --nshards 116
+    |   runner will rebuild jinfprobe-s0of3-a1-kaggle-20261031-210629 under /tmp/kgrun-ship and replace runs/jinfprobe-s0of3-a1-kaggle-20261031-210629 in the args
+    |   runner will rebuild jinfprobe-s1of3-a1-kaggle-20261031-233459 under /tmp/kgrun-ship and replace runs/jinfprobe-s1of3-a1-kaggle-20261031-233459 in the args
+    |   runner will rebuild jinfprobe-s2of3-a1-kaggle-20261101-015818 under /tmp/kgrun-ship and replace runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 in the args
+    |   runner will rebuild calprec2-finalize-20261023-112503 under /tmp/kgrun-ship and replace runs/calprec2-finalize-20261023-112503 in the args
+    |   runner will rebuild rerun-plan-20261023-112643 under /tmp/kgrun-ship and replace runs/rerun-plan-20261023-112643 in the args
+    | PUSH KERNEL (this starts a batch run; 12 hour cap)
+    |   $ kaggle kernels push -p /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push
+    | Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+    | Kernel push error: Maximum batch CPU session count of 5 reached.
+    |   kaggle kernels push exit code 0 (printed; the reply decides, PUSH VERDICT)
+    | PUSH VERDICT: CAPACITY (all 5 batch CPU sessions of the account in use; Kaggle replied: Kernel push error: Maximum batch CPU session count of 5 reached.)
+    | NOT LAUNCHED: Kaggle refused the push at the account's batch CPU session limit
+    |   exit 11
+CAPACITY REFUSAL 6 for c5-x-s91of116-a2: Kernel push error: Maximum batch CPU session count of 5 reached.
+  state READY, attempt 2 unchanged; the next try comes no sooner than 15 min from now (CW)
