@@ -1100,7 +1100,13 @@
     "runs/calprec2-finalize-20261023-112503",
     "runs/rerun-plan-20261023-112643"
   ],
-  "anomaly": null,
+  "anomaly": {
+    "job": "c5-x-s91of116-a1",
+    "kind": "status-unknown",
+    "detail": "no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
+    "run": "43596528057.1",
+    "at": "2026-11-14T18:17:45+05:30"
+  },
   "halt_reason": "",
   "kernel_check": null,
   "attempts": {
@@ -5118,6 +5124,15 @@
       "attempt": 1,
       "job": "c5-x-s91of116-a1",
       "note": "logs/kgrun-c5-x-s91of116-a1.log"
+    },
+    {
+      "at": "2026-11-14T18:17:45+05:30",
+      "run": "43596528057.1",
+      "event": "anomaly",
+      "item": "c5-s91of116",
+      "attempt": 1,
+      "job": "c5-x-s91of116-a1",
+      "note": "status-unknown: no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus"
     }
   ],
   "definition": {
