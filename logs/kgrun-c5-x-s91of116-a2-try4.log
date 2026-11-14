@@ -1,0 +1,140 @@
+==============================================================================
+kgrun  action launch  job c5-x-s91of116-a2  dataset ericsom/cbo-gap-archive
+  repository /home/runner/work/cbo-gap-final/cbo-gap-final
+==============================================================================
+GIT GUARD  runs/ committed, HEAD pushed
+  runs/ clean, HEAD pushed
+ASSEMBLE BUNDLE  /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-bundle
+  ship data   jinfprobe-s0of3-a1-kaggle-20261031-210629   4 files, manifest verified, tracked and clean in git
+  ship data   jinfprobe-s1of3-a1-kaggle-20261031-233459   4 files, manifest verified, tracked and clean in git
+  ship data   jinfprobe-s2of3-a1-kaggle-20261101-015818   4 files, manifest verified, tracked and clean in git
+  ship data   calprec2-finalize-20261023-112503   2 files, manifest verified, tracked and clean in git
+  ship data   rerun-plan-20261023-112643   5 files, manifest verified, tracked and clean in git
+  bundle id 40f9ec17f6037595  (kgrun-bundle-40f9ec17f6037595.sha256, 87 files listed)
+  26 archive files + 41 round-2 scripts + 5 shipped folder(s); bundle 89 files, 3.7 MB
+  dataset id ericsom/cbo-gap-archive
+DATASET REUSE CHECK  bundle 40f9ec17f6037595  (mode on; ledger K9)
+  $ kaggle datasets status ericsom/cbo-gap-archive --format json
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+{"status": "ready", "current_version_number": 183}
+  C1: status ready, current version 183
+  $ kaggle datasets files ericsom/cbo-gap-archive/183 --page-size 200
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+name                                              size  creationDate                
+----------------------------------------------  ------  --------------------------  
+adapt0.py                                        17717  2026-11-14 12:32:18.095000  
+audit.py                                         18819  2026-11-14 12:32:18.092000  
+boundary.py                                      20168  2026-11-14 12:32:18.086000  
+c5_analysis.py                                   30136  2026-11-14 12:32:18.097000  
+c5bitcmp.py                                      14166  2026-11-14 12:32:18.095000  
+c5price.py                                       14370  2026-11-14 12:32:18.102000  
+c5run.py                                         32717  2026-11-14 12:32:18.112000  
+c6.py                                            11509  2026-11-14 12:32:18.089000  
+calprec.py                                       20285  2026-11-14 12:32:18.228000  
+calprec2.py                                      74692  2026-11-14 12:32:18.109000  
+calprec2_hashaudit.py                            21288  2026-11-14 12:32:18.174000  
+cbopaths.py                                       3445  2026-11-14 12:32:18.222000  
+cliff.py                                         21241  2026-11-14 12:32:18.206000  
+control.py                                       22663  2026-11-14 12:32:18.207000  
+costprobe.py                                     11037  2026-11-14 12:32:18.268000  
+costprobe2.py                                    77006  2026-11-14 12:32:18.230000  
+crossed.py                                       23357  2026-11-14 12:32:18.242000  
+depositcheck.py                                  35473  2026-11-14 12:32:18.245000  
+detcheck.py                                      15562  2026-11-14 12:32:18.229000  
+dtref.py                                         52414  2026-11-14 12:32:18.290000  
+ess_extend.py                                    13945  2026-11-14 12:32:18.193000  
+ess_panel.py                                     17625  2026-11-14 12:32:18.234000  
+ess_surface.py                                   16586  2026-11-14 12:32:18.266000  
+exactcal.py                                      16596  2026-11-14 12:32:18.322000  
+exactcal_real.csv                               423255  2026-11-14 12:32:18.571000  
+finitej.py                                        9895  2026-11-14 12:32:18.338000  
+h1null.py                                        30928  2026-11-14 12:32:18.292000  
+jinfprobe.py                                     48220  2026-11-14 12:32:18.344000  
+kgrun-bundle-40f9ec17f6037595.sha256              7347  2026-11-14 12:32:18.319000  
+kgrun-ship-000-0000-sha256.txt                     340  2026-11-14 12:32:18.345000  
+kgrun-ship-000-0001-cbo-jinfprobe-s0of3-a1.log   35564  2026-11-14 12:32:18.346000  
+kgrun-ship-000-0002-jinfprobe_params.csv           707  2026-11-14 12:32:18.556000  
+kgrun-ship-000-0003-jinfprobe_results.csv        71936  2026-11-14 12:32:18.584000  
+kgrun-ship-001-0000-sha256.txt                     340  2026-11-14 12:32:18.354000  
+kgrun-ship-001-0001-cbo-jinfprobe-s1of3-a1.log   35546  2026-11-14 12:32:18.359000  
+kgrun-ship-001-0002-jinfprobe_params.csv           706  2026-11-14 12:32:18.536000  
+kgrun-ship-001-0003-jinfprobe_results.csv        72808  2026-11-14 12:32:18.565000  
+kgrun-ship-002-0000-sha256.txt                     340  2026-11-14 12:32:18.316000  
+kgrun-ship-002-0001-cbo-jinfprobe-s2of3-a1.log   35546  2026-11-14 12:32:18.353000  
+kgrun-ship-002-0002-jinfprobe_params.csv           707  2026-11-14 12:32:18.892000  
+kgrun-ship-002-0003-jinfprobe_results.csv        71539  2026-11-14 12:32:18.754000  
+kgrun-ship-003-0000-sha256.txt                      84  2026-11-14 12:32:18.455000  
+kgrun-ship-003-0001-calprec2_beta.csv           137943  2026-11-14 12:32:18.964000  
+kgrun-ship-004-0000-sha256.txt                     349  2026-11-14 12:32:18.354000  
+kgrun-ship-004-0001-rerun_archive_check.csv     359499  2026-11-14 12:32:18.989000  
+kgrun-ship-004-0002-rerun_onset_control.csv       1953  2026-11-14 12:32:19.062000  
+kgrun-ship-004-0003-rerun_plan.csv              650280  2026-11-14 12:32:19.079000  
+kgrun-ship-004-0004-rerun_plan_params.csv          744  2026-11-14 12:32:19.128000  
+kgrun-ship-index.json                             2794  2026-11-14 12:32:18.364000  
+law.py                                           35107  2026-11-14 12:32:18.377000  
+m1_estimands.py                                  11063  2026-11-14 12:32:18.422000  
+m2_window.py                                     14916  2026-11-14 12:32:18.402000  
+m3_bootmc.py                                     10228  2026-11-14 12:32:18.367000  
+m4_slopese.py                                    11750  2026-11-14 12:32:18.392000  
+m5_gapwidth.py                                   12581  2026-11-14 12:32:18.387000  
+m6_hetero.py                                     14514  2026-11-14 12:32:18.397000  
+m7_pairing.py                                    20201  2026-11-14 12:32:18.403000  
+manifest.py                                       8492  2026-11-14 12:32:18.429000  
+measlib.py                                       12338  2026-11-14 12:32:18.426000  
+mechanism.py                                     20139  2026-11-14 12:32:18.437000  
+memprobe.py                                      12538  2026-11-14 12:32:18.482000  
+mkfig2.py                                         1825  2026-11-14 12:32:18.443000  
+mkfig4.py                                         2223  2026-11-14 12:32:18.437000  
+mkfig5.py                                         2391  2026-11-14 12:32:18.481000  
+n30_reconstruct.py                               37371  2026-11-14 12:32:18.464000  
+onsetclass.py                                    18579  2026-11-14 12:32:18.466000  
+onsetdiag.py                                     25052  2026-11-14 12:32:18.494000  
+onsetr_rehearsal.py                              15524  2026-11-14 12:32:18.466000  
+partm.py                                         17573  2026-11-14 12:32:18.488000  
+perjcal.py                                       12877  2026-11-14 12:32:18.460000  
+perjcalprobe.py                                  29928  2026-11-14 12:32:18.479000  
+reboot.py                                        13085  2026-11-14 12:32:18.487000  
+refratio.py                                      17319  2026-11-14 12:32:18.486000  
+refratio2.py                                     18430  2026-11-14 12:32:18.477000  
+refscale.py                                      35973  2026-11-14 12:32:18.532000  
+regime.py                                        26398  2026-11-14 12:32:18.478000  
+regimemap.py                                     27824  2026-11-14 12:32:18.500000  
+rerun.py                                         55270  2026-11-14 12:32:18.489000  
+rerun_analysis.py                               109437  2026-11-14 12:32:18.488000  
+rerun_tally.py                                   12415  2026-11-14 12:32:18.532000  
+rerunlib.py                                      44427  2026-11-14 12:32:18.530000  
+rerunqwatch.py                                   16829  2026-11-14 12:32:18.582000  
+rmapj.py                                         11680  2026-11-14 12:32:18.511000  
+rmapj_real.csv                                  379782  2026-11-14 12:32:19.118000  
+sigma.py                                         20661  2026-11-14 12:32:18.547000  
+sizetest.py                                      66953  2026-11-14 12:32:18.584000  
+verify.py                                        15711  2026-11-14 12:32:18.595000  
+visibility.py                                    20942  2026-11-14 12:32:18.571000
+  C2: version 183 lists 88 file(s)
+  C3: version 183 holds kgrun-bundle-40f9ec17f6037595.sha256 and no other identity file
+  C4: version 183 lists exactly the 88 names this launch would upload
+  $ kaggle datasets status ericsom/cbo-gap-archive --format json
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+{"status": "ready", "current_version_number": 183}
+  C5: status again ready, current version still 183
+  verdict: PASS, version 183 holds exactly this bundle's 88 files
+DATASET PATH: SKIPPED UPLOAD  bundle 40f9ec17f6037595 already in the current dataset version (version 183 holds exactly this bundle's 88 files); no new version created, no wait; the runner verifies bundle 40f9ec17f6037595 before the script starts
+GENERATE KERNEL  ericsom/cbo-c5-x-s91of116-a2
+  wrote /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push/run.py and kernel-metadata.json
+  runner requires bundle 40f9ec17f6037595 in the mounted dataset, every file hashing as listed
+  private True  internet False  gpu False
+  runner will search /kaggle/input/cbo-gap-archive, then /kaggle/input/datasets/ericsom/cbo-gap-archive, then a walk of /kaggle/input to depth 3
+  runner will call: c5run.py --archive <found path> --outdir /kaggle/working --mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 91 --nshards 116
+  runner will rebuild jinfprobe-s0of3-a1-kaggle-20261031-210629 under /tmp/kgrun-ship and replace runs/jinfprobe-s0of3-a1-kaggle-20261031-210629 in the args
+  runner will rebuild jinfprobe-s1of3-a1-kaggle-20261031-233459 under /tmp/kgrun-ship and replace runs/jinfprobe-s1of3-a1-kaggle-20261031-233459 in the args
+  runner will rebuild jinfprobe-s2of3-a1-kaggle-20261101-015818 under /tmp/kgrun-ship and replace runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 in the args
+  runner will rebuild calprec2-finalize-20261023-112503 under /tmp/kgrun-ship and replace runs/calprec2-finalize-20261023-112503 in the args
+  runner will rebuild rerun-plan-20261023-112643 under /tmp/kgrun-ship and replace runs/rerun-plan-20261023-112643 in the args
+PUSH KERNEL (this starts a batch run; 12 hour cap)
+  $ kaggle kernels push -p /home/runner/work/cbo-gap-final/cbo-gap-final/.kaggle-push
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Kernel push error: Maximum batch CPU session count of 5 reached.
+  kaggle kernels push exit code 0 (printed; the reply decides, PUSH VERDICT)
+PUSH VERDICT: CAPACITY (all 5 batch CPU sessions of the account in use; Kaggle replied: Kernel push error: Maximum batch CPU session count of 5 reached.)
+NOT LAUNCHED: Kaggle refused the push at the account's batch CPU session limit
+  exit 11
