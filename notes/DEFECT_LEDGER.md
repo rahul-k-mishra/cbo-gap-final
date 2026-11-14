@@ -7997,3 +7997,165 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
   G4, G6 followed by a laptop tick) has been run on fixtures only. It
   will first run on a real stall, and the laptop commits that follow it
   are where to read it.
+
+- K12 (Kaggle, a push refused for capacity recorded as launched; the
+  capacity wait; 2026-11-14). Rahul's request named this "K11"; K11 is
+  the laptop fallback entry above, still OPEN, so this is K12.
+  - What happened. The tick of run 43595215894 (18:01 IST) launched
+    c5-x-s91of116-a1. Its preflight gave the kernels.get denial and the
+    control COMPLETE, so the name was free (L3). kgrun launch uploaded
+    dataset version 182, then "kaggle kernels push" printed "Kernel push
+    error: Maximum batch CPU session count of 5 reached." kgrun printed
+    "LAUNCHED ericsom/cbo-c5-x-s91of116-a1" and exited 0
+    (logs/kgrun-c5-x-s91of116-a1.log; the successful s90 launch,
+    logs/kgrun-c5-x-s90of116-a1.log, printed "Kernel version 1
+    successfully pushed." at the same place). rerunq committed
+    "launched" (140375d). The next two polls got "404 Client Error: Not
+    Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/
+    GetKernelSessionStatus", which L4 classes UNKNOWN: anomaly (af7acae,
+    logs/rerunq-c5-x-s91of116-a1-anomaly-20261114-181745.log), then halt
+    (0bf6139, logs/rerunq-c5-x-s91of116-a1-halt-20261114-183309.log),
+    issue #4. No kernel ran; the cost is one dataset version and the
+    queue stopped from 18:33 IST.
+  - Why exit 10 (K9) did not catch it. Three causes, all in code:
+    (1) kaggle 2.2.4 exits 0 on this refusal. Shown by kgrun's own path:
+        run_cmd raises SystemExit("command failed with code N") on any
+        non-zero exit, and the log has no such line and goes on to
+        LAUNCHED.
+    (2) Exit 10 is by design only for a stop BEFORE push() sets
+        push_started; after it, kgrun keeps the exit code it has, and
+        with nothing raised that was 0.
+    (3) rerunq's L2 step (3) read kgrun's exit 0 as "pushed" and checked
+        nothing in the log.
+    So the push was judged by the absence of a crash.
+  - Fix 1, kgrun.py PUSH VERDICT (docstring section of that name, with
+    worked examples and NULL RATE). The rule: the verdict is read from
+    Kaggle's reply, not from an exit code. PUSHED needs exactly one
+    "Kernel version N successfully pushed." line, no line containing
+    "error", and CLI exit 0; then exit 0. CAPACITY is a reply of exactly
+    one line, "Kernel push error: Maximum batch CPU session count of M
+    reached."; exit 11. Everything else is UNCONFIRMED, exit 12. Why
+    this rule: RUNNING is the one consequence that must be proved, so
+    it needs Kaggle's positive statement; any reply not seen before
+    falls to UNCONFIRMED, which halts, never to PUSHED or CAPACITY. The
+    one refusal treated as a wait is pinned to its exact measured text;
+    a 429 or a GPU-limit text halts until its text has been seen here.
+    "run" and "push" stop on 11 and 12 too, without polling.
+  - Fix 2, rerunq.py rule CW (docstring), Rahul's instruction: a
+    capacity refusal is a wait, not an anomaly; READY, logged, retried;
+    no halt, no issue.
+    - Telling a capacity refusal from a real push failure. rerunq does
+      not trust kgrun's exit code alone. Exit 11 is a refusal only if
+      kgrun's log, after its PUSH KERNEL line, holds a reply that is
+      exactly the one refusal line, one "PUSH VERDICT: CAPACITY (" line
+      and no other verdict, kgrun's NOT LAUNCHED line, no success line
+      and no LAUNCHED line. Exit 0 needs one success line, one PUSHED
+      verdict and no error line in the reply. Anything else, and every
+      other exit code, halts with "whether the kernel was pushed is not
+      known", as before (L2N, K1).
+    - The wait. History event "capacity" ("log <path>; refusal R;
+      <Kaggle's line>"), status READY, no job, attempt unchanged (no
+      session ran), one commit with kgrun's log and the tick log, exit
+      0. While the newest refusal of the current job name is under 15
+      minutes old, a tick does nothing; next-wake gives 900 s. No limit
+      on the number of refusals.
+    - Same name on retry. Retry R >= 2 logs to logs/kgrun-<job>-
+      try<R>.log, and L3 accepts launch logs on disk only when they are
+      exactly those the refusals name. After the s91 refusal the
+      status reply for the name changed from the kernels.get denial to
+      the 404 from GetKernelSessionStatus; why is not known. For a name
+      with a recorded refusal, and only then, that exact 404 followed
+      by the control's status line counts as "no session" (ABSENT) for
+      L3. Any status line for the name still halts (L3), which is what
+      catches a refusal that did start something.
+    - Why a refusal means no session: the text says the limit was
+      reached; s91 had no session 15 and 31 minutes later (the 404
+      above); Rahul read GetKernel 403 and GetKernelSessionStatus 404
+      for s91 at 22:39 IST while s90 answered COMPLETE on the same
+      credential (his report in the session; that console output is not
+      stored under logs/).
+    - Cost, stated plainly: each retry runs the whole launch, and with
+      kgrun's REUSE_MODE "shadow" each one uploads a new dataset version,
+      about four an hour while the account is full. The K9 measurement
+      for turning the mode "on" is in and passed (K9 above; the s91 log
+      again shows "verdict: PASS, version 182 holds exactly this
+      bundle's 88 files"). Turning it on is Rahul's one-line decision;
+      it is not made here.
+    - Not changed: kgrun's exit 10, L2N, K1, L4 for a name with no
+      refusal (the 404 stays UNKNOWN), and do_poll and do_recover.
+      Neither kgrun.py nor rerunq.py is shipped, so the bundle id is
+      unchanged and no P1 pin moves.
+  - The pattern elsewhere on this laptop (read only, 2026-11-14). Only
+    rbudget (~/Research/fuzzypd_lp/rbudget) does this: rb_watchdog.py,
+    run every 5 minutes by the user timer rbudget-watchdog.timer
+    (OnCalendar *:0/5, Persistent), with a GitHub fallback that pushes
+    only after 4 h without a state change. It does not count free
+    slots: Kaggle's answer to the push is its slot test. It pushes only
+    when its own single kernel is COMPLETE or ERROR; a capacity refusal
+    ("refused") is retried at the next tick; success needs the
+    "successfully pushed" line (rb_kaggle_session.classify_push, whose
+    comment records the same exit-0 behaviour). Against pushing twice:
+    any WAIT status means no push, and after any push that may have
+    started a session (success, or an unclear reply) a 10-minute floor.
+    It reuses one kernel name for every session, so it never meets the
+    name question of CW (b). Two differences in CW: its capacity text
+    is pinned exactly (rbudget also accepts 429 and rate-limit texts),
+    and a reply it calls "refused" for any other error is retried by
+    rbudget but halts here, because a queue shard must never run twice.
+    No other project here has a timer, unit or script that pushes to
+    Kaggle (horizon and the dr shards are not on this laptop).
+  - Two drivers. The laptop units installed in ~/.config/systemd/user
+    are the pre-K11 ones (no gate; diff against scripts/) and
+    rerunq-tick.timer is disabled and inactive. Enabling it as installed
+    would make two free-running drivers. That is not safe in the sense
+    K11 sets out: no double launch (L1, L3, K1 hold), but spurious halts
+    when one driver ticks into the other's LAUNCHING, and CW makes
+    LAUNCHING frequent, one window per retry, every 15 minutes while
+    the account is full. With the K11 gate installed the laptop skips
+    while the Actions chain is alive, and CW changes nothing in that
+    analysis. Decision: the Actions chain is the driver; the laptop
+    timer stays off until the K11 install checks are done, and then
+    only as the gated fallback.
+  - Pre-run checks, as run by Claude (2026-11-14; no Kaggle call, no git
+    call, the queue's state file not opened; script in the session
+    scratchpad, k12_check.py): both files parse under the 3.8 grammar.
+    Contact: classify_push on the push replies cut from the two real
+    logs gives PUSHED 1 (s90) and CAPACITY 5 (s91, with CLI exit 0 or
+    1); the log readers refuse both real logs, as they must, since they
+    predate the PUSH VERDICT lines. Synthetic: 12 more replies (empty,
+    warning only, other push error, 429, GPU limit, refusal plus a line,
+    no final stop, success plus error, two successes, version 0, success
+    with warning, a traceback) classify as the docstring says; push()
+    with the CLI stubbed exits 0, 11, 12 as specified; rerunq's copies
+    equal kgrun's constants. do_launch end to end on a scratch root with
+    kgrun, publish and the clock stubbed: refusal 1 (intent commit, then
+    a capacity commit carrying the kgrun log; READY, attempt unchanged);
+    a tick inside the floor commits nothing; refusal 2 after the 404 and
+    the control, logged to -try2; then PUSHED to RUNNING from -try3; a
+    status line on retry halts (L3); 404 with the control denied is an
+    anomaly; an extra launch log halts (L3); exit 11 with a second error
+    line halts (this case failed on the first run of the fixture and
+    rerunq was corrected to read the whole reply); a first launch's 404
+    is an anomaly as before; exit 0 with the s91 log body halts; exit 0
+    with an error beside success halts; exit 12 halts quoting the
+    verdict; next-wake gives "900 READY capacity-wait ..." after a
+    refusal and "60 READY" otherwise. 0 failed. The fixture's values are
+    synthetic.
+  - Item 93 (c5-s91of116). Halted at attempt 1. Its a1 name now gives
+    the 404, not the denial, and it has no refusal recorded under CW
+    (the a1 log predates PUSH VERDICT), so it is not retried under a1.
+    Release with next-attempt and --checked-by-hand ABSENT (Rahul's
+    reading at 22:39 IST, more than 30 minutes after the 18:33 halt,
+    K1). Attempt 2, c5-x-s91of116-a2, a name never pushed; no resume
+    folders, since a1 fetched nothing.
+  - What the next launch logs must show. (a) Account full: logs/kgrun-
+    c5-x-s91of116-a2.log with the refusal reply, "PUSH VERDICT:
+    CAPACITY", exit 11; a commit "capacity wait at c5-x-s91of116-a2
+    (refusal 1)"; state READY; no issue opened; the next try no sooner
+    than 15 minutes later. (b) A slot free: "PUSH VERDICT: PUSHED
+    version 1", RUNNING, as before. Anything else (a halt on a capacity
+    log, a 404 on a retry followed by an anomaly, an issue opened for a
+    refusal): stop and read the tick log.
+  STATUS: OPEN until a live refusal has been handled as a wait under CW
+  and the same name has later been pushed, run and fetched with no R1 or
+  R2 halt.

@@ -133,8 +133,9 @@ LAUNCH STOPPED BEFORE THE PUSH: EXIT 10 (ledger K9, 2026-11-08)
   kgrun then prints the cause, the line
     NOT PUSHED: kgrun launch stopped before it ran "kaggle kernels push"
   and exits 10 (NOT_PUSHED_EXIT). A stop after the record is set keeps the
-  exit code it had (1 for a failed push), because a push that returned an
-  error may still have created the kernel.
+  exit code it had, because a push that returned an error may still have
+  created the kernel; since K12 that code is 11 or 12 for any reply the
+  push returned (PUSH VERDICT below), and 1 only for a crash.
   Exit 10 states what this process did. It does not say what Kaggle holds:
   a kernel of that name created by anything else is outside its view.
   rerunq.py's L3 check before every launch and its K1 check before every
@@ -148,7 +149,76 @@ LAUNCH STOPPED BEFORE THE PUSH: EXIT 10 (ledger K9, 2026-11-08)
   failed with code 1") in dataset_version, before push() was reached, and
   kgrun exited 1. Under this rule it prints that message, the NOT PUSHED
   line, and exits 10. Had the same 400 come from "kaggle kernels push"
-  instead, the exit would stay 1.
+  instead, the exit would be 12 (PUSH VERDICT).
+
+PUSH VERDICT: EXIT 0, 11 OR 12 (ledger K12, 2026-11-14; before first
+execution)
+  The exit code of "kaggle kernels push" is not evidence of a push.
+  kaggle 2.2.4 exits 0 when Kaggle refuses one. On 2026-11-14 the launch
+  of c5-x-s91of116-a1 printed "Kernel push error: Maximum batch CPU
+  session count of 5 reached."; run_cmd raised nothing, which it does for
+  every non-zero exit, so the CLI's exit code was 0; kgrun printed
+  LAUNCHED and exited 0 (logs/kgrun-c5-x-s91of116-a1.log). Exit 10 (above)
+  did not apply, by design: the push had started.
+  The verdict is therefore read from what Kaggle returned. The REPLY is
+  the CLI's output with blank lines and the outdated-version warning line
+  removed, each line stripped.
+  PUSHED       the REPLY holds exactly one line starting "Kernel version N
+               successfully pushed." (N a positive integer), no line
+               containing "error" in any case, and the CLI exited 0.
+               kgrun prints "PUSH VERDICT: PUSHED version N of <kernel>",
+               and launch then prints LAUNCHED. Exit 0.
+  CAPACITY     the REPLY is exactly ONE line, "Kernel push error: Maximum
+               batch CPU session count of M reached." (M a positive
+               integer; the final full stop optional), whatever the CLI's
+               exit code. kgrun prints "PUSH VERDICT: CAPACITY (...)" and
+               the CAPACITY_LINE below, and exits 11 (CAPACITY_EXIT).
+  UNCONFIRMED  every other REPLY: no success line, two of them, a success
+               line beside an error line, a success line with a non-zero
+               exit, any other error text, the capacity line with any
+               other line beside it, nothing at all. kgrun prints "PUSH
+               VERDICT: UNCONFIRMED (<reason>; Kaggle replied: <REPLY>)"
+               and the UNCONFIRMED_LINE, and exits 12 (UNCONFIRMED_EXIT).
+               Whether a kernel was created is not known.
+  Why this rule. Recording RUNNING is the one consequence that must be
+  proved, so PUSHED needs Kaggle's own positive statement with a version
+  number, not the absence of a crash. Everything else is UNCONFIRMED and
+  halts the queue, except ONE refusal whose text is pinned exactly and
+  whose meaning is measured. An error text not seen before lands in
+  UNCONFIRMED, never in PUSHED and never in CAPACITY. Rate limits (HTTP
+  429) and the GPU variant are not CAPACITY: their text has not been seen
+  here, so they halt until it has.
+  Why CAPACITY means "no session was started": (a) the text says the
+  account's limit was reached, so the push was refused, not queued; (b)
+  measured for s91: kgrun status of ericsom/cbo-c5-x-s91of116-a1 gave a
+  404 from GetKernelSessionStatus at 18:17 and 18:33 IST, 15 and 31
+  minutes after the refusal (logs/rerunq-c5-x-s91of116-a1-anomaly-
+  20261114-181745.log and -halt-20261114-183309.log), and Rahul read
+  GetKernel 403 and GetKernelSessionStatus 404 for it at 22:39 IST while
+  s90 answered COMPLETE on the same credential. A session, queued or
+  running, has a status.
+  What it does not establish: what Kaggle keeps under the name after the
+  refusal. Before the refused push, kgrun status of that name gave the
+  kernels.get denial (logs/rerunq-c5-x-s91of116-a1-launched-20261114-
+  180219.log); after it, the 404 above. The reply changed; why is not
+  known. rerunq.py's capacity wait (CW) handles that reply.
+  "run" and "push" use the same verdict: after CAPACITY or UNCONFIRMED
+  nothing is polled or fetched.
+  Worked examples: logs/kgrun-c5-x-s90of116-a1.log, "Kernel version 1
+  successfully pushed.  Please check progress at https://www.kaggle.com/
+  code/ericsom/cbo-c5-x-s90of116-a1", exit 0: PUSHED version 1.
+  logs/kgrun-c5-x-s91of116-a1.log, the one line "Kernel push error:
+  Maximum batch CPU session count of 5 reached.", exit 0: CAPACITY, exit
+  11. "Kernel push error: Notebook not found": UNCONFIRMED, exit 12.
+  "429 Client Error: Too Many Requests for url: ...": UNCONFIRMED. The
+  success line, exit 1: UNCONFIRMED. The success line and a line "Kernel
+  push error: ...": UNCONFIRMED. Nothing printed: UNCONFIRMED.
+  NULL RATE: deterministic string tests on one reply; none fires by
+  chance. A false PUSHED needs Kaggle to print its success line for a
+  refused push; a false CAPACITY needs the exact refusal line, alone, for
+  a push that started a session. Neither has been seen; rerunq's L4 at the
+  next poll (no status) and its preflight before a retry (a status means
+  the name is in use: L3 HALT) would show either.
 
 DATASET REUSE (ledger K9, 2026-11-08; Rahul's decision)
   Applies to "launch" without --first only. "dataset-version", "run" and
@@ -251,6 +321,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -277,6 +348,16 @@ DEFAULT_DATASET = "cbo-gap-archive"
 NOT_PUSHED_EXIT = 10
 NOT_PUSHED_LINE = 'NOT PUSHED: kgrun launch stopped before it ran "kaggle kernels push"'
 STATE = {"action": None, "push_started": False}
+
+# PUSH VERDICT (docstring; ledger K12). rerunq.py keeps copies of the two
+# lines and of the two patterns (CW); a change here must be made there too.
+CAPACITY_EXIT = 11
+UNCONFIRMED_EXIT = 12
+CAPACITY_LINE = "NOT LAUNCHED: Kaggle refused the push at the account's batch CPU session limit"
+UNCONFIRMED_LINE = "PUSH UNCONFIRMED: whether a kernel was created is not known; check kgrun status first"
+PUSH_OK_RE = re.compile(r"^Kernel version ([1-9][0-9]*) successfully pushed\.")
+PUSH_CAPACITY_RE = re.compile(r"^Kernel push error: Maximum batch CPU session count of ([1-9][0-9]*) reached\.?$")
+CLI_OUTDATED = "Warning: Looks like you're using an outdated `kaggle` version"
 
 # DATASET REUSE (docstring; ledger K9). "shadow" or "on".
 REUSE_MODE = "shadow"
@@ -873,10 +954,65 @@ def write_kernel(user, dataset, job, script, args, dry, shipped=(), bid="dry-run
     return kid
 
 
+def push_reply(out):
+    """The REPLY of PUSH VERDICT: stripped lines, blank and outdated-version warning lines removed."""
+    return [ln.strip() for ln in out.splitlines() if ln.strip() and not ln.strip().startswith(CLI_OUTDATED)]
+
+
+def classify_push(rc, out):
+    """PUSH VERDICT (docstring; ledger K12): ("PUSHED", N), ("CAPACITY", M) or ("UNCONFIRMED", reason)."""
+    reply = push_reply(out)
+    ok = [m.group(1) for m in (PUSH_OK_RE.match(ln) for ln in reply) if m]
+    err = [ln for ln in reply if "error" in ln.lower()]
+    if len(ok) == 1 and not err and rc == 0:
+        return "PUSHED", ok[0]
+    if not ok and len(reply) == 1:
+        m = PUSH_CAPACITY_RE.match(reply[0])
+        if m:
+            return "CAPACITY", m.group(1)
+    if not reply:
+        reason = "kaggle printed nothing (exit {})".format(rc)
+    elif len(ok) > 1:
+        reason = "{} success lines".format(len(ok))
+    elif ok and err:
+        reason = "a success line beside an error line"
+    elif ok:
+        reason = "a success line, but the CLI exited {}".format(rc)
+    else:
+        reason = "no success line (CLI exit {})".format(rc)
+    return "UNCONFIRMED", reason
+
+
 def push(kid, dry):
+    """Run "kaggle kernels push" and judge it (PUSH VERDICT). Returns only on PUSHED;
+    SystemExit(CAPACITY_EXIT or UNCONFIRMED_EXIT) otherwise."""
     say("PUSH KERNEL (this starts a batch run; 12 hour cap)")
     STATE["push_started"] = True
-    run_cmd(["kaggle", "kernels", "push", "-p", PUSHDIR], dry, capture=True)
+    cmd = ["kaggle", "kernels", "push", "-p", PUSHDIR]
+    if dry:
+        run_cmd(cmd, dry)
+        say("  (dry run: no push, no verdict)")
+        return
+    say("  $ " + " ".join(cmd))
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    out = p.stdout.decode("utf-8", "replace")
+    say(out.rstrip())
+    say("  kaggle kernels push exit code {} (printed; the reply decides, PUSH VERDICT)".format(p.returncode))
+    verdict, detail = classify_push(p.returncode, out)
+    reply = " / ".join(push_reply(out)) or "(nothing)"
+    if verdict == "PUSHED":
+        say("PUSH VERDICT: PUSHED version {} of {}".format(detail, kid))
+        return
+    if verdict == "CAPACITY":
+        say("PUSH VERDICT: CAPACITY (all {} batch CPU sessions of the account in use; Kaggle replied: {})".format(
+            detail, reply))
+        say(CAPACITY_LINE)
+        say("  exit {}".format(CAPACITY_EXIT))
+        raise SystemExit(CAPACITY_EXIT)
+    say("PUSH VERDICT: UNCONFIRMED ({}; Kaggle replied: {})".format(detail, reply))
+    say(UNCONFIRMED_LINE)
+    say("  exit {}".format(UNCONFIRMED_EXIT))
+    raise SystemExit(UNCONFIRMED_EXIT)
 
 
 def status(kid, dry):

@@ -370,6 +370,11 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
     fetch and commit) through kgrun.py, under the decision rules in
     rerunq.py's docstring, and commits as github-actions[bot] (workflow)
     or as "Rahul Kumar Mishra (rerunq laptop timer)" (laptop).
+    A push is judged by Kaggle's reply, never by an exit code; a push
+    refused at the account's batch CPU session limit is a wait, not a
+    halt: the item stays READY and is retried no sooner than 15 minutes
+    later under the same name (kgrun.py PUSH VERDICT, rerunq.py CW;
+    amended 2026-11-14, Rahul's instruction; ledger K12).
     - While any driver is enabled, nobody launches or fetches a Kaggle job
       by hand. Nobody edits notes/rerun_queue.json except through rerunq.py
       halt, check, release and load; a Claude session never edits it

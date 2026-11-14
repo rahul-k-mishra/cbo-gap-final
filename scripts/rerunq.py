@@ -341,7 +341,88 @@ PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
       before next-attempt (L2N)'. The same log with exit 1 (kgrun before K9):
       "whether the kernel was pushed is not known".
 
-  L3  KERNEL NAMES ARE NEVER REUSED. In step (1) of L2, any recognised
+  CW  CAPACITY WAIT (2026-11-14, before first execution; ledger K12;
+      Rahul's instruction: "A capacity refusal must be a wait, not an
+      anomaly: leave the item READY, log the reason, retry. No halt, no
+      issue opened."). On 2026-11-14 at 22:39 IST all five of the
+      account's batch CPU sessions were held by other projects, so a full
+      account is the normal state, not a rare event.
+      PUSH CHECK, step (3) of L2. kgrun's exit code is read with its log,
+      never alone (kgrun.py docstring, PUSH VERDICT):
+      - exit 0: the log must hold, after its "PUSH KERNEL" line, exactly
+        one "PUSH VERDICT: PUSHED version N" line, exactly one line
+        starting "Kernel version N successfully pushed.", and Kaggle's
+        reply (as for exit 11 below) with no line containing "error".
+        Otherwise HALT, "whether the kernel was pushed is not known".
+      - exit 11: a CAPACITY REFUSAL only when all of these hold in the
+        log after its "PUSH KERNEL" line: Kaggle's reply (the lines
+        between kgrun's "$ kaggle kernels push" echo and its "kaggle
+        kernels push exit code" line, blank and outdated-version warning
+        lines removed) is exactly one line, the refusal "Kernel push
+        error: Maximum batch CPU session count of M reached." (pattern
+        copied from kgrun.py), that line occurs once in all, exactly one
+        line starting "PUSH VERDICT: CAPACITY (" and no other PUSH
+        VERDICT line, kgrun's NOT LAUNCHED line, no success line and no
+        line starting "LAUNCHED ". Otherwise HALT, not known.
+      - any other non-zero exit: HALT as before (L2N).
+      A CAPACITY REFUSAL is not an anomaly and not a halt. The tick
+      appends the history event "capacity" (job, "log <path>; refusal R;
+      <Kaggle's line>"), sets the state READY with no job recorded, as
+      before the intent, commits the state with kgrun's log and the tick
+      log, and exits 0. The attempt number does not change: no session
+      ran. Nothing is reported, because exit 0 is not a failure.
+      RETRY FLOOR. While the newest "capacity" event for the current
+      item's job name (job_spec) is less than CAP_RETRY_MIN (15) minutes
+      old, a READY tick does nothing, commits nothing and exits 0 ("CAPACITY
+      WAIT"). next-wake prints its --max (900 s) instead of --min for such
+      a READY state (NW). So the queue asks Kaggle about once in 15
+      minutes, whichever driver ticks. Each try runs the whole launch,
+      and with REUSE_MODE "shadow" (kgrun.py, DATASET REUSE) each try
+      uploads a new dataset version: about four an hour while the account
+      is full. That is the cost of this rule until the mode is "on".
+      SAME NAME. A retry pushes under the same name, because no session
+      ran under it. Two things then differ from a first launch, and both
+      are allowed only for a name with at least one "capacity" event in
+      the history:
+      (a) L3's log check. Retry R (R >= 2) writes kgrun's console to
+          logs/kgrun-<job>-try<R>.log. L3 accepts logs/kgrun-<job>.log and
+          logs/kgrun-<job>-try*.log on disk only when they are exactly the
+          logs named by that name's "capacity" events; anything more or
+          less is the L3 HALT "launched by hand?".
+      (b) L3's status check. After the s91 refusal, kgrun status of that
+          name no longer gave the kernels.get denial of L4 but the reply
+          "404 Client Error: Not Found for url: https://api.kaggle.com/v1/
+          kernels.KernelsApiService/GetKernelSessionStatus" (twice; kgrun
+          PUSH VERDICT has the logs). For such a name, that exact line
+          followed by the control's status line (as L4 (b)) is NO
+          SESSION and counts as ABSENT for L3. Any status line for the
+          name still HALTs (L3: the name is in use, so a refused push
+          did start something). For a name with no "capacity" event the
+          404 stays UNKNOWN, exactly as before.
+      There is no limit on the number of refusals: other projects' jobs
+      run up to 12 h each. Every refusal is a commit and a history entry,
+      so the wait is visible in git log and in "show".
+      Worked example: c5-x-s91of116-a2 at 23:10, all slots in use. Tick 1:
+      preflight denial + control COMPLETE: ABSENT; intent; kgrun exit 11,
+      log logs/kgrun-c5-x-s91of116-a2.log with the refusal line: history
+      "capacity ... refusal 1", READY, exit 0; next-wake "900 READY
+      capacity-wait". A tick at 23:14 (the laptop): CAPACITY WAIT, nothing
+      done. Tick 2 at 23:26: preflight 404 GetKernelSessionStatus +
+      control COMPLETE: NO SESSION; L3 finds exactly logs/kgrun-c5-x-
+      s91of116-a2.log, named by refusal 1: pass; intent; kgrun writes
+      logs/kgrun-c5-x-s91of116-a2-try2.log, exit 0 with "Kernel version 1
+      successfully pushed." and "PUSH VERDICT: PUSHED version 1": RUNNING.
+      Had tick 2's preflight printed 'has status "KernelWorkerStatus.
+      RUNNING"': HALT (L3). Had kgrun exited 11 with a second, unknown
+      line beside the refusal: HALT, not known.
+      NULL RATE: deterministic string and file-name tests; none fires by
+      chance. A false CAPACITY REFUSAL needs kgrun and its log to agree
+      on the exact refusal line for a push that started a session; the
+      next preflight would then see a status and HALT (L3), so at most
+      one tick is lost and no second session is started.
+
+  L3  KERNEL NAMES ARE NEVER REUSED (except the same name after a
+      capacity refusal, CW). In step (1) of L2, any recognised
       status (the kernel exists) is a HALT; also a HALT: any committed
       folder runs/<job>-kaggle-* already present.
       Worked example: rerun-smoke-arch-a1 was pushed by hand from the
@@ -518,6 +599,8 @@ NW  NEXT WAKE (2026-11-01; ledger N45; Rahul's instruction to drive the
     <reason>", from the committed state alone. HALTED or DONE: none (no
     successor is ever started for a halted or finished queue). READY or
     LAUNCHING: A (act soon). RUNNING: B (a kernel is in flight; poll).
+    READY after a capacity refusal of the current job name (CW): B,
+    "<B> READY capacity-wait <job> (refusal R)".
     The workflow (rerun-queue.yml, "Start the next tick") calls it after a
     tick that exited 0 and did not ask to be disabled, sleeps that long,
     resets to main's tip, calls it again, checks that the workflow is still
@@ -528,7 +611,8 @@ NW  NEXT WAKE (2026-11-01; ledger N45; Rahul's instruction to drive the
 
 EXIT CODES (tick)
   0  nothing to do; one action done; an anomaly recorded (L5); the lock
-     lost before any Kaggle side effect (L1)
+     lost before any Kaggle side effect (L1); a capacity refusal
+     recorded, or a capacity wait inside the retry floor (CW)
   3  HALT: the state is HALTED, or this tick halted, or a push failed
      after a Kaggle side effect
   1  unexpected error: unreadable state, dirty checkout, an exception
@@ -542,6 +626,8 @@ FILES WRITTEN (all new files opened "x")
                                 the one exception to CLAUDE.md rule 3
                                 (ledger K6)
   logs/kgrun-<job>.log          kgrun launch's console
+  logs/kgrun-<job>-try<R>.log   kgrun launch's console for retry R >= 2
+                                after a capacity refusal (CW)
   logs/kgrun-<job>-fetch.log    kgrun fetch's console (-fetch2.log, ... if
                                 taken)
   logs/rerunq-<job>-<event>-<stamp>.log   this script's console for every
@@ -664,6 +750,16 @@ STATE = os.path.join(ROOT, STATE_REL)
 KGRUN = os.path.join(SCRIPTS, "kgrun.py")
 KGRUN_NOT_PUSHED = 10                          # kgrun.py NOT_PUSHED_EXIT (L2N; ledger K9)
 KGRUN_NOT_PUSHED_LINE = 'NOT PUSHED: kgrun launch stopped before it ran "kaggle kernels push"'
+# CW (ledger K12): copies of kgrun.py's CAPACITY_EXIT, CAPACITY_LINE, PUSH_OK_RE and PUSH_CAPACITY_RE
+KGRUN_CAPACITY = 11
+KGRUN_CAPACITY_LINE = "NOT LAUNCHED: Kaggle refused the push at the account's batch CPU session limit"
+PUSH_OK_RE = re.compile(r"^Kernel version ([1-9][0-9]*) successfully pushed\.")
+PUSH_CAPACITY_RE = re.compile(r"^Kernel push error: Maximum batch CPU session count of ([1-9][0-9]*) reached\.?$")
+NO_SESSION_LINE = ("404 Client Error: Not Found for url: "
+                   "https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus")
+CAP_RETRY_MIN = 15
+CAP_LOG_RE = re.compile(r"^log (\S+); refusal ([0-9]+); ")
+CLI_OUTDATED = "Warning: Looks like you're using an outdated `kaggle` version"   # kgrun.py CLI_OUTDATED
 RESCUE = os.path.join(ROOT, "scratch-rerunq")
 STATUSES = ("READY", "LAUNCHING", "RUNNING", "HALTED", "DONE")
 WAIT = ("QUEUED", "RUNNING", "NEW_SCRIPT", "CANCEL_REQUESTED")
@@ -1017,8 +1113,12 @@ def raw_status(s, job):
     return found, denied, judged
 
 
-def kernel_status(s, job):
-    """L4: (class, detail), class one of WAIT, FINISHED, ABSENT, UNKNOWN."""
+def kernel_status(s, job, after_capacity=False):
+    """L4: (class, detail), class one of WAIT, FINISHED, ABSENT, UNKNOWN.
+
+    after_capacity (CW (b); only do_launch passes it, and only for a name with
+    a recorded capacity refusal): the reply NO_SESSION_LINE, then the control's
+    status line, is ABSENT ("no session"). Without it that reply is UNKNOWN."""
     found, denied, judged = raw_status(s, job)
     if found in WAIT:
         return "WAIT", found
@@ -1026,6 +1126,14 @@ def kernel_status(s, job):
         return "FINISHED", found
     if found:
         return "UNKNOWN", "status " + found
+    if not denied and after_capacity and judged == NO_SESSION_LINE:
+        say("  no session for a name refused for capacity (CW): control status of {} (L4)".format(CONTROL_JOB))
+        cfound, cdenied, cjudged = raw_status(s, CONTROL_JOB)
+        if not cfound:
+            return "UNKNOWN", "no session for {}, and the control {} {}: {}".format(
+                job, CONTROL_JOB, "was denied" if cdenied else "gave no status line", cjudged)
+        return "ABSENT", "no session ({}) after a capacity refusal (CW); control {} {}".format(
+            judged, CONTROL_JOB, cfound)
     if not denied:
         return "UNKNOWN", "no status line and no denial for {}/cbo-{}; kaggle replied: {}".format(
             s["kaggle_user"], job, judged)
@@ -1165,14 +1273,146 @@ def do_anomaly(ctx, kind, detail):
 # the three actions
 # --------------------------------------------------------------------------
 
+def capacity_refusals(s, job):
+    """CW: the history's "capacity" events for this job name, oldest first."""
+    return [h for h in s["history"] if h["event"] == "capacity" and h["job"] == job]
+
+
+def refusal_log(h):
+    """CW: the launch log a "capacity" event names."""
+    m = CAP_LOG_RE.match(h["note"])
+    if not m:
+        raise ValueError("capacity event at {} names no log: {!r}".format(h["at"], h["note"]))
+    return m.group(1)
+
+
+def minutes_since(at):
+    t = datetime.datetime.fromisoformat(at)
+    return (datetime.datetime.now().astimezone() - t).total_seconds() / 60.0
+
+
+def launch_log(job, r):
+    """CW (a): kgrun's console for try r of this name."""
+    return "logs/kgrun-{}.log".format(job) if r == 1 else "logs/kgrun-{}-try{}.log".format(job, r)
+
+
+def launch_logs_on_disk(job):
+    """CW (a): logs/kgrun-<job>.log and logs/kgrun-<job>-try*.log present, sorted, as repository paths."""
+    found = []
+    if os.path.exists(os.path.join(ROOT, "logs", "kgrun-{}.log".format(job))):
+        found.append("logs/kgrun-{}.log".format(job))
+    for p in glob.glob(os.path.join(ROOT, "logs", "kgrun-{}-try*.log".format(glob.escape(job)))):
+        found.append("logs/" + os.path.basename(p))
+    return sorted(found)
+
+
+def after_push(logrel):
+    """The stripped lines of a kgrun launch log after its last "PUSH KERNEL" line, or None if it has none."""
+    with open(os.path.join(ROOT, logrel), errors="replace") as fh:
+        lines = [ln.strip() for ln in fh.read().splitlines()]
+    at = [i for i, ln in enumerate(lines) if ln.startswith("PUSH KERNEL")]
+    return lines[at[-1] + 1:] if at else None
+
+
+def reply_in_log(tail):
+    """Kaggle's reply to the push in a kgrun log (kgrun.py PUSH VERDICT, REPLY): the lines between kgrun's
+    "$ kaggle kernels push" echo and its "kaggle kernels push exit code" line, blank and outdated-version
+    warning lines removed; None unless each of the two lines occurs once, in that order."""
+    starts = [i for i, ln in enumerate(tail) if ln.startswith("$ kaggle kernels push")]
+    ends = [i for i, ln in enumerate(tail) if ln.startswith("kaggle kernels push exit code")]
+    if len(starts) != 1 or len(ends) != 1 or ends[0] < starts[0]:
+        return None
+    return [ln for ln in tail[starts[0] + 1:ends[0]] if ln and not ln.startswith(CLI_OUTDATED)]
+
+
+def pushed_in_log(logrel):
+    """CW push check for kgrun exit 0: None, or what is missing (kgrun.py PUSH VERDICT)."""
+    tail = after_push(logrel)
+    if tail is None:
+        return "its log {} has no PUSH KERNEL line".format(logrel)
+    reply = reply_in_log(tail)
+    if reply is None:
+        return "its log {} has no single reply to the push".format(logrel)
+    if any("error" in ln.lower() for ln in reply):
+        return "the reply in its log {} holds an error line: {}".format(logrel, reply)
+    ok = [ln for ln in tail if PUSH_OK_RE.match(ln)]
+    verdicts = [ln for ln in tail if ln.startswith("PUSH VERDICT:")]
+    if len(ok) != 1:
+        return "its log {} holds {} \"Kernel version N successfully pushed.\" lines, not 1".format(logrel, len(ok))
+    if len(verdicts) != 1 or not verdicts[0].startswith("PUSH VERDICT: PUSHED version "):
+        return "its log {} holds the PUSH VERDICT line(s) {}, not one PUSHED".format(logrel, verdicts or "(none)")
+    return None
+
+
+def capacity_in_log(logrel):
+    """CW push check for kgrun exit 11: (None, Kaggle's refusal line) or (what is wrong, None)."""
+    tail = after_push(logrel)
+    if tail is None:
+        return "its log {} has no PUSH KERNEL line".format(logrel), None
+    refusals = [ln for ln in tail if PUSH_CAPACITY_RE.match(ln)]
+    verdicts = [ln for ln in tail if ln.startswith("PUSH VERDICT:")]
+    problems = []
+    reply = reply_in_log(tail)
+    if reply is None:
+        problems.append("no single reply between \"$ kaggle kernels push\" and \"kaggle kernels push exit code\"")
+    elif len(reply) != 1 or not PUSH_CAPACITY_RE.match(reply[0]):
+        problems.append("the reply {} is not exactly the one capacity refusal line".format(reply))
+    if len(refusals) != 1:
+        problems.append("{} capacity refusal lines, not 1".format(len(refusals)))
+    if len(verdicts) != 1 or not verdicts[0].startswith("PUSH VERDICT: CAPACITY ("):
+        problems.append("PUSH VERDICT line(s) {}, not one CAPACITY".format(verdicts or "(none)"))
+    if KGRUN_CAPACITY_LINE not in tail:
+        problems.append("no NOT LAUNCHED line")
+    if any(PUSH_OK_RE.match(ln) for ln in tail):
+        problems.append("a success line")
+    if any(ln.startswith("LAUNCHED ") for ln in tail):
+        problems.append("a LAUNCHED line")
+    if problems:
+        return "its log {} holds {}".format(logrel, "; ".join(problems)), None
+    return None, refusals[0]
+
+
+def do_capacity(ctx, job, logrel, r, refusal, item):
+    """CW: a capacity refusal is a wait. READY, no job, history "capacity", one commit, exit 0."""
+    s = ctx.s
+    say("CAPACITY REFUSAL {} for {}: {}".format(r, job, refusal))
+    history(s, ctx.run, "capacity", "log {}; refusal {}; {}".format(logrel, r, refusal))
+    s["status"] = "READY"
+    s["job"], s["args"], s["data_dirs"] = "", "", []
+    say("  state READY, attempt {} unchanged; the next try comes no sooner than {} min from now (CW)".format(
+        s["attempt"], CAP_RETRY_MIN))
+    rel = driver_log(job, "capacity")
+    r_pub = publish(ctx, [logrel, rel], "rerun queue: capacity wait at {} (refusal {}), READY ({}, K12)".format(
+        job, r, item["ledger"]))
+    print("::notice title=rerun queue capacity wait::{} refused at the batch CPU session limit (refusal {}); "
+          "READY, retried in {} min".format(job, r, CAP_RETRY_MIN))
+    gh_summary(s)
+    if r_pub != "ok":
+        rescue([logrel, rel])
+        print("::error title=rerun queue::the capacity wait for {} could not be pushed ({}); main reads "
+              "LAUNCHING. No session was started (kgrun exit 11); the logs are in the rescue artifact".format(
+                  job, r_pub))
+        return 3
+    return 0
+
+
 def do_launch(ctx):
     s = ctx.s
     item = s["queue"][s["index"]]
     p = profile_of(s, item)
     fam = p["family"]
     job, args, data = job_spec(s)
-    say("LAUNCH  item {} ({}), attempt {}, job {}  [{} profile {}]".format(
-        s["index"], item["id"], s["attempt"], job, fam, item["profile"]))
+    refusals = capacity_refusals(s, job)
+    if refusals:
+        mins = minutes_since(refusals[-1]["at"])
+        if mins < CAP_RETRY_MIN:
+            say("CAPACITY WAIT  {}: refusal {} was {:.1f} min ago (< {}); nothing done (CW)".format(
+                job, len(refusals), mins, CAP_RETRY_MIN))
+            gh_summary(s)
+            return 0
+    say("LAUNCH  item {} ({}), attempt {}, job {}  [{} profile {}]{}".format(
+        s["index"], item["id"], s["attempt"], job, fam, item["profile"],
+        "  retry {} after {} capacity refusal(s) (CW)".format(len(refusals) + 1, len(refusals)) if refusals else ""))
     for name, key in FAMILY_PINS[fam]:
         h = sha256_of(os.path.join(SCRIPTS, name))
         if h != p["expect"][key]:
@@ -1186,18 +1426,27 @@ def do_launch(ctx):
     old = glob.glob(os.path.join(ROOT, "runs", job + "-kaggle-*"))
     if old:
         raise Halt("L3: {} already has a folder in runs/: {}".format(job, ", ".join(sorted(old))))
-    if os.path.exists(os.path.join(ROOT, "logs", "kgrun-{}.log".format(job))):
-        raise Halt("L3: logs/kgrun-{}.log already exists; was {} launched by hand?".format(job, job))
+    on_disk = launch_logs_on_disk(job)
+    named = sorted(refusal_log(h) for h in refusals)
+    if on_disk != named:
+        if not named:
+            raise Halt("L3: logs/kgrun-{}.log already exists; was {} launched by hand?".format(job, job))
+        raise Halt("L3: launch logs on disk {} differ from those named by the {} capacity refusal(s) of {}, {}; "
+                   "was {} launched by hand? (CW)".format(on_disk, len(refusals), job, named, job))
+    if refusals:
+        say("  L3 (CW): launch logs on disk are exactly those of the {} capacity refusal(s): {}".format(
+            len(refusals), ", ".join(named)))
     for d in s["resume_dirs"]:
         if not holds_rows(d, fam):
             raise Halt("resume folder {} holds no {} rows".format(d, fam))
-    cls, detail = kernel_status(s, job)
+    cls, detail = kernel_status(s, job, after_capacity=bool(refusals))
     if cls == "UNKNOWN":
         raise Anomaly("preflight-status", detail)
     if cls != "ABSENT":
         raise Halt("L3: kernel {}/cbo-{} already exists on Kaggle (status {}) before this queue launched "
                    "it".format(s["kaggle_user"], job, detail))
-    say("  L3: kernel absent on Kaggle, name unused")
+    say("  L3: kernel absent on Kaggle, {} ({})".format(
+        "no session under a name refused for capacity" if refusals else "name unused", detail))
 
     s["status"] = "LAUNCHING"
     s["job"], s["args"], s["data_dirs"] = job, args, data
@@ -1211,14 +1460,25 @@ def do_launch(ctx):
         print("::error title=rerun queue::the LAUNCHING state could not be pushed; nothing launched")
         return 3
 
-    logrel = "logs/kgrun-{}.log".format(job)
+    logrel = launch_log(job, len(refusals) + 1)
     argv = ["launch", "--job", job, "--user", s["kaggle_user"], "--script", FAMILY_SCRIPT[fam],
             "--data-dirs", ",".join(data), "--args=" + args]
     if s["resume_dirs"]:
         argv += ["--resume-dirs", ",".join(s["resume_dirs"])]
     rc, _ = kgrun(argv, logrel)
+    kid = "{}/cbo-{}".format(s["kaggle_user"], job)
+    if rc == KGRUN_CAPACITY:
+        problem, refusal = capacity_in_log(logrel)
+        if problem:
+            raise Halt("kgrun launch exit 11, but {}; whether the kernel was pushed is not known: check kgrun "
+                       "status by hand before any release (CW)".format(problem), [logrel])
+        return do_capacity(ctx, job, logrel, len(refusals) + 1, refusal, item)
     if rc != 0:
-        raise Halt(launch_failure(rc, logrel, "{}/cbo-{}".format(s["kaggle_user"], job)), [logrel])
+        raise Halt(launch_failure(rc, logrel, kid), [logrel])
+    problem = pushed_in_log(logrel)
+    if problem:
+        raise Halt("kgrun launch exit 0, but {}; whether the kernel was pushed is not known: check kgrun status "
+                   "by hand before any release (CW)".format(problem), [logrel])
     s["status"] = "RUNNING"
     history(s, ctx.run, "launched", logrel)
     rel = driver_log(job, "launched")
@@ -1241,7 +1501,9 @@ def launch_failure(rc, logrel, kid):
     unknown = ("kgrun launch exit {}; whether the kernel was pushed is not known: check kgrun status by "
                "hand before any release".format(rc))
     if rc != KGRUN_NOT_PUSHED:
-        return unknown
+        tail = after_push(logrel) or []
+        verdict = [ln for ln in tail if ln.startswith("PUSH VERDICT:")]
+        return unknown + (" ({})".format(verdict[-1]) if verdict else "")
     with open(os.path.join(ROOT, logrel), errors="replace") as fh:
         lines = [ln.strip() for ln in fh.read().splitlines()]
     pushed = any(ln.startswith("PUSH KERNEL") for ln in lines)
@@ -2138,6 +2400,9 @@ def next_wake(a):
         print("none {}".format(st))
     elif st == "RUNNING":
         print("{} RUNNING {}".format(int(a.max), s["job"]))
+    elif st == "READY" and capacity_refusals(s, job_spec(s)[0]):
+        job = job_spec(s)[0]
+        print("{} READY capacity-wait {} (refusal {})".format(int(a.max), job, len(capacity_refusals(s, job))))
     else:
         print("{} {}".format(int(a.min), st))
     return 0
@@ -2150,6 +2415,11 @@ def show(a):
         print("item     {} {}  attempt {}  job {}".format(s["index"], s["queue"][s["index"]]["id"],
                                                          s["attempt"], s["job"] or "-"))
     print("resume   {}".format(",".join(s["resume_dirs"]) or "-"))
+    if s["status"] != "DONE":
+        cur = s["job"] or job_spec(s)[0]
+        refs = capacity_refusals(s, cur)
+        print("capacity {}".format("{} refusal(s) for {}, first {}, last {} (CW)".format(
+            len(refs), cur, refs[0]["at"], refs[-1]["at"]) if refs else "-"))
     print("anomaly  {}".format(s["anomaly"] or "-"))
     print("halt     {}".format(s["halt_reason"] or "-"))
     kc = s["kernel_check"]
