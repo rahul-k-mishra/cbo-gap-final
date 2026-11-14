@@ -7689,6 +7689,83 @@ the 3.13.15 run (N45, C5 IMAGE SPLIT).
   measurement is in and passes. OPEN until c5-x-s50of116-a2 is fetched
   by the queue with no R1 or R2 halt, and until the mode is decided on
   the s51 launch log under S1 to S5.
+  - MODE ON (2026-11-14; Rahul's decision, "Turn REUSE_MODE on, naming
+    the s91 log"). kgrun.py REUSE_MODE "shadow" -> "on", naming
+    logs/kgrun-c5-x-s91of116-a1.log: "C1: status ready, current version
+    182", "C2: version 182 lists 88 file(s)", "C3: version 182 holds
+    kgrun-bundle-40f9ec17f6037595.sha256 and no other identity file",
+    "C4: version 182 lists exactly the 88 names this launch would
+    upload", "C5: status again ready, current version still 182",
+    "verdict: PASS".
+    - s51 under S1 to S5 (logs/kgrun-c5-x-s51of116-a1.log): bundle id
+      40f9ec17f6037595 and the same id in the check line; C1 version 142;
+      the version-142 table has 88 rows, all dated 2026-11-08 14:19 UTC;
+      "bundle 89 files" against 88 names; C5 still 142; verdict PASS,
+      upload in shadow. Decision rule: S1 to S5 all hold. c5-x-s50of116-a2
+      was fetched (runs/c5-x-s50of116-a2-kaggle-*), so both conditions of
+      the STATUS above are met.
+    - The shadow record, every launch log holding "DATASET REUSE CHECK"
+      (41, ordered by the commit that added the log; read by Claude with a
+      read-only script, nothing executed against Kaggle). Each entry is
+      shard, C1's version N and verdict:
+      s51 142 PASS; s52 143 PASS; s53 144 PASS; s54 145 PASS; s55 146
+      PASS; s56 147 PASS; s57 148 PASS; s58 149 PASS; s59 150 PASS; s60
+      151 PASS; s61 152 PASS; s62 153 PASS; s63 154 PASS; s64 155 PASS;
+      s65 156 PASS; s66 157 PASS; s67 158 PASS; s68 159 PASS; s69 160
+      PASS; s70 161 PASS; s71 162 PASS; s72 163 PASS; s73 164 PASS; s74
+      165 PASS; s75 166 PASS; s76 167 PASS; s77 168 PASS; s78 169 PASS;
+      s79 170 PASS; s80 171 PASS; s81 172 PASS; s82 173 PASS; s83 174
+      PASS; s84 175 PASS; s85 176 PASS; s86 177 PASS; s87 178 PASS; s88
+      179 PASS; s89 180 PASS; s90 181 PASS; s91 182 PASS (all c5-x-
+      s<S>of116-a1). In shadow, every one uploaded anyway; in "on" every
+      one would have skipped.
+    - Was each skip correct? Checked without Kaggle's listing. The
+      bundle id is computed on the runner from the files' hashes. For
+      s52 to s91, N is exactly the previous launch's N + 1, so version N
+      is the previous launch's own upload. The previous launch's bundle
+      id equals this launch's in every case, 40f9ec17f6037595, so version
+      N held this launch's bytes and no upload was needed. For s51,
+      version 142 is c5-x-s50of116-a2's upload (the version-pin
+      measurement above), and a2's log has the same bundle id. No
+      version was created by anything else in the period, since N never
+      skips. Every fetched shard's kernel log verified bundle
+      40f9ec17f6037595; s91 never ran. Result: no skip that shadow would
+      have made was wrong, so the stop condition did not fire.
+    - What the record does not show, stated plainly: the bundle id never
+      changed from s50-a2 to s91, so no launch in it NEEDED an upload.
+      The refusing path (C3 with another id, C4 with other names) has
+      never run on a live reply. It has run on fixtures (K9 above, and
+      the check below). If it failed on a live reply, the guard is the
+      runner's BUNDLE IDENTITY check: a mounted version without this id
+      stops the kernel with exit 2 before the script starts. That would
+      cost one attempt, and the wrong code cannot run.
+    - Which launches are affected: every "launch" without --first, so
+      both a queue item's first try and every capacity retry (K12, CW).
+      "run", "dataset-version", "dataset-create" and "launch --first"
+      always upload, as before. Expected now: no shipped file has changed
+      since s91 (git diff 140375d..HEAD touches only kgrun.py and
+      rerunq.py, which build_bundle excludes, besides notes, logs and
+      CLAUDE.md), so the next launch should compute 40f9ec17f6037595,
+      find version 182 holding it, and print "DATASET PATH: SKIPPED
+      UPLOAD", with no VERSION DATASET step and no waits.
+    - Verification, as run by Claude (2026-11-14; scratchpad
+      reuse_on_check.py; Kaggle and the upload stubbed). Kaggle's real
+      replies from the s91 log were replayed (both status JSONs and the
+      88-row table of version 182) through dataset_step. Mode "on": SKIPPED,
+      dataset_version not called. Mode "shadow", same replies: UPLOADED,
+      as logged. In mode "on", each of these uploaded with the rule that
+      refuses named: another bundle id listed (C3), the version moving
+      during the check (C5), one file missing (C4), a status that is not
+      ready (C1), and a kaggle call raising. 0 failed. The fixture's C4
+      local side is the 88 names version 182 listed; build_bundle was
+      not run. 3.8 grammar passes.
+    - Kept separate on purpose: committed alone, before item 93 is
+      released, so the next launch's behaviour can be traced to K12 or to
+      this switch. The next launch log should show SKIPPED UPLOAD; an
+      UPLOADED line with a refusal reason, or a runner exit 2 on the
+      bundle check, points here.
+  K9 CLOSED 2026-11-14 for the halt and the version-pin measurement; the
+  mode is "on" and is to be read on the next launch log, as above.
 
 - K10 (Kaggle authentication; the cause of the halt of c5-x-s73of116-a1;
   2026-11-12). The queue halted at item 75 (c5-s73of116), attempt 1: "the
