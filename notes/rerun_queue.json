@@ -1087,19 +1087,13 @@
       "ledger": "N45"
     }
   ],
-  "status": "LAUNCHING",
+  "status": "READY",
   "index": 93,
   "attempt": 2,
   "resume_dirs": [],
-  "job": "c5-x-s91of116-a2",
-  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 91 --nshards 116",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -5289,6 +5283,15 @@
       "attempt": 2,
       "job": "c5-x-s91of116-a2",
       "note": "resume none"
+    },
+    {
+      "at": "2026-11-15T01:31:47+05:30",
+      "run": "43635221881.1",
+      "event": "capacity",
+      "item": "c5-s91of116",
+      "attempt": 2,
+      "job": "c5-x-s91of116-a2",
+      "note": "log logs/kgrun-c5-x-s91of116-a2-try8.log; refusal 8; Kernel push error: Maximum batch CPU session count of 5 reached."
     }
   ],
   "definition": {
