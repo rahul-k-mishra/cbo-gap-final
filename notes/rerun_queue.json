@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
+  "status": "HALTED",
   "index": 93,
   "attempt": 1,
   "resume_dirs": [],
@@ -1107,7 +1107,7 @@
     "run": "43596528057.1",
     "at": "2026-11-14T18:17:45+05:30"
   },
-  "halt_reason": "",
+  "halt_reason": "the same anomaly twice for c5-x-s91of116-a1 (status-unknown): first no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus in run 43596528057.1, now no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -5133,6 +5133,15 @@
       "attempt": 1,
       "job": "c5-x-s91of116-a1",
       "note": "status-unknown: no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus"
+    },
+    {
+      "at": "2026-11-14T18:33:09+05:30",
+      "run": "43597769714.1",
+      "event": "halt",
+      "item": "c5-s91of116",
+      "attempt": 1,
+      "job": "c5-x-s91of116-a1",
+      "note": "the same anomaly twice for c5-x-s91of116-a1 (status-unknown): first no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus in run 43596528057.1, now no status line and no denial for ericsom/cbo-c5-x-s91of116-a1; kaggle replied: 404 Client Error: Not Found for url: https://api.kaggle.com/v1/kernels.KernelsApiService/GetKernelSessionStatus"
     }
   ],
   "definition": {
