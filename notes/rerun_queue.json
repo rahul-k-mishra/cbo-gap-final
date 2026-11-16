@@ -1087,7 +1087,7 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
+  "status": "HALTED",
   "index": 102,
   "attempt": 1,
   "resume_dirs": [],
@@ -1101,7 +1101,7 @@
     "runs/rerun-plan-20261023-112643"
   ],
   "anomaly": null,
-  "halt_reason": "",
+  "halt_reason": "R2: no 'kgrun runner: exit code' line in runs/c5-x-s100of116-a1-kaggle-20261116-085820 (killed, cap, pre-emption or cancelled)",
   "kernel_check": null,
   "attempts": {
     "smoke-c5": [
@@ -2559,6 +2559,20 @@
         "resume_dirs": [],
         "fetched_run": "43796602394.1",
         "fetched_at": "2026-11-16T08:41:18+05:30"
+      }
+    ],
+    "c5-s100of116": [
+      {
+        "attempt": 1,
+        "job": "c5-x-s100of116-a1",
+        "folder": "runs/c5-x-s100of116-a1-kaggle-20261116-085820",
+        "kaggle_status": "ERROR",
+        "runner_exit": null,
+        "completed": null,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "43798355321.1",
+        "fetched_at": "2026-11-16T08:58:21+05:30"
       }
     ]
   },
@@ -5685,6 +5699,15 @@
       "attempt": 1,
       "job": "c5-x-s100of116-a1",
       "note": "logs/kgrun-c5-x-s100of116-a1.log"
+    },
+    {
+      "at": "2026-11-16T08:58:21+05:30",
+      "run": "43798355321.1",
+      "event": "halt",
+      "item": "c5-s100of116",
+      "attempt": 1,
+      "job": "c5-x-s100of116-a1",
+      "note": "R2: no 'kgrun runner: exit code' line in runs/c5-x-s100of116-a1-kaggle-20261116-085820 (killed, cap, pre-emption or cancelled)"
     }
   ],
   "definition": {
