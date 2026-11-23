@@ -1087,13 +1087,19 @@
       "ledger": "N45"
     }
   ],
-  "status": "READY",
+  "status": "LAUNCHING",
   "index": 102,
   "attempt": 2,
   "resume_dirs": [],
-  "job": "",
-  "args": "",
-  "data_dirs": [],
+  "job": "c5-x-s100of116-a2",
+  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 100 --nshards 116",
+  "data_dirs": [
+    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
+    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
+    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
+    "runs/calprec2-finalize-20261023-112503",
+    "runs/rerun-plan-20261023-112643"
+  ],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -5720,6 +5726,15 @@
       "attempt": 2,
       "job": "",
       "note": "R2 halt: s100-a1 crashed 2 s in with PermissionError on /kaggle/input/datasets/ericsom/cbo-gap-archive (Kaggle status ERROR), not killed or capped. s99-a1 ran to exit 0 on the identical dataset version 183 and the same candidate-2 path 17 min earlier. Treated as a transient Kaggle mount fault; attempt 2."
+    },
+    {
+      "at": "2026-11-23T19:56:54+05:30",
+      "run": "45194239673.1",
+      "event": "intent",
+      "item": "c5-s100of116",
+      "attempt": 2,
+      "job": "c5-x-s100of116-a2",
+      "note": "resume none"
     }
   ],
   "definition": {
