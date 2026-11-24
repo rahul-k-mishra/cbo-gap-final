@@ -1087,19 +1087,13 @@
       "ledger": "N45"
     }
   ],
-  "status": "RUNNING",
-  "index": 107,
+  "status": "READY",
+  "index": 108,
   "attempt": 1,
   "resume_dirs": [],
-  "job": "c5-x-s105of116-a1",
-  "args": "--mode run --timing runs/jinfprobe-s0of3-a1-kaggle-20261031-210629,runs/jinfprobe-s1of3-a1-kaggle-20261031-233459,runs/jinfprobe-s2of3-a1-kaggle-20261101-015818 --beta-table runs/calprec2-finalize-20261023-112503 --rerun-plan runs/rerun-plan-20261023-112643 --workers 4 --shard 105 --nshards 116",
-  "data_dirs": [
-    "runs/jinfprobe-s0of3-a1-kaggle-20261031-210629",
-    "runs/jinfprobe-s1of3-a1-kaggle-20261031-233459",
-    "runs/jinfprobe-s2of3-a1-kaggle-20261101-015818",
-    "runs/calprec2-finalize-20261023-112503",
-    "runs/rerun-plan-20261023-112643"
-  ],
+  "job": "",
+  "args": "",
+  "data_dirs": [],
   "anomaly": null,
   "halt_reason": "",
   "kernel_check": null,
@@ -2641,6 +2635,20 @@
         "resume_dirs": [],
         "fetched_run": "45347304872.1",
         "fetched_at": "2026-11-24T12:51:33+05:30"
+      }
+    ],
+    "c5-s105of116": [
+      {
+        "attempt": 1,
+        "job": "c5-x-s105of116-a1",
+        "folder": "runs/c5-x-s105of116-a1-kaggle-20261124-161442",
+        "kaggle_status": "COMPLETE",
+        "runner_exit": 0,
+        "completed": 37,
+        "d_smoke": null,
+        "resume_dirs": [],
+        "fetched_run": "45377622130.1",
+        "fetched_at": "2026-11-24T16:14:44+05:30"
       }
     ]
   },
@@ -5947,6 +5955,15 @@
       "attempt": 1,
       "job": "c5-x-s105of116-a1",
       "note": "logs/kgrun-c5-x-s105of116-a1.log"
+    },
+    {
+      "at": "2026-11-24T16:14:44+05:30",
+      "run": "45377622130.1",
+      "event": "fetched",
+      "item": "c5-s106of116",
+      "attempt": 1,
+      "job": "",
+      "note": "runs/c5-x-s105of116-a1-kaggle-20261124-161442: runner exit 0; now READY"
     }
   ],
   "definition": {
