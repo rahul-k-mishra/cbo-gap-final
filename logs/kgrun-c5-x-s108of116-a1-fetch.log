@@ -1,0 +1,15 @@
+==============================================================================
+kgrun  action fetch  job c5-x-s108of116-a1  dataset ericsom/cbo-gap-archive
+  repository /home/runner/work/cbo-gap-final/cbo-gap-final
+==============================================================================
+FETCH OUTPUT into /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550
+  $ kaggle kernels output ericsom/cbo-c5-x-s108of116-a1 -p /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550
+Warning: Looks like you're using an outdated `kaggle` version (installed: 2.2.4), please consider upgrading to the latest version (2.2.5)
+Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550/c5run-run-20261124-154356-s108of116/c5run_params.csv
+Output file downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550/c5run-run-20261124-154356-s108of116/c5run_real.csv
+Kernel log downloaded to /home/runner/work/cbo-gap-final/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550/cbo-c5-x-s108of116-a1.log 
+  3 files, manifest written to sha256.txt
+    a4e913e421292de6a9e5750c3d4ce767df39bd0bdfac139ce1939641caa44fc5  c5run-run-20261124-154356-s108of116/c5run_params.csv
+    3bb3c38a48f4666c2438d7bd12b640a5e7cf3eb9959e3b21b1fab5c1742b13dc  c5run-run-20261124-154356-s108of116/c5run_real.csv
+    04208b6404287209502a2906d15fe73d1cf536ef1e3925559aa1b5b4b36e7564  cbo-c5-x-s108of116-a1.log
+==============================================================================
