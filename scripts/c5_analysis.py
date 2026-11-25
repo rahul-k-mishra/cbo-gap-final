@@ -39,6 +39,54 @@ INPUTS (each folder read only after its sha256.txt verifies; exit 2 otherwise)
       neither), used for one descriptive listing only.
   c5run's inputs (--timing, --beta-table, --rerun-plan, defaults the
   committed ones) rebuild the 4320 task ids, keys and betas, with B1.
+  A0 also requires the --c5 folders to agree on nshards, script_sha256,
+  numpy, timing, beta_table and rerun_plan (exit 2 otherwise), and on
+  python unless rule PY below admits the difference.
+
+A0-PY  A SECOND INTERPRETER (added 2026-11-25, AFTER C5 FINISHED; ledger N45,
+  C5 IMAGE SPLIT, "A0-PY". Input gate only: no estimator, window, resample,
+  interval, verdict, pooling or null-fixture line was changed. Before this
+  the python key stopped the run on any difference.)
+  Let V be the set of python versions in the --c5 folders' params.
+  |V| = 1: nothing more is needed (the old behaviour).
+  |V| > 1: admitted iff BOTH hold, else exit 2 naming what is missing:
+  PY-D every version in V has a --py-detcheck log that passes D below;
+  PY-B the versions in V are connected by the edges (old, new) of the
+       --py-bitcmp logs that pass B below (with two versions: one log
+       with that pair, either direction of time as the log states it).
+  Every supplied evidence log is checked whether or not it is needed; a
+  log that fails, or names a version no folder reports, is exit 2.
+  B (as rerunq.py SP2, with "accepted by the queue" replaced by "one of
+    the --c5 folders"): the log is under logs/, committed and unmodified;
+    it starts "CBO-GAP c5bitcmp", and its printed script sha256 equals that
+    of scripts/c5bitcmp.py, itself committed and unmodified; its "ref"
+    is one of the --c5 folders, and old is that folder's python; its "new"
+    is a folder whose sha256.txt is committed, unmodified and verifies,
+    whose params say mode run, kind 95, the same shard as ref, the common
+    script_sha256 and numpy, and whose python is new != old; the log has
+    "params PASS  equal on every key but python: ref python <old>  new
+    python <new>  numpy <numpy>", "rows PASS", "SUMMARY  N tids compared,
+    N identical, 0 differing" with N >= 1, and "VERDICT  IDENTICAL  (exit
+    0)".
+  D (as rerunq.py SP3, plus numpy): the log is runs/<folder>/<file>,
+    committed and unmodified, and <folder>'s sha256.txt is committed,
+    unmodified and verifies; every "python" header in it names one
+    version, every "numpy" header names the folders' numpy; it holds
+    "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS"; ENVIRONMENT.md,
+    committed and unmodified, has a line ending "OVERALL: PASS -- see
+    <log>".
+  Printed: each version with its folder count and shards, and each log
+  admitted, with its sha256.
+  Worked example (C5): V = {3.13.15 (shards 0 to 12), 3.13.18 (13 to
+  115)}; --py-detcheck runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log
+  (3.13.15) and runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-
+  py31318.log (3.13.18) pass D; --py-bitcmp logs/c5bitcmp-s12-py31318-
+  20261103.log gives the edge (3.13.15, 3.13.18), ref shard 12's folder,
+  37 of 37 identical: PY PASS. Without the bitcmp log, or without either
+  detcheck log, or with a third version in any folder: exit 2.
+  NULL RATE: deterministic string, hash and git checks; none fires by
+  chance. A0-PY decides which folders may be read together, never what
+  is read from them.
 
 ESTIMATOR (rerun_analysis items 0 to 3, unchanged)
   Slope of a realization on a window: regimemap.fit_slope (imported), with
@@ -142,8 +190,12 @@ HOW TO RUN (repository root)
     python -B scripts/c5_analysis.py --c5 runs/A --c5 runs/B ... \
         --rerun runs/rerun-cal-s0of2-a1-kaggle-20261025-003238 \
         --rerun runs/rerun-cal-s1of2-a1-kaggle-20261025-050238 \
-        --sizetest-log logs/sizetest-analyse-20261031.log --workers 4
-Python 3.8 to 3.13, NumPy only.
+        --sizetest-log logs/sizetest-analyse-20261031.log --workers 4 \
+        --py-bitcmp logs/c5bitcmp-s12-py31318-20261103.log \
+        --py-detcheck runs/detcheck-kaggle-20261009-094955/cbo-detcheck.log \
+        --py-detcheck runs/detcheck-py31318-kaggle-20261103-143512/cbo-detcheck-py31318.log
+Python 3.8 to 3.13, NumPy only; git is called (A0-PY) from the repository
+root to check that evidence files are committed and unmodified.
 """
 import os
 
@@ -159,6 +211,7 @@ import math                                                     # noqa: E402
 import multiprocessing                                          # noqa: E402
 import platform                                                 # noqa: E402
 import re                                                       # noqa: E402
+import subprocess                                               # noqa: E402
 import sys                                                      # noqa: E402
 
 import numpy as np                                              # noqa: E402
@@ -384,7 +437,203 @@ def null_fixture(workers):
 # inputs
 # ----------------------------------------------------------------------
 
-def read_c5(folders, want_tids):
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _git(args):
+    p = subprocess.run(["git"] + args, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                       universal_newlines=True)
+    return p.returncode, p.stdout.strip()
+
+
+def _committed_unmodified(rel):
+    """None when rel is tracked by git and unchanged against HEAD, else the reason (as rerunq.py)."""
+    rc, _ = _git(["ls-files", "--error-unmatch", "--", rel])
+    if rc != 0:
+        return "{} is not committed".format(rel)
+    rc, out = _git(["status", "--porcelain", "--", rel])
+    if rc != 0 or out:
+        return "{} differs from the committed file".format(rel)
+    return None
+
+
+def _rel(path):
+    return os.path.relpath(os.path.abspath(os.path.join(ROOT, path)), ROOT).replace(os.sep, "/")
+
+
+def _folder_params(folder):
+    """(params dict, None) from a committed folder whose manifest verifies, or (None, reason)."""
+    why = _committed_unmodified(_rel(folder) + "/sha256.txt")
+    if why:
+        return None, why
+    try:
+        rels = JP.verified(os.path.join(ROOT, folder))
+    except Stop as e:
+        return None, e.msg
+    pp = [r for r in rels if os.path.basename(r) == X.PARAMS_CSV]
+    if len(pp) != 1:
+        return None, "{}: expected one {}".format(folder, X.PARAMS_CSV)
+    return JP.read_kv(os.path.join(ROOT, folder, pp[0])), None
+
+
+def py_bitcmp(rel, by_folder, npy, sha):
+    """A0-PY rule B on one c5bitcmp log: ((old, new, line), []) or (None, problems)."""
+    pr = []
+    if not rel.startswith("logs/"):
+        return None, ["B: {} is not under logs/".format(rel)]
+    why = _committed_unmodified(rel) or _committed_unmodified("scripts/c5bitcmp.py")
+    if why:
+        return None, ["B: " + why]
+    text = io.open(os.path.join(ROOT, rel), "r", encoding="utf-8").read()
+    if not re.search(r"^CBO-GAP c5bitcmp ", text, re.M):
+        pr.append("B: {} is not a c5bitcmp log".format(rel))
+    m = re.search(r"^  script   sha256 ([0-9a-f]{64})$", text, re.M)
+    if not m or m.group(1) != JP.sha256_of(os.path.join(ROOT, "scripts", "c5bitcmp.py")):
+        pr.append("B: {}: printed script sha256 is not that of the committed scripts/c5bitcmp.py".format(rel))
+    mr = re.search(r"^  ref      (\S+)$", text, re.M)
+    mn = re.search(r"^  new      (\S+)$", text, re.M)
+    ref = by_folder.get(_rel(mr.group(1).rstrip("/"))) if mr else None
+    if ref is None:
+        pr.append("B: {}: ref is not one of the --c5 folders".format(rel))
+    newp = None
+    if not mn:
+        pr.append("B: {}: no new folder".format(rel))
+    else:
+        newp, why = _folder_params(mn.group(1).rstrip("/"))
+        if why:
+            pr.append("B: {}: new folder: {}".format(rel, why))
+    if pr:
+        return None, pr
+    old, new = ref.get("python"), newp.get("python")
+    if new == old:
+        pr.append("B: {}: ref and new both report python {}".format(rel, old))
+    for k, want in (("mode", "run"), ("kind", str(X.KIND_RUN)), ("shard", ref.get("shard")),
+                    ("script_sha256", sha), ("numpy", npy)):
+        if newp.get(k) != want:
+            pr.append("B: {}: new folder {} {}, expected {}".format(rel, k, newp.get(k), want))
+    if not re.search(r"^  params PASS  equal on every key but python: ref python {}  new python {}  numpy {}$".format(
+            re.escape(old or ""), re.escape(new or ""), re.escape(npy or "")), text, re.M):
+        pr.append("B: {}: no 'params PASS' line with ref python {}, new python {}, numpy {}".format(rel, old, new, npy))
+    if not re.search(r"^  rows PASS ", text, re.M):
+        pr.append("B: {}: no 'rows PASS' line".format(rel))
+    ms = re.search(r"^SUMMARY  (\d+) tids compared, (\d+) identical, 0 differing$", text, re.M)
+    if not ms or ms.group(1) != ms.group(2) or int(ms.group(1)) < 1:
+        pr.append("B: {}: no SUMMARY with every tid identical and none differing".format(rel))
+    if not re.search(r"^VERDICT  IDENTICAL  \(exit 0\)$", text, re.M):
+        pr.append("B: {}: no 'VERDICT  IDENTICAL  (exit 0)'".format(rel))
+    if pr:
+        return None, pr
+    line = "{} -> {}: {} (sha256 {}), ref {} (shard {}), new {}, {} of {} tids identical".format(
+        old, new, rel, JP.sha256_of(os.path.join(ROOT, rel)), mr.group(1), ref.get("shard"), mn.group(1),
+        ms.group(2), ms.group(1))
+    return (old, new, line), []
+
+
+def py_detcheck(rel, npy):
+    """A0-PY rule D on one detcheck kernel log: ((version, line), []) or (None, problems)."""
+    run = os.path.dirname(rel)
+    if not rel.startswith("runs/") or not run or run == "runs":
+        return None, ["D: {} is not a log inside a run folder under runs/".format(rel)]
+    why = _committed_unmodified(rel) or _committed_unmodified(run + "/sha256.txt")
+    if why:
+        return None, ["D: " + why]
+    try:
+        JP.verified(os.path.join(ROOT, run))
+    except Stop as e:
+        return None, ["D: " + e.msg]
+    pr = []
+    text = io.open(os.path.join(ROOT, rel), "r", encoding="utf-8").read()
+    pys = set(re.findall(r"  python   ([0-9][0-9.]*) ", text))
+    nps = set(re.findall(r"  numpy    ([0-9][0-9.]*[0-9])", text))
+    if len(pys) != 1:
+        pr.append("D: {}: python headers {}, expected exactly one version".format(rel, sorted(pys)))
+    if nps != set([npy]):
+        pr.append("D: {}: numpy headers {}, expected {}".format(rel, sorted(nps), npy))
+    if "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS" not in text:
+        pr.append("D: {}: no OVERALL PASS verdict".format(rel))
+    why = _committed_unmodified("ENVIRONMENT.md")
+    if why:
+        pr.append("D: " + why)
+    else:
+        env = io.open(os.path.join(ROOT, "ENVIRONMENT.md"), "r", encoding="utf-8").read().splitlines()
+        if not any(x.rstrip().endswith("OVERALL: PASS -- see " + rel) for x in env):
+            pr.append("D: ENVIRONMENT.md has no line ending 'OVERALL: PASS -- see {}'".format(rel))
+    if pr:
+        return None, pr
+    v = sorted(pys)[0]
+    return (v, "{}: {} (sha256 {}), OVERALL PASS, numpy {}, recorded in ENVIRONMENT.md".format(
+        v, rel, JP.sha256_of(os.path.join(ROOT, rel)), npy)), []
+
+
+def _ranges(xs):
+    xs, out = sorted(xs), []
+    for x in xs:
+        if out and x == out[-1][1] + 1:
+            out[-1][1] = x
+        else:
+            out.append([x, x])
+    return ", ".join(str(a) if a == b else "{} to {}".format(a, b) for a, b in out)
+
+
+def check_python(folders, prm, bitcmps, detchecks):
+    """A0-PY (docstring): returns nothing; Stop(2) unless one python, or every extra one admitted."""
+    by_folder = dict((_rel(f), p) for f, p in zip(folders, prm))
+    vers = {}
+    for p in prm:
+        vers.setdefault(p.get("python"), []).append(int(p.get("shard")))
+    npy, sha = prm[0].get("numpy"), prm[0].get("script_sha256")
+    say("  A0-PY  python versions of the {} --c5 folders:".format(len(prm)))
+    for v in sorted(vers):
+        say("    python {}  {} folder(s), shards {}".format(v, len(vers[v]), _ranges(vers[v])))
+    probs, edges, have = [], [], {}
+    for rel in [_rel(x) for x in detchecks]:
+        got, pr = py_detcheck(rel, npy)
+        probs += pr
+        if got:
+            if got[0] not in vers:
+                probs.append("D: {} is for python {}, which no --c5 folder reports".format(rel, got[0]))
+            else:
+                have.setdefault(got[0], []).append(got[1])
+    for rel in [_rel(x) for x in bitcmps]:
+        got, pr = py_bitcmp(rel, by_folder, npy, sha)
+        probs += pr
+        if got:
+            if got[1] not in vers:
+                probs.append("B: {} is for python {}, which no --c5 folder reports".format(rel, got[1]))
+            else:
+                edges.append(got)
+    if len(vers) > 1:
+        for v in sorted(vers):
+            if v not in have:
+                probs.append("PY-D: no passing --py-detcheck log for python {}".format(v))
+        seen, todo = set(), [sorted(vers)[0]]
+        while todo:
+            v = todo.pop()
+            if v in seen:
+                continue
+            seen.add(v)
+            todo += [b for a, b, _l in edges if a == v] + [a for a, b, _l in edges if b == v]
+        if seen != set(vers):
+            probs.append("PY-B: no passing --py-bitcmp log connects python {} with {}".format(
+                ", ".join(sorted(seen)), ", ".join(sorted(set(vers) - seen))))
+    if probs:
+        for x in probs:
+            say("  A0-PY FAIL " + x)
+        raise Stop(2, "A0: the folders differ in python and A0-PY does not admit it" if len(vers) > 1
+                   else "A0-PY: a supplied evidence log fails")
+    for v in sorted(have):
+        for ln in have[v]:
+            say("  A0-PY  detcheck {}".format(ln))
+    for _a, _b, ln in edges:
+        say("  A0-PY  bitcmp   {}".format(ln))
+    if len(vers) == 1:
+        say("  A0-PY PASS  one interpreter, python {}".format(sorted(vers)[0]))
+    else:
+        say("  A0-PY PASS  {} interpreters ({}) admitted on the evidence above; numpy {} and script sha256 {} "
+            "in every folder".format(len(vers), ", ".join(sorted(vers)), npy, sha))
+
+
+def read_c5(folders, want_tids, bitcmps=(), detchecks=()):
     store, prm = {}, []
     for f in folders:
         rels = JP.verified(f)
@@ -408,12 +657,14 @@ def read_c5(folders, want_tids):
                 store[x["tid"]] = x
                 n += 1
         say("  read {}: shard {} of {}, {} complete".format(f, pr.get("shard"), pr.get("nshards"), n))
-    for k in ("nshards", "script_sha256", "python", "numpy", "timing", "beta_table", "rerun_plan"):
+    for k in ("nshards", "script_sha256", "numpy", "timing", "beta_table", "rerun_plan"):
         if len(set(p.get(k) for p in prm)) > 1:
             raise Stop(2, "A0: the folders differ in {}".format(k))
     if prm:
+        check_python(folders, prm, bitcmps, detchecks)
         say("  platform of every folder: python {} numpy {}; script sha256 {}".format(
-            prm[0].get("python"), prm[0].get("numpy"), prm[0].get("script_sha256")))
+            " and ".join(sorted(set(p.get("python") for p in prm))), prm[0].get("numpy"),
+            prm[0].get("script_sha256")))
     return store
 
 
@@ -505,6 +756,8 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--budget-mb", type=float, default=X.BUDGET_MB)
     ap.add_argument("--null-only", action="store_true")
+    ap.add_argument("--py-bitcmp", action="append", default=[], help="A0-PY rule B evidence (repeatable)")
+    ap.add_argument("--py-detcheck", action="append", default=[], help="A0-PY rule D evidence (repeatable)")
     a = ap.parse_args()
     a.timing = [x for x in a.timing.split(",") if x]
     hdr("CBO-GAP c5_analysis  (ledger N45; readings fixed 2026-11-01)  --  reads only, writes nothing")
@@ -525,7 +778,7 @@ def main():
     probe, betas, labels, wd = X.inputs(a)
     tasks = X.make_tasks(probe, betas, labels, wd, X.KIND_RUN)
     want = dict((t["tid"], t) for t in tasks)
-    store = read_c5([os.path.abspath(x) for x in a.c5], want)
+    store = read_c5([os.path.abspath(x) for x in a.c5], want, a.py_bitcmp, a.py_detcheck)
     say("  A1  complete C5 tasks {} of {}".format(len(store), len(want)))
     if len(store) != len(want):
         say("  A1  INCOMPLETE: nothing computed")

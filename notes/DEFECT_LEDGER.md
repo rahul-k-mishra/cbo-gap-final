@@ -5079,6 +5079,84 @@ instruction of 2026-10-15.
   every shard (rule 10). The ranges "13 to 115" are confirmed only when
   C5 finishes without another R1 halt.
   CLOSED 2026-11-03 for the image split; the queue release is Rahul's.
+  A0-PY (Claude, 2026-11-25, at Rahul's question "which is right?"; the
+  analysis script was changed AFTER C5 finished).
+  - What happened. c5_analysis.py (sha256 345b1d33...57be, the 2026-11-01
+    version), run by Rahul on the laptop on the 116 C5 run folders,
+    printed the null fixture and then "STOP (exit 2): A0: the folders
+    differ in python" (runs/c5-analysis-20261125-212922.log; a console log,
+    so it belongs in logs/, and Rahul moves it there). The stop comes
+    before A1, so no C5 reading was computed.
+  - The ranges. Rahul, on the laptop, 2026-11-25: 13 folders report python
+    3.13.15 and 103 report 3.13.18, consistent with shards 0 to 12 and 13
+    to 115; NumPy 2.1.3 throughout. No R1 halt after s13: the halts since
+    2026-11-03 are s50 (kgrun launch exit 1, fc4acc2), s73 and s91
+    (status-unknown, c6a8470, 0bf6139) and s100 (R2, no runner exit line,
+    8432f59). The condition FOR THE PAPER left open ("confirmed only when
+    C5 finishes without another R1 halt") is met: the text's "Shards 0 to
+    12 ran under 3.13.15 and shards 13 to 115 under 3.13.18" stands. The
+    rerun's A0-PY lines print the per-version shard lists from the folders
+    themselves, which is the record to cite.
+  - DECIDED: the pooling decision of 2026-11-03 is right; A0 as written is
+    stale, not a competing decision. A0's python key was written on
+    2026-11-01, before any C5 run, when one image was assumed; its purpose
+    is that an unexplained interpreter change stops the analysis. On
+    2026-11-03 the change was explained and measured under outcomes fixed
+    before either result (IDENTICAL and PASS: "shards 0 to 13 stand"),
+    while 102 of the 116 folders did not yet exist. SET-PYTHON carried that
+    decision into rerunq.py; nobody carried it into c5_analysis.py. That
+    omission is mine (Claude, 2026-11-03), and it is what the stop found.
+  - Why editing after the data is acceptable here, and where it stops.
+    A0 decides which folders may be read together, never what is read
+    from them. The edit admits exactly the set the 2026-11-03 decision
+    named, on evidence committed before most of the set existed, and no
+    reading had been computed when it was made. Nothing in the estimator,
+    the windows, the resampling (B, keys), the intervals, the verdicts,
+    the pooling or the null fixture moved. The alternative, analysing the
+    3.13.15 and 3.13.18 shards separately, would not follow the decision
+    on record and would split cells whose realizations sit in both
+    segments (some do: checked by Claude on the committed rows' cell
+    column; no count is recorded here, since no run of Rahul's printed
+    one); not taken.
+  - The change (scripts/c5_analysis.py, sha256 345b1d33...57be ->
+    53ce6b79...7375). The key list of A0 loses "python"; nshards,
+    script_sha256, numpy, timing, beta_table and rerun_plan stay. Rule
+    A0-PY, written into the docstring with a worked example and a NULL
+    RATE line: with more than one python in the folders, every version
+    needs a detcheck kernel log that passes (rule D: committed, folder
+    verifies, one python header, numpy equal to the folders', OVERALL
+    PASS, ENVIRONMENT.md line pointing at it; rerunq.py SP3 plus numpy),
+    and the versions must be connected by c5bitcmp logs that pass (rule B:
+    rerunq.py SP2, with "accepted by the queue" replaced by "one of the
+    --c5 folders", and the new folder's params checked for mode, kind,
+    shard, script sha256 and numpy). Evidence for a version no folder
+    reports, or a log that fails, is exit 2. Rule D asks for a detcheck
+    on BOTH versions, one more than SP3, because rule 16 gates each image.
+    New flags --py-bitcmp and --py-detcheck; the run prints each version's
+    folder count and shards and each admitted log with its sha256.
+    Evidence, by path: logs/c5bitcmp-s12-py31318-20261103.log (VERDICT
+    IDENTICAL, 37 of 37); runs/detcheck-kaggle-20261009-094955/
+    cbo-detcheck.log (3.13.15, OVERALL PASS); runs/detcheck-py31318-
+    kaggle-20261103-143512/cbo-detcheck-py31318.log (3.13.18, OVERALL
+    PASS).
+  - Checks run by Claude (read_c5 on the real committed folders; counts
+    and verdicts only, no reading computed): with the three logs, PASS,
+    two interpreters, 4320 complete tasks; with no evidence, the bitcmp
+    log alone, the detchecks alone, the 3.13.15 detcheck missing, or a
+    detcheck log given as bitcmp: exit 2, reasons named; shards 13 to 115
+    alone without evidence: PASS, one interpreter; the same with the
+    3.13.15 detcheck supplied: exit 2 (no folder reports it); a third
+    version planted in memory in one folder's params: exit 2 (no detcheck,
+    not connected). Python 3.8 grammar. The diff touches the docstring,
+    one import, the new A0-PY functions, read_c5's key loop and summary
+    line, two argparse flags and the read_c5 call.
+  - Null fixture: its code, seeds, levels and NF are unchanged, and it
+    runs before A0. Rahul's rerun prints it again; its table and NULL
+    RATE lines must equal those of runs/c5-analysis-20261125-212922.log
+    line for line (diff given with the command). Until that diff is
+    pasted this is expected, not recorded.
+  OPEN until the rerun's log is in logs/ and the null-fixture diff is
+  empty.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
