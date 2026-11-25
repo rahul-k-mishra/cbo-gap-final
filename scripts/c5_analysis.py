@@ -169,6 +169,19 @@ NULL FIXTURE AND THE RULE IT FEEDS (N40 commitment; run first, every time)
   The pooled DIFFERENCE rule uses its own measured rate (P-win, P-ref).
   Worked example: R1b rates 0.048, 0.061, 0.072, 0.083: r 0.083, used
   with "null rate 0.083".
+  --nf N  (added 2026-11-25, AFTER the C5 READINGS were recorded in N45
+  from logs/c5-analysis-a0py-20261125.log; Rahul's instruction, to
+  measure how much the max-of-four rule inflates r, not to re-make any
+  verdict.) The number of null cells per level; default NF = 400, so a
+  run without --nf prints the fixture table of that log and of
+  logs/c5-analysis-null-20261101.log line for line (the seeds are keyed
+  by (level, cell), so cells 0 to 399 are the same cells at any N >=
+  400). Any N other than 400 is refused (exit 2) unless --null-only is
+  given: the rates the verdicts are read against stay the NF 400 rates,
+  and a full run can never read its verdicts against another N. At any
+  N other than 400 the NULL RATE lines are replaced by "r <crit> largest
+  over levels x at NF N (no status ...)": the used / NOT USED status is
+  the NF 400 one. The comparison across N is scripts/c5_nfcheck.py.
 
 HEADLINE COUNTS
   For R1b, R1c, R1d and D-ref: the number of the 288 cells meeting the
@@ -187,6 +200,7 @@ EXIT CODES  0 printed; 2 an input problem; 7 C5 incomplete (nothing
 
 HOW TO RUN (repository root)
     python -B scripts/c5_analysis.py --null-only
+    python -B scripts/c5_analysis.py --null-only --nf 12000
     python -B scripts/c5_analysis.py --c5 runs/A --c5 runs/B ... \
         --rerun runs/rerun-cal-s0of2-a1-kaggle-20261025-003238 \
         --rerun runs/rerun-cal-s1of2-a1-kaggle-20261025-050238 \
@@ -400,13 +414,16 @@ def null_cell(args):
                                                                     st["se_dref"])
 
 
-def null_fixture(workers):
+def null_fixture(workers, nf=NF, status=True):
+    """Prints the fixture table; returns (use, rates, groups): use as before, rates[k] the four per-level
+    rates of criterion k (unrounded), groups the number of pooled groups per level. status False (any nf
+    but NF): the NULL RATE lines give r without a used / NOT USED status, which belongs to NF 400 only."""
     hdr("NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion")
     say("  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,")
-    say("  no difference; {} cells per level; B {}; every rejection below is a false one".format(NF, B))
+    say("  no difference; {} cells per level; B {}; every rejection below is a false one".format(nf, B))
     pool_ = multiprocessing.Pool(workers)
     try:
-        got = pool_.map(null_cell, [(lv, c) for lv in range(len(LEVELS)) for c in range(NF)], chunksize=8)
+        got = pool_.map(null_cell, [(lv, c) for lv in range(len(LEVELS)) for c in range(nf)], chunksize=8)
     finally:
         pool_.close()
         pool_.join()
@@ -415,10 +432,11 @@ def null_fixture(workers):
     for lv, (s, e) in enumerate(LEVELS):
         row = []
         for k in CRITS + BOOTS:
-            rates[k].append(sum(1 for (l2, _c, d, _p) in got if l2 == lv and d[k]) / float(NF))
+            rates[k].append(sum(1 for (l2, _c, d, _p) in got if l2 == lv and d[k]) / float(nf))
         mine = sorted([(c, p) for (l2, c, _d, p) in got if l2 == lv])
         for k, j in (("P-win", 0), ("P-ref", 2)):
             groups = [mine[i:i + 6] for i in range(0, len(mine) - 5, 6)]
+            ngroups = len(groups)
             hits = sum(1 for g in groups if pool([p[j] for _c, p in g], [p[j + 1] for _c, p in g])[2])
             rates[k].append(hits / float(len(groups)))
         say("  s {:.2f} e {:.2f}  {}".format(s, e, "  ".join("{:>7.3f}".format(rates[k][-1])
@@ -429,8 +447,12 @@ def null_fixture(workers):
     for k in CRITS + POOLS:
         r = max(rates[k])
         use[k] = (r, "NOT USED" if r > 0.10 else ("used, rate printed" if r > 0.05 else "used"))
-        say("  NULL RATE {:<6} largest over levels {:.3f} (nominal 0.05): {}".format(k, r, use[k][1]))
-    return use
+        if status:
+            say("  NULL RATE {:<6} largest over levels {:.3f} (nominal 0.05): {}".format(k, r, use[k][1]))
+        else:
+            say("  r {:<6} largest over levels {:.3f} at NF {} (no status: the verdicts keep the NF {} status)".format(
+                k, r, nf, NF))
+    return use, rates, ngroups
 
 
 # ----------------------------------------------------------------------
@@ -756,10 +778,15 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--budget-mb", type=float, default=X.BUDGET_MB)
     ap.add_argument("--null-only", action="store_true")
+    ap.add_argument("--nf", type=int, default=NF, help="null cells per level (default 400; other values only "
+                    "with --null-only)")
     ap.add_argument("--py-bitcmp", action="append", default=[], help="A0-PY rule B evidence (repeatable)")
     ap.add_argument("--py-detcheck", action="append", default=[], help="A0-PY rule D evidence (repeatable)")
     a = ap.parse_args()
     a.timing = [x for x in a.timing.split(",") if x]
+    if a.nf < 6 or (a.nf != NF and not a.null_only):
+        raise Stop(2, "--nf {}: must be at least 6, and other than {} only with --null-only (the verdicts are "
+                      "read against the NF {} rates)".format(a.nf, NF, NF))
     hdr("CBO-GAP c5_analysis  (ledger N45; readings fixed 2026-11-01)  --  reads only, writes nothing")
     say("  python   {}".format(platform.python_version()))
     say("  numpy    {}".format(np.__version__))
@@ -769,8 +796,8 @@ def main():
     say("  c5run.py sha256 {}".format(JP.sha256_of(X.__file__)))
     say("  windows  W-arch {}  W-hi {}  W-ext {}".format(W_ARCH, W_HI, W_EXT))
     say("  B {}  null fixture levels {}  NF {}  seeds SeedSequence({} + (level, cell, set))".format(
-        B, LEVELS, NF, NULL_SEED))
-    use = null_fixture(a.workers)
+        B, LEVELS, a.nf, NULL_SEED))
+    use = null_fixture(a.workers, a.nf, a.nf == NF)[0]
     if a.null_only:
         hdr("c5_analysis.py --null-only done, exit 0  (nothing written)")
         return 0

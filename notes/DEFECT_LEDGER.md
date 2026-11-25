@@ -5337,6 +5337,44 @@ instruction of 2026-10-15.
   RECORDED 2026-11-25. What the manuscript says about these readings is
   decided in the single editing pass of N45 (Rahul's decision
   2026-10-29), under rules 8 and 10.
+  C5 NULL-RATE CHECKS (Claude, 2026-11-25, at Rahul's instruction; a
+  separate measurement, NOT a revision of the C5 READINGS above, whose
+  verdicts, counts and null rates stand as recorded).
+  - NF made settable AFTER the readings. c5_analysis.py gained --nf on
+    2026-11-25, after the readings were copied from
+    logs/c5-analysis-a0py-20261125.log. This does not touch them: the
+    default stays 400, so a run without --nf prints the same fixture
+    table (checked by R0 below against that log and against
+    logs/c5-analysis-null-20261101.log); any other NF is refused (exit 2)
+    except with --null-only, so no verdict can be read against another
+    NF; and at any other NF the NULL RATE lines carry no used / NOT USED
+    status. No estimator, interval, verdict rule, seed or fixture line
+    changed; both logs are unchanged and were written by earlier hashes
+    of the script (53ce6b79...7375; the 2026-11-01 null log
+    345b1d33...57be).
+  - What is measured (scripts/c5_nfcheck.py; docstring fixed before its
+    first run). Part N: the fixture at NF 400 and NF 12000; for every
+    criterion the four per-level rates, their max (the rule's r), their
+    mean, and excess = max - mean, the inflation the max-of-four rule
+    adds. 12000 because the per-level Monte Carlo SE at p 0.05 is 0.0109
+    at NF 400, the same size as the excesses over 0.05 that put R1b to
+    D-ref in the "rate printed" band; at 12000 it is 0.0020, and the
+    pooled rules (NF / 6 groups) go from 66 groups (SE 0.027) to 2000
+    (0.0049); 12000 is a multiple of 6. The seeds are keyed by (level,
+    cell), so the NF 12000 cells contain the NF 400 cells: the two are
+    not independent. The excess at either NF mixes the selection of the
+    largest of four noisy rates with any real difference between the
+    four noise levels; the script does not separate them.
+  - Part T, caveat 2. R1b fires iff the one-sided lower bound is above
+    -1 and R1c iff the one-sided upper bound is at or below -1; the
+    lower bound never exceeds the upper, so no cell can fire both, and a
+    cell that fired R1c could not have fired R1b. The readings log has
+    no line giving the number of cells that fired neither; it is not
+    recorded here from memory or by hand. Part T tallies it from the
+    log's 288 per-cell lines (T1 288 distinct cells, T2 the yes counts
+    equal the log's HEADLINE COUNTS, T3 none fires both).
+  - Results: PENDING Rahul's run; log to be logs/c5-nfcheck-20261125.log.
+    Nothing is recorded until it is pasted.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
