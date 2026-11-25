@@ -5193,6 +5193,150 @@ instruction of 2026-10-15.
   - Scope of this closure: A0-PY only. No C5 reading from the rerun's
     log is recorded here; the readings are taken up in N45's C5 entry.
   CLOSED 2026-11-25.
+  C5 READINGS (Claude, 2026-11-25, at Rahul's instruction; every number
+  below is copied from logs/c5-analysis-a0py-20261125.log, the A0-PY
+  rerun closed above: c5_analysis.py sha256 53ce6b79...7375, laptop,
+  python 3.12.3, numpy 2.5.3, 4 workers, exit 0, nothing written; 116 C5
+  folders, A1 4320 of 4320 tasks; IN, B1, B2 PASS; no other source).
+  Recorded only: no interpretation of why the readings came out as they
+  did is made in this entry.
+  - What each criterion is, and which way it points (c5_analysis.py
+    docstring, READINGS, fixed 2026-11-01). s_r is realization r's slope
+    of log E_J on log J; every per-cell row of the log prints n4 15 and
+    n50 15, and no "dropped at 4000000" line appears.
+      R1b  on S(W-hi), J 5000 to 400000 at J_inf 4000000: fires
+           ("PERSISTS") iff the one-sided 95% t lower bound is above -1,
+           that is, the slope is flatter than -1.
+      R1c  on S(W-hi): fires ("upper bound <= -1: yes") iff the
+           one-sided 95% t upper bound is at or below -1, that is, the
+           slope is at least as steep as -1. R1b and R1c point opposite
+           ways.
+      R1d  D-win = mean of the paired differences s_r(W-hi) - s_r(W-arch)
+           (W-arch J 10 to 5000, same realizations); fires (DIFFERENCE)
+           iff the two-sided 95% t interval excludes 0, in either
+           direction. Negative D-win: the W-hi slope is the more negative
+           of the two; positive: the W-arch slope is.
+      D-ref  S(W-arch, 4000000) - S(W-arch, 50000), Welch's two-sided 95%
+           interval; fires (DIFFERENCE) iff it excludes 0, in either
+           direction.
+    The pooled tables carry the sign in their D-win and D-ref columns;
+    their DIFFERENCE verdicts use the pooled rules' own null rates, P-win
+    0.061 and P-ref 0.076. The docstring rules out PERSISTS and
+    equivalence on any pooled figure.
+  - Headline counts, 288 cells, as printed (expected = 288 x the
+    criterion's measured null rate r; P is the binomial upper tail):
+      R1b    observed   5   expected   19.4 at null rate 0.068   P(X >= 5) = 1
+      R1c    observed  47   expected   17.3 at null rate 0.060   P(X >= 47) = 5.19e-10
+      R1d    observed  71   expected   23.8 at null rate 0.083   P(X >= 71) = 4.79e-17
+      D-ref  observed  15   expected   23.0 at null rate 0.080   P(X >= 15) = 0.974
+      NULL RATE R1b    0.068: used, rate printed
+      NULL RATE R1c    0.060: used, rate printed
+      NULL RATE R1d    0.083: used, rate printed
+      NULL RATE D-ref  0.080: used, rate printed
+      NULL RATE P-win  0.061: used, rate printed
+      NULL RATE P-ref  0.076: used, rate printed
+    Summary: R1b 5 (expected 19.4, r 0.068, tail 1); R1c 47 (17.3,
+    0.060, 5.19e-10); R1d 71 (23.8, 0.083, 4.79e-17); D-ref 15 (23.0,
+    0.080, 0.974).
+  - R1b and D-ref, what the counts say and what they do not. R1b fired
+    in 5 cells and D-ref in 15, each fewer than the number expected by
+    chance at its measured null rate (19.4 and 23.0). These criteria did
+    not fire more often than chance; that is all the counts show. NEITHER
+    COUNT SUPPORTS AN EQUIVALENCE CLAIM. A low R1b count does not show
+    that any slope is -1, and a low D-ref count does not show that the
+    4000000 and 50000 references agree: a criterion that fails to reject
+    is not evidence of the null, no equivalence criterion (margin, TOST
+    or otherwise) was pre-specified for C5, and the log prints only the
+    upper tail, so no test of a deficit below chance exists either. Any
+    later text that reads these counts as "the slope is -1", "the
+    references agree" or "no difference" breaks rule 10.
+  - R1d, direction, from the pooled tables below (P-win DIFFERENCE
+    groups; the sign is that of D-win):
+      PRIMARY, per (row, d, tau_0). CONC-X: d 10 tau_0 0.01 (-0.0550)
+      and d 40 tau_0 0.01 (-0.1255); no other CONC-X group. TAU8-X d 10:
+      tau_0 0.01, 0.02, 0.03, 0.05, 0.07, all negative; not at 0.1, 0.2,
+      0.3. TAU8-X d 40: every tau_0, 0.01 to 0.3, all negative. TAU8-X
+      d 5: tau_0 0.01 (-0.0604) and 0.02 (-0.0877), negative, and 0.3
+      (+0.0724), positive, the one positive D-win DIFFERENCE in either
+      pooled table; not at 0.03, 0.05, 0.07, 0.1, 0.2. The table has no
+      TAU8-X d 2 group.
+      SECONDARY, per (row, tau_0), over d. CONC-X: tau_0 0.01 only
+      (-0.0416). TAU8-X: tau_0 0.01, 0.02, 0.03, 0.05, 0.07, 0.2, all
+      negative; not at 0.1 (-0.0263 [-0.0550, +0.0024]) or 0.3 (+0.0120
+      [-0.0142, +0.0381]).
+    The per-cell R1d count (71) is not split by sign in the log; no
+    split is recorded here.
+  - D-ref, pooled (P-ref DIFFERENCE groups, as printed): PRIMARY, TAU8-X
+    d 10 tau_0 0.07 (+0.0339), d 40 tau_0 0.01 (+0.0247), 0.07 (+0.0210),
+    0.2 (+0.0219), d 5 tau_0 0.1 (+0.0525); no CONC-X group. SECONDARY,
+    TAU8-X tau_0 0.02 (+0.0236), 0.05 (+0.0242), 0.07 (+0.0240), 0.1
+    (+0.0249); no CONC-X group. All positive. The no-equivalence point
+    above applies to every pooled group that does not fire.
+  - POOLED, PRIMARY: per (row, d, tau_0), verbatim (log lines 775 to
+    811; S(W-hi) carries no verdict on a pooled figure):
+      group | k | S(W-hi) [95%] | D-win [95%] DIFF | D-ref [95%] DIFF | sd_units, tau2, I2 (D-ref)
+      CONC-X d 10 tau0 0.01 | 12 | -1.0306 [-1.0532, -1.0081] | -0.0550 [-0.0895, -0.0206] yes (null rate 0.061) | +0.0043 [-0.0288, +0.0374] no (null rate 0.076) | 0.0435, 0.00000, 0.00
+      CONC-X d 10 tau0 0.1 | 12 | -1.0022 [-1.0290, -0.9753] | +0.0074 [-0.0310, +0.0458] no (null rate 0.061) | +0.0214 [-0.0120, +0.0549] no (null rate 0.076) | 0.0381, 0.00000, 0.00
+      CONC-X d 10 tau0 0.5 | 12 | -1.0189 [-1.0521, -0.9858] | +0.0051 [-0.0415, +0.0516] no (null rate 0.061) | -0.0200 [-0.0526, +0.0126] no (null rate 0.076) | 0.0615, 0.00046, 0.09
+      CONC-X d 2 tau0 0.01 | 12 | -1.0840 [-1.1316, -1.0365] | +0.0082 [-0.0581, +0.0745] no (null rate 0.061) | +0.0534 [-0.0040, +0.1107] no (null rate 0.076) | 0.0974, 0.00000, 0.00
+      CONC-X d 2 tau0 0.1 | 12 | -1.0094 [-1.0610, -0.9577] | +0.0179 [-0.0514, +0.0871] no (null rate 0.061) | +0.0062 [-0.0473, +0.0596] no (null rate 0.076) | 0.0950, 0.00011, 0.00
+      CONC-X d 2 tau0 0.5 | 12 | -1.0126 [-1.0669, -0.9583] | -0.0151 [-0.0897, +0.0594] no (null rate 0.061) | +0.0155 [-0.0348, +0.0659] no (null rate 0.076) | 0.0900, 0.00018, 0.01
+      CONC-X d 40 tau0 0.01 | 12 | -1.0108 [-1.0260, -0.9956] | -0.1255 [-0.1556, -0.0954] yes (null rate 0.061) | +0.0067 [-0.0240, +0.0375] no (null rate 0.076) | 0.0259, 0.00000, 0.00
+      CONC-X d 40 tau0 0.1 | 12 | -1.0154 [-1.0331, -0.9977] | -0.0026 [-0.0306, +0.0255] no (null rate 0.061) | +0.0058 [-0.0242, +0.0357] no (null rate 0.076) | 0.0543, 0.00014, 0.40
+      CONC-X d 40 tau0 0.5 | 12 | -1.0334 [-1.0588, -1.0079] | -0.0313 [-0.0670, +0.0044] no (null rate 0.061) | -0.0008 [-0.0256, +0.0239] no (null rate 0.076) | 0.0506, 0.00064, 0.31
+      CONC-X d 5 tau0 0.01 | 12 | -1.0426 [-1.0737, -1.0114] | +0.0058 [-0.0402, +0.0519] no (null rate 0.061) | -0.0142 [-0.0556, +0.0271] no (null rate 0.076) | 0.0792, 0.00093, 0.07
+      CONC-X d 5 tau0 0.1 | 12 | -1.0003 [-1.0393, -0.9614] | +0.0199 [-0.0332, +0.0730] no (null rate 0.061) | +0.0173 [-0.0200, +0.0546] no (null rate 0.076) | 0.0327, 0.00000, 0.00
+      CONC-X d 5 tau0 0.5 | 12 | -1.0439 [-1.0847, -1.0031] | -0.0328 [-0.0858, +0.0202] no (null rate 0.061) | -0.0010 [-0.0368, +0.0347] no (null rate 0.076) | 0.0529, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.01 | 6 | -1.0170 [-1.0527, -0.9813] | -0.1134 [-0.1668, -0.0599] yes (null rate 0.061) | -0.0083 [-0.0427, +0.0261] no (null rate 0.076) | 0.0382, 0.00000, 0.15
+      TAU8-X d 10 tau0 0.02 | 6 | -1.0076 [-1.0363, -0.9788] | -0.0730 [-0.1143, -0.0317] yes (null rate 0.061) | +0.0187 [-0.0112, +0.0487] no (null rate 0.076) | 0.0305, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.03 | 6 | -1.0256 [-1.0584, -0.9927] | -0.0696 [-0.1194, -0.0198] yes (null rate 0.061) | -0.0147 [-0.0470, +0.0176] no (null rate 0.076) | 0.0365, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.05 | 6 | -1.0173 [-1.0440, -0.9906] | -0.0591 [-0.1030, -0.0151] yes (null rate 0.061) | +0.0323 [-0.0045, +0.0690] no (null rate 0.076) | 0.0325, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.07 | 6 | -1.0426 [-1.0779, -1.0072] | -0.0645 [-0.1117, -0.0174] yes (null rate 0.061) | +0.0339 [+0.0030, +0.0649] yes (null rate 0.076) | 0.0293, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.1 | 6 | -1.0050 [-1.0380, -0.9719] | -0.0116 [-0.0616, +0.0385] no (null rate 0.061) | +0.0113 [-0.0201, +0.0427] no (null rate 0.076) | 0.0247, 0.00000, 0.00
+      TAU8-X d 10 tau0 0.2 | 6 | -1.0324 [-1.0588, -1.0060] | -0.0356 [-0.0760, +0.0048] no (null rate 0.061) | +0.0097 [-0.0232, +0.0426] no (null rate 0.076) | 0.0468, 0.00050, 0.25
+      TAU8-X d 10 tau0 0.3 | 6 | -1.0127 [-1.0402, -0.9853] | -0.0053 [-0.0445, +0.0339] no (null rate 0.061) | +0.0021 [-0.0325, +0.0366] no (null rate 0.076) | 0.0228, 0.00000, 0.00
+      TAU8-X d 40 tau0 0.01 | 6 | -0.9965 [-1.0143, -0.9787] | -0.1646 [-0.1940, -0.1352] yes (null rate 0.061) | +0.0247 [+0.0011, +0.0484] yes (null rate 0.076) | 0.0300, 0.00003, 0.11
+      TAU8-X d 40 tau0 0.02 | 6 | -1.0293 [-1.0463, -1.0123] | -0.1459 [-0.1731, -0.1187] yes (null rate 0.061) | +0.0131 [-0.0101, +0.0364] no (null rate 0.076) | 0.0253, 0.00000, 0.00
+      TAU8-X d 40 tau0 0.03 | 6 | -1.0105 [-1.0254, -0.9956] | -0.0925 [-0.1156, -0.0693] yes (null rate 0.061) | +0.0184 [-0.0030, +0.0398] no (null rate 0.076) | 0.0255, 0.00000, 0.00
+      TAU8-X d 40 tau0 0.05 | 6 | -1.0164 [-1.0327, -1.0000] | -0.0708 [-0.0980, -0.0436] yes (null rate 0.061) | +0.0159 [-0.0046, +0.0365] no (null rate 0.076) | 0.0389, 0.00086, 0.59
+      TAU8-X d 40 tau0 0.07 | 6 | -1.0118 [-1.0264, -0.9971] | -0.0514 [-0.0766, -0.0261] yes (null rate 0.061) | +0.0210 [+0.0002, +0.0417] yes (null rate 0.076) | 0.0104, 0.00000, 0.00
+      TAU8-X d 40 tau0 0.1 | 6 | -1.0244 [-1.0385, -1.0104] | -0.0579 [-0.0793, -0.0365] yes (null rate 0.061) | +0.0109 [-0.0071, +0.0290] no (null rate 0.076) | 0.0146, 0.00000, 0.00
+      TAU8-X d 40 tau0 0.2 | 6 | -1.0274 [-1.0436, -1.0111] | -0.0442 [-0.0675, -0.0208] yes (null rate 0.061) | +0.0219 [+0.0041, +0.0397] yes (null rate 0.076) | 0.0346, 0.00070, 0.63
+      TAU8-X d 40 tau0 0.3 | 6 | -1.0232 [-1.0387, -1.0078] | -0.0312 [-0.0551, -0.0073] yes (null rate 0.061) | +0.0158 [-0.0005, +0.0322] no (null rate 0.076) | 0.0209, 0.00002, 0.00
+      TAU8-X d 5 tau0 0.01 | 6 | -0.9984 [-1.0421, -0.9547] | -0.0604 [-0.1176, -0.0032] yes (null rate 0.061) | +0.0253 [-0.0173, +0.0679] no (null rate 0.076) | 0.0362, 0.00000, 0.00
+      TAU8-X d 5 tau0 0.02 | 6 | -1.0376 [-1.0867, -0.9885] | -0.0877 [-0.1499, -0.0255] yes (null rate 0.061) | +0.0389 [-0.0087, +0.0864] no (null rate 0.076) | 0.0426, 0.00000, 0.00
+      TAU8-X d 5 tau0 0.03 | 6 | -1.0087 [-1.0532, -0.9641] | -0.0142 [-0.0742, +0.0459] no (null rate 0.061) | +0.0114 [-0.0349, +0.0578] no (null rate 0.076) | 0.0460, 0.00000, 0.00
+      TAU8-X d 5 tau0 0.05 | 6 | -1.0231 [-1.0642, -0.9819] | -0.0320 [-0.0905, +0.0265] no (null rate 0.061) | +0.0243 [-0.0187, +0.0672] no (null rate 0.076) | 0.0431, 0.00000, 0.00
+      TAU8-X d 5 tau0 0.07 | 6 | -1.0615 [-1.1076, -1.0153] | -0.0429 [-0.1094, +0.0236] no (null rate 0.061) | +0.0172 [-0.0274, +0.0618] no (null rate 0.076) | 0.0566, 0.00010, 0.17
+      TAU8-X d 5 tau0 0.1 | 6 | -1.0257 [-1.0737, -0.9777] | -0.0095 [-0.0763, +0.0574] no (null rate 0.061) | +0.0525 [+0.0108, +0.0941] yes (null rate 0.076) | 0.0460, 0.00000, 0.00
+      TAU8-X d 5 tau0 0.2 | 6 | -1.0139 [-1.0574, -0.9705] | -0.0038 [-0.0686, +0.0609] no (null rate 0.061) | +0.0271 [-0.0217, +0.0759] no (null rate 0.076) | 0.0917, 0.00469, 0.58
+      TAU8-X d 5 tau0 0.3 | 6 | -0.9813 [-1.0288, -0.9337] | +0.0724 [+0.0089, +0.1360] yes (null rate 0.061) | -0.0059 [-0.0462, +0.0344] no (null rate 0.076) | 0.0249, 0.00000, 0.00
+  - POOLED, SECONDARY: per (row, tau_0), over d, verbatim (log lines 816
+    to 827):
+      group | k | S(W-hi) [95%] | D-win [95%] DIFF | D-ref [95%] DIFF | sd_units, tau2, I2 (D-ref)
+      CONC-X tau0 0.01 | 48 | -1.0420 [-1.0578, -1.0263] | -0.0416 [-0.0648, -0.0184] yes (null rate 0.061) | +0.0125 [-0.0084, +0.0335] no (null rate 0.076) | 0.0701, 0.00000, 0.00
+      CONC-X tau0 0.1 | 48 | -1.0068 [-1.0249, -0.9888] | +0.0107 [-0.0142, +0.0355] no (null rate 0.061) | +0.0127 [-0.0071, +0.0324] no (null rate 0.076) | 0.0587, 0.00000, 0.00
+      CONC-X tau0 0.5 | 48 | -1.0272 [-1.0471, -1.0073] | -0.0185 [-0.0457, +0.0086] no (null rate 0.061) | -0.0016 [-0.0201, +0.0169] no (null rate 0.076) | 0.0648, 0.00000, 0.09
+      TAU8-X tau0 0.01 | 18 | -1.0040 [-1.0237, -0.9842] | -0.1128 [-0.1407, -0.0849] yes (null rate 0.061) | +0.0139 [-0.0060, +0.0338] no (null rate 0.076) | 0.0366, 0.00000, 0.11
+      TAU8-X tau0 0.02 | 18 | -1.0248 [-1.0446, -1.0050] | -0.1022 [-0.1287, -0.0757] yes (null rate 0.061) | +0.0236 [+0.0033, +0.0438] yes (null rate 0.076) | 0.0335, 0.00000, 0.00
+      TAU8-X tau0 0.03 | 18 | -1.0149 [-1.0340, -0.9958] | -0.0587 [-0.0859, -0.0316] yes (null rate 0.061) | +0.0050 [-0.0151, +0.0252] no (null rate 0.076) | 0.0377, 0.00000, 0.00
+      TAU8-X tau0 0.05 | 18 | -1.0189 [-1.0362, -1.0017] | -0.0540 [-0.0800, -0.0279] yes (null rate 0.061) | +0.0242 [+0.0041, +0.0442] yes (null rate 0.076) | 0.0367, 0.00000, 0.08
+      TAU8-X tau0 0.07 | 18 | -1.0386 [-1.0586, -1.0186] | -0.0529 [-0.0814, -0.0245] yes (null rate 0.061) | +0.0240 [+0.0046, +0.0434] yes (null rate 0.076) | 0.0358, 0.00000, 0.00
+      TAU8-X tau0 0.1 | 18 | -1.0184 [-1.0383, -0.9984] | -0.0263 [-0.0550, +0.0024] no (null rate 0.061) | +0.0249 [+0.0065, +0.0433] yes (null rate 0.076) | 0.0356, 0.00000, 0.00
+      TAU8-X tau0 0.2 | 18 | -1.0246 [-1.0424, -1.0068] | -0.0279 [-0.0545, -0.0013] yes (null rate 0.061) | +0.0196 [-0.0009, +0.0401] no (null rate 0.076) | 0.0594, 0.00156, 0.48
+      TAU8-X tau0 0.3 | 18 | -1.0057 [-1.0247, -0.9867] | +0.0120 [-0.0142, +0.0381] no (null rate 0.061) | +0.0040 [-0.0145, +0.0225] no (null rate 0.076) | 0.0234, 0.00000, 0.00
+  - D-ref BY SIZETEST CLASS, verbatim (log lines 832 to 834), under the
+    log's own heading: "a description; the classes are not matched, N40
+    qualification 2". No comparison between the classes is made from
+    these counts.
+      affected  cells  56   D-ref DIFFERENCE   2
+      control   cells  53   D-ref DIFFERENCE   7
+      neither   cells 179   D-ref DIFFERENCE   6
+  - Not recorded here: any reason for these readings, and any link to
+    other entries; neither is drawn in this entry.
+  RECORDED 2026-11-25. What the manuscript says about these readings is
+  decided in the single editing pass of N45 (Rahul's decision
+  2026-10-29), under rules 8 and 10.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
