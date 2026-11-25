@@ -1,0 +1,177 @@
+
+====================================================================================================
+CBO-GAP c5_analysis  (ledger N45; readings fixed 2026-11-01)  --  reads only, writes nothing
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-43-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 345b1d33342aa72668c4c2b3243b9eeb0c5d047cdba20e8e8bbb7e49b4bf57be
+  c5run.py sha256 3c6a569ffea662626f4a67ae8618a42c7db17cd6e2e033d9aa547bf1433cc959
+  windows  W-arch [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000]  W-hi [5000, 10000, 20000, 40000, 80000, 160000, 320000, 400000]  W-ext [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5000, 10000, 20000, 40000, 80000, 160000, 320000, 400000]
+  B 10000  null fixture levels [(0.02, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.3)]  NF 400  seeds SeedSequence((20261101, 99) + (level, cell, set))
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 400 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.068    0.060    0.062    0.060    0.061    0.076    0.072    0.072    0.083    0.072
+  s 0.05 e 0.10    0.060    0.050    0.072    0.048    0.061    0.015    0.072    0.072    0.095    0.080
+  s 0.10 e 0.20    0.058    0.058    0.083    0.080    0.061    0.061    0.087    0.083    0.120    0.107
+  s 0.20 e 0.30    0.037    0.055    0.037    0.055    0.030    0.076    0.050    0.077    0.072    0.072
+  bootstrap bR1b    largest over levels 0.087 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.083 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.120 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.107 (printed only; decides nothing)
+  NULL RATE R1b    largest over levels 0.068 (nominal 0.05): used, rate printed
+  NULL RATE R1c    largest over levels 0.060 (nominal 0.05): used, rate printed
+  NULL RATE R1d    largest over levels 0.083 (nominal 0.05): used, rate printed
+  NULL RATE D-ref  largest over levels 0.080 (nominal 0.05): used, rate printed
+  NULL RATE P-win  largest over levels 0.061 (nominal 0.05): used, rate printed
+  NULL RATE P-ref  largest over levels 0.076 (nominal 0.05): used, rate printed
+
+====================================================================================================
+A0, A1, B1, B2  inputs
+====================================================================================================
+
+====================================================================================================
+IN  inputs
+====================================================================================================
+  read jinfprobe-s0of3-a1-kaggle-20261031-210629: shard 0 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s1of3-a1-kaggle-20261031-233459: shard 1 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  read jinfprobe-s2of3-a1-kaggle-20261101-015818: shard 2 of 3, script sha256 7b9d6e7fee022fa695d9d9d322e751c17b32de0c05f3bd934c818e93aca8dc7f
+  IN PASS  252 complete tasks, every unit at every ladder size
+  IN PASS  probe 42 units; calprec2 336 cells; rerun plan 288 CONC and TAU8 cells
+
+====================================================================================================
+B1  same beta as the 50000 cell (calprec2 against the rerun plan)
+====================================================================================================
+  B1 PASS  288 cells, every beta equal to the rerun plan's
+
+====================================================================================================
+W  workers per d (c5price PR)
+====================================================================================================
+  d  2: R_d 596.9 MB, workers 4, G-RSS flag above 6000 MB
+  d  5: R_d 1619.0 MB, workers 4, G-RSS flag above 6000 MB
+  d 10: R_d 2959.4 MB, workers 4, G-RSS flag above 6000 MB
+  d 40: R_d 10713.7 MB, workers 2, G-RSS flag above 12000 MB
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s0of116-a1-kaggle-20261101-082059: shard 0 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s100of116-a2-kaggle-20261123-231852: shard 100 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s101of116-a1-kaggle-20261124-024208: shard 101 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s102of116-a1-kaggle-20261124-060451: shard 102 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s103of116-a1-kaggle-20261124-092807: shard 103 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s104of116-a1-kaggle-20261124-125132: shard 104 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s105of116-a1-kaggle-20261124-161442: shard 105 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s106of116-a1-kaggle-20261124-180423: shard 106 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s107of116-a1-kaggle-20261124-211215: shard 107 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s108of116-a1-kaggle-20261125-003550: shard 108 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s109of116-a1-kaggle-20261125-022632: shard 109 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s10of116-a1-kaggle-20261102-191053: shard 10 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s110of116-a1-kaggle-20261125-054949: shard 110 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s111of116-a1-kaggle-20261125-091328: shard 111 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s112of116-a1-kaggle-20261125-111922: shard 112 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s113of116-a1-kaggle-20261125-145749: shard 113 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s114of116-a1-kaggle-20261125-170333: shard 114 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s115of116-a1-kaggle-20261125-202538: shard 115 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s11of116-a1-kaggle-20261102-225216: shard 11 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s12of116-a1-kaggle-20261103-023156: shard 12 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s13of116-a1-kaggle-20261103-061045: shard 13 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s14of116-a1-kaggle-20261103-225657: shard 14 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s15of116-a1-kaggle-20261104-022852: shard 15 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s16of116-a1-kaggle-20261104-055545: shard 16 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s17of116-a1-kaggle-20261104-093356: shard 17 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s18of116-a1-kaggle-20261104-131155: shard 18 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s19of116-a1-kaggle-20261104-163520: shard 19 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s1of116-a1-kaggle-20261101-114309: shard 1 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s20of116-a1-kaggle-20261104-195841: shard 20 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s21of116-a1-kaggle-20261104-232301: shard 21 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s22of116-a1-kaggle-20261105-012855: shard 22 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s23of116-a1-kaggle-20261105-050736: shard 23 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s24of116-a1-kaggle-20261105-083044: shard 24 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s25of116-a1-kaggle-20261105-115354: shard 25 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s26of116-a1-kaggle-20261105-140014: shard 26 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s27of116-a1-kaggle-20261105-173754: shard 27 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s28of116-a1-kaggle-20261105-192826: shard 28 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s29of116-a1-kaggle-20261105-225226: shard 29 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s2of116-a1-kaggle-20261101-145049: shard 2 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s30of116-a1-kaggle-20261106-021524: shard 30 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s31of116-a1-kaggle-20261106-081656: shard 31 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s32of116-a1-kaggle-20261106-113932: shard 32 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s33of116-a1-kaggle-20261106-150232: shard 33 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s34of116-a1-kaggle-20261106-182523: shard 34 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s35of116-a1-kaggle-20261106-214801: shard 35 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s36of116-a1-kaggle-20261107-011127: shard 36 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s37of116-a1-kaggle-20261107-044918: shard 37 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s38of116-a1-kaggle-20261107-082731: shard 38 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s39of116-a1-kaggle-20261107-120536: shard 39 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s3of116-a1-kaggle-20261101-182815: shard 3 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s40of116-a1-kaggle-20261107-152806: shard 40 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s41of116-a1-kaggle-20261107-185022: shard 41 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s42of116-a1-kaggle-20261107-205534: shard 42 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s43of116-a1-kaggle-20261108-003329: shard 43 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s44of116-a1-kaggle-20261108-035602: shard 44 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s45of116-a1-kaggle-20261108-071802: shard 45 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s46of116-a1-kaggle-20261108-104110: shard 46 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s47of116-a1-kaggle-20261108-134856: shard 47 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s48of116-a1-kaggle-20261108-171124: shard 48 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s49of116-a1-kaggle-20261108-190135: shard 49 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s4of116-a1-kaggle-20261101-215027: shard 4 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s50of116-a2-kaggle-20261109-002345: shard 50 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s51of116-a1-kaggle-20261109-034558: shard 51 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s52of116-a1-kaggle-20261109-070834: shard 52 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s53of116-a1-kaggle-20261109-103149: shard 53 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s54of116-a1-kaggle-20261109-123741: shard 54 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s55of116-a1-kaggle-20261109-154603: shard 55 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s56of116-a1-kaggle-20261109-185336: shard 56 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s57of116-a1-kaggle-20261109-231801: shard 57 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s58of116-a1-kaggle-20261110-024257: shard 58 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s59of116-a1-kaggle-20261110-060536: shard 59 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s5of116-a1-kaggle-20261102-011302: shard 5 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s60of116-a1-kaggle-20261110-081134: shard 60 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s61of116-a1-kaggle-20261110-114934: shard 61 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s62of116-a1-kaggle-20261110-145702: shard 62 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s63of116-a1-kaggle-20261110-182042: shard 63 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s64of116-a1-kaggle-20261110-214352: shard 64 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s65of116-a1-kaggle-20261111-010659: shard 65 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s66of116-a1-kaggle-20261111-041429: shard 66 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s67of116-a1-kaggle-20261111-073734: shard 67 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s68of116-a1-kaggle-20261111-110028: shard 68 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s69of116-a1-kaggle-20261111-140729: shard 69 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s6of116-a1-kaggle-20261102-045123: shard 6 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s70of116-a1-kaggle-20261111-174555: shard 70 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s71of116-a1-kaggle-20261111-210850: shard 71 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s72of116-a1-kaggle-20261112-004658: shard 72 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s73of116-a1-kaggle-20261112-101144: shard 73 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s74of116-a1-kaggle-20261112-121738: shard 74 of 116, 39 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s75of116-a1-kaggle-20261112-155533: shard 75 of 116, 39 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s76of116-a1-kaggle-20261112-191912: shard 76 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s77of116-a1-kaggle-20261112-225946: shard 77 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s78of116-a1-kaggle-20261113-022229: shard 78 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s79of116-a1-kaggle-20261113-042826: shard 79 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s7of116-a1-kaggle-20261102-081451: shard 7 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s80of116-a1-kaggle-20261113-082218: shard 80 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s81of116-a1-kaggle-20261113-121611: shard 81 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s82of116-a1-kaggle-20261113-152345: shard 82 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s83of116-a1-kaggle-20261113-184705: shard 83 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s84of116-a1-kaggle-20261113-222545: shard 84 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s85of116-a1-kaggle-20261114-014930: shard 85 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s86of116-a1-kaggle-20261114-054417: shard 86 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s87of116-a1-kaggle-20261114-090759: shard 87 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s88of116-a1-kaggle-20261114-123105: shard 88 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s89of116-a1-kaggle-20261114-155414: shard 89 of 116, 38 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s8of116-a1-kaggle-20261102-115257: shard 8 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s90of116-a1-kaggle-20261114-175958: shard 90 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s91of116-a2-kaggle-20261115-050732: shard 91 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s92of116-a1-kaggle-20261115-082958: shard 92 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s93of116-a1-kaggle-20261115-115611: shard 93 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s94of116-a1-kaggle-20261115-151834: shard 94 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s95of116-a1-kaggle-20261115-184023: shard 95 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s96of116-a1-kaggle-20261115-220236: shard 96 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s97of116-a1-kaggle-20261116-013952: shard 97 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s98of116-a1-kaggle-20261116-051829: shard 98 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s99of116-a1-kaggle-20261116-084117: shard 99 of 116, 37 complete
+  read /home/rahul/Research/cbo-gap-final/runs/c5-x-s9of116-a1-kaggle-20261102-153142: shard 9 of 116, 37 complete
+
+STOP (exit 2): A0: the folders differ in python

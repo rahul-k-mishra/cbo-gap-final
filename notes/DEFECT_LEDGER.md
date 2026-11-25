@@ -5114,10 +5114,15 @@ instruction of 2026-10-15.
     the windows, the resampling (B, keys), the intervals, the verdicts,
     the pooling or the null fixture moved. The alternative, analysing the
     3.13.15 and 3.13.18 shards separately, would not follow the decision
-    on record and would split cells whose realizations sit in both
-    segments (some do: checked by Claude on the committed rows' cell
-    column; no count is recorded here, since no run of Rahul's printed
-    one); not taken.
+    on record; not taken. (Corrected 2026-11-25 at Rahul's objection:
+    this sentence first added that separate analysis "would split cells
+    whose realizations sit in both segments", checked by Claude on the
+    committed rows with no count printed by any run of Rahul's. That was
+    a claim doing work in the reasoning with nothing behind it under
+    rule 2, so it is withdrawn rather than measured: the decision rests
+    on the 2026-11-03 evidence alone, and no sentence of the paper needs
+    how cells fall across the two segments. If a later text does need
+    it, it is measured then by a script Rahul runs.)
   - The change (scripts/c5_analysis.py, sha256 345b1d33...57be ->
     53ce6b79...7375). The key list of A0 loses "python"; nshards,
     script_sha256, numpy, timing, beta_table and rerun_plan stay. Rule
@@ -5157,6 +5162,37 @@ instruction of 2026-10-15.
     pasted this is expected, not recorded.
   OPEN until the rerun's log is in logs/ and the null-fixture diff is
   empty.
+  - The rerun (Rahul, laptop, 2026-11-25): logs/c5-analysis-a0py-
+    20261125.log, script sha256 53ce6b79...7375, python 3.12.3, numpy
+    2.5.3, 4 workers; line 851 "c5_analysis.py done, exit 0  (nothing
+    written)". Its A0-PY lines, copied from the log:
+      python 3.13.15  13 folder(s), shards 0 to 12
+      python 3.13.18  103 folder(s), shards 13 to 115
+      detcheck 3.13.15: runs/detcheck-kaggle-20261009-094955/
+        cbo-detcheck.log (sha256 8516d6c6...2128), OVERALL PASS, numpy
+        2.1.3, recorded in ENVIRONMENT.md
+      detcheck 3.13.18: runs/detcheck-py31318-kaggle-20261103-143512/
+        cbo-detcheck-py31318.log (sha256 afe3b0ee...eae9), OVERALL PASS,
+        numpy 2.1.3, recorded in ENVIRONMENT.md
+      bitcmp 3.13.15 -> 3.13.18: logs/c5bitcmp-s12-py31318-20261103.log
+        (sha256 df1b97c5...4335), ref runs/c5-x-s12of116-a1-kaggle-
+        20261103-023156 (shard 12), new runs/c5-x-s12of116-bitchk-a1-
+        kaggle-20261103-181354, 37 of 37 tids identical
+      PASS  2 interpreters (3.13.15, 3.13.18) admitted; numpy 2.1.3 and
+        script sha256 3c6a569f...c959 in every folder
+      A1  complete C5 tasks 4320 of 4320
+    These lines are now the record of the shard ranges cited in FOR THE
+    PAPER of the image-split entry above; Rahul's 2026-11-25 count in
+    "The ranges" agrees with them.
+  - Null fixture: Rahul reported the diff empty ("NULL FIXTURE
+    IDENTICAL"); Claude repeated it on the two committed logs (the 21
+    lines from the NULL FIXTURE heading to the A0 heading): identical.
+  - The stopped run's log is logs/c5-analysis-20261125-212922.log
+    (script sha256 345b1d33...57be, line 177 "STOP (exit 2): A0: the
+    folders differ in python"). Both logs committed with this closure.
+  - Scope of this closure: A0-PY only. No C5 reading from the rerun's
+    log is recorded here; the readings are taken up in N45's C5 entry.
+  CLOSED 2026-11-25.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
