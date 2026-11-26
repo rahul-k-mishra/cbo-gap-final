@@ -1,0 +1,125 @@
+
+====================================================================================================
+CBO-GAP c5_nfcheck  (ledger N45, after the C5 READINGS; re-makes no verdict)  --  reads only, writes nothing
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-43-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 e2a78d640149d3b4dead0796c557c1f64a145d03e6434cef769023c38f6312a6
+  c5_analysis.py sha256 55e7e517a6740042b012ab5cefb7ef12c728a315ab6dca57131481bb05117ce9
+  readings log logs/c5-analysis-a0py-20261125.log   null log logs/c5-analysis-null-20261101.log
+  B 10000  levels [(0.02, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.3)]  NF 400 and 12000  seeds SeedSequence((20261101, 99) + (level, cell, set))
+
+====================================================================================================
+PART T  R1b against R1c, per cell, from the readings log
+====================================================================================================
+  cell lines read 288   distinct cells 288
+  T1 PASS
+  T2 PASS  per-cell yes counts equal the HEADLINE COUNTS lines: R1b 5, R1c 47
+  T3 PASS  no cell fires both
+
+                   R1c yes   R1c no    total
+  R1b yes (PERSISTS)      0        5        5
+  R1b no                 47      236      283
+  total                  47      241      288
+
+  fired neither R1b nor R1c: 236 of 288
+  did not fire R1c (the cells that could have fired R1b): 241 of 288
+
+====================================================================================================
+PART N, N0  the fixture at NF 400 (as c5_analysis.py prints it)
+====================================================================================================
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 400 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.068    0.060    0.062    0.060    0.061    0.076    0.072    0.072    0.083    0.072
+  s 0.05 e 0.10    0.060    0.050    0.072    0.048    0.061    0.015    0.072    0.072    0.095    0.080
+  s 0.10 e 0.20    0.058    0.058    0.083    0.080    0.061    0.061    0.087    0.083    0.120    0.107
+  s 0.20 e 0.30    0.037    0.055    0.037    0.055    0.030    0.076    0.050    0.077    0.072    0.072
+  bootstrap bR1b    largest over levels 0.087 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.083 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.120 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.107 (printed only; decides nothing)
+  NULL RATE R1b    largest over levels 0.068 (nominal 0.05): used, rate printed
+  NULL RATE R1c    largest over levels 0.060 (nominal 0.05): used, rate printed
+  NULL RATE R1d    largest over levels 0.083 (nominal 0.05): used, rate printed
+  NULL RATE D-ref  largest over levels 0.080 (nominal 0.05): used, rate printed
+  NULL RATE P-win  largest over levels 0.061 (nominal 0.05): used, rate printed
+  NULL RATE P-ref  largest over levels 0.076 (nominal 0.05): used, rate printed
+  R0 PASS against logs/c5-analysis-a0py-20261125.log: 19 lines identical
+  R0 PASS against logs/c5-analysis-null-20261101.log: 19 lines identical
+
+====================================================================================================
+PART N, N1  the fixture at NF 12000 (no status: the verdicts keep the NF 400 status)
+====================================================================================================
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 12000 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.048    0.048    0.052    0.048    0.049    0.044    0.065    0.065    0.081    0.068
+  s 0.05 e 0.10    0.050    0.049    0.050    0.053    0.050    0.057    0.069    0.066    0.079    0.073
+  s 0.10 e 0.20    0.050    0.051    0.050    0.049    0.046    0.044    0.069    0.068    0.080    0.070
+  s 0.20 e 0.30    0.051    0.054    0.049    0.051    0.051    0.051    0.066    0.071    0.079    0.072
+  bootstrap bR1b    largest over levels 0.069 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.071 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.081 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.073 (printed only; decides nothing)
+  r R1b    largest over levels 0.051 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r R1c    largest over levels 0.054 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r R1d    largest over levels 0.052 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r D-ref  largest over levels 0.053 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r P-win  largest over levels 0.051 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r P-ref  largest over levels 0.057 at NF 12000 (no status: the verdicts keep the NF 400 status)
+
+====================================================================================================
+PART N  max-of-four inflation: per-level rates, max (the rule's r), mean, excess = max - mean
+====================================================================================================
+  rates unrounded (the logs print 3 decimals); SE = sqrt(mean (1 - mean) / n), n = cells per level, or
+  pooled groups per level for P-win and P-ref; no status is given for any NF but 400 (the verdicts')
+
+  NF 400  (66 pooled groups per level)
+  crit     level 1  level 2  level 3  level 4 |      max     mean   excess |      SE
+  R1b       0.0675   0.0600   0.0575   0.0375 |   0.0675   0.0556   0.0119 |  0.0115
+  R1c       0.0600   0.0500   0.0575   0.0550 |   0.0600   0.0556   0.0044 |  0.0115
+  R1d       0.0625   0.0725   0.0825   0.0375 |   0.0825   0.0638   0.0188 |  0.0122
+  D-ref     0.0600   0.0475   0.0800   0.0550 |   0.0800   0.0606   0.0194 |  0.0119
+  P-win     0.0606   0.0606   0.0606   0.0303 |   0.0606   0.0530   0.0076 |  0.0276
+  P-ref     0.0758   0.0152   0.0606   0.0758 |   0.0758   0.0568   0.0189 |  0.0285
+  bR1b      0.0725   0.0725   0.0875   0.0500 |   0.0875   0.0706   0.0169 |  0.0128   (bootstrap: printed only)
+  bR1c      0.0725   0.0725   0.0825   0.0775 |   0.0825   0.0762   0.0063 |  0.0133   (bootstrap: printed only)
+  bR1d      0.0825   0.0950   0.1200   0.0725 |   0.1200   0.0925   0.0275 |  0.0145   (bootstrap: printed only)
+  bD-ref    0.0725   0.0800   0.1075   0.0725 |   0.1075   0.0831   0.0244 |  0.0138   (bootstrap: printed only)
+
+  NF 12000  (2000 pooled groups per level)
+  crit     level 1  level 2  level 3  level 4 |      max     mean   excess |      SE
+  R1b       0.0478   0.0504   0.0500   0.0507 |   0.0507   0.0497   0.0009 |  0.0020
+  R1c       0.0478   0.0488   0.0512   0.0536 |   0.0536   0.0503   0.0033 |  0.0020
+  R1d       0.0516   0.0498   0.0499   0.0494 |   0.0516   0.0502   0.0014 |  0.0020
+  D-ref     0.0476   0.0527   0.0491   0.0512 |   0.0527   0.0501   0.0026 |  0.0020
+  P-win     0.0485   0.0495   0.0465   0.0515 |   0.0515   0.0490   0.0025 |  0.0048
+  P-ref     0.0445   0.0570   0.0445   0.0515 |   0.0570   0.0494   0.0076 |  0.0048
+  bR1b      0.0645   0.0692   0.0686   0.0656 |   0.0692   0.0670   0.0022 |  0.0023   (bootstrap: printed only)
+  bR1c      0.0653   0.0656   0.0676   0.0708 |   0.0708   0.0673   0.0035 |  0.0023   (bootstrap: printed only)
+  bR1d      0.0814   0.0792   0.0803   0.0792 |   0.0814   0.0800   0.0014 |  0.0025   (bootstrap: printed only)
+  bD-ref    0.0677   0.0727   0.0698   0.0723 |   0.0727   0.0706   0.0020 |  0.0023   (bootstrap: printed only)
+
+  SIDE BY SIDE  excess = max - mean
+  crit      max NF 400         mean       excess | max NF 12000         mean       excess
+  R1b           0.0675       0.0556       0.0119 |       0.0507       0.0497       0.0009
+  R1c           0.0600       0.0556       0.0044 |       0.0536       0.0503       0.0033
+  R1d           0.0825       0.0638       0.0188 |       0.0516       0.0502       0.0014
+  D-ref         0.0800       0.0606       0.0194 |       0.0527       0.0501       0.0026
+  P-win         0.0606       0.0530       0.0076 |       0.0515       0.0490       0.0025
+  P-ref         0.0758       0.0568       0.0189 |       0.0570       0.0494       0.0076
+
+====================================================================================================
+c5_nfcheck.py done, exit 0  (T PASS, R0 PASS; nothing written)
+====================================================================================================

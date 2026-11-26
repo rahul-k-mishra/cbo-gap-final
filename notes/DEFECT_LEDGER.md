@@ -5373,8 +5373,150 @@ instruction of 2026-10-15.
     recorded here from memory or by hand. Part T tallies it from the
     log's 288 per-cell lines (T1 288 distinct cells, T2 the yes counts
     equal the log's HEADLINE COUNTS, T3 none fires both).
-  - Results: PENDING Rahul's run; log to be logs/c5-nfcheck-20261125.log.
-    Nothing is recorded until it is pasted.
+  - Results (recorded 2026-11-26; every number below is copied from
+    logs/c5-nfcheck-20261125.log: c5_nfcheck.py sha256 e2a78d64...12a6,
+    c5_analysis.py sha256 55e7e517...7ce9, laptop, python 3.12.3, numpy
+    2.5.3, 4 workers, exit 0, nothing written; T PASS; R0 PASS against
+    logs/c5-analysis-a0py-20261125.log and
+    logs/c5-analysis-null-20261101.log, 19 lines identical each).
+    Also logs/c5-analysis-null-nfdefault-20261125.log: c5_analysis.py
+    --null-only with no --nf, same sha256 55e7e517...7ce9, exit 0; its
+    fixture span (19 lines, "NULL FIXTURE" to "NULL RATE P-ref") is
+    identical, string for string, to the same span of the readings log,
+    the 2026-11-01 null log and the nfcheck log's N0 (checked by Claude
+    with diff; no number computed). The --nf change left the default run
+    unchanged.
+  - Part T, as printed:
+                         R1c yes   R1c no    total
+        R1b yes (PERSISTS)    0        5        5
+        R1b no               47      236      283
+        total                47      241      288
+      fired neither R1b nor R1c: 236 of 288
+      did not fire R1c (the cells that could have fired R1b): 241 of 288
+  - Part N, per-level rates, max (the rule's r), mean, excess = max -
+    mean, SE, as printed (bootstrap rows printed only, deciding nothing):
+      NF 400  (66 pooled groups per level)
+      crit     level 1  level 2  level 3  level 4 |      max     mean   excess |      SE
+      R1b       0.0675   0.0600   0.0575   0.0375 |   0.0675   0.0556   0.0119 |  0.0115
+      R1c       0.0600   0.0500   0.0575   0.0550 |   0.0600   0.0556   0.0044 |  0.0115
+      R1d       0.0625   0.0725   0.0825   0.0375 |   0.0825   0.0638   0.0188 |  0.0122
+      D-ref     0.0600   0.0475   0.0800   0.0550 |   0.0800   0.0606   0.0194 |  0.0119
+      P-win     0.0606   0.0606   0.0606   0.0303 |   0.0606   0.0530   0.0076 |  0.0276
+      P-ref     0.0758   0.0152   0.0606   0.0758 |   0.0758   0.0568   0.0189 |  0.0285
+      bR1b      0.0725   0.0725   0.0875   0.0500 |   0.0875   0.0706   0.0169 |  0.0128
+      bR1c      0.0725   0.0725   0.0825   0.0775 |   0.0825   0.0762   0.0063 |  0.0133
+      bR1d      0.0825   0.0950   0.1200   0.0725 |   0.1200   0.0925   0.0275 |  0.0145
+      bD-ref    0.0725   0.0800   0.1075   0.0725 |   0.1075   0.0831   0.0244 |  0.0138
+      NF 12000  (2000 pooled groups per level)
+      crit     level 1  level 2  level 3  level 4 |      max     mean   excess |      SE
+      R1b       0.0478   0.0504   0.0500   0.0507 |   0.0507   0.0497   0.0009 |  0.0020
+      R1c       0.0478   0.0488   0.0512   0.0536 |   0.0536   0.0503   0.0033 |  0.0020
+      R1d       0.0516   0.0498   0.0499   0.0494 |   0.0516   0.0502   0.0014 |  0.0020
+      D-ref     0.0476   0.0527   0.0491   0.0512 |   0.0527   0.0501   0.0026 |  0.0020
+      P-win     0.0485   0.0495   0.0465   0.0515 |   0.0515   0.0490   0.0025 |  0.0048
+      P-ref     0.0445   0.0570   0.0445   0.0515 |   0.0570   0.0494   0.0076 |  0.0048
+      bR1b      0.0645   0.0692   0.0686   0.0656 |   0.0692   0.0670   0.0022 |  0.0023
+      bR1c      0.0653   0.0656   0.0676   0.0708 |   0.0708   0.0673   0.0035 |  0.0023
+      bR1d      0.0814   0.0792   0.0803   0.0792 |   0.0814   0.0800   0.0014 |  0.0025
+      bD-ref    0.0677   0.0727   0.0698   0.0723 |   0.0727   0.0706   0.0020 |  0.0023
+  - What the rates say, read from the tables only.
+    (a) At NF 12000 the mean of the four per-level rates of every
+        t-based criterion lies between 0.0490 (P-win) and 0.0503 (R1c),
+        each within one SE of 0.05 (SE 0.0020 for R1b to D-ref, 0.0048
+        for the pooled rules). That is a measurement consistent with the
+        nominal 0.05; it is not a claim that the rates equal 0.05.
+    (b) The NF 400 r (0.0675, 0.0600, 0.0825, 0.0800 for R1b, R1c, R1d,
+        D-ref; 0.0606 and 0.0758 for P-win and P-ref) are each above the
+        NF 12000 r (0.0507, 0.0536, 0.0516, 0.0527; 0.0515, 0.0570). The
+        NF 400 excess was 0.0119 (R1b), 0.0188 (R1d), 0.0194 (D-ref) and
+        0.0189 (P-ref), but 0.0044 for R1c and 0.0076 for P-win, so "the
+        NF 400 rates were inflated by 0.012 to 0.019" holds for R1b, R1d,
+        D-ref and P-ref, not for R1c or P-win.
+    (c) Correction to c5_nfcheck.py's own docstring. Its READING says
+        "The NF 12000 excess is mostly the second" (a real difference
+        between noise levels). That sentence was a prediction written
+        before the run. The printed NF 12000 excesses (0.0009 to 0.0033
+        for R1b to D-ref, 0.0025 and 0.0076 for P-win and P-ref) are each
+        less than twice their SE, the size the same docstring gives for
+        max-of-four selection noise alone (about one SE). The run does
+        not support that sentence and the script cannot separate the two
+        parts; it is not used. The docstring is left as written.
+    (d) The bootstrap versions sit above the t-based ones at NF 12000:
+        at every level each bootstrap rate (0.0645 to 0.0814) is above
+        the same criterion's t-based rate (0.0476 to 0.0536). See C5
+        BOOTSTRAP JUSTIFICATION below.
+  - Nothing above changes a verdict: the verdicts keep the NF 400 rates
+    and the NF 400 status (all "used, rate printed").
+  C5 HEADLINE COUNTS AT THE NF 12000 RATES (Claude, 2026-11-26, at
+  Rahul's instruction; a separate measurement BESIDE the recorded NF 400
+  comparison in C5 READINGS, which stands unchanged: observed 5, 47, 71,
+  15 against expected 19.4, 17.3, 23.8, 23.0 at r 0.068, 0.060, 0.083,
+  0.080).
+  - Script: scripts/c5_headline_nf.py (docstring fixed before its first
+    run). It reruns c5_analysis.null_fixture at NF 400 and 12000, checks
+    both against logs/c5-nfcheck-20261125.log to 4 decimals (R2) and the
+    NF 400 span against the readings log (R0), reproduces each recorded
+    headline line string for string (H2), and then prints, for R1b, R1c,
+    R1d and D-ref, the expected count 288 x r and the binomial upper tail
+    P(X >= observed) at three rates: A the recorded NF 400 max, B the NF
+    12000 max (same rule, larger fixture), C the NF 12000 mean. No status,
+    no verdict, no lower tail (no deficit test was pre-specified and none
+    is added).
+  - Why the inflated rates cut differently, fixed before the run.
+    P(X >= x | 288, p) is nondecreasing in p, so a too-large r gives a
+    too-large upper tail for every criterion. For R1c and R1d the
+    recorded reading is an excess (observed 47 and 71 above expected 17.3
+    and 23.8): a too-large r made that excess harder to show, so the
+    inflation was conservative for them. For R1b and D-ref the recorded
+    reading is the description "fewer than the number expected by chance"
+    (observed 5 and 15 below expected 19.4 and 23.0): a too-large r
+    inflates the expected count and so enlarges the shortfall, which is
+    not conservative for that description. Every NF 12000 r and mean in
+    the table above is below the NF 400 r of the same criterion, so the
+    script must show expected and tail falling for all four; which side of
+    expected each observed count lands on at B and C is read from the log.
+  - Results: PENDING Rahul's run; log to be
+    logs/c5-headline-nf-20261126.log. Nothing is recorded until it is
+    pasted.
+  C5 BOOTSTRAP JUSTIFICATION AT NF 12000 (Claude, 2026-11-26, at Rahul's
+  instruction; numbers from logs/c5-nfcheck-20261125.log and, for NF 400,
+  the identical fixture spans of logs/c5-analysis-null-20261101.log and
+  logs/c5-analysis-a0py-20261125.log).
+  - What was stated. c5_analysis.py's INTERVALS section and this entry's
+    INTERVALS paragraph (2026-11-01, before any C5 run) justify replacing
+    the percentile-bootstrap intervals with Student t intervals by the
+    null fixture "showing the paired and two-sample percentile intervals
+    at n = 15 firing above 0.10 at one noise level", so that under the
+    rule (r > 0.10: NOT USED) D-win and D-ref could not have been
+    verdicts.
+  - What was measured then (NF 400, 400 cells per level): bR1d (paired)
+    0.1200 and bD-ref (two-sample) 0.1075, both at level s 0.10 e 0.20,
+    the only level where either exceeded 0.10; SE 0.0145 and 0.0138.
+  - What is measured now (NF 12000): bR1d max 0.0814, bD-ref max 0.0727,
+    and no bootstrap rate at any level above 0.0814; NF 400 excess 0.0275
+    and 0.0244, NF 12000 excess 0.0014 and 0.0020. Under the rule as
+    fixed, neither would have been NOT USED at NF 12000: both would have
+    been "used, rate printed". The stated empirical justification was an
+    artifact of the 400-cell fixture's Monte Carlo noise and does not
+    survive the larger fixture.
+  - Decision unchanged: the verdicts stay on Student t intervals. The
+    switch was fixed on 2026-11-01, before any C5 run, so it was not
+    chosen by the C5 data; it stands on its own grounds, that t intervals
+    on per-realization slopes use the n - 1 degrees of freedom the
+    percentile bootstrap ignores and are exact for normal slopes. For the
+    record, and not as a justification added after the fact: at NF 12000
+    every bootstrap rate is above the t-based rate of the same criterion
+    at the same level (point (d) above), the bootstrap means being 0.0670
+    to 0.0800 and the t-based means 0.0497 to 0.0503.
+  - Not rewritten: c5_analysis.py's INTERVALS section and the 2026-11-01
+    INTERVALS paragraph above stay as written; they record what was
+    measured and believed then. Any manuscript sentence on the interval
+    choice must say all three things: chosen before the runs; the
+    400-cell fixture put two bootstrap criteria above 0.10 at one level;
+    the 12000-cell fixture does not. Decided in the single editing pass
+    of N45, under rules 8 and 10.
+  - No verdict changes: the bootstrap intervals decided nothing at any
+    time.
   GHKV2025 CITATION (Claude, 2026-11-03; Rahul's instruction to close the
   ghkv2025 items against the text).
   - Version read: ~/cbo-refs/ghkv2025-2505.08669.pdf, first page
