@@ -6172,8 +6172,38 @@ instruction of 2026-10-15.
     was reader checks only (G-SRC on the archive, the 39 gate
     trajectories found in the 18 rerun folders, plan-derived columns
     matched); none evolves a trajectory. REMAINING item (5) is open.
+  QUEUE DECISIONS (Rahul, 2026-11-28, on Claude's proposal of the
+  dtref family: profile, gate item, drill item, shards 0 to 8, rules
+  JD, AD, GV, GF, R1D, F2D, R2D, IMG; nothing written or loaded yet).
+  - RULE 22: dtref.py is added to the queue's families. The CLAUDE.md
+    amendment is applied in the same commit as the rerunq.py dtref
+    family, so that the rule never names a family the code lacks.
+  - IMG: REGATE. After an image change R1 halts as for every family;
+    set-python is refused for the dtref family, and the recovery is a
+    release mode "regate", which requires a detcheck pass on the new
+    image recorded in ENVIRONMENT.md and adds a new gate attempt before
+    the halted shard; drill and shards then use the newest passing gate
+    folder (GF). Reasoning, as Rahul gave it: set-python cannot work
+    here, because the gate folder records the gate's own python and
+    every later shard would exit 2 on the gate-folder check; a plain
+    halt would cost the completed shards; image changes are outside
+    Rahul's control, and one happened during C5's 25 days (N45, C5
+    IMAGE SPLIT); regate keeps rule 16 in force by requiring the
+    detcheck pass on the new image.
+  - BINDING, second half of IMG: dtref_analysis.py is written with
+    two-image admission from the start, on the A0-PY pattern: it
+    accepts a second interpreter only on committed bitcmp and detcheck
+    evidence, exactly as c5_analysis.py does after A0-PY, whether or not
+    regate is ever used. Why: c5_analysis.py was written assuming one
+    image and then refused a decision already taken, which cost a day.
+  - DRILL: pending Rahul's decision, after Claude's answer on whether
+    run mode with --stop-after and --resume-from can serve as the drill
+    without a new dtref.py mode.
+  - Order: Rahul runs the laptop gate first; if the wrapper fails on
+    real inputs, the queue design waits.
   STATUS: framing DECIDED and APPROVED; scope DECIDED (CONC, PROBEARM,
-  ONSET, 2026-11-28); script written, gate not run; OPEN.
+  ONSET, 2026-11-28); script written, gate not run; queue decisions
+  rule 22 and IMG taken, drill pending; OPEN.
 
 ## Checked and found sound
 
