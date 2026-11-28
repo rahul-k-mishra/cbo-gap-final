@@ -6111,10 +6111,41 @@ instruction of 2026-10-15.
     priced CONC, TAU8, SIGMA, ANISO and ONSET-R. Under this decision
     TAU8, SIGMA, ANISO and ONSET-R drop out and PROBEARM comes in; CONC
     stays. N46's 2897760 task-second figure was priced on that other
-    list and does not apply to this scope. The figure for this scope is
-    whatever "dtref.py --mode plan --rows CONC,PROBEARM,ONSET" prints,
-    once Rahul has run it and pasted the output; until then there is
-    none.
+    list and does not apply to this scope.
+  - COST FOR THIS SCOPE (recorded 2026-11-28 from
+    logs/dtref-plan-scope-20261128.log, --nshards 1, and
+    logs/dtref-plan-scope-9-20261128.log, --nshards 9; both laptop,
+    python 3.12.3, numpy 2.5.3, workers 4, exit 0, nothing written;
+    dtref.py sha256 9fc0be0b...cc02b, rerun.py 52864b42...dacbd,
+    rerunlib.py 31f4b360...0e430, costprobe2.py ea5cb2e1...9f64b,
+    calprec2.py 3947d7ba...e511a, each equal to the committed file,
+    checked by Claude with sha256sum; G-SRC PASS, mechanism and
+    regimemap; plan rerun-plan-20261028-212945, 2289 cells; walls 331
+    units from costprobe2-s0-kaggle-20261010-103952 and
+    costprobe2-s1-kaggle-20261011-101343). The two logs are identical
+    above the SHARDS section except "shard 0 of 1" / "shard 0 of 9".
+    As printed:
+      CONC       L1  tasks   2160  task-seconds        31972
+      CONC       L2  tasks   2160  task-seconds        63944
+      PROBEARM   L1  tasks   2160  task-seconds        31972
+      PROBEARM   L2  tasks   2160  task-seconds        63944
+      ONSET      L1  tasks   1584  task-seconds        52530
+      ONSET      L2  tasks   1584  task-seconds       105060
+      total     tasks  11808  task-seconds       349420  (4 worker(s): 87355 s under perfect scaling)
+      gate: 6 groups, 26 tasks, task-seconds 362
+      smallest shard count at the target: 9   (target 10800 s)
+      shards 0 to 8: each 1312 tasks, load 9706 s
+    This figure, 349420 task-seconds, is the cost of this scope and
+    SUPERSEDES the 2897760 task-second figure, which was priced on the
+    earlier row list. It is a LOWER BOUND: perfect scaling over 4
+    workers, on the costprobe2 unit walls times q (2 at L1, 4 at L2).
+    The nine identical per-shard loads come from the estimator (the
+    longest-processing-time assignment of estimated task walls), not
+    from measurement; no DTREF task has been timed. A third log,
+    logs/dtref-plan-scope-K-20261128.log, is an argparse error ("invalid
+    int value: 'K'"): Claude's command block left the placeholder K in
+    a copy-pasteable line. It ran nothing and is kept, not deleted
+    (rule: logs are never removed).
   - The 0.96 (first paragraph of the abstract: "an apparent
     dimension-dependent degradation of the fitted exponent of 0.96 from
     d=2 to d=40"). NOT TRACED to any row: the body (line 386) says only

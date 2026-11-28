@@ -1,0 +1,58 @@
+
+====================================================================================================
+CBO-GAP dtref  (ledger N46: time-step refinement, DTREF)  mode plan
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-43-generic-x86_64-with-glibc2.39
+  workers  4
+  dtref.py      sha256 9fc0be0b32653f80a834f11dca440f900e906cbc93e793ed4e1567e988cbc02b
+  rerun.py      sha256 52864b4240b4bf0c4e4ef1fabeae1a4ac7ad3342991188e3a487dd1bb55dacbd
+  rerunlib.py   sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  calprec2.py   sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  mode     plan   shard 0 of 1
+  rows     CONC,PROBEARM,ONSET
+  plan     rerun-plan-20261028-212945
+  timing   costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343
+  levels   L0 dt 0.01 q 1; L1 dt 0.005 q 2; L2 dt 0.0025 q 4   (run: L1, L2; gate: P0, W0, W1, W2)
+  dynamics rerunlib.realise -> archived one_realisation, unmodified; rerunlib.DT set per level; generator wrapped (BridgeRNG)
+  seeds    trajectory SeedSequence(rerunlib.traj_key), kind 81, unchanged at every level; bridge SeedSequence((20261016, 101, owner, coord_fields, rep, level))
+  checks   gate A1 A2 (A3 diagnostic) B C RSS; run C; bridge tolerance 1e-12
+  budget   12000 MB for concurrent tasks
+
+====================================================================================================
+G-SRC  archived one_realisation shape (the wrapper's assumption)
+====================================================================================================
+  mechanism    PASS
+  regimemap    PASS
+  G-SRC PASS  2 module(s)
+
+====================================================================================================
+IN  plan, walls
+====================================================================================================
+  plan rerun-plan-20261028-212945 (2289 cells, rerun_plan.csv sha256 5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea)
+  walls 331 units from costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343
+
+====================================================================================================
+TASKS per row and level (task-seconds: costprobe2 unit wall x q; a lower bound, perfect scaling)
+====================================================================================================
+  CONC       L1  tasks   2160  task-seconds        31972
+  CONC       L2  tasks   2160  task-seconds        63944
+  PROBEARM   L1  tasks   2160  task-seconds        31972
+  PROBEARM   L2  tasks   2160  task-seconds        63944
+  ONSET      L1  tasks   1584  task-seconds        52530
+  ONSET      L2  tasks   1584  task-seconds       105060
+  total     tasks  11808  task-seconds       349420  (4 worker(s): 87355 s under perfect scaling)
+
+  gate: 6 groups, 26 tasks, task-seconds 362
+
+====================================================================================================
+SHARDS  (load = task-seconds / workers; target 10800 s)
+====================================================================================================
+  smallest shard count at the target: 9
+    shard   0: 11808 tasks, load    87355 s
+
+====================================================================================================
+dtref.py plan done, exit 0  (nothing written)
+====================================================================================================

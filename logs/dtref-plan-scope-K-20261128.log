@@ -1,0 +1,7 @@
+usage: dtref.py [-h] --mode {plan,gate,run} [--rows ROWS] [--plan PLAN]
+                [--timing TIMING] [--committed COMMITTED] [--gate GATE]
+                [--workers WORKERS] [--budget-mb BUDGET_MB] [--shard SHARD]
+                [--nshards NSHARDS] [--target TARGET] [--kmax KMAX]
+                [--stop-after STOP_AFTER] [--resume-from RESUME_FROM]
+                [--archive ARCHIVE] [--outdir OUTDIR]
+dtref.py: error: argument --nshards: invalid int value: 'K'
