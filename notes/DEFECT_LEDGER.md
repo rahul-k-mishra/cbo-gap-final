@@ -5475,9 +5475,79 @@ instruction of 2026-10-15.
     the table above is below the NF 400 r of the same criterion, so the
     script must show expected and tail falling for all four; which side of
     expected each observed count lands on at B and C is read from the log.
-  - Results: PENDING Rahul's run; log to be
-    logs/c5-headline-nf-20261126.log. Nothing is recorded until it is
-    pasted.
+  - Results (recorded 2026-11-28 from logs/c5-headline-nf-20261126.log
+    only): laptop, python 3.12.3, numpy 2.5.3, 4 workers; script sha256
+    29c7c532...4c010, c5_analysis.py 55e7e517...7ce9, c5_nfcheck.py
+    e2a78d64...12a6, each equal to the committed file (checked by Claude
+    with sha256sum); B 10000; exit 0; nothing written. H1 PASS (288
+    cells; observed R1b 5, R1c 47, R1d 71, D-ref 15), R0 PASS (19 lines
+    identical to the readings log), R2 PASS, H2 PASS, M1 PASS.
+  - Headline counts at three rates, as printed (288 cells; A is the
+    recorded comparison; B and C are descriptions beside it, no status,
+    no verdict):
+      crit    obs |   rate                    r  expected P(X >= obs) | position
+      R1b       5 | A max NF 400         0.0675     19.44           1 | observed below expected
+      R1b       5 | B max NF 12000       0.0507     14.59      0.9991 | observed below expected
+      R1b       5 | C mean NF 12000      0.0497     14.32      0.9988 | observed below expected
+
+      R1c      47 | A max NF 400         0.0600     17.28   5.195e-10 | observed above expected
+      R1c      47 | B max NF 12000       0.0536     15.43    1.25e-11 | observed above expected
+      R1c      47 | C mean NF 12000      0.0503     14.49   1.451e-12 | observed above expected
+
+      R1d      71 | A max NF 400         0.0825     23.76   4.787e-17 | observed above expected
+      R1d      71 | B max NF 12000       0.0516     14.86   1.839e-28 | observed above expected
+      R1d      71 | C mean NF 12000      0.0502     14.45     3.5e-29 | observed above expected
+
+      D-ref    15 | A max NF 400         0.0800     23.04      0.9742 | observed below expected
+      D-ref    15 | B max NF 12000       0.0527     15.19      0.5572 | observed below expected
+      D-ref    15 | C mean NF 12000      0.0501     14.44      0.4775 | observed above expected
+  - Direction against A, as printed:
+      crit   rate              expected       tail   position at A -> here
+      R1b    max NF 12000         falls      falls   observed below expected -> observed below expected
+      R1b    mean NF 12000        falls      falls   observed below expected -> observed below expected
+      R1c    max NF 12000         falls      falls   observed above expected -> observed above expected
+      R1c    mean NF 12000        falls      falls   observed above expected -> observed above expected
+      R1d    max NF 12000         falls      falls   observed above expected -> observed above expected
+      R1d    mean NF 12000        falls      falls   observed above expected -> observed above expected
+      D-ref  max NF 12000         falls      falls   observed below expected -> observed below expected
+      D-ref  mean NF 12000        falls      falls   observed below expected -> observed above expected
+    Expected count and tail fall for all four criteria at B and C, as
+    the entry required before the run.
+  - D-ref, explicitly. At rate C (the NF 12000 mean) D-ref's observed 15
+    crosses from below its expected count to above it (15 against
+    14.44); at A (23.04) and B (15.19) it stays below. Its position
+    relative to the expected count is therefore not stable across the
+    three rates: the count sits essentially at its expected count, with
+    upper tail 0.5572 at B and 0.4775 at C. READING: D-ref is at chance.
+    Neither "below chance" nor "above chance" is supportable for it.
+    "At chance" here describes the count against the expected count
+    only. It is not a claim that D-ref's rate equals the null rate, nor
+    that the 4000000 and 50000 references agree: rule 10 forbids reading
+    the count as an equivalence either way, and the no-equivalence
+    paragraph of C5 READINGS applies unchanged.
+  - What the recomputation does to each of the four readings.
+      R1c: strengthened. Still above expected at every rate; the upper
+           tail falls by two orders of magnitude (5.195e-10 at A to
+           1.451e-12 at C).
+      R1d: strengthened. Still above expected at every rate; the upper
+           tail falls by twelve orders of magnitude (4.787e-17 at A to
+           3.5e-29 at C).
+      R1b: unchanged in substance. Observed 5 is still far below
+           expected at every rate (19.44, 14.59, 14.32), tail 0.9988 or
+           more. Part T above showed that only 241 of the 288 cells,
+           those that did not fire R1c, were free to fire R1b, since the
+           two criteria point opposite ways.
+      D-ref: moves from below chance (at A) to at chance (see above).
+  - No verdict is revised. Every verdict keeps the NF 400 rates and the
+    NF 400 status, and the recorded NF 400 comparison in C5 READINGS
+    stands as recorded. Its D-ref sentence ("fewer than the number
+    expected by chance at its measured null rate") remains true at rate
+    A, the rate it names; its conclusion ("did not fire more often than
+    chance; that is all the counts show") holds at all three rates. That
+    entry already stated that no deficit test exists, so "below chance"
+    was never a tested finding; the recomputation removes even the
+    description at the NF 12000 mean, and any manuscript sentence on
+    D-ref must use the at-chance reading, not "fewer than chance".
   C5 BOOTSTRAP JUSTIFICATION AT NF 12000 (Claude, 2026-11-26, at Rahul's
   instruction; numbers from logs/c5-nfcheck-20261125.log and, for NF 400,
   the identical fixture spans of logs/c5-analysis-null-20261101.log and

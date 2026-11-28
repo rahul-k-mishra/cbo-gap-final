@@ -1,0 +1,115 @@
+
+====================================================================================================
+CBO-GAP c5_headline_nf  (ledger N45, after the C5 READINGS; re-makes no verdict)  --  reads only, writes nothing
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-43-generic-x86_64-with-glibc2.39
+  workers  4
+  script   sha256 29c7c5322e964f219b6e4bbad6310179cfcd6e9db15214c3bd738429981c4010
+  c5_analysis.py sha256 55e7e517a6740042b012ab5cefb7ef12c728a315ab6dca57131481bb05117ce9
+  c5_nfcheck.py  sha256 e2a78d640149d3b4dead0796c557c1f64a145d03e6434cef769023c38f6312a6
+  readings log logs/c5-analysis-a0py-20261125.log   nfcheck log logs/c5-nfcheck-20261125.log
+  B 10000  levels [(0.02, 0.05), (0.05, 0.1), (0.1, 0.2), (0.2, 0.3)]  NF 400 and 12000  seeds SeedSequence((20261101, 99) + (level, cell, set))
+  H1 PASS  n 288 cells; observed R1b 5, R1c 47, R1d 71, D-ref 15
+
+====================================================================================================
+FIXTURE AT NF 400 (as c5_analysis.py prints it)
+====================================================================================================
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 400 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.068    0.060    0.062    0.060    0.061    0.076    0.072    0.072    0.083    0.072
+  s 0.05 e 0.10    0.060    0.050    0.072    0.048    0.061    0.015    0.072    0.072    0.095    0.080
+  s 0.10 e 0.20    0.058    0.058    0.083    0.080    0.061    0.061    0.087    0.083    0.120    0.107
+  s 0.20 e 0.30    0.037    0.055    0.037    0.055    0.030    0.076    0.050    0.077    0.072    0.072
+  bootstrap bR1b    largest over levels 0.087 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.083 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.120 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.107 (printed only; decides nothing)
+  NULL RATE R1b    largest over levels 0.068 (nominal 0.05): used, rate printed
+  NULL RATE R1c    largest over levels 0.060 (nominal 0.05): used, rate printed
+  NULL RATE R1d    largest over levels 0.083 (nominal 0.05): used, rate printed
+  NULL RATE D-ref  largest over levels 0.080 (nominal 0.05): used, rate printed
+  NULL RATE P-win  largest over levels 0.061 (nominal 0.05): used, rate printed
+  NULL RATE P-ref  largest over levels 0.076 (nominal 0.05): used, rate printed
+  R0 PASS against logs/c5-analysis-a0py-20261125.log: 19 lines identical
+
+====================================================================================================
+FIXTURE AT NF 12000 (no status: the verdicts keep the NF 400 status)
+====================================================================================================
+
+====================================================================================================
+NULL FIXTURE  synthetic cells with nothing to find (N40 commitment): rejection rate per criterion
+====================================================================================================
+  per cell 15 realizations, log E_J = a + (-1 + delta) log J + eps; true S = -1 everywhere, no curvature,
+  no difference; 12000 cells per level; B 10000; every rejection below is a false one
+  level                R1b      R1c      R1d    D-ref    P-win    P-ref     bR1b     bR1c     bR1d   bD-ref
+  s 0.02 e 0.05    0.048    0.048    0.052    0.048    0.049    0.044    0.065    0.065    0.081    0.068
+  s 0.05 e 0.10    0.050    0.049    0.050    0.053    0.050    0.057    0.069    0.066    0.079    0.073
+  s 0.10 e 0.20    0.050    0.051    0.050    0.049    0.046    0.044    0.069    0.068    0.080    0.070
+  s 0.20 e 0.30    0.051    0.054    0.049    0.051    0.051    0.051    0.066    0.071    0.079    0.072
+  bootstrap bR1b    largest over levels 0.069 (printed only; decides nothing)
+  bootstrap bR1c    largest over levels 0.071 (printed only; decides nothing)
+  bootstrap bR1d    largest over levels 0.081 (printed only; decides nothing)
+  bootstrap bD-ref  largest over levels 0.073 (printed only; decides nothing)
+  r R1b    largest over levels 0.051 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r R1c    largest over levels 0.054 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r R1d    largest over levels 0.052 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r D-ref  largest over levels 0.053 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r P-win  largest over levels 0.051 at NF 12000 (no status: the verdicts keep the NF 400 status)
+  r P-ref  largest over levels 0.057 at NF 12000 (no status: the verdicts keep the NF 400 status)
+
+====================================================================================================
+CHECKS
+====================================================================================================
+  R2 PASS  NF 400 and NF 12000: every per-level rate, max and mean of R1b, R1c, R1d, D-ref equals the nfcheck log
+  H2 PASS  line A reproduces the readings log's headline line for R1b, R1c, R1d, D-ref
+  M1 PASS  the upper tail moves with the rate for every criterion
+
+====================================================================================================
+HEADLINE COUNTS AT THREE RATES  (288 cells; A is the recorded comparison; B and C are descriptions beside it, no status, no verdict)
+====================================================================================================
+  crit    obs |   rate                    r  expected P(X >= obs) | position
+  R1b       5 | A max NF 400         0.0675     19.44           1 | observed below expected
+  R1b       5 | B max NF 12000       0.0507     14.59      0.9991 | observed below expected
+  R1b       5 | C mean NF 12000      0.0497     14.32      0.9988 | observed below expected
+
+  R1c      47 | A max NF 400         0.0600     17.28   5.195e-10 | observed above expected
+  R1c      47 | B max NF 12000       0.0536     15.43    1.25e-11 | observed above expected
+  R1c      47 | C mean NF 12000      0.0503     14.49   1.451e-12 | observed above expected
+
+  R1d      71 | A max NF 400         0.0825     23.76   4.787e-17 | observed above expected
+  R1d      71 | B max NF 12000       0.0516     14.86   1.839e-28 | observed above expected
+  R1d      71 | C mean NF 12000      0.0502     14.45     3.5e-29 | observed above expected
+
+  D-ref    15 | A max NF 400         0.0800     23.04      0.9742 | observed below expected
+  D-ref    15 | B max NF 12000       0.0527     15.19      0.5572 | observed below expected
+  D-ref    15 | C mean NF 12000      0.0501     14.44      0.4775 | observed above expected
+
+  A in c5_analysis.py's format (must equal the readings log, H2):
+  R1b    observed   5   expected   19.4 at null rate 0.068   P(X >= 5) = 1
+  R1c    observed  47   expected   17.3 at null rate 0.060   P(X >= 47) = 5.19e-10
+  R1d    observed  71   expected   23.8 at null rate 0.083   P(X >= 71) = 4.79e-17
+  D-ref  observed  15   expected   23.0 at null rate 0.080   P(X >= 15) = 0.974
+
+====================================================================================================
+DIRECTION AGAINST A  (rule in the docstring)
+====================================================================================================
+  crit   rate              expected       tail   position at A -> here
+  R1b    max NF 12000         falls      falls   observed below expected -> observed below expected
+  R1b    mean NF 12000        falls      falls   observed below expected -> observed below expected
+  R1c    max NF 12000         falls      falls   observed above expected -> observed above expected
+  R1c    mean NF 12000        falls      falls   observed above expected -> observed above expected
+  R1d    max NF 12000         falls      falls   observed above expected -> observed above expected
+  R1d    mean NF 12000        falls      falls   observed above expected -> observed above expected
+  D-ref  max NF 12000         falls      falls   observed below expected -> observed below expected
+  D-ref  mean NF 12000        falls      falls   observed below expected -> observed above expected
+
+====================================================================================================
+c5_headline_nf.py done, exit 0  (H1 PASS, H2 PASS, R0 PASS, R2 PASS, M1 PASS; nothing written)
+====================================================================================================
