@@ -131,10 +131,29 @@ RUN  (--mode run; Kaggle; one shard)
   --rows must be given explicitly in run mode (the scope is fixed in the
   queue definition before launch, N46: every row the abstract quotes;
   Table 1 quotes no slope). Plan and gate default to all 21 rows.
-  Tasks: every cell of --rows (rerun.tasks_for: owner rows only, every
-  diffusion, every rep 0 .. M-1, the archived M), at L 1 and L 2. L 0 is
-  not rerun: the gate's A proves W0 = the committed row. Task tid =
-  "<rerun tid>|L<l>".
+  Tasks: every cell of --rows, every diffusion, every rep 0 .. M-1, the
+  archived M, at L 1 and L 2. L 0 is not rerun: the gate's A proves W0 =
+  the committed row. Task tid = "<rerun tid>|L<l>".
+  SHARED CELLS (K2; corrected 2026-11-28, before any Kaggle job, ledger
+  N46 SCOPE CELLS). A cell a row reads but another row owns (rerunlib's
+  sharing: same coordinates, the owner's key) is a task too, once, under
+  its owner's key and the owner's cell record, exactly as the committed
+  row that holds its dt 0.01 trajectory. Until 2026-11-28 the tasks were
+  rerun.tasks_for(cells, rows), owner rows only, which left out the 24
+  ONSET cells RMAP owns (d 10 and 40 at r 1, 1.5, 2, 3): ONSET's onsets
+  and severities at d 10 and 40 could not have been computed at any
+  level. Now: N = every (cell of a row in --rows, diffusion, rep)
+  trajectory tid, keyed with the cell's owner; the tasks are those of
+  rerun.tasks_for(cells, owners of those cells) whose tid is in N; the
+  two sets must be equal, each tid once, else exit 2 (K2). A task is
+  counted under the first row of --rows (rerunlib order) that reads it.
+  Its gate group is named by the cell record's row, which is the owner's,
+  so a shared cell's trajectories form their own gate groups (for ONSET:
+  RMAP|regimemap|centred|isotropic|-|0 and ...|anisotropic|-|0).
+  Worked example: --rows ONSET gives 90 cells x 2 diffusions x 12 reps =
+  2160 trajectory tids, 1584 from ONSET's 66 owned cells and 576 from
+  the 24 RMAP-owned cells, found in tasks_for(cells, [RMAP, ONSET]);
+  the 96 other RMAP cells are not tasks.
   Shards: est = the unit's measured costprobe2 wall x q (wall is
   proportional to K: each step is the same work; draw_initial and beta
   are per task and do not depend on dt). Longest-processing-time first:
@@ -625,9 +644,26 @@ def inputs(a):
 
 
 def traj_tasks(cells, rows):
-    rts = RR.tasks_for(cells, rows)
+    """K2 (docstring, SHARED CELLS): every trajectory a row of rows reads, once, under its owner."""
+    need = {}
+    for c in cells:
+        if c["row"] not in rows:
+            continue
+        for df in c["diffs"]:
+            for rep in range(c["M"]):
+                tid = "{}|{}".format(rl.key_str(rl.traj_key(c, c["owner"], rep)), df)
+                if tid not in need or rows.index(c["row"]) < rows.index(need[tid]):
+                    need[tid] = c["row"]
+    owners = sorted(set(c["owner"] for c in cells if c["row"] in rows), key=rl.ROWS.index)
+    rts = [t for t in RR.tasks_for(cells, owners) if t["tid"] in need]
     if len(set(t["tid"] for t in rts)) != len(rts):
         raise Stop(2, "K1: duplicate trajectory tids")
+    missing = sorted(set(need) - set(t["tid"] for t in rts))
+    if missing:
+        raise Stop(2, "K2: {} trajectory tid(s) the rows read have no owner task, first {}".format(
+            len(missing), missing[0]))
+    for t in rts:
+        t["scope_row"] = need[t["tid"]]
     return rts
 
 
@@ -646,7 +682,8 @@ def ctuple(rt):
 def mk(rt, level, phase, walls, wrapped=True, suffix=None):
     return {"tid": "{}|{}".format(rt["tid"], suffix or "L{}".format(level)), "phase": phase, "level": level,
             "wrapped": wrapped, "rt": rt, "c": ctuple(rt), "n": rt["cell"]["jinf"], "rep": rt["rep"],
-            "est": wall_of(walls, rt) * (2 ** level), "row": rt["cell"]["row"], "module": rt["cell"]["module"]}
+            "est": wall_of(walls, rt) * (2 ** level), "row": rt.get("scope_row", rt["cell"]["row"]),
+            "module": rt["cell"]["module"]}
 
 
 def run_tasks(rts, walls):
