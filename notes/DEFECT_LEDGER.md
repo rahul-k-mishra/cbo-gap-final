@@ -5527,8 +5527,8 @@ instruction of 2026-10-15.
     paragraph of C5 READINGS applies unchanged.
   - What the recomputation does to each of the four readings.
       R1c: strengthened. Still above expected at every rate; the upper
-           tail falls by two orders of magnitude (5.195e-10 at A to
-           1.451e-12 at C).
+           tail falls by between two and three orders of magnitude
+           (5.195e-10 at A to 1.451e-12 at C).
       R1d: strengthened. Still above expected at every rate; the upper
            tail falls by twelve orders of magnitude (4.787e-17 at A to
            3.5e-29 at C).
