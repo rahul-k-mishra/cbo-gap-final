@@ -6201,9 +6201,227 @@ instruction of 2026-10-15.
     without a new dtref.py mode.
   - Order: Rahul runs the laptop gate first; if the wrapper fails on
     real inputs, the queue design waits.
+  LAPTOP PRE-CHECK (Rahul, 2026-11-28). logs/dtref-gate-laptop-20261128.log;
+  run folder runs/dtref-gate-20261128-122942 (dtref_gate.csv,
+  dtref_gate_verdict.csv, dtref_params.csv, dtref_real.csv; sha256.txt
+  written by scripts/manifest.py). Laptop, python 3.12.3, numpy 2.5.3,
+  workers 1, budget 3000 MB, dtref.py sha256 9fc0be0b...cc02b (the
+  version before SCOPE CELLS below), rows CONC,PROBEARM,ONSET, plan
+  rerun-plan-20261028-212945 (2289 cells), 6 groups and 2 RSS tasks, 26
+  tasks.
+  - Reading criteria fixed before the run. Claude stated them in the
+    session before Rahul ran the gate; that statement was not committed.
+    They are dtref.py's rules A1 to A3 (docstring, THE GATE, 2026-11-03)
+    applied to an image that is not Kaggle's, and read:
+    (i) every group A1, B and C PASS, with A2 FAIL and A3 FAIL (IMAGE):
+        the wrapper changes nothing on real inputs, and A2 fails because
+        the laptop's numpy 2.5.3 and python 3.12.3 do not reproduce rows
+        written on Kaggle with numpy 2.1.3; the queue design proceeds;
+    (ii) any A1 FAIL, or any A2 FAIL with A3 PASS (WRAPPER): a wrapper
+        defect on real inputs; the queue design waits;
+    (iii) any B or C FAIL: the pairing or the bridge fails on real
+        inputs; the design waits;
+    (iv) GATE PASS: the laptop reproduces Kaggle's rows string for
+        string; not expected, and under rule 16 it would say nothing
+        about Kaggle.
+  - Branch: (i). As printed: all six groups "A1 PASS A2 FAIL A3 FAIL
+    IMAGE B PASS C PASS"; "MODULE mechanism FAIL: 4 of 5 group(s)" (the
+    fifth is its RSS task, PASS), "MODULE regimemap FAIL: 2 of 3
+    group(s)"; "GATE FAIL"; "G-FORK PASS"; G-SRC PASS for mechanism and
+    regimemap. The log does not print dtref.py's exit code (3 for GATE
+    FAIL by its docstring).
+  - RSS, the first DTREF per-worker peak RSS measured on a machine Rahul
+    ran (rule 6): RSS task at L2 on the largest-wall unit of each module,
+    304.8 MB mechanism, 536.8 MB regimemap, against the 3000 MB per-worker
+    budget (the log's 3000 MB at one worker; the queue profile's 12000 MB
+    at four workers is the same 3000 MB per worker). Wall 602 s for the
+    26 tasks at one worker (the last task's elapsed time). The Kaggle gate
+    measures RSS again, on its own task list (SCOPE CELLS below changes
+    that list).
+  - COMMITTED section: "6 of 6 gate trajectories found", in five folders
+    only: rerun-arch-s0of4-a1-kaggle-20261024-020220 (2 rows),
+    rerun-arch-s1of4-a1-kaggle-20261024-133226 (1),
+    rerun-arch-s2of4-a1-kaggle-20261024-160215 (1),
+    rerun-cal-s0of2-a1-kaggle-20261025-003238 (1),
+    rerun-cal-s1of2-a1-kaggle-20261025-050238 (1). The other 13 hold none.
+  - WHAT IT DOES NOT DO. It does not satisfy REMAINING item (5): the
+    Kaggle gate has not run. A laptop gate folder can never admit a
+    Kaggle shard: dtref.py's run mode refuses a gate folder whose python,
+    numpy or script sha256 differ from the job's (exit 2), and rerunq.py
+    (GF) passes only a gate the queue itself accepted, whose header R1D
+    holds to the Kaggle profile's expected python and numpy.
+  - The committed list. The queue profile's "committed" is these five
+    folders (Rahul, 2026-11-28). Under SCOPE CELLS the gate has 8 groups;
+    Claude's reader check (dtref.py's own gate_tasks and read_committed on
+    the committed files, counts only, before handover) finds all 8 gate
+    trajectories in the same five folders (arch-s0of4 3, arch-s1of4 1,
+    arch-s2of4 2, cal-s0of2 1, cal-s1of2 1). The Kaggle gate's COMMITTED
+    section is the record.
+  SCOPE CELLS (defect found by Claude 2026-11-28 while writing
+  dtref_analysis.py, before any Kaggle job; fixed in dtref.py, K2).
+  dtref.py built its trajectories with rerun.tasks_for(cells, rows), which
+  keeps only cells whose owner is in --rows. ONSET reads 90 cells; 24 of
+  them (d 10 and 40 at r 1, 1.5, 2, 3, three objectives) are owned by RMAP
+  and were never tasks. ONSET's onsets and severities at d 10 and 40, and
+  so the pooled onset counts the abstract quotes, could not have been
+  computed at any level. The laptop pre-check ran that version: its
+  wrapper code is unchanged by the fix (only the trajectory list
+  changes), so its reading (i) stands for the wrapper; its group list
+  lacked the two RMAP-owned groups.
+  - Fix (dtref.py docstring, RUN, SHARED CELLS): every trajectory a row of
+    --rows reads, once, under its owner's key and the owner's cell record
+    (the committed row that holds its dt 0.01 trajectory); the set must
+    equal the tasks_for(cells, owners) tasks it selects, else exit 2. A
+    task is counted under the first scope row that reads it; its gate
+    group is named by the owner (RMAP|regimemap|centred|isotropic|-|0 and
+    ...|anisotropic|-|0).
+  - Consequences, from Claude's reader check on the committed plan (counts
+    only): 6480 trajectories (CONC 2160, PROBEARM 2160, ONSET 2160, of
+    which 1584 from ONSET's own 66 cells and 576 from the 24 RMAP-owned
+    ones), so 12960 DTREF tasks; 8 gate groups, 34 gate tasks. With the
+    default rows (all 21) the list is unchanged: 60972 trajectories, equal
+    to tasks_for over all rows.
+  - The COST FOR THIS SCOPE paragraph above (349420 task-seconds, 9
+    shards) priced the old list and no longer applies. The queue
+    definition cannot name nshards until Rahul's plan run of the
+    corrected dtref.py reports the shard count; nobody computes it by
+    hand (rule 2).
+  DRILL DECIDED (Rahul, 2026-11-28): run mode with --stop-after 150 on
+  shard 0, no new dtref.py mode, as Claude proposed. The queue's drill
+  item launches "--mode run ... --gate G --shard 0 --nshards K
+  --stop-after 150.0"; its first attempt must exit 5; its second resumes
+  the first with the same arguments and must exit 5 or 0, with dtref.py's
+  read line and F2D's arithmetic; then the drill is done (rerunq.py R2D).
+  - THE GAP, recorded as Rahul instructed. stop_after is one of dtref.py's
+    resume keys (RESUME_KEYS), so a resume must repeat the stopped
+    attempt's --stop-after, and the drill's resumes stop again. The last
+    step of a long shard, a resume that runs to "not stopped" and exit 0,
+    cannot be drilled. It is first exercised by a real shard whose first
+    attempt stops. A defect there halts the queue (F2D's count and resume
+    arithmetic, R1D (f)'s read lines, R2D), so it can cost a halt but
+    cannot put a wrong or duplicated row into an accepted folder.
+  - The drill's rows repeat tasks of shard 0, which then runs from
+    scratch (its stop-after differs, so it cannot resume the drill). The
+    drill's folders are not dtref_analysis.py inputs; a tid in two of its
+    input folders stops it (exit 2).
+  QUEUE FAMILY WRITTEN (2026-11-28; all three decisions taken). Claude's
+  proposal of the rules (JD, AD, GV, GF, R1D, F2D, R2D, IMG) was made in
+  the session and not committed; scripts/rerunq.py's docstring, THE DTREF
+  FAMILY, is the record, with LDD for load. The CLAUDE.md rule 22
+  amendment is in the same commit, as decided; .github/workflows/
+  rerun-queue-admin.yml gains release mode regate (its detcheck log in
+  the "evidence" input). Checks run by Claude before handover (no project
+  number computed; fixture values synthetic; scratchpad only; kgrun,
+  kernel status and push stubbed; the real state file untouched):
+  - The dtref reader on the real laptop gate log: python 3.12.3, numpy
+    2.5.3, the five hashes, mode gate 0 of 1, rows, plan, timing, the IN
+    plan sha256, G-FORK and G-SRC PASS, "6 of 6", GATE FAIL and the
+    MODULE FAIL lines all parsed.
+  - Load: a wrong plan_sha256, a drill with no gate before it, and a
+    shard whose nshards differs from the profile's are refused; the good
+    definition loads and pins the five files.
+  - Happy path: gate PASS (GV), drill a1 exit 5, a2 resumed exit 5 (done),
+    s0 exit 0, s1 exit 5 then a2 resumed exit 0, s2 exit 0, DONE; every
+    drill and shard launched with --gate the accepted gate's folder,
+    shipped as a data folder.
+  - Halts: gate exit 3 (GATE FAIL, GV); a drill with no accepted gate
+    (GF); drill a1 exit 0 (R2D); a resumed attempt without its read line
+    (R1D (f)); wrong resume arithmetic and a read line whose M differs
+    from the folder (F2D); a hash mismatch (R1D (b)); rows short of
+    "tasks run" (F2D); a params gate that is not GF's (R1D (e)). verify
+    on a halted drill reports the same failures.
+  - IMG: a shard exit 2 on a new python halts "R2: runner exit code 2 in
+    <F>; R1: python 3.13.19, expected 3.13.18"; set-python is refused for
+    dtref; regate without a log, and with a detcheck log on another
+    python, is refused (RG2); with the right log it moves expect, inserts
+    gate-dtref-g2 before the shard, and the shard reruns from scratch as
+    a2 against the new gate. A second image change after a partial
+    attempt marks that attempt superseded, and the later resume excludes
+    it. A gate halted on a new python is regated as its own next attempt.
+    A new numpy without a matching detcheck is refused; a shard whose
+    gate-folder refusal also names script_sha256 is refused (RG1).
+  - Found and fixed in the fixture: at a gate on a new image, R1D also
+    reported the python recorded in dtref_params.csv and in
+    dtref_gate_verdict.csv, so the halt reason was never the single
+    python line RG1 requires and a gate could never be regated. Those two
+    files are now held to the header (which (a) holds to expect), so an
+    image change is one problem.
+  - The four archived schema-2 states and the current C5 state still
+    validate; show and next-wake read the C5 state unchanged.
+  DTREF ANALYSIS (scripts/dtref_analysis.py, written 2026-11-28 before
+  any DTREF shard; REMAINING item (4)). It writes nothing. Its docstring
+  fixes, in addition to N46's criterion (delta 0.01, STABLE, SHIFTED,
+  UNRESOLVED, B-RUN), these points N46 left open, decided by Claude under
+  Rahul's standing rule:
+  - Statistics. rerun_analysis.py's own code (conc_like for CONC and
+    PROBEARM; paired_gaps for ONSET) is run with the S-slope replaced by
+    the mean per-realization Delta, resampled with each cell's own index
+    matrix over the realizations kept at every level. Every such
+    statistic is linear in the cell S-slopes, so this is exactly stat(l)
+    - stat(0), resample by resample. Severity, inside onset_block beside
+    the non-linear onsets, is retyped (severity_block) and checked equal
+    to onset_block's rows on the same slopes.
+  - Window. A verdict on every window, W-ge included: the abstract quotes
+    CONC's W-ge "J >= 1/tau_0" changes, so DTREF judges that window too.
+  - Null rates measured, not assumed. N46's 0.025 holds asymptotically in
+    M; C5's fixture found percentile intervals at n 15 firing above
+    nominal. So a null fixture (BOUNDARY at mu = delta, three noise laws,
+    cell arms, contrasts of 2 and 4 cells, pooled means of 3 to 12 units,
+    n 12 and 15, NF 400, B 10000) runs first every time; per criterion
+    and family (cell, unit, pooled) r = the largest null rate; r <= 0.025
+    used, <= 0.05 used with the rate printed, above 0.05 NOT USED. That is
+    C5's rule scaled to this criterion's nominal rate.
+  - Onsets: per-level description only (onset_block at L0, L1 and L2,
+    J4 counts per level), no DTREF verdict: delta is a slope margin and
+    N46 fixed none for a location on the r grid. What it lets the paper
+    say is the onset counts at each dt.
+  - Two-image admission (Rahul's binding, A0-PY pattern): PY-D through
+    c5_analysis.py_detcheck (imported), PY-G, and PY-B, where the bitwise
+    evidence is the pair of committed gate folders compared in the script,
+    not a c5bitcmp log (c5bitcmp reads c5run folders only, and IMG always
+    produces a second gate over the identical task list).
+  - L0 admission: the L0 rows (python 3.13.15) are compared with DTREF
+    rows from a later image because every gate used recorded A2 PASS.
+  Checks run by Claude before handover (no project number computed):
+  - Input contact on the real committed folders: all 6480 scope L0 rows
+    found once in the six rerun folders named in its HOW TO RUN, the four
+    plan checks pass on every row, one env (python 3.13.15, numpy 2.1.3);
+    the laptop gate folder is refused by the gate reader (GATE 'FAIL').
+  - File fixture (synthetic E on the real plan's CONC trajectories,
+    scratch git repo): a missing task gives exit 7; a drill-like folder
+    repeating a shard's task, exit 2; bridge_err 2e-12, exit 2; two
+    pythons with no detcheck, with one, and with gates whose rows differ
+    in one E string, exit 2 (PY-D, PY-D, PY-B).
+  - The same file fixture, passing cases: clean, exit 0; one trajectory
+    with a different L2 coarse_sha, listed by B-RUN, its rep dropped at
+    every level ("M 14 of 15"), exit 0; two pythons with a detcheck log
+    each and gate rows identical (PY-B "32 rows identical"), A0-PY PASS,
+    exit 0.
+  - severity_block against rerun_analysis.onset_block on the same
+    synthetic slopes: all 96 severity rows identical in every field (repr),
+    at L0 (S-slopes) and at L2 (mean Deltas).
+  - --selftest (NF 2, synthetic E on the plan's 6480 scope trajectories,
+    33 minutes on the laptop at 2 workers): mu 0, all 1128 cell arms
+    STABLE; mu 0.02, all 1128 cell arms fired SHIFTED and all 2180
+    contrast and pooled lines STABLE (a uniform shift cancels in a
+    difference), as designed.
+  - The null fixture ran at NF 3 and the selftest at NF 2 only to execute
+    every line; those rates, and the "used / not used" statuses they set,
+    are meaningless and are not results.
+  REMAINING before the first DTREF job, as of this entry: (1) C5 done:
+  done. (2) the scope: decided; the queue definition waits for (6).
+  (3) rerunq.py taught dtref: done in this commit. (4) dtref_analysis.py
+  written: done; its null fixture and selftest to be run by Rahul
+  (--null-only, --selftest) before the first shard. (5) the gate on
+  Kaggle, PASS: open; it is the queue's first item. (6) NEW: the plan run
+  of the corrected dtref.py (--nshards 1 for the shard count at the
+  10800 s target), then notes/queues/dtref.json with that count,
+  committed, then "rerunq.py load".
   STATUS: framing DECIDED and APPROVED; scope DECIDED (CONC, PROBEARM,
-  ONSET, 2026-11-28); script written, gate not run; queue decisions
-  rule 22 and IMG taken, drill pending; OPEN.
+  ONSET, 2026-11-28); SCOPE CELLS defect fixed (K2); laptop pre-check
+  done, branch (i); queue decisions rule 22, IMG and drill taken; rerunq
+  dtref family and dtref_analysis.py written; replan, definition, load
+  and the Kaggle gate pending; OPEN.
 
 ## Checked and found sound
 
