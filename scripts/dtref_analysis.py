@@ -187,28 +187,61 @@ THE CRITERION (N46, approved 2026-11-03; dtref.py docstring)
 
 NULL FIXTURE AND THE RULE IT FEEDS (run first, every time; N40 commitment)
   Synthetic quantities, nothing read from any run. A cell holds n
-  per-realization Deltas, Delta_r = mu_j + s e_r, e_r of unit variance
-  from one of three laws: normal; Student t with 3 degrees of freedom
-  scaled to unit variance; centred lognormal (sigma 0.75) scaled to unit
-  variance (skewed). A unit is a signed sum of c independent cells
-  (signs + - - +: c = 1 a cell arm, 2 a two-cell contrast such as a
-  change, 4 a CON), mu_j = mu on the first cell and 0 elsewhere, so the
-  unit's true value is mu. A pooled figure is the mean of k such units.
-  Each cell is resampled with its own index matrix of B = 10000 (the B the
-  verdicts use), exactly as above, and the criterion is applied to the
+  per-realization Deltas, Delta_r = m + s e_r, e_r of unit variance from
+  one of three laws: normal; Student t with 3 degrees of freedom scaled
+  to unit variance; centred lognormal (sigma 0.75) scaled to unit
+  variance (skewed; a stress law, not fitted to anything: no committed
+  run measures the distribution of a Delta). A unit is a weighted sum
+  sum_j w_j (cell j's resampled mean) of independent cells, each cell
+  resampled with its own index matrix of B = 10000 (the B the verdicts
+  use); the cell a with the largest |w_j| carries m = mu / w_a and every
+  other cell m = 0, so the unit's true value is mu. A pooled figure is
+  the mean of k independent such units. The criterion is applied to the
   resulting interval.
-  Shapes (c, k): (1, 1), (2, 1), (4, 1) [family "unit"; (1, 1) is also
-  family "cell"], (1, 3), (2, 3), (2, 6), (2, 12), (4, 12) [family
-  "pooled"]; n = 12 (ONSET) and 15 (CONC, PROBEARM). NF = 400 replicates
-  per row (Monte Carlo SE about 0.008 at a rate of 0.025).
+  Shapes (CORRECTED 2026-11-28, ledger N46, NULL FIXTURE FAMILIES). Each
+  family holds only shapes its statistics have; the weight vectors are
+  the statistics' own:
+    cell    C1     w (1): a cell arm.
+    unit    D2     (+1, -1): every two-cell contrast in scope (c1
+                   dimension, c2 target, c4 law, c3 aniso - iso, change,
+                   severity).
+            CON4   (+1, -1, -1, +1): CON(t1, t2).
+            TMM6   (+1, -1, -1/2, +1/2, -1/2, +1/2): change(0.01) -
+                   (change(0.5) + change(0.1)) / 2.
+            RGd, RGt, RGdt  the rows b_d, b_tau, b_dtau of pinv(X), X
+                   rerun_analysis's REGF design [1, log2 d, log10(1/tau_0),
+                   log2 d log10(1/tau_0)] on rerunlib.GRID["CONC"]'s 4 d x 3
+                   tau_0 (PROBEARM's grid is the same; checked at start),
+                   computed here from the grid, scaled to max |w| = 1 (a
+                   scale change leaves a BOUNDARY rate unchanged).
+    pooled  D2 at k 3 (ONSET's c3 and severity), 6 (c4 law), 12 (c1, c2,
+            change); CON4, TMM6, RGd, RGt, RGdt at k 12. These are the
+            pooled sizes rerun_analysis prints for the scope rows.
+  Each unit and pooled shape is run in two law modes: "all", every cell
+  on the row's law (a contrast of identically distributed cells, where
+  equal weights cancel skew), and "one", the cell a on the row's law and
+  every other cell normal (unequal laws: skew does not cancel; with
+  unequal weights it cancels only partly even in "all"). Mode "one" is
+  run for t3 and lognormal only (for normal it is "all"). Unequal cell
+  scales are unequal weights in this model; their extreme, one cell
+  dominating, is C1.
+  The first version (2026-11-28, logs/dtref-analysis-selftest-20261128.log)
+  put the single-cell shapes (1, 1) into family unit and (1, 3) into
+  family pooled; no unit or pooled statistic in scope is a single cell, so
+  those families' NF 400 rates came from shapes they never contain. C1
+  keeps shape index 0 and the same draws, so its rows reproduce that
+  log's (1, 1) rows exactly.
+  n = 12 (ONSET) and 15 (CONC, PROBEARM). NF = 400 replicates per row
+  (Monte Carlo SE about 0.008 at a rate of 0.025).
   Blocks:
-    BOUNDARY   mu = delta, s = 0.005, all three laws, all shapes, both n.
+    BOUNDARY   mu = delta, s = 0.005, every shape, its laws, both n.
                The null of STABLE (true Delta exactly at the margin) and of
                SHIFTED (|true Delta| <= delta). For a location-scale law
                the rates do not depend on s; s only has to be fixed.
     NO EFFECT  mu = 0 (N46's "no dt effect" fixture), s 0.005 and 0.02,
-               normal, shapes (1, 1) and (2, 12), both n: STABLE's rate
-               (power, reported) and SHIFTED's (a null, used in its r).
+               normal, shapes C1, D2 and D2 k 12 (one per family), both
+               n: STABLE's rate (power, reported) and SHIFTED's (a null,
+               used in its r).
     PLANTED    mu = 2 delta = 0.02 (N46's "planted shift"), same grid:
                SHIFTED's rate (power, reported) and STABLE's (a null,
                used in its r).
@@ -222,8 +255,10 @@ NULL FIXTURE AND THE RULE IT FEEDS (run first, every time; N40 commitment)
   used, with "null rate r" beside every verdict. r > 0.05: NOT USED; its
   verdict column reads "not used (null rate r)" and the interval is still
   printed. (C5's rule, nominal 0.05 and flag 0.10, scaled to this
-  criterion's nominal 0.025.) A cell arm reads family cell, a contrast
-  unit (or a c3 unit) family unit, a pooled figure family pooled.
+  criterion's nominal 0.025.) A cell arm reads family cell, every unit
+  (contrast, CON, TMM, REGF coefficient, c3, severity) family unit, a
+  pooled figure family pooled. More rows in a family raise its maximum
+  by Monte Carlo noise alone; NF 12000 measures that (as for C5).
   Worked example: BOUNDARY STABLE rates for family cell 0.021, 0.024,
   0.034, ... and PLANTED STABLE rates 0.000: r 0.034, STABLE used for cell
   arms with "null rate 0.034".
@@ -320,8 +355,7 @@ NULL_SEED = (20261128, 102)
 SELF_SEED = (20261128, 103)
 NULL_NS = (12, 15)
 NULL_LAWS = ("normal", "t3", "lognormal")
-SHAPES = ((1, 1), (2, 1), (4, 1), (1, 3), (2, 3), (2, 6), (2, 12), (4, 12))
-SIGNS = (1.0, -1.0, -1.0, 1.0)
+LAW_MODES = ("all", "one")
 PARAM_COMMON = ("rows", "nshards", "plan", "plan_sha256", "timing", "numpy", "script_sha256", "rerun_sha256",
                 "rerunlib_sha256", "costprobe2_sha256", "calprec2_sha256")
 
@@ -375,16 +409,62 @@ def noise(rng, law, n):
     return (x - math.exp(s2 / 2.0)) / math.sqrt((math.exp(s2) - 1.0) * math.exp(s2))
 
 
-def null_rep(rng, c, k, n, law, s, mu):
+def regf_weights():
+    """Rows b_d, b_tau, b_dtau of pinv(X) for rerun_analysis's REGF design on GRID["CONC"], max |w| = 1."""
+    gs = [rl.GRID[r] for r in ("CONC", "PROBEARM")]
+    if [(g["dims"], g["taus"]) for g in gs][0] != [(g["dims"], g["taus"]) for g in gs][1]:
+        raise Stop(2, "null fixture: CONC and PROBEARM REGF grids differ; RG shapes need both")
+    g = gs[0]
+    X = np.array([[1.0, math.log2(d), math.log10(1.0 / t), math.log2(d) * math.log10(1.0 / t)]
+                  for d in g["dims"] for t in g["taus"]])
+    P = np.linalg.pinv(X)
+    return [tuple(float(x) for x in P[j] / np.abs(P[j]).max()) for j in (1, 2, 3)]
+
+
+def make_shapes():
+    """(name, family, weights, mode, k); index 0 is C1 (same draws as the first version's (1, 1))."""
+    rgd, rgt, rgdt = regf_weights()
+    units = (("D2", (1.0, -1.0)), ("CON4", (1.0, -1.0, -1.0, 1.0)),
+             ("TMM6", (1.0, -1.0, -0.5, 0.5, -0.5, 0.5)), ("RGd", rgd), ("RGt", rgt), ("RGdt", rgdt))
+    out = [("C1", "cell", (1.0,), "all", 1)]
+    for nm, w in units:
+        for md in LAW_MODES:
+            out.append((nm, "unit", w, md, 1))
+    for nm, w in units:
+        for k in ((3, 6, 12) if nm == "D2" else (12,)):
+            for md in LAW_MODES:
+                out.append((nm, "pooled", w, md, k))
+    return tuple(out)
+
+
+SHAPES = make_shapes()
+
+
+def shape_label(si):
+    nm, _f, _w, md, k = SHAPES[si]
+    return nm if k == 1 and nm == "C1" else "{}/{}{}".format(nm, md, "" if k == 1 else " k{}".format(k))
+
+
+def shape_index(name, fam, md, k):
+    for i, x in enumerate(SHAPES):
+        if (x[0], x[1], x[3], x[4]) == (name, fam, md, k):
+            return i
+    raise KeyError(name)
+
+
+def null_rep(rng, si, n, law, s, mu):
+    _nm, _fam, w, md, k = SHAPES[si]
+    a = int(np.argmax(np.abs(np.array(w))))
     vecs, pts = [], []
     for _u in range(k):
         v = np.zeros(B)
         p = 0.0
-        for j in range(c):
-            x = (mu if j == 0 else 0.0) + s * noise(rng, law, n)
+        for j, wj in enumerate(w):
+            lj = law if (md == "all" or j == a) else "normal"
+            x = (mu / w[a] if j == a else 0.0) + s * noise(rng, lj, n)
             idx = rng.integers(0, n, size=(B, n))
-            v += SIGNS[j] * x[idx].mean(axis=1)
-            p += SIGNS[j] * float(x.mean())
+            v += wj * x[idx].mean(axis=1)
+            p += wj * float(x.mean())
         vecs.append(v)
         pts.append(p)
     return float(np.mean(pts)), np.mean(np.vstack(vecs), axis=0)
@@ -392,23 +472,17 @@ def null_rep(rng, c, k, n, law, s, mu):
 
 def null_task(a):
     blk, si, n, li, sidx, s, midx, mu, nf = a
-    c, k = SHAPES[si]
     cnt = {"STABLE": 0, "SHIFTED": 0, "UNRESOLVED": 0, None: 0}
     for rep in range(nf):
         rng = np.random.default_rng(np.random.SeedSequence(list(NULL_SEED) + [blk, si, n, li, sidx, midx, rep]))
-        _p, vec = null_rep(rng, c, k, n, NULL_LAWS[li], s, mu)
+        _p, vec = null_rep(rng, si, n, NULL_LAWS[li], s, mu)
         v, _why = criterion(RA.pct(vec))
         cnt[v] += 1
     return a, cnt
 
 
 def family_of_shape(si, fam):
-    c, k = SHAPES[si]
-    if fam == "cell":
-        return (c, k) == (1, 1)
-    if fam == "unit":
-        return k == 1
-    return k > 1
+    return SHAPES[si][1] == fam
 
 
 def null_fixture(workers, nf=NF):
@@ -417,9 +491,12 @@ def null_fixture(workers, nf=NF):
     for si in range(len(SHAPES)):
         for n in NULL_NS:
             for li in range(len(NULL_LAWS)):
+                if SHAPES[si][3] == "one" and NULL_LAWS[li] == "normal":
+                    continue
                 jobs.append((0, si, n, li, 0, 0.005, 0, DELTA, nf))
+    pw_shapes = (0, shape_index("D2", "unit", "all", 1), shape_index("D2", "pooled", "all", 12))
     for blk, mu, midx in ((1, 0.0, 1), (2, 2 * DELTA, 2)):
-        for si in (0, 6):
+        for si in pw_shapes:
             for n in NULL_NS:
                 for sidx, s in ((0, 0.005), (1, 0.02)):
                     jobs.append((blk, si, n, 0, sidx, s, midx, mu, nf))
@@ -430,8 +507,8 @@ def null_fixture(workers, nf=NF):
         pool.close()
         pool.join()
     names = {0: "BOUNDARY", 1: "NO EFFECT", 2: "PLANTED"}
-    say("  {:<10} {:<8} {:>3} {:<9} {:>6} {:>6}   {:>8} {:>8} {:>10} {:>9}".format(
-        "block", "shape", "n", "law", "s", "mu", "STABLE", "SHIFTED", "UNRESOLVED", "no verdict"))
+    say("  {:<10} {:<7} {:<16} {:>3} {:<9} {:>6} {:>6}   {:>8} {:>8} {:>10} {:>9}".format(
+        "block", "family", "shape", "n", "law", "s", "mu", "STABLE", "SHIFTED", "UNRESOLVED", "no verdict"))
     rows = []
     for a in jobs:
         cnt = res[a]
@@ -439,8 +516,8 @@ def null_fixture(workers, nf=NF):
         rs = cnt["STABLE"] / float(nf)
         rh = cnt["SHIFTED"] / float(nf)
         rows.append((blk, si, rs, rh))
-        say("  {:<10} {:<8} {:>3} {:<9} {:>6} {:>6}   {:>8.4f} {:>8.4f} {:>10.4f} {:>9.4f}".format(
-            names[blk], "({},{})".format(*SHAPES[si]), n, NULL_LAWS[li], s, mu, rs, rh,
+        say("  {:<10} {:<7} {:<16} {:>3} {:<9} {:>6} {:>6}   {:>8.4f} {:>8.4f} {:>10.4f} {:>9.4f}".format(
+            names[blk], SHAPES[si][1], shape_label(si), n, NULL_LAWS[li], s, mu, rs, rh,
             cnt["UNRESOLVED"] / float(nf), cnt[None] / float(nf)))
     status = {}
     say("\n  RULE: r = largest rate over the rows that are a null for the criterion in the family;")
@@ -1032,9 +1109,12 @@ def main():
         DELTA, B, FLAG_FRAC))
     say("  bootstrap indices: rerun_analysis.boot_idx(rerunlib.boot_key(cell, owner), n kept), kind {}".format(
         rl.KIND_BOOT))
-    say("  null fixture: NF {}  seeds SeedSequence(({}, {}, ...))  laws {}  n {}  shapes {}".format(
-        a.nf, NULL_SEED[0], NULL_SEED[1], ",".join(NULL_LAWS), ",".join(str(x) for x in NULL_NS),
-        " ".join("({},{})".format(*s) for s in SHAPES)))
+    say("  null fixture: NF {}  seeds SeedSequence(({}, {}, ...))  laws {}  n {}  {} shapes (corrected "
+        "families, N46)".format(a.nf, NULL_SEED[0], NULL_SEED[1], ",".join(NULL_LAWS),
+                                ",".join(str(x) for x in NULL_NS), len(SHAPES)))
+    for si, (nm, fam, w, md, k) in enumerate(SHAPES):
+        say("    shape {:>2} {:<7} {:<16} k {:>2}  w ({})".format(
+            si, fam, shape_label(si), k, ", ".join("{:+.4f}".format(x) for x in w)))
     for f in a.dtref:
         say("  dtref    {}".format(f))
     for f in a.gate:

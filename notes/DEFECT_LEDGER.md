@@ -6408,20 +6408,82 @@ instruction of 2026-10-15.
   - The null fixture ran at NF 3 and the selftest at NF 2 only to execute
     every line; those rates, and the "used / not used" statuses they set,
     are meaningless and are not results.
+  REPLAN AND SELFTEST (Rahul ran both, 2026-11-28; logs/dtref-plan-scope-k2-20261128.log,
+  logs/dtref-analysis-selftest-20261128.log; numbers copied from them).
+  - Plan of the corrected dtref.py (scope CONC, PROBEARM, ONSET): tasks
+    12960, task-seconds 394777 (4 workers: 98694 s under perfect
+    scaling); gate 8 groups, 34 tasks, task-seconds 435; smallest shard
+    count at the target: 10. The 10 shards stand.
+  - Null fixture, NF 400, as first written: NULL RATE STABLE cell 0.1175,
+    unit 0.1175, pooled 0.0775 (all NOT USED); SHIFTED cell 0.0600, unit
+    0.0600 (NOT USED), pooled 0.0475 (used, rate printed). The selftest
+    accordingly printed every cell, unit and pooled line "not used" at
+    mu 0 and mu 0.02. Rahul stopped the queue definition until this is
+    understood.
+  NULL FIXTURE FAMILIES (defect found by Claude, 2026-11-28, reading the
+  table above at Rahul's request; fixed in the commit that records it).
+  - The defect. dtref_analysis.py's first fixture put the single-cell
+    shape (1, 1) into family unit (as well as cell) and the single-cell
+    pooled shape (1, 3) into family pooled. No unit or pooled statistic in
+    scope is a single cell: every unit line the selftest printed is a
+    two-cell difference (c1, c2, c4, c3, change, severity), a CON (4
+    cells), TMM (6) or a REGF coefficient (12); every pooled line is a
+    mean of 3, 6 or 12 such units. So the NF 400 STABLE rates of unit
+    (0.1175) and pooled (0.0775), and SHIFTED unit (0.0600), came from
+    shapes those families never contain: the unit maximum is the (1, 1)
+    lognormal row (STABLE) and the (1, 1) normal n 15 row (SHIFTED), the
+    pooled maximum the (1, 3) lognormal n 12 row. My construction, not a
+    property of the criterion.
+  - Second gap in the same construction: its contrasts were signed sums of
+    identically distributed cells with equal weights, the case in which
+    skew cancels (lognormal (2,1) and (4,1) rows 0.0375 to 0.0450, against
+    0.1175 at (1,1)). Real contrasts may join cells of unequal skew, and
+    TMM and REGF have unequal weights; neither was measured.
+  - Fix (scripts/dtref_analysis.py, NULL FIXTURE section, "CORRECTED
+    2026-11-28"). Families hold only their statistics' shapes, with the
+    statistics' own weight vectors: cell C1; unit D2 (+1, -1), CON4, TMM6
+    (+1, -1, -1/2, +1/2, -1/2, +1/2), and RGd, RGt, RGdt, the rows of
+    pinv(X) of rerun_analysis's REGF design on the CONC grid (PROBEARM's
+    is the same; checked at start), computed in the script; pooled D2 at
+    k 3, 6, 12 and the others at k 12, the pooled sizes the scope prints.
+    Every unit and pooled shape runs in law mode "all" (every cell on the
+    row's law) and "one" (the largest-|w| cell on the row's law, the rest
+    normal: unequal laws). NO EFFECT and PLANTED use C1, D2 and D2 k 12,
+    one shape per family. 146 BOUNDARY rows (were 48) and 24 power rows
+    (were 16). Criterion, RULE, NF, B and seed kind unchanged.
+  - Checks before handover (no rate computed): C1 draws identical to the
+    first version's (1, 1) draws in all three blocks, both n, all laws
+    (same seed index 0), so the corrected log's cell rows must reproduce
+    the first log's (1, 1) rows exactly; the RG weights, rescaled,
+    reproduce rerun_analysis.ols_coef on a test vector; every shape's
+    unit true value is mu; --null-only at NF 2 runs end to end, exit 0
+    (its rates are meaningless).
+  - Cell arms (Rahul's reading, 2026-11-28). The (1, 1) lognormal rows
+    are 47 of 400 at n 12 and at n 15, on independent seeds, against
+    about 20 of 400 at the 0.05 ceiling; their SHIFTED rates, 0.0275 and
+    0.0150, are the asymmetry of skew, not of a too-narrow interval. Cell
+    STABLE is out as specified whatever NF says, unless the interval
+    changes. The corrected fixture does not change this (C1 is unchanged).
+  - Order fixed by Rahul: NF 400 on the corrected construction first;
+    NF 12000 once, after he has seen that table; options (a) interval,
+    (b) delta, (c) realizations, (d) estimand, (e) descriptions only are
+    held until then. No rule changed.
   REMAINING before the first DTREF job, as of this entry: (1) C5 done:
   done. (2) the scope: decided; the queue definition waits for (6).
   (3) rerunq.py taught dtref: done in this commit. (4) dtref_analysis.py
-  written: done; its null fixture and selftest to be run by Rahul
-  (--null-only, --selftest) before the first shard. (5) the gate on
+  written: done; null fixture corrected (NULL FIXTURE FAMILIES); its
+  NF 400 table on the corrected construction, then NF 12000 once, then
+  Rahul's decision on cell arms and options (a) to (e), before the
+  definition. (5) the gate on
   Kaggle, PASS: open; it is the queue's first item. (6) NEW: the plan run
-  of the corrected dtref.py (--nshards 1 for the shard count at the
-  10800 s target), then notes/queues/dtref.json with that count,
-  committed, then "rerunq.py load".
+  of the corrected dtref.py: done, 10 shards; then notes/queues/dtref.json
+  with that count (held until (4)), committed, then "rerunq.py load".
   STATUS: framing DECIDED and APPROVED; scope DECIDED (CONC, PROBEARM,
   ONSET, 2026-11-28); SCOPE CELLS defect fixed (K2); laptop pre-check
   done, branch (i); queue decisions rule 22, IMG and drill taken; rerunq
-  dtref family and dtref_analysis.py written; replan, definition, load
-  and the Kaggle gate pending; OPEN.
+  dtref family and dtref_analysis.py written; replan done (10 shards);
+  null fixture families defect fixed, corrected table pending;
+  definition, load and the Kaggle gate pending; OPEN.
 
 ## Checked and found sound
 
