@@ -47,7 +47,9 @@ experiment. Everything in this file is non-negotiable.
                                    15 minutes from cron-job.org (rule 22)
     .github/workflows/rerun-queue-admin.yml   the queue's manual subcommands
                                    (show, verify, check, release, halt, load,
-                                   set-python),
+                                   set-python; release includes regate,
+                                   the dtref family's image-change
+                                   recovery),
                                    run by hand from GitHub (rule 22)
     .github/workflows/rerun-queue-notify-test.yml   a hand-run test of
                                    the queue's alert issue (rule 22)
@@ -425,11 +427,23 @@ stay on the laptop. A Kaggle CPU session has 4 cores, 30 GB RAM, a hard
       and archives that state under notes/queue-archive/ (amended
       2026-10-25, Rahul's decision; ledger N42). The first queue, the eight
       rerun jobs, is the archived one. A definition's items are rerun.py,
-      calprec2.py, sizetest.py or c5run.py jobs (rerunq.py docstring,
-      schema 2; sizetest.py added: amended 2026-10-31, Rahul's decision;
-      ledger N40; c5run.py added: amended 2026-11-01, Rahul's instruction
-      to automate C5; ledger N45). Anything else goes through the
-      runbooks by hand.
+      calprec2.py, sizetest.py, c5run.py or dtref.py jobs (rerunq.py
+      docstring, schema 2; sizetest.py added: amended 2026-10-31, Rahul's
+      decision; ledger N40; c5run.py added: amended 2026-11-01, Rahul's
+      instruction to automate C5; ledger N45; dtref.py added: amended
+      2026-11-28, Rahul's decision, applied in the same commit as the
+      rerunq.py dtref family; ledger N46, QUEUE DECISIONS). Anything else
+      goes through the runbooks by hand.
+      For the dtref family set-python is refused: its gate folder records
+      the gate's own python, so with only the expected value moved every
+      later shard would exit 2 at dtref.py's gate-folder check. After an
+      image change its recovery is "release --mode regate --detcheck LOG",
+      which requires a detcheck pass on the new image recorded in
+      ENVIRONMENT.md, moves the expected python (and numpy) and puts a new
+      gate before the halted item; later drills and shards use the newest
+      passing gate (rerunq.py IMG, GF; amended 2026-11-28, Rahul's
+      decision; ledger N46). A NumPy change that moves any dt 0.01 number
+      fails the new gate's A2, so no row from such an image is accepted.
     - The dispatch token is a fine-grained personal access token of
       Rahul's, limited to this repository, with Actions read and write
       only, and an expiry date. It exists only in cron-job.org's job

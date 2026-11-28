@@ -269,6 +269,195 @@ involvement at all")
       max_attempts the cap; anything else HALT). The drill exists so that
       the exit-5 path runs on Kaggle under the queue before any shard.
 
+THE DTREF FAMILY (2026-11-28, before first execution; ledger N46, QUEUE
+DECISIONS: Rahul's decisions of 2026-11-28 on rule 22, IMG and the drill)
+    dtref     dtref.py modes gate and run (DTREF, the time-step refinement
+              check: the scope rows at dt 0.005 and 0.0025 on the dt 0.01
+              Brownian path); rows (the scope, "CONC,PROBEARM,ONSET" in
+              rerunlib order), plan and plan_sha256 (of its rerun_plan.csv),
+              timing (the two costprobe2 folders), committed (the rerun
+              folders that hold the gate's dt 0.01 trajectories),
+              budget_mb, nshards, drill_shard, drill_stop_after, workers;
+              items gate, drill or shard.
+  Every rule above (L1 to L5, F1, P1C, K1, CW, R2's exit handling)
+  applies unchanged, except where this section says otherwise. No
+  finalize: dtref_analysis.py reads the fetched folders on the laptop.
+  JD  JOB NAMES: dtref-<set>-gate<G>-a<A> (G the item's gate_no: 1 for the
+      definition's gate, 2, 3, ... for gates IMG inserts),
+      dtref-<set>-drill-a<A>, dtref-<set>-s<S>of<K>-a<A>; kernel cbo-<job>.
+      Worked example: dtref-x-gate1-a1, dtref-x-drill-a2, dtref-x-s4of9-a1.
+  AD  ARGUMENTS, built from the profile (C = --rows R --plan P --timing
+      T0,T1 --committed C1,...,Cn --workers W --budget-mb B):
+        gate:  --mode gate C
+        drill: --mode run C --gate G --shard D --nshards K --stop-after X
+               (D = drill_shard, X = drill_stop_after)
+        shard: --mode run C --gate G --shard S --nshards K
+      G is the gate folder GF names. Data folders: P, T0, T1, C1 to Cn,
+      and G for a drill or shard; resume folders as in R2D. Run mode reads
+      neither --committed nor its folders; they are passed and shipped so
+      that every item's dtref_params.csv records the same list.
+  PINS (P1C): dtref.py, rerun.py, rerunlib.py, costprobe2.py, calprec2.py
+      (the five files dtref.py prints and records).
+  LDD LOAD: as LD; P, T0, T1 and C1 to Cn must pass the folder checks; the
+      one rerun_plan.csv that P's sha256.txt lists must hash to
+      plan_sha256; every drill and shard item needs an earlier gate item
+      of its profile and set; every shard item's nshards is the profile's;
+      0 <= drill_shard < nshards; gate items carry gate_no. Otherwise
+      refused.
+  GV  GATE VERDICT (gate item), after R1D: runner exit 0, the line "GATE
+      PASS", "  N of N gate trajectories found" with both N equal and at
+      least 1, no "MODULE ... FAIL" line, and the fetched
+      dtref-gate-*/dtref_gate_verdict.csv records GATE PASS, rows R,
+      python and numpy as the header prints them, script_sha256 equal to
+      the pin, and every module line PASS (at least one). Then the next item; otherwise HALT, and no
+      drill or shard of the set launches. dtref.py exits 3 for GATE FAIL
+      and for a gate cut by --stop-after; R2D halts on both.
+      Worked example: 8 groups and 2 RSS tasks PASS, "8 of 8 gate
+      trajectories found", "GATE PASS", exit 0: next item. The laptop
+      gate of 2026-11-28 (A2 FAIL IMAGE, "GATE FAIL", exit 3) would HALT.
+  GF  GATE FOLDER for a drill or shard: the folder of the accepted attempt
+      of the NEWEST gate item that precedes the current item in the queue
+      (same profile and set). An attempt is accepted when the queue moved
+      past it on GV (the attempt record carries "accepted": true). None:
+      HALT before launch. After IMG the newest gate is the inserted one,
+      so every later drill and shard uses it. dtref.py itself refuses a
+      gate folder whose python, numpy or script sha256 differ from the
+      job's (exit 2); GF only chooses which folder to pass.
+      Worked example: queue gate1 (accepted, runs/dtref-x-gate1-a1-kaggle-
+      20261129-101500), drill, s0..s3, gate2 (accepted after IMG), s4:
+      s4 gets --gate runs/<gate2's folder>; s2's earlier launch got gate1's.
+  R1D HEADER, from cbo-<job>.log, after the banner "CBO-GAP dtref":
+      (a) "python" and "numpy" equal expect;
+      (b) the five "sha256" lines (dtref.py, rerun.py, rerunlib.py,
+          costprobe2.py, calprec2.py) equal the five pins;
+      (c) "mode     M   shard S of K" with (M, S, K) = (gate, 0, 1),
+          (run, D, K) for the drill, (run, S, K) for a shard;
+      (d) "rows     R", "plan     <P's basename>", "timing   <T0,T1
+          basenames>", "  G-FORK PASS", "G-SRC PASS", and for a drill or
+          shard "  gate     <G's basename>";
+      (e) unless the runner exit is 2 (dtref.py stops before IN and writes
+          nothing, so (e) and (f) have nothing to read): the IN line
+          "  plan <P> (N cells, rerun_plan.csv sha256 <plan_sha256>)";
+          "files  <dir>" with basename exactly dtref-gate-YYYYMMDD-HHMMSS
+          or dtref-run-YYYYMMDD-HHMMSS-s<S>of<K> (no tag when K = 1); the
+          fetched folder holds exactly one dtref-* folder with that
+          basename; its dtref_params.csv records mode, rows, shard,
+          nshards, workers, budget_mb, the five hashes, plan, plan_sha256,
+          timing, gate (G's basename, "" for a gate), committed (the
+          basenames) as the arguments set them, python and numpy as the
+          header prints them (the header is held to expect by (a), so an
+          image change is one problem, not three), and for a drill
+          stop_after as the profile sets it;
+      (f) unless the runner exit is 2: for a resumed attempt, a line
+          "  read <folder>: shard S of K, N rows, M complete" for each
+          resume folder.
+      Any mismatch: HALT, the folder committed.
+      Worked example: files /kaggle/working/dtref-run-20261130-081500-
+      s4of9, params shard 4, nshards 9, gate dtref-x-gate1-a1-kaggle-
+      20261129-101500: pass. A shard whose header prints python 3.13.19
+      against expect 3.13.18, with dtref.py's "python: gate '3.13.18',
+      this job '3.13.19'" and exit 2: HALT "R2: runner exit code 2 in
+      <F>; R1: python 3.13.19, expected 3.13.18", the reason IMG reads.
+  F2D COMPLETE DOWNLOAD (drill and shard): exactly one
+      dtref-run-*/dtref_real.csv; its rows ending ok number exactly N of
+      "tasks run by this job: N   complete, this job and resumed: X of Y",
+      with "bridge check failures (C): 0" and "errored or timed-out tasks:
+      0"; for a resumed attempt X = N + the sum of the M of its "read"
+      lines, and each M equals the rows ending ok in that committed resume
+      folder's dtref-run-*/dtref_real.csv. Exit 0 requires "not stopped:
+      every task ran" and X = Y; exit 5 requires "STOPPED by
+      --stop-after". Otherwise HALT, the folder committed.
+      Worked example: a1 "tasks run by this job: 12   complete, this job
+      and resumed: 12 of 1440", 12 rows ok, STOPPED, exit 5; a2 resuming
+      a1 reads "M = 12" and prints "tasks run by this job: 11   complete,
+      this job and resumed: 23 of 1440": pass. "22 of 1440": HALT.
+  R2D EXIT. Gate: 0 and GV, next item; any other value (3 included) HALT.
+      Shard: as R2 (0 next item; 5 next attempt resuming from every
+      earlier attempt folder of the item holding a dtref-run-*/
+      dtref_real.csv and not superseded (IMG), with N = 0 a halt and
+      max_attempts the cap; anything else HALT).
+      Drill (Rahul, 2026-11-28: run mode with --stop-after X on shard D,
+      no new dtref.py mode): its first attempt (attempt 1, or the item's
+      first_attempt after IMG) must exit 5 with N >= 1: READY, the next
+      attempt resuming from it with the same arguments. A later attempt,
+      which has resumed, must exit 5 or 0 with N >= 1 and pass F2D: the
+      drill is done, next item. Anything else HALT: a first attempt that
+      exits 0 has exercised no stop. So the drill runs, under the queue on
+      Kaggle, a stop at --stop-after, a resume through RS with its rule-17
+      checks, and F2D's resume arithmetic, before any shard.
+      WHAT THE DRILL CANNOT EXERCISE. stop_after is one of dtref.py's
+      resume keys (RESUME_KEYS), so a resume must repeat the stopped
+      attempt's --stop-after. The drill's resumes therefore stop again;
+      the last step of a real long shard, a resume that runs to "not
+      stopped" and exit 0, is never drilled. It is first exercised by a
+      real shard whose first attempt stops. A defect there halts the
+      queue (F2D, R1D (f), R2D), so it can cost a halt but cannot put a
+      wrong or duplicated row into an accepted folder.
+      The drill's rows repeat tasks of shard D; shard D runs from scratch
+      (its stop-after differs, so it cannot resume the drill), and the
+      drill's folders are not inputs of dtref_analysis.py (a tid in two
+      of its input folders is exit 2 there).
+      Worked example: drill a1 exits 5, 12 tasks: READY a2 resume [a1];
+      a2 exits 5, 11 tasks, 23 of 1440: next item s0. a1 exit 0: HALT.
+  IMG IMAGE CHANGE: REGATE (Rahul, 2026-11-28). After a Kaggle image
+      change R1 halts as for every family. set-python is REFUSED for the
+      dtref family: the gate folder records the gate's own python, so with
+      only expect moved every later shard would exit 2 at dtref.py's gate
+      folder check. The recovery is "release --mode regate --detcheck
+      LOG", which requires:
+      RG1 status HALTED, the current item dtref, its last attempt fetched
+          (an attempt record for the current attempt), and halt_reason
+          EXACTLY one of
+            gate:   "R1: header of <F>: P"
+            drill or shard: "R2: runner exit code 2 in <F>; R1: P"
+          with <F> that attempt's folder and P "python <NEW>, expected
+          <OLD>", "numpy <NEW>, expected <OLD>", or both joined by "; ",
+          <OLD> the profile's expect. For a drill or shard the runner log
+          must also hold "STOP (exit 2): the gate folder does not cover
+          this run" and, for each changed value, dtref.py's line
+          "  python: gate '<OLD>', this job '<NEW>'" (numpy likewise),
+          and no other "gate ..., this job" line.
+      RG2 RULE 16: --detcheck is a kernel log in a committed run folder
+          whose sha256.txt verifies; every "python" header in it names the
+          new python, every "numpy" header the new numpy; it holds
+          "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS"; ENVIRONMENT.md,
+          committed and unmodified, has a line ending "OVERALL: PASS --
+          see <log>". (As SP3, plus numpy.)
+      RG3 WRITE. expect python and numpy of the profile become the new
+          values. Halted gate: the same item, attempt A + 1, READY. Halted
+          drill or shard: a new gate item (gate_no one more than the
+          largest in the queue, id "<first gate id>-g<G>") is inserted at
+          the current index, READY at attempt 1; the halted item keeps its
+          place after it, with first_attempt A + 1 and superseded = every
+          earlier attempt folder of the item that holds dtref rows (those
+          rows were made on the old image; dtref.py cannot resume across
+          python, a resume key, so the item starts again from scratch, and
+          the superseded folders are not dtref_analysis.py inputs). The
+          history records "regate" with both versions, the log and its
+          sha256, the inserted item and the superseded folders. The
+          completed items before it are kept: their rows stand, and
+          dtref_analysis.py admits the two images only on the evidence of
+          its PY rules (the two gates' identical rows, and a detcheck for
+          each python).
+      The next image change halts the same way; RG1 and RG2 then need
+      the new pair of versions, so nothing drifts. A NumPy change is
+      admitted by RG1 and RG2, but the new gate's A2 compares dt 0.01
+      rows with the committed ones string for string, so a NumPy change
+      that moves any number fails the gate (GATE FAIL, IMAGE), and GV
+      halts: no dtref row is ever accepted from an image that does not
+      reproduce the committed dt 0.01 rows.
+      Worked example: s4 a1 halts "R2: runner exit code 2 in runs/dtref-
+      x-s4of9-a1-kaggle-20261201-090000; R1: python 3.13.19, expected
+      3.13.18"; the log holds "python: gate '3.13.18', this job
+      '3.13.19'". Rahul runs detcheck on 3.13.19, records it in
+      ENVIRONMENT.md, commits, and releases regate --detcheck runs/<that
+      folder>/<log>: expect python 3.13.19; queue ..., s3, gate-dtref-g2,
+      s4 (first_attempt 2), s5, ...; READY dtref-x-gate2-a1. After GV,
+      s4 launches as dtref-x-s4of9-a2 with --gate runs/<gate2's folder>.
+      The same release with a detcheck on 3.13.18: refused (RG2).
+      NULL RATE (JD to IMG): deterministic string, file, hash and git
+      checks; none fires by chance.
+
 PRE-SPECIFIED DECISION RULES (fixed 2026-10-23, before first execution)
 ------------------------------------------------------------------------
   L1  THE STATE FILE IS THE LOCK. A tick changes the state only by a
@@ -651,7 +840,9 @@ SUBCOMMANDS
                      while HALTED by R1 on the Python version alone: move
                      the expected Python of the current item's profile to
                      VERSION, and nothing else (SP below); Rahul commits
-                     and pushes, runs verify, then releases next-item
+                     and pushes, runs verify, then releases next-item.
+                     Refused for the dtref family (IMG): use release
+                     --mode regate
   load --definition notes/queues/<name>.json --note TEXT
                      only when DONE: archive the state and start the queue
                      the definition describes (LD); Rahul commits and
@@ -673,7 +864,11 @@ SUBCOMMANDS
                   exit 4, a death, or an interrupted launch. Refused
                   without an accepted kernel check (K1); the check comes
                   from "check" or from --checked-by-hand STATUS
-    next-item     READY at the next item, attempt 1
+    next-item     READY at the next item, attempt 1 (its first_attempt,
+                  if IMG set one)
+    regate        dtref family only, with --detcheck LOG: after an image
+                  change, a new gate before the halted item (IMG, RG1 to
+                  RG3)
 
 SP  SET-PYTHON (ledger N45, C5 IMAGE SPLIT; written 2026-11-03 after the
     IDENTICAL verdict, at Rahul's instruction: "Only the expected value
@@ -766,21 +961,34 @@ WAIT = ("QUEUED", "RUNNING", "NEW_SCRIPT", "CANCEL_REQUESTED")
 FINISHED = ("COMPLETE", "ERROR", "CANCEL_ACKNOWLEDGED")
 PINNED = (("rerun.py", "rerun_sha256"), ("rerunlib.py", "rerunlib_sha256"),
           ("costprobe2.py", "costprobe2_sha256"))
-FAMILY_SCRIPT = {"rerun": "rerun.py", "calprec2": "calprec2.py", "sizetest": "sizetest.py", "c5": "c5run.py"}
+FAMILY_SCRIPT = {"rerun": "rerun.py", "calprec2": "calprec2.py", "sizetest": "sizetest.py", "c5": "c5run.py",
+                 "dtref": "dtref.py"}
 FAMILY_PINS = {"rerun": PINNED,
                "calprec2": (("calprec2.py", "calprec2_sha256"), ("costprobe2.py", "costprobe2_sha256")),
                "sizetest": (("sizetest.py", "sizetest_sha256"), ("calprec2.py", "calprec2_sha256"),
                             ("costprobe2.py", "costprobe2_sha256")),
                "c5": (("c5run.py", "c5run_sha256"), ("jinfprobe.py", "jinfprobe_sha256"),
                       ("c5price.py", "c5price_sha256"), ("calprec2.py", "calprec2_sha256"),
-                      ("costprobe2.py", "costprobe2_sha256"), ("rerunlib.py", "rerunlib_sha256"))}
+                      ("costprobe2.py", "costprobe2_sha256"), ("rerunlib.py", "rerunlib_sha256")),
+               "dtref": (("dtref.py", "dtref_sha256"), ("rerun.py", "rerun_sha256"), ("rerunlib.py", "rerunlib_sha256"),
+                         ("costprobe2.py", "costprobe2_sha256"), ("calprec2.py", "calprec2_sha256"))}
 FAMILY_KINDS = {"rerun": ("smoke", "shard"), "calprec2": ("shard", "finalize"), "sizetest": ("smoke", "shard"),
-                "c5": ("smoke", "drill", "shard")}
+                "c5": ("smoke", "drill", "shard"), "dtref": ("gate", "drill", "shard")}
 PROFILE_KEYS = {"rerun": ("family", "workers", "plan", "plan_sha256", "timing", "expect"),
                 "calprec2": ("family", "workers", "rows", "throughput", "stop_after", "ceiling", "cells",
                              "expect"),
                 "sizetest": ("family", "workers", "plan", "plan_sha256", "throughput", "stop_after", "expect"),
-                "c5": ("family", "workers", "timing", "beta_table", "rerun_plan", "drill_stop_after", "expect")}
+                "c5": ("family", "workers", "timing", "beta_table", "rerun_plan", "drill_stop_after", "expect"),
+                "dtref": ("family", "workers", "rows", "plan", "plan_sha256", "timing", "committed", "budget_mb",
+                          "nshards", "drill_shard", "drill_stop_after", "expect")}
+# dtref.py header: "  {:<13} sha256 {}" for these labels, in this order (dtref.py hashes())
+DTREF_HASH_LABELS = (("dtref_sha256", "dtref.py"), ("rerun_sha256", "rerun.py"), ("rerunlib_sha256", "rerunlib.py"),
+                     ("costprobe2_sha256", "costprobe2.py"), ("calprec2_sha256", "calprec2.py"))
+DTREF_PARAM_HASH = {"dtref_sha256": "script_sha256", "rerun_sha256": "rerun_sha256",
+                    "rerunlib_sha256": "rerunlib_sha256", "costprobe2_sha256": "costprobe2_sha256",
+                    "calprec2_sha256": "calprec2_sha256"}
+DTREF_STOP_GATE = "STOP (exit 2): the gate folder does not cover this run"
+DTREF_PLAN_CSV = "rerun_plan.csv"
 C5_KIND = {"smoke": 97, "drill": 98, "shard": 95}
 C5_HASH_LABELS = (("c5run_sha256", "script  "), ("jinfprobe_sha256", "jinfprobe.py"), ("c5price_sha256", "c5price.py"),
                   ("calprec2_sha256", "calprec2.py"), ("costprobe2_sha256", "costprobe2.py"),
@@ -904,6 +1112,31 @@ def validate_definition(s):
                 raise ValueError("item {}: shard {} of {}".format(it["id"], it["shard"], it["nshards"]))
         if fam == "rerun" and not it.get("rows"):
             raise ValueError("item {}: a rerun item needs rows".format(it["id"]))
+        if "first_attempt" in it and not (isinstance(it["first_attempt"], int) and it["first_attempt"] >= 1):
+            raise ValueError("item {}: first_attempt {!r}".format(it["id"], it["first_attempt"]))
+        if fam == "dtref":
+            validate_dtref_item(s, it)
+
+
+def validate_dtref_item(s, it):
+    """LDD: the dtref family's structural rules (also checked on every tick)."""
+    p = s["profiles"][it["profile"]]
+    if not (isinstance(p["nshards"], int) and isinstance(p["drill_shard"], int)
+            and 0 <= p["drill_shard"] < p["nshards"]):
+        raise ValueError("profile {}: drill_shard {!r} of nshards {!r}".format(it["profile"], p["drill_shard"],
+                                                                           p["nshards"]))
+    if not isinstance(p["rows"], str) or not p["rows"] or " " in p["rows"]:
+        raise ValueError("profile {}: rows {!r}".format(it["profile"], p["rows"]))
+    if it["kind"] == "gate":
+        if not (isinstance(it.get("gate_no"), int) and it["gate_no"] >= 1):
+            raise ValueError("item {}: a dtref gate item needs gate_no >= 1".format(it["id"]))
+        return
+    if it["kind"] == "shard" and it["nshards"] != p["nshards"]:
+        raise ValueError("item {}: nshards {} is not the profile's {}".format(it["id"], it["nshards"], p["nshards"]))
+    i = s["queue"].index(it)
+    if not any(x["kind"] == "gate" and x["profile"] == it["profile"] and x["set"] == it["set"]
+               for x in s["queue"][:i]):
+        raise ValueError("item {}: no gate item of its profile and set before it (LDD)".format(it["id"]))
 
 
 def validate(s):
@@ -947,6 +1180,12 @@ def history(s, run, event, note):
 
 
 def job_name(s, item, attempt):
+    if family_of(s, item) == "dtref":
+        if item["kind"] == "gate":
+            return "dtref-{}-gate{}-a{}".format(item["set"], item["gate_no"], attempt)
+        if item["kind"] == "drill":
+            return "dtref-{}-drill-a{}".format(item["set"], attempt)
+        return "dtref-{}-s{}of{}-a{}".format(item["set"], item["shard"], item["nshards"], attempt)
     if family_of(s, item) == "c5":
         if item["kind"] in ("smoke", "drill"):
             return "c5-{}-{}-a{}".format(item["set"], item["kind"], attempt)
@@ -985,10 +1224,65 @@ def finalize_inputs(s, item):
     return folders, probs
 
 
+def gate_folder(s, index=None):
+    """GF: the folder of the accepted attempt of the newest gate item before the item at index, or None."""
+    index = s["index"] if index is None else index
+    item = s["queue"][index]
+    for it in reversed(s["queue"][:index]):
+        if it["kind"] != "gate" or it["profile"] != item["profile"] or it["set"] != item["set"]:
+            continue
+        acc = [r for r in s["attempts"].get(it["id"], []) if r.get("accepted")]
+        if acc:
+            return acc[-1]["folder"]
+    return None
+
+
+def dtref_common(p):
+    return "--rows {} --plan {} --timing {} --committed {} --workers {} --budget-mb {!r}".format(
+        p["rows"], p["plan"], ",".join(p["timing"]), ",".join(p["committed"]), p["workers"],
+        float(p["budget_mb"]))
+
+
+def first_attempt(item):
+    return item.get("first_attempt", 1)
+
+
+def resume_folders(s, item, fam):
+    """The item's recorded attempt folders that hold rows, superseded ones (IMG) excluded."""
+    sup = set(item.get("superseded", []))
+    return [r["folder"] for r in s["attempts"].get(item["id"], [])
+            if holds_rows(r["folder"], fam) and r["folder"] not in sup]
+
+
+def advance(s):
+    """The next item, at its first attempt (1, or first_attempt after IMG), no resume folders."""
+    s["index"] += 1
+    s["attempt"] = first_attempt(s["queue"][s["index"]]) if s["index"] < len(s["queue"]) else 1
+    s["resume_dirs"] = []
+    s["status"] = "DONE" if s["index"] == len(s["queue"]) else "READY"
+
+
 def job_spec(s):
     """(job, args, data folders) for the current item and attempt."""
     item = s["queue"][s["index"]]
     p = profile_of(s, item)
+    if p["family"] == "dtref":
+        common = dtref_common(p)
+        data = [p["plan"]] + list(p["timing"]) + list(p["committed"])
+        if item["kind"] == "gate":
+            args = "--mode gate " + common
+        else:
+            g = gate_folder(s)
+            gtxt = g if g else "<no accepted gate: GF>"
+            if item["kind"] == "drill":
+                args = "--mode run {} --gate {} --shard {} --nshards {} --stop-after {!r}".format(
+                    common, gtxt, p["drill_shard"], p["nshards"], float(p["drill_stop_after"]))
+            else:
+                args = "--mode run {} --gate {} --shard {} --nshards {}".format(
+                    common, gtxt, item["shard"], item["nshards"])
+            if g:
+                data.append(g)
+        return job_name(s, item, s["attempt"]), args, data
     if p["family"] == "c5":
         common = "--timing {} --beta-table {} --rerun-plan {} --workers {}".format(
             ",".join(p["timing"]), p["beta_table"], p["rerun_plan"], p["workers"])
@@ -1031,6 +1325,8 @@ def job_spec(s):
 
 
 def holds_rows(folder, family="rerun"):
+    if family == "dtref":
+        return bool(glob.glob(os.path.join(ROOT, folder, "dtref-run-*", "dtref_real.csv")))
     if family == "c5":
         return bool(glob.glob(os.path.join(ROOT, folder, "c5run-*", "c5run_real.csv")))
     if family == "sizetest":
@@ -1418,6 +1714,12 @@ def do_launch(ctx):
         if h != p["expect"][key]:
             raise Halt("P1: scripts/{} sha256 {} differs from the pinned {}".format(name, h, p["expect"][key]))
     say("  P1 code pin: {} as pinned".format(", ".join(n for n, _ in FAMILY_PINS[fam])))
+    if fam == "dtref" and item["kind"] != "gate":
+        g = gate_folder(s)
+        if not g:
+            raise Halt("GF: no accepted gate item precedes {} in profile {} set {}".format(
+                item["id"], item["profile"], item["set"]))
+        say("  GF: gate folder {}".format(g))
     if fam == "calprec2" and item["kind"] == "finalize":
         _f, probs = finalize_inputs(s, item)
         if probs:
@@ -1610,6 +1912,8 @@ def runner_text(folder, job):
 
 
 def read_runner(text, family="rerun"):
+    if family == "dtref":
+        return read_runner_dtref(text)
     if family == "c5":
         return read_runner_c5(text)
     if family == "sizetest":
@@ -1800,6 +2104,215 @@ def f2_problem_c5(s, item, folder, rel, f):
         return "F2X: exit 0 without 'not stopped: every task ran' and N of N complete rows in {}".format(rel)
     if f["exit"] == 5 and not f["stopped"]:
         return "F2X: exit 5 without 'STOPPED by --stop-after' in {}".format(rel)
+    return None
+
+
+def read_runner_dtref(text):
+    """R1D, GV, F2D, RG1: the lines dtref.py prints after its banner "CBO-GAP dtref"."""
+    f = {"exit": None, "python": None, "numpy": None, "hashes": {}, "mode": None, "shard": None, "nshards": None,
+         "rows": None, "plan": None, "timing": None, "gate": None, "gfork": False, "gsrc": False,
+         "plan_in": None, "plan_sha": None, "rundir": None, "resume_read": set(), "resume_m": {}, "ran": None,
+         "complete": None, "bridge_fail": None, "errors": None, "stopped": False, "notstopped": False,
+         "gate_verdict": None, "found": None, "module_fail": False, "stop_gate": False, "gate_mismatch": [],
+         "completed": None, "smoke": None}
+    if text is None:
+        return f
+    ex = re.findall(r"kgrun runner: exit code (-?\d+)", text)
+    if ex:
+        f["exit"] = int(ex[-1])
+    i = text.find("CBO-GAP dtref")
+    body = text[i:] if i >= 0 else ""
+    for key, pat in (("python", r"^  python   (\S+)\s*$"), ("numpy", r"^  numpy    (\S+)\s*$"),
+                     ("rows", r"^  rows     (\S+)\s*$"), ("plan", r"^  plan     (\S+)\s*$"),
+                     ("timing", r"^  timing   (\S+)\s*$"), ("gate", r"^  gate     (\S+)\s*$")):
+        m = re.search(pat, body, re.M)
+        if m:
+            f[key] = m.group(1)
+    for key, label in DTREF_HASH_LABELS:
+        m = re.search(r"^  " + re.escape(label) + r" +sha256 ([0-9a-f]{64})\s*$", body, re.M)
+        if m:
+            f["hashes"][key] = m.group(1)
+    m = re.search(r"^  mode     (\w+)   shard (\d+) of (\d+)\s*$", body, re.M)
+    if m:
+        f["mode"], f["shard"], f["nshards"] = m.group(1), int(m.group(2)), int(m.group(3))
+    f["gfork"] = bool(re.search(r"^  G-FORK PASS ", body, re.M))
+    f["gsrc"] = bool(re.search(r"^  G-SRC PASS ", body, re.M))
+    m = re.search(r"^  plan (\S+) \(\d+ cells, rerun_plan\.csv sha256 ([0-9a-f]{64})\)\s*$", body, re.M)
+    if m:
+        f["plan_in"], f["plan_sha"] = m.group(1), m.group(2)
+    m = re.findall(r"^files  (\S+)\s*$", body, re.M)
+    if m:
+        f["rundir"] = m[-1]
+    for path, mm in re.findall(r"^  read (\S+): shard \S+ of \S+, \d+ rows, (\d+) complete\s*$", body, re.M):
+        b = os.path.basename(path.rstrip("/"))
+        f["resume_read"].add(b)
+        f["resume_m"][b] = int(mm)
+    m = re.findall(r"^tasks run by this job: (\d+)   complete, this job and resumed: (\d+) of (\d+)\s*$", body, re.M)
+    if m:
+        f["ran"] = int(m[-1][0])
+        f["completed"] = f["ran"]
+        f["complete"] = (int(m[-1][1]), int(m[-1][2]))
+    m = re.findall(r"^bridge check failures \(C\): (\d+)\s*$", body, re.M)
+    if m:
+        f["bridge_fail"] = int(m[-1])
+    m = re.findall(r"^errored or timed-out tasks: (\d+)\s*$", body, re.M)
+    if m:
+        f["errors"] = int(m[-1])
+    f["stopped"] = bool(re.search(r"^STOPPED by --stop-after", body, re.M))
+    f["notstopped"] = bool(re.search(r"^not stopped: every task ran\s*$", body, re.M))
+    m = re.findall(r"^GATE (PASS|FAIL)\s*$", body, re.M)
+    if m:
+        f["gate_verdict"] = m[-1]
+    m = re.findall(r"^  (\d+) of (\d+) gate trajectories found\s*$", body, re.M)
+    if m:
+        f["found"] = (int(m[-1][0]), int(m[-1][1]))
+    f["module_fail"] = bool(re.search(r"^MODULE \S+ FAIL", body, re.M))
+    f["stop_gate"] = bool(re.search(r"^" + re.escape(DTREF_STOP_GATE) + r"\s*$", body, re.M))
+    f["gate_mismatch"] = re.findall(r"^  (\S+): gate '([^']*)', this job '([^']*)'\s*$", body, re.M)
+    return f
+
+
+def dtref_params(folder, base):
+    pp = os.path.join(folder, base, "dtref_params.csv")
+    if not os.path.isfile(pp):
+        return {}
+    with open(pp, newline="") as fh:
+        return dict((r[0], r[1]) for r in csv.reader(fh) if r)
+
+
+def header_problems_dtref(s, item, f, folder):
+    """R1D (a) to (f), and GV for a gate item."""
+    p = profile_of(s, item)
+    e = p["expect"]
+    out = []
+    if f["python"] != e["python"]:
+        out.append("python {}, expected {}".format(f["python"], e["python"]))
+    if f["numpy"] != e["numpy"]:
+        out.append("numpy {}, expected {}".format(f["numpy"], e["numpy"]))
+    for k, _l in DTREF_HASH_LABELS:
+        if f["hashes"].get(k) != e[k]:
+            out.append("{} {}, expected {}".format(k, f["hashes"].get(k), e[k]))
+    kind = item["kind"]
+    mode = "gate" if kind == "gate" else "run"
+    S, K = {"gate": (0, 1), "drill": (p["drill_shard"], p["nshards"])}.get(kind, (item.get("shard"),
+                                                                               item.get("nshards")))
+    if (f["mode"], f["shard"], f["nshards"]) != (mode, S, K):
+        out.append("mode {} shard {} of {}, expected {} shard {} of {}".format(
+            f["mode"], f["shard"], f["nshards"], mode, S, K))
+    bn = lambda x: os.path.basename(x.rstrip("/"))           # noqa: E731
+    g = gate_folder(s) if kind != "gate" else ""
+    names = {"rows": p["rows"], "plan": bn(p["plan"]), "timing": ",".join(bn(x) for x in p["timing"])}
+    if kind != "gate":
+        names["gate"] = bn(g) if g else "<none: GF>"
+    for k, v in sorted(names.items()):
+        if f[k] != v:
+            out.append("{} {}, expected {}".format(k, f[k], v))
+    if kind == "gate" and f["gate"] is not None:
+        out.append("a gate line {} in a gate job".format(f["gate"]))
+    if not f["gfork"]:
+        out.append("no 'G-FORK PASS' line")
+    if not f["gsrc"]:
+        out.append("no 'G-SRC PASS' line")
+    if f["exit"] == 2:
+        return out
+    if (f["plan_in"], f["plan_sha"]) != (names["plan"], p["plan_sha256"]):
+        out.append("IN plan {} rerun_plan.csv sha256 {}, expected {} {}".format(
+            f["plan_in"], f["plan_sha"], names["plan"], p["plan_sha256"]))
+    base = os.path.basename((f["rundir"] or "").rstrip("/"))
+    tag = "" if K == 1 else "-s{}of{}".format(S, K)
+    if not re.fullmatch(r"dtref-" + mode + r"-\d{8}-\d{6}" + re.escape(tag), base):
+        out.append("files {}, expected a basename dtref-{}-YYYYMMDD-HHMMSS{}".format(f["rundir"], mode, tag))
+    subs = sorted(os.path.basename(d) for d in glob.glob(os.path.join(folder, "dtref-*")) if os.path.isdir(d))
+    if subs != [base]:
+        out.append("fetched dtref-* folder(s) {}, expected exactly [{}]".format(subs, base))
+    else:
+        got = dtref_params(folder, base)
+        want = {"mode": mode, "rows": p["rows"], "shard": str(S), "nshards": str(K), "workers": str(p["workers"]),
+                "budget_mb": repr(float(p["budget_mb"])), "plan": names["plan"], "plan_sha256": p["plan_sha256"],
+                "timing": names["timing"], "gate": names.get("gate", ""),
+                "committed": ",".join(bn(x) for x in p["committed"]), "python": f["python"], "numpy": f["numpy"]}
+        for k, _l in DTREF_HASH_LABELS:
+            want[DTREF_PARAM_HASH[k]] = e[k]
+        if kind == "drill":
+            want["stop_after"] = repr(float(p["drill_stop_after"]))
+        for k, v in sorted(want.items()):
+            if got.get(k) != v:
+                out.append("{}/dtref_params.csv {} {!r}, expected {!r}".format(base, k, got.get(k), v))
+        if kind == "gate":
+            out.extend(gv_problems(s, item, f, folder, base))
+    for d in s["resume_dirs"]:
+        if bn(d) not in f["resume_read"]:
+            out.append("no 'read' line for resume folder " + d)
+    return out
+
+
+def gv_problems(s, item, f, folder, base):
+    """GV (gate item): the printed verdict and dtref_gate_verdict.csv."""
+    p = profile_of(s, item)
+    e = p["expect"]
+    out = []
+    if f["gate_verdict"] != "PASS":
+        out.append("GV: GATE {}".format(f["gate_verdict"]))
+    if f["found"] is None or f["found"][0] != f["found"][1] or f["found"][0] < 1:
+        out.append("GV: gate trajectories found {}".format(f["found"]))
+    if f["module_fail"]:
+        out.append("GV: a MODULE ... FAIL line")
+    vp = os.path.join(folder, base, "dtref_gate_verdict.csv")
+    vt, mods = {}, []
+    if os.path.isfile(vp):
+        with open(vp, newline="") as fh:
+            for r in csv.reader(fh):
+                if not r or r[0] == "module":
+                    continue
+                vt[r[0]] = r[1]
+                if r[0] not in ("GATE", "rows", "python", "numpy", "script_sha256"):
+                    mods.append((r[0], r[1]))
+    want = {"GATE": "PASS", "rows": p["rows"], "python": f["python"], "numpy": f["numpy"],
+            "script_sha256": e["dtref_sha256"]}
+    for k, v in sorted(want.items()):
+        if vt.get(k) != v:
+            out.append("GV: {}/dtref_gate_verdict.csv {} {!r}, expected {!r}".format(base, k, vt.get(k), v))
+    if not mods or any(v != "PASS" for _m, v in mods):
+        out.append("GV: module verdicts {}".format(mods))
+    return out
+
+
+def dtref_ok_rows(folder):
+    csvs = glob.glob(os.path.join(ROOT, folder, "dtref-run-*", "dtref_real.csv"))
+    if len(csvs) != 1:
+        return None
+    with open(csvs[0], newline="") as fh:
+        return sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+
+
+def f2_problem_dtref(s, item, folder, rel, f):
+    """F2D (drill and shard): None, or the halt reason."""
+    csvs = glob.glob(os.path.join(folder, "dtref-run-*", "dtref_real.csv"))
+    if len(csvs) != 1:
+        return "F2D: {} dtref-run-*/dtref_real.csv file(s) in {}, expected 1".format(len(csvs), rel)
+    with open(csvs[0], newline="") as fh:
+        nok = sum(1 for r in csv.DictReader(fh) if r.get("end") == "ok")
+    say("  F2D: {} rows end ok; runner 'tasks run by this job' {}, complete {}, bridge failures {}, errored {}".format(
+        nok, f["ran"], f["complete"], f["bridge_fail"], f["errors"]))
+    if f["ran"] is None or nok != f["ran"] or f["errors"] != 0 or f["bridge_fail"] != 0 or f["complete"] is None:
+        return ("F2D: download incomplete or summary missing: {} rows end ok in {}, tasks run {}, errored {}, "
+                "bridge failures {}, complete {}".format(nok, rel, f["ran"], f["errors"], f["bridge_fail"],
+                                                         f["complete"]))
+    resumed = 0
+    for d in s["resume_dirs"]:
+        b = os.path.basename(d.rstrip("/"))
+        local = dtref_ok_rows(d)
+        if local is None or f["resume_m"].get(b) != local:
+            return "F2D: resume folder {}: 'read' line M {}, rows ending ok there {}".format(
+                d, f["resume_m"].get(b), local)
+        resumed += local
+    if f["complete"][0] != f["ran"] + resumed:
+        return "F2D: complete {} is not tasks run {} + resumed {} in {}".format(
+            f["complete"][0], f["ran"], resumed, rel)
+    if f["exit"] == 0 and (not f["notstopped"] or f["complete"][0] != f["complete"][1]):
+        return "F2D: exit 0 without 'not stopped: every task ran' and Y of Y complete in {}".format(rel)
+    if f["exit"] == 5 and not f["stopped"]:
+        return "F2D: exit 5 without 'STOPPED by --stop-after' in {}".format(rel)
     return None
 
 
@@ -2083,7 +2596,9 @@ def shard_problems(item, rundir, folder):
 
 
 def header_problems(s, item, f, folder):
-    """R1 (rerun), R1C/R1F (calprec2), R1Z (sizetest) or R1X (c5)."""
+    """R1 (rerun), R1C/R1F (calprec2), R1Z (sizetest), R1X (c5) or R1D (dtref)."""
+    if family_of(s, item) == "dtref":
+        return header_problems_dtref(s, item, f, folder)
     if family_of(s, item) == "c5":
         return header_problems_c5(s, item, f, folder)
     if family_of(s, item) == "sizetest":
@@ -2116,6 +2631,8 @@ def header_problems(s, item, f, folder):
 def f2_problem(s, item, folder, rel, f):
     """F2 (rerun shard), F2C/F2F (calprec2), F2Z (sizetest shard) or F2X (c5 drill, shard): None, else the halt
     reason."""
+    if family_of(s, item) == "dtref":
+        return f2_problem_dtref(s, item, folder, rel, f)
     if family_of(s, item) == "c5":
         return f2_problem_c5(s, item, folder, rel, f)
     if family_of(s, item) == "sizetest":
@@ -2189,11 +2706,24 @@ def do_fetch(ctx, kstatus):
         bad = f2_problem(s, item, folder, rel, f)
         if bad:
             raise Halt(bad, paths)
+    drill_done = False
+    if fam == "dtref" and item["kind"] == "gate" and code != 0:
+        raise Halt("R2D: gate {} exit {}; only 0 with GATE PASS is accepted".format(rel, code), paths)
+    if fam == "dtref" and item["kind"] == "drill":
+        if s["attempt"] == first_attempt(item):
+            if code != 5:
+                raise Halt("R2D: drill {} first attempt exit {}: it exercised no stop".format(rel, code), paths)
+        elif not s["resume_dirs"]:
+            raise Halt("R2D: drill {} attempt {} resumed nothing".format(rel, s["attempt"]), paths)
+        else:
+            if not f["completed"]:
+                raise Halt("R2D: drill {} resumed attempt ran {} tasks".format(rel, f["completed"]), paths)
+            drill_done = True
     if item["kind"] == "smoke":
         if code != 0 or f["smoke"] != "PASS":
             raise Halt("R2: smoke {} exit {}, D-SMOKE {}; no shard of set {} launches".format(
                 rel, code, f["smoke"], item["set"]), paths)
-    elif code == 5:
+    elif code == 5 and not drill_done:
         if not f["completed"]:
             raise Halt("R2: G-STOP with completed {} in {}: no progress".format(f["completed"], rel), paths)
         if s["attempt"] >= s["max_attempts"]:
@@ -2201,16 +2731,17 @@ def do_fetch(ctx, kstatus):
                        paths)
 
     done_job = job
-    if code == 0:
-        note = "runner exit 0" + (", D-SMOKE PASS" if item["kind"] == "smoke" else "")
-        s["index"] += 1
-        s["attempt"] = 1
-        s["resume_dirs"] = []
-        s["status"] = "DONE" if s["index"] == len(s["queue"]) else "READY"
+    if code == 0 or drill_done:
+        note = "runner exit {}".format(code) + (", D-SMOKE PASS" if item["kind"] == "smoke" else "") + (
+            ", GATE PASS (GV)" if fam == "dtref" and item["kind"] == "gate" else "") + (
+            ", drill done: stop and resume exercised (R2D)" if drill_done else "")
+        if fam == "dtref":
+            s["attempts"][item["id"]][-1]["accepted"] = True
+        advance(s)
     else:
         note = "runner exit 5 (G-STOP), completed {}; next attempt resumes".format(f["completed"])
         s["attempt"] += 1
-        s["resume_dirs"] = [r["folder"] for r in s["attempts"][item["id"]] if holds_rows(r["folder"], fam)]
+        s["resume_dirs"] = resume_folders(s, item, fam)
         s["status"] = "READY"
     s["job"], s["args"], s["data_dirs"] = "", "", []
     s["anomaly"] = None
@@ -2265,6 +2796,12 @@ def tick(a):
         if fam == "rerun":
             say("  profile {} [rerun]  plan {} (rerun_plan.csv {})  timing {}  workers {}".format(
                 name, p["plan"], p["plan_sha256"], ", ".join(p["timing"]), p["workers"]))
+        elif fam == "dtref":
+            say("  profile {} [dtref]  rows {}  plan {} ({} {})  timing {}  committed {}  budget {} MB  nshards {}  "
+                "drill shard {} stop-after {}  workers {}".format(
+                    name, p["rows"], p["plan"], DTREF_PLAN_CSV, p["plan_sha256"], ", ".join(p["timing"]),
+                    ", ".join(p["committed"]), p["budget_mb"], p["nshards"], p["drill_shard"], p["drill_stop_after"],
+                    p["workers"]))
         elif fam == "c5":
             say("  profile {} [c5]  timing {}  beta table {}  rerun plan {}  drill stop-after {}  workers {}".format(
                 name, ", ".join(p["timing"]), p["beta_table"], p["rerun_plan"], p["drill_stop_after"], p["workers"]))
@@ -2350,6 +2887,8 @@ def load_definition(a):
             dirs = [p["plan"]] + list(p["timing"])
         elif fam == "c5":
             dirs = list(p["timing"]) + [p["beta_table"], p["rerun_plan"]]
+        elif fam == "dtref":
+            dirs = [p["plan"]] + list(p["timing"]) + list(p["committed"])
         elif fam == "sizetest":
             dirs = [p["plan"], p["throughput"]]
         else:
@@ -2365,6 +2904,15 @@ def load_definition(a):
                 raise SystemExit("profile {}: {}/{} sha256 {}, the definition says {} (LDZ)".format(
                     name, p["plan"], SIZETEST_PLAN_CSV, got, p["plan_sha256"]))
             print("  profile {}: {}/{} sha256 as defined".format(name, p["plan"], SIZETEST_PLAN_CSV))
+        if fam == "dtref":
+            with open(os.path.join(ROOT, p["plan"], "sha256.txt")) as fh:
+                hits = [ln.rstrip("\n").split("  ", 1) for ln in fh
+                        if ln.strip() and os.path.basename(ln.rstrip("\n").split("  ", 1)[1]) == DTREF_PLAN_CSV]
+            got = sha256_of(os.path.join(ROOT, p["plan"], hits[0][1])) if len(hits) == 1 else None
+            if got != p["plan_sha256"]:
+                raise SystemExit("profile {}: {} lists {} {} file(s); sha256 {}, the definition says {} (LDD)".format(
+                    name, p["plan"], len(hits), DTREF_PLAN_CSV, got, p["plan_sha256"]))
+            print("  profile {}: {}/{} sha256 as defined".format(name, p["plan"], hits[0][1]))
         for fname, key in FAMILY_PINS[fam]:
             p["expect"][key] = sha256_of(os.path.join(SCRIPTS, fname))
             print("  profile {}: pinned scripts/{} {}".format(name, fname, p["expect"][key]))
@@ -2415,6 +2963,15 @@ def show(a):
         print("item     {} {}  attempt {}  job {}".format(s["index"], s["queue"][s["index"]]["id"],
                                                          s["attempt"], s["job"] or "-"))
     print("resume   {}".format(",".join(s["resume_dirs"]) or "-"))
+    if s["index"] < len(s["queue"]) and family_of(s, s["queue"][s["index"]]) == "dtref":
+        cur = s["queue"][s["index"]]
+        if cur["kind"] != "gate":
+            print("gate     {}  (GF)".format(gate_folder(s) or "none accepted"))
+    for it in s["queue"]:
+        if it.get("first_attempt") or it.get("superseded") or it.get("regate_of"):
+            print("item     {}: first_attempt {}  superseded {}  regate_of {}".format(
+                it["id"], it.get("first_attempt", 1), ",".join(it.get("superseded", [])) or "-",
+                it.get("regate_of", "-")))
     if s["status"] != "DONE":
         cur = s["job"] or job_spec(s)[0]
         refs = capacity_refusals(s, cur)
@@ -2457,13 +3014,18 @@ def verify(a):
     say("  runner exit {}  python {}  numpy {}  mode {}  run dir {}  D-SMOKE {}  completed {}".format(
         f["exit"], f["python"], f["numpy"], f["mode"], f["rundir"], f["smoke"], f["completed"]))
     probs += ["R1: " + x for x in header_problems(s, item, f, folder)]
-    if f["exit"] != 0:
+    fam = family_of(s, item)
+    if fam == "dtref" and item["kind"] == "drill" and rec.get("resume_dirs"):
+        if f["exit"] not in (0, 5) or not f["completed"]:
+            probs.append("R2D: resumed drill exit {}, tasks run {}; next-item needs 0 or 5 with progress".format(
+                f["exit"], f["completed"]))
+    elif f["exit"] != 0:
         probs.append("R2: runner exit {}, next-item needs 0".format(f["exit"]))
     if item["kind"] in ("shard", "finalize", "drill"):
         bad = f2_problem(s, item, folder, rel, f)
         if bad:
             probs.append(bad)
-    elif f["smoke"] != "PASS":
+    elif item["kind"] == "smoke" and f["smoke"] != "PASS":
         probs.append("R2: D-SMOKE {}".format(f["smoke"]))
     for x in probs:
         say("  FAIL " + x)
@@ -2489,6 +3051,10 @@ def set_python_problems(s, new, bitcmp, detcheck):
         return ["SP1: status is {}, not HALTED".format(s.get("status"))]
     item = s["queue"][s["index"]]
     prof = profile_of(s, item)
+    if prof["family"] == "dtref":
+        return ["SP1: set-python is refused for the dtref family: its gate folder records the gate's own "
+                "python, so every later shard would exit 2 at dtref.py's gate folder check; use release --mode "
+                "regate --detcheck LOG (IMG)"]
     old, npy = prof["expect"]["python"], prof["expect"]["numpy"]
     if not re.match(r"^\d+\.\d+\.\d+$", new or ""):
         probs.append("SP1: --to {!r} is not a version like 3.13.18".format(new))
@@ -2585,6 +3151,142 @@ def set_python(a):
     return 0
 
 
+def log_text(rel):
+    """A kernel log's printed text: the JSON stream's "data" fields joined, else the raw text."""
+    with open(os.path.join(ROOT, rel), encoding="utf-8", errors="replace") as fh:
+        raw = fh.read()
+    try:
+        ents = json.loads(raw)
+        return "".join(e.get("data", "") for e in ents if isinstance(e, dict))
+    except ValueError:
+        return raw
+
+
+def detcheck_problems(detcheck, py, npy):
+    """RG2 (IMG): rule 16 on the new image, as SP3 plus numpy. [] when it passes."""
+    probs = []
+    run = os.path.dirname(detcheck)
+    if not detcheck.startswith("runs/") or not run or run == "runs":
+        return ["RG2: --detcheck must be a log inside a run folder under runs/"]
+    why = committed_unmodified(detcheck) or committed_unmodified(run + "/sha256.txt") or folder_ok(run)
+    if why:
+        return ["RG2: " + why]
+    text = log_text(detcheck)
+    pys = re.findall(r"^  python   (\S+)", text, re.M)
+    nps = re.findall(r"^  numpy    (\S+)", text, re.M)
+    if not pys or any(x != py for x in pys):
+        probs.append("RG2: python header(s) {} in the detcheck log, expected {}".format(sorted(set(pys)), py))
+    if not nps or any(x != npy for x in nps):
+        probs.append("RG2: numpy header(s) {} in the detcheck log, expected {}".format(sorted(set(nps)), npy))
+    if "VERDICT   D1+D2: PASS   D3: PASS   OVERALL: PASS" not in text:
+        probs.append("RG2: no OVERALL PASS verdict in the detcheck log")
+    why = committed_unmodified("ENVIRONMENT.md")
+    if why:
+        probs.append("RG2: " + why)
+    else:
+        env = open(os.path.join(ROOT, "ENVIRONMENT.md"), encoding="utf-8").read().splitlines()
+        if not any(x.rstrip().endswith("OVERALL: PASS -- see " + detcheck) for x in env):
+            probs.append("RG2: ENVIRONMENT.md has no 'OVERALL: PASS -- see {}' line".format(detcheck))
+    return probs
+
+
+def regate_problems(s, detcheck):
+    """RG1 and RG2 (IMG): ({key: (old, new)}, []) when regate may write, else (None, every reason)."""
+    if s.get("status") != "HALTED":
+        return None, ["RG1: status is {}, not HALTED".format(s.get("status"))]
+    item = s["queue"][s["index"]]
+    prof = profile_of(s, item)
+    if prof["family"] != "dtref":
+        return None, ["RG1: regate is for the dtref family; this item is {}".format(prof["family"])]
+    recs = s["attempts"].get(item["id"], [])
+    if not recs or recs[-1]["attempt"] != s["attempt"]:
+        return None, ["RG1: no fetched folder recorded for {} attempt {}".format(item["id"], s["attempt"])]
+    F = recs[-1]["folder"]
+    reason = s.get("halt_reason", "")
+    lead = ("R1: header of {}: ".format(F) if item["kind"] == "gate"
+            else "R2: runner exit code 2 in {}; R1: ".format(F))
+    if not reason.startswith(lead):
+        return None, ["RG1: halt reason is {!r}; it must start {!r}".format(reason, lead)]
+    change, probs = {}, []
+    parts = reason[len(lead):].split("; ")
+    for part in parts:
+        m = re.fullmatch(r"(python|numpy) (\S+), expected (\S+)", part)
+        if not m or m.group(1) in change:
+            probs.append("RG1: {!r} is not a python or numpy change (any other R1 problem refuses regate)".format(part))
+            continue
+        change[m.group(1)] = (m.group(3), m.group(2))
+    if [k for k in ("python", "numpy") if k in change] != [k for k in change]:
+        probs.append("RG1: python and numpy out of order in the halt reason")
+    for k, (old, new) in change.items():
+        if old != prof["expect"][k] or new == old or not re.fullmatch(r"\d+(\.\d+)+", new):
+            probs.append("RG1: {} {} -> {} against expect {}".format(k, old, new, prof["expect"][k]))
+    if not change:
+        probs.append("RG1: no python or numpy change in the halt reason")
+    if item["kind"] != "gate" and not probs:
+        f = read_runner_dtref(runner_text(os.path.join(ROOT, F), recs[-1]["job"]))
+        want = set((k, old, new) for k, (old, new) in change.items())
+        if f["exit"] != 2 or not f["stop_gate"]:
+            probs.append("RG1: the runner log of {} lacks exit 2 with {!r}".format(F, DTREF_STOP_GATE))
+        if set(f["gate_mismatch"]) != want or len(f["gate_mismatch"]) != len(want):
+            probs.append("RG1: dtref.py's gate-folder lines {} are not exactly {}".format(f["gate_mismatch"],
+                                                                                         sorted(want)))
+        txt = runner_text(os.path.join(ROOT, F), recs[-1]["job"]) or ""
+        if re.search(r"^  (module \S+ is |GATE is )", txt, re.M):
+            probs.append("RG1: the gate folder was refused for more than python or numpy")
+    if probs:
+        return None, probs
+    new_py = change.get("python", (None, prof["expect"]["python"]))[1]
+    new_np = change.get("numpy", (None, prof["expect"]["numpy"]))[1]
+    probs = detcheck_problems(detcheck, new_py, new_np)
+    return (None, probs) if probs else (change, [])
+
+
+def regate(s, a):
+    """RG3 (IMG): move expect, then a new gate attempt or a new gate item before the halted one.
+    Returns the history note; manual() records it as the event "release-regate"."""
+    change, probs = regate_problems(s, a.detcheck or "")
+    for x in probs:
+        print("  REFUSED " + x)
+    if probs:
+        raise SystemExit("regate refused; nothing written")
+    item = s["queue"][s["index"]]
+    prof = profile_of(s, item)
+    fam = prof["family"]
+    for k, (old, new) in change.items():
+        prof["expect"][k] = new
+    moved = "; ".join("expect {} {} -> {}".format(k, o, n) for k, (o, n) in change.items())
+    if item["kind"] == "gate":
+        if s["attempt"] + 1 > s["max_attempts"]:
+            raise SystemExit("attempt {} would exceed max_attempts {}".format(s["attempt"] + 1, s["max_attempts"]))
+        s["attempt"] += 1
+        what = "gate {} attempt {}".format(item["id"], s["attempt"])
+    else:
+        nxt = s["attempt"] + 1
+        if nxt > s["max_attempts"]:
+            raise SystemExit("{} attempt {} would exceed max_attempts {}".format(item["id"], nxt, s["max_attempts"]))
+        gates = [x for x in s["queue"] if x["kind"] == "gate" and x["profile"] == item["profile"]
+                 and x["set"] == item["set"]]
+        g_no = max(x["gate_no"] for x in gates) + 1
+        new_id = "{}-g{}".format(gates[0]["id"], g_no)
+        if any(x["id"] == new_id for x in s["queue"]):
+            raise SystemExit("item id {} already exists".format(new_id))
+        sup = sorted(set(item.get("superseded", [])) | set(
+            r["folder"] for r in s["attempts"].get(item["id"], []) if holds_rows(r["folder"], fam)))
+        item["first_attempt"] = nxt
+        item["superseded"] = sup
+        s["queue"].insert(s["index"], {"id": new_id, "profile": item["profile"], "kind": "gate", "set": item["set"],
+                                       "ledger": item["ledger"], "gate_no": g_no, "regate_of": item["id"]})
+        s["attempt"] = 1
+        what = "new gate item {} (gate_no {}) before {}, which resumes at attempt {} from scratch; superseded {}".format(
+            new_id, g_no, item["id"], nxt, ", ".join(sup) or "none")
+    s["resume_dirs"] = []
+    s["job"], s["args"], s["data_dirs"] = "", "", []
+    s["status"] = "READY"
+    print("  regate: {}; {}".format(moved, what))
+    return "{}; {}; detcheck {} sha256 {}; {}".format(moved, what, a.detcheck,
+                                                      sha256_of(os.path.join(ROOT, a.detcheck)), a.note)
+
+
 def halted_job(s):
     """K1: the job a halt leaves: the recorded one, else the current item and attempt's name."""
     return s["job"] or job_spec(s)[0]
@@ -2667,19 +3369,18 @@ def manual(a):
                 raise SystemExit("attempt {} would exceed max_attempts {}".format(s["attempt"] + 1, s["max_attempts"]))
             s["attempt"] += 1
             fam = family_of(s, item)
-            s["resume_dirs"] = ([r["folder"] for r in s["attempts"].get(item["id"], [])
-                                 if holds_rows(r["folder"], fam)]
-                                if item["kind"] in ("shard", "drill") else [])
+            s["resume_dirs"] = (resume_folders(s, item, fam) if item["kind"] in ("shard", "drill") else [])
             s["job"], s["args"], s["data_dirs"] = "", "", []
             s["status"] = "READY"
+        elif a.mode == "regate":
+            a.note = regate(s, a)
         else:
-            s["index"] += 1
-            s["attempt"] = 1
-            s["resume_dirs"] = []
+            advance(s)
             s["job"], s["args"], s["data_dirs"] = "", "", []
-            s["status"] = "DONE" if s["index"] == len(s["queue"]) else "READY"
         if a.checked_by_hand and a.mode != "next-attempt":
             raise SystemExit("--checked-by-hand applies to next-attempt only")
+        if a.detcheck and a.mode != "regate":
+            raise SystemExit("--detcheck applies to regate only")
         s["halt_reason"] = ""
         s["anomaly"] = None
         s["kernel_check"] = None
@@ -2715,10 +3416,12 @@ def main():
     sp.add_argument("--detcheck", required=True)
     sp.add_argument("--note", required=True)
     r = sub.add_parser("release")
-    r.add_argument("--mode", required=True, choices=["start", "repoll", "next-attempt", "next-item"])
+    r.add_argument("--mode", required=True, choices=["start", "repoll", "next-attempt", "next-item", "regate"])
     r.add_argument("--note", required=True)
     r.add_argument("--checked-by-hand", choices=HAND_STATUSES, default=None,
                    help="next-attempt only: the status you saw on Kaggle yourself for the halted job (K1)")
+    r.add_argument("--detcheck", default=None,
+                   help="regate only: the detcheck kernel log on the new image, recorded in ENVIRONMENT.md (IMG, RG2)")
     a = p.parse_args()
     if a.cmd == "tick":
         return tick(a)

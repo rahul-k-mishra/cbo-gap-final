@@ -3,7 +3,9 @@
 # involvement). Started only by hand: Actions > rerun-queue-admin > Run
 # workflow, or "gh workflow run rerun-queue-admin.yml -f command=...".
 # It runs exactly one of scripts/rerunq.py show, verify, check, release,
-# halt, load or set-python (N45, 2026-11-03), with the inputs given, and
+# halt, load or set-python (N45, 2026-11-03), with the inputs given (release
+# --mode regate, the dtref family's recovery after an image change, takes
+# its detcheck log from "evidence": N46, IMG, 2026-11-28), and
 # for the five that change the state commits and pushes what rerunq.py wrote (the state file, and for
 # load the archived state), as Rahul would on the laptop. It decides
 # nothing: every rule (K1, LD, the release modes) is rerunq.py's own.
@@ -25,11 +27,11 @@ on:
         type: choice
         options: [show, verify, check, release, halt, load, set-python]
       mode:
-        description: "release only: start, repoll, next-attempt or next-item"
+        description: "release only: start, repoll, next-attempt, next-item or regate (dtref only)"
         required: false
         type: choice
         default: none
-        options: [none, start, repoll, next-attempt, next-item]
+        options: [none, start, repoll, next-attempt, next-item, regate]
       checked_by_hand:
         description: "release next-attempt only: the status you saw on Kaggle yourself (K1)"
         required: false
@@ -45,7 +47,7 @@ on:
         required: false
         default: ""
       evidence:
-        description: "set-python only: BITCMP_LOG,DETCHECK_LOG (committed paths, comma-separated)"
+        description: "set-python: BITCMP_LOG,DETCHECK_LOG (comma-separated); release regate: DETCHECK_LOG (committed paths)"
         required: false
         default: ""
       note:
@@ -123,7 +125,10 @@ jobs:
             release)
               test -n "$NOTE" || { echo "a note is required for release"; exit 2; }
               test "$MODE" != none || { echo "release needs a mode"; exit 2; }
-              if [ "$HAND" != none ]; then
+              if [ "$MODE" = regate ]; then
+                test -n "$EVID" || { echo "release regate needs evidence = DETCHECK_LOG"; exit 2; }
+                python scripts/rerunq.py release --mode regate --note "$NOTE" --detcheck "$EVID"
+              elif [ "$HAND" != none ]; then
                 python scripts/rerunq.py release --mode "$MODE" --note "$NOTE" --checked-by-hand "$HAND"
               else
                 python scripts/rerunq.py release --mode "$MODE" --note "$NOTE"
