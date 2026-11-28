@@ -1,0 +1,9 @@
+group,module,kind,traj_tid,A1,A2,A3,A_diag,B,C,rss_mb,rss_flag,verdict,detail
+CONC|mechanism|centred|none|-|0,mechanism,group,20261016-81-3-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_10,E_20,E_80,E_160,E_320,E_640,E_1280,E_2560"
+CONC|mechanism|mix-0.1|none|-|0,mechanism,group,20261016-81-3-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_10,E_20,E_40,E_160,E_320,E_640,E_2560,E_5000"
+ONSET|regimemap|centred|anisotropic|-|0,regimemap,group,20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0-0|anisotropic,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_320,E_640,E_2560,extras"
+ONSET|regimemap|centred|isotropic|-|0,regimemap,group,20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0-0|isotropic,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_10,E_20,E_40,E_80,E_160,E_320,E_640,E_1280"
+PROBEARM|mechanism|centred|none|-|0,mechanism,group,20261016-81-4-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_20,E_40,E_80,E_160,E_320,E_640,E_1280,E_2560"
+PROBEARM|mechanism|mix-0.1|none|-|0,mechanism,group,20261016-81-4-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none,PASS,FAIL,FAIL,IMAGE,PASS,PASS,,,FAIL,"A2 W0 != committed in E_10,E_20,E_80,E_160,E_320,E_640,E_1280,E_2560"
+RSS|mechanism,mechanism,rss,20261016-81-3-2-4-40-0-10000-0-0-0-50000-1000000-0-0-0|none,,,,,,PASS,304.8,,PASS,
+RSS|regimemap,regimemap,rss,20261016-81-16-10-1-80-0-100000-1000000-0-0-50000-1000000-0-0-0|anisotropic,,,,,,PASS,536.8,,PASS,

@@ -1,0 +1,115 @@
+
+====================================================================================================
+CBO-GAP dtref  (ledger N46: time-step refinement, DTREF)  mode gate
+====================================================================================================
+  python   3.12.3
+  numpy    2.5.3
+  platform Linux-7.0.0-43-generic-x86_64-with-glibc2.39
+  workers  1
+  dtref.py      sha256 9fc0be0b32653f80a834f11dca440f900e906cbc93e793ed4e1567e988cbc02b
+  rerun.py      sha256 52864b4240b4bf0c4e4ef1fabeae1a4ac7ad3342991188e3a487dd1bb55dacbd
+  rerunlib.py   sha256 31f4b3600c7a32c236011fb041adb5ccbf51a029a4e6cc333da26b58a730e430
+  costprobe2.py sha256 ea5cb2e1d50e393abbbd91e688f850023effa6ac38a4f05e6b63af02b849f64b
+  calprec2.py   sha256 3947d7ba86a55eeced69a4ab6694d841a2c6695a6b1eaf1ee55fd14f980e511a
+  mode     gate   shard 0 of 1
+  rows     CONC,PROBEARM,ONSET
+  plan     rerun-plan-20261028-212945
+  timing   costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343
+  levels   L0 dt 0.01 q 1; L1 dt 0.005 q 2; L2 dt 0.0025 q 4   (run: L1, L2; gate: P0, W0, W1, W2)
+  dynamics rerunlib.realise -> archived one_realisation, unmodified; rerunlib.DT set per level; generator wrapped (BridgeRNG)
+  seeds    trajectory SeedSequence(rerunlib.traj_key), kind 81, unchanged at every level; bridge SeedSequence((20261016, 101, owner, coord_fields, rep, level))
+  checks   gate A1 A2 (A3 diagnostic) B C RSS; run C; bridge tolerance 1e-12
+  budget   3000 MB for concurrent tasks
+
+====================================================================================================
+G-FORK, G-SRC
+====================================================================================================
+  G-FORK PASS  start method fork
+
+====================================================================================================
+G-SRC  archived one_realisation shape (the wrapper's assumption)
+====================================================================================================
+  mechanism    PASS
+  regimemap    PASS
+  G-SRC PASS  2 module(s)
+
+====================================================================================================
+IN  plan, walls
+====================================================================================================
+  plan rerun-plan-20261028-212945 (2289 cells, rerun_plan.csv sha256 5fc3b0b2d7070d2934a690cd8d51998b69ab9fe8701dcb165cd29f6bfbb842ea)
+  walls 331 units from costprobe2-s0-kaggle-20261010-103952,costprobe2-s1-kaggle-20261011-101343
+  gate: 6 groups x (P0, W0, W1, W2) + 2 RSS task(s) = 26 tasks
+
+====================================================================================================
+COMMITTED rerun rows (gate A2)
+====================================================================================================
+  rerun-arch-s0of4-a1-kaggle-20261024-020220: 2 gate row(s)
+  rerun-arch-s1of4-a1-kaggle-20261024-133226: 1 gate row(s)
+  rerun-arch-s2of4-a1-kaggle-20261024-160215: 1 gate row(s)
+  rerun-arch-s3of4-a1-kaggle-20261024-200233: 0 gate row(s)
+  rerun-cal-s0of2-a1-kaggle-20261025-003238: 1 gate row(s)
+  rerun-cal-s1of2-a1-kaggle-20261025-050238: 1 gate row(s)
+  rerun-cal3-s0of2-a1-kaggle-20261027-011714: 0 gate row(s)
+  rerun-cal3-s1of2-a1-kaggle-20261027-043215: 0 gate row(s)
+  rerun-onsetr-s0of10-a1-kaggle-20261029-024727: 0 gate row(s)
+  rerun-onsetr-s1of10-a1-kaggle-20261029-054727: 0 gate row(s)
+  rerun-onsetr-s2of10-a1-kaggle-20261029-084728: 0 gate row(s)
+  rerun-onsetr-s3of10-a1-kaggle-20261029-121727: 0 gate row(s)
+  rerun-onsetr-s4of10-a1-kaggle-20261029-154728: 0 gate row(s)
+  rerun-onsetr-s5of10-a1-kaggle-20261029-191727: 0 gate row(s)
+  rerun-onsetr-s6of10-a1-kaggle-20261029-223227: 0 gate row(s)
+  rerun-onsetr-s7of10-a1-kaggle-20261030-020149: 0 gate row(s)
+  rerun-onsetr-s8of10-a1-kaggle-20261030-040227: 0 gate row(s)
+  rerun-onsetr-s9of10-a1-kaggle-20261030-061727: 0 gate row(s)
+  6 of 6 gate trajectories found
+
+====================================================================================================
+T1, STOP, G-STOP
+====================================================================================================
+  TIMEOUT_S 936 s; --stop-after 36000 s (auto); cap 43200 s
+
+  run dir  /home/rahul/Research/cbo-gap-final/runs/dtref-gate-20261128-122942
+  [gate] 26 task(s) to run, 0 already in the resumed folders
+  [gate     1/26   ] 20261016-81-16-10-1-80-0-100000-1000000-0-0-50000-1000000-0- wall   279.625 s  RSS   536.8 MB  elapsed     280 s
+  [gate     2/26   ] 20261016-81-3-2-4-40-0-10000-0-0-0-50000-1000000-0-0-0|none| wall   153.410 s  RSS   304.8 MB  elapsed     434 s
+  [gate     3/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall    17.421 s  RSS    74.3 MB  elapsed     451 s
+  [gate     4/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall    19.246 s  RSS    74.5 MB  elapsed     471 s
+  [gate     5/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall     9.699 s  RSS    70.1 MB  elapsed     480 s
+  [gate     6/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall    10.352 s  RSS    71.4 MB  elapsed     491 s
+  [gate     7/26   ] 20261016-81-3-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall    11.193 s  RSS    57.0 MB  elapsed     502 s
+  [gate     8/26   ] 20261016-81-3-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall    11.022 s  RSS    56.9 MB  elapsed     513 s
+  [gate     9/26   ] 20261016-81-4-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall    11.135 s  RSS    57.0 MB  elapsed     525 s
+  [gate    10/26   ] 20261016-81-4-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall    11.902 s  RSS    57.0 MB  elapsed     537 s
+  [gate    11/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall     3.478 s  RSS    62.7 MB  elapsed     540 s
+  [gate    12/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall     4.420 s  RSS    63.6 MB  elapsed     545 s
+  [gate    13/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall     3.811 s  RSS    64.1 MB  elapsed     549 s
+  [gate    14/26   ] 20261016-81-16-10-2-5-0-100000-1000000-0-0-50000-1000000-0-0 wall     4.922 s  RSS    63.8 MB  elapsed     554 s
+  [gate    15/26   ] 20261016-81-3-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall     5.920 s  RSS    55.5 MB  elapsed     560 s
+  [gate    16/26   ] 20261016-81-3-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall     5.897 s  RSS    55.4 MB  elapsed     567 s
+  [gate    17/26   ] 20261016-81-4-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall     5.898 s  RSS    55.2 MB  elapsed     573 s
+  [gate    18/26   ] 20261016-81-4-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall     5.895 s  RSS    55.6 MB  elapsed     579 s
+  [gate    19/26   ] 20261016-81-3-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|P wall     2.538 s  RSS    49.9 MB  elapsed     581 s
+  [gate    20/26   ] 20261016-81-3-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall     3.008 s  RSS    50.8 MB  elapsed     585 s
+  [gate    21/26   ] 20261016-81-3-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|P wall     2.442 s  RSS    50.1 MB  elapsed     587 s
+  [gate    22/26   ] 20261016-81-3-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall     2.768 s  RSS    50.9 MB  elapsed     590 s
+  [gate    23/26   ] 20261016-81-4-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|P wall     2.442 s  RSS    50.0 MB  elapsed     593 s
+  [gate    24/26   ] 20261016-81-4-2-5-2-0-10000-0-0-0-50000-1000000-0-0-0|none|W wall     2.838 s  RSS    50.7 MB  elapsed     596 s
+  [gate    25/26   ] 20261016-81-4-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|P wall     2.504 s  RSS    50.3 MB  elapsed     599 s
+  [gate    26/26   ] 20261016-81-4-2-5-2-2-10000-0-0-0-50000-1000000-0-0-0|none|W wall     2.773 s  RSS    50.9 MB  elapsed     602 s
+
+====================================================================================================
+GATE  per group (A1 W0=P0, A2 W0=committed, A3 P0=committed [diagnostic], B, C) and per module
+====================================================================================================
+  FAIL CONC|mechanism|centred|none|-|0                                        A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_10,E_20,E_80,E_160,E_320,E_640,E_1280,E_2560
+  FAIL CONC|mechanism|mix-0.1|none|-|0                                        A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_10,E_20,E_40,E_160,E_320,E_640,E_2560,E_5000
+  FAIL ONSET|regimemap|centred|anisotropic|-|0                                A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_320,E_640,E_2560,extras
+  FAIL ONSET|regimemap|centred|isotropic|-|0                                  A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_10,E_20,E_40,E_80,E_160,E_320,E_640,E_1280
+  FAIL PROBEARM|mechanism|centred|none|-|0                                    A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_20,E_40,E_80,E_160,E_320,E_640,E_1280,E_2560
+  FAIL PROBEARM|mechanism|mix-0.1|none|-|0                                    A1 PASS A2 FAIL A3 FAIL IMAGE   B PASS C PASS A2 W0 != committed in E_10,E_20,E_80,E_160,E_320,E_640,E_1280,E_2560
+  PASS RSS|mechanism                                                          A1      A2      A3              B      C PASS 304.8 MB 
+  PASS RSS|regimemap                                                          A1      A2      A3              B      C PASS 536.8 MB 
+MODULE mechanism FAIL: 4 of 5 group(s); first CONC|mechanism|centred|none|-|0: A2 W0 != committed in E_10,E_20,E_80,E_160,E_320,E_640,E_1280,E_2560
+MODULE regimemap FAIL: 2 of 3 group(s); first ONSET|regimemap|centred|anisotropic|-|0: A2 W0 != committed in E_320,E_640,E_2560,extras
+
+GATE FAIL
+files  /home/rahul/Research/cbo-gap-final/runs/dtref-gate-20261128-122942

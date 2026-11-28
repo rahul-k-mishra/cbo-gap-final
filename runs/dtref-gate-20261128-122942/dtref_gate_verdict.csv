@@ -1,0 +1,8 @@
+module,verdict,groups,failed
+mechanism,FAIL,5,4
+regimemap,FAIL,3,2
+GATE,FAIL,,
+rows,"CONC,PROBEARM,ONSET",,
+python,3.12.3,,
+numpy,2.5.3,,
+script_sha256,9fc0be0b32653f80a834f11dca440f900e906cbc93e793ed4e1567e988cbc02b,,
